@@ -4,7 +4,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import org.apache.commons.io.FilenameUtils;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import lombok.Getter;
@@ -15,9 +15,9 @@ import lombok.Getter;
  * @author jcruz
  *
  */
-@Service
+@Component
 @Getter
-public class XtoolService {
+public class PathContext {
 
 	/**
 	 * Diretório atual
