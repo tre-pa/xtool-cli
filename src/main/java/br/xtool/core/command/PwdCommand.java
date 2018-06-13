@@ -13,7 +13,7 @@ public class PwdCommand {
 	@Autowired
 	private XtoolService xtoolService;
 
-	@ShellMethod(value = "Exibe o diretório de trabalho", group = XtoolCliApplication.CORE_COMMAND_GROUP)
+	@ShellMethod(value = "Exibe o diretório de trabalho atual", group = XtoolCliApplication.CORE_COMMAND_GROUP)
 	public String pwd() {
 		return xtoolService.getWorkingDirectory();
 	}
