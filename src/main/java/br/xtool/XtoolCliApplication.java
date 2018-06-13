@@ -13,11 +13,14 @@ public class XtoolCliApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(XtoolCliApplication.class, args);
 	}
-	
+
+	/**
+	 * Define o estilo do prompt de comando.
+	 * 
+	 * @return
+	 */
 	@Bean
 	public PromptProvider promptProvider() {
-	    return () -> new AttributedString("xtool > ", AttributedStyle.DEFAULT.foreground(AttributedStyle.YELLOW));
+		return () -> new AttributedString("xtool > ", AttributedStyle.DEFAULT.foreground(AttributedStyle.YELLOW));
 	}
 }
-
-
