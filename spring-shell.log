@@ -20,3 +20,30 @@
 1528926806996:quit
 1528926817644:cd --dir d
 1528927174174:quit
+1528927379081:help
+1528927381109:pwd
+1528927385576:cd /home
+1528927395520:cd --dir /home
+1528927416623:quit
+1528927428411:cd /home
+1528927430126:pwd
+1528927467008:quit
+1528927574391:cd /home/jcruz
+1528927576690:pwd
+1528927620635:quit
+1528927633350:cd /home/jcruz
+1528927635186:pwd
+1528927638171:exit
+1528927854188:cd /home/jcruz
+1528928077760:quit
+1528928090169:cd /home/jcruz
+1528928092728:quit
+1528928122115:cd /home/jcruz
+1528928139103:cd /home/jcruz/Documentos/workspace-sts-3.9.4.RELEASE/xtool-cli/
+1528928144121:cd /home/jcruz/Documentos/workspace-sts-3.9.4.RELEASE/xtool-cli
+1528928215596:quit
+1528928225697:cd /home/jcruz/Documentos/workspace-sts-3.9.4.RELEASE/xtool-cli
+1528928228722:cd /home/jcruz/Documentos/workspace-sts-3.9.4.RELEASE/xtool-cli/
+1528928242649:pwd
+1528928252676:cd ~
+1528928257370:cd /home/jcruz/Documentos/workspace-sts-3.9.4.RELEASE/xtool-cli/
