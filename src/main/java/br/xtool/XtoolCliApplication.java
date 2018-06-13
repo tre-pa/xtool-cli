@@ -9,6 +9,8 @@ import org.springframework.shell.jline.PromptProvider;
 
 @SpringBootApplication
 public class XtoolCliApplication {
+	
+	public final static String CORE_COMMAND_GROUP = "Core Commands Group";
 
 	public static void main(String[] args) {
 		SpringApplication.run(XtoolCliApplication.class, args);
