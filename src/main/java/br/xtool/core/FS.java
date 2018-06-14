@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
@@ -29,6 +30,7 @@ public class FS {
 	 * @throws IOException
 	 */
 	public void copy(String source, String destination) throws IOException {
+		FileUtils.forceMkdirParent(new File(destination));
 		FileUtils.copyInputStreamToFile(new ClassPathResource(String.format("templates/%s", source)).getInputStream(),
 				new File(destination));
 	}
@@ -47,6 +49,7 @@ public class FS {
 	public void copyTpl(String template, String destination, Map<String, Object> vars) throws IOException {
 		Template t = vEngine.getTemplate(String.format("templates/%s", template));
 		VelocityContext vContext = new VelocityContext(vars);
+		FileUtils.forceMkdirParent(new File(destination));
 		FileWriter writer = new FileWriter(destination);
 		t.merge(vContext, writer);
 		writer.flush();

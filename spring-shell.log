@@ -70,3 +70,27 @@
 1528933228166:stacktrace
 1528933293918:quit
 1528933301759:hello 'Jose Ribamar'
+1528933747258:quit
+1528933769491:cd --dir h
+1528933777579:cd /home/jcruz/Documentos/workspace-sts-3.9.4.RELEASE/xtool-cli/
+1528933781398:pwd
+1528934041883:quit
+1528934048746:help
+1528934064091:fs Teste\\ Hello
+1528934068437:fs Teste
+1528936049715:quit
+1528936058588:help
+1528936345779:quit
+1528936402521:cd /home/jcruz/Documentos/workspace-sts-3.9.4.RELEASE/xtool-cli/
+1528936811356:gen-hello --path d
+1528937595924:quit
+1528937604290:cd /home/jcruz/Documentos/workspace-sts-3.9.4.RELEASE/xtool-cli/
+1528937607356:gen-hello --path d
+1528937611950:stacktrace
+1528937763946:quit
+1528937775138:cd /home/jcruz/Documentos/workspace-sts-3.9.4.RELEASE/xtool-cli/
+1528937778639:gen-hello --path d
+1528937822695:quit
+1528937831452:cd /home/jcruz/Documentos/workspace-sts-3.9.4.RELEASE/xtool-cli/
+1528937833990:gen-hello --path d
+1528939031637:quit
