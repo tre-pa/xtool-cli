@@ -1,6 +1,5 @@
 package br.xtool.core;
 
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Optional;
@@ -25,7 +24,7 @@ public class PathContext {
 	/**
 	 * Diretório atual
 	 */
-	private String workingDirectory;
+	private String workingDirectory = System.getProperty("user.home");
 
 	/**
 	 * Altera o diretório de trabalho.
@@ -52,7 +51,7 @@ public class PathContext {
 	}
 
 	public Optional<SpringBootProject> getSpringBootProject() {
-		return SpringBootProject.of(this.getWorkingDirectory());
+		return SpringBootProject.of(this.workingDirectory);
 	}
 
 }
