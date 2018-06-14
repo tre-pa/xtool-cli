@@ -9,21 +9,27 @@ import org.springframework.shell.Availability;
 import org.springframework.shell.standard.ShellMethodAvailability;
 
 import br.xtool.core.PathContext;
+import br.xtool.core.model.SpringBootProject;
 
-public class SpringbootGeneratorCommand extends GeneratorCommand {
+public class SpringBootGeneratorCommand extends GeneratorCommand {
 
 	@Autowired
 	private PathContext pathCtx;
-	
+
 	/**
 	 * Define a disponibilidade dos comando do grupo Spring Boot.
+	 * 
 	 * @return
 	 * @throws IOException
 	 */
 	@ShellMethodAvailability
 	public Availability availabilitySpringBootCommand() throws IOException {
-		return Files.exists(Paths.get(pathCtx.getWorkingDirectory(), "pom.xml")) ? Availability.available()
+		return SpringBootProject.isValidSpringBootProject(pathCtx.getWorkingDirectory()) ? Availability.available()
 				: Availability.unavailable(
 						"O diretório de trabalho não é um projeto maven válido. Use o comando cd para alterar o diretório de trabalho.");
+	}
+
+	protected SpringBootProject getProject() throws IOException {
+		return SpringBootProject.of(pathCtx.getWorkingDirectory());
 	}
 }
