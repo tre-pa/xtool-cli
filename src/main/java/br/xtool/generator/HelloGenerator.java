@@ -18,15 +18,23 @@ import br.xtool.core.provider.EntityValueProvider;
 public class HelloGenerator extends SpringBootGeneratorCommand {
 
 	@ShellMethod(key = "gen-hello", value = "Gerador de Hello")
-	public void run(@ShellOption(valueProvider = EntityValueProvider.class) Entity entity) throws IOException {
-		Map<String, Object> vars = ImmutableMap.<String,Object>builder()
-				.put("entity", entity)
-				.build();
+	public void run(@ShellOption(valueProvider = EntityValueProvider.class, defaultValue = "") Entity entity) throws IOException {
 
-		//System.out.println("Entidade Selecionada: " + entity.getName());
+		System.out.println(entity);
+		if (entity != null) {
 
-		this.copyTpl("hello.vm", "target/app/${entity.name}.txt", vars);
-		//getProject().getEntities().stream().forEach(j -> System.out.println(j.getName()));
+			//// @formatter:off
+			Map<String, Object> vars = ImmutableMap.<String, Object>builder()
+					.put("entity", entity)
+					.build();
+			// @formatter:on
+
+			// System.out.println("Entidade Selecionada: " + entity.getName());
+
+			this.copyTpl("hello.vm", "target/app/${entity.name}.txt", vars);
+			// getProject().getEntities().stream().forEach(j ->
+			// System.out.println(j.getName()));
+		}
 	}
 
 }

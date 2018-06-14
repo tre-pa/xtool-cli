@@ -1,5 +1,6 @@
 package br.xtool.core.converter;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
@@ -15,7 +16,7 @@ public class EntityConverter implements Converter<String, Entity> {
 
 	@Override
 	public Entity convert(String source) {
-		if (pathCtx.getSpringBootProject().isPresent()) {
+		if (pathCtx.getSpringBootProject().isPresent() && StringUtils.isNotEmpty(source)) {
 			// @formatter:off
 			return pathCtx.getSpringBootProject().get().getEntities()
 				.stream()

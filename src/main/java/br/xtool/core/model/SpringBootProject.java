@@ -9,6 +9,8 @@ import java.nio.file.Paths;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
@@ -17,6 +19,12 @@ import org.jboss.forge.roaster.model.JavaUnit;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.jboss.forge.roaster.model.source.JavaInterfaceSource;
 
+/**
+ * Classe que representa um projeto Spring Boot
+ * 
+ * @author jcruz
+ *
+ */
 public class SpringBootProject {
 
 	private String path;
@@ -25,7 +33,7 @@ public class SpringBootProject {
 
 	private Set<JavaInterfaceSource> javaInterfaceSources = new HashSet<>();
 
-	private Set<Entity> entities;
+	private SortedSet<Entity> entities;
 
 	private SpringBootProject() {
 		super();
@@ -41,7 +49,7 @@ public class SpringBootProject {
 		return Files.exists(Paths.get(path, "pom.xml"));
 	}
 
-	public static Optional<SpringBootProject> of(String path)  {
+	public static Optional<SpringBootProject> of(String path) {
 		if (isValidSpringBootProject(path)) {
 			SpringBootProject springBootProject = new SpringBootProject(path);
 			return Optional.of(springBootProject);
@@ -49,21 +57,26 @@ public class SpringBootProject {
 		return Optional.empty();
 	}
 
-	public Set<Entity> getEntities() {
+	/**
+	 * Retorna a lista das entidades JPA do projeto
+	 * 
+	 * @return
+	 */
+	public SortedSet<Entity> getEntities() {
 		if (this.entities == null) {
 			// @formatter:off
 			this.entities = this.javaClassSources
 					.parallelStream()
 					.filter(j -> j.getAnnotations().stream().anyMatch(ann -> ann.getName().equals("Entity")))
 					.map(Entity::new)
-					.collect(Collectors.toSet());
+					.collect(Collectors.toCollection(TreeSet::new));
 			// @formatter:on
 
 		}
 		return entities;
 	}
 
-	private void buildJavaClassSources()  {
+	private void buildJavaClassSources() {
 		if (StringUtils.isNotEmpty(path)) {
 			//// @formatter:off
 			try {
