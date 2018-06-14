@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -30,7 +31,7 @@ public class SpringBootProject {
 		super();
 	}
 
-	private SpringBootProject(String path) throws IOException {
+	private SpringBootProject(String path) {
 		super();
 		this.path = path;
 		this.buildJavaClassSources();
@@ -40,12 +41,12 @@ public class SpringBootProject {
 		return Files.exists(Paths.get(path, "pom.xml"));
 	}
 
-	public static SpringBootProject of(String path) throws IOException {
-		if (!isValidSpringBootProject(path)) {
-			throw new RuntimeException("O diretório de trabalho atual não é um projeto maven válido.");
+	public static Optional<SpringBootProject> of(String path)  {
+		if (isValidSpringBootProject(path)) {
+			SpringBootProject springBootProject = new SpringBootProject(path);
+			return Optional.of(springBootProject);
 		}
-		SpringBootProject springBootProject = new SpringBootProject(path);
-		return springBootProject;
+		return Optional.empty();
 	}
 
 	public Set<Entity> getEntities() {
@@ -62,14 +63,18 @@ public class SpringBootProject {
 		return entities;
 	}
 
-	private void buildJavaClassSources() throws IOException {
+	private void buildJavaClassSources()  {
 		if (StringUtils.isNotEmpty(path)) {
 			//// @formatter:off
-			Files.walk(Paths.get(this.path))
-				.filter(Files::isRegularFile)
-				.filter(p -> p.toFile().getName().endsWith("java"))
-				.map(p -> p.toFile())
-				.forEach(this::parseAndAddJavaFile);;
+			try {
+				Files.walk(Paths.get(this.path))
+					.filter(Files::isRegularFile)
+					.filter(p -> p.toFile().getName().endsWith("java"))
+					.map(p -> p.toFile())
+					.forEach(this::parseAndAddJavaFile);
+			} catch (IOException e) {
+				e.printStackTrace();
+			};
 			// @formatter:on
 		}
 	}

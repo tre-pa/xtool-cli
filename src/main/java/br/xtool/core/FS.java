@@ -3,10 +3,11 @@ package br.xtool.core;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.StringWriter;
 import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.output.FileWriterWithEncoding;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
@@ -47,10 +48,10 @@ public class FS {
 	 * @throws IOException
 	 */
 	public void copyTpl(String template, String destination, Map<String, Object> vars) throws IOException {
-		Template t = vEngine.getTemplate(String.format("templates/%s", template));
 		VelocityContext vContext = new VelocityContext(vars);
+		Template t = vEngine.getTemplate(String.format("templates/%s", template));
 		FileUtils.forceMkdirParent(new File(destination));
-		FileWriter writer = new FileWriter(destination);
+		FileWriterWithEncoding writer = new FileWriterWithEncoding(destination, "UTF-8");
 		t.merge(vContext, writer);
 		writer.flush();
 		writer.close();

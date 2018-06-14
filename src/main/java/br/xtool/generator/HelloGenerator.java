@@ -7,6 +7,8 @@ import java.util.Map;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 
+import com.google.common.collect.ImmutableMap;
+
 import br.xtool.core.annotation.ShellGeneratorComponent;
 import br.xtool.core.generator.SpringBootGeneratorCommand;
 import br.xtool.core.model.Entity;
@@ -17,12 +19,14 @@ public class HelloGenerator extends SpringBootGeneratorCommand {
 
 	@ShellMethod(key = "gen-hello", value = "Gerador de Hello")
 	public void run(@ShellOption(valueProvider = EntityValueProvider.class) Entity entity) throws IOException {
-		Map<String, Object> vars = new HashMap<>();
+		Map<String, Object> vars = ImmutableMap.<String,Object>builder()
+				.put("entity", entity)
+				.build();
 
-		System.out.println("Entidade Selecionada: " + entity.getName());
+		//System.out.println("Entidade Selecionada: " + entity.getName());
 
-		// this.copyTpl("hello.vm", "target/app/hello-gen.txt", vars);
-		getProject().getEntities().stream().forEach(j -> System.out.println(j.getName()));
+		this.copyTpl("hello.vm", "target/app/${entity.name}.txt", vars);
+		//getProject().getEntities().stream().forEach(j -> System.out.println(j.getName()));
 	}
 
 }

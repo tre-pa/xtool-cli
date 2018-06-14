@@ -52,12 +52,7 @@ public class PathContext {
 	}
 
 	public Optional<SpringBootProject> getSpringBootProject() {
-		try {
-			return Optional.ofNullable(SpringBootProject.of(this.getWorkingDirectory()));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return Optional.empty();
+		return SpringBootProject.of(this.getWorkingDirectory());
 	}
 
 }

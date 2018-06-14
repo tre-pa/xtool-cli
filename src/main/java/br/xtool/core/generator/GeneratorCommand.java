@@ -1,10 +1,13 @@
 package br.xtool.core.generator;
 
 import java.io.IOException;
+import java.io.StringWriter;
 import java.util.Map;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.velocity.VelocityContext;
+import org.apache.velocity.app.VelocityEngine;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import br.xtool.core.FS;
@@ -19,6 +22,9 @@ public class GeneratorCommand {
 
 	@Autowired
 	private PathContext pathCtx;
+	
+	@Autowired
+	private VelocityEngine vEngine;
 
 	@Autowired
 	private Log log;
@@ -33,6 +39,11 @@ public class GeneratorCommand {
 	}
 
 	protected void copyTpl(String template, String destination, Map<String, Object> vars) throws IOException {
+		VelocityContext vContext = new VelocityContext(vars);
+		StringWriter stringWriter = new StringWriter();
+		vEngine.evaluate(vContext, stringWriter, new String(), destination);
+		destination = stringWriter.toString();
+
 		String fTemplate = this.getFinalSource(template);
 		String fDestination = this.getFinalDestination(destination);
 		fs.copyTpl(fTemplate, fDestination, vars);
