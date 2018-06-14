@@ -1,12 +1,15 @@
 package br.xtool.core;
 
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Optional;
 
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
+import br.xtool.core.model.SpringBootProject;
 import lombok.Getter;
 
 /**
@@ -46,6 +49,15 @@ public class PathContext {
 
 	public boolean hasWorkingDirectory() {
 		return !StringUtils.isEmpty(this.workingDirectory);
+	}
+
+	public Optional<SpringBootProject> getSpringBootProject() {
+		try {
+			return Optional.ofNullable(SpringBootProject.of(this.getWorkingDirectory()));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return Optional.empty();
 	}
 
 }

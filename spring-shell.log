@@ -147,3 +147,11 @@
 1528996246287:quit
 1528996256639:cd /home/jcruz/git/aelis2018-atividades-service
 1528996259553:gen-hello --path s
+1528997830606:quit
+1528997840934:cd /home/jcruz/git/aelis2018-atividades-service
+1528997843532:gen-hello --path s
+1528997861718:gen-hello --entity Atividade
+1528997890900:quit
+1528997900181:cd /home/jcruz/git/aelis2018-atividades-service
+1528997908507:gen-hello --entity Municipio
+1528997921345:gen-hello --entity Atividade
