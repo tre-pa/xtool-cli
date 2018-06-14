@@ -94,3 +94,18 @@
 1528937831452:cd /home/jcruz/Documentos/workspace-sts-3.9.4.RELEASE/xtool-cli/
 1528937833990:gen-hello --path d
 1528939031637:quit
+1528939346805:help
+1528939360969:pwd
+1528939707930:quit
+1528981993657:help
+1528981996980:cd
+1528982006054:quit
+1528984536787:cd /home/jcruz/Documentos/workspace-sts-3.9.4.RELEASE/xtool-cli
+1528984544487:gen-hello
+1528984549900:gen-hello --path s
+1528984764809:quit
+1528984773573:cd /home/jcruz/Documentos/workspace-sts-3.9.4.RELEASE/xtool-cli
+1528984775370:gen-hello --path s
+1528984809975:quit
+1528984819778:cd /home/jcruz/Documentos/workspace-sts-3.9.4.RELEASE/xtool-cli
+1528984822546:gen-hello --path s

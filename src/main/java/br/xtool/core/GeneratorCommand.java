@@ -17,16 +17,25 @@ public class GeneratorCommand {
 	@Autowired
 	private PathContext pathCtx;
 
+	@Autowired
+	private Log log;
+
 	protected void copy(String source, String destination) throws IOException {
 		String fSource = this.getFinalSource(source);
 		String fDestination = this.getFinalDestination(destination);
 		fs.copy(fSource, fDestination);
+		log.print("");
+		log.print(log.green("\tCREATE ") + log.white(destination));
+		log.print("");
 	}
 
 	protected void copyTpl(String template, String destination, Map<String, Object> vars) throws IOException {
 		String fTemplate = this.getFinalSource(template);
 		String fDestination = this.getFinalDestination(destination);
 		fs.copyTpl(fTemplate, fDestination, vars);
+		log.print("");
+		log.print(log.green("\tCREATE ") + log.white(destination));
+		log.print("");
 	}
 
 	private String getFinalSource(String path) {
