@@ -1,4 +1,4 @@
-package br.xtool.core;
+package br.xtool.core.generator;
 
 import java.io.IOException;
 import java.util.Map;
@@ -7,6 +7,9 @@ import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import br.xtool.core.FS;
+import br.xtool.core.Log;
+import br.xtool.core.PathContext;
 import br.xtool.core.annotation.ShellGeneratorComponent;
 
 public class GeneratorCommand {

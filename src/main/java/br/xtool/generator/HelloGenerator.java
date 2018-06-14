@@ -7,11 +7,11 @@ import java.util.Map;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 
-import br.xtool.core.GeneratorCommand;
 import br.xtool.core.annotation.ShellGeneratorComponent;
+import br.xtool.core.generator.SpringbootGeneratorCommand;
 
 @ShellGeneratorComponent(templatePath = "generators/hello")
-public class HelloGenerator extends GeneratorCommand {
+public class HelloGenerator extends SpringbootGeneratorCommand {
 
 	@ShellMethod(key = "gen-hello", value = "Gerador de Hello")
 	public void run(@ShellOption String path) throws IOException {
