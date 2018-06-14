@@ -14,7 +14,12 @@ public class SpringbootGeneratorCommand extends GeneratorCommand {
 
 	@Autowired
 	private PathContext pathCtx;
-
+	
+	/**
+	 * Define a disponibilidade dos comando do grupo Spring Boot.
+	 * @return
+	 * @throws IOException
+	 */
 	@ShellMethodAvailability
 	public Availability availabilitySpringBootCommand() throws IOException {
 		return Files.exists(Paths.get(pathCtx.getWorkingDirectory(), "pom.xml")) ? Availability.available()
