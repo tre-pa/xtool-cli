@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache updateCheck="false">
+	<defaultCache 
+		maxElementsInMemory="10000"
+		eternal="false"
+    	timeToIdleSeconds="60"
+    	timeToLiveSeconds="60" 
+    	overflowToDisk="false"
+    	memoryStoreEvictionPolicy="LRU" />
+     
+	<cache
+		 name="org.hibernate.cache.StandardQueryCache"
+		 maxElementsInMemory="50"
+	 	 eternal="false"
+	 	 timeToLiveSeconds="15"
+	 	 overflowToDisk="false"/>
+	 	 
+</ehcache>

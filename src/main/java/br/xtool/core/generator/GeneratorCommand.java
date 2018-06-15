@@ -40,6 +40,12 @@ public class GeneratorCommand {
 		fs.copy(fSource, fDestination);
 		log.print(log.green("\tCREATE ") + log.white(destination));
 	}
+	
+	protected void copy(String source, String destination, Supplier<Boolean> exp) throws IOException {
+		if(exp.get()) {
+			this.copy(source, destination);
+		}
+	}
 
 	protected void copyTpl(String template, String destination, Map<String, Object> vars) throws IOException {
 		VelocityContext vContext = new VelocityContext(vars);

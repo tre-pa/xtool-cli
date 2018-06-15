@@ -20,19 +20,22 @@ import strman.Strman;
 
 @ShellGeneratorComponent(templatePath = "generators/springboot/scaffold/1.5.x")
 public class NewSpringBootProjectGenerator extends GeneratorCommand {
-	
+
 	@Autowired
 	private PathContext pathCtx;
-	
+
 	@Autowired
 	private Log log;
 
 	@ShellMethod(key = "new-springboot-project", value = "Novo projeto Spring Boot 1.5.x", group = XtoolCliApplication.CORE_COMMAND_GROUP)
-	public void run(@ShellOption(help = "Nome do projeto") String name,
+	// @formatter:off
+	public void run(
+			@ShellOption(help = "Nome do projeto") String name, 
 			@ShellOption(help = "Versão do projeto", defaultValue = "0.0.1") String version,
 			@ShellOption(help = "Nome do pacote raiz", defaultValue = "") String packageRoot,
 			@ShellOption(help = "Desativa a dependência jpa", defaultValue = "false", arity = 0) Boolean noJpa,
 			@ShellOption(help = "Desativa a dependência web", defaultValue = "false", arity = 0) boolean noWeb) throws IOException {
+	// @formatter:on
 
 		//// @formatter:off
 		Map<String, Object> vars = ImmutableMap.<String, Object>builder()
@@ -47,8 +50,11 @@ public class NewSpringBootProjectGenerator extends GeneratorCommand {
 
 		this.setDestinationRoot(getFinalProjectName(name));
 		this.copyTpl("src/main/java/SpringBootApplication.java.vm", "src/main/java/${packageRoot.dir}/${mainClassName}Application.java", vars);
+		this.copyTpl("src/main/resources/application.properties.vm", "src/main/resources/application.properties", vars);
+		this.copy("src/main/resources/ehcache.xml.vm", "src/main/resources/ehcache.xml", () -> !noJpa);
+		this.copy("gitignore", ".gitignore");
 		this.copyTpl("pom.xml.vm", "pom.xml", vars);
-		
+
 		this.pathCtx.changeWorkingDirectory(FilenameUtils.concat(this.pathCtx.getWorkingDirectory(), this.getDestinationRoot()));
 		log.print(log.white("\nDiretório de trabalho alterado para: "), log.cyan(this.pathCtx.getWorkingDirectory()));
 	}
