@@ -22,12 +22,14 @@ public class GeneratorCommand {
 
 	@Autowired
 	private PathContext pathCtx;
-	
+
 	@Autowired
 	private VelocityEngine vEngine;
 
 	@Autowired
 	private Log log;
+
+	private String destinationRoot;
 
 	protected void copy(String source, String destination) throws IOException {
 		String fSource = this.getFinalSource(source);
@@ -52,13 +54,17 @@ public class GeneratorCommand {
 		log.print("");
 	}
 
+	protected void setDestinationRoot(String destinationRoot) {
+		this.destinationRoot = destinationRoot;
+	}
+
 	private String getFinalSource(String path) {
 		String prefix = this.getClass().getAnnotation(ShellGeneratorComponent.class).templatePath();
 		return FilenameUtils.concat(prefix, path);
 	}
 
 	private String getFinalDestination(String destination) {
-		return FilenameUtils.concat(pathCtx.getWorkingDirectory(), destination);
+		return FilenameUtils.concat(FilenameUtils.concat(pathCtx.getWorkingDirectory(), destinationRoot), destination);
 	}
 
 }

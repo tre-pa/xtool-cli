@@ -14,7 +14,7 @@ import br.xtool.core.generator.SpringBootGeneratorCommand;
 import br.xtool.core.model.Entity;
 import br.xtool.core.provider.EntityValueProvider;
 
-@ShellGeneratorComponent(templatePath = "generators/hello")
+//@ShellGeneratorComponent(templatePath = "generators/hello")
 public class HelloGenerator extends SpringBootGeneratorCommand {
 
 	@ShellMethod(key = "gen-hello", value = "Gerador de Hello")
