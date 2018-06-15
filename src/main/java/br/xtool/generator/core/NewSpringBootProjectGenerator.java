@@ -1,5 +1,6 @@
 package br.xtool.generator.core;
 
+import java.io.IOException;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
@@ -18,28 +19,53 @@ public class NewSpringBootProjectGenerator extends GeneratorCommand {
 
 	@ShellMethod(key = "new-springboot-project", value = "Novo projeto Spring Boot 1.5.x", group = XtoolCliApplication.CORE_COMMAND_GROUP)
 	public void run(@ShellOption(help = "Nome do projeto") String name,
+			@ShellOption(help = "Versão do projeto", defaultValue = "0.0.1") String version,
 			@ShellOption(help = "Nome do pacote raiz", defaultValue = "") String packageRoot,
-			@ShellOption(help = "Desativa a dependência jpa", value = "--no-jpa", defaultValue = "false", arity = 1) boolean noJpa,
-			@ShellOption(help = "Desativa a dependência web", value = "--no-web", defaultValue = "false", arity = 1) boolean noWeb) {
+			@ShellOption(help = "Desativa a dependência jpa", defaultValue = "false", arity = 0) Boolean noJpa,
+			@ShellOption(help = "Desativa a dependência web", defaultValue = "false", arity = 0) boolean noWeb) throws IOException {
 
 		//// @formatter:off
 		Map<String, Object> vars = ImmutableMap.<String, Object>builder()
 				.put("projectName", getFinalProjectName(name))
+				.put("projectVersion", version)
+				.put("packageRoot", getFinalPackageRoot(name, packageRoot))
+				.put("mainClassName", getMainClassName(getFinalProjectName(name)))
+				.put("noJpa", noJpa)
+				.put("noWeb", noWeb)
 				.build();
 		// @formatter:on
 
-		System.out.println(getFinalProjectName(name));
-		System.out.println(getFinalPackageRoot(name, packageRoot));
+		this.setDestinationRoot(getFinalProjectName(name));
+		this.copyTpl("src/main/java/SpringBootApplication.java.vm", "src/main/java/${packageRoot.dir}/${mainClassName}Application.java", vars);
+		this.copyTpl("pom.xml.vm", "pom.xml", vars);
 	}
 
+	/*
+	 * Retorna o nome final do projeto com o sufixo -service caso necessário.
+	 */
 	private String getFinalProjectName(String name) {
 		name = name.endsWith("-service") ? name : name.concat("-service");
 		return Strman.toKebabCase(name);
 	}
 
-	private String getFinalPackageRoot(String name, String packageRoot) {
+	/*
+	 * Retorna o nome final do pacote raiz do projeto.
+	 */
+	private Map<String, String> getFinalPackageRoot(String name, String packageRoot) {
 		name = name.endsWith("-service") ? name.replace("-service", "") : name;
 		String _packageRoot = StringUtils.join(StringUtils.split(Strman.toKebabCase(name), "-"), ".");
-		return StringUtils.isEmpty(packageRoot) ? "br.jus.tre_pa.".concat(_packageRoot) : packageRoot;
+		String packageName = StringUtils.isEmpty(packageRoot) ? "br.jus.tre_pa.".concat(_packageRoot) : packageRoot;
+		String packageDir = packageName.replaceAll("\\.", "/");
+		// @formatter:off
+		return ImmutableMap.<String, String>builder()
+				.put("name", packageName)
+				.put("dir", packageDir)
+				.build();
+		// @formatter:on
 	}
+
+	private String getMainClassName(String finalProjectName) {
+		return Strman.toStudlyCase(finalProjectName);
+	}
+
 }

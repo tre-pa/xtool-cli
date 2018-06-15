@@ -3,6 +3,9 @@ package br.xtool.core.generator;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.Map;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -35,9 +38,7 @@ public class GeneratorCommand {
 		String fSource = this.getFinalSource(source);
 		String fDestination = this.getFinalDestination(destination);
 		fs.copy(fSource, fDestination);
-		log.print("");
 		log.print(log.green("\tCREATE ") + log.white(destination));
-		log.print("");
 	}
 
 	protected void copyTpl(String template, String destination, Map<String, Object> vars) throws IOException {
@@ -49,9 +50,13 @@ public class GeneratorCommand {
 		String fTemplate = this.getFinalSource(template);
 		String fDestination = this.getFinalDestination(destination);
 		fs.copyTpl(fTemplate, fDestination, vars);
-		log.print("");
 		log.print(log.green("\tCREATE ") + log.white(destination));
-		log.print("");
+	}
+
+	protected void copyTpl(String template, String destination, Map<String, Object> vars, Supplier<Boolean> exp) throws IOException {
+		if(exp.get()) {
+			this.copyTpl(template, destination, vars);
+		}
 	}
 
 	protected void setDestinationRoot(String destinationRoot) {
