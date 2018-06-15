@@ -29,6 +29,12 @@ public class SpringBootGeneratorCommand extends GeneratorCommand {
 						"O diretório de trabalho não é um projeto maven válido. Use o comando cd para alterar o diretório de trabalho.");
 	}
 
+	/**
+	 * Retorna o modelo do projeto Spring Boot do diretório de trabalho atual.
+	 * 
+	 * @return
+	 * @throws IOException
+	 */
 	protected SpringBootProject getProject() throws IOException {
 		return pathCtx.getSpringBootProject().get();
 	}

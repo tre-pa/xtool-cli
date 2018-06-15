@@ -3,19 +3,29 @@ package br.xtool.generator.core;
 import java.io.IOException;
 import java.util.Map;
 
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 
 import com.google.common.collect.ImmutableMap;
 
 import br.xtool.XtoolCliApplication;
+import br.xtool.core.Log;
+import br.xtool.core.PathContext;
 import br.xtool.core.annotation.ShellGeneratorComponent;
 import br.xtool.core.generator.GeneratorCommand;
 import strman.Strman;
 
 @ShellGeneratorComponent(templatePath = "generators/springboot/scaffold/1.5.x")
 public class NewSpringBootProjectGenerator extends GeneratorCommand {
+	
+	@Autowired
+	private PathContext pathCtx;
+	
+	@Autowired
+	private Log log;
 
 	@ShellMethod(key = "new-springboot-project", value = "Novo projeto Spring Boot 1.5.x", group = XtoolCliApplication.CORE_COMMAND_GROUP)
 	public void run(@ShellOption(help = "Nome do projeto") String name,
@@ -38,6 +48,9 @@ public class NewSpringBootProjectGenerator extends GeneratorCommand {
 		this.setDestinationRoot(getFinalProjectName(name));
 		this.copyTpl("src/main/java/SpringBootApplication.java.vm", "src/main/java/${packageRoot.dir}/${mainClassName}Application.java", vars);
 		this.copyTpl("pom.xml.vm", "pom.xml", vars);
+		
+		this.pathCtx.changeWorkingDirectory(FilenameUtils.concat(this.pathCtx.getWorkingDirectory(), this.getDestinationRoot()));
+		log.print(log.white("\nDiretório de trabalho alterado para: "), log.cyan(this.pathCtx.getWorkingDirectory()));
 	}
 
 	/*

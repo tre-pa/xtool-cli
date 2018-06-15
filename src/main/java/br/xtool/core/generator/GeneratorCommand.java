@@ -54,13 +54,17 @@ public class GeneratorCommand {
 	}
 
 	protected void copyTpl(String template, String destination, Map<String, Object> vars, Supplier<Boolean> exp) throws IOException {
-		if(exp.get()) {
+		if (exp.get()) {
 			this.copyTpl(template, destination, vars);
 		}
 	}
 
 	protected void setDestinationRoot(String destinationRoot) {
 		this.destinationRoot = destinationRoot;
+	}
+
+	protected String getDestinationRoot() {
+		return destinationRoot;
 	}
 
 	private String getFinalSource(String path) {

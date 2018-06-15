@@ -1,5 +1,6 @@
 package br.xtool.core;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -51,7 +52,7 @@ public class Log {
 		return ANSI_WHITE + text + ANSI_RESET;
 	}
 
-	public void print(String text) {
-		System.out.println(text);
+	public void print(String...text) {
+		System.out.println(StringUtils.join(text));
 	}
 }
