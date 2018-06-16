@@ -18,6 +18,12 @@ import br.xtool.core.annotation.ShellGeneratorComponent;
 import br.xtool.core.generator.GeneratorCommand;
 import strman.Strman;
 
+/**
+ * Shell Commando responsável por criar uma projeto Spring Boot 1.5.x
+ * 
+ * @author jcruz
+ *
+ */
 @ShellGeneratorComponent(templatePath = "generators/springboot/scaffold/1.5.x")
 public class NewSpringBootProjectGenerator extends GeneratorCommand {
 
@@ -37,6 +43,9 @@ public class NewSpringBootProjectGenerator extends GeneratorCommand {
 			@ShellOption(help = "Desativa a dependência web", defaultValue = "false", arity = 0) boolean noWeb) throws IOException {
 	// @formatter:on
 
+		/*
+		 * Cria o mapa com as variáveis do gerador.
+		 */
 		//// @formatter:off
 		Map<String, Object> vars = ImmutableMap.<String, Object>builder()
 				.put("projectName", getFinalProjectName(name))
@@ -49,12 +58,14 @@ public class NewSpringBootProjectGenerator extends GeneratorCommand {
 		// @formatter:on
 
 		this.setDestinationRoot(getFinalProjectName(name));
+		log.print("");
 		this.copyTpl("src/main/java/SpringBootApplication.java.vm", "src/main/java/${packageRoot.dir}/${mainClassName}Application.java", vars);
 		this.copyTpl("src/main/resources/application.properties.vm", "src/main/resources/application.properties", vars);
 		this.copy("src/main/resources/ehcache.xml.vm", "src/main/resources/ehcache.xml", () -> !noJpa);
 		this.copy("gitignore", ".gitignore");
 		this.copyTpl("pom.xml.vm", "pom.xml", vars);
 
+		// Altera o diretório de trabalho para o novo projeto gerado.
 		this.pathCtx.changeWorkingDirectory(FilenameUtils.concat(this.pathCtx.getWorkingDirectory(), this.getDestinationRoot()));
 		log.print(log.white("\nDiretório de trabalho alterado para: "), log.cyan(this.pathCtx.getWorkingDirectory()));
 	}
