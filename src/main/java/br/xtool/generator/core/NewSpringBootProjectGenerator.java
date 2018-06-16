@@ -59,6 +59,13 @@ public class NewSpringBootProjectGenerator extends GeneratorCommand {
 
 		this.setDestinationRoot(getFinalProjectName(name));
 		log.print("");
+		this.copyTpl("src/main/java/config/gitkeep", "src/main/java/${packageRoot.dir}/config/.gitkeep", vars);
+		this.copyTpl("src/main/java/domain/gitkeep", "src/main/java/${packageRoot.dir}/domain/.gitkeep", vars, () -> !noJpa);
+		this.copyTpl("src/main/java/exception/gitkeep", "src/main/java/${packageRoot.dir}/exception/.gitkeep", vars);
+		this.copyTpl("src/main/java/report/gitkeep", "src/main/java/${packageRoot.dir}/report/.gitkeep", vars);
+		this.copyTpl("src/main/java/repository/gitkeep", "src/main/java/${packageRoot.dir}/repository/.gitkeep", vars, () -> !noJpa);
+		this.copyTpl("src/main/java/rest/gitkeep", "src/main/java/${packageRoot.dir}/rest/.gitkeep", vars, () -> !noWeb);
+		this.copyTpl("src/main/java/service/gitkeep", "src/main/java/${packageRoot.dir}/service/.gitkeep", vars);
 		this.copyTpl("src/main/java/SpringBootApplication.java.vm", "src/main/java/${packageRoot.dir}/${mainClassName}Application.java", vars);
 		this.copyTpl("src/main/resources/application.properties.vm", "src/main/resources/application.properties", vars);
 		this.copy("src/main/resources/ehcache.xml.vm", "src/main/resources/ehcache.xml", () -> !noJpa);
