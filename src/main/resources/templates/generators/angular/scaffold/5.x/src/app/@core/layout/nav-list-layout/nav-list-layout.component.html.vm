@@ -1,0 +1,40 @@
+<td-layout-nav-list #navList
+toolbarTitle="demo"
+[opened]="media.registerQuery('gt-sm') | async"
+[mode]="(media.registerQuery('gt-sm') | async) ? 'side' : 'over'"
+[sidenavWidth]="(media.registerQuery('gt-xs') | async) ? sidenavWidth + 'px' : '100%'"
+navigationRoute="/">
+<!-- -->
+<mat-toolbar td-sidenav-content *ngIf="isToolbarSidNav">
+  <span>{{toolbarSidNavTitle}}</span>
+ <ng-content select="[left-toolbar]"></ng-content>
+</mat-toolbar>
+
+<div td-sidenav-toolbar-content (click)="!media.query('gt-sm') && navList.close()"></div>
+
+<!-- BARRA LATERAL ESQUERDA -->
+<mat-nav-list dense td-sidenav-content (click)="!media.query('gt-sm') && navList.close()">
+  <ng-content select="[sidenav]"></ng-content>
+  <!-- MENU LATERAL ESQUERDA-->
+  <ng-content select="[menu-lateral]"></ng-content>
+</mat-nav-list>
+
+
+<!--TOOLBAR -->
+<div td-toolbar-content layout="row" layout-align="left center" flex>
+  <span>{{ toolbarContentTitle }}</span>
+  <span flex></span>
+  <ng-content select="[right-toolbar]"></ng-content>
+</div>
+
+<!--MAIN CONTENT -->
+<ng-content select="[main-content]"></ng-content>
+
+<!--FOOTER-->
+<td-layout-footer-inner *ngIf="isSubFooter">
+  <ng-content select="sub-footer"></ng-content>
+</td-layout-footer-inner>
+<td-layout-footer *ngIf="isMainFooter">
+  <ng-content select="[main-footer]"></ng-content>
+</td-layout-footer>
+</td-layout-nav-list>

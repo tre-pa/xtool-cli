@@ -1,0 +1,11 @@
+<td-layout #layout>
+  <td-navigation-drawer sidenavTitle="demo" [name]="userInfo.name" [email]="userInfo.email">
+    <mat-nav-list>
+      <ng-template let-item let-last="last" ngFor [ngForOf]="routes">
+        <a mat-list-item [routerLink]="[item.route]" (click)="layout.close()">
+          <mat-icon>{{item.icon}}</mat-icon>{{item.title}}</a>
+      </ng-template>
+    </mat-nav-list>
+  </td-navigation-drawer>
+  <router-outlet></router-outlet>
+</td-layout>
