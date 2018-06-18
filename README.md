@@ -19,15 +19,16 @@ $ cd xtool-cli
 ```sh
 $ ./run.sh
 ```
+
 **3.** Após rodar a aplicação o prompt da ferramenta será exibida: 
 
 ```sh
-xtool@jcruz >
+xtool@user >
 ```
 
 **4.** Para visualizar os comando disponéveis digitar no prompt o comando `help`:
 
 ```sh
-xtool@jcruz > help
+xtool@user > help
 ```
  
