@@ -84,5 +84,6 @@ public class NewAngularProjectGenerator extends GeneratorCommand {
 		this.copyTpl("protractor.conf.js.vm", "protractor.conf.js", vars);
 		this.copyTpl("readme.md.vm", "readme.md.js", vars);
 		
+		this.changeWorkingDirectoryToDestinationRoot();
 	}
 }

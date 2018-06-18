@@ -64,6 +64,13 @@ public class GeneratorCommand {
 			this.copyTpl(template, destination, vars);
 		}
 	}
+	
+	protected void changeWorkingDirectoryToDestinationRoot() {
+		if(StringUtils.isNotEmpty(this.destinationRoot)) {
+			this.pathCtx.changeWorkingDirectory(FilenameUtils.concat(this.pathCtx.getWorkingDirectory(), this.getDestinationRoot()));
+			log.print(log.white("\nDiretório de trabalho alterado para: "), log.cyan(this.pathCtx.getWorkingDirectory()));
+		}
+	}
 
 	protected void setDestinationRoot(String destinationRoot) {
 		this.destinationRoot = destinationRoot;

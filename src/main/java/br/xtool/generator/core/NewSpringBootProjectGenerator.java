@@ -72,9 +72,7 @@ public class NewSpringBootProjectGenerator extends GeneratorCommand {
 		this.copy("gitignore", ".gitignore");
 		this.copyTpl("pom.xml.vm", "pom.xml", vars);
 
-		// Altera o diretório de trabalho para o novo projeto gerado.
-		this.pathCtx.changeWorkingDirectory(FilenameUtils.concat(this.pathCtx.getWorkingDirectory(), this.getDestinationRoot()));
-		log.print(log.white("\nDiretório de trabalho alterado para: "), log.cyan(this.pathCtx.getWorkingDirectory()));
+		this.changeWorkingDirectoryToDestinationRoot();
 	}
 
 	/*
