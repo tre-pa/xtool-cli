@@ -8,6 +8,7 @@ import java.util.Optional;
 
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import br.xtool.core.model.SpringBootProject;
@@ -19,9 +20,9 @@ import lombok.Getter;
  * @author jcruz
  *
  */
-@Component
+@Service
 @Getter
-public class PathContext {
+public class PathService {
 
 	/**
 	 * Diretório atual

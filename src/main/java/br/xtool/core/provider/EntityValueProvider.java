@@ -12,20 +12,20 @@ import org.springframework.shell.CompletionProposal;
 import org.springframework.shell.standard.ValueProviderSupport;
 import org.springframework.stereotype.Component;
 
-import br.xtool.core.PathContext;
+import br.xtool.core.PathService;
 import br.xtool.core.model.Entity;
 
 @Component
 public class EntityValueProvider extends ValueProviderSupport {
 
 	@Autowired
-	private PathContext pathCtx;
+	private PathService pathService;
 
 	@Override
 	public List<CompletionProposal> complete(MethodParameter parameter, CompletionContext completionContext, String[] hints) {
-		if (pathCtx.getSpringBootProject().isPresent()) {
+		if (pathService.getSpringBootProject().isPresent()) {
 			// @formatter:off
-			return pathCtx.getSpringBootProject().get().getEntities()
+			return pathService.getSpringBootProject().get().getEntities()
 					.stream().map(Entity::getName)
 					.map(CompletionProposal::new)
 					.collect(Collectors.toList());

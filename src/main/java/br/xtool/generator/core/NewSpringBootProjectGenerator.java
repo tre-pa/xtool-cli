@@ -13,7 +13,7 @@ import com.google.common.collect.ImmutableMap;
 
 import br.xtool.XtoolCliApplication;
 import br.xtool.core.Log;
-import br.xtool.core.PathContext;
+import br.xtool.core.PathService;
 import br.xtool.core.annotation.ShellGeneratorComponent;
 import br.xtool.core.generator.GeneratorCommand;
 import strman.Strman;
@@ -28,7 +28,7 @@ import strman.Strman;
 public class NewSpringBootProjectGenerator extends GeneratorCommand {
 
 	@Autowired
-	private PathContext pathCtx;
+	private PathService pathService;
 
 	@Autowired
 	private Log log;

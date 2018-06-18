@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import br.xtool.core.FS;
 import br.xtool.core.Log;
-import br.xtool.core.PathContext;
+import br.xtool.core.PathService;
 import br.xtool.core.annotation.ShellGeneratorComponent;
 
 public class GeneratorCommand {
@@ -24,7 +24,7 @@ public class GeneratorCommand {
 	private FS fs;
 
 	@Autowired
-	private PathContext pathCtx;
+	private PathService pathService;
 
 	@Autowired
 	private VelocityEngine vEngine;
@@ -67,8 +67,8 @@ public class GeneratorCommand {
 	
 	protected void changeWorkingDirectoryToDestinationRoot() {
 		if(StringUtils.isNotEmpty(this.destinationRoot)) {
-			this.pathCtx.changeWorkingDirectory(FilenameUtils.concat(this.pathCtx.getWorkingDirectory(), this.getDestinationRoot()));
-			log.print(log.white("\nDiretório de trabalho alterado para: "), log.cyan(this.pathCtx.getWorkingDirectory()));
+			this.pathService.changeWorkingDirectory(FilenameUtils.concat(this.pathService.getWorkingDirectory(), this.getDestinationRoot()));
+			log.print(log.white("\nDiretório de trabalho alterado para: "), log.cyan(this.pathService.getWorkingDirectory()));
 		}
 	}
 
@@ -86,7 +86,7 @@ public class GeneratorCommand {
 	}
 
 	private String getFinalDestination(String destination) {
-		return FilenameUtils.concat(FilenameUtils.concat(pathCtx.getWorkingDirectory(), destinationRoot), destination);
+		return FilenameUtils.concat(FilenameUtils.concat(pathService.getWorkingDirectory(), destinationRoot), destination);
 	}
 
 }

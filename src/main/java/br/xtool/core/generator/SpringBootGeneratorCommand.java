@@ -8,13 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.Availability;
 import org.springframework.shell.standard.ShellMethodAvailability;
 
-import br.xtool.core.PathContext;
+import br.xtool.core.PathService;
 import br.xtool.core.model.SpringBootProject;
 
 public class SpringBootGeneratorCommand extends GeneratorCommand {
 
 	@Autowired
-	private PathContext pathCtx;
+	private PathService pathCtx;
 
 	/**
 	 * Define a disponibilidade dos comando do grupo Spring Boot.

@@ -6,18 +6,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.jline.PromptProvider;
 import org.springframework.stereotype.Component;
 
-import br.xtool.core.PathContext;
+import br.xtool.core.PathService;
 
 @Component
 public class XtoolPromptProvider implements PromptProvider {
 
 	@Autowired
-	private PathContext pathCtx;
+	private PathService pathService;
 
 	@Override
 	public AttributedString getPrompt() {
-		if (pathCtx.hasWorkingDirectory()) {
-			return new AttributedString(String.format("xtool@%s > ", pathCtx.getWorkingDirectoryBaseName()),
+		if (pathService.hasWorkingDirectory()) {
+			return new AttributedString(String.format("xtool@%s > ", pathService.getWorkingDirectoryBaseName()),
 					AttributedStyle.DEFAULT.foreground(AttributedStyle.YELLOW));
 		}
 		return new AttributedString("xtool > ", AttributedStyle.DEFAULT.foreground(AttributedStyle.YELLOW));

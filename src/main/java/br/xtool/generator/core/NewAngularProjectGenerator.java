@@ -11,7 +11,7 @@ import com.google.common.collect.ImmutableMap;
 
 import br.xtool.XtoolCliApplication;
 import br.xtool.core.Log;
-import br.xtool.core.PathContext;
+import br.xtool.core.PathService;
 import br.xtool.core.annotation.ShellGeneratorComponent;
 import br.xtool.core.generator.GeneratorCommand;
 
@@ -19,7 +19,7 @@ import br.xtool.core.generator.GeneratorCommand;
 public class NewAngularProjectGenerator extends GeneratorCommand {
 
 	@Autowired
-	private PathContext pathCtx;
+	private PathService pathService;
 
 	@Autowired
 	private Log log;
@@ -85,6 +85,6 @@ public class NewAngularProjectGenerator extends GeneratorCommand {
 		this.copyTpl("readme.md.vm", "readme.md.js", vars);
 		
 		this.changeWorkingDirectoryToDestinationRoot();
-		this.pathCtx.exec("npm i");
+		this.pathService.exec("npm i");
 	}
 }
