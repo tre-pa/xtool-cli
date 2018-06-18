@@ -85,5 +85,6 @@ public class NewAngularProjectGenerator extends GeneratorCommand {
 		this.copyTpl("readme.md.vm", "readme.md.js", vars);
 		
 		this.changeWorkingDirectoryToDestinationRoot();
+		this.pathCtx.exec("npm i");
 	}
 }

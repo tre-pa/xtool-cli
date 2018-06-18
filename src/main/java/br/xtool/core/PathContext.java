@@ -1,5 +1,7 @@
 package br.xtool.core;
 
+import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Optional;
@@ -52,6 +54,20 @@ public class PathContext {
 
 	public Optional<SpringBootProject> getSpringBootProject() {
 		return SpringBootProject.of(this.workingDirectory);
+	}
+
+	public int exec(String command) {
+		try {
+			ProcessBuilder builder = new ProcessBuilder();
+			builder.inheritIO();
+			builder.command("sh", "-c", command);
+			builder.directory(new File(this.workingDirectory));
+			Process process = builder.start();
+			return process.waitFor();
+		} catch (IOException | InterruptedException e) {
+			e.printStackTrace();
+		}
+		return 1;
 	}
 
 }
