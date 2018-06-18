@@ -17,8 +17,7 @@ public class XtoolPromptProvider implements PromptProvider {
 	@Override
 	public AttributedString getPrompt() {
 		if (pathService.hasWorkingDirectory()) {
-			return new AttributedString(String.format("xtool@%s > ", pathService.getWorkingDirectoryBaseName()),
-					AttributedStyle.DEFAULT.foreground(AttributedStyle.YELLOW));
+			return new AttributedString(String.format("xtool@%s > ", pathService.getWorkingDirectoryBaseName()), AttributedStyle.DEFAULT.foreground(AttributedStyle.YELLOW));
 		}
 		return new AttributedString("xtool > ", AttributedStyle.DEFAULT.foreground(AttributedStyle.YELLOW));
 	}
