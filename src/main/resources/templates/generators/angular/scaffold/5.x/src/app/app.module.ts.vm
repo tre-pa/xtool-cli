@@ -16,7 +16,6 @@ import { MainLayoutComponent } from './@core/layout/main-layout/main-layout.comp
     MainLayoutComponent
   ],
   imports: [
-    AppRoutingModule,
     BrowserModule,
     BrowserAnimationsModule,
     SharedModule,
