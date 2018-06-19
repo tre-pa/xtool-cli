@@ -18,11 +18,7 @@ import { MainLayoutComponent } from './@core/layout/main-layout/main-layout.comp
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    SharedModule,
-    CovalentHttpModule.forRoot(),
-    CovalentHighlightModule,
-    CovalentMarkdownModule,
-    AppRoutingModule
+    SharedModule
   ],
   providers: [
   ],

@@ -1,7 +1,6 @@
 @import '~@angular/material/theming';
 @import '~@covalent/core/theming/all-theme';
 @import '~@covalent/markdown/markdown-theme';
-@import '~@covalent/highlight/highlight-theme';
 // Plus imports for other components in your app.
 
 // Include the base styles for Angular Material core. We include this here so that you only
@@ -26,7 +25,6 @@ $theme: mat-light-theme($primary, $accent, $warn);
 @include angular-material-theme($theme);
 @include covalent-theme($theme);
 @include covalent-markdown-theme($theme);
-@include covalent-highlight-theme();
 
 // Active icon color in list nav
 md-nav-list {
@@ -110,4 +108,13 @@ ngx-charts-line-chart {
             stroke-width: 2;
         }
     }
+}
+
+mat-select.rotatype-select .mat-select-value {
+    color: white;
+    font-size: 80%;
+}
+
+mat-select.rotatype-select .mat-select-arrow {
+    color: white;
 }

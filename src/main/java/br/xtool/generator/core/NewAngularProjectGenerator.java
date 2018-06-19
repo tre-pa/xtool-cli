@@ -67,8 +67,7 @@ public class NewAngularProjectGenerator extends GeneratorCommand {
 		this.copy("src/favicon.ico", "src/favicon.ico");
 		this.copyTpl("src/index.html.vm", "src/index.html", vars);
 		this.copyTpl("src/main.ts.vm", "src/main.ts", vars);
-		this.copyTpl("src/polyfills.ts.vm", "src/polyfills.ts.vm", vars);
-		this.copyTpl("src/polyfills.ts.vm", "src/polyfills.ts.vm", vars);
+		this.copyTpl("src/polyfills.ts.vm", "src/polyfills.ts", vars);
 		this.copyTpl("src/styles.scss.vm", "src/styles.scss", vars);
 		this.copyTpl("src/test.ts.vm", "src/test.ts", vars);
 		this.copyTpl("src/theme.scss.vm", "src/theme.scss", vars);
