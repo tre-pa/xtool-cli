@@ -6,6 +6,9 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Optional;
 
+import javax.annotation.PostConstruct;
+
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -21,13 +24,31 @@ import lombok.Getter;
  *
  */
 @Service
-@Getter
 public class PathService {
 
 	/**
 	 * Diretório atual
 	 */
-	private String workingDirectory = System.getProperty("user.home");
+	private String workingDirectory;
+
+	@PostConstruct
+	private void init() {
+	}
+
+	public String getWorkingDirectory() {
+		if(StringUtils.isEmpty(workingDirectory)) {
+			String gitHome = System.getProperty("user.home").concat("/git");
+			if (Files.isDirectory(Paths.get(gitHome))) {
+				try {
+					Files.createDirectories(Paths.get(gitHome));
+					this.workingDirectory = gitHome;
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return workingDirectory;
+	}
 
 	/**
 	 * Altera o diretório de trabalho.
@@ -43,18 +64,18 @@ public class PathService {
 	}
 
 	public String getWorkingDirectoryBaseName() {
-		if (!StringUtils.isEmpty(this.workingDirectory)) {
+		if (!StringUtils.isEmpty(this.getWorkingDirectory())) {
 			return FilenameUtils.getBaseName(this.workingDirectory);
 		}
 		return "";
 	}
 
 	public boolean hasWorkingDirectory() {
-		return !StringUtils.isEmpty(this.workingDirectory);
+		return !StringUtils.isEmpty(this.getWorkingDirectory());
 	}
 
 	public Optional<SpringBootProject> getSpringBootProject() {
-		return SpringBootProject.of(this.workingDirectory);
+		return SpringBootProject.of(this.getWorkingDirectory());
 	}
 
 	public int exec(String command) {
@@ -62,7 +83,7 @@ public class PathService {
 			ProcessBuilder builder = new ProcessBuilder();
 			builder.inheritIO();
 			builder.command("sh", "-c", command);
-			builder.directory(new File(this.workingDirectory));
+			builder.directory(new File(this.getWorkingDirectory()));
 			Process process = builder.start();
 			return process.waitFor();
 		} catch (IOException | InterruptedException e) {
