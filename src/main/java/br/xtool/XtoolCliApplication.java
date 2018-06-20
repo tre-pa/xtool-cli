@@ -9,6 +9,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class XtoolCliApplication {
 
 	public final static String CORE_COMMAND_GROUP = "Core Commands";
+	public final static String SPRINGBOOT_COMMAND_GROUP = "Spring Boot Commands";
+
 
 	public static void main(String[] args) {
 		SpringApplication.run(XtoolCliApplication.class, args);

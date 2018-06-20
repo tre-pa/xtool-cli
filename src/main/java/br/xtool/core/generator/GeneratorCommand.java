@@ -32,7 +32,7 @@ public class GeneratorCommand {
 	@Autowired
 	private Log log;
 
-	private String destinationRoot;
+	private String destinationRoot="";
 
 	protected void copy(String source, String destination) throws IOException {
 		String fSource = this.getFinalSource(source);

@@ -23,12 +23,19 @@ $ ./run.sh
 **3.** Após rodar a aplicação o prompt da ferramenta será exibida: 
 
 ```sh
-xtool@user >
+xtool@git >
 ```
 
 **4.** Para visualizar os comando disponéveis digitar no prompt o comando `help`:
 
 ```sh
-xtool@user > help
+xtool@git > help
 ```
- 
+
+## Criando projeto Spring Boot
+
+Para criar um novo projeto Spring Boot 1.5.x digitar o comando abaixo:
+
+```sh
+xtool@git > new-springboot-project [NOME PROJETO]
+```
