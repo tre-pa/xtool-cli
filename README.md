@@ -20,13 +20,18 @@ $ cd xtool-cli
 $ ./run.sh
 ```
 
-**3.** Após rodar a aplicação o prompt da ferramenta será exibida: 
+**3.** Após rodar a aplicação o prompt da ferramenta será exibido. O **Diretório de trabalho padrão** é `$HOME/git`
 
 ```sh
 xtool@git >
+
+## Help do Sistema
+
+Com o comando `help` é possível visualizar os comandos disponíveis:  
+
 ```
 
-**4.** Para visualizar os comando disponéveis digitar no prompt o comando `help`:
+**1.** Para visualizar os comando disponéveis digitar no prompt o comando `help`:
 
 ```sh
 xtool@git > help
