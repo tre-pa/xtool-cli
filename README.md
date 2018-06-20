@@ -1,6 +1,6 @@
 # Ferramenta xtool-cli
 
-Ferramenta de Produtividade para Desenvolvimento de Aplicações Angular e Spring Boot.
+Ferramenta de Produtividade para Desenvolvimento de Aplicações Angular e Spring Boot. O projeto é baseado no Spring Shell e é 100% java.
 
 # Utilização
 
@@ -37,10 +37,17 @@ Com o comando `help` é possível visualizar os comandos disponíveis:
 xtool@git > help
 ```
 
+**2.** Para visualizar o help de um comando específico digitar: 
+
+```sh
+xtool@git > help NOME_COMANDO
+```
+
+
 ## Criando projeto Spring Boot
 
 Para criar um novo projeto Spring Boot 1.5.x digitar o comando abaixo:
 
 ```sh
-xtool@git > new-springboot-project [NOME PROJETO]
+xtool@git > new-springboot-project NOME_PROJETO
 ```
