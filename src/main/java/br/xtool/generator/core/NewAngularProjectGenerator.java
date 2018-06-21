@@ -41,7 +41,7 @@ public class NewAngularProjectGenerator extends GeneratorCommand {
 		createScaffoldAngularProject(vars);
 
 		this.changeWorkingDirectoryToDestinationRoot();
-		this.pathService.exec("npm i");
+		this.pathService.exec("npm i && code .");
 	}
 
 	/**
