@@ -59,9 +59,9 @@ public class NewAngularProjectGenerator extends GeneratorCommand {
 		this.copyTpl("scaffold/src/app/@core/layout/nav-list-layout/nav-list-layout.component.css.vm", "src/app/@core/layout/nav-list-layout/nav-list-layout.component.css", vars);
 		this.copyTpl("scaffold/src/app/@core/layout/nav-list-layout/nav-list-layout.component.html.vm", "src/app/@core/layout/nav-list-layout/nav-list-layout.component.html", vars);
 		this.copyTpl("scaffold/src/app/@core/layout/nav-list-layout/nav-list-layout.component.ts.vm", "src/app/@core/layout/nav-list-layout/nav-list-layout.component.ts", vars);
-		this.copyTpl("scaffold/src/app/@core/layout/nav-view-layout/nav-view-layout.component.css.vm", "src/app/@core/layout/nav-list-layout/nav-view-layout.component.css", vars);
-		this.copyTpl("scaffold/src/app/@core/layout/nav-view-layout/nav-view-layout.component.html.vm", "src/app/@core/layout/nav-list-layout/nav-view-layout.component.html", vars);
-		this.copyTpl("scaffold/src/app/@core/layout/nav-view-layout/nav-view-layout.component.ts.vm", "src/app/@core/layout/nav-list-layout/nav-view-layout.component.ts", vars);
+		this.copyTpl("scaffold/src/app/@core/layout/nav-view-layout/nav-view-layout.component.css.vm", "src/app/@core/layout/nav-view-layout/nav-view-layout.component.css", vars);
+		this.copyTpl("scaffold/src/app/@core/layout/nav-view-layout/nav-view-layout.component.html.vm", "src/app/@core/layout/nav-view-layout/nav-view-layout.component.html", vars);
+		this.copyTpl("scaffold/src/app/@core/layout/nav-view-layout/nav-view-layout.component.ts.vm", "src/app/@core/layout/nav-view-layout/nav-view-layout.component.ts", vars);
 		this.copyTpl("scaffold/src/app/@core/model/page.ts.vm", "src/app/@core/model/page.ts", vars);
 		this.copyTpl("scaffold/src/app/@core/security/keycloak.js.vm", "src/app/@core/security/keycloak.js", vars);
 		this.copyTpl("scaffold/src/app/@core/security/keycloak.service.ts.vm", "src/app/@core/security/keycloak.service.ts", vars);

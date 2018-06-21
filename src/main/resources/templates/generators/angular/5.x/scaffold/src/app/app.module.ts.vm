@@ -6,10 +6,14 @@ import { AppComponent } from './app.component';
 import { SharedModule } from './@core/shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
 import { MainLayoutComponent } from './@core/layout/main-layout/main-layout.component';
+import { NavListLayoutComponent } from './@core/layout/nav-list-layout/nav-list-layout.component';
+import { NavViewLayoutComponent } from './@core/layout/nav-view-layout/nav-view-layout.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    NavListLayoutComponent,
+    NavViewLayoutComponent,
     MainLayoutComponent
   ],
   imports: [
