@@ -1,1 +1,8 @@
 # Sistema ${projectName}
+
+# Versões das Ferramentas de Desenvolvimento
+
+Angular CLI: 1.7.4
+Node: 8.11.1
+npm: 6.1.0
+
