@@ -51,8 +51,8 @@ public class NewAngularProjectGenerator extends GeneratorCommand {
 	 * @throws IOException
 	 */
 	private void createScaffoldAngularProject(Map<String, Object> vars) throws IOException {
-		this.copy("scaffold/data/gitkeep", "scaffold/data/.gitkeep");
-		this.copy("scaffold/scripts/gitkeep", "scaffold/scripts/.gitkeep");
+		this.copy("scaffold/src/data/gitkeep", "src/data/.gitkeep");
+		this.copy("scaffold/scripts/gitkeep", "scripts/.gitkeep");
 		this.copyTpl("scaffold/src/app/@core/layout/main-layout/main-layout.component.css.vm", "src/app/@core/layout/main-layout/main-layout.component.css", vars);
 		this.copyTpl("scaffold/src/app/@core/layout/main-layout/main-layout.component.html.vm", "src/app/@core/layout/main-layout/main-layout.component.html", vars);
 		this.copyTpl("scaffold/src/app/@core/layout/main-layout/main-layout.component.ts.vm", "src/app/@core/layout/main-layout/main-layout.component.ts", vars);
@@ -91,6 +91,7 @@ public class NewAngularProjectGenerator extends GeneratorCommand {
 		this.copyTpl("scaffold/src/typings.d.ts.vm", "src/typings.d.ts.json", vars);
 		this.copyTpl("scaffold/angular-cli.json.vm", ".angular-cli.json", vars);
 		this.copyTpl("scaffold/angulardoc.json.vm", ".angulardoc.json", vars);
+		this.copyTpl("scaffold/editorconfig.vm", ".editorconfig", vars);
 		this.copyTpl("scaffold/gitignore.vm", ".gitignore", vars);
 		this.copyTpl("scaffold/gitlab-ci.yml.vm", ".gitlab-ci.yml", vars);
 		this.copyTpl("scaffold/karma.conf.js.vm", "karma.conf.js", vars);

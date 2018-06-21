@@ -9,6 +9,7 @@
       "outDir": "dist/${projectName}",
       "assets": [
         "assets",
+        "data",
         "favicon.ico"
       ],
       "index": "index.html",
@@ -20,9 +21,7 @@
       "prefix": "app",
       "styles": [
         "styles.scss",
-        "theme.scss",
-        "../node_modules/@covalent/core/common/platform.css",
-        "../node_modules/roboto-fontface/css/roboto/roboto-fontface.css"
+        "theme.scss"
       ],
       "scripts": ["app/@core/security/keycloak.js"],
       "environmentSource": "environments/environment.ts",
