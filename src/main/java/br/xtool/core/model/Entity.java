@@ -1,9 +1,11 @@
 package br.xtool.core.model;
 
-import java.util.Arrays;
 import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
+import java.util.stream.Collectors;
 
-import org.apache.commons.lang3.StringUtils;
+import org.jboss.forge.roaster.model.source.AnnotationSource;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 
 /**
@@ -15,6 +17,8 @@ import org.jboss.forge.roaster.model.source.JavaClassSource;
 public class Entity implements Comparable<Entity> {
 
 	private JavaClassSource javaClassSource;
+
+	private SortedSet<Attribute> attributes;
 
 	public Entity(JavaClassSource javaClassSource) {
 		super();
@@ -39,18 +43,38 @@ public class Entity implements Comparable<Entity> {
 		return javaClassSource.getQualifiedName();
 	}
 
-	public String getPackageName() {
-		return javaClassSource.getPackage();
+	/**
+	 * Retorna o pacote da classe
+	 * 
+	 * @return
+	 */
+	public Package getPackage() {
+		return Package.of(javaClassSource.getPackage());
 	}
 
-	public String getParentPackageName() {
-		List<String> packageItems = Arrays.asList(StringUtils.split(javaClassSource.getPackage(), "."));
-		return StringUtils.join(packageItems.subList(0, packageItems.size()-1), ".");
+	/**
+	 * Retorna as annotations da classe
+	 * 
+	 * @return
+	 */
+	public List<AnnotationSource<JavaClassSource>> getAnnotations() {
+		return this.javaClassSource.getAnnotations();
 	}
-	
-	public String getParentPackageDir() {
-		List<String> packageItems = Arrays.asList(StringUtils.split(javaClassSource.getPackage(), "."));
-		return StringUtils.join(packageItems.subList(0, packageItems.size()-1), "/");
+
+	/**
+	 * Retorna os atributos da classe.
+	 * 
+	 * @return
+	 */
+	public SortedSet<Attribute> getAttributes() {
+		if (this.attributes == null) {
+			// @formatter:off
+			this.attributes = this.javaClassSource.getFields().stream()
+					.map(Attribute::new)
+					.collect(Collectors.toCollection(TreeSet::new));
+			// @formatter:on
+		}
+		return this.attributes;
 	}
 
 	@Override

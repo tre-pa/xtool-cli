@@ -18,7 +18,6 @@ import org.jboss.forge.roaster.Roaster;
 import org.jboss.forge.roaster.model.JavaUnit;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.jboss.forge.roaster.model.source.JavaInterfaceSource;
-import org.jdom2.Document;
 import org.jdom2.JDOMException;
 
 /**

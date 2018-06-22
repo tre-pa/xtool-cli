@@ -33,7 +33,14 @@ public class SpringBootJpaCrudGenerator extends SpringBootCommand {
 				.put("entity", entity)
 				.build();
 		// @formatter:on
+		
+		entity.getAttributes().stream()
+			.forEach(a -> System.out.println(a.getName().concat(" : ").concat(a.getType().getName())));
+		
+		System.out.println("=================================");
+		
+		entity.getAnnotations().stream()
+			.forEach(a -> System.out.println(a.getName()));
 
-		this.copyTpl("repository.java.vm", "src/main/java/${entity.parentPackageDir}/repository/${entity.name}Repository.java", vars);
 	}
 }

@@ -2,6 +2,12 @@ package br.xtool.core.model;
 
 import org.jboss.forge.roaster.model.source.JavaInterfaceSource;
 
+/**
+ * Classe que representa uma inteface Repository
+ * 
+ * @author jcruz
+ *
+ */
 public class Repository implements Comparable<Repository> {
 
 	private JavaInterfaceSource javaInterfaceSource;
@@ -11,6 +17,11 @@ public class Repository implements Comparable<Repository> {
 		this.javaInterfaceSource = javaInterfaceSource;
 	}
 
+	/**
+	 * Nome do Repository
+	 * 
+	 * @return
+	 */
 	public String getName() {
 		return this.javaInterfaceSource.getName();
 	}

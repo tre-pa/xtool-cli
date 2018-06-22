@@ -2,6 +2,16 @@ package br.xtool.core.model;
 
 import org.apache.commons.lang3.StringUtils;
 
+import lombok.Getter;
+
+/**
+ * Representa um pacote Java.
+ * 
+ * @author jcruz
+ *
+ */
+
+@Getter
 public class Package {
 
 	private String name;
@@ -10,14 +20,6 @@ public class Package {
 
 	private Package() {
 		super();
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public String getDir() {
-		return dir;
 	}
 
 	public static Package of(String packageName) {
