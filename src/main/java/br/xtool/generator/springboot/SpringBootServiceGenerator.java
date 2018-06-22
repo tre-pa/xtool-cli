@@ -1,6 +1,5 @@
 package br.xtool.generator.springboot;
 
-import java.io.Console;
 import java.io.IOException;
 import java.util.Map;
 
