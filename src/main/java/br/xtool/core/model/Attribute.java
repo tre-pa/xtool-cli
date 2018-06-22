@@ -32,7 +32,7 @@ public class Attribute implements Comparable<Attribute> {
 	}
 
 	/**
-	 * Retorna as annotation do atributo. s
+	 * Retorna as annotation do atributo.
 	 * 
 	 * @return
 	 */
@@ -48,7 +48,7 @@ public class Attribute implements Comparable<Attribute> {
 	public Type<JavaClassSource> getType() {
 		return this.fieldSource.getType();
 	}
-
+	
 	@Override
 	public int compareTo(Attribute o) {
 		return this.getName().compareTo(o.getName());
