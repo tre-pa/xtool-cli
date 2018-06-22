@@ -18,6 +18,8 @@ import org.jboss.forge.roaster.Roaster;
 import org.jboss.forge.roaster.model.JavaUnit;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.jboss.forge.roaster.model.source.JavaInterfaceSource;
+import org.jdom2.Document;
+import org.jdom2.JDOMException;
 
 /**
  * Classe que representa um projeto Spring Boot
@@ -34,6 +36,10 @@ public class SpringBootProject {
 	private Set<JavaInterfaceSource> javaInterfaceSources = new HashSet<>();
 
 	private SortedSet<Entity> entities;
+
+	private SortedSet<Repository> repositories;
+
+	private Pom pom;
 
 	private SpringBootProject() {
 		super();
@@ -57,6 +63,13 @@ public class SpringBootProject {
 		return Optional.empty();
 	}
 
+	public Pom getPom() throws JDOMException, IOException {
+		if(this.pom == null) {
+			this.pom = new Pom(this.path);
+		}
+		return pom;
+	}
+
 	/**
 	 * Retorna a lista das entidades JPA do projeto
 	 * 
@@ -74,6 +87,32 @@ public class SpringBootProject {
 
 		}
 		return entities;
+	}
+
+	/**
+	 * Retorna a lista de repositórios.
+	 * 
+	 * @return
+	 */
+	public SortedSet<Repository> getRepositories() {
+		if (this.repositories == null) {
+			// @formatter:off
+			this.repositories = this.javaInterfaceSources
+					.parallelStream()
+					.filter(j -> j.getAnnotations().stream().anyMatch(ann -> ann.getName().equals("Repository")))
+					.map(Repository::new)
+					.collect(Collectors.toCollection(TreeSet::new));
+			// @formatter:on
+		}
+		return this.repositories;
+	}
+
+	public Optional<Entity> getEntityFromRepository(Repository repository) {
+		// @formatter:off
+		return this.getEntities().stream()
+				.filter(e -> e.getName().concat("Repository").equals(repository.getName()))
+				.findFirst();
+		// @formatter:on
 	}
 
 	private void buildJavaClassSources() {

@@ -3,6 +3,7 @@ package br.xtool.generator.springboot;
 import java.io.IOException;
 import java.util.Map;
 
+import org.jdom2.JDOMException;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 
@@ -21,19 +22,21 @@ import br.xtool.core.provider.EntityValueProvider;
  *
  */
 @ShellGeneratorComponent(templatePath = "generators/springboot/repository")
-public class SpringBootRepositoryGenerator extends SpringBootGeneratorCommand {
+public class SpringBootJpaRepositoryGenerator extends SpringBootGeneratorCommand {
 
-	@ShellMethod(key = "gen-springboot-repository", value = "Gera uma classe de Repositório", group = XtoolCliApplication.SPRINGBOOT_COMMAND_GROUP)
-	public void run(@ShellOption(help = "Entidade JPA", valueProvider = EntityValueProvider.class) Entity entity) throws IOException {
+	@ShellMethod(key = "gen-springboot-jpa-repository", value = "Gera uma classe de Repositório (JpaRepository) para entidade JPA", group = XtoolCliApplication.SPRINGBOOT_COMMAND_GROUP)
+	public void run(@ShellOption(help = "Entidade JPA", valueProvider = EntityValueProvider.class) Entity entity) throws IOException, JDOMException {
 		/*
 		 * Cria o mapa com as variáveis do gerador.
 		 */
 		//// @formatter:off
 		Map<String, Object> vars = ImmutableMap.<String, Object>builder()
+				.put("groupId", this.getProject().getPom().getGroupId())
+				.put("groupIdAsDir", this.getProject().getPom().getGroupAsDir())
 				.put("entity", entity)
 				.build();
 		// @formatter:on
 
-		this.copyTpl("repository.java.vm", "src/main/java/${entity.parentPackageDir}/repository/${entity.name}Repository.java", vars);
+		this.copyTpl("repository.java.vm", "src/main/java/${groupIdAsDir}/repository/${entity.name}Repository.java", vars);
 	}
 }
