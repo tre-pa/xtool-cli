@@ -80,7 +80,7 @@ public class SpringBootProject {
 			this.entities = this.javaClassSources
 					.parallelStream()
 					.filter(j -> j.getAnnotations().stream().anyMatch(ann -> ann.getName().equals("Entity")))
-					.map(Entity::new)
+					.map(j -> new Entity(this, j))
 					.collect(Collectors.toCollection(TreeSet::new));
 			// @formatter:on
 
@@ -113,7 +113,7 @@ public class SpringBootProject {
 				.findFirst();
 		// @formatter:on
 	}
-
+	
 	private void buildJavaClassSources() {
 		if (StringUtils.isNotEmpty(path)) {
 			//// @formatter:off
