@@ -13,10 +13,10 @@ import br.xtool.XtoolCliApplication;
 import br.xtool.core.Log;
 import br.xtool.core.PathService;
 import br.xtool.core.annotation.ShellGeneratorComponent;
-import br.xtool.core.generator.GeneratorCommand;
+import br.xtool.core.command.XCommand;
 
 @ShellGeneratorComponent(templatePath = "generators/angular/5.x")
-public class NewAngularProjectGenerator extends GeneratorCommand {
+public class NewAngularProjectGenerator extends XCommand {
 
 	@Autowired
 	private PathService pathService;

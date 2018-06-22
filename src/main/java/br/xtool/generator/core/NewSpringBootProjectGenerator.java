@@ -15,7 +15,7 @@ import br.xtool.XtoolCliApplication;
 import br.xtool.core.Log;
 import br.xtool.core.PathService;
 import br.xtool.core.annotation.ShellGeneratorComponent;
-import br.xtool.core.generator.GeneratorCommand;
+import br.xtool.core.command.XCommand;
 import strman.Strman;
 
 /**
@@ -25,7 +25,7 @@ import strman.Strman;
  *
  */
 @ShellGeneratorComponent(templatePath = "generators/springboot/scaffold/1.5.x")
-public class NewSpringBootProjectGenerator extends GeneratorCommand {
+public class NewSpringBootProjectGenerator extends XCommand {
 
 	@Autowired
 	private PathService pathService;

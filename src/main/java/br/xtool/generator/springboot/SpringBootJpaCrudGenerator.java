@@ -10,7 +10,7 @@ import com.google.common.collect.ImmutableMap;
 
 import br.xtool.XtoolCliApplication;
 import br.xtool.core.annotation.ShellGeneratorComponent;
-import br.xtool.core.generator.SpringBootGeneratorCommand;
+import br.xtool.core.command.SpringBootCommand;
 import br.xtool.core.model.Entity;
 import br.xtool.core.provider.EntityValueProvider;
 
@@ -21,7 +21,7 @@ import br.xtool.core.provider.EntityValueProvider;
  *
  */
 @ShellGeneratorComponent(templatePath = "generators/springboot/crud")
-public class SpringBootJpaCrudGenerator extends SpringBootGeneratorCommand {
+public class SpringBootJpaCrudGenerator extends SpringBootCommand {
 
 	@ShellMethod(key = "gen-springboot-jpa-crud", value = "Gera as classes de CRUD (JpaRepository, Service e Rest) para entidade JPA", group = XtoolCliApplication.SPRINGBOOT_COMMAND_GROUP)
 	public void run(@ShellOption(help = "Entidade JPA", valueProvider = EntityValueProvider.class) Entity entity) throws IOException {

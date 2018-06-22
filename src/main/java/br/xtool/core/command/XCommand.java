@@ -1,4 +1,4 @@
-package br.xtool.core.generator;
+package br.xtool.core.command;
 
 import java.io.IOException;
 import java.io.StringWriter;
@@ -18,7 +18,7 @@ import br.xtool.core.Log;
 import br.xtool.core.PathService;
 import br.xtool.core.annotation.ShellGeneratorComponent;
 
-public class GeneratorCommand {
+public class XCommand {
 
 	@Autowired
 	private FS fs;

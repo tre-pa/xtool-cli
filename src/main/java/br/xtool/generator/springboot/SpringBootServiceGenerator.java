@@ -11,11 +11,11 @@ import com.google.common.collect.ImmutableMap;
 
 import br.xtool.XtoolCliApplication;
 import br.xtool.core.annotation.ShellGeneratorComponent;
-import br.xtool.core.generator.SpringBootGeneratorCommand;
+import br.xtool.core.command.SpringBootCommand;
 import strman.Strman;
 
 @ShellGeneratorComponent(templatePath = "generators/springboot/service")
-public class SpringBootServiceGenerator extends SpringBootGeneratorCommand {
+public class SpringBootServiceGenerator extends SpringBootCommand {
 
 	@ShellMethod(key = "gen-springboot-service", value = "Gera uma classe Service", group = XtoolCliApplication.SPRINGBOOT_COMMAND_GROUP)
 	public void run(@ShellOption(help = "Nome da classe Service") String name) throws JDOMException, IOException {

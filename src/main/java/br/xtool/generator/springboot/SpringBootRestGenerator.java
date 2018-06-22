@@ -13,13 +13,13 @@ import com.google.common.collect.ImmutableMap;
 
 import br.xtool.XtoolCliApplication;
 import br.xtool.core.annotation.ShellGeneratorComponent;
-import br.xtool.core.generator.SpringBootGeneratorCommand;
+import br.xtool.core.command.SpringBootCommand;
 import br.xtool.core.model.Repository;
 import br.xtool.core.provider.RepositoryValueProvider;
 import strman.Strman;
 
 @ShellGeneratorComponent(templatePath = "generators/springboot/rest")
-public class SpringBootRestGenerator extends SpringBootGeneratorCommand {
+public class SpringBootRestGenerator extends SpringBootCommand {
 
 	@ShellMethod(key = "gen-springboot-rest", value = "Gera uma classe Rest", group = XtoolCliApplication.SPRINGBOOT_COMMAND_GROUP)
 	public void run(@ShellOption(help = "Nome da classe Rest") String name) throws JDOMException, IOException {

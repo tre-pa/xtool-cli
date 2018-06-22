@@ -1,4 +1,4 @@
-package br.xtool.core.generator;
+package br.xtool.core.command;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -11,7 +11,7 @@ import org.springframework.shell.standard.ShellMethodAvailability;
 import br.xtool.core.PathService;
 import br.xtool.core.model.SpringBootProject;
 
-public class SpringBootGeneratorCommand extends GeneratorCommand {
+public class SpringBootCommand extends XCommand {
 
 	@Autowired
 	private PathService pathCtx;
