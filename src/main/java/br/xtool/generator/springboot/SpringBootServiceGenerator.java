@@ -1,5 +1,6 @@
 package br.xtool.generator.springboot;
 
+import java.io.Console;
 import java.io.IOException;
 import java.util.Map;
 
@@ -25,12 +26,11 @@ public class SpringBootServiceGenerator extends SpringBootGeneratorCommand {
 		//// @formatter:off
 		Map<String, Object> vars = ImmutableMap.<String, Object>builder()
 				.put("groupId", this.getProject().getPom().getGroupId())
-				.put("groupIdAsDir", this.getProject().getPom().getGroupAsDir())
-				.put("name", this.getFinalName(Strman.toStudlyCase("name")))
+				.put("serviceName", this.getFinalName(Strman.toStudlyCase(name)))
 				.build();
 		// @formatter:on
 
-		this.copyTpl("service.java.vm", "src/main/java/${groupIdAsDir}/service/${name}.java", vars);
+		this.copyTpl("service.java.vm", "src/main/java/${groupId.dir}/service/${serviceName}.java", vars);
 	}
 
 	private String getFinalName(String name) {

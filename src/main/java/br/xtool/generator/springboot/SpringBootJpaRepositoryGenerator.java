@@ -32,11 +32,10 @@ public class SpringBootJpaRepositoryGenerator extends SpringBootGeneratorCommand
 		//// @formatter:off
 		Map<String, Object> vars = ImmutableMap.<String, Object>builder()
 				.put("groupId", this.getProject().getPom().getGroupId())
-				.put("groupIdAsDir", this.getProject().getPom().getGroupAsDir())
 				.put("entity", entity)
 				.build();
 		// @formatter:on
 
-		this.copyTpl("repository.java.vm", "src/main/java/${groupIdAsDir}/repository/${entity.name}Repository.java", vars);
+		this.copyTpl("repository.java.vm", "src/main/java/${groupId.dir}/repository/${entity.name}Repository.java", vars);
 	}
 }

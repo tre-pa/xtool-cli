@@ -19,13 +19,17 @@ public class Pom {
 		SAXBuilder saxBuilder = new SAXBuilder();
 		this.pomDoc = saxBuilder.build(file);
 	}
-
+	/*
 	public String getGroupId() {
 		return pomDoc.getRootElement().getChild("groupId", Namespace.getNamespace("http://maven.apache.org/POM/4.0.0")).getText();
 	}
 
 	public String getGroupAsDir() {
 		return pomDoc.getRootElement().getChild("groupId", Namespace.getNamespace("http://maven.apache.org/POM/4.0.0")).getText().replaceAll("\\.", "/");
+	}*/
+	
+	public Package getGroupId() {
+		return Package.of(pomDoc.getRootElement().getChild("groupId", Namespace.getNamespace("http://maven.apache.org/POM/4.0.0")).getText());
 	}
 
 }

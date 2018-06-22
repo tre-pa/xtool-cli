@@ -1,8 +1,8 @@
-package package ${groupId}.service;
+package ${groupId.name}.service;
 
 import org.springframework.stereotype.Service;
 
 @Service
-public class ${name} {
+public class ${serviceName} {
 	
 }
