@@ -63,7 +63,7 @@ public class SpringBootProject {
 	}
 
 	public Pom getPom() throws JDOMException, IOException {
-		if(this.pom == null) {
+		if (this.pom == null) {
 			this.pom = new Pom(this.path);
 		}
 		return pom;
@@ -99,21 +99,13 @@ public class SpringBootProject {
 			this.repositories = this.javaInterfaceSources
 					.parallelStream()
 					.filter(j -> j.getAnnotations().stream().anyMatch(ann -> ann.getName().equals("Repository")))
-					.map(Repository::new)
+					.map(j -> new Repository(this, j))
 					.collect(Collectors.toCollection(TreeSet::new));
 			// @formatter:on
 		}
 		return this.repositories;
 	}
 
-	public Optional<Entity> getEntityFromRepository(Repository repository) {
-		// @formatter:off
-		return this.getEntities().stream()
-				.filter(e -> e.getName().concat("Repository").equals(repository.getName()))
-				.findFirst();
-		// @formatter:on
-	}
-	
 	private void buildJavaClassSources() {
 		if (StringUtils.isNotEmpty(path)) {
 			//// @formatter:off
