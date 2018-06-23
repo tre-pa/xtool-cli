@@ -27,12 +27,6 @@ import strman.Strman;
 @ShellGeneratorComponent(templatePath = "generators/springboot/scaffold/1.5.x")
 public class NewSpringBootProjectGenerator extends XCommand {
 
-	@Autowired
-	private PathService pathService;
-
-	@Autowired
-	private Log log;
-
 	@ShellMethod(key = "new-springboot-project", value = "Novo projeto Spring Boot 1.5.x", group = XtoolCliApplication.CORE_COMMAND_GROUP)
 	// @formatter:off
 	public void run(
@@ -58,7 +52,7 @@ public class NewSpringBootProjectGenerator extends XCommand {
 		// @formatter:on
 
 		this.setDestinationRoot(getFinalProjectName(name));
-		log.print("");
+		Log.print("");
 		this.copyTpl("src/main/java/config/gitkeep", "src/main/java/${packageRoot.dir}/config/.gitkeep", vars);
 		this.copyTpl("src/main/java/domain/gitkeep", "src/main/java/${packageRoot.dir}/domain/.gitkeep", vars, () -> !noJpa);
 		this.copyTpl("src/main/java/exception/gitkeep", "src/main/java/${packageRoot.dir}/exception/.gitkeep", vars);

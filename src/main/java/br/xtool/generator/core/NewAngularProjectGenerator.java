@@ -21,8 +21,6 @@ public class NewAngularProjectGenerator extends XCommand {
 	@Autowired
 	private PathService pathService;
 
-	@Autowired
-	private Log log;
 
 	@ShellMethod(key = "new-angular-project", value = "Novo projeto Angular 5.x", group = XtoolCliApplication.CORE_COMMAND_GROUP)
 	public void run(@ShellOption(help = "Nome do projeto") String name) throws IOException {
@@ -36,7 +34,7 @@ public class NewAngularProjectGenerator extends XCommand {
 		// @formatter:on
 
 		this.setDestinationRoot(name);
-		log.print("");
+		Log.print("");
 
 		createScaffoldAngularProject(vars);
 

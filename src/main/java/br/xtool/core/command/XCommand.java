@@ -29,8 +29,6 @@ public class XCommand {
 	@Autowired
 	private VelocityEngine vEngine;
 
-	@Autowired
-	private Log log;
 
 	private String destinationRoot="";
 
@@ -38,7 +36,7 @@ public class XCommand {
 		String fSource = this.getFinalSource(source);
 		String fDestination = this.getFinalDestination(destination);
 		fs.copy(fSource, fDestination);
-		log.print(log.green("\tCREATE ") + log.white(destination));
+		Log.print(Log.green("\tCREATE ") + Log.white(destination));
 	}
 	
 	protected void copy(String source, String destination, Supplier<Boolean> exp) throws IOException {
@@ -56,7 +54,7 @@ public class XCommand {
 		String fTemplate = this.getFinalSource(template);
 		String fDestination = this.getFinalDestination(destination);
 		fs.copyTpl(fTemplate, fDestination, vars);
-		log.print(log.green("\tCREATE ") + log.white(destination));
+		Log.print(Log.green("\tCREATE ") + Log.white(destination));
 	}
 
 	protected void copyTpl(String template, String destination, Map<String, Object> vars, Supplier<Boolean> exp) throws IOException {
@@ -68,7 +66,7 @@ public class XCommand {
 	protected void changeWorkingDirectoryToDestinationRoot() {
 		if(StringUtils.isNotEmpty(this.destinationRoot)) {
 			this.pathService.changeWorkingDirectory(FilenameUtils.concat(this.pathService.getWorkingDirectory(), this.getDestinationRoot()));
-			log.print(log.white("\nDiretório de trabalho alterado para: "), log.cyan(this.pathService.getWorkingDirectory()));
+			Log.print(Log.white("\nDiretório de trabalho alterado para: "), Log.cyan(this.pathService.getWorkingDirectory()));
 		}
 	}
 

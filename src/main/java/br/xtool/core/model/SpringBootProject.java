@@ -13,12 +13,15 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.jboss.forge.roaster.Roaster;
 import org.jboss.forge.roaster.model.JavaUnit;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.jboss.forge.roaster.model.source.JavaInterfaceSource;
 import org.jdom2.JDOMException;
+
+import lombok.Getter;
 
 /**
  * Classe que representa um projeto Spring Boot
@@ -28,6 +31,7 @@ import org.jdom2.JDOMException;
  */
 public class SpringBootProject {
 
+	@Getter
 	private String path;
 
 	private Set<JavaClassSource> javaClassSources = new HashSet<>();
@@ -104,6 +108,10 @@ public class SpringBootProject {
 			// @formatter:on
 		}
 		return this.repositories;
+	}
+	
+	public String getMainDir() {
+		return FilenameUtils.concat(this.path, "src/main/java");
 	}
 
 	private void buildJavaClassSources() {

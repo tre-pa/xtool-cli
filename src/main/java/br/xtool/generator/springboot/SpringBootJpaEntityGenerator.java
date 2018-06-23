@@ -47,6 +47,6 @@ public class SpringBootJpaEntityGenerator extends SpringBootCommand {
 	}
 
 	public String getDBId(String name) {
-		return StringUtils.abbreviate(name.toUpperCase(), "", 30);
+		return StringUtils.abbreviate(name.toUpperCase(), "", 25);
 	}
 }

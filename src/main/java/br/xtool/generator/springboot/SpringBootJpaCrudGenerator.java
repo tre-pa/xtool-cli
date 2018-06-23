@@ -3,6 +3,7 @@ package br.xtool.generator.springboot;
 import java.io.IOException;
 import java.util.Map;
 
+import org.jboss.forge.roaster.model.JavaClass;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 
@@ -56,5 +57,13 @@ public class SpringBootJpaCrudGenerator extends SpringBootCommand {
 					.concat("<")
 					.concat(attr.getAssociation().get().getName())
 					.concat(">")));
+		
+		entity.update(javaClass -> {
+			javaClass.addField()
+				.setPublic()
+				.setName("Abc")
+				.addAnnotation("com.fasterxml.jackson.annotation.JsonIgnoreProperties")
+				.setStringArrayValue(new String[] { "pessoa", "id", "unidade" });
+		});
 	}
 }
