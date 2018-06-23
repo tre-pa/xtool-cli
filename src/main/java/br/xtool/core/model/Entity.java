@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.io.FilenameUtils;
 import org.jboss.forge.roaster.model.source.AnnotationSource;
+import org.jboss.forge.roaster.model.source.FieldSource;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 
 import br.xtool.core.Log;
@@ -113,10 +114,24 @@ public class Entity implements Comparable<Entity> {
 		return this.collectionAssociations;
 	}
 
-	public void updateClass(Consumer<JavaClassSource> action) {
-		action.accept(this.javaClassSource);
+	/**
+	 * Adicionar um atributo a classe.
+	 * 
+	 * @param action
+	 */
+	public void addAttribute(Consumer<FieldSource<JavaClassSource>> action) {
+		action.accept(this.javaClassSource.addField());
 	}
-	
+
+	/**
+	 * Adcionar uma anotação a classe.
+	 * 
+	 * @param action
+	 */
+	public void addAnnotation(Consumer<AnnotationSource<JavaClassSource>> action) {
+		action.accept(this.javaClassSource.addAnnotation());
+	}
+
 	public void commitUpdate() {
 		String javaPath = FilenameUtils.concat(this.springBootProject.getMainDir(), this.getPackage().getDir());
 		String javaFile = javaPath.concat("/").concat(this.getName().concat(".java"));

@@ -11,6 +11,7 @@ import org.springframework.shell.standard.ShellOption;
 import com.google.common.collect.ImmutableMap;
 
 import br.xtool.XtoolCliApplication;
+import br.xtool.core.Log;
 import br.xtool.core.annotation.Template;
 import br.xtool.core.command.SpringBootCommand;
 import br.xtool.core.model.Entity;
@@ -37,20 +38,21 @@ public class SpringBootJpaCrudGenerator extends SpringBootCommand {
 				.build();
 		// @formatter:on
 		
+		System.out.println(Log.green("Lista de atributos da classe "));
 		entity.getAttributes().stream()
 			.forEach(a -> System.out.println(a.getName().concat(" : ").concat(a.getType().getName())));
 		
-		System.out.println("=================================");
+		System.out.println(Log.green("\nLista de annotations da class\n"));
 		
 		entity.getAnnotations().stream()
 			.forEach(a -> System.out.println(a.getName()));
 		
-		System.out.println("=========== Single Associations =========");
+		System.out.println(Log.green("\nLista de associações simples\n"));
 		
 		entity.getSingleAssociations().stream()
 			.forEach(attr -> System.out.println(attr.getName().concat(" : ").concat(attr.getAssociation().get().getName())));
 		
-		System.out.println("=========== Collection Associations =========");
+		System.out.println(Log.green("\nLista de associações compostas\n"));
 		
 		entity.getCollectionAssociations().stream()
 			.forEach(attr -> System.out.println(attr.getName()
@@ -60,8 +62,9 @@ public class SpringBootJpaCrudGenerator extends SpringBootCommand {
 					.concat(attr.getAssociation().get().getName())
 					.concat(">")));
 		
-		entity.updateClass(javaClass -> {
-			javaClass.addField()
+		System.out.println(Log.green("\n Adição de novo atributo\n"));
+		entity.addAttribute(fieldSource -> {
+			fieldSource
 				.setPublic()
 				.setName("Abc")
 				.addAnnotation("com.fasterxml.jackson.annotation.JsonIgnoreProperties")
