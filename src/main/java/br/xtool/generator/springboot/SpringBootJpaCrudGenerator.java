@@ -54,7 +54,7 @@ public class SpringBootJpaCrudGenerator extends SpringBootCommand {
 					.concat(" : ")
 					.concat(attr.getType().getName())
 					.concat("<")
-					.concat(attr.getType().getTypeArguments().get(0).getName())
+					.concat(attr.getAssociation().get().getName())
 					.concat(">")));
 	}
 }

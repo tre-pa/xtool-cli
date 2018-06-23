@@ -1,6 +1,7 @@
 package br.xtool.core.model;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import org.jboss.forge.roaster.model.Type;
@@ -52,14 +53,28 @@ public class Attribute implements Comparable<Attribute> {
 	public Type<JavaClassSource> getType() {
 		return this.fieldSource.getType();
 	}
-	
+
+	/**
+	 * 
+	 * Verifica se o atributo é uma associação @OnetToOne ou @ManyToOne
+	 * 
+	 * @return
+	 */
 	public boolean isSingleAssociation() {
+		// @formatter:off
 		return this.springBootProject.getEntities().parallelStream()
 				.anyMatch(entity -> entity.getName().equals(this.getType().getName()));
+		// @formatter:on
 	}
-	
+
+	/**
+	 * 
+	 * Verifica se o atributo é uma associação @OneToMany ou @ManyToMany
+	 * 
+	 * @return
+	 */
 	public boolean isCollectionAssociation() {
-		if(Stream.of("List", "Set", "Collection").anyMatch(type -> type.equals(this.getType().getName()))) {
+		if (Stream.of("List", "Set", "Collection").anyMatch(type -> type.equals(this.getType().getName()))) {
 			// @formatter:off
 			return this.springBootProject.getEntities().parallelStream()
 					.anyMatch(entity -> this.getType().getTypeArguments().stream()
@@ -67,6 +82,29 @@ public class Attribute implements Comparable<Attribute> {
 			// @formatter:on
 		}
 		return false;
+	}
+
+	public boolean isAssociation() {
+		return this.isSingleAssociation() || this.isCollectionAssociation();
+	}
+
+	public Optional<Entity> getAssociation() {
+		if (this.isAssociation()) {
+			if (this.isSingleAssociation()) {
+				// @formatter:off
+				return this.springBootProject.getEntities().stream()
+						.filter(entity -> entity.getName().equals(this.getType().getName()))
+						.findFirst();
+				// @formatter:on
+			}
+			// @formatter:off
+			return this.springBootProject.getEntities().stream()
+					.filter(entity -> this.getType().getTypeArguments().stream()
+							.anyMatch(type -> type.getName().equals(entity.getName())))
+							.findFirst();
+			// @formatter:on
+		}
+		return Optional.empty();
 	}
 
 	@Override
