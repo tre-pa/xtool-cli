@@ -24,7 +24,7 @@ public class NewAngularProjectGenerator extends XCommand {
 	private PathService pathService;
 
 
-	@ShellMethod(key = "new-angular-project", value = "Novo projeto Angular 5.x", group = XtoolCliApplication.CORE_COMMAND_GROUP)
+	@ShellMethod(key = "new-angular-project", value = "Novo projeto Angular 5.x", group = XtoolCliApplication.PROJECT_COMMAND_GROUP)
 	public void run(@ShellOption(help = "Nome do projeto") String name) throws IOException {
 		/*
 		 * Cria o mapa com as variáveis do gerador.

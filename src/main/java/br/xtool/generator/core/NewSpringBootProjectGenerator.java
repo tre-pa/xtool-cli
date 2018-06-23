@@ -29,7 +29,7 @@ import strman.Strman;
 @Template(path = "generators/springboot/scaffold/1.5.x")
 public class NewSpringBootProjectGenerator extends XCommand {
 
-	@ShellMethod(key = "new-springboot-project", value = "Novo projeto Spring Boot 1.5.x", group = XtoolCliApplication.CORE_COMMAND_GROUP)
+	@ShellMethod(key = "new-springboot-project", value = "Novo projeto Spring Boot 1.5.x", group = XtoolCliApplication.PROJECT_COMMAND_GROUP)
 	// @formatter:off
 	public void run(
 			@ShellOption(help = "Nome do projeto") String name, 

@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class XtoolCliApplication {
 
 	public final static String CORE_COMMAND_GROUP = "Core Commands";
+	public final static String PROJECT_COMMAND_GROUP = "Project Commands";
 	public final static String SPRINGBOOT_COMMAND_GROUP = "Spring Boot Commands";
 
 
