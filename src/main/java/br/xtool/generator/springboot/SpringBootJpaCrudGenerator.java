@@ -45,7 +45,7 @@ public class SpringBootJpaCrudGenerator extends SpringBootCommand {
 		System.out.println("=========== Single Associations =========");
 		
 		entity.getSingleAssociations().stream()
-			.forEach(attr -> System.out.println(attr.getName().concat(" : ").concat(attr.getType().getName())));
+			.forEach(attr -> System.out.println(attr.getName().concat(" : ").concat(attr.getAssociation().get().getName())));
 		
 		System.out.println("=========== Collection Associations =========");
 		
