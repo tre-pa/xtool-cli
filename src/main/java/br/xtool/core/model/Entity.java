@@ -79,7 +79,7 @@ public class Entity implements Comparable<Entity> {
 		if (this.attributes == null) {
 			// @formatter:off
 			this.attributes = this.javaClassSource.getFields().stream()
-					.map(Attribute::new)
+					.map(f -> new Attribute(this.springBootProject, f))
 					.collect(Collectors.toCollection(TreeSet::new));
 			// @formatter:on
 		}
@@ -90,8 +90,7 @@ public class Entity implements Comparable<Entity> {
 		if (this.singleAssociations == null) {
 			// @formatter:off
 			this.singleAssociations = this.getAttributes().stream()
-					.filter(attr -> this.springBootProject.getEntities().stream()
-						.anyMatch(e -> e.getName().equals(attr.getType().getName())))
+					.filter(attr -> attr.isSingleAssociation())
 					.collect(Collectors.toCollection(TreeSet::new));
 			// @formatter:on
 		}
@@ -102,10 +101,7 @@ public class Entity implements Comparable<Entity> {
 		if (this.collectionAssociations == null) {
 			// @formatter:off
 			this.collectionAssociations = this.getAttributes().stream()
-					.filter(attr -> Stream.of("List", "Set", "Collection").anyMatch(type -> type.equals(attr.getType().getName())))
-					.filter(attr -> this.springBootProject.getEntities().stream()
-						.anyMatch(entity -> attr.getType().getTypeArguments().stream()
-								.anyMatch(arg -> arg.getName().equals(entity.getName()))))
+					.filter(attr -> attr.isCollectionAssociation())
 					.collect(Collectors.toCollection(TreeSet::new));
 			// @formatter:on
 		}
