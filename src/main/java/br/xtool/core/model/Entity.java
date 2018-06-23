@@ -113,11 +113,14 @@ public class Entity implements Comparable<Entity> {
 		return this.collectionAssociations;
 	}
 
-	public void update(Consumer<JavaClassSource> action) {
+	public void updateClass(Consumer<JavaClassSource> action) {
+		action.accept(this.javaClassSource);
+	}
+	
+	public void commitUpdate() {
 		String javaPath = FilenameUtils.concat(this.springBootProject.getMainDir(), this.getPackage().getDir());
 		String javaFile = javaPath.concat("/").concat(this.getName().concat(".java"));
 		try (FileWriter fileWriter = new FileWriter(javaFile)) {
-			action.accept(this.javaClassSource);
 			fileWriter.write(this.javaClassSource.toUnformattedString());
 			fileWriter.flush();
 			fileWriter.close();

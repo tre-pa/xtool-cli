@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 
@@ -12,10 +13,11 @@ import com.google.common.collect.ImmutableMap;
 import br.xtool.XtoolCliApplication;
 import br.xtool.core.Log;
 import br.xtool.core.PathService;
-import br.xtool.core.annotation.ShellGeneratorComponent;
+import br.xtool.core.annotation.Template;
 import br.xtool.core.command.XCommand;
 
-@ShellGeneratorComponent(templatePath = "generators/angular/5.x")
+@ShellComponent
+@Template(path = "generators/angular/5.x")
 public class NewAngularProjectGenerator extends XCommand {
 
 	@Autowired

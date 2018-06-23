@@ -5,13 +5,14 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.jdom2.JDOMException;
+import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 
 import com.google.common.collect.ImmutableMap;
 
 import br.xtool.XtoolCliApplication;
-import br.xtool.core.annotation.ShellGeneratorComponent;
+import br.xtool.core.annotation.Template;
 import br.xtool.core.command.SpringBootCommand;
 import br.xtool.core.model.Entity;
 import br.xtool.core.provider.EntityValueProvider;
@@ -23,7 +24,8 @@ import strman.Strman;
  * @author jcruz
  *
  */
-@ShellGeneratorComponent(templatePath = "generators/springboot/entity")
+@ShellComponent
+@Template(path = "generators/springboot/entity")
 public class SpringBootJpaEntityGenerator extends SpringBootCommand {
 
 	@ShellMethod(key = "gen-springboot-jpa-entity", value = "Gera uma classe de entidade JPA", group = XtoolCliApplication.SPRINGBOOT_COMMAND_GROUP)

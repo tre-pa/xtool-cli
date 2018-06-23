@@ -4,13 +4,14 @@ import java.io.IOException;
 import java.util.Map;
 
 import org.jboss.forge.roaster.model.JavaClass;
+import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 
 import com.google.common.collect.ImmutableMap;
 
 import br.xtool.XtoolCliApplication;
-import br.xtool.core.annotation.ShellGeneratorComponent;
+import br.xtool.core.annotation.Template;
 import br.xtool.core.command.SpringBootCommand;
 import br.xtool.core.model.Entity;
 import br.xtool.core.provider.EntityValueProvider;
@@ -21,7 +22,8 @@ import br.xtool.core.provider.EntityValueProvider;
  * @author jcruz
  *
  */
-@ShellGeneratorComponent(templatePath = "generators/springboot/crud")
+@ShellComponent
+@Template(path = "generators/springboot/crud")
 public class SpringBootJpaCrudGenerator extends SpringBootCommand {
 
 	@ShellMethod(key = "gen-springboot-jpa-crud", value = "Gera as classes de CRUD (JpaRepository, Service e Rest) para entidade JPA", group = XtoolCliApplication.SPRINGBOOT_COMMAND_GROUP)
@@ -58,12 +60,13 @@ public class SpringBootJpaCrudGenerator extends SpringBootCommand {
 					.concat(attr.getAssociation().get().getName())
 					.concat(">")));
 		
-		entity.update(javaClass -> {
+		entity.updateClass(javaClass -> {
 			javaClass.addField()
 				.setPublic()
 				.setName("Abc")
 				.addAnnotation("com.fasterxml.jackson.annotation.JsonIgnoreProperties")
 				.setStringArrayValue(new String[] { "pessoa", "id", "unidade" });
 		});
+		entity.commitUpdate();
 	}
 }

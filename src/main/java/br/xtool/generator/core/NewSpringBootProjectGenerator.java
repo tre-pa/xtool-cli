@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 
@@ -14,7 +15,7 @@ import com.google.common.collect.ImmutableMap;
 import br.xtool.XtoolCliApplication;
 import br.xtool.core.Log;
 import br.xtool.core.PathService;
-import br.xtool.core.annotation.ShellGeneratorComponent;
+import br.xtool.core.annotation.Template;
 import br.xtool.core.command.XCommand;
 import strman.Strman;
 
@@ -24,7 +25,8 @@ import strman.Strman;
  * @author jcruz
  *
  */
-@ShellGeneratorComponent(templatePath = "generators/springboot/scaffold/1.5.x")
+@ShellComponent
+@Template(path = "generators/springboot/scaffold/1.5.x")
 public class NewSpringBootProjectGenerator extends XCommand {
 
 	@ShellMethod(key = "new-springboot-project", value = "Novo projeto Spring Boot 1.5.x", group = XtoolCliApplication.CORE_COMMAND_GROUP)

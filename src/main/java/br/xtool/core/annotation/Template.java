@@ -12,9 +12,8 @@ import org.springframework.shell.standard.ShellComponent;
 @Documented
 @Retention(RUNTIME)
 @Target(TYPE)
-@ShellComponent
-public @interface ShellGeneratorComponent {
+public @interface Template {
 
-	String templatePath();
+	String path();
 
 }

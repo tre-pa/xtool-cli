@@ -16,7 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import br.xtool.core.FS;
 import br.xtool.core.Log;
 import br.xtool.core.PathService;
-import br.xtool.core.annotation.ShellGeneratorComponent;
+import br.xtool.core.annotation.Template;
 
 public class XCommand {
 
@@ -29,8 +29,7 @@ public class XCommand {
 	@Autowired
 	private VelocityEngine vEngine;
 
-
-	private String destinationRoot="";
+	private String destinationRoot = "";
 
 	protected void copy(String source, String destination) throws IOException {
 		String fSource = this.getFinalSource(source);
@@ -38,9 +37,9 @@ public class XCommand {
 		fs.copy(fSource, fDestination);
 		Log.print(Log.green("\tCREATE ") + Log.white(destination));
 	}
-	
+
 	protected void copy(String source, String destination, Supplier<Boolean> exp) throws IOException {
-		if(exp.get()) {
+		if (exp.get()) {
 			this.copy(source, destination);
 		}
 	}
@@ -62,9 +61,9 @@ public class XCommand {
 			this.copyTpl(template, destination, vars);
 		}
 	}
-	
+
 	protected void changeWorkingDirectoryToDestinationRoot() {
-		if(StringUtils.isNotEmpty(this.destinationRoot)) {
+		if (StringUtils.isNotEmpty(this.destinationRoot)) {
 			this.pathService.changeWorkingDirectory(FilenameUtils.concat(this.pathService.getWorkingDirectory(), this.getDestinationRoot()));
 			Log.print(Log.white("\nDiretório de trabalho alterado para: "), Log.cyan(this.pathService.getWorkingDirectory()));
 		}
@@ -79,7 +78,10 @@ public class XCommand {
 	}
 
 	private String getFinalSource(String path) {
-		String prefix = this.getClass().getAnnotation(ShellGeneratorComponent.class).templatePath();
+		if (!this.getClass().isAnnotationPresent(Template.class)) {
+			throw new RuntimeException("A classe " + this.getClass().getName().concat(" deve ser anotada com @Template"));
+		}
+		String prefix = this.getClass().getAnnotation(Template.class).path();
 		return FilenameUtils.concat(prefix, path);
 	}
 
