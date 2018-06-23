@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Map;
 
 import org.jboss.forge.roaster.model.JavaClass;
+import org.jdom2.JDOMException;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
@@ -28,7 +29,7 @@ import br.xtool.core.provider.EntityValueProvider;
 public class SpringBootJpaCrudGenerator extends SpringBootCommand {
 
 	@ShellMethod(key = "gen-springboot-jpa-crud", value = "Gera as classes de CRUD (JpaRepository, Service e Rest) para entidade JPA", group = XtoolCliApplication.SPRINGBOOT_COMMAND_GROUP)
-	public void run(@ShellOption(help = "Entidade JPA", valueProvider = EntityValueProvider.class) Entity entity) throws IOException {
+	public void run(@ShellOption(help = "Entidade JPA", valueProvider = EntityValueProvider.class) Entity entity) throws IOException, JDOMException {
 		/*
 		 * Cria o mapa com as variáveis do gerador.
 		 */
@@ -37,6 +38,8 @@ public class SpringBootJpaCrudGenerator extends SpringBootCommand {
 				.put("entity", entity)
 				.build();
 		// @formatter:on
+		
+		getProject().getPom().getDependencies().forEach(d -> System.out.println(d));
 		
 		System.out.println(Log.green("Lista de atributos da classe "));
 		entity.getAttributes().stream()
