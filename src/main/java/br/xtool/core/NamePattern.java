@@ -111,7 +111,8 @@ public class NamePattern {
 	public static String asDBTable(String name) {
 		// @formatter:off
 		return StringUtils.abbreviate(
-				Strman.toSnakeCase(name.toUpperCase()), "", 30);
+				StringUtils.upperCase(
+						Strman.toSnakeCase(name)), "", 30);
 		// @formatter:on
 	}
 
@@ -122,6 +123,10 @@ public class NamePattern {
 	 * @return
 	 */
 	public static String asDBSequence(String name) {
-		return StringUtils.abbreviate("SEQ_" + Strman.toSnakeCase(name.toUpperCase()), "", 30);
+		// @formatter:off
+		return StringUtils.abbreviate(
+				StringUtils.upperCase(
+				"SEQ_" + Strman.toSnakeCase(name)), "", 30);
+		// @formatter:on
 	}
 }
