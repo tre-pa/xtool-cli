@@ -12,6 +12,7 @@ import org.springframework.shell.standard.ShellOption;
 import com.google.common.collect.ImmutableMap;
 
 import br.xtool.XtoolCliApplication;
+import br.xtool.core.NamePattern;
 import br.xtool.core.annotation.Template;
 import br.xtool.core.command.SpringBootCommand;
 import br.xtool.core.model.Entity;
@@ -36,19 +37,13 @@ public class SpringBootJpaEntityGenerator extends SpringBootCommand {
 		//// @formatter:off
 		Map<String, Object> vars = ImmutableMap.<String, Object>builder()
 				.put("groupId", this.getProject().getPom().getGroupId())
-				.put("entityName", this.getFinalName(name))
-				.put("entityDbId", this.getDBId(name))
+				.put("entityName", NamePattern.asEntityClass(name))
+				.put("tableName", NamePattern.asDBTable(name))
+				.put("seqName", NamePattern.asDBSequence(name))
 				.build();
 		// @formatter:on
 
 		this.copyTpl("entity.java.vm", "src/main/java/${groupId.dir}/domain/${entityName}.java", vars);
 	}
 
-	public String getFinalName(String name) {
-		return Strman.toStudlyCase(name);
-	}
-
-	public String getDBId(String name) {
-		return StringUtils.abbreviate(name.toUpperCase(), "", 25);
-	}
 }

@@ -12,7 +12,7 @@ import java.util.Optional;
  *
  */
 @Repository
-public interface ${entity.name}Repository extends JpaRepository<${entity.name}, Long> {
+public interface ${repositoryName} extends JpaRepository<${entity.name}, Long> {
 
   Optional<${entity.name}> findById(Long id);
 

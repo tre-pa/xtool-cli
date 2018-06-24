@@ -11,6 +11,7 @@ import org.springframework.shell.standard.ShellOption;
 import com.google.common.collect.ImmutableMap;
 
 import br.xtool.XtoolCliApplication;
+import br.xtool.core.NamePattern;
 import br.xtool.core.annotation.Template;
 import br.xtool.core.command.SpringBootCommand;
 import strman.Strman;
@@ -27,14 +28,11 @@ public class SpringBootServiceGenerator extends SpringBootCommand {
 		//// @formatter:off
 		Map<String, Object> vars = ImmutableMap.<String, Object>builder()
 				.put("groupId", this.getProject().getPom().getGroupId())
-				.put("serviceName", this.getFinalName(Strman.toStudlyCase(name)))
+				.put("serviceName", NamePattern.asServiceClass((name)))
 				.build();
 		// @formatter:on
 
 		this.copyTpl("service.java.vm", "src/main/java/${groupId.dir}/service/${serviceName}.java", vars);
 	}
 
-	private String getFinalName(String name) {
-		return name.endsWith("Service") ? name : name.concat("Service");
-	}
 }

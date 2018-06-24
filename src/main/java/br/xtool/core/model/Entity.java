@@ -12,6 +12,7 @@ import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.jboss.forge.roaster.model.source.AnnotationSource;
 import org.jboss.forge.roaster.model.source.FieldSource;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
@@ -94,6 +95,11 @@ public class Entity implements Comparable<Entity> {
 		return this.attributes;
 	}
 
+	/**
+	 * Retorna as associações da entidade.
+	 * 
+	 * @return
+	 */
 	public SortedSet<Association> getAssociations() {
 		if (this.associations == null) {
 			this.associations = new TreeSet<>();
@@ -105,6 +111,17 @@ public class Entity implements Comparable<Entity> {
 			// @formatter:on
 		}
 		return this.associations;
+	}
+
+	/**
+	 * Verifica se a entidade possui a annotation
+	 * 
+	 * @param name
+	 *            Nome da annotation
+	 * @return
+	 */
+	public boolean hasAnnotation(String name) {
+		return this.javaClassSource.hasAnnotation(name);
 	}
 
 	/**

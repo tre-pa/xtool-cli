@@ -11,6 +11,7 @@ import org.springframework.shell.standard.ShellOption;
 import com.google.common.collect.ImmutableMap;
 
 import br.xtool.XtoolCliApplication;
+import br.xtool.core.NamePattern;
 import br.xtool.core.annotation.Template;
 import br.xtool.core.command.SpringBootCommand;
 import br.xtool.core.model.Entity;
@@ -34,10 +35,11 @@ public class SpringBootJpaRepositoryGenerator extends SpringBootCommand {
 		//// @formatter:off
 		Map<String, Object> vars = ImmutableMap.<String, Object>builder()
 				.put("groupId", this.getProject().getPom().getGroupId())
+				.put("repositoryName", NamePattern.asRepositoryClass(entity.getName()))
 				.put("entity", entity)
 				.build();
 		// @formatter:on
 
-		this.copyTpl("repository.java.vm", "src/main/java/${groupId.dir}/repository/${entity.name}Repository.java", vars);
+		this.copyTpl("repository.java.vm", "src/main/java/${groupId.dir}/repository/${repositoryName}.java", vars);
 	}
 }

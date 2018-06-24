@@ -13,6 +13,7 @@ import org.springframework.shell.standard.ShellOption;
 import com.google.common.collect.ImmutableMap;
 
 import br.xtool.XtoolCliApplication;
+import br.xtool.core.NamePattern;
 import br.xtool.core.annotation.Template;
 import br.xtool.core.command.SpringBootCommand;
 import br.xtool.core.model.Repository;
@@ -31,20 +32,11 @@ public class SpringBootRestGenerator extends SpringBootCommand {
 		//// @formatter:off
 		Map<String, Object> vars = ImmutableMap.<String, Object>builder()
 				.put("groupId", this.getProject().getPom().getGroupId())
-				.put("restName", this.getFinalName(Strman.toStudlyCase(name)))
-				.put("restPath", this.getPath(name))
+				.put("restName", NamePattern.asRestClass(name))
+				.put("restPath", NamePattern.asRestPath(name))
 				.build();
 		// @formatter:on
 
 		this.copyTpl("rest.java.vm", "src/main/java/${groupId.dir}/rest/${restName}.java", vars);
-	}
-
-	private String getFinalName(String name) {
-		return name.endsWith("Rest") ? name : name.concat("Rest");
-	}
-
-	private String getPath(String name) {
-		String path = name.endsWith("Rest") ? name.replace("Rest", "") : name;
-		return Strman.toKebabCase(path);
 	}
 }
