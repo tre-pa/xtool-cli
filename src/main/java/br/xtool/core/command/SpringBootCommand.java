@@ -15,7 +15,9 @@ public class SpringBootCommand extends XCommand {
 
 	@Autowired
 	private PathService pathCtx;
-
+	
+	private SpringBootProject springBootProject;
+	
 	/**
 	 * Define a disponibilidade dos comando do grupo Spring Boot.
 	 * 
@@ -36,6 +38,9 @@ public class SpringBootCommand extends XCommand {
 	 * @throws IOException
 	 */
 	protected SpringBootProject getProject() throws IOException {
-		return pathCtx.getSpringBootProject().get();
+		if(this.springBootProject == null) {
+			this.springBootProject = pathCtx.getSpringBootProject().get();
+		}
+		return this.springBootProject;
 	}
 }

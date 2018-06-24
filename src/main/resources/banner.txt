@@ -1,3 +1,3 @@
-Bem vindo a ferramenta ${AnsiColor.BRIGHT_MAGENTA}${AnsiStyle.BOLD}xtool${AnsiColor.DEFAULT}${AnsiStyle.NORMAL}
-O diretório de trabalho atual é: ${AnsiColor.BRIGHT_MAGENTA}${AnsiStyle.BOLD}${user.home}/git${AnsiColor.DEFAULT}${AnsiStyle.NORMAL}
-Digite ${AnsiColor.BRIGHT_MAGENTA}${AnsiStyle.BOLD}help${AnsiColor.DEFAULT}${AnsiStyle.NORMAL} para ver as opções de comandos.
+Bem vindo a ferramenta ${AnsiColor.BRIGHT_GREEN}${AnsiStyle.BOLD}xtool${AnsiColor.DEFAULT}${AnsiStyle.NORMAL}
+O diretório de trabalho atual é: ${AnsiColor.BRIGHT_GREEN}${AnsiStyle.BOLD}${user.home}/git${AnsiColor.DEFAULT}${AnsiStyle.NORMAL}
+Digite ${AnsiColor.BRIGHT_GREEN}${AnsiStyle.BOLD}help${AnsiColor.DEFAULT}${AnsiStyle.NORMAL} para ver as opções de comandos.

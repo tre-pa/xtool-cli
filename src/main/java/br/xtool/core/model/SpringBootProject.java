@@ -68,7 +68,7 @@ public class SpringBootProject {
 
 	public Pom getPom() throws JDOMException, IOException {
 		if (this.pom == null) {
-			this.pom = new Pom(this.path);
+			this.pom = new Pom(FilenameUtils.concat(this.path, "pom.xml"));
 		}
 		return pom;
 	}
@@ -109,7 +109,7 @@ public class SpringBootProject {
 		}
 		return this.repositories;
 	}
-	
+
 	public String getMainDir() {
 		return FilenameUtils.concat(this.path, "src/main/java");
 	}
