@@ -51,11 +51,11 @@ public class SpringBootJpaCrudGenerator extends SpringBootCommand {
 
 		// showEntityAnnotations(entity);
 
-		// showSingleAssociations(entity);
+		showSingleAssociations(entity);
 
-		// showCollectionAssociations(entity);
+		showCollectionAssociations(entity);
 
-		addEntityAttribute(entity);
+		//addEntityAttribute(entity);
 	}
 
 	private void addEntityAttribute(Entity entity) {
@@ -67,15 +67,30 @@ public class SpringBootJpaCrudGenerator extends SpringBootCommand {
 
 	private void showCollectionAssociations(Entity entity) {
 		System.out.println(Log.green("\nLista de associações compostas\n"));
-
-		entity.getCollectionAssociations().stream()
-				.forEach(attr -> System.out.println(attr.getName().concat(" : ").concat(attr.getType().getName()).concat("<").concat(attr.getAssociation().get().getName()).concat(">")));
+		// @formatter:off
+		entity.getAttributes().stream()
+				.filter(attr -> attr.isAssociation())
+				.filter(attr -> attr.getAssociation().get().isCollectionAssociation())
+				.forEach(attr -> System.out.println(attr.getName()
+						.concat(" : ")
+						.concat(attr.getType().getName())
+						.concat("<")
+						.concat(attr.getAssociation().get().getTarget().getName()).concat(">")
+						.concat(" Bidirectional: "+attr.getAssociation().get().isBidirectional())));
+		// @formatter:on
 	}
 
 	private void showSingleAssociations(Entity entity) {
 		System.out.println(Log.green("\nLista de associações simples\n"));
-
-		entity.getSingleAssociations().stream().forEach(attr -> System.out.println(attr.getName().concat(" : ").concat(attr.getAssociation().get().getName())));
+		//// @formatter:off
+		entity.getAttributes().stream()
+			.filter(attr -> attr.isAssociation())
+			.filter(attr -> attr.getAssociation().get().isSingleAssociation())
+			.forEach(attr -> System.out.println(attr.getName()
+						.concat(" : ")
+						.concat(attr.getAssociation().get().getTarget().getName())
+						.concat(" Bidirectional: "+attr.getAssociation().get().isBidirectional())));
+		// @formatter:on
 	}
 
 	private void showEntityAnnotations(Entity entity) {

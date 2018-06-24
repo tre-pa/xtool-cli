@@ -3,7 +3,9 @@ package br.xtool.core.model;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.function.Consumer;
@@ -30,9 +32,7 @@ public class Entity implements Comparable<Entity> {
 
 	private SortedSet<Attribute> attributes;
 
-	private SortedSet<Attribute> singleAssociations;
-
-	private SortedSet<Attribute> collectionAssociations;
+	private SortedSet<Association> associations;
 
 	private List<String> updateInfo = new ArrayList<>();
 
@@ -87,33 +87,24 @@ public class Entity implements Comparable<Entity> {
 		if (this.attributes == null) {
 			// @formatter:off
 			this.attributes = this.javaClassSource.getFields().stream()
-					.map(f -> new Attribute(this.springBootProject, f))
+					.map(f -> new Attribute(this.springBootProject,this, f))
 					.collect(Collectors.toCollection(TreeSet::new));
 			// @formatter:on
 		}
 		return this.attributes;
 	}
 
-	public SortedSet<Attribute> getSingleAssociations() {
-		if (this.singleAssociations == null) {
+	public SortedSet<Association> getAssociations() {
+		if (this.associations == null) {
+			this.associations = new TreeSet<>();
 			// @formatter:off
-			this.singleAssociations = this.getAttributes().stream()
-					.filter(attr -> attr.isSingleAssociation())
-					.collect(Collectors.toCollection(TreeSet::new));
+			this.getAttributes().stream()
+				.filter(Attribute::isAssociation)
+				.map(Attribute::getAssociation)
+				.forEach(association -> this.associations.add(association.get()));
 			// @formatter:on
 		}
-		return this.singleAssociations;
-	}
-
-	public SortedSet<Attribute> getCollectionAssociations() {
-		if (this.collectionAssociations == null) {
-			// @formatter:off
-			this.collectionAssociations = this.getAttributes().stream()
-					.filter(attr -> attr.isCollectionAssociation())
-					.collect(Collectors.toCollection(TreeSet::new));
-			// @formatter:on
-		}
-		return this.collectionAssociations;
+		return this.associations;
 	}
 
 	/**

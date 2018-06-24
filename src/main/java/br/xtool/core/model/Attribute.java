@@ -19,11 +19,14 @@ public class Attribute implements Comparable<Attribute> {
 
 	private SpringBootProject springBootProject;
 
+	private Entity entitySource;
+
 	private FieldSource<JavaClassSource> fieldSource;
 
-	public Attribute(SpringBootProject springBootProject, FieldSource<JavaClassSource> fieldSource) {
+	public Attribute(SpringBootProject springBootProject, Entity entitySource, FieldSource<JavaClassSource> fieldSource) {
 		super();
 		this.springBootProject = springBootProject;
+		this.entitySource = entitySource;
 		this.fieldSource = fieldSource;
 	}
 
@@ -54,13 +57,14 @@ public class Attribute implements Comparable<Attribute> {
 		return this.fieldSource.getType();
 	}
 
-	/**
-	 * 
-	 * Verifica se o atributo é uma associação @OnetToOne ou @ManyToOne
-	 * 
-	 * @return
-	 */
-	public boolean isSingleAssociation() {
+	public boolean isAssociation() {
+		if (this.isCollection()) {
+			// @formatter:off
+			return this.springBootProject.getEntities().parallelStream()
+					.anyMatch(entity -> this.getType().getTypeArguments().stream()
+												.anyMatch(t -> t.getName().equals(entity.getName())));
+			// @formatter:on
+		}
 		// @formatter:off
 		return this.springBootProject.getEntities().parallelStream()
 				.anyMatch(entity -> entity.getName().equals(this.getType().getName()));
@@ -68,40 +72,30 @@ public class Attribute implements Comparable<Attribute> {
 	}
 
 	/**
-	 * 
-	 * Verifica se o atributo é uma associação @OneToMany ou @ManyToMany
+	 * Verifica se o atributo é uma coleção
 	 * 
 	 * @return
 	 */
-	public boolean isCollectionAssociation() {
-		if (Stream.of("List", "Set", "Collection").anyMatch(type -> type.equals(this.getType().getName()))) {
-			// @formatter:off
-			return this.springBootProject.getEntities().parallelStream()
-					.anyMatch(entity -> this.getType().getTypeArguments().stream()
-							.anyMatch(t -> t.getName().equals(entity.getName())));
-			// @formatter:on
-		}
-		return false;
+	public boolean isCollection() {
+		return Stream.of("List", "Set", "Collection").anyMatch(type -> type.equals(this.getType().getName()));
 	}
 
-	public boolean isAssociation() {
-		return this.isSingleAssociation() || this.isCollectionAssociation();
-	}
-
-	public Optional<Entity> getAssociation() {
+	public Optional<Association> getAssociation() {
 		if (this.isAssociation()) {
-			if (this.isSingleAssociation()) {
+			if (this.isCollection()) {
 				// @formatter:off
 				return this.springBootProject.getEntities().stream()
-						.filter(entity -> entity.getName().equals(this.getType().getName()))
+						.filter(entity -> this.getType().getTypeArguments().stream()
+								.anyMatch(type -> type.getName().equals(entity.getName())))
+						.map(entityTarget -> new Association(entitySource, entityTarget, this))
 						.findFirst();
 				// @formatter:on
 			}
 			// @formatter:off
 			return this.springBootProject.getEntities().stream()
-					.filter(entity -> this.getType().getTypeArguments().stream()
-							.anyMatch(type -> type.getName().equals(entity.getName())))
-							.findFirst();
+					.filter(entity -> entity.getName().equals(this.getType().getName()))
+					.map(entityTarget -> new Association(entitySource, entityTarget, this))
+					.findFirst();
 			// @formatter:on
 		}
 		return Optional.empty();

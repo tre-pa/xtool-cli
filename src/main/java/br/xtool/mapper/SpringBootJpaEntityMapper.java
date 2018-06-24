@@ -14,7 +14,6 @@ public class SpringBootJpaEntityMapper extends SpringBootCommand {
 	// @formatter:off
 	public void run(
 			@ShellOption(help = "Mapeia a entidade com annotations JPA", defaultValue = "false", arity = 0) Boolean jpa,
-			@ShellOption(help = "Mapeia a entidade com annotations Lombok", defaultValue = "false", arity = 0) Boolean lombok,
 			@ShellOption(help = "Mapeia a entidade com annotations Jackson", defaultValue = "false", arity = 0) Boolean jackson) {
 	// @formatter:on
 
