@@ -56,6 +56,19 @@ public class Pom {
 	}
 
 	/**
+	 * Retorna a versão da aplicação.
+	 * 
+	 * @return
+	 */
+	public String getVersion() {
+		return this.rootElement.getChild("version", NAMESPACE).getText();
+	}
+	
+	public String getParentVersion() {
+		return this.rootElement.getChild("parent", NAMESPACE).getChild("version", NAMESPACE).getText();
+	}
+
+	/**
 	 * Retorna a lista de dependências do projeto.
 	 * 
 	 * @return
