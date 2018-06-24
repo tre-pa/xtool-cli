@@ -63,9 +63,28 @@ public class Pom {
 	public String getVersion() {
 		return this.rootElement.getChild("version", NAMESPACE).getText();
 	}
-	
+
+	/**
+	 * Retorna a versão do parent.
+	 * 
+	 * @return
+	 */
 	public String getParentVersion() {
 		return this.rootElement.getChild("parent", NAMESPACE).getChild("version", NAMESPACE).getText();
+	}
+
+	/**
+	 * Verifica se um atefato existe no pom.xml
+	 * 
+	 * @param artifactId
+	 *            Nome do artefato
+	 * @return
+	 */
+	public boolean hasArtifactId(String artifactId) {
+		// @formatter:off
+		return this.getDependencies().stream()
+				.anyMatch(dependency -> dependency.getArtifactId().equals(artifactId));
+		// @formatter:on
 	}
 
 	/**
