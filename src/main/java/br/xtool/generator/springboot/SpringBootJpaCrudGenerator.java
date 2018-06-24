@@ -55,11 +55,10 @@ public class SpringBootJpaCrudGenerator extends SpringBootCommand {
 
 		// showCollectionAssociations(entity);
 
-		// addEntityAttribute(entity);
+		addEntityAttribute(entity);
 	}
 
 	private void addEntityAttribute(Entity entity) {
-		System.out.println(Log.green("\n Adição de novo atributo\n"));
 		entity.addAttribute(fieldSource -> {
 			fieldSource.setPublic().setName("Abc").addAnnotation("com.fasterxml.jackson.annotation.JsonIgnoreProperties").setStringArrayValue(new String[] { "pessoa", "id", "unidade" });
 		});

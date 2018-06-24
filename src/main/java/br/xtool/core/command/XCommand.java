@@ -35,7 +35,7 @@ public class XCommand {
 		String fSource = this.getFinalSource(source);
 		String fDestination = this.getFinalDestination(destination);
 		fs.copy(fSource, fDestination);
-		Log.print(Log.green("\tCREATE ") + Log.white(destination));
+		Log.print(Log.green("\t[CREATE FILE] ") + Log.white(destination));
 	}
 
 	protected void copy(String source, String destination, Supplier<Boolean> exp) throws IOException {
@@ -53,7 +53,7 @@ public class XCommand {
 		String fTemplate = this.getFinalSource(template);
 		String fDestination = this.getFinalDestination(destination);
 		fs.copyTpl(fTemplate, fDestination, vars);
-		Log.print(Log.green("\tCREATE ") + Log.white(destination));
+		Log.print(Log.green("\t[CREATE FILE] ") + Log.white(destination));
 	}
 
 	protected void copyTpl(String template, String destination, Map<String, Object> vars, Supplier<Boolean> exp) throws IOException {

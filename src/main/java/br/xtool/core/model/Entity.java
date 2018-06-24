@@ -2,6 +2,7 @@ package br.xtool.core.model;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -14,7 +15,6 @@ import org.jboss.forge.roaster.model.source.FieldSource;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 
 import br.xtool.core.Log;
-import lombok.Getter;
 
 /**
  * Classe que representa um entidade JPA
@@ -33,6 +33,8 @@ public class Entity implements Comparable<Entity> {
 	private SortedSet<Attribute> singleAssociations;
 
 	private SortedSet<Attribute> collectionAssociations;
+
+	private List<String> updateInfo = new ArrayList<>();
 
 	public Entity(SpringBootProject springBootProject, JavaClassSource javaClassSource) {
 		super();
@@ -120,7 +122,9 @@ public class Entity implements Comparable<Entity> {
 	 * @param action
 	 */
 	public void addAttribute(Consumer<FieldSource<JavaClassSource>> action) {
-		action.accept(this.javaClassSource.addField());
+		FieldSource<JavaClassSource> newField = this.javaClassSource.addField();
+		action.accept(newField);
+		this.updateInfo.add("\t\t       + " + newField.getVisibility() + " " + newField.getType() + " " + newField.getName());
 	}
 
 	/**
@@ -129,7 +133,9 @@ public class Entity implements Comparable<Entity> {
 	 * @param action
 	 */
 	public void addAnnotation(Consumer<AnnotationSource<JavaClassSource>> action) {
-		action.accept(this.javaClassSource.addAnnotation());
+		AnnotationSource<JavaClassSource> newAnnotation = this.javaClassSource.addAnnotation();
+		action.accept(newAnnotation);
+		this.updateInfo.add("\t\t       [NEW ANNOTATION] " + "@" + newAnnotation.getName());
 	}
 
 	public void commitUpdate() {
@@ -139,7 +145,9 @@ public class Entity implements Comparable<Entity> {
 			fileWriter.write(this.javaClassSource.toUnformattedString());
 			fileWriter.flush();
 			fileWriter.close();
-			Log.print(Log.green("\tUPDATE ") + Log.white(this.getQualifiedName().concat(".java")));
+			Log.print(Log.green("\t[UPDATE CLASS] ") + Log.white(this.getQualifiedName().concat(".java")));
+			this.updateInfo.forEach(info -> Log.print(info));
+			this.updateInfo.clear();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
