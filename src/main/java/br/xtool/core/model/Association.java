@@ -58,6 +58,42 @@ public class Association implements Comparable<Association> {
 		return this.attributeSource.isCollection();
 	}
 
+	/**
+	 * Verifica se a associação do atributo possui a annotation @OneToOne
+	 * 
+	 * @return
+	 */
+	public boolean hasOneToOneAnnotation() {
+		return this.attributeSource.hasAnnotation("OneToOne");
+	}
+
+	/**
+	 * Verifica se a associação do atributo possui a annotation @OneToMany
+	 * 
+	 * @return
+	 */
+	public boolean hasOneToManyAnnotation() {
+		return this.attributeSource.hasAnnotation("OneToMany");
+	}
+
+	/**
+	 * Verifica se a associação do atributo possui a annotation @ManyToOne
+	 * 
+	 * @return
+	 */
+	public boolean hasManyToOneAnnotation() {
+		return this.attributeSource.hasAnnotation("ManyToOne");
+	}
+
+	/**
+	 * Verifica se a associação do atributo possui a annotation @ManyToMany
+	 * 
+	 * @return
+	 */
+	public boolean hasManyToManyAnnotation() {
+		return this.attributeSource.hasAnnotation("ManyToMany");
+	}
+
 	@Override
 	public int compareTo(Association o) {
 		return this.target.getName().compareTo(o.getTarget().getName());

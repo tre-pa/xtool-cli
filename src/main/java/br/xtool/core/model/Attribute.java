@@ -101,6 +101,10 @@ public class Attribute implements Comparable<Attribute> {
 		return Optional.empty();
 	}
 
+	public boolean hasAnnotation(String name) {
+		return this.fieldSource.hasAnnotation(name);
+	}
+
 	@Override
 	public int compareTo(Attribute o) {
 		return this.getName().compareTo(o.getName());
