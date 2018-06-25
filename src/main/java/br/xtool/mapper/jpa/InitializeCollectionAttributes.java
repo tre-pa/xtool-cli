@@ -7,7 +7,7 @@ import br.xtool.core.model.Entity;
 import br.xtool.mapper.core.JpaMapper;
 
 @Component
-public class InitializeCollectionAttributesOfEntity implements JpaMapper {
+public class InitializeCollectionAttributes implements JpaMapper {
 
 	@Override
 	public void apply(Entity t) {

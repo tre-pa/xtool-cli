@@ -75,7 +75,7 @@ public class SpringBootJpaCrudGenerator extends SpringBootCommand {
 						.concat(" : ")
 						.concat(attr.getType().getName())
 						.concat("<")
-						.concat(attr.getAssociation().get().getTarget().getName()).concat(">")
+						.concat(attr.getAssociation().get().getEntityTarget().getName()).concat(">")
 						.concat(" Bidirectional: "+attr.getAssociation().get().isBidirectional())));
 		// @formatter:on
 	}
@@ -88,7 +88,7 @@ public class SpringBootJpaCrudGenerator extends SpringBootCommand {
 			.filter(attr -> attr.getAssociation().get().isSingleAssociation())
 			.forEach(attr -> System.out.println(attr.getName()
 						.concat(" : ")
-						.concat(attr.getAssociation().get().getTarget().getName())
+						.concat(attr.getAssociation().get().getEntityTarget().getName())
 						.concat(" Bidirectional: "+attr.getAssociation().get().isBidirectional())));
 		// @formatter:on
 	}

@@ -1,21 +1,24 @@
 package br.xtool.core.model;
 
+import java.util.Optional;
+
 import lombok.Getter;
 
 public class Association implements Comparable<Association> {
 
 	@Getter
-	private Entity source;
+	private Entity entitySource;
 
 	@Getter
-	private Entity target;
+	private Entity entityTarget;
 
+	@Getter
 	private Attribute attributeSource;
 
 	public Association(Entity source, Entity target, Attribute attributeSource) {
 		super();
-		this.source = source;
-		this.target = target;
+		this.entitySource = source;
+		this.entityTarget = target;
 		this.attributeSource = attributeSource;
 	}
 
@@ -26,8 +29,8 @@ public class Association implements Comparable<Association> {
 	 */
 	public boolean isBidirectional() {
 		// @formatter:off
-		return target.getAssociations().stream()
-				.anyMatch(association -> association.getTarget().getName().equals(this.source.getName()));
+		return entityTarget.getAssociations().stream()
+				.anyMatch(association -> association.getEntityTarget().getName().equals(this.entitySource.getName()));
 		// @formatter:on
 	}
 
@@ -94,9 +97,17 @@ public class Association implements Comparable<Association> {
 		return this.attributeSource.hasAnnotation("ManyToMany");
 	}
 
+	public Optional<Attribute> getAttributeTarget() {
+		// @formatter:off
+		return this.entityTarget.getAttributes().stream()
+				.filter(attrTarget -> attrTarget.getType().getName().equals(entityTarget.getName()))
+				.findFirst();
+		// @formatter:on
+	}
+
 	@Override
 	public int compareTo(Association o) {
-		return this.target.getName().compareTo(o.getTarget().getName());
+		return this.entityTarget.getName().compareTo(o.getEntityTarget().getName());
 	}
 
 }
