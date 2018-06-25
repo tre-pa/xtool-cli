@@ -1,23 +1,19 @@
 package br.xtool.mapper.lombok;
 
-import org.springframework.stereotype.Component;
-
 import br.xtool.core.model.Entity;
 import br.xtool.mapper.core.LombokMapper;
 
 /**
- * Adicionar as annotation @Getter e @Setter na entidade JPA.
+ * Adicionar a annotation @NoArgsConstructor a entidade JPA.
  * 
  * @author jcruz
  *
  */
-@Component
-public class AddLombokAccessorToEntity implements LombokMapper {
+public class AddNoArgsConstructorAnnotationToEntity implements LombokMapper {
 
 	@Override
 	public void apply(Entity t) {
-		addAnnotation(t, "Getter", "lombok.Getter");
-		addAnnotation(t, "Setter", "lombok.Setter");
+		addAnnotation(t, "NoArgsConstructor", "lombok.NoArgsConstructor");
 	}
 
 	private void addAnnotation(Entity entity, String annotationName, String importName) {

@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
+import org.springframework.util.Assert;
 
 import br.xtool.XtoolCliApplication;
 import br.xtool.core.command.SpringBootCommand;
@@ -26,6 +27,9 @@ public class SpringBootJpaEntityMapper extends SpringBootCommand {
 	@Lazy
 	private Set<JpaMapper> jpaMappers;
 
+	/*
+	 * Retorna todas as instâncias de classes que impementam LombokMapper
+	 */
 	@Autowired
 	@Lazy
 	private Set<LombokMapper> lombokMappers;
@@ -39,6 +43,9 @@ public class SpringBootJpaEntityMapper extends SpringBootCommand {
 			@ShellOption(help = "Mapeia a entidade com annotations Lombok", defaultValue = "false", arity = 0) Boolean lombok,
 			@ShellOption(help = "Mapeia a entidade com annotations Jackson", defaultValue = "false", arity = 0) Boolean jackson) {
 	// @formatter:on
+		Assert.isTrue(Objects.nonNull(entity) || allEntities, "Selecione uma entidade ou a opção 'all-entities' para selecionar todas as entidades. Digite 'help map-springboot-jpa-entity' para mais detalhes.");
+		Assert.isTrue(jpa || lombok || jackson, "Seleciona pelo menos uma opção de mapeamento. Digite 'help map-springboot-jpa-entity' para mais detalhes.");
+
 		if (Objects.nonNull(entity)) {
 			if (jpa) jpaMappers.stream().forEach(mapper -> mapper.apply(entity));
 			if (lombok) lombokMappers.stream().forEach(mapper -> mapper.apply(entity));

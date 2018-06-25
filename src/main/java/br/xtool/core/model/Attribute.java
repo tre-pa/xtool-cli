@@ -80,6 +80,23 @@ public class Attribute implements Comparable<Attribute> {
 		return Stream.of("List", "Set", "Collection").anyMatch(type -> type.equals(this.getType().getName()));
 	}
 
+	/**
+	 * Verifica se o atributo é static.
+	 * 
+	 * @return
+	 */
+	public boolean isStatic() {
+		return this.fieldSource.isStatic();
+	}
+
+	public boolean isJpaTransient() {
+		return this.hasAnnotation("Transient");
+	}
+
+	public boolean isJpaLob() {
+		return this.hasAnnotation("Lob");
+	}
+
 	public Optional<Association> getAssociation() {
 		if (this.isAssociation()) {
 			if (this.isCollection()) {
