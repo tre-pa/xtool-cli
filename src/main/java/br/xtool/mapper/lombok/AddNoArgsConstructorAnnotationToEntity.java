@@ -1,5 +1,7 @@
 package br.xtool.mapper.lombok;
 
+import org.springframework.stereotype.Component;
+
 import br.xtool.core.model.Entity;
 import br.xtool.mapper.core.LombokMapper;
 
@@ -9,6 +11,7 @@ import br.xtool.mapper.core.LombokMapper;
  * @author jcruz
  *
  */
+@Component
 public class AddNoArgsConstructorAnnotationToEntity implements LombokMapper {
 
 	@Override
