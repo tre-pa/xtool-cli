@@ -132,7 +132,7 @@ public class Entity implements Comparable<Entity> {
 	public void addAttribute(Consumer<FieldSource<JavaClassSource>> action) {
 		FieldSource<JavaClassSource> newField = this.javaClassSource.addField();
 		action.accept(newField);
-		this.updateInfo.add("\t\t       + " + newField.getVisibility() + " " + newField.getType() + " " + newField.getName());
+		this.updateInfo.add("\t\t + " + newField.getVisibility() + " " + newField.getType() + " " + newField.getName());
 	}
 
 	/**
@@ -143,12 +143,12 @@ public class Entity implements Comparable<Entity> {
 	public void addAnnotation(Consumer<AnnotationSource<JavaClassSource>> action) {
 		AnnotationSource<JavaClassSource> newAnnotation = this.javaClassSource.addAnnotation();
 		action.accept(newAnnotation);
-		this.updateInfo.add("\t\t       + " + "@" + newAnnotation.getName());
+		this.updateInfo.add("\t\t + " + "@" + newAnnotation.getName());
 	}
 	
 	public void addImport(String importName) {
 		this.javaClassSource.addImport(importName);
-		this.updateInfo.add("\t\t       + " + "import " + importName);
+		this.updateInfo.add("\t\t + " + "import " + importName);
 	}
 
 	public void commitUpdate() {
@@ -158,7 +158,7 @@ public class Entity implements Comparable<Entity> {
 			fileWriter.write(this.javaClassSource.toUnformattedString());
 			fileWriter.flush();
 			fileWriter.close();
-			Log.print(Log.green("\t[UPDATE CLASS] ") + Log.white(this.getQualifiedName().concat(".java")));
+			Log.print(Log.green("\t[UPDATE] ") + Log.white(this.getQualifiedName().concat(".java")));
 			this.updateInfo.forEach(info -> Log.print(info));
 			this.updateInfo.clear();
 		} catch (IOException e) {

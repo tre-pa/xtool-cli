@@ -19,12 +19,9 @@ public class AddTableAnnotationToEntity implements JpaMapper {
 	public void apply(Entity entity) {
 		if (!entity.hasAnnotation("Table")) {
 			entity.addImport("javax.persistence.Table");
-			// @formatter:off
 			entity.addAnnotation(annotation -> {
-				annotation.setName("Table")
-					.setStringValue("name",NamePattern.asDBTable(entity.getName()));
+				annotation.setName("Table").setStringValue("name", NamePattern.asDBTable(entity.getName()));
 			});
-			// @formatter:on
 		}
 	}
 }

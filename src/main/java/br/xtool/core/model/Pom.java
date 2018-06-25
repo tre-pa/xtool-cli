@@ -16,6 +16,7 @@ import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
+import br.xtool.core.Log;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -37,6 +38,8 @@ public class Pom {
 	private File file;
 
 	private Element rootElement;
+	
+	private List<String> updateInfo = new ArrayList<>();
 
 	public Pom(String path) throws JDOMException, IOException {
 		super();
@@ -117,6 +120,7 @@ public class Pom {
 	 */
 	public void addDependency(Dependency dependency) {
 		this.rootElement.getChild("dependencies", NAMESPACE).addContent(dependency.getAsDom());
+		this.updateInfo.add("\t\t + " + dependency);
 	}
 
 	/**
@@ -133,6 +137,9 @@ public class Pom {
 			xmlOutputter.output(this.pomDoc, fos);
 			fos.flush();
 			fos.close();
+			Log.print(Log.green("\t[UPDATE] ") + Log.white("pom.xml"));
+			this.updateInfo.forEach(info -> Log.print(info));
+			this.updateInfo.clear();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -146,7 +153,6 @@ public class Pom {
 	 *
 	 */
 	@Getter
-	@ToString
 	@EqualsAndHashCode
 	public static class Dependency {
 		private String groupId;
@@ -199,6 +205,12 @@ public class Pom {
 				version.setText(this.getVersion());
 				dependency.addContent(version);
 			}
+		}
+
+		@Override
+		public String toString() {
+			return "Dependency [" + (groupId != null ? "groupId=" + groupId + ", " : "") + (artifactId != null ? "artifactId=" + artifactId + ", " : "")
+					+ (version != null ? "version=" + version : "") + "]";
 		}
 
 	}

@@ -14,11 +14,11 @@ public class Log {
 	}
 
 	public static String green(String text) {
-		return "\u001B[32m" + text + "\u001B[0m";
+		return "\u001B[92m" + text + "\u001B[0m";
 	}
 
 	public static String yellow(String text) {
-		return "\u001B[33m" + text + "\u001B[0m";
+		return "\u001B[93m" + text + "\u001B[0m";
 	}
 
 	public static String blue(String text) {
@@ -26,11 +26,11 @@ public class Log {
 	}
 
 	public static String purple(String text) {
-		return "\u001B[35m" + text + "\u001B[0m";
+		return "\u001B[95m" + text + "\u001B[0m";
 	}
 
 	public static String cyan(String text) {
-		return "\u001B[36m" + text + "\u001B[0m";
+		return "\u001B[96m" + text + "\u001B[0m";
 	}
 
 	public static String gray(String text) {
