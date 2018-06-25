@@ -3,16 +3,13 @@ package br.xtool.core.model;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.jboss.forge.roaster.model.source.AnnotationSource;
 import org.jboss.forge.roaster.model.source.FieldSource;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
@@ -35,6 +32,7 @@ public class Entity implements Comparable<Entity> {
 
 	private SortedSet<Association> associations;
 
+	@Deprecated
 	private List<String> updateInfo = new ArrayList<>();
 
 	public Entity(SpringBootProject springBootProject, JavaClassSource javaClassSource) {
@@ -129,6 +127,7 @@ public class Entity implements Comparable<Entity> {
 	 * 
 	 * @param action
 	 */
+	@Deprecated
 	public void addAttribute(Consumer<FieldSource<JavaClassSource>> action) {
 		FieldSource<JavaClassSource> newField = this.javaClassSource.addField();
 		action.accept(newField);
@@ -140,12 +139,14 @@ public class Entity implements Comparable<Entity> {
 	 * 
 	 * @param action
 	 */
+	@Deprecated
 	public void addAnnotation(Consumer<AnnotationSource<JavaClassSource>> action) {
 		AnnotationSource<JavaClassSource> newAnnotation = this.javaClassSource.addAnnotation();
 		action.accept(newAnnotation);
 		this.updateInfo.add("\t\t + " + "@" + newAnnotation.getName());
 	}
 
+	@Deprecated
 	public void addImport(String importName) {
 		if (!this.javaClassSource.hasImport(importName)) {
 			this.javaClassSource.addImport(importName);
@@ -153,6 +154,7 @@ public class Entity implements Comparable<Entity> {
 		}
 	}
 
+	@Deprecated
 	public void commitUpdate() {
 		String javaPath = FilenameUtils.concat(this.springBootProject.getMainDir(), this.getPackage().getDir());
 		String javaFile = javaPath.concat("/").concat(this.getName().concat(".java"));

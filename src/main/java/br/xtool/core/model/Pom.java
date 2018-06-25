@@ -118,6 +118,7 @@ public class Pom {
 	 * 
 	 * @param dependency
 	 */
+	@Deprecated
 	public void addDependency(Dependency dependency) {
 		this.rootElement.getChild("dependencies", NAMESPACE).addContent(dependency.getAsDom());
 		this.updateInfo.add("\t\t + " + dependency);
@@ -128,6 +129,7 @@ public class Pom {
 	 * 
 	 * @throws IOException
 	 */
+	@Deprecated
 	public void commitUpdate() throws IOException {
 		try (FileOutputStream fos = new FileOutputStream(this.file)) {
 			XMLOutputter xmlOutputter = new XMLOutputter();
