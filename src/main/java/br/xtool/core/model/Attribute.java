@@ -97,6 +97,14 @@ public class Attribute implements Comparable<Attribute> {
 		return this.hasAnnotation("Lob");
 	}
 
+	public void setStringInitialize(String value) {
+		this.fieldSource.setStringInitializer(value);
+	}
+
+	public void setLiteralInitialize(String value) {
+		this.fieldSource.setLiteralInitializer(value);
+	}
+
 	public Optional<Association> getAssociation() {
 		if (this.isAssociation()) {
 			if (this.isCollection()) {

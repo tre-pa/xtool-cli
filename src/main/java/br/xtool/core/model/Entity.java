@@ -145,10 +145,12 @@ public class Entity implements Comparable<Entity> {
 		action.accept(newAnnotation);
 		this.updateInfo.add("\t\t + " + "@" + newAnnotation.getName());
 	}
-	
+
 	public void addImport(String importName) {
-		this.javaClassSource.addImport(importName);
-		this.updateInfo.add("\t\t + " + "import " + importName);
+		if (!this.javaClassSource.hasImport(importName)) {
+			this.javaClassSource.addImport(importName);
+			this.updateInfo.add("\t\t + " + "import " + importName);
+		}
 	}
 
 	public void commitUpdate() {
