@@ -14,6 +14,15 @@ import strman.Strman;
  */
 public class NamePattern {
 
+	public static String asSpringBootBaseClass(String name) {
+		// @formatter:off
+		return Strman.toKebabCase(
+				name.endsWith("Application") ? 
+						name.replace("Application", "") : 
+						name);
+		// @formatter:on
+	}
+
 	/**
 	 * 
 	 * Retorna um nome válido de projeto Spring Boot.
