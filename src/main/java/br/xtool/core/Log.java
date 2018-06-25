@@ -4,7 +4,11 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 public class Log {
-
+	
+	public static String bold(String text) {
+		return "\u001B[1m" + text + "\u001B[0m";
+	}
+	
 	public static String black(String text) {
 		return "\u001B[30m" + text + "\u001B[0m";
 	}

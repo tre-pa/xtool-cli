@@ -3,8 +3,6 @@ package br.xtool.core.command;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.Map;
-import java.util.function.Consumer;
-import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 import org.apache.commons.io.FilenameUtils;
@@ -35,7 +33,7 @@ public class XCommand {
 		String fSource = this.getFinalSource(source);
 		String fDestination = this.getFinalDestination(destination);
 		fs.copy(fSource, fDestination);
-		Log.print(Log.green("\t[CREATE] ") + Log.white(destination));
+		Log.print(Log.bold(Log.green("\t[+] ")) + Log.purple("File: ") + Log.white(destination));
 	}
 
 	protected void copy(String source, String destination, Supplier<Boolean> exp) throws IOException {
@@ -53,7 +51,7 @@ public class XCommand {
 		String fTemplate = this.getFinalSource(template);
 		String fDestination = this.getFinalDestination(destination);
 		fs.copyTpl(fTemplate, fDestination, vars);
-		Log.print(Log.green("\t[CREATE] ") + Log.white(destination));
+		Log.print(Log.bold(Log.green("\t[+] ")) + Log.purple("File: ") + Log.white(destination));
 	}
 
 	protected void copyTpl(String template, String destination, Map<String, Object> vars, Supplier<Boolean> exp) throws IOException {
