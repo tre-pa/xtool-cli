@@ -1,14 +1,11 @@
 package br.xtool.core.command;
 
 import java.io.IOException;
-import java.io.StringWriter;
 import java.util.Map;
 import java.util.function.Supplier;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.velocity.VelocityContext;
-import org.apache.velocity.app.VelocityEngine;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import br.xtool.core.FS;
@@ -23,9 +20,6 @@ public class XCommand {
 
 	@Autowired
 	private PathService pathService;
-
-	@Autowired
-	private VelocityEngine vEngine;
 
 	private String destinationRoot = "";
 
@@ -43,10 +37,6 @@ public class XCommand {
 	}
 
 	protected void copyTpl(String template, String destination, Map<String, Object> vars) throws IOException {
-		VelocityContext vContext = new VelocityContext(vars);
-		StringWriter stringWriter = new StringWriter();
-		vEngine.evaluate(vContext, stringWriter, new String(), destination);
-		destination = stringWriter.toString();
 
 		String fTemplate = this.getFinalSource(template);
 		String fDestination = this.getFinalDestination(destination);

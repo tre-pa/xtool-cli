@@ -49,6 +49,11 @@ public class FS {
 	 */
 	public void copyTpl(String template, String destination, Map<String, Object> vars) throws IOException {
 		VelocityContext vContext = new VelocityContext(vars);
+
+		StringWriter stringWriter = new StringWriter();
+		vEngine.evaluate(vContext, stringWriter, new String(), destination);
+		destination = stringWriter.toString();
+		
 		Template t = vEngine.getTemplate(String.format("templates/%s", template), "UTF-8");
 		FileUtils.forceMkdirParent(new File(destination));
 		FileWriterWithEncoding writer = new FileWriterWithEncoding(destination, "UTF-8");

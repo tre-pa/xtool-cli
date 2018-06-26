@@ -8,14 +8,11 @@ import java.util.Optional;
 
 import javax.annotation.PostConstruct;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import br.xtool.core.representation.SpringBootProjectRepresentation;
-import lombok.Getter;
 
 /**
  * Bean com as informações de contexto da aplicação.
