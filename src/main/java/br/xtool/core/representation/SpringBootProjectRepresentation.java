@@ -1,4 +1,4 @@
-package br.xtool.core.model;
+package br.xtool.core.representation;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -29,7 +29,7 @@ import lombok.Getter;
  * @author jcruz
  *
  */
-public class SpringBootProject {
+public class SpringBootProjectRepresentation {
 
 	@Getter
 	private String path;
@@ -38,17 +38,17 @@ public class SpringBootProject {
 
 	private Set<JavaInterfaceSource> javaInterfaceSources = new HashSet<>();
 
-	private SortedSet<Entity> entities;
+	private SortedSet<EntityRepresentation> entities;
 
-	private SortedSet<Repository> repositories;
+	private SortedSet<RepositoryRepresentation> repositories;
 
-	private Pom pom;
+	private PomRepresentation pom;
 
-	private SpringBootProject() {
+	private SpringBootProjectRepresentation() {
 		super();
 	}
 
-	private SpringBootProject(String path) {
+	private SpringBootProjectRepresentation(String path) {
 		super();
 		this.path = path;
 		this.buildJavaClassSources();
@@ -58,17 +58,17 @@ public class SpringBootProject {
 		return Files.exists(Paths.get(path, "pom.xml"));
 	}
 
-	public static Optional<SpringBootProject> of(String path) {
+	public static Optional<SpringBootProjectRepresentation> of(String path) {
 		if (isValidSpringBootProject(path)) {
-			SpringBootProject springBootProject = new SpringBootProject(path);
+			SpringBootProjectRepresentation springBootProject = new SpringBootProjectRepresentation(path);
 			return Optional.of(springBootProject);
 		}
 		return Optional.empty();
 	}
 
-	public Pom getPom() throws JDOMException, IOException {
+	public PomRepresentation getPom() throws JDOMException, IOException {
 		if (this.pom == null) {
-			this.pom = new Pom(FilenameUtils.concat(this.path, "pom.xml"));
+			this.pom = new PomRepresentation(FilenameUtils.concat(this.path, "pom.xml"));
 		}
 		return pom;
 	}
@@ -78,13 +78,13 @@ public class SpringBootProject {
 	 * 
 	 * @return
 	 */
-	public SortedSet<Entity> getEntities() {
+	public SortedSet<EntityRepresentation> getEntities() {
 		if (this.entities == null) {
 			// @formatter:off
 			this.entities = this.javaClassSources
 					.parallelStream()
 					.filter(j -> j.getAnnotations().stream().anyMatch(ann -> ann.getName().equals("Entity")))
-					.map(j -> new Entity(this, j))
+					.map(j -> new EntityRepresentation(this, j))
 					.collect(Collectors.toCollection(TreeSet::new));
 			// @formatter:on
 
@@ -97,13 +97,13 @@ public class SpringBootProject {
 	 * 
 	 * @return
 	 */
-	public SortedSet<Repository> getRepositories() {
+	public SortedSet<RepositoryRepresentation> getRepositories() {
 		if (this.repositories == null) {
 			// @formatter:off
 			this.repositories = this.javaInterfaceSources
 					.parallelStream()
 					.filter(j -> j.getAnnotations().stream().anyMatch(ann -> ann.getName().equals("Repository")))
-					.map(j -> new Repository(this, j))
+					.map(j -> new RepositoryRepresentation(this, j))
 					.collect(Collectors.toCollection(TreeSet::new));
 			// @formatter:on
 		}

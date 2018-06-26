@@ -2,7 +2,7 @@ package br.xtool.mapper.lombok;
 
 import org.springframework.stereotype.Component;
 
-import br.xtool.core.model.Entity;
+import br.xtool.core.representation.EntityRepresentation;
 import br.xtool.mapper.core.LombokMapper;
 
 /**
@@ -15,12 +15,12 @@ import br.xtool.mapper.core.LombokMapper;
 public class AddAccessorAnnotationToEntity implements LombokMapper {
 
 	@Override
-	public void apply(Entity t) {
+	public void apply(EntityRepresentation t) {
 		addAnnotation(t, "Getter", "lombok.Getter");
 		addAnnotation(t, "Setter", "lombok.Setter");
 	}
 
-	private void addAnnotation(Entity entity, String annotationName, String importName) {
+	private void addAnnotation(EntityRepresentation entity, String annotationName, String importName) {
 		if (!entity.hasAnnotation(annotationName)) {
 			entity.addImport(importName);
 			entity.addAnnotation(annotation -> {

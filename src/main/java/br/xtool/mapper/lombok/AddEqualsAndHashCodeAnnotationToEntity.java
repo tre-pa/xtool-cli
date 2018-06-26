@@ -2,15 +2,15 @@ package br.xtool.mapper.lombok;
 
 import org.springframework.stereotype.Component;
 
-import br.xtool.core.model.Attribute;
-import br.xtool.core.model.Entity;
+import br.xtool.core.representation.AttributeRepresentation;
+import br.xtool.core.representation.EntityRepresentation;
 import br.xtool.mapper.core.LombokMapper;
 
 @Component
 public class AddEqualsAndHashCodeAnnotationToEntity implements LombokMapper {
 
 	@Override
-	public void apply(Entity t) {
+	public void apply(EntityRepresentation t) {
 		if (!t.hasAnnotation("EqualsAndHashCode")) {
 			t.addImport("lombok.EqualsAndHashCode");
 			t.addAnnotation(annotation -> {
@@ -19,14 +19,14 @@ public class AddEqualsAndHashCodeAnnotationToEntity implements LombokMapper {
 		}
 	}
 
-	public String[] getAttributeOfEqualsAndHashCode(Entity entity) {
+	public String[] getAttributeOfEqualsAndHashCode(EntityRepresentation entity) {
 		// @formatter:off
 		return entity.getAttributes().stream()
 				.filter(attr -> !attr.isAssociation())
 				.filter(attr -> !attr.isStatic())
 				.filter(attr -> !attr.isJpaTransient())
 				.filter(attr -> !attr.isJpaLob())
-				.map(Attribute::getName)
+				.map(AttributeRepresentation::getName)
 				.toArray(String[]::new);
 		// @formatter:on
 	}

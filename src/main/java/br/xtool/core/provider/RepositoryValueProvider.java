@@ -12,7 +12,7 @@ import org.springframework.shell.standard.ValueProviderSupport;
 import org.springframework.stereotype.Component;
 
 import br.xtool.core.PathService;
-import br.xtool.core.model.Repository;
+import br.xtool.core.representation.RepositoryRepresentation;
 
 @Component
 public class RepositoryValueProvider extends ValueProviderSupport {
@@ -25,7 +25,7 @@ public class RepositoryValueProvider extends ValueProviderSupport {
 		if (pathService.getSpringBootProject().isPresent()) {
 			// @formatter:off
 			return pathService.getSpringBootProject().get().getRepositories()
-					.stream().map(Repository::getName)
+					.stream().map(RepositoryRepresentation::getName)
 					.map(CompletionProposal::new)
 					.collect(Collectors.toList());
 			// @formatter:on

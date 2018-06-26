@@ -2,15 +2,15 @@ package br.xtool.mapper.jpa;
 
 import org.springframework.stereotype.Component;
 
-import br.xtool.core.model.Attribute;
-import br.xtool.core.model.Entity;
+import br.xtool.core.representation.AttributeRepresentation;
+import br.xtool.core.representation.EntityRepresentation;
 import br.xtool.mapper.core.JpaMapper;
 
 @Component
 public class InitializeCollectionAttributes implements JpaMapper {
 
 	@Override
-	public void apply(Entity t) {
+	public void apply(EntityRepresentation t) {
 		// @formatter:off
 		t.getAttributes().stream()
 			.filter(attr -> attr.isCollection())
@@ -18,7 +18,7 @@ public class InitializeCollectionAttributes implements JpaMapper {
 		// @formatter:on
 	}
 
-	private void initalizeCollectionAttribute(Entity entity, Attribute attribute) {
+	private void initalizeCollectionAttribute(EntityRepresentation entity, AttributeRepresentation attribute) {
 		switch (attribute.getType().getName()) {
 		case "List":
 			entity.addImport("java.util.ArrayList");

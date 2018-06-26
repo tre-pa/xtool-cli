@@ -6,16 +6,16 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 import br.xtool.core.PathService;
-import br.xtool.core.model.Entity;
+import br.xtool.core.representation.EntityRepresentation;
 
 @Component
-public class EntityConverter implements Converter<String, Entity> {
+public class EntityConverter implements Converter<String, EntityRepresentation> {
 
 	@Autowired
 	private PathService pathService;
 
 	@Override
-	public Entity convert(String source) {
+	public EntityRepresentation convert(String source) {
 		if (pathService.getSpringBootProject().isPresent() && StringUtils.isNotEmpty(source)) {
 			// @formatter:off
 			return pathService.getSpringBootProject().get().getEntities()

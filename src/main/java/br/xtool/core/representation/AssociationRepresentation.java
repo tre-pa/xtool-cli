@@ -1,21 +1,21 @@
-package br.xtool.core.model;
+package br.xtool.core.representation;
 
 import java.util.Optional;
 
 import lombok.Getter;
 
-public class Association implements Comparable<Association> {
+public class AssociationRepresentation implements Comparable<AssociationRepresentation> {
 
 	@Getter
-	private Entity entitySource;
+	private EntityRepresentation entitySource;
 
 	@Getter
-	private Entity entityTarget;
+	private EntityRepresentation entityTarget;
 
 	@Getter
-	private Attribute attributeSource;
+	private AttributeRepresentation attributeSource;
 
-	public Association(Entity source, Entity target, Attribute attributeSource) {
+	public AssociationRepresentation(EntityRepresentation source, EntityRepresentation target, AttributeRepresentation attributeSource) {
 		super();
 		this.entitySource = source;
 		this.entityTarget = target;
@@ -97,7 +97,7 @@ public class Association implements Comparable<Association> {
 		return this.attributeSource.hasAnnotation("ManyToMany");
 	}
 
-	public Optional<Attribute> getAttributeTarget() {
+	public Optional<AttributeRepresentation> getAttributeTarget() {
 		// @formatter:off
 		return this.entityTarget.getAttributes().stream()
 				.filter(attrTarget -> attrTarget.getType().getName().equals(entityTarget.getName()))
@@ -106,7 +106,7 @@ public class Association implements Comparable<Association> {
 	}
 
 	@Override
-	public int compareTo(Association o) {
+	public int compareTo(AssociationRepresentation o) {
 		return this.entityTarget.getName().compareTo(o.getEntityTarget().getName());
 	}
 

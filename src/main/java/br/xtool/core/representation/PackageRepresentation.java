@@ -1,4 +1,4 @@
-package br.xtool.core.model;
+package br.xtool.core.representation;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -12,25 +12,25 @@ import lombok.Getter;
  */
 
 @Getter
-public class Package {
+public class PackageRepresentation {
 
 	private String name;
 
 	private String dir;
 
-	private Package() {
+	private PackageRepresentation() {
 		super();
 	}
 
-	public static Package of(String packageName) {
-		Package package1 = new Package();
+	public static PackageRepresentation of(String packageName) {
+		PackageRepresentation package1 = new PackageRepresentation();
 		package1.name = packageName;
 		package1.dir = packageName.replaceAll("\\.", "/");
 		return package1;
 	}
 
-	public static Package of(String... packageElements) {
-		Package package1 = new Package();
+	public static PackageRepresentation of(String... packageElements) {
+		PackageRepresentation package1 = new PackageRepresentation();
 		package1.name = StringUtils.join(packageElements, ".");
 		package1.dir = package1.name.replaceAll("\\.", "/");
 		return package1;

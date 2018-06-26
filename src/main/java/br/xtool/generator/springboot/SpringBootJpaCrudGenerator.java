@@ -14,9 +14,9 @@ import br.xtool.XtoolCliApplication;
 import br.xtool.core.Log;
 import br.xtool.core.annotation.Template;
 import br.xtool.core.command.SpringBootCommand;
-import br.xtool.core.model.Entity;
-import br.xtool.core.model.Pom;
 import br.xtool.core.provider.EntityValueProvider;
+import br.xtool.core.representation.EntityRepresentation;
+import br.xtool.core.representation.PomRepresentation;
 
 /**
  * Comando que gera um classe CRUD no projeto Spring Boot
@@ -29,7 +29,7 @@ import br.xtool.core.provider.EntityValueProvider;
 public class SpringBootJpaCrudGenerator extends SpringBootCommand {
 
 	@ShellMethod(key = "gen-springboot-jpa-crud", value = "Gera as classes de CRUD (JpaRepository, Service e Rest) para entidade JPA", group = XtoolCliApplication.SPRINGBOOT_COMMAND_GROUP)
-	public void run(@ShellOption(help = "Entidade JPA", valueProvider = EntityValueProvider.class) Entity entity) throws IOException, JDOMException {
+	public void run(@ShellOption(help = "Entidade JPA", valueProvider = EntityValueProvider.class) EntityRepresentation entity) throws IOException, JDOMException {
 		/*
 		 * Cria o mapa com as variáveis do gerador.
 		 */
@@ -58,14 +58,14 @@ public class SpringBootJpaCrudGenerator extends SpringBootCommand {
 		//addEntityAttribute(entity);
 	}
 
-	private void addEntityAttribute(Entity entity) {
+	private void addEntityAttribute(EntityRepresentation entity) {
 		entity.addAttribute(fieldSource -> {
 			fieldSource.setPublic().setName("Abc").addAnnotation("com.fasterxml.jackson.annotation.JsonIgnoreProperties").setStringArrayValue(new String[] { "pessoa", "id", "unidade" });
 		});
 		entity.commitUpdate();
 	}
 
-	private void showCollectionAssociations(Entity entity) {
+	private void showCollectionAssociations(EntityRepresentation entity) {
 		System.out.println(Log.green("\nLista de associações compostas\n"));
 		// @formatter:off
 		entity.getAttributes().stream()
@@ -80,7 +80,7 @@ public class SpringBootJpaCrudGenerator extends SpringBootCommand {
 		// @formatter:on
 	}
 
-	private void showSingleAssociations(Entity entity) {
+	private void showSingleAssociations(EntityRepresentation entity) {
 		System.out.println(Log.green("\nLista de associações simples\n"));
 		//// @formatter:off
 		entity.getAttributes().stream()
@@ -93,13 +93,13 @@ public class SpringBootJpaCrudGenerator extends SpringBootCommand {
 		// @formatter:on
 	}
 
-	private void showEntityAnnotations(Entity entity) {
+	private void showEntityAnnotations(EntityRepresentation entity) {
 		System.out.println(Log.green("\nLista de annotations da class\n"));
 
 		entity.getAnnotations().stream().forEach(a -> System.out.println(a.getName()));
 	}
 
-	private void showEntityAttributes(Entity entity) {
+	private void showEntityAttributes(EntityRepresentation entity) {
 		System.out.println(Log.green("Lista de atributos da classe "));
 		entity.getAttributes().stream().forEach(a -> System.out.println(a.getName().concat(" : ").concat(a.getType().getName())));
 	}

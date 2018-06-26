@@ -1,4 +1,4 @@
-package br.xtool.core.model;
+package br.xtool.core.representation;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -27,7 +27,7 @@ import lombok.ToString;
  * @author jcruz
  *
  */
-public class Pom {
+public class PomRepresentation {
 
 	public static final Namespace NAMESPACE = Namespace.getNamespace("http://maven.apache.org/POM/4.0.0");
 
@@ -41,7 +41,7 @@ public class Pom {
 	
 	private List<String> updateInfo = new ArrayList<>();
 
-	public Pom(String path) throws JDOMException, IOException {
+	public PomRepresentation(String path) throws JDOMException, IOException {
 		super();
 		this.file = new File(path);
 		SAXBuilder saxBuilder = new SAXBuilder();
@@ -54,8 +54,8 @@ public class Pom {
 	 * 
 	 * @return
 	 */
-	public Package getGroupId() {
-		return Package.of(this.rootElement.getChild("groupId", NAMESPACE).getText());
+	public PackageRepresentation getGroupId() {
+		return PackageRepresentation.of(this.rootElement.getChild("groupId", NAMESPACE).getText());
 	}
 
 	/**
@@ -182,7 +182,7 @@ public class Pom {
 		 * @return
 		 */
 		public Element getAsDom() {
-			Element dependency = new Element("dependency", Pom.NAMESPACE);
+			Element dependency = new Element("dependency", PomRepresentation.NAMESPACE);
 			this.addGroupId(dependency);
 			this.addArtifiactId(dependency);
 			this.addVersion(dependency);
@@ -190,20 +190,20 @@ public class Pom {
 		}
 
 		private void addGroupId(Element dependency) {
-			Element groupId = new Element("groupId", Pom.NAMESPACE);
+			Element groupId = new Element("groupId", PomRepresentation.NAMESPACE);
 			groupId.setText(this.getGroupId());
 			dependency.addContent(groupId);
 		}
 
 		private void addArtifiactId(Element dependency) {
-			Element artifactId = new Element("artifactId", Pom.NAMESPACE);
+			Element artifactId = new Element("artifactId", PomRepresentation.NAMESPACE);
 			artifactId.setText(this.getArtifactId());
 			dependency.addContent(artifactId);
 		}
 
 		private void addVersion(Element dependency) {
 			if (StringUtils.isNoneBlank(this.getVersion())) {
-				Element version = new Element("version", Pom.NAMESPACE);
+				Element version = new Element("version", PomRepresentation.NAMESPACE);
 				version.setText(this.getVersion());
 				dependency.addContent(version);
 			}

@@ -13,7 +13,7 @@ import org.springframework.shell.standard.ValueProviderSupport;
 import org.springframework.stereotype.Component;
 
 import br.xtool.core.PathService;
-import br.xtool.core.model.Entity;
+import br.xtool.core.representation.EntityRepresentation;
 
 @Component
 public class EntityValueProvider extends ValueProviderSupport {
@@ -26,7 +26,7 @@ public class EntityValueProvider extends ValueProviderSupport {
 		if (pathService.getSpringBootProject().isPresent()) {
 			// @formatter:off
 			return pathService.getSpringBootProject().get().getEntities()
-					.stream().map(Entity::getName)
+					.stream().map(EntityRepresentation::getName)
 					.map(CompletionProposal::new)
 					.collect(Collectors.toList());
 			// @formatter:on

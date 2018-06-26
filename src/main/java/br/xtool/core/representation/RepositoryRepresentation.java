@@ -1,4 +1,4 @@
-package br.xtool.core.model;
+package br.xtool.core.representation;
 
 import java.util.Optional;
 
@@ -10,13 +10,13 @@ import org.jboss.forge.roaster.model.source.JavaInterfaceSource;
  * @author jcruz
  *
  */
-public class Repository implements Comparable<Repository> {
+public class RepositoryRepresentation implements Comparable<RepositoryRepresentation> {
 
-	private SpringBootProject springBootProject;
+	private SpringBootProjectRepresentation springBootProject;
 
 	private JavaInterfaceSource javaInterfaceSource;
 
-	public Repository(SpringBootProject springBootProject, JavaInterfaceSource javaInterfaceSource) {
+	public RepositoryRepresentation(SpringBootProjectRepresentation springBootProject, JavaInterfaceSource javaInterfaceSource) {
 		super();
 		this.springBootProject = springBootProject;
 		this.javaInterfaceSource = javaInterfaceSource;
@@ -32,11 +32,11 @@ public class Repository implements Comparable<Repository> {
 	}
 
 	@Override
-	public int compareTo(Repository o) {
+	public int compareTo(RepositoryRepresentation o) {
 		return this.getName().compareTo(o.getName());
 	}
 
-	public Optional<Entity> getEntity() {
+	public Optional<EntityRepresentation> getEntity() {
 		// @formatter:off
 		return this.springBootProject.getEntities().stream()
 				.filter(e -> e.getName().concat("Repository").equals(this.getName()))

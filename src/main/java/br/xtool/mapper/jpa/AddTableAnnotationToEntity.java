@@ -3,7 +3,7 @@ package br.xtool.mapper.jpa;
 import org.springframework.stereotype.Component;
 
 import br.xtool.core.NamePattern;
-import br.xtool.core.model.Entity;
+import br.xtool.core.representation.EntityRepresentation;
 import br.xtool.mapper.core.JpaMapper;
 
 /**
@@ -16,7 +16,7 @@ import br.xtool.mapper.core.JpaMapper;
 public class AddTableAnnotationToEntity implements JpaMapper {
 
 	@Override
-	public void apply(Entity entity) {
+	public void apply(EntityRepresentation entity) {
 		if (!entity.hasAnnotation("Table")) {
 			entity.addImport("javax.persistence.Table");
 			entity.addAnnotation(annotation -> {

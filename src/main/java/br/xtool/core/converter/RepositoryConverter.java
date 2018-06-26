@@ -6,17 +6,17 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 import br.xtool.core.PathService;
-import br.xtool.core.model.Entity;
-import br.xtool.core.model.Repository;
+import br.xtool.core.representation.EntityRepresentation;
+import br.xtool.core.representation.RepositoryRepresentation;
 
 @Component
-public class RepositoryConverter implements Converter<String, Repository> {
+public class RepositoryConverter implements Converter<String, RepositoryRepresentation> {
 
 	@Autowired
 	private PathService pathService;
 
 	@Override
-	public Repository convert(String source) {
+	public RepositoryRepresentation convert(String source) {
 		if (pathService.getSpringBootProject().isPresent() && StringUtils.isNotEmpty(source)) {
 			// @formatter:off
 			return pathService.getSpringBootProject().get().getRepositories()

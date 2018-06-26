@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import br.xtool.core.model.SpringBootProject;
+import br.xtool.core.representation.SpringBootProjectRepresentation;
 import lombok.Getter;
 
 /**
@@ -74,8 +74,8 @@ public class PathService {
 		return !StringUtils.isEmpty(this.getWorkingDirectory());
 	}
 
-	public Optional<SpringBootProject> getSpringBootProject() {
-		return SpringBootProject.of(this.getWorkingDirectory());
+	public Optional<SpringBootProjectRepresentation> getSpringBootProject() {
+		return SpringBootProjectRepresentation.of(this.getWorkingDirectory());
 	}
 
 	public int exec(String command) {

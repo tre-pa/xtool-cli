@@ -9,14 +9,14 @@ import org.springframework.shell.Availability;
 import org.springframework.shell.standard.ShellMethodAvailability;
 
 import br.xtool.core.PathService;
-import br.xtool.core.model.SpringBootProject;
+import br.xtool.core.representation.SpringBootProjectRepresentation;
 
 public class SpringBootCommand extends XCommand {
 
 	@Autowired
 	private PathService pathCtx;
 	
-	private SpringBootProject springBootProject;
+	private SpringBootProjectRepresentation springBootProject;
 	
 	/**
 	 * Define a disponibilidade dos comando do grupo Spring Boot.
@@ -26,7 +26,7 @@ public class SpringBootCommand extends XCommand {
 	 */
 	@ShellMethodAvailability
 	public Availability availabilitySpringBootCommand() throws IOException {
-		return SpringBootProject.isValidSpringBootProject(pathCtx.getWorkingDirectory()) ? Availability.available()
+		return SpringBootProjectRepresentation.isValidSpringBootProject(pathCtx.getWorkingDirectory()) ? Availability.available()
 				: Availability.unavailable(
 						"O diretório de trabalho não é um projeto maven válido. Use o comando cd para alterar o diretório de trabalho.");
 	}
@@ -37,7 +37,7 @@ public class SpringBootCommand extends XCommand {
 	 * @return
 	 * @throws IOException
 	 */
-	protected SpringBootProject getProject() throws IOException {
+	protected SpringBootProjectRepresentation getProject() throws IOException {
 		if(this.springBootProject == null) {
 			this.springBootProject = pathCtx.getSpringBootProject().get();
 		}

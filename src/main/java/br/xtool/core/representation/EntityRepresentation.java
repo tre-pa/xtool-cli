@@ -1,4 +1,4 @@
-package br.xtool.core.model;
+package br.xtool.core.representation;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -22,20 +22,20 @@ import br.xtool.core.Log;
  * @author jcruz
  *
  */
-public class Entity implements Comparable<Entity> {
+public class EntityRepresentation implements Comparable<EntityRepresentation> {
 
-	private SpringBootProject springBootProject;
+	private SpringBootProjectRepresentation springBootProject;
 
 	private JavaClassSource javaClassSource;
 
-	private SortedSet<Attribute> attributes;
+	private SortedSet<AttributeRepresentation> attributes;
 
-	private SortedSet<Association> associations;
+	private SortedSet<AssociationRepresentation> associations;
 
 	@Deprecated
 	private List<String> updateInfo = new ArrayList<>();
 
-	public Entity(SpringBootProject springBootProject, JavaClassSource javaClassSource) {
+	public EntityRepresentation(SpringBootProjectRepresentation springBootProject, JavaClassSource javaClassSource) {
 		super();
 		this.springBootProject = springBootProject;
 		this.javaClassSource = javaClassSource;
@@ -64,8 +64,8 @@ public class Entity implements Comparable<Entity> {
 	 * 
 	 * @return
 	 */
-	public Package getPackage() {
-		return Package.of(javaClassSource.getPackage());
+	public PackageRepresentation getPackage() {
+		return PackageRepresentation.of(javaClassSource.getPackage());
 	}
 
 	/**
@@ -82,11 +82,11 @@ public class Entity implements Comparable<Entity> {
 	 * 
 	 * @return
 	 */
-	public SortedSet<Attribute> getAttributes() {
+	public SortedSet<AttributeRepresentation> getAttributes() {
 		if (this.attributes == null) {
 			// @formatter:off
 			this.attributes = this.javaClassSource.getFields().stream()
-					.map(f -> new Attribute(this.springBootProject,this, f))
+					.map(f -> new AttributeRepresentation(this.springBootProject,this, f))
 					.collect(Collectors.toCollection(TreeSet::new));
 			// @formatter:on
 		}
@@ -98,13 +98,13 @@ public class Entity implements Comparable<Entity> {
 	 * 
 	 * @return
 	 */
-	public SortedSet<Association> getAssociations() {
+	public SortedSet<AssociationRepresentation> getAssociations() {
 		if (this.associations == null) {
 			this.associations = new TreeSet<>();
 			// @formatter:off
 			this.getAttributes().stream()
-				.filter(Attribute::isAssociation)
-				.map(Attribute::getAssociation)
+				.filter(AttributeRepresentation::isAssociation)
+				.map(AttributeRepresentation::getAssociation)
 				.forEach(association -> this.associations.add(association.get()));
 			// @formatter:on
 		}
@@ -171,7 +171,7 @@ public class Entity implements Comparable<Entity> {
 	}
 
 	@Override
-	public int compareTo(Entity o) {
+	public int compareTo(EntityRepresentation o) {
 		return this.getName().compareTo(o.getName());
 	}
 
