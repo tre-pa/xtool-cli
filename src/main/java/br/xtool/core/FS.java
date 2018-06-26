@@ -23,39 +23,38 @@ public class FS {
 	/**
 	 * Realiza uma cópia simples.
 	 * 
-	 * @param source
+	 * @param templatePath
 	 *            Caminho relativo do arquivo no diretório de templates.F
-	 * @param destination
+	 * @param relativeDestination
 	 *            Caminho absoluto do arquivo final
 	 * @throws IOException
 	 */
-	public void copy(String source, String destination) throws IOException {
-		FileUtils.forceMkdirParent(new File(destination));
-		FileUtils.copyInputStreamToFile(new ClassPathResource(String.format("templates/%s", source)).getInputStream(),
-				new File(destination));
+	public void copy(String templatePath, String relativeDestination) throws IOException {
+		FileUtils.forceMkdirParent(new File(relativeDestination));
+		FileUtils.copyInputStreamToFile(new ClassPathResource(String.format("templates/%s", templatePath)).getInputStream(), new File(relativeDestination));
 	}
 
 	/**
 	 * Realiza uma cópia com substituição de variáveis no template.
 	 * 
-	 * @param template
+	 * @param templatePath
 	 *            Caminho relativo do arquivo de template
-	 * @param destination
+	 * @param relativeDestination
 	 *            Caminho absoluto do arquivo final
 	 * @param vars
 	 *            Mapa com variáveis para substituição no template
 	 * @throws IOException
 	 */
-	public void copyTpl(String template, String destination, Map<String, Object> vars) throws IOException {
+	public void copy(String templatePath, String relativeDestination, Map<String, Object> vars) throws IOException {
 		VelocityContext vContext = new VelocityContext(vars);
 
 		StringWriter stringWriter = new StringWriter();
-		vEngine.evaluate(vContext, stringWriter, new String(), destination);
-		destination = stringWriter.toString();
-		
-		Template t = vEngine.getTemplate(String.format("templates/%s", template), "UTF-8");
-		FileUtils.forceMkdirParent(new File(destination));
-		FileWriterWithEncoding writer = new FileWriterWithEncoding(destination, "UTF-8");
+		vEngine.evaluate(vContext, stringWriter, new String(), relativeDestination);
+		relativeDestination = stringWriter.toString();
+
+		Template t = vEngine.getTemplate(String.format("templates/%s", templatePath), "UTF-8");
+		FileUtils.forceMkdirParent(new File(relativeDestination));
+		FileWriterWithEncoding writer = new FileWriterWithEncoding(relativeDestination, "UTF-8");
 		t.merge(vContext, writer);
 		writer.flush();
 		writer.close();

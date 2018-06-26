@@ -43,7 +43,7 @@ public class XCommand {
 
 		String fTemplate = this.getFinalSource(template);
 		String fDestination = this.getFinalDestination(destination);
-		fs.copyTpl(fTemplate, fDestination, vars);
+		fs.copy(fTemplate, fDestination, vars);
 		Log.print(Log.bold(Log.green("\t[+] ")) + Log.purple("File: ") + Log.white(destination));
 	}
 	

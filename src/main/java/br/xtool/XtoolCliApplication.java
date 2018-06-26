@@ -4,12 +4,8 @@ import org.jline.utils.AttributedString;
 import org.jline.utils.AttributedStyle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.ansi.AnsiColor;
-import org.springframework.boot.ansi.AnsiStyle;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Import;
 import org.springframework.shell.jline.PromptProvider;
-import org.springframework.shell.standard.FileValueProvider;
 
 import br.xtool.core.PathService;
 
@@ -34,4 +30,5 @@ public class XtoolCliApplication implements PromptProvider {
 		}
 		return new AttributedString("xtool > ", AttributedStyle.DEFAULT.foreground(AttributedStyle.YELLOW));
 	}
+
 }
