@@ -23,6 +23,7 @@ public class XCommand {
 
 	private String destinationRoot = "";
 
+	@Deprecated
 	protected void copy(String source, String destination) throws IOException {
 		String fSource = this.getFinalSource(source);
 		String fDestination = this.getFinalDestination(destination);
@@ -30,12 +31,14 @@ public class XCommand {
 		Log.print(Log.bold(Log.green("\t[+] ")) + Log.purple("File: ") + Log.white(destination));
 	}
 
+	@Deprecated
 	protected void copy(String source, String destination, Supplier<Boolean> exp) throws IOException {
 		if (exp.get()) {
 			this.copy(source, destination);
 		}
 	}
-
+	
+	@Deprecated
 	protected void copyTpl(String template, String destination, Map<String, Object> vars) throws IOException {
 
 		String fTemplate = this.getFinalSource(template);
@@ -43,7 +46,8 @@ public class XCommand {
 		fs.copyTpl(fTemplate, fDestination, vars);
 		Log.print(Log.bold(Log.green("\t[+] ")) + Log.purple("File: ") + Log.white(destination));
 	}
-
+	
+	@Deprecated
 	protected void copyTpl(String template, String destination, Map<String, Object> vars, Supplier<Boolean> exp) throws IOException {
 		if (exp.get()) {
 			this.copyTpl(template, destination, vars);

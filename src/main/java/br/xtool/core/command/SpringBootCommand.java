@@ -14,6 +14,7 @@ public class SpringBootCommand extends XCommand {
 	@Autowired
 	private PathService pathCtx;
 	
+	@Deprecated
 	private SpringBootProjectRepresentation springBootProject;
 	
 	/**
@@ -35,6 +36,7 @@ public class SpringBootCommand extends XCommand {
 	 * @return
 	 * @throws IOException
 	 */
+	@Deprecated
 	protected SpringBootProjectRepresentation getProject() throws IOException {
 		if(this.springBootProject == null) {
 			this.springBootProject = pathCtx.getSpringBootProject().get();
