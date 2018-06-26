@@ -9,7 +9,7 @@ import br.xtool.core.PathService;
 import br.xtool.core.representation.EntityRepresentation;
 
 @Component
-public class EntityConverter implements Converter<String, EntityRepresentation> {
+public class EntityRepresentationConverter implements Converter<String, EntityRepresentation> {
 
 	@Autowired
 	private PathService pathService;

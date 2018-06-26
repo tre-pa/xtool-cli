@@ -10,7 +10,7 @@ import br.xtool.core.representation.EntityRepresentation;
 import br.xtool.core.representation.RepositoryRepresentation;
 
 @Component
-public class RepositoryConverter implements Converter<String, RepositoryRepresentation> {
+public class RepositoryRepresentationConverter implements Converter<String, RepositoryRepresentation> {
 
 	@Autowired
 	private PathService pathService;
