@@ -1,6 +1,5 @@
 package br.xtool.core.provider;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,7 +15,7 @@ import br.xtool.core.PathService;
 import br.xtool.core.representation.EntityRepresentation;
 
 @Component
-public class EntityValueProvider extends ValueProviderSupport {
+public class EntityRepresentationValueProvider extends ValueProviderSupport {
 
 	@Autowired
 	private PathService pathService;

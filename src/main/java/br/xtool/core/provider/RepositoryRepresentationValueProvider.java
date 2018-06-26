@@ -15,7 +15,7 @@ import br.xtool.core.PathService;
 import br.xtool.core.representation.RepositoryRepresentation;
 
 @Component
-public class RepositoryValueProvider extends ValueProviderSupport {
+public class RepositoryRepresentationValueProvider extends ValueProviderSupport {
 
 	@Autowired
 	private PathService pathService;

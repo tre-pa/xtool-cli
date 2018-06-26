@@ -15,7 +15,7 @@ import br.xtool.XtoolCliApplication;
 import br.xtool.core.NamePattern;
 import br.xtool.core.annotation.Template;
 import br.xtool.core.command.SpringBootCommand;
-import br.xtool.core.provider.EntityValueProvider;
+import br.xtool.core.provider.EntityRepresentationValueProvider;
 import br.xtool.core.representation.EntityRepresentation;
 import strman.Strman;
 
