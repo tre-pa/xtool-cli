@@ -48,9 +48,7 @@ public class FS {
 	public void copy(String templatePath, String relativeDestination, Map<String, Object> vars) throws IOException {
 		VelocityContext vContext = new VelocityContext(vars);
 
-		StringWriter stringWriter = new StringWriter();
-		vEngine.evaluate(vContext, stringWriter, new String(), relativeDestination);
-		relativeDestination = stringWriter.toString();
+		relativeDestination = this.inlineTemplate(relativeDestination, vars);
 
 		Template t = vEngine.getTemplate(String.format("templates/%s", templatePath), "UTF-8");
 		FileUtils.forceMkdirParent(new File(relativeDestination));
@@ -58,5 +56,20 @@ public class FS {
 		t.merge(vContext, writer);
 		writer.flush();
 		writer.close();
+	}
+
+	/**
+	 * Realiza substituição inline do template.
+	 * 
+	 * @param inlineTemplate
+	 * @param vars
+	 * @return
+	 */
+	public String inlineTemplate(String inlineTemplate, Map<String, Object> vars) {
+		VelocityContext vContext = new VelocityContext(vars);
+
+		StringWriter stringWriter = new StringWriter();
+		vEngine.evaluate(vContext, stringWriter, new String(), inlineTemplate);
+		return stringWriter.toString();
 	}
 }
