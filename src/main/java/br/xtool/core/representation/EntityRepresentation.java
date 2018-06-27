@@ -4,6 +4,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.SortedSet;
@@ -128,16 +129,17 @@ public class EntityRepresentation implements Comparable<EntityRepresentation>, U
 		return this.getName().compareTo(o.getName());
 	}
 
-	public <T extends UpdateRequest<EntityRepresentation>> void addUpdateRequest(Optional<T> updateRequest) {
+	public <T extends UpdateRequest<EntityRepresentation>> void addUpdate(Optional<T> updateRequest) {
 		if (updateRequest.isPresent()) {
 			this.updateRequests.add(updateRequest.get());
 		}
 	}
 
-	public void commitUpdateRequests() {
+	public void commitUpdates() {
 		Log.print(Log.bold(Log.yellow("\t[~] ")), Log.white(this.getQualifiedName()));
 		// @formatter:off
-		this.updateRequests.stream()
+		this.updateRequests
+			.stream()
 			.filter(updateRequest -> updateRequest.updatePolicy(this))
 			.forEach(updateRequest -> updateRequest.apply(this));
 		// @formatter:on

@@ -8,11 +8,17 @@ import br.xtool.core.Log;
 import br.xtool.core.representation.EntityRepresentation;
 import br.xtool.core.representation.updater.core.UpdateRequest;
 
-public class AddImportUpdaterRequest implements UpdateRequest<EntityRepresentation> {
+/**
+ * Requisição de atualização para adição de import.
+ * 
+ * @author jcruz
+ *
+ */
+public class AddImport implements UpdateRequest<EntityRepresentation> {
 
 	private String name;
 
-	private AddImportUpdaterRequest(String name) {
+	private AddImport(String name) {
 		super();
 		this.name = name;
 	}
@@ -25,12 +31,17 @@ public class AddImportUpdaterRequest implements UpdateRequest<EntityRepresentati
 	@Override
 	public void apply(EntityRepresentation representation) {
 		representation.getSource().addImport(name);
-		Log.print(Log.bold(Log.green("\t\t[+] ")), Log.gray("import : "), Log.white(this.name));
+		Log.print(Log.bold(Log.green("\t    [+] ")), Log.gray("import : "), Log.white(this.name));
 	}
 
-	public static Optional<AddImportUpdaterRequest> of(String name) {
+	/**
+	 * 
+	 * @param name
+	 * @return
+	 */
+	public static Optional<AddImport> of(String name) {
 		if (StringUtils.isNotBlank(name)) {
-			return Optional.of(new AddImportUpdaterRequest(name));
+			return Optional.of(new AddImport(name));
 		}
 		return Optional.empty();
 	}

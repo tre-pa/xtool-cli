@@ -1,5 +1,6 @@
 package br.xtool.mapper;
 
+import java.util.Collections;
 import java.util.Objects;
 
 import org.springframework.shell.standard.ShellComponent;
@@ -7,11 +8,15 @@ import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 import org.springframework.util.Assert;
 
+import com.google.common.collect.Lists;
+
 import br.xtool.XtoolCliApplication;
 import br.xtool.core.command.SpringBootCommand;
 import br.xtool.core.provider.EntityRepresentationValueProvider;
 import br.xtool.core.representation.EntityRepresentation;
-import br.xtool.core.representation.updater.AddImportUpdaterRequest;
+import br.xtool.core.representation.updater.AddAnnotationStringValue;
+import br.xtool.core.representation.updater.AddEntityAnnotation;
+import br.xtool.core.representation.updater.AddImport;
 
 @ShellComponent
 public class SpringBootJpaEntityMapper extends SpringBootCommand {
@@ -30,8 +35,10 @@ public class SpringBootJpaEntityMapper extends SpringBootCommand {
 		Assert.isTrue(jpa || lombok || jackson, "Seleciona pelo menos uma opção de mapeamento. Digite 'help map-springboot-jpa-entity' para mais detalhes.");
 
 		if (Objects.nonNull(entity)) {
-			entity.addUpdateRequest(AddImportUpdaterRequest.of("br.jus.tre_pa"));
-			entity.commitUpdateRequests();
+			entity.addUpdate(AddImport.of("br.jus.tre_pa"));
+			entity.addUpdate(AddEntityAnnotation.of("lombok.Getter", "Getter"));
+			entity.addUpdate(AddEntityAnnotation.of("lombok.EqualsAndHashCode", "EqualsAndHashCode", AddAnnotationStringValue.of("of", new String[] { "id", "name" })));
+			entity.commitUpdates();
 			return;
 		}
 	}
