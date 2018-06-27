@@ -3,7 +3,6 @@ package br.xtool.generator.core;
 import java.io.IOException;
 import java.util.Map;
 
-import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
@@ -13,10 +12,9 @@ import org.springframework.shell.standard.ShellOption;
 import com.google.common.collect.ImmutableMap;
 
 import br.xtool.XtoolCliApplication;
+import br.xtool.core.FS;
 import br.xtool.core.Log;
-import br.xtool.core.PathService;
-import br.xtool.core.annotation.Template;
-import br.xtool.core.command.XCommand;
+import br.xtool.core.NamePattern;
 import strman.Strman;
 
 /**
@@ -26,8 +24,10 @@ import strman.Strman;
  *
  */
 @ShellComponent
-@Template(path = "generators/springboot/scaffold/1.5.x")
-public class NewSpringBootProjectGenerator extends XCommand {
+public class NewSpringBootProjectGenerator {
+
+	@Autowired
+	private FS fs;
 
 	@ShellMethod(key = "new-springboot-project", value = "Novo projeto Spring Boot 1.5.x", group = XtoolCliApplication.PROJECT_COMMAND_GROUP)
 	// @formatter:off
@@ -44,39 +44,33 @@ public class NewSpringBootProjectGenerator extends XCommand {
 		 */
 		//// @formatter:off
 		Map<String, Object> vars = ImmutableMap.<String, Object>builder()
-				.put("projectName", getFinalProjectName(name))
+				.put("templatePath", "generators/springboot/scaffold/1.5.x")
+				.put("projectName", NamePattern.asSpringBootProject(name))
 				.put("projectVersion", version)
 				.put("packageRoot", getFinalPackageRoot(name, packageRoot))
-				.put("mainClassName", getMainClassName(getFinalProjectName(name)))
+				.put("baseClassName", NamePattern.asSpringBootBaseClass(name))
 				.put("noJpa", noJpa)
 				.put("noWeb", noWeb)
 				.build();
 		// @formatter:on
 
-		this.setDestinationRoot(getFinalProjectName(name));
 		Log.print("");
-		this.copyTpl("src/main/java/config/gitkeep", "src/main/java/${packageRoot.dir}/config/.gitkeep", vars);
-		this.copyTpl("src/main/java/domain/gitkeep", "src/main/java/${packageRoot.dir}/domain/.gitkeep", vars, () -> !noJpa);
-		this.copyTpl("src/main/java/exception/gitkeep", "src/main/java/${packageRoot.dir}/exception/.gitkeep", vars);
-		this.copyTpl("src/main/java/report/gitkeep", "src/main/java/${packageRoot.dir}/report/.gitkeep", vars);
-		this.copyTpl("src/main/java/repository/gitkeep", "src/main/java/${packageRoot.dir}/repository/.gitkeep", vars, () -> !noJpa);
-		this.copyTpl("src/main/java/rest/gitkeep", "src/main/java/${packageRoot.dir}/rest/.gitkeep", vars, () -> !noWeb);
-		this.copyTpl("src/main/java/service/gitkeep", "src/main/java/${packageRoot.dir}/service/.gitkeep", vars);
-		this.copyTpl("src/main/java/SpringBootApplication.java.vm", "src/main/java/${packageRoot.dir}/${mainClassName}Application.java", vars);
-		this.copyTpl("src/main/resources/application.properties.vm", "src/main/resources/application.properties", vars);
-		this.copy("src/main/resources/ehcache.xml.vm", "src/main/resources/ehcache.xml", () -> !noJpa);
-		this.copy("gitignore", ".gitignore");
-		this.copyTpl("pom.xml.vm", "pom.xml", vars);
 
-		this.changeWorkingDirectoryToDestinationRoot();
-	}
+		fs.copy("${templatePath}/src/main/java/config/gitkeep", "${projectName}/src/main/java/${packageRoot.dir}/config/.gitkeep", vars);
+		fs.copy("${templatePath}/src/main/java/domain/gitkeep", "${projectName}/src/main/java/${packageRoot.dir}/domain/.gitkeep", vars);
+		fs.copy("${templatePath}/src/main/java/exception/gitkeep", "${projectName}/src/main/java/${packageRoot.dir}/exception/.gitkeep", vars);
+		fs.copy("${templatePath}/src/main/java/report/gitkeep", "${projectName}/src/main/java/${packageRoot.dir}/report/.gitkeep", vars);
+		fs.copy("${templatePath}/src/main/java/repository/gitkeep", "${projectName}/src/main/java/${packageRoot.dir}/repository/.gitkeep", vars);
+		fs.copy("${templatePath}/src/main/java/rest/gitkeep", "${projectName}/src/main/java/${packageRoot.dir}/rest/.gitkeep", vars);
+		fs.copy("${templatePath}/src/main/java/service/gitkeep", "${projectName}/src/main/java/${packageRoot.dir}/service/.gitkeep", vars);
+		fs.copy("${templatePath}/src/main/java/SpringBootApplication.java.vm", "${projectName}/src/main/java/${packageRoot.dir}/${baseClassName}Application.java", vars);
+		fs.copy("${templatePath}/src/main/resources/application.properties.vm", "${projectName}/src/main/resources/application.properties", vars);
+		fs.copy("${templatePath}/src/main/resources/ehcache.xml.vm", "${projectName}/src/main/resources/ehcache.xml", vars);
+		fs.copy("${templatePath}/gitignore", "${projectName}/.gitignore", vars);
+		fs.copy("${templatePath}/pom.xml.vm", "${projectName}/pom.xml", vars);
 
-	/*
-	 * Retorna o nome final do projeto com o sufixo -service caso necessário.
-	 */
-	private String getFinalProjectName(String name) {
-		name = name.endsWith("-service") ? name : name.concat("-service");
-		return Strman.toKebabCase(name);
+		Log.print("");
+
 	}
 
 	/*
@@ -93,10 +87,6 @@ public class NewSpringBootProjectGenerator extends XCommand {
 				.put("dir", packageDir)
 				.build();
 		// @formatter:on
-	}
-
-	private String getMainClassName(String finalProjectName) {
-		return Strman.toStudlyCase(finalProjectName);
 	}
 
 }

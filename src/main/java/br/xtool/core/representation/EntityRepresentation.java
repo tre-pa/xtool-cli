@@ -15,6 +15,7 @@ import org.jboss.forge.roaster.model.source.FieldSource;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 
 import br.xtool.core.Log;
+import lombok.ToString;
 
 /**
  * Classe que representa um entidade JPA

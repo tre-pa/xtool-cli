@@ -12,11 +12,9 @@ import com.google.common.collect.ImmutableMap;
 
 import br.xtool.XtoolCliApplication;
 import br.xtool.core.Log;
-import br.xtool.core.annotation.Template;
 import br.xtool.core.command.SpringBootCommand;
 import br.xtool.core.provider.EntityRepresentationValueProvider;
 import br.xtool.core.representation.EntityRepresentation;
-import br.xtool.core.representation.PomRepresentation;
 
 /**
  * Comando que gera um classe CRUD no projeto Spring Boot
@@ -25,11 +23,10 @@ import br.xtool.core.representation.PomRepresentation;
  *
  */
 @ShellComponent
-@Template(path = "generators/springboot/crud")
 public class SpringBootJpaCrudGenerator extends SpringBootCommand {
 
 	@ShellMethod(key = "gen-springboot-jpa-crud", value = "Gera as classes de CRUD (JpaRepository, Service e Rest) para entidade JPA", group = XtoolCliApplication.SPRINGBOOT_COMMAND_GROUP)
-	public void run(@ShellOption(help = "Entidade JPA", valueProvider = EntityRepresentationValueProvider.class) EntityRepresentation entity) throws IOException, JDOMException {
+	public void run(@ShellOption(help = "Entidade JPA") String entity) throws IOException, JDOMException {
 		/*
 		 * Cria o mapa com as variáveis do gerador.
 		 */
@@ -37,13 +34,17 @@ public class SpringBootJpaCrudGenerator extends SpringBootCommand {
 		Map<String, Object> vars = ImmutableMap.<String, Object>builder()
 				.put("entity", entity)
 				.build();
+		
+		
+		this.getProject();
+		
 		// @formatter:on
 
 		// getProject().getPom().addDependency(new Pom.Dependency("foo", "lib-foo",
 		// "1.0"));
 		// getProject().getPom().commitUpdate();
 
-		System.out.println("Parent Version: " + getProject().getPom().getParentVersion());
+		//System.out.println("Parent Version: " + getProject().getPom().getParentVersion());
 
 		// getProject().getPom().getDependencies().forEach(d -> System.out.println(d));
 
@@ -51,18 +52,11 @@ public class SpringBootJpaCrudGenerator extends SpringBootCommand {
 
 		// showEntityAnnotations(entity);
 
-		showSingleAssociations(entity);
+		//showSingleAssociations(entity);
 
-		showCollectionAssociations(entity);
+		//showCollectionAssociations(entity);
 
 		//addEntityAttribute(entity);
-	}
-
-	private void addEntityAttribute(EntityRepresentation entity) {
-		entity.addAttribute(fieldSource -> {
-			fieldSource.setPublic().setName("Abc").addAnnotation("com.fasterxml.jackson.annotation.JsonIgnoreProperties").setStringArrayValue(new String[] { "pessoa", "id", "unidade" });
-		});
-		entity.commitUpdate();
 	}
 
 	private void showCollectionAssociations(EntityRepresentation entity) {

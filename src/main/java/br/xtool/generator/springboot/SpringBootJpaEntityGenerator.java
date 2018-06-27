@@ -3,8 +3,8 @@ package br.xtool.generator.springboot;
 import java.io.IOException;
 import java.util.Map;
 
-import org.apache.commons.lang3.StringUtils;
 import org.jdom2.JDOMException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
@@ -12,12 +12,9 @@ import org.springframework.shell.standard.ShellOption;
 import com.google.common.collect.ImmutableMap;
 
 import br.xtool.XtoolCliApplication;
+import br.xtool.core.FS;
 import br.xtool.core.NamePattern;
-import br.xtool.core.annotation.Template;
 import br.xtool.core.command.SpringBootCommand;
-import br.xtool.core.provider.EntityRepresentationValueProvider;
-import br.xtool.core.representation.EntityRepresentation;
-import strman.Strman;
 
 /**
  * Comando que gera um classe Repository no projeto Spring Boot
@@ -26,8 +23,10 @@ import strman.Strman;
  *
  */
 @ShellComponent
-@Template(path = "generators/springboot/entity")
 public class SpringBootJpaEntityGenerator extends SpringBootCommand {
+
+	@Autowired
+	private FS fs;
 
 	@ShellMethod(key = "gen-springboot-jpa-entity", value = "Gera uma classe de entidade JPA", group = XtoolCliApplication.SPRINGBOOT_COMMAND_GROUP)
 	public void run(@ShellOption(help = "Nome da entidade JPA") String name) throws IOException, JDOMException {
@@ -43,7 +42,7 @@ public class SpringBootJpaEntityGenerator extends SpringBootCommand {
 				.build();
 		// @formatter:on
 
-		this.copyTpl("entity.java.vm", "src/main/java/${groupId.dir}/domain/${entityName}.java", vars);
+		fs.copy("generators/springboot/entity/entity.java.vm", "src/main/java/${groupId.dir}/domain/${entityName}.java", vars);
 	}
 
 }

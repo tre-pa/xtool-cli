@@ -11,20 +11,20 @@ import org.springframework.shell.CompletionProposal;
 import org.springframework.shell.standard.ValueProviderSupport;
 import org.springframework.stereotype.Component;
 
-import br.xtool.core.PathService;
+import br.xtool.core.WorkContext;
 import br.xtool.core.representation.RepositoryRepresentation;
 
 @Component
 public class RepositoryRepresentationValueProvider extends ValueProviderSupport {
 
 	@Autowired
-	private PathService pathService;
+	private WorkContext workContext;
 
 	@Override
 	public List<CompletionProposal> complete(MethodParameter parameter, CompletionContext completionContext, String[] hints) {
-		if (pathService.getSpringBootProject().isPresent()) {
+		if (workContext.getProject().isPresent()) {
 			// @formatter:off
-			return pathService.getSpringBootProject().get().getRepositories()
+			return workContext.getProject().get().getRepositories()
 					.stream().map(RepositoryRepresentation::getName)
 					.map(CompletionProposal::new)
 					.collect(Collectors.toList());

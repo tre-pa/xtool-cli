@@ -5,16 +5,16 @@ import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 
 import br.xtool.XtoolCliApplication;
-import br.xtool.core.PathService;
+import br.xtool.core.WorkContext;
 
 @ShellComponent
 public class PwdCommand {
 
 	@Autowired
-	private PathService pathService;
+	private WorkContext workContext;
 
 	@ShellMethod(value = "Exibe o diretório de trabalho atual", group = XtoolCliApplication.CORE_COMMAND_GROUP)
 	public String pwd() {
-		return pathService.getWorkingDirectory();
+		return workContext.getDirectory().getPath();
 	}
 }

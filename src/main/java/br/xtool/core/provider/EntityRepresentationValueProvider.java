@@ -11,21 +11,21 @@ import org.springframework.shell.CompletionProposal;
 import org.springframework.shell.standard.ValueProviderSupport;
 import org.springframework.stereotype.Component;
 
-import br.xtool.core.PathService;
+import br.xtool.core.WorkContext;
 import br.xtool.core.representation.EntityRepresentation;
 
 @Component
 public class EntityRepresentationValueProvider extends ValueProviderSupport {
 
 	@Autowired
-	private PathService pathService;
+	private WorkContext workContext;
 
 	@Override
 	public List<CompletionProposal> complete(MethodParameter parameter, CompletionContext completionContext, String[] hints) {
-		if (pathService.getSpringBootProject().isPresent()) {
+		if (workContext.getProject().isPresent()) {
 			// @formatter:off
-			return pathService.getSpringBootProject().get().getEntities()
-					.stream().map(EntityRepresentation::getName)
+			return workContext.getProject().get().getEntities().stream()
+					.map(EntityRepresentation::getName)
 					.map(CompletionProposal::new)
 					.collect(Collectors.toList());
 			// @formatter:on

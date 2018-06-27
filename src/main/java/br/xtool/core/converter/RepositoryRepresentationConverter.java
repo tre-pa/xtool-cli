@@ -5,21 +5,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
-import br.xtool.core.PathService;
-import br.xtool.core.representation.EntityRepresentation;
+import br.xtool.core.WorkContext;
 import br.xtool.core.representation.RepositoryRepresentation;
 
 @Component
 public class RepositoryRepresentationConverter implements Converter<String, RepositoryRepresentation> {
 
 	@Autowired
-	private PathService pathService;
+	private WorkContext workContext;
 
 	@Override
 	public RepositoryRepresentation convert(String source) {
-		if (pathService.getSpringBootProject().isPresent() && StringUtils.isNotEmpty(source)) {
+		if (workContext.getProject().isPresent() && StringUtils.isNotEmpty(source)) {
 			// @formatter:off
-			return pathService.getSpringBootProject().get().getRepositories()
+			return workContext.getProject().get().getRepositories()
 				.stream()
 				.filter(e -> e.getName().equals(source))
 				.findFirst()

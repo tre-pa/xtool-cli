@@ -6,17 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.Availability;
 import org.springframework.shell.standard.ShellMethodAvailability;
 
-import br.xtool.core.PathService;
+import br.xtool.core.WorkContext;
 import br.xtool.core.representation.SpringBootProjectRepresentation;
 
-public class SpringBootCommand extends XCommand {
+public class SpringBootCommand {
 
 	@Autowired
-	private PathService pathCtx;
-	
-	@Deprecated
-	private SpringBootProjectRepresentation springBootProject;
-	
+	private WorkContext workContext;
+
 	/**
 	 * Define a disponibilidade dos comando do grupo Spring Boot.
 	 * 
@@ -25,22 +22,12 @@ public class SpringBootCommand extends XCommand {
 	 */
 	@ShellMethodAvailability
 	public Availability availabilitySpringBootCommand() throws IOException {
-		return SpringBootProjectRepresentation.isValidSpringBootProject(pathCtx.getWorkingDirectory()) ? Availability.available()
-				: Availability.unavailable(
-						"O diretório de trabalho não é um projeto maven válido. Use o comando cd para alterar o diretório de trabalho.");
+		return SpringBootProjectRepresentation.isValidProject(workContext.getDirectory().getPath()) ? Availability.available()
+				: Availability.unavailable("O diretório de trabalho não é um projeto maven válido. Use o comando cd para alterar o diretório de trabalho.");
 	}
 
-	/**
-	 * Retorna o modelo do projeto Spring Boot do diretório de trabalho atual.
-	 * 
-	 * @return
-	 * @throws IOException
-	 */
-	@Deprecated
-	protected SpringBootProjectRepresentation getProject() throws IOException {
-		if(this.springBootProject == null) {
-			this.springBootProject = pathCtx.getSpringBootProject().get();
-		}
-		return this.springBootProject;
+	public SpringBootProjectRepresentation getProject() {
+		return workContext.getProject().get();
 	}
+
 }

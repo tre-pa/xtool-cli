@@ -7,13 +7,13 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.shell.jline.PromptProvider;
 
-import br.xtool.core.PathService;
+import br.xtool.core.WorkContext;
 
 @SpringBootApplication
 public class XtoolCliApplication implements PromptProvider {
 
 	@Autowired
-	private PathService pathService;
+	private WorkContext workContext;
 
 	public final static String CORE_COMMAND_GROUP = "Core Commands";
 	public final static String PROJECT_COMMAND_GROUP = "Project Commands";
@@ -25,10 +25,7 @@ public class XtoolCliApplication implements PromptProvider {
 
 	@Override
 	public AttributedString getPrompt() {
-		if (pathService.hasWorkingDirectory()) {
-			return new AttributedString(String.format("xtool@%s > ", pathService.getWorkingDirectoryBaseName()), AttributedStyle.DEFAULT.foreground(AttributedStyle.YELLOW));
-		}
-		return new AttributedString("xtool > ", AttributedStyle.DEFAULT.foreground(AttributedStyle.YELLOW));
+		return new AttributedString(String.format("xtool@%s > ", workContext.getDirectory().getBaseName()), AttributedStyle.DEFAULT.foreground(AttributedStyle.YELLOW));
 	}
 
 }

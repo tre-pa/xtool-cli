@@ -5,20 +5,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
-import br.xtool.core.PathService;
+import br.xtool.core.WorkContext;
 import br.xtool.core.representation.EntityRepresentation;
 
 @Component
 public class EntityRepresentationConverter implements Converter<String, EntityRepresentation> {
 
 	@Autowired
-	private PathService pathService;
+	private WorkContext workContext;
 
 	@Override
 	public EntityRepresentation convert(String source) {
-		if (pathService.getSpringBootProject().isPresent() && StringUtils.isNotEmpty(source)) {
+		if (workContext.getProject().isPresent() && StringUtils.isNotEmpty(source)) {
 			// @formatter:off
-			return pathService.getSpringBootProject().get().getEntities()
+			return workContext.getProject().get().getEntities()
 				.stream()
 				.filter(e -> e.getName().equals(source))
 				.findFirst()
