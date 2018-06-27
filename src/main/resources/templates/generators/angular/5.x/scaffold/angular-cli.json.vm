@@ -21,7 +21,8 @@
       "prefix": "app",
       "styles": [
         "styles.scss",
-        "theme.scss"
+        "theme.scss",
+        "../node_modules/@covalent/core/common/platform.css"
       ],
       "scripts": ["app/@core/security/keycloak.js"],
       "environmentSource": "environments/environment.ts",

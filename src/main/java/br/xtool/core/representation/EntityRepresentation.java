@@ -8,13 +8,15 @@ import java.util.stream.Collectors;
 import org.jboss.forge.roaster.model.source.AnnotationSource;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 
+import br.xtool.core.representation.updater.Updatable;
+
 /**
  * Classe que representa um entidade JPA
  * 
  * @author jcruz
  *
  */
-public class EntityRepresentation implements Comparable<EntityRepresentation> {
+public class EntityRepresentation implements Comparable<EntityRepresentation>, Updatable<JavaClassSource> {
 
 	private SpringBootProjectRepresentation springBootProject;
 
@@ -114,6 +116,11 @@ public class EntityRepresentation implements Comparable<EntityRepresentation> {
 	@Override
 	public int compareTo(EntityRepresentation o) {
 		return this.getName().compareTo(o.getName());
+	}
+
+	@Override
+	public JavaClassSource getSource() {
+		return this.javaClassSource;
 	}
 
 }
