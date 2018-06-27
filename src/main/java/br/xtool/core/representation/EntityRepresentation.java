@@ -1,14 +1,22 @@
 package br.xtool.core.representation;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
+import org.apache.commons.io.FilenameUtils;
 import org.jboss.forge.roaster.model.source.AnnotationSource;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 
-import br.xtool.core.representation.updater.Updatable;
+import br.xtool.core.Log;
+import br.xtool.core.representation.updater.core.Updatable;
+import br.xtool.core.representation.updater.core.UpdateRequest;
 
 /**
  * Classe que representa um entidade JPA
@@ -25,6 +33,8 @@ public class EntityRepresentation implements Comparable<EntityRepresentation>, U
 	private SortedSet<AttributeRepresentation> attributes;
 
 	private SortedSet<AssociationRepresentation> associations;
+
+	private Collection<UpdateRequest<EntityRepresentation>> updateRequests = new ArrayList<>();
 
 	public EntityRepresentation(SpringBootProjectRepresentation springBootProject, JavaClassSource javaClassSource) {
 		super();
@@ -116,6 +126,34 @@ public class EntityRepresentation implements Comparable<EntityRepresentation>, U
 	@Override
 	public int compareTo(EntityRepresentation o) {
 		return this.getName().compareTo(o.getName());
+	}
+
+	public <T extends UpdateRequest<EntityRepresentation>> void addUpdateRequest(Optional<T> updateRequest) {
+		if (updateRequest.isPresent()) {
+			this.updateRequests.add(updateRequest.get());
+		}
+	}
+
+	public void commitUpdateRequests() {
+		Log.print(Log.bold(Log.yellow("\t[~] ")), Log.white(this.getQualifiedName()));
+		// @formatter:off
+		this.updateRequests.stream()
+			.filter(updateRequest -> updateRequest.updatePolicy(this))
+			.forEach(updateRequest -> updateRequest.apply(this));
+		// @formatter:on
+		this.updateJavaFile();
+	}
+
+	public void updateJavaFile() {
+		String javaPath = FilenameUtils.concat(this.springBootProject.getMainDir(), this.getPackage().getDir());
+		String javaFile = javaPath.concat("/").concat(this.getName().concat(".java"));
+		try (FileWriter fileWriter = new FileWriter(javaFile)) {
+			fileWriter.write(this.javaClassSource.toUnformattedString());
+			fileWriter.flush();
+			fileWriter.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override

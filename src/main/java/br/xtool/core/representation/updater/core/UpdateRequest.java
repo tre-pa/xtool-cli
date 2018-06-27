@@ -1,4 +1,4 @@
-package br.xtool.core.representation.updater;
+package br.xtool.core.representation.updater.core;
 
 public interface UpdateRequest<T extends Updatable<?>> {
 

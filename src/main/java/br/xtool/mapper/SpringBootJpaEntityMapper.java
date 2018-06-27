@@ -11,6 +11,7 @@ import br.xtool.XtoolCliApplication;
 import br.xtool.core.command.SpringBootCommand;
 import br.xtool.core.provider.EntityRepresentationValueProvider;
 import br.xtool.core.representation.EntityRepresentation;
+import br.xtool.core.representation.updater.AddImportUpdaterRequest;
 
 @ShellComponent
 public class SpringBootJpaEntityMapper extends SpringBootCommand {
@@ -29,6 +30,8 @@ public class SpringBootJpaEntityMapper extends SpringBootCommand {
 		Assert.isTrue(jpa || lombok || jackson, "Seleciona pelo menos uma opção de mapeamento. Digite 'help map-springboot-jpa-entity' para mais detalhes.");
 
 		if (Objects.nonNull(entity)) {
+			entity.addUpdateRequest(AddImportUpdaterRequest.of("br.jus.tre_pa"));
+			entity.commitUpdateRequests();
 			return;
 		}
 	}

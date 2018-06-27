@@ -9,7 +9,7 @@ import org.jboss.forge.roaster.model.source.AnnotationSource;
 import org.jboss.forge.roaster.model.source.FieldSource;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 
-import br.xtool.core.representation.updater.Updatable;
+import br.xtool.core.representation.updater.core.Updatable;
 
 /**
  * Classe que representa um atributo de classe.
