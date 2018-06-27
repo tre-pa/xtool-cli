@@ -183,25 +183,25 @@ public class PomRepresentation {
 		 */
 		public Element getAsDom() {
 			Element dependency = new Element("dependency", PomRepresentation.NAMESPACE);
-			this.addGroupId(dependency);
-			this.addArtifiactId(dependency);
-			this.addVersion(dependency);
+			this.buildGroupId(dependency);
+			this.buildArtifiactId(dependency);
+			this.buildVersion(dependency);
 			return dependency;
 		}
 
-		private void addGroupId(Element dependency) {
+		private void buildGroupId(Element dependency) {
 			Element groupId = new Element("groupId", PomRepresentation.NAMESPACE);
 			groupId.setText(this.getGroupId());
 			dependency.addContent(groupId);
 		}
 
-		private void addArtifiactId(Element dependency) {
+		private void buildArtifiactId(Element dependency) {
 			Element artifactId = new Element("artifactId", PomRepresentation.NAMESPACE);
 			artifactId.setText(this.getArtifactId());
 			dependency.addContent(artifactId);
 		}
 
-		private void addVersion(Element dependency) {
+		private void buildVersion(Element dependency) {
 			if (StringUtils.isNoneBlank(this.getVersion())) {
 				Element version = new Element("version", PomRepresentation.NAMESPACE);
 				version.setText(this.getVersion());
