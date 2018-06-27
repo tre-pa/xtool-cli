@@ -1,21 +1,12 @@
 package br.xtool.core.representation;
 
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
-import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
-import org.apache.commons.io.FilenameUtils;
 import org.jboss.forge.roaster.model.source.AnnotationSource;
-import org.jboss.forge.roaster.model.source.FieldSource;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
-
-import br.xtool.core.Log;
-import lombok.ToString;
 
 /**
  * Classe que representa um entidade JPA
@@ -32,9 +23,6 @@ public class EntityRepresentation implements Comparable<EntityRepresentation> {
 	private SortedSet<AttributeRepresentation> attributes;
 
 	private SortedSet<AssociationRepresentation> associations;
-
-	@Deprecated
-	private List<String> updateInfo = new ArrayList<>();
 
 	public EntityRepresentation(SpringBootProjectRepresentation springBootProject, JavaClassSource javaClassSource) {
 		super();
@@ -121,54 +109,6 @@ public class EntityRepresentation implements Comparable<EntityRepresentation> {
 	 */
 	public boolean hasAnnotation(String name) {
 		return this.javaClassSource.hasAnnotation(name);
-	}
-
-	/**
-	 * Adicionar um atributo a classe.
-	 * 
-	 * @param action
-	 */
-	@Deprecated
-	public void addAttribute(Consumer<FieldSource<JavaClassSource>> action) {
-		FieldSource<JavaClassSource> newField = this.javaClassSource.addField();
-		action.accept(newField);
-		this.updateInfo.add("\t\t + " + newField.getVisibility() + " " + newField.getType() + " " + newField.getName());
-	}
-
-	/**
-	 * Adcionar uma anotação a classe.
-	 * 
-	 * @param action
-	 */
-	@Deprecated
-	public void addAnnotation(Consumer<AnnotationSource<JavaClassSource>> action) {
-		AnnotationSource<JavaClassSource> newAnnotation = this.javaClassSource.addAnnotation();
-		action.accept(newAnnotation);
-		this.updateInfo.add("\t\t + " + "@" + newAnnotation.getName());
-	}
-
-	@Deprecated
-	public void addImport(String importName) {
-		if (!this.javaClassSource.hasImport(importName)) {
-			this.javaClassSource.addImport(importName);
-			this.updateInfo.add("\t\t + " + "import " + importName);
-		}
-	}
-
-	@Deprecated
-	public void commitUpdate() {
-		String javaPath = FilenameUtils.concat(this.springBootProject.getMainDir(), this.getPackage().getDir());
-		String javaFile = javaPath.concat("/").concat(this.getName().concat(".java"));
-		try (FileWriter fileWriter = new FileWriter(javaFile)) {
-			fileWriter.write(this.javaClassSource.toUnformattedString());
-			fileWriter.flush();
-			fileWriter.close();
-			Log.print(Log.green("\t[UPDATE] ") + Log.white(this.getQualifiedName().concat(".java")));
-			this.updateInfo.forEach(info -> Log.print(info));
-			this.updateInfo.clear();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 
 	@Override
