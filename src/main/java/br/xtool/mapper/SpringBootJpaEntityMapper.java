@@ -29,12 +29,12 @@ public class SpringBootJpaEntityMapper extends SpringBootCommand {
 	// @formatter:on
 		Assert.isTrue(Objects.nonNull(entity) || allEntities,
 				"Selecione uma entidade ou a opção 'all-entities' para selecionar todas as entidades. Digite 'help map-springboot-jpa-entity' para mais detalhes.");
-		Assert.isTrue(jpa || lombok || jackson, "Seleciona pelo menos uma opção de mapeamento. Digite 'help map-springboot-jpa-entity' para mais detalhes.");
+		Assert.isTrue(jpa || lombok || jackson, "Selecione pelo menos uma opção de mapeamento. Digite 'help map-springboot-jpa-entity' para mais detalhes.");
 
 		if (Objects.nonNull(entity)) {
 			entity.addUpdate(AddImport.of("br.jus.tre_pa"));
-			entity.addUpdate(AddEntityAnnotation.of("lombok.Getter", "Getter"));
-			entity.addUpdate(AddEntityAnnotation.of("lombok.EqualsAndHashCode", "EqualsAndHashCode", AddAnnotationStringValue.of("of", new String[] { "id", "name" })));
+			entity.addUpdate(AddEntityAnnotation.of("lombok.Getter"));
+			entity.addUpdate(AddEntityAnnotation.of("lombok.EqualsAndHashCode", AddAnnotationStringValue.of("of", new String[] { "id", "name" })));
 			entity.commitUpdates();
 			return;
 		}

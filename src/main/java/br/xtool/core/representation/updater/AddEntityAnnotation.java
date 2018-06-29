@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.Objects;
 import java.util.Optional;
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.jboss.forge.roaster.model.source.AnnotationSource;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
@@ -84,10 +85,17 @@ public class AddEntityAnnotation implements UpdateRequest<EntityRepresentation> 
 	}
 
 	/**
+	 * 
+	 * @param qualifiedAnnotationName
+	 * @param payloads
+	 * @return
 	 */
-	public static Optional<AddEntityAnnotation> of(String annotationImportName, String annotationName, AnnotationPayload... payloads) {
+	public static Optional<AddEntityAnnotation> of(String qualifiedAnnotationName, AnnotationPayload... payloads) {
+		String[] annotationTokens = StringUtils.split(qualifiedAnnotationName, ".");
+		String annotationName = annotationTokens[annotationTokens.length - 1];
+		String annotationImportName = qualifiedAnnotationName;
 		if (StringUtils.isNotBlank(annotationImportName) && StringUtils.isNotBlank(annotationName)) {
-			return Optional.of(new AddEntityAnnotation(annotationName, annotationImportName, Arrays.asList(payloads) ));
+			return Optional.of(new AddEntityAnnotation(annotationName, annotationImportName, Arrays.asList(payloads)));
 		}
 		return Optional.empty();
 	}

@@ -17,7 +17,7 @@ import br.xtool.core.NamePattern;
 import br.xtool.core.command.SpringBootCommand;
 
 /**
- * Comando que gera um classe Repository no projeto Spring Boot
+ * Comando que gera uma classe Repository no projeto Spring Boot
  * 
  * @author jcruz
  *
