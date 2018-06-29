@@ -36,6 +36,8 @@ public class SpringBootProjectRepresentation {
 
 	private PomRepresentation pom;
 
+	private ApplicationPropertiesRepresentation applicationProperties;
+
 	public SpringBootProjectRepresentation(String path, Set<JavaUnit> javaUnits) {
 		super();
 		this.path = path;
@@ -47,6 +49,14 @@ public class SpringBootProjectRepresentation {
 			PomRepresentation.of(FilenameUtils.concat(this.path, "pom.xml")).ifPresent(pomRepresentation -> this.pom = pomRepresentation);
 		}
 		return pom;
+	}
+
+	public ApplicationPropertiesRepresentation getApplicationProperties() {
+		if (this.applicationProperties == null) {
+			ApplicationPropertiesRepresentation.of(FilenameUtils.concat(this.path, "src/main/resources/application.properties"))
+					.ifPresent(applicationProperties -> this.applicationProperties = applicationProperties);
+		}
+		return applicationProperties;
 	}
 
 	/**

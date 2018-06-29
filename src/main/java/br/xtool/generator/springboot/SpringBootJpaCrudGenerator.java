@@ -2,6 +2,7 @@ package br.xtool.generator.springboot;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.Properties;
 
 import org.jdom2.JDOMException;
 import org.springframework.shell.standard.ShellComponent;
@@ -36,7 +37,19 @@ public class SpringBootJpaCrudGenerator extends SpringBootCommand {
 				.build();
 		
 		
-		this.getProject();
+		String context = this.getProject()
+			.getApplicationProperties()
+				.get("server.contextPath")
+				.orElse("Sem context");
+		
+		System.out.println("Context: "+context);
+		
+		this.getProject().getApplicationProperties()
+			.set("abc", "1");
+		this.getProject().getApplicationProperties()
+			.commitUpdates();
+		//properties.l
+		
 		
 		// @formatter:on
 
