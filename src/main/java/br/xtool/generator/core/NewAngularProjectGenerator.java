@@ -13,9 +13,10 @@ import com.google.common.collect.ImmutableMap;
 import br.xtool.XtoolCliApplication;
 import br.xtool.core.FS;
 import br.xtool.core.Log;
+import br.xtool.core.command.RegularCommand;
 
 @ShellComponent
-public class NewAngularProjectGenerator {
+public class NewAngularProjectGenerator extends RegularCommand {
 
 	@Autowired
 	private FS fs;

@@ -15,6 +15,7 @@ import br.xtool.XtoolCliApplication;
 import br.xtool.core.FS;
 import br.xtool.core.Log;
 import br.xtool.core.NamePattern;
+import br.xtool.core.command.RegularCommand;
 import strman.Strman;
 
 /**
@@ -24,7 +25,7 @@ import strman.Strman;
  *
  */
 @ShellComponent
-public class NewSpringBootProjectGenerator {
+public class NewSpringBootProjectGenerator extends RegularCommand {
 
 	@Autowired
 	private FS fs;

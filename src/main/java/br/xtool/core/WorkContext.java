@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 import org.apache.commons.io.FilenameUtils;
 import org.jboss.forge.roaster.model.JavaUnit;
 import org.jline.utils.AttributedString;
+import org.jline.utils.AttributedStringBuilder;
 import org.jline.utils.AttributedStyle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
@@ -97,6 +98,15 @@ public class WorkContext implements PromptProvider {
 
 	@Override
 	public AttributedString getPrompt() {
+		if (!this.getDirectory().getType().equals(Type.REGULAR)) {
+			// @formatter:off
+			return new AttributedStringBuilder()
+					.append("xtool@", AttributedStyle.DEFAULT.foreground(AttributedStyle.YELLOW))
+					.append(this.directory.getBaseName(), AttributedStyle.BOLD.foreground(AttributedStyle.GREEN))
+					.append(" > ", AttributedStyle.DEFAULT.foreground(AttributedStyle.YELLOW))
+					.toAttributedString();
+			// @formatter:on
+		}
 		// @formatter:off
 		return new AttributedString(
 				String.format("xtool@%s > ", this.getDirectory().getBaseName()), 
