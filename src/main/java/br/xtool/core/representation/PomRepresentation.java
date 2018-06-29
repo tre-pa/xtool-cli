@@ -3,9 +3,12 @@ package br.xtool.core.representation;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 import org.apache.commons.lang3.StringUtils;
 import org.jdom2.Document;
@@ -40,12 +43,9 @@ public class PomRepresentation {
 
 	private List<String> updateInfo = new ArrayList<>();
 
-	public PomRepresentation(String path) throws JDOMException, IOException {
+	private PomRepresentation(String path) throws JDOMException, IOException {
 		super();
-		this.file = new File(path);
-		SAXBuilder saxBuilder = new SAXBuilder();
-		this.pomDoc = saxBuilder.build(file);
-		this.rootElement = this.pomDoc.getRootElement();
+
 	}
 
 	/**
@@ -145,6 +145,22 @@ public class PomRepresentation {
 			e.printStackTrace();
 		}
 
+	}
+
+	public static Optional<PomRepresentation> of(String path) {
+		if (Files.exists(Paths.get(path))) {
+			try {
+				PomRepresentation pomRepresentation = new PomRepresentation(path);
+				pomRepresentation.file = new File(path);
+				SAXBuilder saxBuilder = new SAXBuilder();
+				pomRepresentation.pomDoc = saxBuilder.build(pomRepresentation.file);
+				pomRepresentation.rootElement = pomRepresentation.pomDoc.getRootElement();
+				return Optional.of(pomRepresentation);
+			} catch (JDOMException | IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return Optional.empty();
 	}
 
 	/**

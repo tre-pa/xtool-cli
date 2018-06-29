@@ -44,7 +44,7 @@ public class SpringBootProjectRepresentation {
 
 	public PomRepresentation getPom() throws JDOMException, IOException {
 		if (this.pom == null) {
-			this.pom = new PomRepresentation(FilenameUtils.concat(this.path, "pom.xml"));
+			PomRepresentation.of(FilenameUtils.concat(this.path, "pom.xml")).ifPresent(pomRepresentation -> this.pom = pomRepresentation);
 		}
 		return pom;
 	}

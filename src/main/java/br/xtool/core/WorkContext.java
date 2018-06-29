@@ -1,34 +1,33 @@
 package br.xtool.core;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
-import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 import org.apache.commons.io.FilenameUtils;
-import org.jboss.forge.roaster.model.JavaType;
 import org.jboss.forge.roaster.model.JavaUnit;
-import org.jboss.forge.roaster.model.source.JavaClassSource;
-import org.jboss.forge.roaster.model.source.JavaInterfaceSource;
+import org.jline.utils.AttributedString;
+import org.jline.utils.AttributedStyle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
+import org.springframework.shell.jline.PromptProvider;
 import org.springframework.stereotype.Component;
 
 import br.xtool.core.event.ChangeDirectoryEvent;
 import br.xtool.core.representation.DirectoryRepresentation;
+import br.xtool.core.representation.DirectoryRepresentation.Type;
 import br.xtool.core.representation.SpringBootProjectRepresentation;
 import br.xtool.core.utils.RoasterUtils;
 import lombok.Getter;
 
 @Component
-public class WorkContext {
+public class WorkContext implements PromptProvider {
 
 	@Getter
 	private DirectoryRepresentation directory;
@@ -94,6 +93,15 @@ public class WorkContext {
 			}
 		}
 		return this.project;
+	}
+
+	@Override
+	public AttributedString getPrompt() {
+		// @formatter:off
+		return new AttributedString(
+				String.format("xtool@%s > ", this.getDirectory().getBaseName()), 
+					AttributedStyle.DEFAULT.foreground(AttributedStyle.YELLOW));
+		// @formatter:on
 	}
 
 }

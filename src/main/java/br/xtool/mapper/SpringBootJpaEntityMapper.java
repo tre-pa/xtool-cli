@@ -1,14 +1,11 @@
 package br.xtool.mapper;
 
-import java.util.Collections;
 import java.util.Objects;
 
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 import org.springframework.util.Assert;
-
-import com.google.common.collect.Lists;
 
 import br.xtool.XtoolCliApplication;
 import br.xtool.core.command.SpringBootCommand;
