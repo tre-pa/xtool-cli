@@ -28,6 +28,9 @@ public class SpringBootProjectRepresentation {
 	@Getter
 	private String path;
 
+	@Getter
+	private DirectoryRepresentation directory;
+
 	private Set<JavaUnit> javaUnits = new HashSet<>();
 
 	private SortedSet<EntityRepresentation> entities;
@@ -41,6 +44,7 @@ public class SpringBootProjectRepresentation {
 	public SpringBootProjectRepresentation(String path, Set<JavaUnit> javaUnits) {
 		super();
 		this.path = path;
+		this.directory = new DirectoryRepresentation(path);
 		this.javaUnits = javaUnits;
 	}
 
