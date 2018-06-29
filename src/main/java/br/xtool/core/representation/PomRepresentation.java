@@ -19,7 +19,6 @@ import org.jdom2.output.XMLOutputter;
 import br.xtool.core.Log;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.ToString;
 
 /**
  * Representa o arquivo pom.xml
@@ -38,7 +37,7 @@ public class PomRepresentation {
 	private File file;
 
 	private Element rootElement;
-	
+
 	private List<String> updateInfo = new ArrayList<>();
 
 	public PomRepresentation(String path) throws JDOMException, IOException {
@@ -114,14 +113,15 @@ public class PomRepresentation {
 	}
 
 	/**
-	 * Adciona uma dependência o pom.xml
+	 * Adciona uma dependência o pom.xml caso não exista.
 	 * 
 	 * @param dependency
 	 */
-	@Deprecated
 	public void addDependency(Dependency dependency) {
-		this.rootElement.getChild("dependencies", NAMESPACE).addContent(dependency.getAsDom());
-		this.updateInfo.add("\t\t + " + dependency);
+		if (hasArtifactId(dependency.getArtifactId())) {
+			this.rootElement.getChild("dependencies", NAMESPACE).addContent(dependency.getAsDom());
+			Log.print(Log.bold(Log.green("\t[+] ")), Log.purple("pom : "), Log.white(dependency.toString()));
+		}
 	}
 
 	/**
@@ -129,8 +129,7 @@ public class PomRepresentation {
 	 * 
 	 * @throws IOException
 	 */
-	@Deprecated
-	public void commitUpdate() throws IOException {
+	public void commitUpdates() throws IOException {
 		try (FileOutputStream fos = new FileOutputStream(this.file)) {
 			XMLOutputter xmlOutputter = new XMLOutputter();
 			Format format = Format.getPrettyFormat();
@@ -211,8 +210,8 @@ public class PomRepresentation {
 
 		@Override
 		public String toString() {
-			return "Dependency [" + (groupId != null ? "groupId=" + groupId + ", " : "") + (artifactId != null ? "artifactId=" + artifactId + ", " : "")
-					+ (version != null ? "version=" + version : "") + "]";
+			return "Dependency [" + (groupId != null ? "groupId=" + groupId + ", " : "") + (artifactId != null ? "artifactId=" + artifactId + ", " : "") + (version != null ? "version=" + version : "")
+					+ "]";
 		}
 
 	}

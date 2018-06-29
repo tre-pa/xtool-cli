@@ -39,7 +39,7 @@ public class NewAngularProjectGenerator {
 		fs.copy("${templatePath}/src/app/@core/layout/main-layout/main-layout.component.css.vm", "${projectName}/src/app/@core/layout/main-layout/main-layout.component.css", vars);
 		fs.copy("${templatePath}/src/app/@core/layout/main-layout/main-layout.component.html.vm", "${projectName}/src/app/@core/layout/main-layout/main-layout.component.html", vars);
 		fs.copy("${templatePath}/src/app/@core/layout/main-layout/main-layout.component.ts.vm", "${projectName}/src/app/@core/layout/main-layout/main-layout.component.ts", vars);
-		fs.copy("${templatePath}/src/app/@core/layout/nav-list-layout/nav-list-layout.component.css.vm", "${projectName};src/app/@core/layout/nav-list-layout/nav-list-layout.component.css", vars);
+		fs.copy("${templatePath}/src/app/@core/layout/nav-list-layout/nav-list-layout.component.css.vm", "${projectName}/src/app/@core/layout/nav-list-layout/nav-list-layout.component.css", vars);
 		fs.copy("${templatePath}/src/app/@core/layout/nav-list-layout/nav-list-layout.component.html.vm", "${projectName}/src/app/@core/layout/nav-list-layout/nav-list-layout.component.html", vars);
 		fs.copy("${templatePath}/src/app/@core/layout/nav-list-layout/nav-list-layout.component.ts.vm", "${projectName}/src/app/@core/layout/nav-list-layout/nav-list-layout.component.ts", vars);
 		fs.copy("${templatePath}/src/app/@core/layout/nav-view-layout/nav-view-layout.component.css.vm", "${projectName}/src/app/@core/layout/nav-view-layout/nav-view-layout.component.css", vars);
