@@ -26,9 +26,15 @@ public class DirectoryRepresentation {
 	@Getter
 	private String path;
 
+	// @formatter:off
 	public enum Type {
-		SPRINGBOOT1_PROJECT, ANGULAR5_PROJECT, REGULAR
+		SPRINGBOOT1_PROJECT,
+		SPRINGBOOT2_PROJECT,
+		ANGULAR5_PROJECT, 
+		ANGULAR6_PROJECT,
+		REGULAR
 	}
+	// @formatter:on
 
 	// @formatter:off
 	private Set<Function<DirectoryRepresentation, Type>> typeResolvers = 
