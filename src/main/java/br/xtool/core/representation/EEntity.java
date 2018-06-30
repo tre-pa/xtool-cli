@@ -16,6 +16,7 @@ import org.jboss.forge.roaster.model.source.JavaClassSource;
 import br.xtool.core.Log;
 import br.xtool.core.representation.updater.core.Updatable;
 import br.xtool.core.representation.updater.core.UpdateRequest;
+import lombok.Getter;
 
 /**
  * Classe que representa um entidade JPA
@@ -27,11 +28,11 @@ public class EEntity extends EClass implements Comparable<EEntity>, Updatable<Ja
 
 	private ESpringBootProject springBootProject;
 
-	private JavaClassSource javaClassSource;
-	
-	private SortedSet<EAttribute> attributes;
+	@Getter(lazy = true)
+	private final SortedSet<EAttribute> attributes = buildAttributes();
 
-	private SortedSet<EAssociation> associations;
+	@Getter(lazy = true)
+	private final SortedSet<EAssociation> associations = buildAssociations();
 
 	public EEntity(ESpringBootProject springBootProject, JavaClassSource javaClassSource) {
 		super(javaClassSource);
@@ -44,15 +45,12 @@ public class EEntity extends EClass implements Comparable<EEntity>, Updatable<Ja
 	 * 
 	 * @return
 	 */
-	public SortedSet<EAttribute> getAttributes() {
-		if (this.attributes == null) {
-			// @formatter:off
-			this.attributes = this.javaClassSource.getFields().stream()
-					.map(f -> new EAttribute(this.springBootProject,this, f))
-					.collect(Collectors.toCollection(TreeSet::new));
-			// @formatter:on
-		}
-		return this.attributes;
+	private SortedSet<EAttribute> buildAttributes() {
+		// @formatter:off
+		return this.javaClassSource.getFields().stream()
+				.map(f -> new EAttribute(this.springBootProject,this, f))
+				.collect(Collectors.toCollection(TreeSet::new));
+		// @formatter:on
 	}
 
 	/**
@@ -60,17 +58,15 @@ public class EEntity extends EClass implements Comparable<EEntity>, Updatable<Ja
 	 * 
 	 * @return
 	 */
-	public SortedSet<EAssociation> getAssociations() {
-		if (this.associations == null) {
-			this.associations = new TreeSet<>();
-			// @formatter:off
-			this.getAttributes().stream()
-				.filter(EAttribute::isAssociation)
-				.map(EAttribute::getAssociation)
-				.forEach(association -> this.associations.add(association.get()));
-			// @formatter:on
-		}
-		return this.associations;
+	private SortedSet<EAssociation> buildAssociations() {
+		SortedSet<EAssociation> associations = new TreeSet<>();
+		// @formatter:off
+		this.getAttributes().stream()
+			.filter(EAttribute::isAssociation)
+			.map(EAttribute::getAssociation)
+			.forEach(association -> associations.add(association.get()));
+		// @formatter:on
+		return associations;
 	}
 
 	@Override

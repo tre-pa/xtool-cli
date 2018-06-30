@@ -27,6 +27,12 @@ public class EDirectory {
 	@Getter
 	private String path;
 
+	@Getter(lazy = true)
+	private final List<File> allFiles = listFilesRecursively();
+
+	@Getter(lazy = true)
+	private final ProjectType projectType = buildProjectType();
+
 	// @formatter:off
 	private Set<Function<EDirectory, ProjectType>> typeResolvers = 
 			ImmutableSet.of(
@@ -43,7 +49,7 @@ public class EDirectory {
 		return FilenameUtils.getBaseName(path);
 	}
 
-	public List<File> listFilesRecursively() {
+	private List<File> listFilesRecursively() {
 		try {
 			// @formatter:off
 			return Files.walk(Paths.get(this.path))
@@ -62,7 +68,7 @@ public class EDirectory {
 		return new ArrayList<>();
 	}
 
-	public ProjectType getProjectType() {
+	protected ProjectType buildProjectType() {
 		// @formatter:off
 		return this.typeResolvers.stream()
 				.map(fun -> fun.apply(this))

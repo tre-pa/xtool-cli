@@ -38,11 +38,10 @@ public class EPom implements Updatable<Element> {
 
 	private Document pomDoc;
 
-	private List<Dependency> dependencies;
+	@Getter(lazy = true)
+	private final List<Dependency> dependencies = buildDependencies();
 
 	private File file;
-
-	private Element rootElement;
 
 	private Collection<UpdateRequest<EPom>> updateRequests = new ArrayList<>();
 
@@ -57,7 +56,7 @@ public class EPom implements Updatable<Element> {
 	 * @return
 	 */
 	public EPackage getGroupId() {
-		return EPackage.of(this.rootElement.getChild("groupId", NAMESPACE).getText());
+		return EPackage.of(this.pomDoc.getRootElement().getChild("groupId", NAMESPACE).getText());
 	}
 
 	/**
@@ -66,7 +65,7 @@ public class EPom implements Updatable<Element> {
 	 * @return
 	 */
 	public String getVersion() {
-		return this.rootElement.getChild("version", NAMESPACE).getText();
+		return this.pomDoc.getRootElement().getChild("version", NAMESPACE).getText();
 	}
 
 	/**
@@ -75,7 +74,7 @@ public class EPom implements Updatable<Element> {
 	 * @return
 	 */
 	public String getParentVersion() {
-		return this.rootElement.getChild("parent", NAMESPACE).getChild("version", NAMESPACE).getText();
+		return this.pomDoc.getRootElement().getChild("parent", NAMESPACE).getChild("version", NAMESPACE).getText();
 	}
 
 	/**
@@ -97,22 +96,20 @@ public class EPom implements Updatable<Element> {
 	 * 
 	 * @return
 	 */
-	public List<Dependency> getDependencies() {
-		if (dependencies == null) {
-			this.dependencies = new ArrayList<>();
-			Element dependencies = this.rootElement.getChild("dependencies", NAMESPACE);
-			for (Element dependency : dependencies.getChildren()) {
-				String groupId = dependency.getChild("groupId", NAMESPACE).getTextTrim();
-				String artifactId = dependency.getChild("artifactId", NAMESPACE).getTextTrim();
-				if (Objects.nonNull(dependency.getChild("version", NAMESPACE))) {
-					String version = dependency.getChild("version", NAMESPACE).getTextTrim();
-					this.dependencies.add(new Dependency(groupId, artifactId, version));
-					continue;
-				}
-				this.dependencies.add(new Dependency(groupId, artifactId));
+	private List<Dependency> buildDependencies() {
+		List<Dependency> dependencies = new ArrayList<>();
+		Element dependenciesNode = this.pomDoc.getRootElement().getChild("dependencies", NAMESPACE);
+		for (Element dependency : dependenciesNode.getChildren()) {
+			String groupId = dependency.getChild("groupId", NAMESPACE).getTextTrim();
+			String artifactId = dependency.getChild("artifactId", NAMESPACE).getTextTrim();
+			if (Objects.nonNull(dependency.getChild("version", NAMESPACE))) {
+				String version = dependency.getChild("version", NAMESPACE).getTextTrim();
+				dependencies.add(new Dependency(groupId, artifactId, version));
+				continue;
 			}
+			dependencies.add(new Dependency(groupId, artifactId));
 		}
-		return this.dependencies;
+		return dependencies;
 	}
 
 	/**
@@ -122,7 +119,7 @@ public class EPom implements Updatable<Element> {
 	 */
 	public void addDependency(Dependency dependency) {
 		if (hasArtifactId(dependency.getArtifactId())) {
-			this.rootElement.getChild("dependencies", NAMESPACE).addContent(dependency.getAsDom());
+			this.pomDoc.getRootElement().getChild("dependencies", NAMESPACE).addContent(dependency.getAsDom());
 		}
 	}
 
@@ -164,7 +161,6 @@ public class EPom implements Updatable<Element> {
 				pomRepresentation.file = new File(path);
 				SAXBuilder saxBuilder = new SAXBuilder();
 				pomRepresentation.pomDoc = saxBuilder.build(pomRepresentation.file);
-				pomRepresentation.rootElement = pomRepresentation.pomDoc.getRootElement();
 				return Optional.of(pomRepresentation);
 			} catch (JDOMException | IOException e) {
 				e.printStackTrace();
@@ -244,7 +240,7 @@ public class EPom implements Updatable<Element> {
 
 	@Override
 	public Element getSource() {
-		return this.rootElement.getChild("dependencies", NAMESPACE);
+		return this.pomDoc.getRootElement().getChild("dependencies", NAMESPACE);
 	}
 
 }

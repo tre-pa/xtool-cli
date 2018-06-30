@@ -10,19 +10,25 @@ import org.apache.commons.lang3.StringUtils;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.jboss.forge.roaster.model.source.MethodSource;
 
+import lombok.Getter;
+
 public class ERest implements Comparable<ERest> {
 
 	private ESpringBootProject springBootProject;
 
 	private JavaClassSource javaClassSource;
 
-	private SortedSet<EMethod> httpGetMethods;
+	@Getter(lazy = true)
+	private final SortedSet<EMethod> httpGetMethods = buildHttpGetMethods();
 
-	private SortedSet<EMethod> httpPutMethods;
+	@Getter(lazy = true)
+	private final SortedSet<EMethod> httpPutMethods = buildHttpPutMethods();
 
-	private SortedSet<EMethod> httpPostMethods;
+	@Getter(lazy = true)
+	private final SortedSet<EMethod> httpPostMethods = buildHttpPostMethods();
 
-	private SortedSet<EMethod> httpDeleteMethods;
+	@Getter(lazy = true)
+	private final SortedSet<EMethod> httpDeleteMethods = buildHttpDeleteMethods();
 
 	public ERest(ESpringBootProject springBootProject, JavaClassSource javaClassSource) {
 		super();
@@ -53,11 +59,8 @@ public class ERest implements Comparable<ERest> {
 	 * 
 	 * @return
 	 */
-	public SortedSet<EMethod> getHttpGetMethods() {
-		if (this.httpGetMethods == null) {
-			this.httpGetMethods = this.getHttpMethods("GetMapping", "RequestMethod.GET");
-		}
-		return this.httpGetMethods;
+	private SortedSet<EMethod> buildHttpGetMethods() {
+		return this.getHttpMethods("GetMapping", "RequestMethod.GET");
 	}
 
 	/**
@@ -65,11 +68,8 @@ public class ERest implements Comparable<ERest> {
 	 * 
 	 * @return
 	 */
-	public SortedSet<EMethod> getHttpPutMethods() {
-		if (this.httpPutMethods == null) {
-			this.httpGetMethods = this.getHttpMethods("PutMapping", "RequestMethod.PUT");
-		}
-		return httpPutMethods;
+	private SortedSet<EMethod> buildHttpPutMethods() {
+		return this.getHttpMethods("PutMapping", "RequestMethod.PUT");
 	}
 
 	/**
@@ -77,11 +77,8 @@ public class ERest implements Comparable<ERest> {
 	 * 
 	 * @return
 	 */
-	public SortedSet<EMethod> getHttpPostMethods() {
-		if (this.httpPostMethods == null) {
-			this.httpPostMethods = this.getHttpMethods("PostMapping", "RequestMethod.POST");
-		}
-		return httpPostMethods;
+	private SortedSet<EMethod> buildHttpPostMethods() {
+		return this.getHttpMethods("PostMapping", "RequestMethod.POST");
 	}
 
 	/**
@@ -89,11 +86,8 @@ public class ERest implements Comparable<ERest> {
 	 * 
 	 * @return
 	 */
-	public SortedSet<EMethod> getHttpDeleteMethods() {
-		if (this.httpDeleteMethods == null) {
-			this.httpDeleteMethods = this.getHttpMethods("DeleteMapping", "RequestMethod.DELETE");
-		}
-		return httpDeleteMethods;
+	private SortedSet<EMethod> buildHttpDeleteMethods() {
+		return this.getHttpMethods("DeleteMapping", "RequestMethod.DELETE");
 	}
 
 	private SortedSet<EMethod> getHttpMethods(String httpAnnotation, String requestMappingMethod) {

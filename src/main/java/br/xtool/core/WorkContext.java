@@ -88,7 +88,7 @@ public class WorkContext implements PromptProvider {
 		if (!project.isPresent()) {
 			if (ESpringBootProject.isValidProject(this.directory.getPath())) {
 				// @formatter:off
-				Set<JavaUnit> javaUnits = this.directory.listFilesRecursively().stream()
+				Set<JavaUnit> javaUnits = this.directory.getAllFiles().stream()
 					.filter(file -> file.getName().endsWith(".java"))
 					.map(RoasterUtils::getJavaUnit)
 					.filter(Optional::isPresent)
