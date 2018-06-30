@@ -31,12 +31,12 @@ public class ERepository implements Comparable<ERepository> {
 		return this.javaInterfaceSource.getName();
 	}
 
-	@Override
-	public int compareTo(ERepository o) {
-		return this.getName().compareTo(o.getName());
-	}
-
-	public Optional<EEntity> getEntity() {
+	/**
+	 * Retorna a entidade alvo do repositório.
+	 * 
+	 * @return
+	 */
+	public Optional<EEntity> getTargetEntity() {
 		// @formatter:off
 		return this.springBootProject.getEntities().stream()
 				.filter(e -> e.getName().concat("Repository").equals(this.getName()))
@@ -44,4 +44,8 @@ public class ERepository implements Comparable<ERepository> {
 		// @formatter:on
 	}
 
+	@Override
+	public int compareTo(ERepository o) {
+		return this.getName().compareTo(o.getName());
+	}
 }

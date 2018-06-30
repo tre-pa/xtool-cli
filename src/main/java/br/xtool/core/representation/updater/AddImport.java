@@ -1,7 +1,5 @@
 package br.xtool.core.representation.updater;
 
-import java.util.Optional;
-
 import org.apache.commons.lang3.StringUtils;
 
 import br.xtool.core.Log;
