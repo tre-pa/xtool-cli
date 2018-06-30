@@ -2,6 +2,7 @@ package br.xtool.core;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.StringWriter;
 import java.util.Map;
 
@@ -78,5 +79,23 @@ public class FS {
 		StringWriter stringWriter = new StringWriter();
 		vEngine.evaluate(vContext, stringWriter, new String(), inlineTemplate);
 		return stringWriter.toString();
+	}
+
+	/**
+	 * Cria um diretório vazio.
+	 * 
+	 * @param relativeDestination
+	 * @param vars
+	 */
+	public void createEmptyPath(String relativeDestination, Map<String, Object> vars) {
+		try {
+			relativeDestination = this.inlineTemplate(relativeDestination, vars);
+			String finalDestination = FilenameUtils.concat(workContext.getDirectory().getPath(), relativeDestination);
+			FileUtils.forceMkdir(new File(finalDestination));
+			FileUtils.touch(new File(FilenameUtils.concat(finalDestination, ".gitkeep")));
+			Log.print(Log.bold(Log.green("\t[+] ")), Log.purple("Path: "), Log.white(relativeDestination));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

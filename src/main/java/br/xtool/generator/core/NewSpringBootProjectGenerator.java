@@ -56,12 +56,12 @@ public class NewSpringBootProjectGenerator extends RegularCommand {
 		// @formatter:on
 
 		Log.print("");
-
-		fs.copy("${templatePath}/src/main/java/config/gitkeep", "${projectName}/src/main/java/${packageRoot.dir}/config/.gitkeep", vars);
-		fs.copy("${templatePath}/src/main/java/domain/gitkeep", "${projectName}/src/main/java/${packageRoot.dir}/domain/.gitkeep", vars);
+		
+		fs.createEmptyPath("${projectName}/src/main/java/${packageRoot.dir}/config", vars);
+		fs.createEmptyPath("${projectName}/src/main/java/${packageRoot.dir}/domain", vars);
 		fs.copy("${templatePath}/src/main/java/exception/gitkeep", "${projectName}/src/main/java/${packageRoot.dir}/exception/.gitkeep", vars);
 		fs.copy("${templatePath}/src/main/java/report/gitkeep", "${projectName}/src/main/java/${packageRoot.dir}/report/.gitkeep", vars);
-		fs.copy("${templatePath}/src/main/java/repository/gitkeep", "${projectName}/src/main/java/${packageRoot.dir}/repository/.gitkeep", vars);
+		fs.createEmptyPath("${projectName}/src/main/java/${packageRoot.dir}/repository", vars);
 		fs.copy("${templatePath}/src/main/java/rest/gitkeep", "${projectName}/src/main/java/${packageRoot.dir}/rest/.gitkeep", vars);
 		fs.copy("${templatePath}/src/main/java/service/gitkeep", "${projectName}/src/main/java/${packageRoot.dir}/service/.gitkeep", vars);
 		fs.copy("${templatePath}/src/main/java/SpringBootApplication.java.vm", "${projectName}/src/main/java/${packageRoot.dir}/${baseClassName}Application.java", vars);
