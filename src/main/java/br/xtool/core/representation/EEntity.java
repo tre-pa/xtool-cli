@@ -74,12 +74,14 @@ public class EEntity extends EClass implements Comparable<EEntity>, Updatable<Ja
 		return this.getName().compareTo(o.getName());
 	}
 
+	@Deprecated
 	public <T extends UpdateRequest<EEntity>> void addUpdate(Consumer<UpdateRequests> updateRequest) {
 		Collection<UpdateRequest<EEntity>> requests = new ArrayList<>();
 		updateRequest.accept(new UpdateRequests(requests));
 		this.commitUpdates(requests);
 	}
 
+	@Deprecated
 	private void commitUpdates(Collection<UpdateRequest<EEntity>> updateRequests) {
 		Log.print(Log.bold(Log.yellow("\t[~] ")), Log.white(this.getQualifiedName()));
 		// @formatter:off
@@ -105,6 +107,7 @@ public class EEntity extends EClass implements Comparable<EEntity>, Updatable<Ja
 		return this.javaClassSource;
 	}
 
+	@Deprecated
 	public class UpdateRequests {
 
 		private Collection<UpdateRequest<EEntity>> updateRequests = new ArrayList<>();

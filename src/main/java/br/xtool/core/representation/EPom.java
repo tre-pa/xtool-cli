@@ -43,6 +43,7 @@ public class EPom implements Updatable<Element> {
 
 	private File file;
 
+	@Deprecated
 	private Collection<UpdateRequest<EPom>> updateRequests = new ArrayList<>();
 
 	private EPom(String path) {
@@ -117,12 +118,14 @@ public class EPom implements Updatable<Element> {
 	 * 
 	 * @param dependency
 	 */
+	@Deprecated
 	public void addDependency(Dependency dependency) {
 		if (hasArtifactId(dependency.getArtifactId())) {
 			this.pomDoc.getRootElement().getChild("dependencies", NAMESPACE).addContent(dependency.getAsDom());
 		}
 	}
-
+	
+	@Deprecated
 	public void commitUpdates() {
 		Log.print(Log.bold(Log.yellow("\t[~] ")), Log.white("pom.xml"));
 		// @formatter:off
@@ -139,6 +142,7 @@ public class EPom implements Updatable<Element> {
 	 * 
 	 * @throws IOException
 	 */
+	@Deprecated
 	public void updateRepresentation() {
 		try (FileOutputStream fos = new FileOutputStream(this.file)) {
 			XMLOutputter xmlOutputter = new XMLOutputter();
