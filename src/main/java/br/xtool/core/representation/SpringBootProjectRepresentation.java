@@ -1,6 +1,5 @@
 package br.xtool.core.representation;
 
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashSet;
@@ -10,11 +9,12 @@ import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.jboss.forge.roaster.model.JavaUnit;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.jboss.forge.roaster.model.source.JavaInterfaceSource;
-import org.jdom2.JDOMException;
 
+import br.xtool.core.representation.enums.ProjectType;
 import lombok.Getter;
 
 /**
@@ -50,7 +50,36 @@ public class SpringBootProjectRepresentation {
 		this.javaUnits = javaUnits;
 	}
 
-	public PomRepresentation getPom() throws JDOMException, IOException {
+	/**
+	 * 
+	 * @return
+	 */
+	public String getName() {
+		return this.directory.getBaseName();
+	}
+
+	public String getBaseClassName() {
+		// @formatter:off
+		return this.javaUnits
+				.parallelStream()
+				.filter(javaUnit -> javaUnit.getGoverningType().isClass())
+				.map(javaUnit -> javaUnit.<JavaClassSource>getGoverningType())
+				.filter(j -> j.getAnnotations().stream().anyMatch(ann -> ann.getName().equals("SpringBootApplication")))
+				.map(j -> StringUtils.replace(j.getName(), "Application", ""))
+				.findFirst()
+				.orElse("");
+		// @formatter:on
+	}
+
+	public ProjectType getProjectType() {
+		return this.getDirectory().getProjectType();
+	}
+
+	public PackageRepresentation getRootPackage() {
+		return this.getPom().getGroupId();
+	}
+
+	public PomRepresentation getPom() {
 		if (this.pom == null) {
 			PomRepresentation.of(FilenameUtils.concat(this.path, "pom.xml")).ifPresent(pomRepresentation -> this.pom = pomRepresentation);
 		}
@@ -104,7 +133,7 @@ public class SpringBootProjectRepresentation {
 		}
 		return this.repositories;
 	}
-	
+
 	/**
 	 * 
 	 * @return

@@ -15,7 +15,12 @@ import br.xtool.XtoolCliApplication;
 import br.xtool.core.FS;
 import br.xtool.core.Log;
 import br.xtool.core.NamePattern;
+import br.xtool.core.WorkContext;
 import br.xtool.core.command.RegularCommand;
+import br.xtool.core.representation.SpringBootProjectRepresentation;
+import br.xtool.core.representation.enums.ProjectType;
+import br.xtool.support.core.SupportManager;
+import br.xtool.support.core.SupportType;
 import strman.Strman;
 
 /**
@@ -30,12 +35,18 @@ public class NewSpringBootProjectGenerator extends RegularCommand {
 	@Autowired
 	private FS fs;
 
+	@Autowired
+	private WorkContext workContext;
+
+	@Autowired
+	private SupportManager supportManager;
+
 	@ShellMethod(key = "new-springboot-project", value = "Novo projeto Spring Boot 1.5.x", group = XtoolCliApplication.PROJECT_COMMAND_GROUP)
 	// @formatter:off
 	public void run(
 			@ShellOption(help = "Nome do projeto") String name, 
 			@ShellOption(help = "Versão do projeto", defaultValue = "0.0.1") String version,
-			@ShellOption(help = "Nome do pacote raiz", defaultValue = "") String packageRoot,
+			@ShellOption(help = "Nome do pacote raiz", defaultValue = "") String rootPackage,
 			@ShellOption(help = "Desativa a dependência jpa", defaultValue = "false", arity = 0) Boolean noJpa,
 			@ShellOption(help = "Desativa a dependência web", defaultValue = "false", arity = 0) boolean noWeb) throws IOException {
 	// @formatter:on
@@ -48,7 +59,7 @@ public class NewSpringBootProjectGenerator extends RegularCommand {
 				.put("templatePath", "generators/springboot/scaffold/1.5.x")
 				.put("projectName", NamePattern.asSpringBootProject(name))
 				.put("projectVersion", version)
-				.put("packageRoot", getFinalPackageRoot(name, packageRoot))
+				.put("rootPackage", getFinalRootPackage(name, rootPackage))
 				.put("baseClassName", NamePattern.asSpringBootBaseClass(name))
 				.put("noJpa", noJpa)
 				.put("noWeb", noWeb)
@@ -56,19 +67,29 @@ public class NewSpringBootProjectGenerator extends RegularCommand {
 		// @formatter:on
 
 		Log.print("");
-		
-		fs.createEmptyPath("${projectName}/src/main/java/${packageRoot.dir}/config", vars);
-		fs.createEmptyPath("${projectName}/src/main/java/${packageRoot.dir}/domain", vars);
-		fs.copy("${templatePath}/src/main/java/exception/gitkeep", "${projectName}/src/main/java/${packageRoot.dir}/exception/.gitkeep", vars);
-		fs.copy("${templatePath}/src/main/java/report/gitkeep", "${projectName}/src/main/java/${packageRoot.dir}/report/.gitkeep", vars);
-		fs.createEmptyPath("${projectName}/src/main/java/${packageRoot.dir}/repository", vars);
-		fs.copy("${templatePath}/src/main/java/rest/gitkeep", "${projectName}/src/main/java/${packageRoot.dir}/rest/.gitkeep", vars);
-		fs.copy("${templatePath}/src/main/java/service/gitkeep", "${projectName}/src/main/java/${packageRoot.dir}/service/.gitkeep", vars);
-		fs.copy("${templatePath}/src/main/java/SpringBootApplication.java.vm", "${projectName}/src/main/java/${packageRoot.dir}/${baseClassName}Application.java", vars);
+
+		fs.createEmptyPath("${projectName}/src/main/java/${rootPackage.dir}/config", vars);
+		// fs.createEmptyPath("${projectName}/src/main/java/${rootPackage.dir}/domain",
+		// vars);
+		fs.copy("${templatePath}/src/main/java/exception/gitkeep", "${projectName}/src/main/java/${rootPackage.dir}/exception/.gitkeep", vars);
+		fs.copy("${templatePath}/src/main/java/report/gitkeep", "${projectName}/src/main/java/${rootPackage.dir}/report/.gitkeep", vars);
+		// fs.createEmptyPath("${projectName}/src/main/java/${rootPackage.dir}/repository",
+		// vars);
+		fs.copy("${templatePath}/src/main/java/rest/gitkeep", "${projectName}/src/main/java/${rootPackage.dir}/rest/.gitkeep", vars);
+		fs.copy("${templatePath}/src/main/java/service/gitkeep", "${projectName}/src/main/java/${rootPackage.dir}/service/.gitkeep", vars);
+		fs.copy("${templatePath}/src/main/java/SpringBootApplication.java.vm", "${projectName}/src/main/java/${rootPackage.dir}/${baseClassName}Application.java", vars);
 		fs.copy("${templatePath}/src/main/resources/application.properties.vm", "${projectName}/src/main/resources/application.properties", vars);
 		fs.copy("${templatePath}/src/main/resources/ehcache.xml.vm", "${projectName}/src/main/resources/ehcache.xml", vars);
 		fs.copy("${templatePath}/gitignore", "${projectName}/.gitignore", vars);
 		fs.copy("${templatePath}/pom.xml.vm", "${projectName}/pom.xml", vars);
+
+		workContext.changeRelativeTo((String) vars.get("projectName"));
+
+		if (workContext.getProject().isPresent()) {
+			if (!noJpa) {
+				supportManager.addSupport(workContext.getProject().get(), SupportType.JPA);
+			}
+		}
 
 		Log.print("");
 
@@ -77,10 +98,10 @@ public class NewSpringBootProjectGenerator extends RegularCommand {
 	/*
 	 * Retorna o nome final do pacote raiz do projeto.
 	 */
-	private Map<String, String> getFinalPackageRoot(String name, String packageRoot) {
+	private Map<String, String> getFinalRootPackage(String name, String rootPackage) {
 		name = name.endsWith("-service") ? name.replace("-service", "") : name;
-		String _packageRoot = StringUtils.join(StringUtils.split(Strman.toKebabCase(name), "-"), ".");
-		String packageName = StringUtils.isEmpty(packageRoot) ? "br.jus.tre_pa.".concat(_packageRoot) : packageRoot;
+		String _rootPackage = StringUtils.join(StringUtils.split(Strman.toKebabCase(name), "-"), ".");
+		String packageName = StringUtils.isEmpty(rootPackage) ? "br.jus.tre_pa.".concat(_rootPackage) : rootPackage;
 		String packageDir = packageName.replaceAll("\\.", "/");
 		// @formatter:off
 		return ImmutableMap.<String, String>builder()

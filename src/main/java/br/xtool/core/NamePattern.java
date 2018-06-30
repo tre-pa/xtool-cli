@@ -15,10 +15,11 @@ public class NamePattern {
 
 	public static String asSpringBootBaseClass(String name) {
 		// @formatter:off
-		return Strman.toKebabCase(
-				name.endsWith("Application") ? 
-						name.replace("Application", "") : 
-						name);
+		return StringUtils.capitalize(
+					Strman.toKebabCase(
+						name.endsWith("Application") ? name.replace("Application", "") : name
+					)
+				);
 		// @formatter:on
 	}
 

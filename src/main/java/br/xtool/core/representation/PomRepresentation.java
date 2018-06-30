@@ -43,7 +43,7 @@ public class PomRepresentation {
 
 	private List<String> updateInfo = new ArrayList<>();
 
-	private PomRepresentation(String path) throws JDOMException, IOException {
+	private PomRepresentation(String path) {
 		super();
 
 	}

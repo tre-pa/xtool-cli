@@ -41,13 +41,18 @@ public class WorkContext implements PromptProvider {
 	/**
 	 * Altera o diretório de trabalho.
 	 * 
-	 * @param newDirectory
+	 * @param newAbsoluteDirectory
 	 */
-	public void changeTo(String newDirectory) {
-		validateDirectory(newDirectory);
-		this.directory = new DirectoryRepresentation(newDirectory);
+	public void changeTo(String newAbsoluteDirectory) {
+		validateDirectory(newAbsoluteDirectory);
+		this.directory = new DirectoryRepresentation(newAbsoluteDirectory);
 		this.project = Optional.empty();
 		applicationEventPublisher.publishEvent(new ChangeDirectoryEvent(this.directory));
+	}
+
+	public void changeRelativeTo(String newRelativeDirectory) {
+		String newAbsoluteDirectory = FilenameUtils.concat(this.directory.getPath(), newRelativeDirectory);
+		this.changeTo(newAbsoluteDirectory);
 	}
 
 	private void validateDirectory(String newDirectory) {
