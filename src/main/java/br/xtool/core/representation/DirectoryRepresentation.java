@@ -68,7 +68,7 @@ public class DirectoryRepresentation {
 				.map(fun -> fun.apply(this))
 				.filter(Objects::nonNull)
 				.findFirst()
-				.orElse(ProjectType.REGULAR);
+				.orElse(ProjectType.NONE);
 		// @formatter:on
 	}
 

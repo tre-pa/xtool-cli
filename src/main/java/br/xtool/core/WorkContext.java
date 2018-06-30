@@ -98,7 +98,7 @@ public class WorkContext implements PromptProvider {
 
 	@Override
 	public AttributedString getPrompt() {
-		if (!this.getDirectory().getProjectType().equals(ProjectType.REGULAR)) {
+		if (!this.getDirectory().getProjectType().equals(ProjectType.NONE)) {
 			// @formatter:off
 			return new AttributedStringBuilder()
 					.append("xtool@", AttributedStyle.DEFAULT.foreground(AttributedStyle.YELLOW))

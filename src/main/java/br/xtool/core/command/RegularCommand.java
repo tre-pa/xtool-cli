@@ -22,7 +22,7 @@ public class RegularCommand {
 	 */
 	@ShellMethodAvailability
 	public Availability availabilitySpringBootCommand() throws IOException {
-		return workContext.getDirectory().getProjectType().equals(ProjectType.REGULAR) ? Availability.available() : Availability.unavailable("O commando não é aplicável ao diretório atual.");
+		return workContext.getDirectory().getProjectType().equals(ProjectType.NONE) ? Availability.available() : Availability.unavailable("O commando não é aplicável ao diretório atual.");
 	}
 
 }
