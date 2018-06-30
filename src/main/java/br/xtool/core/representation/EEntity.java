@@ -28,7 +28,7 @@ public class EEntity extends EClass implements Comparable<EEntity>, Updatable<Ja
 	private ESpringBootProject springBootProject;
 
 	private JavaClassSource javaClassSource;
-
+	
 	private SortedSet<EAttribute> attributes;
 
 	private SortedSet<EAssociation> associations;
