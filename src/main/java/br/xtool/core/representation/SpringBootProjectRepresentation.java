@@ -37,6 +37,8 @@ public class SpringBootProjectRepresentation {
 
 	private SortedSet<RepositoryRepresentation> repositories;
 
+	private SortedSet<RestRepresentation> rests;
+
 	private PomRepresentation pom;
 
 	private ApplicationPropertiesRepresentation applicationProperties;
@@ -101,6 +103,25 @@ public class SpringBootProjectRepresentation {
 			// @formatter:on
 		}
 		return this.repositories;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public SortedSet<RestRepresentation> getRests() {
+		if (this.rests == null) {
+			// @formatter:off
+			this.rests = this.javaUnits
+					.parallelStream()
+					.filter(javaUnit -> javaUnit.getGoverningType().isClass())
+					.map(javaUnit -> javaUnit.<JavaClassSource>getGoverningType())
+					.filter(j -> j.getAnnotations().stream().anyMatch(ann -> ann.getName().equals("RestController")))
+					.map(j -> new RestRepresentation(this, j))
+					.collect(Collectors.toCollection(TreeSet::new));
+			// @formatter:on
+		}
+		return rests;
 	}
 
 	public String getMainDir() {

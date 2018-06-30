@@ -2,7 +2,6 @@ package br.xtool.generator.springboot;
 
 import java.io.IOException;
 import java.util.Map;
-import java.util.Properties;
 
 import org.jdom2.JDOMException;
 import org.springframework.shell.standard.ShellComponent;
@@ -14,7 +13,6 @@ import com.google.common.collect.ImmutableMap;
 import br.xtool.XtoolCliApplication;
 import br.xtool.core.Log;
 import br.xtool.core.command.SpringBootCommand;
-import br.xtool.core.provider.EntityRepresentationValueProvider;
 import br.xtool.core.representation.EntityRepresentation;
 
 /**
@@ -36,7 +34,22 @@ public class SpringBootJpaCrudGenerator extends SpringBootCommand {
 				.put("entity", entity)
 				.build();
 		
+		this.getProject().getRests()
+			.stream()
+			.forEach(rest -> {
+				System.out.println(rest.getName()); 
+				rest.getHttpPostMethods()
+						.stream()
+						.forEach(method -> {
+							System.out.println(method.getAnnotations());
+							System.out.println(method.getParameters());
+						});
+				System.out.println("\n");
+			});
 		
+	}
+
+	private void updateApplicationProperties() {
 		String context = this.getProject()
 			.getApplicationProperties()
 				.get("server.contextPath")
@@ -48,28 +61,6 @@ public class SpringBootJpaCrudGenerator extends SpringBootCommand {
 			.set("abc", "1");
 		this.getProject().getApplicationProperties()
 			.commitUpdates();
-		//properties.l
-		
-		
-		// @formatter:on
-
-		// getProject().getPom().addDependency(new Pom.Dependency("foo", "lib-foo",
-		// "1.0"));
-		// getProject().getPom().commitUpdate();
-
-		//System.out.println("Parent Version: " + getProject().getPom().getParentVersion());
-
-		// getProject().getPom().getDependencies().forEach(d -> System.out.println(d));
-
-		// showEntityAttributes(entity);
-
-		// showEntityAnnotations(entity);
-
-		//showSingleAssociations(entity);
-
-		//showCollectionAssociations(entity);
-
-		//addEntityAttribute(entity);
 	}
 
 	private void showCollectionAssociations(EntityRepresentation entity) {

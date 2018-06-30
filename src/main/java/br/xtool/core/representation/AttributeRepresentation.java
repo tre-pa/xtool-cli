@@ -21,6 +21,7 @@ public class AttributeRepresentation implements Comparable<AttributeRepresentati
 
 	private SpringBootProjectRepresentation springBootProject;
 
+	@Deprecated
 	private EntityRepresentation entitySource;
 
 	private FieldSource<JavaClassSource> fieldSource;
