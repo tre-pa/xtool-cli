@@ -17,16 +17,16 @@ import br.xtool.core.representation.updater.core.Updatable;
  * @author jcruz
  *
  */
-public class AttributeRepresentation implements Comparable<AttributeRepresentation>, Updatable<FieldSource<JavaClassSource>> {
+public class EAttribute implements Comparable<EAttribute>, Updatable<FieldSource<JavaClassSource>> {
 
-	private SpringBootProjectRepresentation springBootProject;
+	private ESpringBootProject springBootProject;
 
 	@Deprecated
-	private EntityRepresentation entitySource;
+	private EEntity entitySource;
 
 	private FieldSource<JavaClassSource> fieldSource;
 
-	public AttributeRepresentation(SpringBootProjectRepresentation springBootProject, EntityRepresentation entitySource, FieldSource<JavaClassSource> fieldSource) {
+	public EAttribute(ESpringBootProject springBootProject, EEntity entitySource, FieldSource<JavaClassSource> fieldSource) {
 		super();
 		this.springBootProject = springBootProject;
 		this.entitySource = entitySource;
@@ -108,21 +108,21 @@ public class AttributeRepresentation implements Comparable<AttributeRepresentati
 		this.fieldSource.setLiteralInitializer(value);
 	}
 
-	public Optional<AssociationRepresentation> getAssociation() {
+	public Optional<EAssociation> getAssociation() {
 		if (this.isAssociation()) {
 			if (this.isCollection()) {
 				// @formatter:off
 				return this.springBootProject.getEntities().stream()
 						.filter(entity -> this.getType().getTypeArguments().stream()
 								.anyMatch(type -> type.getName().equals(entity.getName())))
-						.map(entityTarget -> new AssociationRepresentation(entitySource, entityTarget, this))
+						.map(entityTarget -> new EAssociation(entitySource, entityTarget, this))
 						.findFirst();
 				// @formatter:on
 			}
 			// @formatter:off
 			return this.springBootProject.getEntities().stream()
 					.filter(entity -> entity.getName().equals(this.getType().getName()))
-					.map(entityTarget -> new AssociationRepresentation(entitySource, entityTarget, this))
+					.map(entityTarget -> new EAssociation(entitySource, entityTarget, this))
 					.findFirst();
 			// @formatter:on
 		}
@@ -134,7 +134,7 @@ public class AttributeRepresentation implements Comparable<AttributeRepresentati
 	}
 
 	@Override
-	public int compareTo(AttributeRepresentation o) {
+	public int compareTo(EAttribute o) {
 		return this.getName().compareTo(o.getName());
 	}
 

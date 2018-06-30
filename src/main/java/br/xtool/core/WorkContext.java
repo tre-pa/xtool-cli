@@ -21,8 +21,8 @@ import org.springframework.shell.jline.PromptProvider;
 import org.springframework.stereotype.Component;
 
 import br.xtool.core.event.ChangeDirectoryEvent;
-import br.xtool.core.representation.DirectoryRepresentation;
-import br.xtool.core.representation.SpringBootProjectRepresentation;
+import br.xtool.core.representation.EDirectory;
+import br.xtool.core.representation.ESpringBootProject;
 import br.xtool.core.representation.enums.ProjectType;
 import br.xtool.core.utils.RoasterUtils;
 import lombok.Getter;
@@ -31,12 +31,12 @@ import lombok.Getter;
 public class WorkContext implements PromptProvider {
 
 	@Getter
-	private DirectoryRepresentation directory;
+	private EDirectory directory;
 
 	@Autowired
 	private ApplicationEventPublisher applicationEventPublisher;
 
-	private Optional<SpringBootProjectRepresentation> project = Optional.empty();
+	private Optional<ESpringBootProject> project = Optional.empty();
 
 	/**
 	 * Altera o diretório de trabalho.
@@ -45,7 +45,7 @@ public class WorkContext implements PromptProvider {
 	 */
 	public void changeTo(String newAbsoluteDirectory) {
 		validateDirectory(newAbsoluteDirectory);
-		this.directory = new DirectoryRepresentation(newAbsoluteDirectory);
+		this.directory = new EDirectory(newAbsoluteDirectory);
 		this.project = Optional.empty();
 		applicationEventPublisher.publishEvent(new ChangeDirectoryEvent(this.directory));
 	}
@@ -64,7 +64,7 @@ public class WorkContext implements PromptProvider {
 	private void setupHomeDirectory() throws IOException {
 		String home = FilenameUtils.concat(System.getProperty("user.home"), "git");
 		Files.createDirectories(Paths.get(home));
-		this.directory = new DirectoryRepresentation(home);
+		this.directory = new EDirectory(home);
 	}
 
 	/**
@@ -84,9 +84,9 @@ public class WorkContext implements PromptProvider {
 	 * 
 	 * @return
 	 */
-	public Optional<SpringBootProjectRepresentation> getProject() {
+	public Optional<ESpringBootProject> getProject() {
 		if (!project.isPresent()) {
-			if (SpringBootProjectRepresentation.isValidProject(this.directory.getPath())) {
+			if (ESpringBootProject.isValidProject(this.directory.getPath())) {
 				// @formatter:off
 				Set<JavaUnit> javaUnits = this.directory.listFilesRecursively().stream()
 					.filter(file -> file.getName().endsWith(".java"))
@@ -95,7 +95,7 @@ public class WorkContext implements PromptProvider {
 					.map(Optional::get)
 					.collect(Collectors.toCollection(HashSet::new));
 				// @formatter:on
-				this.project = Optional.of(new SpringBootProjectRepresentation(this.directory.getPath(), javaUnits));
+				this.project = Optional.of(new ESpringBootProject(this.directory.getPath(), javaUnits));
 			}
 		}
 		return this.project;

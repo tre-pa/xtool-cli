@@ -1,6 +1,6 @@
 package br.xtool.support.core;
 
-import br.xtool.core.representation.SpringBootProjectRepresentation;
+import br.xtool.core.representation.ESpringBootProject;
 import br.xtool.core.representation.enums.ProjectType;
 
 public interface SpringBootSupport {
@@ -9,5 +9,5 @@ public interface SpringBootSupport {
 
 	public SupportType getType();
 
-	public void apply(SpringBootProjectRepresentation project);
+	public void apply(ESpringBootProject project);
 }

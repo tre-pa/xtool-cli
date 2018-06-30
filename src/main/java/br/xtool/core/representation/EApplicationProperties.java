@@ -9,13 +9,13 @@ import java.nio.file.Paths;
 import java.util.Optional;
 import java.util.Properties;
 
-public class ApplicationPropertiesRepresentation {
+public class EApplicationProperties {
 
 	private String path;
 
 	private Properties properties;
 
-	private ApplicationPropertiesRepresentation(String path) {
+	private EApplicationProperties(String path) {
 		super();
 		this.path = path;
 	}
@@ -41,10 +41,10 @@ public class ApplicationPropertiesRepresentation {
 		}
 	}
 
-	public static Optional<ApplicationPropertiesRepresentation> of(String path) {
+	public static Optional<EApplicationProperties> of(String path) {
 		if (Files.exists(Paths.get(path))) {
 			try {
-				ApplicationPropertiesRepresentation representation = new ApplicationPropertiesRepresentation(path);
+				EApplicationProperties representation = new EApplicationProperties(path);
 				Properties properties = new Properties();
 				properties.load(new FileInputStream(new File(path)));
 				representation.properties = properties;

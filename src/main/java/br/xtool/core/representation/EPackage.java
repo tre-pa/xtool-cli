@@ -12,25 +12,25 @@ import lombok.Getter;
  */
 
 @Getter
-public class PackageRepresentation {
+public class EPackage {
 
 	private String name;
 
 	private String dir;
 
-	private PackageRepresentation() {
+	private EPackage() {
 		super();
 	}
 
-	public static PackageRepresentation of(String packageName) {
-		PackageRepresentation package1 = new PackageRepresentation();
+	public static EPackage of(String packageName) {
+		EPackage package1 = new EPackage();
 		package1.name = packageName;
 		package1.dir = packageName.replaceAll("\\.", "/");
 		return package1;
 	}
 
-	public static PackageRepresentation of(String... packageElements) {
-		PackageRepresentation package1 = new PackageRepresentation();
+	public static EPackage of(String... packageElements) {
+		EPackage package1 = new EPackage();
 		package1.name = StringUtils.join(packageElements, ".");
 		package1.dir = package1.name.replaceAll("\\.", "/");
 		return package1;

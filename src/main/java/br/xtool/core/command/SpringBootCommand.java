@@ -7,7 +7,7 @@ import org.springframework.shell.Availability;
 import org.springframework.shell.standard.ShellMethodAvailability;
 
 import br.xtool.core.WorkContext;
-import br.xtool.core.representation.SpringBootProjectRepresentation;
+import br.xtool.core.representation.ESpringBootProject;
 
 public class SpringBootCommand {
 
@@ -22,11 +22,11 @@ public class SpringBootCommand {
 	 */
 	@ShellMethodAvailability
 	public Availability availabilitySpringBootCommand() throws IOException {
-		return SpringBootProjectRepresentation.isValidProject(workContext.getDirectory().getPath()) ? Availability.available()
+		return ESpringBootProject.isValidProject(workContext.getDirectory().getPath()) ? Availability.available()
 				: Availability.unavailable("O diretório de trabalho não é um projeto maven válido. Use o comando cd para alterar o diretório de trabalho.");
 	}
 
-	public SpringBootProjectRepresentation getProject() {
+	public ESpringBootProject getProject() {
 		return workContext.getProject().get();
 	}
 

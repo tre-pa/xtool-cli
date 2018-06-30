@@ -9,7 +9,7 @@ import org.jboss.forge.roaster.model.source.AnnotationSource;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 
 import br.xtool.core.Log;
-import br.xtool.core.representation.EntityRepresentation;
+import br.xtool.core.representation.EEntity;
 import br.xtool.core.representation.updater.core.AnnotationPayload;
 
 public class AddAnnotationStringValue implements AnnotationPayload {
@@ -30,7 +30,7 @@ public class AddAnnotationStringValue implements AnnotationPayload {
 	}
 
 	@Override
-	public void apply(EntityRepresentation representation, AnnotationSource<JavaClassSource> annotationSource) {
+	public void apply(EEntity representation, AnnotationSource<JavaClassSource> annotationSource) {
 		if (StringUtils.isNotBlank(paramName)) {
 			annotationSource.setStringArrayValue(paramName, paramValues);
 			Log.print(Log.bold(Log.green("\t        [+] ")), Log.gray("params : "), Log.white(this.paramName), Log.white(Arrays.deepToString(paramValues)));

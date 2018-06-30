@@ -1,4 +1,4 @@
-package br.xtool.core.provider;
+package br.xtool.core.representation.provider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,10 +12,10 @@ import org.springframework.shell.standard.ValueProviderSupport;
 import org.springframework.stereotype.Component;
 
 import br.xtool.core.WorkContext;
-import br.xtool.core.representation.RepositoryRepresentation;
+import br.xtool.core.representation.EEntity;
 
 @Component
-public class RepositoryRepresentationValueProvider extends ValueProviderSupport {
+public class EEntityValueProvider extends ValueProviderSupport {
 
 	@Autowired
 	private WorkContext workContext;
@@ -24,8 +24,8 @@ public class RepositoryRepresentationValueProvider extends ValueProviderSupport 
 	public List<CompletionProposal> complete(MethodParameter parameter, CompletionContext completionContext, String[] hints) {
 		if (workContext.getProject().isPresent()) {
 			// @formatter:off
-			return workContext.getProject().get().getRepositories()
-					.stream().map(RepositoryRepresentation::getName)
+			return workContext.getProject().get().getEntities().stream()
+					.map(EEntity::getName)
 					.map(CompletionProposal::new)
 					.collect(Collectors.toList());
 			// @formatter:on

@@ -32,7 +32,7 @@ import lombok.Getter;
  * @author jcruz
  *
  */
-public class PomRepresentation implements Updatable<Element> {
+public class EPom implements Updatable<Element> {
 
 	public static final Namespace NAMESPACE = Namespace.getNamespace("http://maven.apache.org/POM/4.0.0");
 
@@ -44,9 +44,9 @@ public class PomRepresentation implements Updatable<Element> {
 
 	private Element rootElement;
 
-	private Collection<UpdateRequest<PomRepresentation>> updateRequests = new ArrayList<>();
+	private Collection<UpdateRequest<EPom>> updateRequests = new ArrayList<>();
 
-	private PomRepresentation(String path) {
+	private EPom(String path) {
 		super();
 
 	}
@@ -56,8 +56,8 @@ public class PomRepresentation implements Updatable<Element> {
 	 * 
 	 * @return
 	 */
-	public PackageRepresentation getGroupId() {
-		return PackageRepresentation.of(this.rootElement.getChild("groupId", NAMESPACE).getText());
+	public EPackage getGroupId() {
+		return EPackage.of(this.rootElement.getChild("groupId", NAMESPACE).getText());
 	}
 
 	/**
@@ -157,10 +157,10 @@ public class PomRepresentation implements Updatable<Element> {
 
 	}
 
-	public static Optional<PomRepresentation> of(String path) {
+	public static Optional<EPom> of(String path) {
 		if (Files.exists(Paths.get(path))) {
 			try {
-				PomRepresentation pomRepresentation = new PomRepresentation(path);
+				EPom pomRepresentation = new EPom(path);
 				pomRepresentation.file = new File(path);
 				SAXBuilder saxBuilder = new SAXBuilder();
 				pomRepresentation.pomDoc = saxBuilder.build(pomRepresentation.file);
@@ -207,7 +207,7 @@ public class PomRepresentation implements Updatable<Element> {
 		 * @return
 		 */
 		public Element getAsDom() {
-			Element dependency = new Element("dependency", PomRepresentation.NAMESPACE);
+			Element dependency = new Element("dependency", EPom.NAMESPACE);
 			this.buildGroupId(dependency);
 			this.buildArtifiactId(dependency);
 			this.buildVersion(dependency);
@@ -215,20 +215,20 @@ public class PomRepresentation implements Updatable<Element> {
 		}
 
 		private void buildGroupId(Element dependency) {
-			Element groupId = new Element("groupId", PomRepresentation.NAMESPACE);
+			Element groupId = new Element("groupId", EPom.NAMESPACE);
 			groupId.setText(this.getGroupId());
 			dependency.addContent(groupId);
 		}
 
 		private void buildArtifiactId(Element dependency) {
-			Element artifactId = new Element("artifactId", PomRepresentation.NAMESPACE);
+			Element artifactId = new Element("artifactId", EPom.NAMESPACE);
 			artifactId.setText(this.getArtifactId());
 			dependency.addContent(artifactId);
 		}
 
 		private void buildVersion(Element dependency) {
 			if (StringUtils.isNoneBlank(this.getVersion())) {
-				Element version = new Element("version", PomRepresentation.NAMESPACE);
+				Element version = new Element("version", EPom.NAMESPACE);
 				version.setText(this.getVersion());
 				dependency.addContent(version);
 			}

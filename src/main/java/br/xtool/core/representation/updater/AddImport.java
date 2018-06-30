@@ -5,7 +5,7 @@ import java.util.Optional;
 import org.apache.commons.lang3.StringUtils;
 
 import br.xtool.core.Log;
-import br.xtool.core.representation.EntityRepresentation;
+import br.xtool.core.representation.EEntity;
 import br.xtool.core.representation.updater.core.UpdateRequest;
 
 /**
@@ -14,7 +14,7 @@ import br.xtool.core.representation.updater.core.UpdateRequest;
  * @author jcruz
  *
  */
-public class AddImport implements UpdateRequest<EntityRepresentation> {
+public class AddImport implements UpdateRequest<EEntity> {
 
 	private String name;
 
@@ -24,12 +24,12 @@ public class AddImport implements UpdateRequest<EntityRepresentation> {
 	}
 
 	@Override
-	public boolean updatePolicy(EntityRepresentation representation) {
+	public boolean updatePolicy(EEntity representation) {
 		return !representation.getSource().hasAnnotation(name);
 	}
 
 	@Override
-	public void apply(EntityRepresentation representation) {
+	public void apply(EEntity representation) {
 		representation.getSource().addImport(name);
 		Log.print(Log.bold(Log.green("\t    [+] ")), Log.gray("import : "), Log.white(this.name));
 	}

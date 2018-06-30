@@ -25,20 +25,20 @@ import br.xtool.core.representation.updater.core.UpdateRequest;
  * @author jcruz
  *
  */
-public class EntityRepresentation implements Comparable<EntityRepresentation>, Updatable<JavaClassSource> {
+public class EEntity implements Comparable<EEntity>, Updatable<JavaClassSource> {
 
-	private SpringBootProjectRepresentation springBootProject;
+	private ESpringBootProject springBootProject;
 
 	private JavaClassSource javaClassSource;
 
-	private SortedSet<AttributeRepresentation> attributes;
+	private SortedSet<EAttribute> attributes;
 
-	private SortedSet<AssociationRepresentation> associations;
+	private SortedSet<EAssociation> associations;
 
 	// private Collection<UpdateRequest<EntityRepresentation>> updateRequests = new
 	// ArrayList<>();
 
-	public EntityRepresentation(SpringBootProjectRepresentation springBootProject, JavaClassSource javaClassSource) {
+	public EEntity(ESpringBootProject springBootProject, JavaClassSource javaClassSource) {
 		super();
 		this.springBootProject = springBootProject;
 		this.javaClassSource = javaClassSource;
@@ -67,8 +67,8 @@ public class EntityRepresentation implements Comparable<EntityRepresentation>, U
 	 * 
 	 * @return
 	 */
-	public PackageRepresentation getPackage() {
-		return PackageRepresentation.of(javaClassSource.getPackage());
+	public EPackage getPackage() {
+		return EPackage.of(javaClassSource.getPackage());
 	}
 
 	/**
@@ -85,11 +85,11 @@ public class EntityRepresentation implements Comparable<EntityRepresentation>, U
 	 * 
 	 * @return
 	 */
-	public SortedSet<AttributeRepresentation> getAttributes() {
+	public SortedSet<EAttribute> getAttributes() {
 		if (this.attributes == null) {
 			// @formatter:off
 			this.attributes = this.javaClassSource.getFields().stream()
-					.map(f -> new AttributeRepresentation(this.springBootProject,this, f))
+					.map(f -> new EAttribute(this.springBootProject,this, f))
 					.collect(Collectors.toCollection(TreeSet::new));
 			// @formatter:on
 		}
@@ -101,13 +101,13 @@ public class EntityRepresentation implements Comparable<EntityRepresentation>, U
 	 * 
 	 * @return
 	 */
-	public SortedSet<AssociationRepresentation> getAssociations() {
+	public SortedSet<EAssociation> getAssociations() {
 		if (this.associations == null) {
 			this.associations = new TreeSet<>();
 			// @formatter:off
 			this.getAttributes().stream()
-				.filter(AttributeRepresentation::isAssociation)
-				.map(AttributeRepresentation::getAssociation)
+				.filter(EAttribute::isAssociation)
+				.map(EAttribute::getAssociation)
 				.forEach(association -> this.associations.add(association.get()));
 			// @formatter:on
 		}
@@ -126,7 +126,7 @@ public class EntityRepresentation implements Comparable<EntityRepresentation>, U
 	}
 
 	@Override
-	public int compareTo(EntityRepresentation o) {
+	public int compareTo(EEntity o) {
 		return this.getName().compareTo(o.getName());
 	}
 
@@ -136,13 +136,13 @@ public class EntityRepresentation implements Comparable<EntityRepresentation>, U
 	 * this.updateRequests.add(updateRequest.get()); } }
 	 */
 
-	public <T extends UpdateRequest<EntityRepresentation>> void addUpdate(Consumer<UpdateRequests> updateRequest) {
-		Collection<UpdateRequest<EntityRepresentation>> requests = new ArrayList<>();
+	public <T extends UpdateRequest<EEntity>> void addUpdate(Consumer<UpdateRequests> updateRequest) {
+		Collection<UpdateRequest<EEntity>> requests = new ArrayList<>();
 		updateRequest.accept(new UpdateRequests(requests));
 		this.commitUpdates(requests);
 	}
 
-	private void commitUpdates(Collection<UpdateRequest<EntityRepresentation>> updateRequests) {
+	private void commitUpdates(Collection<UpdateRequest<EEntity>> updateRequests) {
 		Log.print(Log.bold(Log.yellow("\t[~] ")), Log.white(this.getQualifiedName()));
 		// @formatter:off
 		updateRequests
@@ -173,14 +173,14 @@ public class EntityRepresentation implements Comparable<EntityRepresentation>, U
 
 	public class UpdateRequests {
 
-		private Collection<UpdateRequest<EntityRepresentation>> updateRequests = new ArrayList<>();
+		private Collection<UpdateRequest<EEntity>> updateRequests = new ArrayList<>();
 
-		public UpdateRequests(Collection<UpdateRequest<EntityRepresentation>> updateRequests) {
+		public UpdateRequests(Collection<UpdateRequest<EEntity>> updateRequests) {
 			super();
 			this.updateRequests = updateRequests;
 		}
 
-		public void add(UpdateRequest<EntityRepresentation> updateRequest) {
+		public void add(UpdateRequest<EEntity> updateRequest) {
 			if (Objects.nonNull(updateRequest)) {
 				this.updateRequests.add(updateRequest);
 			}

@@ -1,17 +1,17 @@
 package br.xtool.core.representation.updater;
 
-import br.xtool.core.representation.PomRepresentation;
+import br.xtool.core.representation.EPom;
 import br.xtool.core.representation.updater.core.UpdateRequest;
 
-public class AddPomDependency implements UpdateRequest<PomRepresentation> {
+public class AddPomDependency implements UpdateRequest<EPom> {
 
 	@Override
-	public boolean updatePolicy(PomRepresentation representation) {
+	public boolean updatePolicy(EPom representation) {
 		return false;
 	}
 
 	@Override
-	public void apply(PomRepresentation representation) {
+	public void apply(EPom representation) {
 
 	}
 

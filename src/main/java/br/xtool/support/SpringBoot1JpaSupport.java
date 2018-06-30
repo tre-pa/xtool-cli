@@ -8,8 +8,8 @@ import org.springframework.stereotype.Component;
 import com.google.common.collect.ImmutableMap;
 
 import br.xtool.core.FS;
-import br.xtool.core.representation.SpringBootProjectRepresentation;
-import br.xtool.core.representation.PomRepresentation.Dependency;
+import br.xtool.core.representation.ESpringBootProject;
+import br.xtool.core.representation.EPom.Dependency;
 import br.xtool.core.representation.enums.ProjectType;
 import br.xtool.support.core.SpringBootSupport;
 import br.xtool.support.core.SupportType;
@@ -38,7 +38,7 @@ public class SpringBoot1JpaSupport implements SpringBootSupport {
 	}
 
 	@Override
-	public void apply(SpringBootProjectRepresentation project) {
+	public void apply(ESpringBootProject project) {
 		//// @formatter:off
 		Map<String, Object> vars = ImmutableMap.<String, Object>builder()
 				.put("projectName", project.getName())

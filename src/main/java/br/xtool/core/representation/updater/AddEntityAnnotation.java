@@ -12,7 +12,7 @@ import org.jboss.forge.roaster.model.source.AnnotationSource;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 
 import br.xtool.core.Log;
-import br.xtool.core.representation.EntityRepresentation;
+import br.xtool.core.representation.EEntity;
 import br.xtool.core.representation.updater.core.AnnotationPayload;
 import br.xtool.core.representation.updater.core.UpdateRequest;
 
@@ -49,7 +49,7 @@ import br.xtool.core.representation.updater.core.UpdateRequest;
  * @author jcruz
  *
  */
-public class AddEntityAnnotation implements UpdateRequest<EntityRepresentation> {
+public class AddEntityAnnotation implements UpdateRequest<EEntity> {
 
 	private String annotationName;
 
@@ -65,12 +65,12 @@ public class AddEntityAnnotation implements UpdateRequest<EntityRepresentation> 
 	}
 
 	@Override
-	public boolean updatePolicy(EntityRepresentation representation) {
+	public boolean updatePolicy(EEntity representation) {
 		return !representation.getSource().hasAnnotation(annotationName);
 	}
 
 	@Override
-	public void apply(EntityRepresentation representation) {
+	public void apply(EEntity representation) {
 		representation.getSource().addImport(annotationImportName);
 		AnnotationSource<JavaClassSource> annotationSource = representation.getSource().addAnnotation();
 		annotationSource.setName(annotationName);

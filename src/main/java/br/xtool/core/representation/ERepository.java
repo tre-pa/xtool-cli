@@ -10,13 +10,13 @@ import org.jboss.forge.roaster.model.source.JavaInterfaceSource;
  * @author jcruz
  *
  */
-public class RepositoryRepresentation implements Comparable<RepositoryRepresentation> {
+public class ERepository implements Comparable<ERepository> {
 
-	private SpringBootProjectRepresentation springBootProject;
+	private ESpringBootProject springBootProject;
 
 	private JavaInterfaceSource javaInterfaceSource;
 
-	public RepositoryRepresentation(SpringBootProjectRepresentation springBootProject, JavaInterfaceSource javaInterfaceSource) {
+	public ERepository(ESpringBootProject springBootProject, JavaInterfaceSource javaInterfaceSource) {
 		super();
 		this.springBootProject = springBootProject;
 		this.javaInterfaceSource = javaInterfaceSource;
@@ -32,11 +32,11 @@ public class RepositoryRepresentation implements Comparable<RepositoryRepresenta
 	}
 
 	@Override
-	public int compareTo(RepositoryRepresentation o) {
+	public int compareTo(ERepository o) {
 		return this.getName().compareTo(o.getName());
 	}
 
-	public Optional<EntityRepresentation> getEntity() {
+	public Optional<EEntity> getEntity() {
 		// @formatter:off
 		return this.springBootProject.getEntities().stream()
 				.filter(e -> e.getName().concat("Repository").equals(this.getName()))

@@ -10,21 +10,21 @@ import org.apache.commons.lang3.StringUtils;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.jboss.forge.roaster.model.source.MethodSource;
 
-public class RestRepresentation implements Comparable<RestRepresentation> {
+public class ERest implements Comparable<ERest> {
 
-	private SpringBootProjectRepresentation springBootProject;
+	private ESpringBootProject springBootProject;
 
 	private JavaClassSource javaClassSource;
 
-	private SortedSet<MethodRepresentation> httpGetMethods;
+	private SortedSet<EMethod> httpGetMethods;
 
-	private SortedSet<MethodRepresentation> httpPutMethods;
+	private SortedSet<EMethod> httpPutMethods;
 
-	private SortedSet<MethodRepresentation> httpPostMethods;
+	private SortedSet<EMethod> httpPostMethods;
 
-	private SortedSet<MethodRepresentation> httpDeleteMethods;
+	private SortedSet<EMethod> httpDeleteMethods;
 
-	public RestRepresentation(SpringBootProjectRepresentation springBootProject, JavaClassSource javaClassSource) {
+	public ERest(ESpringBootProject springBootProject, JavaClassSource javaClassSource) {
 		super();
 		this.springBootProject = springBootProject;
 		this.javaClassSource = javaClassSource;
@@ -53,7 +53,7 @@ public class RestRepresentation implements Comparable<RestRepresentation> {
 	 * 
 	 * @return
 	 */
-	public SortedSet<MethodRepresentation> getHttpGetMethods() {
+	public SortedSet<EMethod> getHttpGetMethods() {
 		if (this.httpGetMethods == null) {
 			this.httpGetMethods = this.getHttpMethods("GetMapping", "RequestMethod.GET");
 		}
@@ -65,7 +65,7 @@ public class RestRepresentation implements Comparable<RestRepresentation> {
 	 * 
 	 * @return
 	 */
-	public SortedSet<MethodRepresentation> getHttpPutMethods() {
+	public SortedSet<EMethod> getHttpPutMethods() {
 		if (this.httpPutMethods == null) {
 			this.httpGetMethods = this.getHttpMethods("PutMapping", "RequestMethod.PUT");
 		}
@@ -77,7 +77,7 @@ public class RestRepresentation implements Comparable<RestRepresentation> {
 	 * 
 	 * @return
 	 */
-	public SortedSet<MethodRepresentation> getHttpPostMethods() {
+	public SortedSet<EMethod> getHttpPostMethods() {
 		if (this.httpPostMethods == null) {
 			this.httpPostMethods = this.getHttpMethods("PostMapping", "RequestMethod.POST");
 		}
@@ -89,14 +89,14 @@ public class RestRepresentation implements Comparable<RestRepresentation> {
 	 * 
 	 * @return
 	 */
-	public SortedSet<MethodRepresentation> getHttpDeleteMethods() {
+	public SortedSet<EMethod> getHttpDeleteMethods() {
 		if (this.httpDeleteMethods == null) {
 			this.httpDeleteMethods = this.getHttpMethods("DeleteMapping", "RequestMethod.DELETE");
 		}
 		return httpDeleteMethods;
 	}
 
-	private SortedSet<MethodRepresentation> getHttpMethods(String httpAnnotation, String requestMappingMethod) {
+	private SortedSet<EMethod> getHttpMethods(String httpAnnotation, String requestMappingMethod) {
 		Predicate<MethodSource<JavaClassSource>> hasHttpAnnotation = methodSource -> methodSource.hasAnnotation(httpAnnotation);
 		Predicate<MethodSource<JavaClassSource>> hasRequestMapping = methodSource -> methodSource.hasAnnotation("RequestMapping");
 		Predicate<MethodSource<JavaClassSource>> hasRequestMappingMethod = methodSource -> StringUtils.equals(methodSource.getAnnotation("RequestMapping").getStringValue("method"),
@@ -105,13 +105,13 @@ public class RestRepresentation implements Comparable<RestRepresentation> {
 		return this.javaClassSource.getMethods()
 			.stream()
 			.filter(hasHttpAnnotation.or(hasRequestMapping.and(hasRequestMappingMethod)))
-			.map(methodSource -> new MethodRepresentation(springBootProject, javaClassSource, methodSource))
+			.map(methodSource -> new EMethod(springBootProject, javaClassSource, methodSource))
 			.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
 	}
 
 	@Override
-	public int compareTo(RestRepresentation o) {
+	public int compareTo(ERest o) {
 		return this.getName().compareTo(o.getName());
 	}
 

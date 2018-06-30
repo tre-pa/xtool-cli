@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 
-import br.xtool.core.representation.SpringBootProjectRepresentation;
+import br.xtool.core.representation.ESpringBootProject;
 import br.xtool.core.representation.enums.ProjectType;
 
 /**
@@ -40,7 +40,7 @@ public class SupportManager {
 	 * @param supportType
 	 *            Enum com tipo de support a ser adicionado. {@link SupportType}
 	 */
-	public void addSupport(SpringBootProjectRepresentation project, SupportType supportType) {
+	public void addSupport(ESpringBootProject project, SupportType supportType) {
 		SpringBootSupport support = supportTable.get(project.getProjectType(), supportType);
 		support.apply(project);
 	}

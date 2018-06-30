@@ -22,19 +22,19 @@ import com.google.common.collect.ImmutableSet;
 import br.xtool.core.representation.enums.ProjectType;
 import lombok.Getter;
 
-public class DirectoryRepresentation {
+public class EDirectory {
 
 	@Getter
 	private String path;
 
 	// @formatter:off
-	private Set<Function<DirectoryRepresentation, ProjectType>> typeResolvers = 
+	private Set<Function<EDirectory, ProjectType>> typeResolvers = 
 			ImmutableSet.of(
 					new SpringBoot1ProjectTypeResolver()
 			);
 	// @formatter:on
 
-	public DirectoryRepresentation(String directory) {
+	public EDirectory(String directory) {
 		super();
 		this.path = FilenameUtils.normalizeNoEndSeparator(directory, true);
 	}
@@ -72,13 +72,13 @@ public class DirectoryRepresentation {
 		// @formatter:on
 	}
 
-	private class SpringBoot1ProjectTypeResolver implements Function<DirectoryRepresentation, ProjectType> {
+	private class SpringBoot1ProjectTypeResolver implements Function<EDirectory, ProjectType> {
 
 		@Override
-		public @Nullable ProjectType apply(@Nullable DirectoryRepresentation dr) {
+		public @Nullable ProjectType apply(@Nullable EDirectory dr) {
 			String pomFile = FilenameUtils.concat(dr.getPath(), "pom.xml");
 			if (Files.exists(Paths.get(pomFile))) {
-				Optional<PomRepresentation> pomRepresentation = PomRepresentation.of(pomFile);
+				Optional<EPom> pomRepresentation = EPom.of(pomFile);
 				if (pomRepresentation.isPresent()) {
 					Pattern pattern = Pattern.compile("1.5.\\d\\d?.RELEASE");
 					Matcher matcher = pattern.matcher(pomRepresentation.get().getParentVersion());

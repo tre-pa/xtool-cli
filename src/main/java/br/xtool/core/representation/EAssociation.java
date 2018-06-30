@@ -4,18 +4,18 @@ import java.util.Optional;
 
 import lombok.Getter;
 
-public class AssociationRepresentation implements Comparable<AssociationRepresentation> {
+public class EAssociation implements Comparable<EAssociation> {
 
 	@Getter
-	private EntityRepresentation entitySource;
+	private EEntity entitySource;
 
 	@Getter
-	private EntityRepresentation entityTarget;
+	private EEntity entityTarget;
 
 	@Getter
-	private AttributeRepresentation attributeSource;
+	private EAttribute attributeSource;
 
-	public AssociationRepresentation(EntityRepresentation source, EntityRepresentation target, AttributeRepresentation attributeSource) {
+	public EAssociation(EEntity source, EEntity target, EAttribute attributeSource) {
 		super();
 		this.entitySource = source;
 		this.entityTarget = target;
@@ -97,7 +97,7 @@ public class AssociationRepresentation implements Comparable<AssociationRepresen
 		return this.attributeSource.hasAnnotation("ManyToMany");
 	}
 
-	public Optional<AttributeRepresentation> getAttributeTarget() {
+	public Optional<EAttribute> getAttributeTarget() {
 		// @formatter:off
 		return this.entityTarget.getAttributes().stream()
 				.filter(attrTarget -> attrTarget.getType().getName().equals(entityTarget.getName()))
@@ -106,7 +106,7 @@ public class AssociationRepresentation implements Comparable<AssociationRepresen
 	}
 
 	@Override
-	public int compareTo(AssociationRepresentation o) {
+	public int compareTo(EAssociation o) {
 		return this.entityTarget.getName().compareTo(o.getEntityTarget().getName());
 	}
 

@@ -15,7 +15,6 @@ import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.jboss.forge.roaster.model.source.JavaInterfaceSource;
 
 import br.xtool.core.representation.enums.ProjectType;
-import lombok.Getter;
 
 /**
  * Classe que representa um projeto Spring Boot
@@ -23,30 +22,22 @@ import lombok.Getter;
  * @author jcruz
  *
  */
-public class SpringBootProjectRepresentation {
-
-	@Getter
-	private String path;
-
-	@Getter
-	private DirectoryRepresentation directory;
+public class ESpringBootProject extends EProject {
 
 	private Set<JavaUnit> javaUnits = new HashSet<>();
 
-	private SortedSet<EntityRepresentation> entities;
+	private SortedSet<EEntity> entities;
 
-	private SortedSet<RepositoryRepresentation> repositories;
+	private SortedSet<ERepository> repositories;
 
-	private SortedSet<RestRepresentation> rests;
+	private SortedSet<ERest> rests;
 
-	private PomRepresentation pom;
+	private EPom pom;
 
-	private ApplicationPropertiesRepresentation applicationProperties;
+	private EApplicationProperties applicationProperties;
 
-	public SpringBootProjectRepresentation(String path, Set<JavaUnit> javaUnits) {
-		super();
-		this.path = path;
-		this.directory = new DirectoryRepresentation(path);
+	public ESpringBootProject(String path, Set<JavaUnit> javaUnits) {
+		super(path);
 		this.javaUnits = javaUnits;
 	}
 
@@ -56,7 +47,7 @@ public class SpringBootProjectRepresentation {
 	 * @return
 	 */
 	public String getName() {
-		return this.directory.getBaseName();
+		return this.getDirectory().getBaseName();
 	}
 
 	/**
@@ -92,7 +83,7 @@ public class SpringBootProjectRepresentation {
 	 * 
 	 * @return
 	 */
-	public PackageRepresentation getRootPackage() {
+	public EPackage getRootPackage() {
 		return this.getPom().getGroupId();
 	}
 
@@ -101,9 +92,9 @@ public class SpringBootProjectRepresentation {
 	 * 
 	 * @return
 	 */
-	public PomRepresentation getPom() {
+	public EPom getPom() {
 		if (this.pom == null) {
-			PomRepresentation.of(FilenameUtils.concat(this.path, "pom.xml")).ifPresent(pomRepresentation -> this.pom = pomRepresentation);
+			EPom.of(FilenameUtils.concat(this.getPath(), "pom.xml")).ifPresent(pomRepresentation -> this.pom = pomRepresentation);
 		}
 		return pom;
 	}
@@ -113,9 +104,9 @@ public class SpringBootProjectRepresentation {
 	 * 
 	 * @return
 	 */
-	public ApplicationPropertiesRepresentation getApplicationProperties() {
+	public EApplicationProperties getApplicationProperties() {
 		if (this.applicationProperties == null) {
-			ApplicationPropertiesRepresentation.of(FilenameUtils.concat(this.path, "src/main/resources/application.properties"))
+			EApplicationProperties.of(FilenameUtils.concat(this.getPath(), "src/main/resources/application.properties"))
 					.ifPresent(applicationProperties -> this.applicationProperties = applicationProperties);
 		}
 		return applicationProperties;
@@ -126,7 +117,7 @@ public class SpringBootProjectRepresentation {
 	 * 
 	 * @return
 	 */
-	public SortedSet<EntityRepresentation> getEntities() {
+	public SortedSet<EEntity> getEntities() {
 		if (this.entities == null) {
 			// @formatter:off
 			this.entities = this.javaUnits
@@ -134,7 +125,7 @@ public class SpringBootProjectRepresentation {
 					.filter(javaUnit -> javaUnit.getGoverningType().isClass())
 					.map(javaUnit -> javaUnit.<JavaClassSource>getGoverningType())
 					.filter(j -> j.getAnnotations().stream().anyMatch(ann -> ann.getName().equals("Entity")))
-					.map(j -> new EntityRepresentation(this, j))
+					.map(j -> new EEntity(this, j))
 					.collect(Collectors.toCollection(TreeSet::new));
 			// @formatter:on
 		}
@@ -146,7 +137,7 @@ public class SpringBootProjectRepresentation {
 	 * 
 	 * @return
 	 */
-	public SortedSet<RepositoryRepresentation> getRepositories() {
+	public SortedSet<ERepository> getRepositories() {
 		if (this.repositories == null) {
 			// @formatter:off
 			this.repositories = this.javaUnits
@@ -154,7 +145,7 @@ public class SpringBootProjectRepresentation {
 					.filter(javaUnit -> javaUnit.getGoverningType().isInterface())
 					.map(javaUnit -> javaUnit.<JavaInterfaceSource>getGoverningType())
 					.filter(j -> j.getAnnotations().stream().anyMatch(ann -> ann.getName().equals("Repository")))
-					.map(j -> new RepositoryRepresentation(this, j))
+					.map(j -> new ERepository(this, j))
 					.collect(Collectors.toCollection(TreeSet::new));
 			// @formatter:on
 		}
@@ -165,7 +156,7 @@ public class SpringBootProjectRepresentation {
 	 * 
 	 * @return
 	 */
-	public SortedSet<RestRepresentation> getRests() {
+	public SortedSet<ERest> getRests() {
 		if (this.rests == null) {
 			// @formatter:off
 			this.rests = this.javaUnits
@@ -173,7 +164,7 @@ public class SpringBootProjectRepresentation {
 					.filter(javaUnit -> javaUnit.getGoverningType().isClass())
 					.map(javaUnit -> javaUnit.<JavaClassSource>getGoverningType())
 					.filter(j -> j.getAnnotations().stream().anyMatch(ann -> ann.getName().equals("RestController")))
-					.map(j -> new RestRepresentation(this, j))
+					.map(j -> new ERest(this, j))
 					.collect(Collectors.toCollection(TreeSet::new));
 			// @formatter:on
 		}
@@ -181,7 +172,7 @@ public class SpringBootProjectRepresentation {
 	}
 
 	public String getMainDir() {
-		return FilenameUtils.concat(this.path, "src/main/java");
+		return FilenameUtils.concat(this.getPath(), "src/main/java");
 	}
 
 	public static boolean isValidProject(String path) {

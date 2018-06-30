@@ -8,15 +8,15 @@ import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.jboss.forge.roaster.model.source.MethodSource;
 import org.jboss.forge.roaster.model.source.ParameterSource;
 
-public class MethodRepresentation implements Comparable<MethodRepresentation> {
+public class EMethod implements Comparable<EMethod> {
 
-	private SpringBootProjectRepresentation springBootProject;
+	private ESpringBootProject springBootProject;
 
 	private JavaClassSource owner;
 
 	private MethodSource<JavaClassSource> methodSource;
 
-	public MethodRepresentation(SpringBootProjectRepresentation springBootProject, JavaClassSource owner, MethodSource<JavaClassSource> methodSource) {
+	public EMethod(ESpringBootProject springBootProject, JavaClassSource owner, MethodSource<JavaClassSource> methodSource) {
 		super();
 		this.springBootProject = springBootProject;
 		this.owner = owner;
@@ -65,7 +65,7 @@ public class MethodRepresentation implements Comparable<MethodRepresentation> {
 	}
 
 	@Override
-	public int compareTo(MethodRepresentation o) {
+	public int compareTo(EMethod o) {
 		return this.getName().compareTo(o.getName());
 	}
 

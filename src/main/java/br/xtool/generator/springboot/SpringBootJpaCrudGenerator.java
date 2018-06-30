@@ -13,7 +13,7 @@ import com.google.common.collect.ImmutableMap;
 import br.xtool.XtoolCliApplication;
 import br.xtool.core.Log;
 import br.xtool.core.command.SpringBootCommand;
-import br.xtool.core.representation.EntityRepresentation;
+import br.xtool.core.representation.EEntity;
 
 /**
  * Comando que gera um classe CRUD no projeto Spring Boot
@@ -63,7 +63,7 @@ public class SpringBootJpaCrudGenerator extends SpringBootCommand {
 			.commitUpdates();
 	}
 
-	private void showCollectionAssociations(EntityRepresentation entity) {
+	private void showCollectionAssociations(EEntity entity) {
 		System.out.println(Log.green("\nLista de associações compostas\n"));
 		// @formatter:off
 		entity.getAttributes().stream()
@@ -78,7 +78,7 @@ public class SpringBootJpaCrudGenerator extends SpringBootCommand {
 		// @formatter:on
 	}
 
-	private void showSingleAssociations(EntityRepresentation entity) {
+	private void showSingleAssociations(EEntity entity) {
 		System.out.println(Log.green("\nLista de associações simples\n"));
 		//// @formatter:off
 		entity.getAttributes().stream()
@@ -91,13 +91,13 @@ public class SpringBootJpaCrudGenerator extends SpringBootCommand {
 		// @formatter:on
 	}
 
-	private void showEntityAnnotations(EntityRepresentation entity) {
+	private void showEntityAnnotations(EEntity entity) {
 		System.out.println(Log.green("\nLista de annotations da class\n"));
 
 		entity.getAnnotations().stream().forEach(a -> System.out.println(a.getName()));
 	}
 
-	private void showEntityAttributes(EntityRepresentation entity) {
+	private void showEntityAttributes(EEntity entity) {
 		System.out.println(Log.green("Lista de atributos da classe "));
 		entity.getAttributes().stream().forEach(a -> System.out.println(a.getName().concat(" : ").concat(a.getType().getName())));
 	}

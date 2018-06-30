@@ -1,4 +1,4 @@
-package br.xtool.core.converter;
+package br.xtool.core.representation.converter;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -6,23 +6,23 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 import br.xtool.core.WorkContext;
-import br.xtool.core.representation.EntityRepresentation;
+import br.xtool.core.representation.ERepository;
 
 @Component
-public class EntityRepresentationConverter implements Converter<String, EntityRepresentation> {
+public class ERepositoryConverter implements Converter<String, ERepository> {
 
 	@Autowired
 	private WorkContext workContext;
 
 	@Override
-	public EntityRepresentation convert(String source) {
+	public ERepository convert(String source) {
 		if (workContext.getProject().isPresent() && StringUtils.isNotEmpty(source)) {
 			// @formatter:off
-			return workContext.getProject().get().getEntities()
+			return workContext.getProject().get().getRepositories()
 				.stream()
 				.filter(e -> e.getName().equals(source))
 				.findFirst()
-				.orElseThrow(() -> new RuntimeException("Erro ao converer entidade"));
+				.orElseThrow(() -> new RuntimeException("Erro ao converer repositório"));
 			// @formatter:on
 		}
 		return null;
