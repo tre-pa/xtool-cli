@@ -19,6 +19,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 
 import com.google.common.collect.ImmutableSet;
 
+import br.xtool.core.representation.enums.ProjectType;
 import lombok.Getter;
 
 public class DirectoryRepresentation {
@@ -27,17 +28,7 @@ public class DirectoryRepresentation {
 	private String path;
 
 	// @formatter:off
-	public enum Type {
-		SPRINGBOOT1_PROJECT,
-		SPRINGBOOT2_PROJECT,
-		ANGULAR5_PROJECT, 
-		ANGULAR6_PROJECT,
-		REGULAR
-	}
-	// @formatter:on
-
-	// @formatter:off
-	private Set<Function<DirectoryRepresentation, Type>> typeResolvers = 
+	private Set<Function<DirectoryRepresentation, ProjectType>> typeResolvers = 
 			ImmutableSet.of(
 					new SpringBoot1ProjectTypeResolver()
 			);
@@ -71,20 +62,20 @@ public class DirectoryRepresentation {
 		return new ArrayList<>();
 	}
 
-	public Type getType() {
+	public ProjectType getProjectType() {
 		// @formatter:off
 		return this.typeResolvers.stream()
 				.map(fun -> fun.apply(this))
 				.filter(Objects::nonNull)
 				.findFirst()
-				.orElse(Type.REGULAR);
+				.orElse(ProjectType.REGULAR);
 		// @formatter:on
 	}
 
-	private class SpringBoot1ProjectTypeResolver implements Function<DirectoryRepresentation, Type> {
+	private class SpringBoot1ProjectTypeResolver implements Function<DirectoryRepresentation, ProjectType> {
 
 		@Override
-		public @Nullable Type apply(@Nullable DirectoryRepresentation dr) {
+		public @Nullable ProjectType apply(@Nullable DirectoryRepresentation dr) {
 			String pomFile = FilenameUtils.concat(dr.getPath(), "pom.xml");
 			if (Files.exists(Paths.get(pomFile))) {
 				Optional<PomRepresentation> pomRepresentation = PomRepresentation.of(pomFile);
@@ -92,7 +83,7 @@ public class DirectoryRepresentation {
 					Pattern pattern = Pattern.compile("1.5.\\d\\d?.RELEASE");
 					Matcher matcher = pattern.matcher(pomRepresentation.get().getParentVersion());
 					if (matcher.matches()) {
-						return Type.SPRINGBOOT1_PROJECT;
+						return ProjectType.SPRINGBOOT1_PROJECT;
 					}
 				}
 			}

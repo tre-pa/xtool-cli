@@ -7,7 +7,7 @@ import org.springframework.shell.Availability;
 import org.springframework.shell.standard.ShellMethodAvailability;
 
 import br.xtool.core.WorkContext;
-import br.xtool.core.representation.DirectoryRepresentation.Type;
+import br.xtool.core.representation.enums.ProjectType;
 
 public class RegularCommand {
 
@@ -22,7 +22,7 @@ public class RegularCommand {
 	 */
 	@ShellMethodAvailability
 	public Availability availabilitySpringBootCommand() throws IOException {
-		return workContext.getDirectory().getType().equals(Type.REGULAR) ? Availability.available() : Availability.unavailable("O commando não é aplicável ao diretório atual.");
+		return workContext.getDirectory().getProjectType().equals(ProjectType.REGULAR) ? Availability.available() : Availability.unavailable("O commando não é aplicável ao diretório atual.");
 	}
 
 }

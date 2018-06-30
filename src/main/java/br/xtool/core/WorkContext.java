@@ -22,8 +22,8 @@ import org.springframework.stereotype.Component;
 
 import br.xtool.core.event.ChangeDirectoryEvent;
 import br.xtool.core.representation.DirectoryRepresentation;
-import br.xtool.core.representation.DirectoryRepresentation.Type;
 import br.xtool.core.representation.SpringBootProjectRepresentation;
+import br.xtool.core.representation.enums.ProjectType;
 import br.xtool.core.utils.RoasterUtils;
 import lombok.Getter;
 
@@ -98,7 +98,7 @@ public class WorkContext implements PromptProvider {
 
 	@Override
 	public AttributedString getPrompt() {
-		if (!this.getDirectory().getType().equals(Type.REGULAR)) {
+		if (!this.getDirectory().getProjectType().equals(ProjectType.REGULAR)) {
 			// @formatter:off
 			return new AttributedStringBuilder()
 					.append("xtool@", AttributedStyle.DEFAULT.foreground(AttributedStyle.YELLOW))
