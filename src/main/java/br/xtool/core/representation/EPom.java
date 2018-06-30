@@ -1,12 +1,10 @@
 package br.xtool.core.representation;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -17,12 +15,7 @@ import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.Namespace;
 import org.jdom2.input.SAXBuilder;
-import org.jdom2.output.Format;
-import org.jdom2.output.XMLOutputter;
 
-import br.xtool.core.Log;
-import br.xtool.core.representation.updater.core.Updatable;
-import br.xtool.core.representation.updater.core.UpdateRequest;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
@@ -32,7 +25,7 @@ import lombok.Getter;
  * @author jcruz
  *
  */
-public class EPom implements Updatable<Element> {
+public class EPom {
 
 	public static final Namespace NAMESPACE = Namespace.getNamespace("http://maven.apache.org/POM/4.0.0");
 
@@ -42,9 +35,6 @@ public class EPom implements Updatable<Element> {
 	private final List<Dependency> dependencies = buildDependencies();
 
 	private File file;
-
-	@Deprecated
-	private Collection<UpdateRequest<EPom>> updateRequests = new ArrayList<>();
 
 	private EPom(String path) {
 		super();
@@ -111,51 +101,6 @@ public class EPom implements Updatable<Element> {
 			dependencies.add(new Dependency(groupId, artifactId));
 		}
 		return dependencies;
-	}
-
-	/**
-	 * Adciona uma dependência o pom.xml caso não exista.
-	 * 
-	 * @param dependency
-	 */
-	@Deprecated
-	public void addDependency(Dependency dependency) {
-		if (hasArtifactId(dependency.getArtifactId())) {
-			this.pomDoc.getRootElement().getChild("dependencies", NAMESPACE).addContent(dependency.getAsDom());
-		}
-	}
-	
-	@Deprecated
-	public void commitUpdates() {
-		Log.print(Log.bold(Log.yellow("\t[~] ")), Log.white("pom.xml"));
-		// @formatter:off
-		this.updateRequests
-			.stream()
-			.filter(updateRequest -> updateRequest.updatePolicy(this))
-			.forEach(updateRequest -> updateRequest.apply(this));
-		// @formatter:on
-		this.updateRepresentation();
-	}
-
-	/**
-	 * Comita as alterações no pom.xml
-	 * 
-	 * @throws IOException
-	 */
-	@Deprecated
-	public void updateRepresentation() {
-		try (FileOutputStream fos = new FileOutputStream(this.file)) {
-			XMLOutputter xmlOutputter = new XMLOutputter();
-			Format format = Format.getPrettyFormat();
-			format.setIndent("\t");
-			xmlOutputter.setFormat(format);
-			xmlOutputter.output(this.pomDoc, fos);
-			fos.flush();
-			fos.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
 	}
 
 	public static Optional<EPom> of(String path) {
@@ -240,11 +185,6 @@ public class EPom implements Updatable<Element> {
 					+ "]";
 		}
 
-	}
-
-	@Override
-	public Element getSource() {
-		return this.pomDoc.getRootElement().getChild("dependencies", NAMESPACE);
 	}
 
 }

@@ -11,9 +11,6 @@ import br.xtool.XtoolCliApplication;
 import br.xtool.core.command.SpringBootCommand;
 import br.xtool.core.representation.EEntity;
 import br.xtool.core.representation.provider.EEntityValueProvider;
-import br.xtool.core.representation.updater.AddAnnotationStringValue;
-import br.xtool.core.representation.updater.AddEntityAnnotation;
-import br.xtool.core.representation.updater.AddImport;
 
 @ShellComponent
 public class SpringBootJpaEntityMapper extends SpringBootCommand {
@@ -32,9 +29,9 @@ public class SpringBootJpaEntityMapper extends SpringBootCommand {
 		Assert.isTrue(jpa || lombok || jackson, "Selecione pelo menos uma opção de mapeamento. Digite 'help map-springboot-jpa-entity' para mais detalhes.");
 
 		if (Objects.nonNull(entity)) {
-			entity.addUpdate(requests -> {
+			//entity.addUpdate(requests -> {
 				//requests.add(AddImport.of(""));
-			});
+			//});
 			// entity.addUpdate(AddImport.of("br.jus.tre_pa"));
 			// entity.addUpdate(AddEntityAnnotation.of("lombok.Getter"));
 			// entity.addUpdate(AddEntityAnnotation.of("lombok.EqualsAndHashCode",

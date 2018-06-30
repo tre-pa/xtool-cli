@@ -9,15 +9,13 @@ import org.jboss.forge.roaster.model.source.AnnotationSource;
 import org.jboss.forge.roaster.model.source.FieldSource;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 
-import br.xtool.core.representation.updater.core.Updatable;
-
 /**
  * Classe que representa um atributo de classe.
  * 
  * @author jcruz
  *
  */
-public class EAttribute implements Comparable<EAttribute>, Updatable<FieldSource<JavaClassSource>> {
+public class EAttribute implements Comparable<EAttribute> {
 
 	private ESpringBootProject springBootProject;
 
@@ -136,11 +134,6 @@ public class EAttribute implements Comparable<EAttribute>, Updatable<FieldSource
 	@Override
 	public int compareTo(EAttribute o) {
 		return this.getName().compareTo(o.getName());
-	}
-
-	@Override
-	public FieldSource<JavaClassSource> getSource() {
-		return this.fieldSource;
 	}
 
 }

@@ -9,7 +9,6 @@ import com.google.common.collect.ImmutableMap;
 
 import br.xtool.core.FS;
 import br.xtool.core.representation.ESpringBootProject;
-import br.xtool.core.representation.EPom.Dependency;
 import br.xtool.core.representation.enums.ProjectType;
 import br.xtool.support.core.SpringBootSupport;
 import br.xtool.support.core.SupportType;
@@ -49,12 +48,6 @@ public class SpringBoot1JpaSupport implements SpringBootSupport {
 		// @formatter:on
 		fs.createEmptyPath("src/main/java/${rootPackage.dir}/domain", vars);
 		fs.createEmptyPath("src/main/java/${rootPackage.dir}/repository", vars);
-		project.getPom().addDependency(new Dependency("org.springframework.boot", "spring-boot-starter-data-jpa"));
-		project.getPom().addDependency(new Dependency("com.h2database", "h2"));
-		project.getPom().addDependency(new Dependency("com.oracle", "ojdbc6", "11.2.0.3.0"));
-		project.getPom().addDependency(new Dependency("org.hibernate", "hibernate-java8"));
-		project.getPom().addDependency(new Dependency("org.hibernate", "hibernate-ehcache"));
-		project.getPom().commitUpdates();
 	}
 
 }
