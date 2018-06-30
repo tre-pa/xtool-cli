@@ -90,14 +90,14 @@ public class AddEntityAnnotation implements UpdateRequest<EntityRepresentation> 
 	 * @param payloads
 	 * @return
 	 */
-	public static Optional<AddEntityAnnotation> of(String qualifiedAnnotationName, AnnotationPayload... payloads) {
+	public static AddEntityAnnotation of(String qualifiedAnnotationName, AnnotationPayload... payloads) {
 		String[] annotationTokens = StringUtils.split(qualifiedAnnotationName, ".");
 		String annotationName = annotationTokens[annotationTokens.length - 1];
 		String annotationImportName = qualifiedAnnotationName;
 		if (StringUtils.isNotBlank(annotationImportName) && StringUtils.isNotBlank(annotationName)) {
-			return Optional.of(new AddEntityAnnotation(annotationName, annotationImportName, Arrays.asList(payloads)));
+			return new AddEntityAnnotation(annotationName, annotationImportName, Arrays.asList(payloads));
 		}
-		return Optional.empty();
+		return null;
 	}
 
 }

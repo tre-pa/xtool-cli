@@ -39,11 +39,11 @@ public class AddImport implements UpdateRequest<EntityRepresentation> {
 	 * @param name
 	 * @return
 	 */
-	public static Optional<AddImport> of(String name) {
+	public static AddImport of(String name) {
 		if (StringUtils.isNotBlank(name)) {
-			return Optional.of(new AddImport(name));
+			return new AddImport(name);
 		}
-		return Optional.empty();
+		return null;
 	}
 
 }

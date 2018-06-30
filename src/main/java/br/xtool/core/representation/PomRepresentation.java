@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -20,6 +21,8 @@ import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
 import br.xtool.core.Log;
+import br.xtool.core.representation.updater.core.Updatable;
+import br.xtool.core.representation.updater.core.UpdateRequest;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
@@ -29,7 +32,7 @@ import lombok.Getter;
  * @author jcruz
  *
  */
-public class PomRepresentation {
+public class PomRepresentation implements Updatable<Element> {
 
 	public static final Namespace NAMESPACE = Namespace.getNamespace("http://maven.apache.org/POM/4.0.0");
 
@@ -41,7 +44,7 @@ public class PomRepresentation {
 
 	private Element rootElement;
 
-	private List<String> updateInfo = new ArrayList<>();
+	private Collection<UpdateRequest<PomRepresentation>> updateRequests = new ArrayList<>();
 
 	private PomRepresentation(String path) {
 		super();
@@ -120,8 +123,18 @@ public class PomRepresentation {
 	public void addDependency(Dependency dependency) {
 		if (hasArtifactId(dependency.getArtifactId())) {
 			this.rootElement.getChild("dependencies", NAMESPACE).addContent(dependency.getAsDom());
-			Log.print(Log.bold(Log.green("\t[+] ")), Log.purple("pom : "), Log.white(dependency.toString()));
 		}
+	}
+
+	public void commitUpdates() {
+		Log.print(Log.bold(Log.yellow("\t[~] ")), Log.white("pom.xml"));
+		// @formatter:off
+		this.updateRequests
+			.stream()
+			.filter(updateRequest -> updateRequest.updatePolicy(this))
+			.forEach(updateRequest -> updateRequest.apply(this));
+		// @formatter:on
+		this.updateRepresentation();
 	}
 
 	/**
@@ -129,7 +142,7 @@ public class PomRepresentation {
 	 * 
 	 * @throws IOException
 	 */
-	public void commitUpdates() throws IOException {
+	public void updateRepresentation() {
 		try (FileOutputStream fos = new FileOutputStream(this.file)) {
 			XMLOutputter xmlOutputter = new XMLOutputter();
 			Format format = Format.getPrettyFormat();
@@ -138,9 +151,6 @@ public class PomRepresentation {
 			xmlOutputter.output(this.pomDoc, fos);
 			fos.flush();
 			fos.close();
-			Log.print(Log.green("\t[UPDATE] ") + Log.white("pom.xml"));
-			this.updateInfo.forEach(info -> Log.print(info));
-			this.updateInfo.clear();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -230,6 +240,11 @@ public class PomRepresentation {
 					+ "]";
 		}
 
+	}
+
+	@Override
+	public Element getSource() {
+		return this.rootElement.getChild("dependencies", NAMESPACE);
 	}
 
 }

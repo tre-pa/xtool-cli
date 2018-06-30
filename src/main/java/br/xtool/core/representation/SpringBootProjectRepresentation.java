@@ -51,6 +51,7 @@ public class SpringBootProjectRepresentation {
 	}
 
 	/**
+	 * Retorna o nome do projeto.
 	 * 
 	 * @return
 	 */
@@ -58,6 +59,12 @@ public class SpringBootProjectRepresentation {
 		return this.directory.getBaseName();
 	}
 
+	/**
+	 * Retorna o nome da classe base. O nome da classe base é o nome da classe que
+	 * possui a annotation @SpringBootApplication sem o sufixo 'Application'
+	 * 
+	 * @return Nome da classe base.
+	 */
 	public String getBaseClassName() {
 		// @formatter:off
 		return this.javaUnits
@@ -71,14 +78,29 @@ public class SpringBootProjectRepresentation {
 		// @formatter:on
 	}
 
+	/**
+	 * Retorna o tipo de projeto atual.
+	 * 
+	 * @return
+	 */
 	public ProjectType getProjectType() {
 		return this.getDirectory().getProjectType();
 	}
 
+	/**
+	 * Retorna o pacote raiz.
+	 * 
+	 * @return
+	 */
 	public PackageRepresentation getRootPackage() {
 		return this.getPom().getGroupId();
 	}
 
+	/**
+	 * Retorna a representação do arquivo pom.xml
+	 * 
+	 * @return
+	 */
 	public PomRepresentation getPom() {
 		if (this.pom == null) {
 			PomRepresentation.of(FilenameUtils.concat(this.path, "pom.xml")).ifPresent(pomRepresentation -> this.pom = pomRepresentation);
@@ -86,6 +108,11 @@ public class SpringBootProjectRepresentation {
 		return pom;
 	}
 
+	/**
+	 * Retorna a representação do arquivo application.properties
+	 * 
+	 * @return
+	 */
 	public ApplicationPropertiesRepresentation getApplicationProperties() {
 		if (this.applicationProperties == null) {
 			ApplicationPropertiesRepresentation.of(FilenameUtils.concat(this.path, "src/main/resources/application.properties"))

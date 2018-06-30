@@ -13,6 +13,12 @@ import com.google.common.collect.Table;
 import br.xtool.core.representation.SpringBootProjectRepresentation;
 import br.xtool.core.representation.enums.ProjectType;
 
+/**
+ * Classe que gerencia a adcição dos suports ao projeto.
+ * 
+ * @author jcruz
+ *
+ */
 @Service
 public class SupportManager {
 
@@ -26,6 +32,14 @@ public class SupportManager {
 		supports.forEach(support -> supportTable.put(support.getApplyForType(), support.getType(), support));
 	}
 
+	/**
+	 * Adiciona um suport ao projeto Spring Boot.
+	 * 
+	 * @param project
+	 *            Projeto Spring Boot
+	 * @param supportType
+	 *            Enum com tipo de support a ser adicionado. {@link SupportType}
+	 */
 	public void addSupport(SpringBootProjectRepresentation project, SupportType supportType) {
 		SpringBootSupport support = supportTable.get(project.getProjectType(), supportType);
 		support.apply(project);

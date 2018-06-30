@@ -13,12 +13,9 @@ import com.google.common.collect.ImmutableMap;
 
 import br.xtool.XtoolCliApplication;
 import br.xtool.core.FS;
-import br.xtool.core.Log;
 import br.xtool.core.NamePattern;
 import br.xtool.core.WorkContext;
 import br.xtool.core.command.RegularCommand;
-import br.xtool.core.representation.SpringBootProjectRepresentation;
-import br.xtool.core.representation.enums.ProjectType;
 import br.xtool.support.core.SupportManager;
 import br.xtool.support.core.SupportType;
 import strman.Strman;
@@ -54,7 +51,7 @@ public class NewSpringBootProjectGenerator extends RegularCommand {
 		/*
 		 * Cria o mapa com as variáveis do gerador.
 		 */
-		//// @formatter:off
+		// @formatter:off
 		Map<String, Object> vars = ImmutableMap.<String, Object>builder()
 				.put("templatePath", "generators/springboot/scaffold/1.5.x")
 				.put("projectName", NamePattern.asSpringBootProject(name))
@@ -66,17 +63,10 @@ public class NewSpringBootProjectGenerator extends RegularCommand {
 				.build();
 		// @formatter:on
 
-		Log.print("");
-
 		fs.createEmptyPath("${projectName}/src/main/java/${rootPackage.dir}/config", vars);
-		// fs.createEmptyPath("${projectName}/src/main/java/${rootPackage.dir}/domain",
-		// vars);
-		fs.copy("${templatePath}/src/main/java/exception/gitkeep", "${projectName}/src/main/java/${rootPackage.dir}/exception/.gitkeep", vars);
-		fs.copy("${templatePath}/src/main/java/report/gitkeep", "${projectName}/src/main/java/${rootPackage.dir}/report/.gitkeep", vars);
-		// fs.createEmptyPath("${projectName}/src/main/java/${rootPackage.dir}/repository",
-		// vars);
-		fs.copy("${templatePath}/src/main/java/rest/gitkeep", "${projectName}/src/main/java/${rootPackage.dir}/rest/.gitkeep", vars);
-		fs.copy("${templatePath}/src/main/java/service/gitkeep", "${projectName}/src/main/java/${rootPackage.dir}/service/.gitkeep", vars);
+		fs.createEmptyPath("${projectName}/src/main/java/${rootPackage.dir}/exception", vars);
+		fs.createEmptyPath("${projectName}/src/main/java/${rootPackage.dir}/service", vars);
+		fs.createEmptyPath("${projectName}/src/main/java/${rootPackage.dir}/report", vars);
 		fs.copy("${templatePath}/src/main/java/SpringBootApplication.java.vm", "${projectName}/src/main/java/${rootPackage.dir}/${baseClassName}Application.java", vars);
 		fs.copy("${templatePath}/src/main/resources/application.properties.vm", "${projectName}/src/main/resources/application.properties", vars);
 		fs.copy("${templatePath}/src/main/resources/ehcache.xml.vm", "${projectName}/src/main/resources/ehcache.xml", vars);
@@ -90,8 +80,6 @@ public class NewSpringBootProjectGenerator extends RegularCommand {
 				supportManager.addSupport(workContext.getProject().get(), SupportType.JPA);
 			}
 		}
-
-		Log.print("");
 
 	}
 
