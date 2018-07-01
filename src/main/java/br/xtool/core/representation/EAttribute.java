@@ -1,61 +1,26 @@
 package br.xtool.core.representation;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
 
-import org.jboss.forge.roaster.model.Type;
-import org.jboss.forge.roaster.model.source.AnnotationSource;
 import org.jboss.forge.roaster.model.source.FieldSource;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 
 /**
- * Classe que representa um atributo de classe.
+ * Classe que representa um atributo JPA de uma entidade.
  * 
  * @author jcruz
  *
  */
-public class EAttribute implements Comparable<EAttribute> {
+public class EAttribute extends EField {
 
 	private ESpringBootProject springBootProject;
 
-	@Deprecated
 	private EEntity entitySource;
 
-	private FieldSource<JavaClassSource> fieldSource;
-
 	public EAttribute(ESpringBootProject springBootProject, EEntity entitySource, FieldSource<JavaClassSource> fieldSource) {
-		super();
+		super(fieldSource);
 		this.springBootProject = springBootProject;
 		this.entitySource = entitySource;
-		this.fieldSource = fieldSource;
-	}
-
-	/**
-	 * Retorna o nome do attributo.
-	 * 
-	 * @return
-	 */
-	public String getName() {
-		return this.fieldSource.getName();
-	}
-
-	/**
-	 * Retorna as annotation do atributo.
-	 * 
-	 * @return
-	 */
-	public List<AnnotationSource<JavaClassSource>> getAnnotations() {
-		return this.fieldSource.getAnnotations();
-	}
-
-	/**
-	 * Retorna o tipo do atributo.
-	 * 
-	 * @return
-	 */
-	public Type<JavaClassSource> getType() {
-		return this.fieldSource.getType();
 	}
 
 	public boolean isAssociation() {
@@ -72,38 +37,12 @@ public class EAttribute implements Comparable<EAttribute> {
 		// @formatter:on
 	}
 
-	/**
-	 * Verifica se o atributo é uma coleção
-	 * 
-	 * @return
-	 */
-	public boolean isCollection() {
-		return Stream.of("List", "Set", "Collection").anyMatch(type -> type.equals(this.getType().getName()));
-	}
-
-	/**
-	 * Verifica se o atributo é static.
-	 * 
-	 * @return
-	 */
-	public boolean isStatic() {
-		return this.fieldSource.isStatic();
-	}
-
 	public boolean isJpaTransient() {
 		return this.hasAnnotation("Transient");
 	}
 
 	public boolean isJpaLob() {
 		return this.hasAnnotation("Lob");
-	}
-
-	public void setStringInitialize(String value) {
-		this.fieldSource.setStringInitializer(value);
-	}
-
-	public void setLiteralInitialize(String value) {
-		this.fieldSource.setLiteralInitializer(value);
 	}
 
 	public Optional<EAssociation> getAssociation() {
@@ -125,15 +64,6 @@ public class EAttribute implements Comparable<EAttribute> {
 			// @formatter:on
 		}
 		return Optional.empty();
-	}
-
-	public boolean hasAnnotation(String name) {
-		return this.fieldSource.hasAnnotation(name);
-	}
-
-	@Override
-	public int compareTo(EAttribute o) {
-		return this.getName().compareTo(o.getName());
 	}
 
 }
