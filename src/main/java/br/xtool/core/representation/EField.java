@@ -88,6 +88,10 @@ public class EField implements Comparable<EAttribute> {
 		// @formatter:on
 	}
 
+	public EAnnotation addAnnotation() {
+		return new EAnnotation(this.fieldSource.addAnnotation());
+	}
+
 	@Override
 	public int compareTo(EAttribute o) {
 		return this.getName().compareTo(o.getName());

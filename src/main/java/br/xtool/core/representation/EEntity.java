@@ -59,6 +59,10 @@ public class EEntity extends EClass implements Comparable<EEntity> {
 		return associations;
 	}
 
+	public EAnnotation addAnnotation() {
+		return new EAnnotation(this.javaClassSource.addAnnotation());
+	}
+
 	@Override
 	public int compareTo(EEntity o) {
 		return this.getName().compareTo(o.getName());

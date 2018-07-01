@@ -29,9 +29,9 @@ public class SpringBootJpaEntityMapper extends SpringBootCommand {
 		Assert.isTrue(jpa || lombok || jackson, "Selecione pelo menos uma opção de mapeamento. Digite 'help map-springboot-jpa-entity' para mais detalhes.");
 
 		if (Objects.nonNull(entity)) {
-			//entity.addUpdate(requests -> {
-				//requests.add(AddImport.of(""));
-			//});
+			// entity.addUpdate(requests -> {
+			// requests.add(AddImport.of(""));
+			// });
 			// entity.addUpdate(AddImport.of("br.jus.tre_pa"));
 			// entity.addUpdate(AddEntityAnnotation.of("lombok.Getter"));
 			// entity.addUpdate(AddEntityAnnotation.of("lombok.EqualsAndHashCode",
