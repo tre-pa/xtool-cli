@@ -1,12 +1,16 @@
 package br.xtool.core.representation;
 
 import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
+import java.util.stream.Collectors;
 
-import org.jboss.forge.roaster.model.Annotation;
 import org.jboss.forge.roaster.model.Type;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.jboss.forge.roaster.model.source.MethodSource;
 import org.jboss.forge.roaster.model.source.ParameterSource;
+
+import lombok.Getter;
 
 public class EMethod implements Comparable<EMethod> {
 
@@ -15,6 +19,9 @@ public class EMethod implements Comparable<EMethod> {
 	private JavaClassSource owner;
 
 	private MethodSource<JavaClassSource> methodSource;
+
+	@Getter(lazy = true)
+	private final SortedSet<EAnnotation> annotations = buildAnnotations();
 
 	public EMethod(ESpringBootProject springBootProject, JavaClassSource owner, MethodSource<JavaClassSource> methodSource) {
 		super();
@@ -34,10 +41,6 @@ public class EMethod implements Comparable<EMethod> {
 
 	public boolean isStatic() {
 		return methodSource.isStatic();
-	}
-
-	public List<? extends Annotation<JavaClassSource>> getAnnotations() {
-		return methodSource.getAnnotations();
 	}
 
 	public boolean isConstructor() {
@@ -62,6 +65,15 @@ public class EMethod implements Comparable<EMethod> {
 
 	public List<ParameterSource<JavaClassSource>> getParameters() {
 		return methodSource.getParameters();
+	}
+
+	private SortedSet<EAnnotation> buildAnnotations() {
+		// @formatter:off
+		return this.methodSource.getAnnotations()
+				.stream()
+				.map(EAnnotation::new)
+				.collect(Collectors.toCollection(TreeSet::new));
+		// @formatter:on
 	}
 
 	@Override

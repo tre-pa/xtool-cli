@@ -1,16 +1,22 @@
 package br.xtool.core.representation;
 
-import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.jboss.forge.roaster.model.Type;
-import org.jboss.forge.roaster.model.source.AnnotationSource;
 import org.jboss.forge.roaster.model.source.FieldSource;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
+
+import lombok.Getter;
 
 public class EField implements Comparable<EAttribute> {
 
 	protected FieldSource<JavaClassSource> fieldSource;
+
+	@Getter(lazy = true)
+	private final SortedSet<EAnnotation> annotations = buildAnnotations();
 
 	public EField(FieldSource<JavaClassSource> fieldSource) {
 		super();
@@ -27,12 +33,11 @@ public class EField implements Comparable<EAttribute> {
 	}
 
 	/**
-	 * Retorna as annotation do atributo.
 	 * 
-	 * @return
+	 * @param name
 	 */
-	public List<AnnotationSource<JavaClassSource>> getAnnotations() {
-		return this.fieldSource.getAnnotations();
+	public void setName(String name) {
+		this.fieldSource.setName(name);
 	}
 
 	/**
@@ -72,6 +77,15 @@ public class EField implements Comparable<EAttribute> {
 
 	public void setLiteralInitialize(String value) {
 		this.fieldSource.setLiteralInitializer(value);
+	}
+
+	private SortedSet<EAnnotation> buildAnnotations() {
+		// @formatter:off
+		return this.fieldSource.getAnnotations()
+				.stream()
+				.map(EAnnotation::new)
+				.collect(Collectors.toCollection(TreeSet::new));
+		// @formatter:on
 	}
 
 	@Override
