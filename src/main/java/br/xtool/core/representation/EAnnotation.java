@@ -118,9 +118,9 @@ public class EAnnotation implements Comparable<EAnnotation> {
 		return Arrays.asList(annotation.getClassArrayValue(name));
 	}
 
-	public AnnotationSource<JavaClassSource> setName(String className) {
-		return annotation.setName(className);
-	}
+//	public AnnotationSource<JavaClassSource> setName(String className) {
+//		return annotation.setName(className);
+//	}
 
 	public AnnotationSource<JavaClassSource> setEnumValue(String name, Enum<?> value) {
 		return annotation.setEnumValue(name, value);

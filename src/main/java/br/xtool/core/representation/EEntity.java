@@ -1,9 +1,16 @@
 package br.xtool.core.representation;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Optional;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.jboss.forge.roaster.model.source.AnnotationSource;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 
 import lombok.Getter;
@@ -59,8 +66,42 @@ public class EEntity extends EClass implements Comparable<EEntity> {
 		return associations;
 	}
 
-	public EAnnotation addAnnotation() {
-		return new EAnnotation(this.javaClassSource.addAnnotation());
+	/**
+	 * Retorna o caminho da classe no projeto.
+	 * 
+	 * @return
+	 */
+	public String getPath() {
+		return FilenameUtils.concat(this.springBootProject.getPath(), String.format("src/main/java/%s/%s.java", this.getPackage().getDir(), this.getName()));
+	}
+
+	public Optional<EAnnotation> addAnnotation(String qualifiedName) {
+		if (StringUtils.isNotBlank(qualifiedName)) {
+			String[] annotationTokens = StringUtils.split(qualifiedName, ".");
+			String annotationName = annotationTokens[annotationTokens.length - 1];
+			if (!javaClassSource.hasAnnotation(annotationName)) {
+				AnnotationSource<JavaClassSource> annotationSource = this.javaClassSource.addAnnotation();
+				if (!this.javaClassSource.hasImport(qualifiedName)) {
+					this.javaClassSource.addImport(qualifiedName);
+				}
+				annotationSource.setName(annotationName);
+				return Optional.of(new EAnnotation(annotationSource));
+			}
+		}
+		return Optional.empty();
+	}
+
+	/**
+	 * Salva as alteração realizadas no model.
+	 */
+	public void save() {
+		try (FileWriter fw = new FileWriter(new File(this.getPath()))) {
+			fw.write(this.javaClassSource.toUnformattedString());
+			fw.flush();
+			fw.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
