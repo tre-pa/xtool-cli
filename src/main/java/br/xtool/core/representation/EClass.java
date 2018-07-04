@@ -1,17 +1,19 @@
 package br.xtool.core.representation;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Optional;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.jboss.forge.roaster.model.source.AnnotationSource;
+import org.jboss.forge.roaster.model.source.FieldSource;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
+import org.jboss.forge.roaster.model.util.Types;
 
 import lombok.Getter;
 
@@ -71,11 +73,20 @@ public class EClass {
 		return this.javaClassSource.hasAnnotation(name);
 	}
 
+	/**
+	 * Retorna o caminho da classe no projeto.
+	 * 
+	 * @return
+	 */
+	public String getPath() {
+		return FilenameUtils.concat(this.project.getPath(), String.format("src/main/java/%s/%s.java", this.getPackage().getDir(), this.getName()));
+	}
+
 	private SortedSet<EField> buildFields() {
 		// @formatter:off
 		return this.javaClassSource.getFields()
 				.stream()
-				.map(fieldSource -> new EField(this, fieldSource))
+				.map(EField::new)
 				.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
 	}
@@ -97,12 +108,10 @@ public class EClass {
 	 */
 	public Optional<EAnnotation> addAnnotation(String qualifiedName) {
 		if (StringUtils.isNotBlank(qualifiedName)) {
-			String[] annotationTokens = StringUtils.split(qualifiedName, ".");
-			String annotationName = annotationTokens[annotationTokens.length - 1];
-			if (!javaClassSource.hasAnnotation(annotationName)) {
+			if (!javaClassSource.hasAnnotation(Types.toSimpleName(qualifiedName))) {
 				AnnotationSource<JavaClassSource> annotationSource = this.javaClassSource.addAnnotation();
 				this.javaClassSource.addImport(qualifiedName);
-				annotationSource.setName(annotationName);
+				annotationSource.setName(Types.toSimpleName(qualifiedName));
 				return Optional.of(new EAnnotation(annotationSource));
 			}
 		}
@@ -110,12 +119,35 @@ public class EClass {
 	}
 
 	/**
+	 * Adiciona um nova atributo a classe.
 	 * 
+	 * @param qualifiedType
 	 * @param name
+	 * @return
 	 */
-	public void addImport(String name) {
-		if (!this.javaClassSource.hasImport(name)) {
-			this.javaClassSource.addImport(name);
+	public Optional<EField> addField(String qualifiedType, String name) {
+		if (StringUtils.isNoneBlank(qualifiedType, name)) {
+			if (!javaClassSource.hasField(name)) {
+				FieldSource<JavaClassSource> fieldSource = this.javaClassSource.addField();
+				this.javaClassSource.addImport(qualifiedType);
+				fieldSource.setName(name);
+				fieldSource.setType(Types.toSimpleName(qualifiedType));
+				return Optional.of(new EField(fieldSource));
+			}
+		}
+		return Optional.empty();
+	}
+
+	/**
+	 * Adiciona um import a classe.
+	 * 
+	 * @param importName
+	 */
+	public void addImport(String importName) {
+		if (StringUtils.isNotBlank(importName)) {
+			if (!this.javaClassSource.hasImport(importName)) {
+				this.javaClassSource.addImport(importName);
+			}
 		}
 	}
 
@@ -123,22 +155,11 @@ public class EClass {
 	 * Salva as alteração realizadas no model.
 	 */
 	public void save() {
-		try (FileWriter fw = new FileWriter(new File(this.getPath()))) {
-			fw.write(this.javaClassSource.toUnformattedString());
-			fw.flush();
-			fw.close();
+		try {
+			FileUtils.writeStringToFile(new File(this.getPath()), this.javaClassSource.toUnformattedString(), "UTF-8");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
-
-	/**
-	 * Retorna o caminho da classe no projeto.
-	 * 
-	 * @return
-	 */
-	public String getPath() {
-		return FilenameUtils.concat(this.project.getPath(), String.format("src/main/java/%s/%s.java", this.getPackage().getDir(), this.getName()));
 	}
 
 }

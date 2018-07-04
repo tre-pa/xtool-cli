@@ -1,7 +1,9 @@
 package br.xtool.mapper;
 
+import java.util.Arrays;
 import java.util.Objects;
 
+import org.jboss.forge.roaster.model.util.Types;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
@@ -27,10 +29,14 @@ public class SpringBootJpaEntityMapper extends SpringBootCommand {
 		Assert.isTrue(Objects.nonNull(entity) || allEntities,
 				"Selecione uma entidade ou a opção 'all-entities' para selecionar todas as entidades. Digite 'help map-springboot-jpa-entity' para mais detalhes.");
 		Assert.isTrue(jpa || lombok || jackson, "Selecione pelo menos uma opção de mapeamento. Digite 'help map-springboot-jpa-entity' para mais detalhes.");
-
+		
+		System.out.println(Types.getPackage("lombok.Getter"));
+		System.out.println(Types.toSimpleName("lombok.Getter"));
+		System.out.println(Arrays.deepToString(Types.splitGenerics("Map<String, Long>")));
+		
 		if (Objects.nonNull(entity)) {
-			entity.addAnnotation("foo.Abc");
-			entity.save();
+			//entity.addAnnotation("foo.Abc");
+			//entity.save();
 			// entity.addUpdate(requests -> {
 			// requests.add(AddImport.of(""));
 			// });

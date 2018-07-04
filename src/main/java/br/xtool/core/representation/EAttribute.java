@@ -18,7 +18,7 @@ public class EAttribute extends EField {
 	private EEntity entitySource;
 
 	public EAttribute(ESpringBootProject springBootProject, EEntity entitySource, FieldSource<JavaClassSource> fieldSource) {
-		super(entitySource, fieldSource);
+		super(fieldSource);
 		this.springBootProject = springBootProject;
 		this.entitySource = entitySource;
 	}
