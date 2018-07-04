@@ -29,6 +29,9 @@ public class EClass {
 	@Getter(lazy = true)
 	private final SortedSet<EAnnotation> annotations = buildAnnotations();
 
+	@Getter(lazy = true)
+	private final SortedSet<EMethod> methods = buildMethods();
+
 	public EClass(EProject project, JavaClassSource javaClassSource) {
 		super();
 		this.project = project;
@@ -96,6 +99,15 @@ public class EClass {
 		return this.javaClassSource.getAnnotations()
 				.stream()
 				.map(EAnnotation::new)
+				.collect(Collectors.toCollection(TreeSet::new));
+		// @formatter:on
+	}
+	
+	private SortedSet<EMethod> buildMethods() {
+		// @formatter:off
+		return this.javaClassSource.getMethods()
+				.stream()
+				.map(EMethod::new)
 				.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
 	}

@@ -14,19 +14,13 @@ import lombok.Getter;
 
 public class EMethod implements Comparable<EMethod> {
 
-	private ESpringBootProject springBootProject;
-
-	private JavaClassSource owner;
-
 	private MethodSource<JavaClassSource> methodSource;
 
 	@Getter(lazy = true)
 	private final SortedSet<EAnnotation> annotations = buildAnnotations();
 
-	public EMethod(ESpringBootProject springBootProject, JavaClassSource owner, MethodSource<JavaClassSource> methodSource) {
+	public EMethod(MethodSource<JavaClassSource> methodSource) {
 		super();
-		this.springBootProject = springBootProject;
-		this.owner = owner;
 		this.methodSource = methodSource;
 	}
 

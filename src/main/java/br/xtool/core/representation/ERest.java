@@ -99,7 +99,7 @@ public class ERest implements Comparable<ERest> {
 		return this.javaClassSource.getMethods()
 			.stream()
 			.filter(hasHttpAnnotation.or(hasRequestMapping.and(hasRequestMappingMethod)))
-			.map(methodSource -> new EMethod(springBootProject, javaClassSource, methodSource))
+			.map(EMethod::new)
 			.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
 	}
