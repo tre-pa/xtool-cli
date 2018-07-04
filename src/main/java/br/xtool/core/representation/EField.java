@@ -1,11 +1,14 @@
 package br.xtool.core.representation;
 
+import java.util.Optional;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.apache.commons.lang3.StringUtils;
 import org.jboss.forge.roaster.model.Type;
+import org.jboss.forge.roaster.model.source.AnnotationSource;
 import org.jboss.forge.roaster.model.source.FieldSource;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 
@@ -15,11 +18,14 @@ public class EField implements Comparable<EAttribute> {
 
 	protected FieldSource<JavaClassSource> fieldSource;
 
+	private EClass eClass;
+
 	@Getter(lazy = true)
 	private final SortedSet<EAnnotation> annotations = buildAnnotations();
 
-	public EField(FieldSource<JavaClassSource> fieldSource) {
+	public EField(EClass eClass, FieldSource<JavaClassSource> fieldSource) {
 		super();
+		this.eClass = eClass;
 		this.fieldSource = fieldSource;
 	}
 
@@ -88,8 +94,24 @@ public class EField implements Comparable<EAttribute> {
 		// @formatter:on
 	}
 
-	public EAnnotation addAnnotation() {
-		return new EAnnotation(this.fieldSource.addAnnotation());
+	/**
+	 * Adiciona uma nova annotation a classe
+	 * 
+	 * @param qualifiedName
+	 * @return
+	 */
+	public Optional<EAnnotation> addAnnotation(String qualifiedName) {
+		if (StringUtils.isNotBlank(qualifiedName)) {
+			String[] annotationTokens = StringUtils.split(qualifiedName, ".");
+			String annotationName = annotationTokens[annotationTokens.length - 1];
+			if (!fieldSource.hasAnnotation(annotationName)) {
+				AnnotationSource<JavaClassSource> annotationSource = this.fieldSource.addAnnotation();
+				this.eClass.addImport(qualifiedName);
+				annotationSource.setName(annotationName);
+				return Optional.of(new EAnnotation(annotationSource));
+			}
+		}
+		return Optional.empty();
 	}
 
 	@Override
