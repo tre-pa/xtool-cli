@@ -11,7 +11,7 @@ import strman.Strman;
  * @author jcruz
  *
  */
-public class NamePattern {
+public class Names {
 
 	public static String asSpringBootBaseClass(String name) {
 		// @formatter:off

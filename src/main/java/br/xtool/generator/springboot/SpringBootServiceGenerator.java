@@ -13,7 +13,7 @@ import com.google.common.collect.ImmutableMap;
 
 import br.xtool.XtoolCliApplication;
 import br.xtool.core.FS;
-import br.xtool.core.NamePattern;
+import br.xtool.core.Names;
 import br.xtool.core.command.SpringBootCommand;
 
 @ShellComponent
@@ -30,7 +30,7 @@ public class SpringBootServiceGenerator extends SpringBootCommand {
 		//// @formatter:off
 		Map<String, Object> vars = ImmutableMap.<String, Object>builder()
 				.put("groupId", this.getProject().getPom().getGroupId())
-				.put("serviceName", NamePattern.asServiceClass((name)))
+				.put("serviceName", Names.asServiceClass((name)))
 				.build();
 		// @formatter:on
 

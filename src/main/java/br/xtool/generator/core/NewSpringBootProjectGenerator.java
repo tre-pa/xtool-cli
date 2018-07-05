@@ -13,7 +13,7 @@ import com.google.common.collect.ImmutableMap;
 
 import br.xtool.XtoolCliApplication;
 import br.xtool.core.FS;
-import br.xtool.core.NamePattern;
+import br.xtool.core.Names;
 import br.xtool.core.WorkContext;
 import br.xtool.core.command.RegularCommand;
 import br.xtool.support.core.SupportManager;
@@ -54,10 +54,10 @@ public class NewSpringBootProjectGenerator extends RegularCommand {
 		// @formatter:off
 		Map<String, Object> vars = ImmutableMap.<String, Object>builder()
 				.put("templatePath", "generators/springboot/scaffold/1.5.x")
-				.put("projectName", NamePattern.asSpringBootProject(name))
+				.put("projectName", Names.asSpringBootProject(name))
 				.put("projectVersion", version)
 				.put("rootPackage", getFinalRootPackage(name, rootPackage))
-				.put("baseClassName", NamePattern.asSpringBootBaseClass(name))
+				.put("baseClassName", Names.asSpringBootBaseClass(name))
 				.put("noJpa", noJpa)
 				.put("noWeb", noWeb)
 				.build();

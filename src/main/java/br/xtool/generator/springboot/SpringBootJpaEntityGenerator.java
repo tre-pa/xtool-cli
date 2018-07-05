@@ -13,7 +13,7 @@ import com.google.common.collect.ImmutableMap;
 
 import br.xtool.XtoolCliApplication;
 import br.xtool.core.FS;
-import br.xtool.core.NamePattern;
+import br.xtool.core.Names;
 import br.xtool.core.command.SpringBootCommand;
 
 /**
@@ -36,9 +36,9 @@ public class SpringBootJpaEntityGenerator extends SpringBootCommand {
 		//// @formatter:off
 		Map<String, Object> vars = ImmutableMap.<String, Object>builder()
 				.put("groupId", this.getProject().getPom().getGroupId())
-				.put("entityName", NamePattern.asEntityClass(name))
-				.put("tableName", NamePattern.asDBTable(name))
-				.put("seqName", NamePattern.asDBSequence(name))
+				.put("entityName", Names.asEntityClass(name))
+				.put("tableName", Names.asDBTable(name))
+				.put("seqName", Names.asDBSequence(name))
 				.build();
 		// @formatter:on
 

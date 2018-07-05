@@ -13,7 +13,7 @@ import com.google.common.collect.ImmutableMap;
 
 import br.xtool.XtoolCliApplication;
 import br.xtool.core.FS;
-import br.xtool.core.NamePattern;
+import br.xtool.core.Names;
 import br.xtool.core.command.SpringBootCommand;
 
 @ShellComponent
@@ -30,8 +30,8 @@ public class SpringBootRestGenerator extends SpringBootCommand {
 		//// @formatter:off
 		Map<String, Object> vars = ImmutableMap.<String, Object>builder()
 				.put("groupId", this.getProject().getPom().getGroupId())
-				.put("restName", NamePattern.asRestClass(name))
-				.put("restPath", NamePattern.asRestPath(name))
+				.put("restName", Names.asRestClass(name))
+				.put("restPath", Names.asRestPath(name))
 				.build();
 		// @formatter:on
 

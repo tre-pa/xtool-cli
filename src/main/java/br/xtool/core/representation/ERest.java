@@ -12,11 +12,9 @@ import org.jboss.forge.roaster.model.source.MethodSource;
 
 import lombok.Getter;
 
-public class ERest implements Comparable<ERest> {
+public class ERest extends EClass implements Comparable<ERest> {
 
 	private ESpringBootProject springBootProject;
-
-	private JavaClassSource javaClassSource;
 
 	@Getter(lazy = true)
 	private final SortedSet<EMethod> httpGetMethods = buildHttpGetMethods();
@@ -31,18 +29,8 @@ public class ERest implements Comparable<ERest> {
 	private final SortedSet<EMethod> httpDeleteMethods = buildHttpDeleteMethods();
 
 	public ERest(ESpringBootProject springBootProject, JavaClassSource javaClassSource) {
-		super();
+		super(springBootProject, javaClassSource);
 		this.springBootProject = springBootProject;
-		this.javaClassSource = javaClassSource;
-	}
-
-	/**
-	 * Retorna o nome da classe Rest
-	 * 
-	 * @return
-	 */
-	public String getName() {
-		return this.javaClassSource.getName();
 	}
 
 	/**

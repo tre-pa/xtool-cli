@@ -14,6 +14,7 @@ import org.jboss.forge.roaster.model.source.AnnotationSource;
 import org.jboss.forge.roaster.model.source.FieldSource;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.jboss.forge.roaster.model.source.JavaDocSource;
+import org.jboss.forge.roaster.model.util.Types;
 
 import lombok.Getter;
 
@@ -94,12 +95,10 @@ public class EField implements Comparable<EAttribute> {
 	 */
 	public Optional<EAnnotation> addAnnotation(String qualifiedName) {
 		if (StringUtils.isNotBlank(qualifiedName)) {
-			String[] annotationTokens = StringUtils.split(qualifiedName, ".");
-			String annotationName = annotationTokens[annotationTokens.length - 1];
-			if (!fieldSource.hasAnnotation(annotationName)) {
+			if (!fieldSource.hasAnnotation(Types.toSimpleName(qualifiedName))) {
 				AnnotationSource<JavaClassSource> annotationSource = this.fieldSource.addAnnotation();
 				this.fieldSource.getOrigin().addImport(qualifiedName);
-				annotationSource.setName(annotationName);
+				annotationSource.setName(Types.toSimpleName(qualifiedName));
 				return Optional.of(new EAnnotation(annotationSource));
 			}
 		}
