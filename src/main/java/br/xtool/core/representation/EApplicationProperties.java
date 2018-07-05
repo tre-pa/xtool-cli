@@ -30,7 +30,7 @@ public class EApplicationProperties {
 		}
 	}
 
-	public void commitUpdates() {
+	public void save() {
 		try {
 			FileOutputStream fos = new FileOutputStream(new File(this.path));
 			this.properties.store(fos, "");

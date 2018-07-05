@@ -60,7 +60,7 @@ public class SpringBootJpaCrudGenerator extends SpringBootCommand {
 		this.getProject().getApplicationProperties()
 			.set("abc", "1");
 		this.getProject().getApplicationProperties()
-			.commitUpdates();
+			.save();
 	}
 
 	private void showCollectionAssociations(EEntity entity) {

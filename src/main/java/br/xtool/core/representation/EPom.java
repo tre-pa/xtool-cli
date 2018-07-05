@@ -1,6 +1,7 @@
 package br.xtool.core.representation;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -9,14 +10,14 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-import org.apache.commons.lang3.StringUtils;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.Namespace;
 import org.jdom2.input.SAXBuilder;
+import org.jdom2.output.Format;
+import org.jdom2.output.XMLOutputter;
 
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 /**
@@ -32,7 +33,7 @@ public class EPom {
 	private Document pomDoc;
 
 	@Getter(lazy = true)
-	private final List<Dependency> dependencies = buildDependencies();
+	private final List<EDependency> dependencies = buildDependencies();
 
 	private File file;
 
@@ -76,10 +77,7 @@ public class EPom {
 	 * @return
 	 */
 	public boolean hasArtifactId(String artifactId) {
-		// @formatter:off
-		return this.getDependencies().stream()
-				.anyMatch(dependency -> dependency.getArtifactId().equals(artifactId));
-		// @formatter:on
+		return this.getDependencies().stream().anyMatch(dependency -> dependency.getArtifactId().equals(artifactId));
 	}
 
 	/**
@@ -87,20 +85,44 @@ public class EPom {
 	 * 
 	 * @return
 	 */
-	private List<Dependency> buildDependencies() {
-		List<Dependency> dependencies = new ArrayList<>();
+	private List<EDependency> buildDependencies() {
+		List<EDependency> dependencies = new ArrayList<>();
 		Element dependenciesNode = this.pomDoc.getRootElement().getChild("dependencies", NAMESPACE);
 		for (Element dependency : dependenciesNode.getChildren()) {
 			String groupId = dependency.getChild("groupId", NAMESPACE).getTextTrim();
 			String artifactId = dependency.getChild("artifactId", NAMESPACE).getTextTrim();
 			if (Objects.nonNull(dependency.getChild("version", NAMESPACE))) {
 				String version = dependency.getChild("version", NAMESPACE).getTextTrim();
-				dependencies.add(new Dependency(groupId, artifactId, version));
+				dependencies.add(new EDependency(groupId, artifactId, version));
 				continue;
 			}
-			dependencies.add(new Dependency(groupId, artifactId));
+			dependencies.add(new EDependency(groupId, artifactId));
 		}
 		return dependencies;
+	}
+
+	/**
+	 * Adciona uma dependência o pom.xml caso não exista.
+	 * 
+	 * @param dependency
+	 */
+	public void addDependency(String groupId, String artifactId) {
+		EDependency dependency = new EDependency(groupId, artifactId);
+		if (!hasArtifactId(dependency.getArtifactId())) {
+			this.pomDoc.getRootElement().getChild("dependencies", NAMESPACE).addContent(dependency.getAsDom());
+		}
+	}
+
+	/**
+	 * Adciona uma dependência o pom.xml caso não exista.
+	 * 
+	 * @param dependency
+	 */
+	public void addDependency(String groupId, String artifactId, String version) {
+		EDependency dependency = new EDependency(groupId, artifactId, version);
+		if (!hasArtifactId(dependency.getArtifactId())) {
+			this.pomDoc.getRootElement().getChild("dependencies", NAMESPACE).addContent(dependency.getAsDom());
+		}
 	}
 
 	public static Optional<EPom> of(String path) {
@@ -118,71 +140,18 @@ public class EPom {
 		return Optional.empty();
 	}
 
-	/**
-	 * Classe que representa uma depêndencia do pom.xml
-	 * 
-	 * @author jcruz
-	 *
-	 */
-	@Getter
-	@EqualsAndHashCode
-	public static class Dependency {
-		private String groupId;
-
-		private String artifactId;
-
-		private String version;
-
-		public Dependency(String groupId, String artifactId, String version) {
-			super();
-			this.groupId = groupId;
-			this.artifactId = artifactId;
-			this.version = version;
-		}
-
-		public Dependency(String groupId, String artifactId) {
-			super();
-			this.groupId = groupId;
-			this.artifactId = artifactId;
-		}
-
-		/**
-		 * Retorna o objeto Dependency com um objeto JDOM
-		 * 
-		 * @return
-		 */
-		public Element getAsDom() {
-			Element dependency = new Element("dependency", EPom.NAMESPACE);
-			this.buildGroupId(dependency);
-			this.buildArtifiactId(dependency);
-			this.buildVersion(dependency);
-			return dependency;
-		}
-
-		private void buildGroupId(Element dependency) {
-			Element groupId = new Element("groupId", EPom.NAMESPACE);
-			groupId.setText(this.getGroupId());
-			dependency.addContent(groupId);
-		}
-
-		private void buildArtifiactId(Element dependency) {
-			Element artifactId = new Element("artifactId", EPom.NAMESPACE);
-			artifactId.setText(this.getArtifactId());
-			dependency.addContent(artifactId);
-		}
-
-		private void buildVersion(Element dependency) {
-			if (StringUtils.isNoneBlank(this.getVersion())) {
-				Element version = new Element("version", EPom.NAMESPACE);
-				version.setText(this.getVersion());
-				dependency.addContent(version);
-			}
-		}
-
-		@Override
-		public String toString() {
-			return "Dependency [" + (groupId != null ? "groupId=" + groupId + ", " : "") + (artifactId != null ? "artifactId=" + artifactId + ", " : "") + (version != null ? "version=" + version : "")
-					+ "]";
+	public void save() throws IOException {
+		try (FileOutputStream fos = new FileOutputStream(this.file)) {
+			XMLOutputter xmlOutputter = new XMLOutputter();
+			Format format = Format.getPrettyFormat();
+			format.setIndent("\t");
+			xmlOutputter.setFormat(format);
+			xmlOutputter.output(this.pomDoc, fos);
+			fos.flush();
+			fos.close();
+			// Log.print(Log.green("\t[UPDATE] ") + Log.white("pom.xml"));
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 
 	}
