@@ -10,4 +10,22 @@ public interface SpringBootSupport {
 	public SupportType getType();
 
 	public void apply(ESpringBootProject project);
+	
+	public enum SupportType {
+		JPA,
+		JPA_AUDIT,
+		FLYWAY,
+		EHCACHE,
+		REPORT,
+		HIBERNATE_SEARCH,
+		WEB,
+		SWAGGER,
+		ASYNC,
+		SCHEDULE,
+		EMAIL,
+		WEBSOCKET,
+		KEYCLOAK,
+		LOMBOK
+	}
+
 }

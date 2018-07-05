@@ -16,8 +16,8 @@ import br.xtool.core.FS;
 import br.xtool.core.Names;
 import br.xtool.core.WorkContext;
 import br.xtool.core.command.RegularCommand;
+import br.xtool.support.core.SpringBootSupport.SupportType;
 import br.xtool.support.core.SupportManager;
-import br.xtool.support.core.SupportType;
 import strman.Strman;
 
 /**

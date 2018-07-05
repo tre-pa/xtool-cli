@@ -144,6 +144,7 @@ public class EClass {
 				this.javaClassSource.addImport(qualifiedType);
 				fieldSource.setName(name);
 				fieldSource.setType(Types.toSimpleName(qualifiedType));
+//				Log.print(Log.bold(Log.green("\t[+] ")), Log.purple(" Add: "), Log.white(relativeDestination));
 				return Optional.of(new EField(fieldSource));
 			}
 		}

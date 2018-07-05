@@ -12,6 +12,7 @@ import com.google.common.collect.Table;
 
 import br.xtool.core.representation.ESpringBootProject;
 import br.xtool.core.representation.enums.ProjectType;
+import br.xtool.support.core.SpringBootSupport.SupportType;
 
 /**
  * Classe que gerencia a adcição dos suports ao projeto.
