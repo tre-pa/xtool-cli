@@ -13,6 +13,7 @@ public interface SpringBootSupport {
 	
 	public boolean hasSupport(ESpringBootProject project);
 	
+	// @formatter:off
 	public enum SupportType {
 		JPA,
 		JPA_AUDIT,
@@ -29,5 +30,6 @@ public interface SpringBootSupport {
 		KEYCLOAK,
 		LOMBOK
 	}
+	// @formatter:on
 
 }
