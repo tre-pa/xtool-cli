@@ -66,4 +66,9 @@ public class SpringBoot1WebSupport implements SpringBootSupport {
 		project.getApplicationProperties().save();
 	}
 
+	@Override
+	public boolean hasSupport(ESpringBootProject project) {
+		return project.getPom().hasArtifactId("spring-boot-starter-web") && project.getApplicationProperties().hasProperty("server.context-path");
+	}
+
 }

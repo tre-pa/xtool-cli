@@ -11,6 +11,8 @@ public interface SpringBootSupport {
 
 	public void apply(ESpringBootProject project);
 	
+	public boolean hasSupport(ESpringBootProject project);
+	
 	public enum SupportType {
 		JPA,
 		JPA_AUDIT,

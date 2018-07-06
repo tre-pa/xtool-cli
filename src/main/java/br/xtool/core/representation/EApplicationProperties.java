@@ -2,15 +2,12 @@ package br.xtool.core.representation;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Optional;
 import java.util.Properties;
-
-import org.apache.commons.lang3.StringUtils;
 
 import br.xtool.core.Log;
 import strman.Strman;
@@ -35,6 +32,10 @@ public class EApplicationProperties {
 			properties.setProperty(key, value);
 			Log.print(Log.bold(Log.yellow("\t[~] ")), Log.purple("Item: "), Log.white("application.properties"), Log.gray(" -- "), Log.gray(Strman.surround(key, "Key [", "]")));
 		}
+	}
+
+	public boolean hasProperty(String key) {
+		return properties.containsKey(key) && this.get(key).isPresent();
 	}
 
 	public void save() {

@@ -57,7 +57,6 @@ public class SpringBoot1JpaSupport implements SpringBootSupport {
 		project.getPom().addDependency("org.springframework.boot", "spring-boot-starter-data-jpa");
 		project.getPom().addDependency("com.h2database", "h2");
 		project.getPom().addDependency("org.hibernate", "hibernate-java8");
-		project.getPom().addDependency("org.hibernate", "hibernate-ehcache");
 		project.getPom().addDependency("com.oracle", "ojdbc6", "11.2.0.3.0");
 		project.getPom().save();
 	}
@@ -75,6 +74,11 @@ public class SpringBoot1JpaSupport implements SpringBootSupport {
 		project.getApplicationProperties().set("spring.jpa.hibernate.ddl-auto", "update");
 		project.getApplicationProperties().set("spring.jpa.hibernate.use-new-id-generator-mappings", "true");
 		project.getApplicationProperties().save();
+	}
+
+	@Override
+	public boolean hasSupport(ESpringBootProject project) {
+		return project.getPom().hasArtifactId("spring-boot-starter-data-jpa");
 	}
 
 }
