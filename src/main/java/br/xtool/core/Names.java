@@ -13,6 +13,20 @@ import strman.Strman;
  */
 public class Names {
 
+	/**
+	 * 
+	 * @param name
+	 * @return
+	 */
+	public static String asDotCase(String name) {
+		return StringUtils.join(StringUtils.split(Strman.toKebabCase(name), "-"), ".");
+	}
+
+	/**
+	 * 
+	 * @param name
+	 * @return
+	 */
 	public static String asSpringBootBaseClass(String name) {
 		// @formatter:off
 		return StringUtils.capitalize(

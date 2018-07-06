@@ -9,6 +9,7 @@ import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 
+import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableMap;
 
 import br.xtool.XtoolCliApplication;
@@ -16,6 +17,7 @@ import br.xtool.core.FS;
 import br.xtool.core.Names;
 import br.xtool.core.WorkContext;
 import br.xtool.core.command.RegularCommand;
+import br.xtool.core.representation.EPackage;
 import br.xtool.support.core.SpringBootSupport.SupportType;
 import br.xtool.support.core.SupportManager;
 import strman.Strman;
@@ -86,17 +88,9 @@ public class NewSpringBootProjectGenerator extends RegularCommand {
 	/*
 	 * Retorna o nome final do pacote raiz do projeto.
 	 */
-	private Map<String, String> getFinalRootPackage(String name, String rootPackage) {
-		name = name.endsWith("-service") ? name.replace("-service", "") : name;
-		String _rootPackage = StringUtils.join(StringUtils.split(Strman.toKebabCase(name), "-"), ".");
-		String packageName = StringUtils.isEmpty(rootPackage) ? "br.jus.tre_pa.".concat(_rootPackage) : rootPackage;
-		String packageDir = packageName.replaceAll("\\.", "/");
-		// @formatter:off
-		return ImmutableMap.<String, String>builder()
-				.put("name", packageName)
-				.put("dir", packageDir)
-				.build();
-		// @formatter:on
+	private EPackage getFinalRootPackage(String name, String rootPackage) {
+		String packageName = StringUtils.isEmpty(rootPackage) ? "br.jus.tre_pa.".concat(Names.asDotCase(name)) : rootPackage;
+		return EPackage.of(packageName);
 	}
 
 }
