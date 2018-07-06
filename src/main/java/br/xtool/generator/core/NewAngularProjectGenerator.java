@@ -3,6 +3,7 @@ package br.xtool.generator.core;
 import java.io.IOException;
 import java.util.Map;
 
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
@@ -11,8 +12,10 @@ import org.springframework.shell.standard.ShellOption;
 import com.google.common.collect.ImmutableMap;
 
 import br.xtool.XtoolCliApplication;
+import br.xtool.core.CommandLineExecutor;
 import br.xtool.core.FS;
 import br.xtool.core.Log;
+import br.xtool.core.WorkContext;
 import br.xtool.core.command.RegularCommand;
 
 @ShellComponent
@@ -20,6 +23,12 @@ public class NewAngularProjectGenerator extends RegularCommand {
 
 	@Autowired
 	private FS fs;
+
+	@Autowired
+	private CommandLineExecutor executor;
+
+	@Autowired
+	private WorkContext workContext;
 
 	@ShellMethod(key = "new-angular-project", value = "Novo projeto Angular 5.x", group = XtoolCliApplication.PROJECT_COMMAND_GROUP)
 	public void run(@ShellOption(help = "Nome do projeto") String name) throws IOException {
@@ -30,6 +39,7 @@ public class NewAngularProjectGenerator extends RegularCommand {
 		Map<String, Object> vars = ImmutableMap.<String, Object>builder()
 				.put("templatePath", "generators/angular/5.x/scaffold")
 				.put("projectName", name)
+				.put("projectPath", FilenameUtils.concat(workContext.getDirectory().getPath(), name))
 				.build();
 		// @formatter:on
 
@@ -83,7 +93,11 @@ public class NewAngularProjectGenerator extends RegularCommand {
 		fs.copy("${templatePath}/protractor.conf.js.vm", "${projectName}/protractor.conf.js", vars);
 		fs.copy("${templatePath}/readme.md.vm", "${projectName}/readme.md.js", vars);
 
-		Log.print("");
+		workContext.changeRelativeTo((String) vars.get("projectName"));
+
+		Log.print(Log.cyan("\t-- npm install --"));
+
+		executor.run("npm i");
 
 		// this.pathService.exec("npm i && code .");
 	}
