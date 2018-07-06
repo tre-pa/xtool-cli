@@ -140,7 +140,7 @@ public class EPom {
 		return Optional.empty();
 	}
 
-	public void save() throws IOException {
+	public void save() {
 		try (FileOutputStream fos = new FileOutputStream(this.file)) {
 			XMLOutputter xmlOutputter = new XMLOutputter();
 			Format format = Format.getPrettyFormat();

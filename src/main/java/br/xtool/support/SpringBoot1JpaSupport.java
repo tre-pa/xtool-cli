@@ -47,6 +47,32 @@ public class SpringBoot1JpaSupport implements SpringBootSupport {
 		// @formatter:on
 		fs.createEmptyPath("src/main/java/${rootPackage.dir}/domain", vars);
 		fs.createEmptyPath("src/main/java/${rootPackage.dir}/repository", vars);
+		addDependencies(project);
+		addProperties(project);
+	}
+
+	private void addDependencies(ESpringBootProject project) {
+		project.getPom().addDependency("org.springframework.boot", "spring-boot-starter-data-jpa");
+		project.getPom().addDependency("com.h2database", "h2");
+		project.getPom().addDependency("org.hibernate", "hibernate-java8");
+		project.getPom().addDependency("org.hibernate", "hibernate-ehcache");
+		project.getPom().addDependency("com.oracle", "ojdbc6", "11.2.0.3.0");
+		project.getPom().save();
+	}
+
+	private void addProperties(ESpringBootProject project) {
+		project.getApplicationProperties().set("spring.h2.console.enabled", "true");
+		project.getApplicationProperties().set("spring.h2.console.path", "/h2");
+		project.getApplicationProperties().set("spring.datasource.url", String.format("jdbc:h2:./target/db/%s;DB_CLOSE_ON_EXIT=FALSE", project.getName()));
+		project.getApplicationProperties().set("spring.datasource.driver-class-name", "org.h2.Driver");
+		project.getApplicationProperties().set("spring.datasource.username", "sa");
+		project.getApplicationProperties().set("spring.datasource.password", "");
+		project.getApplicationProperties().set("spring.datasource.sqlScriptEncoding", "UTF-8");
+		project.getApplicationProperties().set("logging.level.org.hibernate.SQL", "DEBUG");
+		project.getApplicationProperties().set("spring.jpa.properties.hibernate.format_sql", "true");
+		project.getApplicationProperties().set("spring.jpa.hibernate.ddl-auto", "update");
+		project.getApplicationProperties().set("spring.jpa.hibernate.use-new-id-generator-mappings", "true");
+		project.getApplicationProperties().save();
 	}
 
 }

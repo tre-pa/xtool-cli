@@ -3,6 +3,7 @@ package br.xtool.core.representation;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -25,15 +26,15 @@ public class EApplicationProperties {
 	}
 
 	public void set(String key, String value) {
-		if (!this.get(key).isPresent()) {
+		if (!properties.containsKey(key)) {
 			properties.setProperty(key, value);
 		}
 	}
 
 	public void save() {
 		try {
-			FileOutputStream fos = new FileOutputStream(new File(this.path));
-			this.properties.store(fos, "");
+			FileWriter fos = new FileWriter(new File(this.path));
+			this.properties.store(fos, " ");
 			fos.flush();
 			fos.close();
 		} catch (IOException e) {
