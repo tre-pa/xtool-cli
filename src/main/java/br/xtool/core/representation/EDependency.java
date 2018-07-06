@@ -69,8 +69,7 @@ public class EDependency {
 
 	@Override
 	public String toString() {
-		return "Dependency [" + (groupId != null ? "groupId=" + groupId + ", " : "") + (artifactId != null ? "artifactId=" + artifactId + ", " : "") + (version != null ? "version=" + version : "")
-				+ "]";
+		return "Dependency [" + (groupId != null ? "groupId=" + groupId + ", " : "") + (artifactId != null ? "artifactId=" + artifactId : "") + (version != null ? ",version=" + version : "") + "]";
 	}
 
 }

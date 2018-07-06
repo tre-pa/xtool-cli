@@ -10,6 +10,11 @@ import java.nio.file.Paths;
 import java.util.Optional;
 import java.util.Properties;
 
+import org.apache.commons.lang3.StringUtils;
+
+import br.xtool.core.Log;
+import strman.Strman;
+
 public class EApplicationProperties {
 
 	private String path;
@@ -28,6 +33,7 @@ public class EApplicationProperties {
 	public void set(String key, String value) {
 		if (!properties.containsKey(key)) {
 			properties.setProperty(key, value);
+			Log.print(Log.bold(Log.yellow("\t[~] ")), Log.purple("Item: "), Log.white("application.properties"), Log.gray(" -- "), Log.gray(Strman.surround(key, "Key [", "]")));
 		}
 	}
 

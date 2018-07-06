@@ -18,6 +18,7 @@ import br.xtool.core.Names;
 import br.xtool.core.WorkContext;
 import br.xtool.core.command.RegularCommand;
 import br.xtool.core.representation.EPackage;
+import br.xtool.core.representation.ESpringBootProject;
 import br.xtool.support.core.SpringBootSupport.SupportType;
 import br.xtool.support.core.SupportManager;
 import strman.Strman;
@@ -78,8 +79,9 @@ public class NewSpringBootProjectGenerator extends RegularCommand {
 		workContext.changeRelativeTo((String) vars.get("projectName"));
 
 		if (workContext.getProject().isPresent()) {
+			ESpringBootProject project = workContext.getProject().get();
 			if (!noJpa) {
-				supportManager.addSupport(workContext.getProject().get(), SupportType.JPA);
+				supportManager.addSupport(project, SupportType.JPA);
 			}
 		}
 

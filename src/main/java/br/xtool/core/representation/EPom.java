@@ -18,6 +18,7 @@ import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
+import br.xtool.core.Log;
 import lombok.Getter;
 
 /**
@@ -110,6 +111,7 @@ public class EPom {
 		EDependency dependency = new EDependency(groupId, artifactId);
 		if (!hasArtifactId(dependency.getArtifactId())) {
 			this.pomDoc.getRootElement().getChild("dependencies", NAMESPACE).addContent(dependency.getAsDom());
+			Log.print(Log.bold(Log.yellow("\t[~] ")), Log.purple("Item: "), Log.white("pom.xml"), Log.gray(" -- "), Log.gray(dependency.toString()));
 		}
 	}
 
