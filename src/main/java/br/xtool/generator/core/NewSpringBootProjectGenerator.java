@@ -14,6 +14,7 @@ import com.google.common.collect.ImmutableMap;
 
 import br.xtool.XtoolCliApplication;
 import br.xtool.core.FS;
+import br.xtool.core.Log;
 import br.xtool.core.Names;
 import br.xtool.core.WorkContext;
 import br.xtool.core.command.RegularCommand;
@@ -65,14 +66,14 @@ public class NewSpringBootProjectGenerator extends RegularCommand {
 				.put("noWeb", noWeb)
 				.build();
 		// @formatter:on
-
+		
+		Log.print(Log.cyan("\t-- Projeto Base --"));
 		fs.createEmptyPath("${projectName}/src/main/java/${rootPackage.dir}/config", vars);
 		fs.createEmptyPath("${projectName}/src/main/java/${rootPackage.dir}/exception", vars);
 		fs.createEmptyPath("${projectName}/src/main/java/${rootPackage.dir}/service", vars);
 		fs.createEmptyPath("${projectName}/src/main/java/${rootPackage.dir}/report", vars);
 		fs.copy("${templatePath}/src/main/java/SpringBootApplication.java.vm", "${projectName}/src/main/java/${rootPackage.dir}/${baseClassName}Application.java", vars);
 		fs.copy("${templatePath}/src/main/resources/application.properties.vm", "${projectName}/src/main/resources/application.properties", vars);
-		fs.copy("${templatePath}/src/main/resources/ehcache.xml.vm", "${projectName}/src/main/resources/ehcache.xml", vars);
 		fs.copy("${templatePath}/gitignore", "${projectName}/.gitignore", vars);
 		fs.copy("${templatePath}/pom.xml.vm", "${projectName}/pom.xml", vars);
 
@@ -80,9 +81,8 @@ public class NewSpringBootProjectGenerator extends RegularCommand {
 
 		if (workContext.getProject().isPresent()) {
 			ESpringBootProject project = workContext.getProject().get();
-			if (!noJpa) {
-				supportManager.addSupport(project, SupportType.JPA);
-			}
+			if (!noJpa) supportManager.addSupport(project, SupportType.JPA);
+			if (!noWeb) supportManager.addSupport(project, SupportType.WEB);
 		}
 
 	}

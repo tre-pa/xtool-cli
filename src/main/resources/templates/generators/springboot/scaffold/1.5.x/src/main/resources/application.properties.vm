@@ -1,7 +1,3 @@
-#if(!$noWeb)
-server.context-path=/${projectName}
-server.port=8080
-#end
 
 #LOG PROPERTIES
 logging.level.br.jus=DEBUG
@@ -14,7 +10,3 @@ spring.jpa.properties.hibernate.cache.region.factory_class=org.hibernate.cache.e
 logging.level.net.sf.ehcache=DEBUG 
 #end
 
-#if(!$noWeb)
-spring.jackson.serialization.WRITE_DATES_AS_TIMESTAMPS = false
-spring.jackson.serialization.FAIL_ON_EMPTY_BEANS = false
-#end
