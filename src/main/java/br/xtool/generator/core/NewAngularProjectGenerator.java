@@ -47,19 +47,16 @@ public class NewAngularProjectGenerator extends RegularCommand {
 
 		fs.copy("${templatePath}/src/data/gitkeep", "${projectName}/src/data/.gitkeep", vars);
 		fs.copy("${templatePath}/scripts/gitkeep", "${projectName}/scripts/.gitkeep", vars);
-		fs.copy("${templatePath}/src/app/@core/layout/main-layout/main-layout.component.css.vm", "${projectName}/src/app/@core/layout/main-layout/main-layout.component.css", vars);
-		fs.copy("${templatePath}/src/app/@core/layout/main-layout/main-layout.component.html.vm", "${projectName}/src/app/@core/layout/main-layout/main-layout.component.html", vars);
-		fs.copy("${templatePath}/src/app/@core/layout/main-layout/main-layout.component.ts.vm", "${projectName}/src/app/@core/layout/main-layout/main-layout.component.ts", vars);
 		fs.copy("${templatePath}/src/app/@core/layout/nav-list-layout/nav-list-layout.component.css.vm", "${projectName}/src/app/@core/layout/nav-list-layout/nav-list-layout.component.css", vars);
 		fs.copy("${templatePath}/src/app/@core/layout/nav-list-layout/nav-list-layout.component.html.vm", "${projectName}/src/app/@core/layout/nav-list-layout/nav-list-layout.component.html", vars);
 		fs.copy("${templatePath}/src/app/@core/layout/nav-list-layout/nav-list-layout.component.ts.vm", "${projectName}/src/app/@core/layout/nav-list-layout/nav-list-layout.component.ts", vars);
 		fs.copy("${templatePath}/src/app/@core/layout/nav-view-layout/nav-view-layout.component.css.vm", "${projectName}/src/app/@core/layout/nav-view-layout/nav-view-layout.component.css", vars);
 		fs.copy("${templatePath}/src/app/@core/layout/nav-view-layout/nav-view-layout.component.html.vm", "${projectName}/src/app/@core/layout/nav-view-layout/nav-view-layout.component.html", vars);
 		fs.copy("${templatePath}/src/app/@core/layout/nav-view-layout/nav-view-layout.component.ts.vm", "${projectName}/src/app/@core/layout/nav-view-layout/nav-view-layout.component.ts", vars);
-		fs.copy("${templatePath}/src/app/@core/model/page.ts.vm", "${projectName}/src/app/@core/model/page.ts", vars);
 		fs.copy("${templatePath}/src/app/@core/security/keycloak.js.vm", "${projectName}/src/app/@core/security/keycloak.js", vars);
 		fs.copy("${templatePath}/src/app/@core/security/keycloak.service.ts.vm", "${projectName}/src/app/@core/security/keycloak.service.ts", vars);
-		fs.copy("${templatePath}/src/app/@core/shared/shared.module.ts.vm", "${projectName}/src/app/@core/shared/shared.module.ts", vars);
+		fs.copy("${templatePath}/src/app/@core/shared.module.ts.vm", "${projectName}/src/app/@core/shared.module.ts", vars);
+		fs.copy("${templatePath}/src/app/@core/page.ts.vm", "${projectName}/src/app/@core/page.ts", vars);
 		fs.copy("${templatePath}/src/app/@core/util/gitkeep", "${projectName}/src/app/@core/util/.gitkeep", vars);
 		fs.copy("${templatePath}/src/app/domain/gitkeep", "${projectName}/src/app/domain/.gitkeep", vars);
 		fs.copy("${templatePath}/src/app/service/gitkeep", "${projectName}/src/app/service/.gitkeep", vars);
@@ -73,7 +70,7 @@ public class NewAngularProjectGenerator extends RegularCommand {
 		fs.copy("${templatePath}/src/environments/environment.dev.ts.vm", "${projectName}/src/environments/environment.dev.ts", vars);
 		fs.copy("${templatePath}/src/environments/environment.prod.ts.vm", "${projectName}/src/environments/environment.prod.ts", vars);
 		fs.copy("${templatePath}/src/environments/environment.ts.vm", "${projectName}/src/environments/environment.ts", vars);
-		fs.copy("${templatePath}/src/favicon.ico", "${projectName}/src/favicon.ico", vars);
+		fs.copy("${templatePath}/src/favicon.ico", "${projectName}/src/favicon.ico", vars, true);
 		fs.copy("${templatePath}/src/index.html.vm", "${projectName}/src/index.html", vars);
 		fs.copy("${templatePath}/src/main.ts.vm", "${projectName}/src/main.ts", vars);
 		fs.copy("${templatePath}/src/polyfills.ts.vm", "${projectName}/src/polyfills.ts", vars);
@@ -97,7 +94,7 @@ public class NewAngularProjectGenerator extends RegularCommand {
 
 		Log.print(Log.cyan("\t-- npm install --"));
 
-		executor.run("npm i");
+		executor.run("npm i && code .");
 
 		// this.pathService.exec("npm i && code .");
 	}

@@ -3,9 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
-import { SharedModule } from './@core/shared/shared.module';
+import { SharedModule } from './@core/shared.module';
 import { AppRoutingModule } from './app-routing.module';
-import { MainLayoutComponent } from './@core/layout/main-layout/main-layout.component';
 import { NavListLayoutComponent } from './@core/layout/nav-list-layout/nav-list-layout.component';
 import { NavViewLayoutComponent } from './@core/layout/nav-view-layout/nav-view-layout.component';
 
@@ -13,8 +12,7 @@ import { NavViewLayoutComponent } from './@core/layout/nav-view-layout/nav-view-
   declarations: [
     AppComponent,
     NavListLayoutComponent,
-    NavViewLayoutComponent,
-    MainLayoutComponent
+    NavViewLayoutComponent
   ],
   imports: [
     BrowserModule,
