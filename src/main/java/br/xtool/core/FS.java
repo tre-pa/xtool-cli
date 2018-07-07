@@ -2,8 +2,9 @@ package br.xtool.core;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.StringWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
@@ -53,18 +54,22 @@ public class FS {
 		templatePath = this.inlineTemplate(templatePath, vars);
 		relativeDestination = this.inlineTemplate(relativeDestination, vars);
 		String finalDestination = FilenameUtils.concat(workContext.getDirectory().getPath(), relativeDestination);
-		FileUtils.forceMkdirParent(new File(finalDestination));
-		if (binary) {
-			FileUtils.copyInputStreamToFile(new ClassPathResource(String.format("templates/%s", templatePath)).getInputStream(), new File(finalDestination));
+		if (!Files.exists(Paths.get(finalDestination))) {
+			FileUtils.forceMkdirParent(new File(finalDestination));
+			if (binary) {
+				FileUtils.copyInputStreamToFile(new ClassPathResource(String.format("templates/%s", templatePath)).getInputStream(), new File(finalDestination));
+				Log.print(Log.bold(Log.green("\t[+] ")), Log.purple("File: "), Log.white(relativeDestination));
+				return;
+			}
+			Template t = vEngine.getTemplate(String.format("templates/%s", templatePath), "UTF-8");
+			FileWriterWithEncoding writer = new FileWriterWithEncoding(finalDestination, "UTF-8");
+			t.merge(vContext, writer);
+			writer.flush();
+			writer.close();
 			Log.print(Log.bold(Log.green("\t[+] ")), Log.purple("File: "), Log.white(relativeDestination));
 			return;
 		}
-		Template t = vEngine.getTemplate(String.format("templates/%s", templatePath), "UTF-8");
-		FileWriterWithEncoding writer = new FileWriterWithEncoding(finalDestination, "UTF-8");
-		t.merge(vContext, writer);
-		writer.flush();
-		writer.close();
-		Log.print(Log.bold(Log.green("\t[+] ")), Log.purple("File: "), Log.white(relativeDestination));
+		Log.print(Log.bold(Log.gray("\t[!] ")), Log.purple("File: "), Log.gray(relativeDestination), Log.yellow(" -- Skip "));
 	}
 
 	/**
@@ -91,9 +96,13 @@ public class FS {
 		try {
 			relativeDestination = this.inlineTemplate(relativeDestination, vars);
 			String finalDestination = FilenameUtils.concat(workContext.getDirectory().getPath(), relativeDestination);
-			FileUtils.forceMkdir(new File(finalDestination));
-			FileUtils.touch(new File(FilenameUtils.concat(finalDestination, ".gitkeep")));
-			Log.print(Log.bold(Log.green("\t[+] ")), Log.purple("Path: "), Log.white(relativeDestination));
+			if (!Files.exists(Paths.get(finalDestination))) {
+				FileUtils.forceMkdir(new File(finalDestination));
+				FileUtils.touch(new File(FilenameUtils.concat(finalDestination, ".gitkeep")));
+				Log.print(Log.bold(Log.green("\t[+] ")), Log.purple("Path: "), Log.white(relativeDestination));
+				return;
+			}
+			Log.print(Log.bold(Log.gray("\t[!] ")), Log.purple("Path: "), Log.gray(relativeDestination), Log.yellow(" -- Skip "));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
