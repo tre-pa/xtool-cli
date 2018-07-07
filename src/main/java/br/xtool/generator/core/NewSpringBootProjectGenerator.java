@@ -9,7 +9,6 @@ import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 
-import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableMap;
 
 import br.xtool.XtoolCliApplication;
@@ -22,7 +21,6 @@ import br.xtool.core.representation.EPackage;
 import br.xtool.core.representation.ESpringBootProject;
 import br.xtool.support.core.SpringBootSupport.SupportType;
 import br.xtool.support.core.SupportManager;
-import strman.Strman;
 
 /**
  * Shell Commando responsável por criar uma projeto Spring Boot 1.5.x
@@ -42,7 +40,7 @@ public class NewSpringBootProjectGenerator extends RegularCommand {
 	@Autowired
 	private SupportManager supportManager;
 
-	@ShellMethod(key = "new-springboot-project", value = "Novo projeto Spring Boot 1.5.x", group = XtoolCliApplication.PROJECT_COMMAND_GROUP)
+	@ShellMethod(key = "new:springboot", value = "Novo projeto Spring Boot 1.5.x", group = XtoolCliApplication.PROJECT_COMMAND_GROUP)
 	// @formatter:off
 	public void run(
 			@ShellOption(help = "Nome do projeto") String name, 
@@ -66,7 +64,7 @@ public class NewSpringBootProjectGenerator extends RegularCommand {
 				.put("noWeb", noWeb)
 				.build();
 		// @formatter:on
-		
+
 		Log.print(Log.cyan("\t-- Projeto Base --"));
 		fs.createEmptyPath("${projectName}/src/main/java/${rootPackage.dir}/config", vars);
 		fs.createEmptyPath("${projectName}/src/main/java/${rootPackage.dir}/exception", vars);

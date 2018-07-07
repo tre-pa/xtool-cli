@@ -17,7 +17,7 @@ import br.xtool.core.representation.provider.EEntityValueProvider;
 @ShellComponent
 public class SpringBootJpaEntityMapper extends SpringBootCommand {
 
-	@ShellMethod(key = "map-springboot-jpa-entity", value = "Mapeia uma entidade JPA existente", group = XtoolCliApplication.SPRINGBOOT_COMMAND_GROUP)
+	@ShellMethod(key = "map:entity", value = "Mapeia uma entidade JPA existente", group = XtoolCliApplication.SPRINGBOOT_COMMAND_GROUP)
 	// @formatter:off
 	public void run(
 			@ShellOption(help = "Entidade JPA", valueProvider = EEntityValueProvider.class, defaultValue="") EEntity entity,
@@ -29,14 +29,14 @@ public class SpringBootJpaEntityMapper extends SpringBootCommand {
 		Assert.isTrue(Objects.nonNull(entity) || allEntities,
 				"Selecione uma entidade ou a opção 'all-entities' para selecionar todas as entidades. Digite 'help map-springboot-jpa-entity' para mais detalhes.");
 		Assert.isTrue(jpa || lombok || jackson, "Selecione pelo menos uma opção de mapeamento. Digite 'help map-springboot-jpa-entity' para mais detalhes.");
-		
+
 		System.out.println(Types.getPackage("lombok.Getter"));
 		System.out.println(Types.toSimpleName("lombok.Getter"));
 		System.out.println(Arrays.deepToString(Types.splitGenerics("Map<String, Long>")));
-		
+
 		if (Objects.nonNull(entity)) {
-			//entity.addAnnotation("foo.Abc");
-			//entity.save();
+			// entity.addAnnotation("foo.Abc");
+			// entity.save();
 			// entity.addUpdate(requests -> {
 			// requests.add(AddImport.of(""));
 			// });
