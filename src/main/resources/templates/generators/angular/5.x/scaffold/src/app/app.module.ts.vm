@@ -7,12 +7,14 @@ import { SharedModule } from './@core/shared.module';
 import { AppRoutingModule } from './app-routing.module';
 import { NavListLayoutComponent } from './@core/layout/nav-list-layout/nav-list-layout.component';
 import { NavViewLayoutComponent } from './@core/layout/nav-view-layout/nav-view-layout.component';
+import { NavLinkComponent } from './view/@common/nav-link/nav-link.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    NavViewLayoutComponent,
     NavListLayoutComponent,
-    NavViewLayoutComponent
+    NavLinkComponent
   ],
   imports: [
     BrowserModule,

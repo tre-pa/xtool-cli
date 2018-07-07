@@ -1,12 +1,9 @@
 <td-layout-nav toolbarTitle="demo" color="primary" navigationRoute="/">
   <div td-toolbar-content layout="row" layout-align="left center" flex>
-    <!-- TOOLBAR CONTENT -->
-    <ng-content select="[toolbar-content]"></ng-content>
+    <ng-content select="[top-toolbar-left]"></ng-content>
     <span flex></span>
+    <ng-content select="[top-toolbar-right]"></ng-content>
   </div>
   <!--MAIN CONTENT -->
   <ng-content select="[main-content]"></ng-content>
-  <td-layout-footer color="primary" *ngIf="isFooter">
-  </td-layout-footer>
 </td-layout-nav>
-

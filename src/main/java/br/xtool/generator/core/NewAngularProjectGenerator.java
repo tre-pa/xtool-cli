@@ -47,20 +47,19 @@ public class NewAngularProjectGenerator extends RegularCommand {
 
 		fs.copy("${templatePath}/src/data/gitkeep", "${projectName}/src/data/.gitkeep", vars);
 		fs.copy("${templatePath}/scripts/gitkeep", "${projectName}/scripts/.gitkeep", vars);
-		fs.copy("${templatePath}/src/app/@core/layout/nav-list-layout/nav-list-layout.component.css.vm", "${projectName}/src/app/@core/layout/nav-list-layout/nav-list-layout.component.css", vars);
 		fs.copy("${templatePath}/src/app/@core/layout/nav-list-layout/nav-list-layout.component.html.vm", "${projectName}/src/app/@core/layout/nav-list-layout/nav-list-layout.component.html", vars);
 		fs.copy("${templatePath}/src/app/@core/layout/nav-list-layout/nav-list-layout.component.ts.vm", "${projectName}/src/app/@core/layout/nav-list-layout/nav-list-layout.component.ts", vars);
-		fs.copy("${templatePath}/src/app/@core/layout/nav-view-layout/nav-view-layout.component.css.vm", "${projectName}/src/app/@core/layout/nav-view-layout/nav-view-layout.component.css", vars);
 		fs.copy("${templatePath}/src/app/@core/layout/nav-view-layout/nav-view-layout.component.html.vm", "${projectName}/src/app/@core/layout/nav-view-layout/nav-view-layout.component.html", vars);
 		fs.copy("${templatePath}/src/app/@core/layout/nav-view-layout/nav-view-layout.component.ts.vm", "${projectName}/src/app/@core/layout/nav-view-layout/nav-view-layout.component.ts", vars);
 		fs.copy("${templatePath}/src/app/@core/security/keycloak.js.vm", "${projectName}/src/app/@core/security/keycloak.js", vars);
 		fs.copy("${templatePath}/src/app/@core/security/keycloak.service.ts.vm", "${projectName}/src/app/@core/security/keycloak.service.ts", vars);
 		fs.copy("${templatePath}/src/app/@core/shared.module.ts.vm", "${projectName}/src/app/@core/shared.module.ts", vars);
 		fs.copy("${templatePath}/src/app/@core/page.ts.vm", "${projectName}/src/app/@core/page.ts", vars);
-		fs.copy("${templatePath}/src/app/@core/util/gitkeep", "${projectName}/src/app/@core/util/.gitkeep", vars);
 		fs.copy("${templatePath}/src/app/domain/gitkeep", "${projectName}/src/app/domain/.gitkeep", vars);
 		fs.copy("${templatePath}/src/app/service/gitkeep", "${projectName}/src/app/service/.gitkeep", vars);
 		fs.copy("${templatePath}/src/app/view/gitkeep", "${projectName}/src/app/view/.gitkeep", vars);
+		fs.copy("${templatePath}/src/app/view/@common/nav-link/nav-link.component.html.vm", "${projectName}/src/app/view/@common/nav-link/nav-link.component.html", vars);
+		fs.copy("${templatePath}/src/app/view/@common/nav-link/nav-link.component.ts.vm", "${projectName}/src/app/view/@common/nav-link/nav-link.component.ts", vars);
 		fs.copy("${templatePath}/src/app/app-routing.module.ts.vm", "${projectName}/src/app/app-routing.module.ts", vars);
 		fs.copy("${templatePath}/src/app/app.component.css.vm", "${projectName}/src/app/app.component.css", vars);
 		fs.copy("${templatePath}/src/app/app.component.html.vm", "${projectName}/src/app/app.component.html", vars);
@@ -88,7 +87,7 @@ public class NewAngularProjectGenerator extends RegularCommand {
 		fs.copy("${templatePath}/karma.conf.js.vm", "${projectName}/karma.conf.js", vars);
 		fs.copy("${templatePath}/package.json.vm", "${projectName}/package.json", vars);
 		fs.copy("${templatePath}/protractor.conf.js.vm", "${projectName}/protractor.conf.js", vars);
-		fs.copy("${templatePath}/readme.md.vm", "${projectName}/readme.md.js", vars);
+		fs.copy("${templatePath}/readme.md.vm", "${projectName}/README.md", vars);
 
 		workContext.changeRelativeTo((String) vars.get("projectName"));
 

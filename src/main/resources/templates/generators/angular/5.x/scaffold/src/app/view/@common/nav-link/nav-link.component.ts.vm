@@ -1,0 +1,15 @@
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'nav-link',
+  templateUrl: './nav-link.component.html',
+  styles: []
+})
+export class NavLinkComponent implements OnInit {
+
+  constructor() { }
+
+  ngOnInit() {
+  }
+
+}

@@ -5,17 +5,9 @@ import { Component, OnInit, AfterViewInit, Input, ChangeDetectorRef } from '@ang
 @Component({
   selector: 'nav-list-layout',
   templateUrl: './nav-list-layout.component.html',
-  styleUrls: ['./nav-list-layout.component.css']
+  styles: []
 })
 export class NavListLayoutComponent implements OnInit, AfterViewInit {
-
-  @Input() isToolbarSidNav: boolean = false;
-  @Input() toolbarSidNavTitle: string = '';
-  @Input() isSubFooter: boolean = false;
-  @Input() isMainFooter: boolean = false;
-  @Input() toolbarContentTitle: string;
-  @Input() formTitle: string;
-  @Input() sidenavWidth: string = '257';
 
   /**
    *
@@ -24,11 +16,9 @@ export class NavListLayoutComponent implements OnInit, AfterViewInit {
    */
   constructor(
     public media: TdMediaService,
-    private _changeDetectorRef: ChangeDetectorRef
-  ) { }
+    private _changeDetectorRef: ChangeDetectorRef) { }
 
   ngOnInit() {
-
   }
 
   /**
