@@ -50,6 +50,7 @@ public class NewAngularProjectGenerator extends RegularCommand {
 		fs.createEmptyPath("${projectName}/src/app/service", vars);
 		fs.createEmptyPath("${projectName}/src/app/domain", vars);
 		fs.createEmptyPath("${projectName}/src/assets", vars);
+		fs.copy("${templatePath}/scripts/xtool-ng.js.vm", "${projectName}/scripts/xtool-ng.js", vars);
 		fs.copy("${templatePath}/src/app/@core/layout/nav-list-layout/nav-list-layout.component.html.vm", "${projectName}/src/app/@core/layout/nav-list-layout/nav-list-layout.component.html", vars);
 		fs.copy("${templatePath}/src/app/@core/layout/nav-list-layout/nav-list-layout.component.ts.vm", "${projectName}/src/app/@core/layout/nav-list-layout/nav-list-layout.component.ts", vars);
 		fs.copy("${templatePath}/src/app/@core/layout/nav-view-layout/nav-view-layout.component.html.vm", "${projectName}/src/app/@core/layout/nav-view-layout/nav-view-layout.component.html", vars);

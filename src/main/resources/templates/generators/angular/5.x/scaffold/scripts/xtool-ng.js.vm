@@ -9,7 +9,7 @@ var path = require('path');
 const args = require('yargs').argv;
 
 function applyChanges(path, content, changes) {
-  const tree = new schematics.FileSystemTree()
+  const tree = new schematics.VirtualTree();
   tree.create(path, content);
   const exportRecorder = tree.beginUpdate(path);
   for (const change of changes) {

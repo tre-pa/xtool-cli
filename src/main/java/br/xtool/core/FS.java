@@ -17,6 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
+import lombok.SneakyThrows;
+
 @Component
 public class FS {
 
@@ -37,7 +39,7 @@ public class FS {
 	 *            Mapa com variáveis para substituição no template
 	 * @throws IOException
 	 */
-	public void copy(String templatePath, String relativeDestination, Map<String, Object> vars) throws IOException {
+	public void copy(String templatePath, String relativeDestination, Map<String, Object> vars) {
 		this.copy(templatePath, relativeDestination, vars, false);
 	}
 
@@ -49,7 +51,8 @@ public class FS {
 	 * @param binary
 	 * @throws IOException
 	 */
-	public void copy(String templatePath, String relativeDestination, Map<String, Object> vars, boolean binary) throws IOException {
+	@SneakyThrows
+	public void copy(String templatePath, String relativeDestination, Map<String, Object> vars, boolean binary) {
 		VelocityContext vContext = new VelocityContext(vars);
 		templatePath = this.inlineTemplate(templatePath, vars);
 		relativeDestination = this.inlineTemplate(relativeDestination, vars);
