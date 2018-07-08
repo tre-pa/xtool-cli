@@ -77,8 +77,8 @@ public class NewSpringBootProjectGenerator extends RegularCommand {
 
 		workContext.changeRelativeTo((String) vars.get("projectName"));
 
-		if (workContext.getProject().isPresent()) {
-			ESpringBootProject project = workContext.getProject().get();
+		if (workContext.getSpringBootProject().isPresent()) {
+			ESpringBootProject project = workContext.getSpringBootProject().get();
 			if (!noJpa) supportManager.addSupport(project, SupportType.JPA);
 			if (!noWeb) supportManager.addSupport(project, SupportType.WEB);
 		}

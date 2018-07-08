@@ -1,7 +1,5 @@
 package br.xtool.core.representation;
 
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.SortedSet;
@@ -40,7 +38,7 @@ public class ESpringBootProject extends EProject {
 
 	@Getter(lazy = true)
 	private final EApplicationProperties applicationProperties = buildApplicationProperties();
-	
+
 	@Getter(lazy = true)
 	private final String baseClassName = buildBaseClassName();
 
@@ -147,10 +145,6 @@ public class ESpringBootProject extends EProject {
 
 	public String getMainDir() {
 		return FilenameUtils.concat(this.getPath(), "src/main/java");
-	}
-
-	public static boolean isValidProject(String path) {
-		return Files.exists(Paths.get(path, "pom.xml"));
 	}
 
 }

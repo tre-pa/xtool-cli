@@ -1,0 +1,18 @@
+{
+  "name": "xtool-cli",
+  "version": "1.0.0",
+  "description": "Ferramenta de Produtividade para Desenvolvimento de Aplicações Angular e Spring Boot. O projeto é baseado no Spring Shell e é 100% java.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@git.tre-pa.jus.br:sds/support/xtool-cli.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@angular-devkit/core": "^0.6.8"
+  }
+}

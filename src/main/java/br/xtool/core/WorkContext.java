@@ -3,10 +3,15 @@ package br.xtool.core;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.apache.commons.io.FilenameUtils;
 import org.jboss.forge.roaster.model.JavaUnit;
@@ -21,7 +26,10 @@ import org.springframework.shell.jline.PromptProvider;
 import org.springframework.stereotype.Component;
 
 import br.xtool.core.event.ChangeDirectoryEvent;
+import br.xtool.core.representation.EAngularProject;
 import br.xtool.core.representation.EDirectory;
+import br.xtool.core.representation.ENgClass;
+import br.xtool.core.representation.EProject;
 import br.xtool.core.representation.ESpringBootProject;
 import br.xtool.core.representation.enums.ProjectType;
 import br.xtool.core.utils.RoasterUtils;
@@ -36,7 +44,7 @@ public class WorkContext implements PromptProvider {
 	@Autowired
 	private ApplicationEventPublisher applicationEventPublisher;
 
-	private Optional<ESpringBootProject> project = Optional.empty();
+	private EProject project;
 
 	/**
 	 * Altera o diretório de trabalho.
@@ -46,7 +54,7 @@ public class WorkContext implements PromptProvider {
 	public void changeTo(String newAbsoluteDirectory) {
 		validateDirectory(newAbsoluteDirectory);
 		this.directory = new EDirectory(newAbsoluteDirectory);
-		this.project = Optional.empty();
+		this.project = null;
 		applicationEventPublisher.publishEvent(new ChangeDirectoryEvent(this.directory));
 	}
 
@@ -84,9 +92,9 @@ public class WorkContext implements PromptProvider {
 	 * 
 	 * @return
 	 */
-	public Optional<ESpringBootProject> getProject() {
-		if (!project.isPresent()) {
-			if (ESpringBootProject.isValidProject(this.directory.getPath())) {
+	public Optional<ESpringBootProject> getSpringBootProject() {
+		if (Objects.isNull(this.project)) {
+			if (Stream.of(ProjectType.SPRINGBOOT1_PROJECT, ProjectType.SPRINGBOOT2_PROJECT).anyMatch(p -> p.equals(this.getDirectory().getProjectType()))) {
 				// @formatter:off
 				Set<JavaUnit> javaUnits = this.directory.getAllFiles().stream()
 					.filter(file -> file.getName().endsWith(".java"))
@@ -95,10 +103,30 @@ public class WorkContext implements PromptProvider {
 					.map(Optional::get)
 					.collect(Collectors.toCollection(HashSet::new));
 				// @formatter:on
-				this.project = Optional.of(new ESpringBootProject(this.directory.getPath(), javaUnits));
+				this.project = new ESpringBootProject(this.directory.getPath(), javaUnits);
 			}
 		}
-		return this.project;
+		return Optional.of((ESpringBootProject) this.project);
+	}
+
+	/**
+	 * Retorna a representação do projeto Angular
+	 * 
+	 * @return
+	 */
+	public Optional<EAngularProject> getAngularProject() {
+		if (Objects.isNull(this.project)) {
+			if (Stream.of(ProjectType.ANGULAR5_PROJECT, ProjectType.ANGULAR6_PROJECT).anyMatch(p -> p.equals(this.getDirectory().getProjectType()))) {
+				// @formatter:off
+				SortedSet<ENgClass> ngClasses = this.directory.getAllFiles().stream()
+					.filter(file -> Arrays.asList(".module.ts", ".component.ts", ".service.ts").stream().anyMatch(p -> file.getPath().endsWith(p)))
+					.map(ENgClass::new)
+					.collect(Collectors.toCollection(TreeSet::new));
+				// @formatter:on
+				this.project = new EAngularProject(this.directory.getPath(), ngClasses);
+			}
+		}
+		return Optional.of((EAngularProject) this.project);
 	}
 
 	@Override

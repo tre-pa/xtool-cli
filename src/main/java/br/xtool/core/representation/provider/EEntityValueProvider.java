@@ -22,9 +22,9 @@ public class EEntityValueProvider extends ValueProviderSupport {
 
 	@Override
 	public List<CompletionProposal> complete(MethodParameter parameter, CompletionContext completionContext, String[] hints) {
-		if (workContext.getProject().isPresent()) {
+		if (workContext.getSpringBootProject().isPresent()) {
 			// @formatter:off
-			return workContext.getProject().get().getEntities().stream()
+			return workContext.getSpringBootProject().get().getEntities().stream()
 					.map(EEntity::getName)
 					.map(CompletionProposal::new)
 					.collect(Collectors.toList());

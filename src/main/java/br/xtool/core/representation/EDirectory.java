@@ -3,6 +3,7 @@ package br.xtool.core.representation;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,9 +14,9 @@ import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 import com.google.common.collect.ImmutableSet;
@@ -37,7 +38,8 @@ public class EDirectory {
 	// @formatter:off
 	private Set<Function<EDirectory, ProjectType>> typeResolvers = 
 			ImmutableSet.of(
-					new SpringBoot1ProjectTypeResolver()
+					new SpringBoot1ProjectTypeResolver(),
+					new Angular5ProjectProjectTypeResolver()
 			);
 	// @formatter:on
 
@@ -51,9 +53,9 @@ public class EDirectory {
 	}
 
 	private List<File> listFilesRecursively() {
-		try {
+		try (Stream<Path> pathStrem = Files.walk(Paths.get(this.path))) {
 			// @formatter:off
-			return Files.walk(Paths.get(this.path))
+			return pathStrem
 					.filter(Files::isRegularFile)
 					.filter(p -> !p.startsWith(FilenameUtils.concat(path, "target")))
 					.filter(p -> !p.startsWith(FilenameUtils.concat(path, ".git")))
@@ -96,6 +98,19 @@ public class EDirectory {
 			}
 			return null;
 		}
+	}
+
+	private class Angular5ProjectProjectTypeResolver implements Function<EDirectory, ProjectType> {
+
+		@Override
+		public ProjectType apply(EDirectory dr) {
+			String packageJsonFile = FilenameUtils.concat(dr.getPath(), "package.json");
+			if (Files.exists(Paths.get(packageJsonFile))) {
+				return ProjectType.ANGULAR5_PROJECT;
+			}
+			return null;
+		}
+
 	}
 
 }

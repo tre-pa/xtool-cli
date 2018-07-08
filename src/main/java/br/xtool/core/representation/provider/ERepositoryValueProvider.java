@@ -22,9 +22,9 @@ public class ERepositoryValueProvider extends ValueProviderSupport {
 
 	@Override
 	public List<CompletionProposal> complete(MethodParameter parameter, CompletionContext completionContext, String[] hints) {
-		if (workContext.getProject().isPresent()) {
+		if (workContext.getSpringBootProject().isPresent()) {
 			// @formatter:off
-			return workContext.getProject().get().getRepositories()
+			return workContext.getSpringBootProject().get().getRepositories()
 					.stream().map(ERepository::getName)
 					.map(CompletionProposal::new)
 					.collect(Collectors.toList());

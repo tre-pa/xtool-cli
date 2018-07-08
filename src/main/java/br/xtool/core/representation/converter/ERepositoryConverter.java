@@ -16,9 +16,9 @@ public class ERepositoryConverter implements Converter<String, ERepository> {
 
 	@Override
 	public ERepository convert(String source) {
-		if (workContext.getProject().isPresent() && StringUtils.isNotEmpty(source)) {
+		if (workContext.getSpringBootProject().isPresent() && StringUtils.isNotEmpty(source)) {
 			// @formatter:off
-			return workContext.getProject().get().getRepositories()
+			return workContext.getSpringBootProject().get().getRepositories()
 				.stream()
 				.filter(e -> e.getName().equals(source))
 				.findFirst()
