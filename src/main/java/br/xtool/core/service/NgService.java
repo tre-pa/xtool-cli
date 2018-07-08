@@ -15,6 +15,7 @@ import br.xtool.core.FS;
 import br.xtool.core.WorkContext;
 import br.xtool.core.representation.ENgComponent;
 import br.xtool.core.representation.ENgModule;
+import br.xtool.core.representation.ENgService;
 import lombok.NonNull;
 
 @Service
@@ -49,5 +50,27 @@ public class NgService {
 			fs.copy("${templatePath}/scripts/xtool-ng.js.vm", "scripts/xtool-ng.js", vars);
 		}
 		cmdExecutor.run("node ${xtoolNg} --module-path=${modulePath} --module-name=${moduleName} --component-path=${componentPath} --component-name=${componentName}", vars);
+	}
+
+	/**
+	 * 
+	 * @param ngModule
+	 * @param ngService
+	 */
+	public void addProviderToModule(@NonNull ENgModule ngModule, @NonNull ENgService ngService) {
+		// @formatter:off
+		Map<String, Object> vars = ImmutableMap.<String, Object>builder()
+				.put("templatePath", "generators/angular/5.x/scaffold")
+				.put("xtoolNg", FilenameUtils.concat(workContext.getDirectory().getPath(), "scripts/xtool-ng.js"))
+				.put("modulePath", ngModule.getFile().getAbsolutePath())
+				.put("moduleName", ngModule.getName())
+				.put("servicePath", ngService.getFile().getAbsolutePath())
+				.put("serviceName", ngService.getName())
+				.build();
+		// @formatter:on
+		if (Files.notExists(Paths.get((String) vars.get("xtoolNg")))) {
+			fs.copy("${templatePath}/scripts/xtool-ng.js.vm", "scripts/xtool-ng.js", vars);
+		}
+		cmdExecutor.run("node ${xtoolNg} --module-path=${modulePath} --module-name=${moduleName} --service-path=${servicePath} --service-name=${serviceName}", vars);
 	}
 }
