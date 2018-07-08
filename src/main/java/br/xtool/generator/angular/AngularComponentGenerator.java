@@ -34,7 +34,6 @@ public class AngularComponentGenerator extends AngularCommand {
 		this.getProject().getNgModules().stream().forEach(System.out::println);
 		// System.out.println(this.getProject().getNgPackage());
 		// System.out.println(this.getProject().getNgPackage().getDependencies());
-
 	}
 
 }
