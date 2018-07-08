@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -106,7 +107,17 @@ public class EDirectory {
 		public ProjectType apply(EDirectory dr) {
 			String packageJsonFile = FilenameUtils.concat(dr.getPath(), "package.json");
 			if (Files.exists(Paths.get(packageJsonFile))) {
-				return ProjectType.ANGULAR5_PROJECT;
+				Optional<ENgPackage> ngPackage = ENgPackage.of(packageJsonFile);
+				if (ngPackage.isPresent()) {
+					Map<String, String> dependencies = ngPackage.get().getDependencies();
+					if (dependencies.containsKey("@angular/core")) {
+						Pattern pattern = Pattern.compile("[~|^]?5\\.\\d\\.\\d$");
+						Matcher matcher = pattern.matcher(dependencies.get("@angular/core"));
+						if (matcher.matches()) {
+							return ProjectType.ANGULAR5_PROJECT;
+						}
+					}
+				}
 			}
 			return null;
 		}
