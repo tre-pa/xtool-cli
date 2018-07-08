@@ -1,6 +1,5 @@
 import { NgModule, } from '@angular/core';
 import { CommonModule, } from '@angular/common';
-import { Http, HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule, } from '@angular/forms';
 import { NgxChartsModule, } from '@swimlane/ngx-charts';
@@ -39,7 +38,6 @@ import {
 const ANGULAR_MODULES: any[] = [
   FormsModule, 
   ReactiveFormsModule, 
-  HttpModule, 
   HttpClientModule,
 ];
 

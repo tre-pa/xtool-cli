@@ -45,8 +45,11 @@ public class NewAngularProjectGenerator extends RegularCommand {
 
 		Log.print("");
 
-		fs.copy("${templatePath}/src/data/gitkeep", "${projectName}/src/data/.gitkeep", vars);
-		fs.copy("${templatePath}/scripts/gitkeep", "${projectName}/scripts/.gitkeep", vars);
+		fs.createEmptyPath("${projectName}/data", vars);
+		fs.createEmptyPath("${projectName}/scripts", vars);
+		fs.createEmptyPath("${projectName}/src/app/service", vars);
+		fs.createEmptyPath("${projectName}/src/app/domain", vars);
+		fs.createEmptyPath("${projectName}/src/assets", vars);
 		fs.copy("${templatePath}/src/app/@core/layout/nav-list-layout/nav-list-layout.component.html.vm", "${projectName}/src/app/@core/layout/nav-list-layout/nav-list-layout.component.html", vars);
 		fs.copy("${templatePath}/src/app/@core/layout/nav-list-layout/nav-list-layout.component.ts.vm", "${projectName}/src/app/@core/layout/nav-list-layout/nav-list-layout.component.ts", vars);
 		fs.copy("${templatePath}/src/app/@core/layout/nav-view-layout/nav-view-layout.component.html.vm", "${projectName}/src/app/@core/layout/nav-view-layout/nav-view-layout.component.html", vars);
@@ -55,9 +58,6 @@ public class NewAngularProjectGenerator extends RegularCommand {
 		fs.copy("${templatePath}/src/app/@core/security/keycloak.service.ts.vm", "${projectName}/src/app/@core/security/keycloak.service.ts", vars);
 		fs.copy("${templatePath}/src/app/@core/shared.module.ts.vm", "${projectName}/src/app/@core/shared.module.ts", vars);
 		fs.copy("${templatePath}/src/app/@core/page.ts.vm", "${projectName}/src/app/@core/page.ts", vars);
-		fs.copy("${templatePath}/src/app/domain/gitkeep", "${projectName}/src/app/domain/.gitkeep", vars);
-		fs.copy("${templatePath}/src/app/service/gitkeep", "${projectName}/src/app/service/.gitkeep", vars);
-		fs.copy("${templatePath}/src/app/view/gitkeep", "${projectName}/src/app/view/.gitkeep", vars);
 		fs.copy("${templatePath}/src/app/view/@common/nav-link/nav-link.component.html.vm", "${projectName}/src/app/view/@common/nav-link/nav-link.component.html", vars);
 		fs.copy("${templatePath}/src/app/view/@common/nav-link/nav-link.component.ts.vm", "${projectName}/src/app/view/@common/nav-link/nav-link.component.ts", vars);
 		fs.copy("${templatePath}/src/app/app-routing.module.ts.vm", "${projectName}/src/app/app-routing.module.ts", vars);
@@ -65,7 +65,6 @@ public class NewAngularProjectGenerator extends RegularCommand {
 		fs.copy("${templatePath}/src/app/app.component.html.vm", "${projectName}/src/app/app.component.html", vars);
 		fs.copy("${templatePath}/src/app/app.component.ts.vm", "${projectName}/src/app/app.component.ts", vars);
 		fs.copy("${templatePath}/src/app/app.module.ts.vm", "${projectName}/src/app/app.module.ts", vars);
-		fs.copy("${templatePath}/src/assets/gitkeep", "${projectName}/src/assets/.gitkeep", vars);
 		fs.copy("${templatePath}/src/environments/environment.dev.ts.vm", "${projectName}/src/environments/environment.dev.ts", vars);
 		fs.copy("${templatePath}/src/environments/environment.prod.ts.vm", "${projectName}/src/environments/environment.prod.ts", vars);
 		fs.copy("${templatePath}/src/environments/environment.ts.vm", "${projectName}/src/environments/environment.ts", vars);
