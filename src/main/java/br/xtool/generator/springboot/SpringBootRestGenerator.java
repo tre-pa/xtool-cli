@@ -22,7 +22,7 @@ public class SpringBootRestGenerator extends SpringBootCommand {
 	@Autowired
 	private FS fs;
 
-	@ShellMethod(key = "gen:rest", value = "Gera uma classe Rest", group = XtoolCliApplication.SPRINGBOOT_COMMAND_GROUP)
+	@ShellMethod(key = "gen:rest", value = "Gera uma classe Rest em um projeto Spring Boot", group = XtoolCliApplication.GENERATORS_COMMAND_GROUP)
 	public void run(@ShellOption(help = "Nome da classe Rest") String name) throws JDOMException, IOException {
 		/*
 		 * Cria o mapa com as variáveis do gerador.

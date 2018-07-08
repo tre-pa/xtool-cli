@@ -21,7 +21,7 @@ public class AngularComponentGenerator extends AngularCommand {
 	@Autowired
 	private FS fs;
 
-	@ShellMethod(key = "gen:ngcomponent", value = "Gera uma classe Service", group = XtoolCliApplication.ANGULAR_COMMAND_GROUP)
+	@ShellMethod(key = "gen:ng-component", value = "Gera uma classe component em um projeto Angular", group = XtoolCliApplication.GENERATORS_COMMAND_GROUP)
 	public void run(@ShellOption(help = "Nome da classe component") String name) throws JDOMException, IOException {
 		/*
 		 * Cria o mapa com as variáveis do gerador.
