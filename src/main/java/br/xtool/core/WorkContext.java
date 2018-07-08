@@ -32,7 +32,7 @@ import br.xtool.core.representation.ENgClass;
 import br.xtool.core.representation.EProject;
 import br.xtool.core.representation.ESpringBootProject;
 import br.xtool.core.representation.enums.ProjectType;
-import br.xtool.core.utils.RoasterUtils;
+import br.xtool.core.service.RoasterService;
 import lombok.Getter;
 
 @Component
@@ -43,6 +43,9 @@ public class WorkContext implements PromptProvider {
 
 	@Autowired
 	private ApplicationEventPublisher applicationEventPublisher;
+
+	@Autowired
+	private RoasterService roasterService;
 
 	private EProject project;
 
@@ -98,7 +101,7 @@ public class WorkContext implements PromptProvider {
 				// @formatter:off
 				Set<JavaUnit> javaUnits = this.directory.getAllFiles().stream()
 					.filter(file -> file.getName().endsWith(".java"))
-					.map(RoasterUtils::getJavaUnit)
+					.map(roasterService::getJavaUnit)
 					.filter(Optional::isPresent)
 					.map(Optional::get)
 					.collect(Collectors.toCollection(HashSet::new));

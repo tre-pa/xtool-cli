@@ -1,4 +1,4 @@
-package br.xtool.core.utils;
+package br.xtool.core.service;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -7,10 +7,12 @@ import java.util.Optional;
 
 import org.jboss.forge.roaster.Roaster;
 import org.jboss.forge.roaster.model.JavaUnit;
+import org.springframework.stereotype.Service;
 
-public class RoasterUtils {
+@Service
+public class RoasterService {
 
-	public static Optional<JavaUnit> getJavaUnit(File javaFile) {
+	public Optional<JavaUnit> getJavaUnit(File javaFile) {
 		try {
 			JavaUnit javaUnit = Roaster.parseUnit(new FileInputStream(javaFile));
 			return Optional.of(javaUnit);

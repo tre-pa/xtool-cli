@@ -40,7 +40,7 @@ public class ENgClass implements Comparable<ENgClass> {
 	}
 
 	public String getFileName() {
-		return FilenameUtils.getBaseName(this.getFile().getPath());
+		return FilenameUtils.getName(this.getFile().getPath());
 	}
 
 	@Override
