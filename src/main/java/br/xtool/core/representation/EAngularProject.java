@@ -17,13 +17,13 @@ public class EAngularProject extends EProject {
 	private final ENgPackage ngPackage = buildNgPackage();
 
 	@Getter(lazy = true)
-	private final SortedSet<ENgClass> ngModules = buildNgModules();
+	private final SortedSet<ENgModule> ngModules = buildNgModules();
 
 	@Getter(lazy = true)
-	private final SortedSet<ENgClass> ngComponents = buildNgComponents();
+	private final SortedSet<ENgComponent> ngComponents = buildNgComponents();
 
 	@Getter(lazy = true)
-	private final SortedSet<ENgClass> ngServices = buildNgServices();
+	private final SortedSet<ENgService> ngServices = buildNgServices();
 
 	public EAngularProject(String path, SortedSet<ENgClass> ngClasses) {
 		super(path);
@@ -39,10 +39,11 @@ public class EAngularProject extends EProject {
 	 * 
 	 * @return
 	 */
-	private SortedSet<ENgClass> buildNgModules() {
+	private SortedSet<ENgModule> buildNgModules() {
 		// @formatter:off
 		return ngClasses.stream()
 				.filter(ngClass -> ngClass.getFileName().endsWith(".module.ts"))
+				.map(ngClass -> new ENgModule(ngClass.getFile()))
 				.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
 	}
@@ -52,10 +53,11 @@ public class EAngularProject extends EProject {
 	 * 
 	 * @return
 	 */
-	private SortedSet<ENgClass> buildNgComponents() {
+	private SortedSet<ENgComponent> buildNgComponents() {
 		// @formatter:off
 		return ngClasses.stream()
 				.filter(ngClass -> ngClass.getFileName().endsWith(".component.ts"))
+				.map(ngClass -> new ENgComponent(ngClass.getFile()))
 				.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
 	}
@@ -65,10 +67,11 @@ public class EAngularProject extends EProject {
 	 * 
 	 * @return
 	 */
-	private SortedSet<ENgClass> buildNgServices() {
+	private SortedSet<ENgService> buildNgServices() {
 		// @formatter:off
 		return ngClasses.stream()
 				.filter(ngClass -> ngClass.getFileName().endsWith(".service.ts"))
+				.map(ngClass -> new ENgService(ngClass.getFile()))
 				.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
 	}
