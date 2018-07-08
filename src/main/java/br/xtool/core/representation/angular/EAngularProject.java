@@ -1,4 +1,4 @@
-package br.xtool.core.representation;
+package br.xtool.core.representation.angular;
 
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.io.FilenameUtils;
 
+import br.xtool.core.representation.EProject;
 import lombok.Getter;
 
 @Getter
@@ -24,6 +25,12 @@ public class EAngularProject extends EProject {
 
 	@Getter(lazy = true)
 	private final SortedSet<ENgService> ngServices = buildNgServices();
+
+	@Getter(lazy = true)
+	private final SortedSet<ENgLayout> ngLayouts = buildNgLayouts();
+
+	@Getter(lazy = true)
+	private final SortedSet<ENgPage> ngPages = buildNgPages();
 
 	public EAngularProject(String path, SortedSet<ENgClass> ngClasses) {
 		super(path);
@@ -72,6 +79,34 @@ public class EAngularProject extends EProject {
 		return ngClasses.stream()
 				.filter(ngClass -> ngClass.getFileName().endsWith(".service.ts"))
 				.map(ngClass -> new ENgService(ngClass.getFile()))
+				.collect(Collectors.toCollection(TreeSet::new));
+		// @formatter:on
+	}
+
+	/**
+	 * Retorna as classes services do projeto.
+	 * 
+	 * @return
+	 */
+	private SortedSet<ENgLayout> buildNgLayouts() {
+		// @formatter:off
+		return ngClasses.stream()
+				.filter(ngClass -> ngClass.getFileName().endsWith("-layout.component.ts"))
+				.map(ngClass -> new ENgLayout(ngClass.getFile()))
+				.collect(Collectors.toCollection(TreeSet::new));
+		// @formatter:on
+	}
+
+	/**
+	 * Retorna as classes services do projeto.
+	 * 
+	 * @return
+	 */
+	private SortedSet<ENgPage> buildNgPages() {
+		// @formatter:off
+		return ngClasses.stream()
+				.filter(ngClass -> ngClass.getFileName().endsWith("-page.component.ts"))
+				.map(ngClass -> new ENgPage(ngClass.getFile()))
 				.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
 	}

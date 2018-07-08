@@ -8,7 +8,7 @@ import org.springframework.shell.Availability;
 import org.springframework.shell.standard.ShellMethodAvailability;
 
 import br.xtool.core.WorkContext;
-import br.xtool.core.representation.EAngularProject;
+import br.xtool.core.representation.angular.EAngularProject;
 import br.xtool.core.representation.enums.ProjectType;
 
 public class AngularCommand {

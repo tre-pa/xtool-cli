@@ -1,6 +1,5 @@
 package br.xtool.generator.angular;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 
@@ -15,8 +14,7 @@ import com.google.common.collect.ImmutableMap;
 import br.xtool.XtoolCliApplication;
 import br.xtool.core.FS;
 import br.xtool.core.command.AngularCommand;
-import br.xtool.core.representation.ENgComponent;
-import br.xtool.core.representation.ENgModule;
+import br.xtool.core.representation.angular.ENgModule;
 import br.xtool.core.representation.provider.ENgModuleValueProvider;
 import br.xtool.core.service.NgService;
 
@@ -43,9 +41,10 @@ public class AngularComponentGenerator extends AngularCommand {
 				.build();
 		// @formatter:on
 
-		ngService.addDeclarationToModule(ngModule, new ENgComponent(new File("/home/jcruz/git/a5-exemple/src/app/view/hello-page/hello-list/hello-list.component.ts")));
+		// ngService.addDeclarationToModule(ngModule, new ENgComponent(new
+		// File("/home/jcruz/git/a5-exemple/src/app/view/hello-page/hello-list/hello-list.component.ts")));
 
-		// this.getProject().getNgModules().stream().forEach(System.out::println);
+		this.getProject().getNgPages().stream().forEach(System.out::println);
 		// System.out.println(this.getProject().getNgPackage());
 		// System.out.println(this.getProject().getNgPackage().getDependencies());
 	}

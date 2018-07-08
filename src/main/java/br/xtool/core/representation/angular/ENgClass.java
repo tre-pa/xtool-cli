@@ -1,4 +1,4 @@
-package br.xtool.core.representation;
+package br.xtool.core.representation.angular;
 
 import java.io.File;
 import java.util.stream.Collectors;

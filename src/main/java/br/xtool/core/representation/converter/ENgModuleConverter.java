@@ -6,7 +6,7 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 import br.xtool.core.WorkContext;
-import br.xtool.core.representation.ENgModule;
+import br.xtool.core.representation.angular.ENgModule;
 
 @Component
 public class ENgModuleConverter implements Converter<String, ENgModule> {
