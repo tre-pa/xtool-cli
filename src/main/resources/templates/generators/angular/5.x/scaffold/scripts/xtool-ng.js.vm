@@ -44,4 +44,13 @@ if(args['service-path']) {
   return;
 }
 
+if (args['dialog-path']) {
+  var importPath = path.parse(findModule.buildRelativePath(args['module-path'], args['dialog-path']));
+  var changes = astUtil.addSymbolToNgModuleMetadata(tsSource, args['module-path'], 'entryComponents', args['dialog-name'], `${importPath.dir}/${importPath.name}`);
+  var out = applyChanges(args['module-path'], moduleContent, changes);
+  fs.writeFileSync(args['module-path'], out, 'UTF-8');
+  return;
+}
+
+
 

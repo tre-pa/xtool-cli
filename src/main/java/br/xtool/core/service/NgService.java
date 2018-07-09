@@ -14,6 +14,7 @@ import br.xtool.core.CommandLineExecutor;
 import br.xtool.core.FS;
 import br.xtool.core.WorkContext;
 import br.xtool.core.representation.angular.ENgComponent;
+import br.xtool.core.representation.angular.ENgDialog;
 import br.xtool.core.representation.angular.ENgModule;
 import br.xtool.core.representation.angular.ENgService;
 import lombok.NonNull;
@@ -72,5 +73,27 @@ public class NgService {
 			fs.copy("${templatePath}/scripts/xtool-ng.js.vm", "scripts/xtool-ng.js", vars);
 		}
 		cmdExecutor.run("node ${xtoolNg} --module-path=${modulePath} --module-name=${moduleName} --service-path=${servicePath} --service-name=${serviceName}", vars);
+	}
+
+	/**
+	 * 
+	 * @param ngModule
+	 * @param ngDialog
+	 */
+	public void addEntryComponentsToModule(@NonNull ENgModule ngModule, @NonNull ENgDialog ngDialog) {
+		// @formatter:off
+		Map<String, Object> vars = ImmutableMap.<String, Object>builder()
+				.put("templatePath", "generators/angular/5.x/scaffold")
+				.put("xtoolNg", FilenameUtils.concat(workContext.getDirectory().getPath(), "scripts/xtool-ng.js"))
+				.put("modulePath", ngModule.getFile().getAbsolutePath())
+				.put("moduleName", ngModule.getName())
+				.put("dialogPath", ngDialog.getFile().getAbsolutePath())
+				.put("dialogName", ngDialog.getName())
+				.build();
+		// @formatter:on
+		if (Files.notExists(Paths.get((String) vars.get("xtoolNg")))) {
+			fs.copy("${templatePath}/scripts/xtool-ng.js.vm", "scripts/xtool-ng.js", vars);
+		}
+		cmdExecutor.run("node ${xtoolNg} --module-path=${modulePath} --module-name=${moduleName} --dialog-path=${dialogPath} --dialog-name=${dialogName}", vars);
 	}
 }
