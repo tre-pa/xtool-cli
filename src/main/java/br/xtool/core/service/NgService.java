@@ -36,7 +36,7 @@ public class NgService {
 	 * @param ngModule
 	 * @param ngComponent
 	 */
-	public void addDeclarationToModule(@NonNull ENgModule ngModule, @NonNull ENgComponent ngComponent) {
+	public <T extends ENgComponent> void addDeclarationToModule(@NonNull ENgModule ngModule, @NonNull T ngComponent) {
 		// @formatter:off
 		Map<String, Object> vars = ImmutableMap.<String, Object>builder()
 				.put("templatePath", "generators/angular/5.x/scaffold")

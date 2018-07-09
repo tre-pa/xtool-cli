@@ -41,7 +41,7 @@ public class AngularComponentGenerator extends AngularCommand {
 				.build();
 		// @formatter:on
 
-		// ngService.addDeclarationToModule(ngModule, new ENgComponent(new
+		// ngService.addDeclarationToModule(ngModule, new ENgDetail(new
 		// File("/home/jcruz/git/a5-exemple/src/app/view/hello-page/hello-list/hello-list.component.ts")));
 
 		this.getProject().getNgPages().stream().forEach(System.out::println);

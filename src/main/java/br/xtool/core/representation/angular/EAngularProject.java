@@ -32,6 +32,12 @@ public class EAngularProject extends EProject {
 	@Getter(lazy = true)
 	private final SortedSet<ENgPage> ngPages = buildNgPages();
 
+	@Getter(lazy = true)
+	private final SortedSet<ENgEdit> ngEdits = buildNgEdits();
+
+	@Getter(lazy = true)
+	private final SortedSet<ENgDetail> ngDetails = buildNgDetails();
+
 	public EAngularProject(String path, SortedSet<ENgClass> ngClasses) {
 		super(path);
 		this.ngClasses = ngClasses;
@@ -84,7 +90,7 @@ public class EAngularProject extends EProject {
 	}
 
 	/**
-	 * Retorna as classes services do projeto.
+	 * Retorna as classes layouts do projeto.
 	 * 
 	 * @return
 	 */
@@ -98,7 +104,7 @@ public class EAngularProject extends EProject {
 	}
 
 	/**
-	 * Retorna as classes services do projeto.
+	 * Retorna as classes pages do projeto.
 	 * 
 	 * @return
 	 */
@@ -111,4 +117,31 @@ public class EAngularProject extends EProject {
 		// @formatter:on
 	}
 
+	/**
+	 * Retorna as classes edit do projeto.
+	 * 
+	 * @return
+	 */
+	private SortedSet<ENgEdit> buildNgEdits() {
+		// @formatter:off
+		return ngClasses.stream()
+				.filter(ngClass -> ngClass.getFileName().endsWith("-edit.component.ts"))
+				.map(ngClass -> new ENgEdit(ngClass.getFile()))
+				.collect(Collectors.toCollection(TreeSet::new));
+		// @formatter:on
+	}
+
+	/**
+	 * Retorna as classes details do projeto.
+	 * 
+	 * @return
+	 */
+	private SortedSet<ENgDetail> buildNgDetails() {
+		// @formatter:off
+		return ngClasses.stream()
+				.filter(ngClass -> ngClass.getFileName().endsWith("-detail.component.ts"))
+				.map(ngClass -> new ENgDetail(ngClass.getFile()))
+				.collect(Collectors.toCollection(TreeSet::new));
+		// @formatter:on
+	}
 }

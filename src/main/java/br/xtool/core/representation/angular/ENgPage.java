@@ -2,7 +2,7 @@ package br.xtool.core.representation.angular;
 
 import java.io.File;
 
-public class ENgPage extends ENgClass {
+public class ENgPage extends ENgComponent {
 
 	public ENgPage(File file) {
 		super(file);

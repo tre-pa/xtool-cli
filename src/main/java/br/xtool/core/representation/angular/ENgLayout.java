@@ -2,7 +2,7 @@ package br.xtool.core.representation.angular;
 
 import java.io.File;
 
-public class ENgLayout extends ENgClass {
+public class ENgLayout extends ENgComponent {
 
 	public ENgLayout(File file) {
 		super(file);
