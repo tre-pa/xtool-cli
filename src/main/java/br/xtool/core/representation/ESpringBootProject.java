@@ -1,7 +1,7 @@
 package br.xtool.core.representation;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
@@ -22,7 +22,7 @@ import lombok.Getter;
  */
 public class ESpringBootProject extends EProject {
 
-	private Set<JavaUnit> javaUnits = new HashSet<>();
+	private Map<String, JavaUnit> javaUnits = new HashMap<>();
 
 	@Getter(lazy = true)
 	private final SortedSet<EEntity> entities = buildEntities();
@@ -42,7 +42,7 @@ public class ESpringBootProject extends EProject {
 	@Getter(lazy = true)
 	private final String baseClassName = buildBaseClassName();
 
-	public ESpringBootProject(String path, Set<JavaUnit> javaUnits) {
+	public ESpringBootProject(String path, Map<String, JavaUnit> javaUnits) {
 		super(path);
 		this.javaUnits = javaUnits;
 	}
@@ -55,7 +55,7 @@ public class ESpringBootProject extends EProject {
 	 */
 	private String buildBaseClassName() {
 		// @formatter:off
-		return this.javaUnits
+		return this.javaUnits.values()
 				.parallelStream()
 				.filter(javaUnit -> javaUnit.getGoverningType().isClass())
 				.map(javaUnit -> javaUnit.<JavaClassSource>getGoverningType())
@@ -100,7 +100,7 @@ public class ESpringBootProject extends EProject {
 	 */
 	private SortedSet<EEntity> buildEntities() {
 		// @formatter:off
-		return this.javaUnits
+		return this.javaUnits.values()
 				.parallelStream()
 				.filter(javaUnit -> javaUnit.getGoverningType().isClass())
 				.map(javaUnit -> javaUnit.<JavaClassSource>getGoverningType())
@@ -117,7 +117,7 @@ public class ESpringBootProject extends EProject {
 	 */
 	private SortedSet<ERepository> buildRepositories() {
 		// @formatter:off
-		return this.javaUnits
+		return this.javaUnits.values()
 				.parallelStream()
 				.filter(javaUnit -> javaUnit.getGoverningType().isInterface())
 				.map(javaUnit -> javaUnit.<JavaInterfaceSource>getGoverningType())
@@ -133,7 +133,7 @@ public class ESpringBootProject extends EProject {
 	 */
 	private SortedSet<ERest> buildRests() {
 		// @formatter:off
-		return this.javaUnits
+		return this.javaUnits.values()
 				.parallelStream()
 				.filter(javaUnit -> javaUnit.getGoverningType().isClass())
 				.map(javaUnit -> javaUnit.<JavaClassSource>getGoverningType())
