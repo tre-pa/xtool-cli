@@ -34,18 +34,21 @@ public class SpringBootJpaCrudGenerator extends SpringBootCommand {
 				.put("entity", entity)
 				.build();
 		
-		this.getProject().getRests()
+		this.getProject().getEntities()
 			.stream()
-			.forEach(rest -> {
-				System.out.println(rest.getName()); 
-				rest.getHttpPostMethods()
-						.stream()
-						.forEach(method -> {
-							System.out.println(method.getAnnotations());
-							System.out.println(method.getParameters());
-						});
-				System.out.println("\n");
+			.forEach(_entity -> {
+				_entity.getAttributes()
+					.stream()
+					.forEach(attr -> {
+						attr.getJavaDoc().getTags("@View")
+							.stream()
+							.forEach(javaDoc -> {
+								System.out.println(javaDoc.getName());
+								System.out.println(javaDoc.getValue());
+							});;
+					});
 			});
+			
 		
 	}
 

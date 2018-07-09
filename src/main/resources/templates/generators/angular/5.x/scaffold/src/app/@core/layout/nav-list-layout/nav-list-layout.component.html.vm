@@ -6,7 +6,7 @@
 <td-layout-nav-list #navList toolbarTitle="demo" [opened]="media.registerQuery('gt-sm') | async" [mode]="(media.registerQuery('gt-sm') | async) ? 'side' : 'over'"
   [sidenavWidth]="(media.registerQuery('gt-xs') | async) ?  '350px' : '100%'" navigationRoute="/">
   <!-- Sidenav -->
-  <mat-nav-list td-sidenav-content (click)="!media.query('gt-sm') && navList.close()">
+  <mat-nav-list layout-fill td-sidenav-content (click)="!media.query('gt-sm') && navList.close()" class="pad-top-none">
     <ng-content select="[sidenav]"></ng-content>
   </mat-nav-list>
   <!-- TopToolbar -->
