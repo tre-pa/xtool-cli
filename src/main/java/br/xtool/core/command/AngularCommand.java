@@ -29,6 +29,7 @@ public class AngularCommand {
 	}
 
 	public EAngularProject getProject() {
-		return workContext.getAngularProject().get();
+		//		return workContext.getAngularProject().get();
+		return null;
 	}
 }

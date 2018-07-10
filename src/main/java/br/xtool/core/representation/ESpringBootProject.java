@@ -10,12 +10,15 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.apache.commons.io.FilenameUtils;
 import org.jboss.forge.roaster.Roaster;
 import org.jboss.forge.roaster.model.JavaUnit;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.jboss.forge.roaster.model.source.JavaInterfaceSource;
+
+import br.xtool.core.representation.enums.ProjectType;
 
 /**
  * Classe que representa um projeto Spring Boot
@@ -190,6 +193,14 @@ public class ESpringBootProject extends EProject {
 
 	public String getMainDir() {
 		return FilenameUtils.concat(this.getPath(), "src/main/java");
+	}
+
+	public static Optional<ESpringBootProject> of(String path) {
+		if (Stream.of(ProjectType.SPRINGBOOT1_PROJECT, ProjectType.SPRINGBOOT2_PROJECT).anyMatch(p -> p.equals(new EDirectory(path).getProjectType()))) {
+			ESpringBootProject project = new ESpringBootProject(path);
+			return Optional.of(project);
+		}
+		return Optional.empty();
 	}
 
 }
