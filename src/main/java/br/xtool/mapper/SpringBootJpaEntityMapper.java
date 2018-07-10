@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.Objects;
 
 import org.jboss.forge.roaster.model.util.Types;
-import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 import org.springframework.util.Assert;
@@ -14,7 +13,7 @@ import br.xtool.core.command.SpringBootCommand;
 import br.xtool.core.representation.EEntity;
 import br.xtool.core.representation.provider.EEntityValueProvider;
 
-@ShellComponent
+//@ShellComponent
 public class SpringBootJpaEntityMapper extends SpringBootCommand {
 
 	@ShellMethod(key = "map:entity", value = "Mapeia uma entidade JPA existente", group = XtoolCliApplication.SPRINGBOOT_COMMAND_GROUP)

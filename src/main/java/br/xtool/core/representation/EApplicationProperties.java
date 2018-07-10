@@ -9,7 +9,7 @@ import java.nio.file.Paths;
 import java.util.Optional;
 import java.util.Properties;
 
-import br.xtool.core.Log;
+import br.xtool.core.ConsoleLog;
 import strman.Strman;
 
 public class EApplicationProperties {
@@ -30,7 +30,7 @@ public class EApplicationProperties {
 	public void set(String key, String value) {
 		if (!properties.containsKey(key)) {
 			properties.setProperty(key, value);
-			Log.print(Log.bold(Log.yellow("\t[~] ")), Log.purple("Item: "), Log.white("application.properties"), Log.gray(" -- "), Log.gray(Strman.surround(key, "Key [", "]")));
+			ConsoleLog.print(ConsoleLog.bold(ConsoleLog.yellow("\t[~] ")), ConsoleLog.purple("Item: "), ConsoleLog.white("application.properties"), ConsoleLog.gray(" -- "), ConsoleLog.gray(Strman.surround(key, "Key [", "]")));
 		}
 	}
 

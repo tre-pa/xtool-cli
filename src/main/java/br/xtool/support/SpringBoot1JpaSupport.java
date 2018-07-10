@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import com.google.common.collect.ImmutableMap;
 
 import br.xtool.core.FS;
-import br.xtool.core.Log;
+import br.xtool.core.ConsoleLog;
 import br.xtool.core.representation.ESpringBootProject;
 import br.xtool.core.representation.enums.ProjectType;
 import br.xtool.support.core.SpringBootSupport;
@@ -46,7 +46,7 @@ public class SpringBoot1JpaSupport implements SpringBootSupport {
 				.put("baseClassName", project.getBaseClassName())
 				.build();
 		// @formatter:on
-		Log.print(Log.cyan("\t-- Suporte JPA --"));
+		ConsoleLog.print(ConsoleLog.cyan("\t-- Suporte JPA --"));
 		fs.createEmptyPath("src/main/java/${rootPackage.dir}/domain", vars);
 		fs.createEmptyPath("src/main/java/${rootPackage.dir}/repository", vars);
 		addDependencies(project);

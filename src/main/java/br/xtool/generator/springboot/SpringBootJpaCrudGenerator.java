@@ -11,7 +11,7 @@ import org.springframework.shell.standard.ShellOption;
 import com.google.common.collect.ImmutableMap;
 
 import br.xtool.XtoolCliApplication;
-import br.xtool.core.Log;
+import br.xtool.core.ConsoleLog;
 import br.xtool.core.command.SpringBootCommand;
 import br.xtool.core.representation.EEntity;
 
@@ -67,7 +67,7 @@ public class SpringBootJpaCrudGenerator extends SpringBootCommand {
 	}
 
 	private void showCollectionAssociations(EEntity entity) {
-		System.out.println(Log.green("\nLista de associações compostas\n"));
+		System.out.println(ConsoleLog.green("\nLista de associações compostas\n"));
 		// @formatter:off
 		entity.getAttributes().stream()
 				.filter(attr -> attr.isAssociation())
@@ -82,7 +82,7 @@ public class SpringBootJpaCrudGenerator extends SpringBootCommand {
 	}
 
 	private void showSingleAssociations(EEntity entity) {
-		System.out.println(Log.green("\nLista de associações simples\n"));
+		System.out.println(ConsoleLog.green("\nLista de associações simples\n"));
 		//// @formatter:off
 		entity.getAttributes().stream()
 			.filter(attr -> attr.isAssociation())
@@ -95,13 +95,13 @@ public class SpringBootJpaCrudGenerator extends SpringBootCommand {
 	}
 
 	private void showEntityAnnotations(EEntity entity) {
-		System.out.println(Log.green("\nLista de annotations da class\n"));
+		System.out.println(ConsoleLog.green("\nLista de annotations da class\n"));
 
 		entity.getAnnotations().stream().forEach(a -> System.out.println(a.getName()));
 	}
 
 	private void showEntityAttributes(EEntity entity) {
-		System.out.println(Log.green("Lista de atributos da classe "));
+		System.out.println(ConsoleLog.green("Lista de atributos da classe "));
 		entity.getAttributes().stream().forEach(a -> System.out.println(a.getName().concat(" : ").concat(a.getType().getName())));
 	}
 }

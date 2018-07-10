@@ -13,7 +13,7 @@ import com.google.common.collect.ImmutableMap;
 
 import br.xtool.XtoolCliApplication;
 import br.xtool.core.FS;
-import br.xtool.core.Log;
+import br.xtool.core.ConsoleLog;
 import br.xtool.core.Names;
 import br.xtool.core.WorkContext;
 import br.xtool.core.command.RegularCommand;
@@ -65,7 +65,7 @@ public class NewSpringBootProjectGenerator extends RegularCommand {
 				.build();
 		// @formatter:on
 
-		Log.print(Log.cyan("\t-- Projeto Base --"));
+		ConsoleLog.print(ConsoleLog.cyan("\t-- Projeto Base --"));
 		fs.createEmptyPath("${projectName}/src/main/java/${rootPackage.dir}/config", vars);
 		fs.createEmptyPath("${projectName}/src/main/java/${rootPackage.dir}/exception", vars);
 		fs.createEmptyPath("${projectName}/src/main/java/${rootPackage.dir}/service", vars);

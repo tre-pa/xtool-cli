@@ -3,7 +3,7 @@ package br.xtool.core;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
-public class Log {
+public class ConsoleLog {
 	
 	public static String bold(String text) {
 		return "\u001B[1m" + text + "\u001B[0m";

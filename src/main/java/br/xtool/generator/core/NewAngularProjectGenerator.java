@@ -14,7 +14,7 @@ import com.google.common.collect.ImmutableMap;
 import br.xtool.XtoolCliApplication;
 import br.xtool.core.CommandLineExecutor;
 import br.xtool.core.FS;
-import br.xtool.core.Log;
+import br.xtool.core.ConsoleLog;
 import br.xtool.core.WorkContext;
 import br.xtool.core.command.RegularCommand;
 
@@ -43,7 +43,7 @@ public class NewAngularProjectGenerator extends RegularCommand {
 				.build();
 		// @formatter:on
 
-		Log.print("");
+		ConsoleLog.print("");
 
 		fs.createEmptyPath("${projectName}/data", vars);
 		fs.createEmptyPath("${projectName}/scripts", vars);
@@ -91,7 +91,7 @@ public class NewAngularProjectGenerator extends RegularCommand {
 
 		workContext.changeRelativeTo((String) vars.get("projectName"));
 
-		Log.print(Log.cyan("\t-- npm install --"));
+		ConsoleLog.print(ConsoleLog.cyan("\t-- npm install --"));
 
 		executor.run("npm i && code .");
 

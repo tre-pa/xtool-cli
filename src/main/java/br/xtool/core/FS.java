@@ -61,7 +61,7 @@ public class FS {
 			FileUtils.forceMkdirParent(new File(finalDestination));
 			if (binary) {
 				FileUtils.copyInputStreamToFile(new ClassPathResource(String.format("templates/%s", templatePath)).getInputStream(), new File(finalDestination));
-				Log.print(Log.bold(Log.green("\t[+] ")), Log.purple("File: "), Log.white(relativeDestination));
+				ConsoleLog.print(ConsoleLog.bold(ConsoleLog.green("\t[+] ")), ConsoleLog.purple("File: "), ConsoleLog.white(relativeDestination));
 				return;
 			}
 			Template t = vEngine.getTemplate(String.format("templates/%s", templatePath), "UTF-8");
@@ -69,10 +69,10 @@ public class FS {
 			t.merge(vContext, writer);
 			writer.flush();
 			writer.close();
-			Log.print(Log.bold(Log.green("\t[+] ")), Log.purple("File: "), Log.white(relativeDestination));
+			ConsoleLog.print(ConsoleLog.bold(ConsoleLog.green("\t[+] ")), ConsoleLog.purple("File: "), ConsoleLog.white(relativeDestination));
 			return;
 		}
-		Log.print(Log.bold(Log.gray("\t[!] ")), Log.purple("File: "), Log.gray(relativeDestination), Log.yellow(" -- Skip "));
+		ConsoleLog.print(ConsoleLog.bold(ConsoleLog.gray("\t[!] ")), ConsoleLog.purple("File: "), ConsoleLog.gray(relativeDestination), ConsoleLog.yellow(" -- Skip "));
 	}
 
 	/**
@@ -102,10 +102,10 @@ public class FS {
 			if (!Files.exists(Paths.get(finalDestination))) {
 				FileUtils.forceMkdir(new File(finalDestination));
 				FileUtils.touch(new File(FilenameUtils.concat(finalDestination, ".gitkeep")));
-				Log.print(Log.bold(Log.green("\t[+] ")), Log.purple("Path: "), Log.white(relativeDestination));
+				ConsoleLog.print(ConsoleLog.bold(ConsoleLog.green("\t[+] ")), ConsoleLog.purple("Path: "), ConsoleLog.white(relativeDestination));
 				return;
 			}
-			Log.print(Log.bold(Log.gray("\t[!] ")), Log.purple("Path: "), Log.gray(relativeDestination), Log.yellow(" -- Skip "));
+			ConsoleLog.print(ConsoleLog.bold(ConsoleLog.gray("\t[!] ")), ConsoleLog.purple("Path: "), ConsoleLog.gray(relativeDestination), ConsoleLog.yellow(" -- Skip "));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
