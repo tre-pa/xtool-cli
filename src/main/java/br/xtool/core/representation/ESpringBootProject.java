@@ -2,6 +2,7 @@ package br.xtool.core.representation;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
@@ -24,14 +25,11 @@ public class ESpringBootProject extends EProject {
 
 	private Map<String, JavaUnit> javaUnits = new HashMap<>();
 
-	@Getter(lazy = true)
-	private final SortedSet<EEntity> entities = buildEntities();
+	private SortedSet<EEntity> entities;
 
-	@Getter(lazy = true)
-	private final SortedSet<ERepository> repositories = buildRepositories();
+	private SortedSet<ERepository> repositories;
 
-	@Getter(lazy = true)
-	private final SortedSet<ERest> rests = buildRests();
+	private SortedSet<ERest> rests;
 
 	@Getter(lazy = true)
 	private final EPom pom = buildPom();
@@ -98,16 +96,19 @@ public class ESpringBootProject extends EProject {
 	 * 
 	 * @return
 	 */
-	private SortedSet<EEntity> buildEntities() {
-		// @formatter:off
-		return this.javaUnits.values()
+	public SortedSet<EEntity> getEntities() {
+		if (Objects.isNull(this.entities)) {
+			// @formatter:off
+			this.entities = this.javaUnits.values()
 				.parallelStream()
 				.filter(javaUnit -> javaUnit.getGoverningType().isClass())
 				.map(javaUnit -> javaUnit.<JavaClassSource>getGoverningType())
 				.filter(j -> j.getAnnotations().stream().anyMatch(ann -> ann.getName().equals("Entity")))
 				.map(j -> new EEntity(this, j))
 				.collect(Collectors.toCollection(TreeSet::new));
-		// @formatter:on
+			// @formatter:on
+		}
+		return this.entities;
 	}
 
 	/**
@@ -115,32 +116,38 @@ public class ESpringBootProject extends EProject {
 	 * 
 	 * @return
 	 */
-	private SortedSet<ERepository> buildRepositories() {
-		// @formatter:off
-		return this.javaUnits.values()
+	public SortedSet<ERepository> getRepositories() {
+		if (Objects.isNull(this.repositories)) {
+			// @formatter:off
+			this.repositories = this.javaUnits.values()
 				.parallelStream()
 				.filter(javaUnit -> javaUnit.getGoverningType().isInterface())
 				.map(javaUnit -> javaUnit.<JavaInterfaceSource>getGoverningType())
 				.filter(j -> j.getAnnotations().stream().anyMatch(ann -> ann.getName().equals("Repository")))
 				.map(j -> new ERepository(this, j))
 				.collect(Collectors.toCollection(TreeSet::new));
-		// @formatter:on
+			// @formatter:on
+		}
+		return this.repositories;
 	}
 
 	/**
 	 * 
 	 * @return
 	 */
-	private SortedSet<ERest> buildRests() {
-		// @formatter:off
-		return this.javaUnits.values()
+	public SortedSet<ERest> getRests() {
+		if (Objects.isNull(this.rests)) {
+			// @formatter:off
+			this.rests = this.javaUnits.values()
 				.parallelStream()
 				.filter(javaUnit -> javaUnit.getGoverningType().isClass())
 				.map(javaUnit -> javaUnit.<JavaClassSource>getGoverningType())
 				.filter(j -> j.getAnnotations().stream().anyMatch(ann -> ann.getName().equals("RestController")))
 				.map(j -> new ERest(this, j))
 				.collect(Collectors.toCollection(TreeSet::new));
-		// @formatter:on
+			// @formatter:on
+		}
+		return this.rests;
 	}
 
 	public String getMainDir() {
