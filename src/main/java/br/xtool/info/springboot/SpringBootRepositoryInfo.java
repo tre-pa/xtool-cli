@@ -16,10 +16,10 @@ public class SpringBootRepositoryInfo extends SpringBootCommand {
 
 	@ShellMethod(key = "info:repository", value = "Exibe informações sobre os Repositórios do projeto", group = XtoolCliApplication.INFO_COMMAND_GROUP)
 	public void run() {
-		infoAllEntities();
+		infoAllRepositories();
 	}
 
-	private void infoAllEntities() {
+	private void infoAllRepositories() {
 		//// @formatter:off
 		int maxLenghtEntityName = this.getProject().getRepositories().stream()
 				.map(ERepository::getName)
