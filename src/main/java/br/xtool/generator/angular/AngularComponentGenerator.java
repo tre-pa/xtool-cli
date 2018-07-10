@@ -27,7 +27,7 @@ public class AngularComponentGenerator extends AngularCommand {
 	@Autowired
 	private NgService ngService;
 
-	@ShellMethod(key = "gen:ng-component", value = "Gera uma classe component em um projeto Angular", group = XtoolCliApplication.GENERATORS_COMMAND_GROUP)
+	@ShellMethod(key = "gen:ng-component", value = "Gera uma classe component em um projeto Angular", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
 	// @formatter:off
 	public void run(
 			@ShellOption(help = "Nome da classe component") String name,

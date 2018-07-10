@@ -14,7 +14,7 @@ import br.xtool.core.representation.ERest;
 @ShellComponent
 public class SpringBootRestInfo extends SpringBootCommand {
 
-	@ShellMethod(key = "info:rest", value = "Exibe informações sobre os Rests do projeto", group = XtoolCliApplication.INFO_COMMAND_GROUP)
+	@ShellMethod(key = "info:rest", value = "Exibe informações sobre os Rests do projeto", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
 	public void run() {
 		infoAllRests();
 	}

@@ -12,8 +12,8 @@ import org.springframework.shell.standard.ShellOption;
 import com.google.common.collect.ImmutableMap;
 
 import br.xtool.XtoolCliApplication;
-import br.xtool.core.FS;
 import br.xtool.core.ConsoleLog;
+import br.xtool.core.FS;
 import br.xtool.core.Names;
 import br.xtool.core.WorkContext;
 import br.xtool.core.command.RegularCommand;
@@ -40,7 +40,7 @@ public class NewSpringBootProjectGenerator extends RegularCommand {
 	@Autowired
 	private SupportManager supportManager;
 
-	@ShellMethod(key = "new:springboot", value = "Novo projeto Spring Boot 1.5.x", group = XtoolCliApplication.PROJECT_COMMAND_GROUP)
+	@ShellMethod(key = "new:springboot", value = "Novo projeto Spring Boot 1.5.x", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
 	// @formatter:off
 	public void run(
 			@ShellOption(help = "Nome do projeto") String name, 

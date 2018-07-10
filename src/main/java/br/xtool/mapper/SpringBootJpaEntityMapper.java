@@ -16,7 +16,7 @@ import br.xtool.core.representation.provider.EEntityValueProvider;
 //@ShellComponent
 public class SpringBootJpaEntityMapper extends SpringBootCommand {
 
-	@ShellMethod(key = "map:entity", value = "Mapeia uma entidade JPA existente", group = XtoolCliApplication.SPRINGBOOT_COMMAND_GROUP)
+	@ShellMethod(key = "map:entity", value = "Mapeia uma entidade JPA existente", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
 	// @formatter:off
 	public void run(
 			@ShellOption(help = "Entidade JPA", valueProvider = EEntityValueProvider.class, defaultValue="") EEntity entity,

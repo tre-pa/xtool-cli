@@ -22,7 +22,7 @@ public class SpringBootServiceGenerator extends SpringBootCommand {
 	@Autowired
 	private FS fs;
 
-	@ShellMethod(key = "gen:service", value = "Gera uma classe Service em um projeto Spring Boot", group = XtoolCliApplication.GENERATORS_COMMAND_GROUP)
+	@ShellMethod(key = "gen:service", value = "Gera uma classe Service em um projeto Spring Boot", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
 	public void run(@ShellOption(help = "Nome da classe Service") String name) throws JDOMException, IOException {
 		/*
 		 * Cria o mapa com as variáveis do gerador.

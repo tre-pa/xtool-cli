@@ -13,8 +13,8 @@ import com.google.common.collect.ImmutableMap;
 
 import br.xtool.XtoolCliApplication;
 import br.xtool.core.CommandLineExecutor;
-import br.xtool.core.FS;
 import br.xtool.core.ConsoleLog;
+import br.xtool.core.FS;
 import br.xtool.core.WorkContext;
 import br.xtool.core.command.RegularCommand;
 
@@ -30,7 +30,7 @@ public class NewAngularProjectGenerator extends RegularCommand {
 	@Autowired
 	private WorkContext workContext;
 
-	@ShellMethod(key = "new:angular", value = "Novo projeto Angular 5.x", group = XtoolCliApplication.PROJECT_COMMAND_GROUP)
+	@ShellMethod(key = "new:angular", value = "Novo projeto Angular 5.x", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
 	public void run(@ShellOption(help = "Nome do projeto") String name) throws IOException {
 		/*
 		 * Cria o mapa com as variáveis do gerador.

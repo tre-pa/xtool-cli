@@ -30,7 +30,7 @@ public class SpringBootJpaRepositoryGenerator extends SpringBootCommand {
 	@Autowired
 	private FS fs;
 
-	@ShellMethod(key = "gen:repository", value = "Gera uma classe de Repository (JpaRepository) para entidade JPA em um projeto Spring Boot", group = XtoolCliApplication.GENERATORS_COMMAND_GROUP)
+	@ShellMethod(key = "gen:repository", value = "Gera uma classe de Repository (JpaRepository) para entidade JPA em um projeto Spring Boot", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
 	public void run(@ShellOption(help = "Entidade JPA", valueProvider = EEntityValueProvider.class) EEntity entity) throws IOException, JDOMException {
 		/*
 		 * Cria o mapa com as variáveis do gerador.

@@ -13,7 +13,7 @@ public class PwdCommand {
 	@Autowired
 	private WorkContext workContext;
 
-	@ShellMethod(value = "Exibe o diretório de trabalho atual", group = XtoolCliApplication.CORE_COMMAND_GROUP)
+	@ShellMethod(value = "Exibe o diretório de trabalho atual", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
 	public String pwd() {
 		return workContext.getDirectory().getPath();
 	}

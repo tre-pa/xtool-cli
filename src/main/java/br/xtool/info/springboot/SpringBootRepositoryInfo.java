@@ -14,7 +14,7 @@ import br.xtool.core.representation.ERepository;
 @ShellComponent
 public class SpringBootRepositoryInfo extends SpringBootCommand {
 
-	@ShellMethod(key = "info:repository", value = "Exibe informações sobre os Repositórios do projeto", group = XtoolCliApplication.INFO_COMMAND_GROUP)
+	@ShellMethod(key = "info:repository", value = "Exibe informações sobre os Repositórios do projeto", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
 	public void run() {
 		infoAllRepositories();
 	}

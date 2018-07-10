@@ -14,7 +14,7 @@ import br.xtool.core.representation.EEntity;
 @ShellComponent
 public class SpringBootEntityInfo extends SpringBootCommand {
 
-	@ShellMethod(key = "info:entity", value = "Exibe informações sobre as entidades JPA do projeto", group = XtoolCliApplication.INFO_COMMAND_GROUP)
+	@ShellMethod(key = "info:entity", value = "Exibe informações sobre as entidades JPA do projeto", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
 	public void run() {
 		infoAllEntities();
 	}

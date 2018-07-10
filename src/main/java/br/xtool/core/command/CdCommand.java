@@ -15,7 +15,7 @@ public class CdCommand {
 	@Autowired
 	private WorkContext workContext;
 
-	@ShellMethod(value = "Altera o diretório de trabalho do xtool", group = XtoolCliApplication.CORE_COMMAND_GROUP)
+	@ShellMethod(value = "Altera o diretório de trabalho do xtool", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
 	public void cd(@ShellOption(help = "Diretório alvo", valueProvider = FileValueProvider.class) String dir) {
 		workContext.changeTo(dir);
 	}
