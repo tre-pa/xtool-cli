@@ -196,7 +196,7 @@ public class ESpringBootProject extends EProject {
 	}
 
 	public static Optional<ESpringBootProject> of(String path) {
-		if (Stream.of(ProjectType.SPRINGBOOT1_PROJECT, ProjectType.SPRINGBOOT2_PROJECT).anyMatch(p -> p.equals(new EDirectory(path).getProjectType()))) {
+		if (Stream.of(ProjectType.SPRINGBOOT1_PROJECT, ProjectType.SPRINGBOOT2_PROJECT).anyMatch(p -> p.equals(EDirectory.of(path).getProjectType()))) {
 			ESpringBootProject project = new ESpringBootProject(path);
 			return Optional.of(project);
 		}

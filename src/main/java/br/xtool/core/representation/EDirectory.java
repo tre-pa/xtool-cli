@@ -45,7 +45,7 @@ public class EDirectory {
 			);
 	// @formatter:on
 
-	public EDirectory(String directory) {
+	private EDirectory(String directory) {
 		super();
 		this.path = FilenameUtils.normalizeNoEndSeparator(directory, true);
 	}
@@ -81,6 +81,13 @@ public class EDirectory {
 				.findFirst()
 				.orElse(ProjectType.NONE);
 		// @formatter:on
+	}
+
+	public static EDirectory of(String path) {
+		if (!Files.isDirectory(Paths.get(path))) {
+			throw new IllegalArgumentException(String.format("O diretório %s não existe", path));
+		}
+		return new EDirectory(path);
 	}
 
 	private class SpringBoot1ProjectTypeResolver implements Function<EDirectory, ProjectType> {

@@ -14,7 +14,7 @@ public abstract class EProject {
 	public EProject(String path) {
 		super();
 		this.path = path;
-		this.directory = new EDirectory(path);
+		this.directory = EDirectory.of(path);
 	}
 
 	/**

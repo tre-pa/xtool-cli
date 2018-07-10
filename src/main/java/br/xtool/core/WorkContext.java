@@ -43,8 +43,7 @@ public class WorkContext implements PromptProvider {
 	 * @param newAbsoluteDirectory
 	 */
 	public void changeTo(String newAbsoluteDirectory) {
-		validateDirectory(newAbsoluteDirectory);
-		this.directory = new EDirectory(newAbsoluteDirectory);
+		this.directory = EDirectory.of(newAbsoluteDirectory);
 		this.springBootProject = null;
 		applicationEventPublisher.publishEvent(new ChangeDirectoryEvent(this.directory));
 	}
@@ -54,16 +53,10 @@ public class WorkContext implements PromptProvider {
 		this.changeTo(newAbsoluteDirectory);
 	}
 
-	private void validateDirectory(String newDirectory) {
-		if (!Files.isDirectory(Paths.get(newDirectory))) {
-			throw new IllegalArgumentException(String.format("O diretório %s não existe", newDirectory));
-		}
-	}
-
 	private void setupHomeDirectory() throws IOException {
 		String home = FilenameUtils.concat(System.getProperty("user.home"), "git");
 		Files.createDirectories(Paths.get(home));
-		this.directory = new EDirectory(home);
+		this.directory = EDirectory.of(home);
 	}
 
 	/**
