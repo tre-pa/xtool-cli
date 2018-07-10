@@ -32,6 +32,15 @@ public class ERepository implements Comparable<ERepository> {
 	}
 
 	/**
+	 * Retorna o pacote da classe
+	 * 
+	 * @return
+	 */
+	public EPackage getPackage() {
+		return EPackage.of(javaInterfaceSource.getPackage());
+	}
+
+	/**
 	 * Retorna a entidade alvo do repositório.
 	 * 
 	 * @return
