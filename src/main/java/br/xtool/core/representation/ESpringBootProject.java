@@ -13,6 +13,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.monitor.FileAlterationListener;
+import org.apache.commons.io.monitor.FileAlterationObserver;
 import org.jboss.forge.roaster.Roaster;
 import org.jboss.forge.roaster.model.JavaUnit;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
@@ -26,7 +28,7 @@ import br.xtool.core.representation.enums.ProjectType;
  * @author jcruz
  *
  */
-public class ESpringBootProject extends EProject {
+public class ESpringBootProject extends EProject implements FileAlterationListener {
 
 	private Map<String, JavaUnit> javaUnits;
 
@@ -201,6 +203,56 @@ public class ESpringBootProject extends EProject {
 			return Optional.of(project);
 		}
 		return Optional.empty();
+	}
+
+	@Override
+	public void onStart(FileAlterationObserver observer) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onDirectoryCreate(File directory) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onDirectoryChange(File directory) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onDirectoryDelete(File directory) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onFileCreate(File file) {
+		System.out.println("---Created---");
+		System.out.println(file);
+	}
+
+	@Override
+	public void onFileChange(File file) {
+		System.out.println("---Changed---");
+		System.out.println(file);
+
+	}
+
+	@Override
+	public void onFileDelete(File file) {
+		System.out.println("---Deleted---");
+		System.out.println(file);
+
+	}
+
+	@Override
+	public void onStop(FileAlterationObserver observer) {
+		// TODO Auto-generated method stub
+
 	}
 
 }

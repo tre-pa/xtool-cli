@@ -3,7 +3,6 @@ package br.xtool.core;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Objects;
 import java.util.Optional;
 
 import org.apache.commons.io.FilenameUtils;
@@ -33,10 +32,6 @@ public class WorkContext implements PromptProvider {
 	@Autowired
 	private ApplicationEventPublisher applicationEventPublisher;
 
-	//	private EProject project;
-
-	private Optional<ESpringBootProject> springBootProject;
-
 	/**
 	 * Altera o diretório de trabalho.
 	 * 
@@ -44,7 +39,6 @@ public class WorkContext implements PromptProvider {
 	 */
 	public void changeTo(String newAbsoluteDirectory) {
 		this.directory = EDirectory.of(newAbsoluteDirectory);
-		this.springBootProject = null;
 		applicationEventPublisher.publishEvent(new ChangeDirectoryEvent(this.directory));
 	}
 
@@ -77,10 +71,7 @@ public class WorkContext implements PromptProvider {
 	 * @return
 	 */
 	public Optional<ESpringBootProject> getSpringBootProject() {
-		if (Objects.isNull(this.springBootProject)) {
-			this.springBootProject = ESpringBootProject.of(this.directory.getPath());
-		}
-		return this.springBootProject;
+		return ESpringBootProject.of(this.directory.getPath());
 	}
 
 	/**
