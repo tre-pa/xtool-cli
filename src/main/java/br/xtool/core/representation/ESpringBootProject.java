@@ -3,17 +3,15 @@ package br.xtool.core.representation;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.jboss.forge.roaster.model.JavaUnit;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.jboss.forge.roaster.model.source.JavaInterfaceSource;
-
-import lombok.Getter;
 
 /**
  * Classe que representa um projeto Spring Boot
@@ -31,14 +29,11 @@ public class ESpringBootProject extends EProject {
 
 	private SortedSet<ERest> rests;
 
-	@Getter(lazy = true)
-	private final EPom pom = buildPom();
+	private EPom pom;
 
-	@Getter(lazy = true)
-	private final EApplicationProperties applicationProperties = buildApplicationProperties();
+	private EApplicationProperties applicationProperties;
 
-	@Getter(lazy = true)
-	private final String baseClassName = buildBaseClassName();
+	private Optional<EClass> mainClass;
 
 	public ESpringBootProject(String path, Map<String, JavaUnit> javaUnits) {
 		super(path);
@@ -51,17 +46,27 @@ public class ESpringBootProject extends EProject {
 	 * 
 	 * @return Nome da classe base.
 	 */
-	private String buildBaseClassName() {
-		// @formatter:off
-		return this.javaUnits.values()
-				.parallelStream()
-				.filter(javaUnit -> javaUnit.getGoverningType().isClass())
-				.map(javaUnit -> javaUnit.<JavaClassSource>getGoverningType())
-				.filter(j -> j.getAnnotations().stream().anyMatch(ann -> ann.getName().equals("SpringBootApplication")))
-				.map(j -> StringUtils.replace(j.getName(), "Application", ""))
-				.findFirst()
-				.orElse("");
-		// @formatter:on
+	public String getBaseClassName() {
+		return this.getMainclass().get().getName().replaceAll("Application", "");
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public Optional<EClass> getMainclass() {
+		if (Objects.isNull(this.mainClass)) {
+			// @formatter:off
+			this.mainClass = this.javaUnits.values()
+					.parallelStream()
+					.filter(javaUnit -> javaUnit.getGoverningType().isClass())
+					.map(javaUnit -> javaUnit.<JavaClassSource>getGoverningType())
+					.filter(j -> j.getAnnotations().stream().anyMatch(ann -> ann.getName().equals("SpringBootApplication")))
+					.map(javaUnit -> new EClass(this, javaUnit))
+					.findFirst();
+			// @formatter:on
+		}
+		return this.mainClass;
 	}
 
 	/**
@@ -78,8 +83,11 @@ public class ESpringBootProject extends EProject {
 	 * 
 	 * @return
 	 */
-	private EPom buildPom() {
-		return EPom.of(FilenameUtils.concat(this.getPath(), "pom.xml")).orElse(null);
+	public EPom getPom() {
+		if (Objects.isNull(this.pom)) {
+			this.pom = EPom.of(FilenameUtils.concat(this.getPath(), "pom.xml")).orElse(null);
+		}
+		return this.pom;
 	}
 
 	/**
@@ -87,8 +95,11 @@ public class ESpringBootProject extends EProject {
 	 * 
 	 * @return
 	 */
-	private EApplicationProperties buildApplicationProperties() {
-		return EApplicationProperties.of(FilenameUtils.concat(this.getPath(), "src/main/resources/application.properties")).orElse(null);
+	public EApplicationProperties getApplicationProperties() {
+		if (Objects.isNull(this.applicationProperties)) {
+			this.applicationProperties = EApplicationProperties.of(FilenameUtils.concat(this.getPath(), "src/main/resources/application.properties")).orElse(null);
+		}
+		return this.applicationProperties;
 	}
 
 	/**
