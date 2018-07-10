@@ -4,17 +4,14 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.SortedSet;
 import java.util.TreeSet;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.apache.commons.io.FilenameUtils;
-import org.jboss.forge.roaster.model.JavaUnit;
 import org.jline.utils.AttributedString;
 import org.jline.utils.AttributedStringBuilder;
 import org.jline.utils.AttributedStyle;
@@ -32,7 +29,6 @@ import br.xtool.core.representation.ESpringBootProject;
 import br.xtool.core.representation.angular.EAngularProject;
 import br.xtool.core.representation.angular.ENgClass;
 import br.xtool.core.representation.enums.ProjectType;
-import br.xtool.core.service.RoasterService;
 import lombok.Getter;
 
 @Component
@@ -43,9 +39,6 @@ public class WorkContext implements PromptProvider {
 
 	@Autowired
 	private ApplicationEventPublisher applicationEventPublisher;
-
-	@Autowired
-	private RoasterService roasterService;
 
 	private EProject project;
 
@@ -98,15 +91,7 @@ public class WorkContext implements PromptProvider {
 	public Optional<ESpringBootProject> getSpringBootProject() {
 		if (Objects.isNull(this.project)) {
 			if (Stream.of(ProjectType.SPRINGBOOT1_PROJECT, ProjectType.SPRINGBOOT2_PROJECT).anyMatch(p -> p.equals(this.getDirectory().getProjectType()))) {
-				// @formatter:off
-				Map<String, JavaUnit> javaUnits = this.directory.getAllFiles().stream()
-					.filter(file -> file.getName().endsWith(".java"))
-					.map(roasterService::getJavaUnit)
-					.filter(Optional::isPresent)
-					.map(Optional::get)
-					.collect(Collectors.toMap(javaUnit -> javaUnit.getGoverningType().getName(), Function.identity()));
-				// @formatter:on
-				this.project = new ESpringBootProject(this.directory.getPath(), javaUnits);
+				this.project = new ESpringBootProject(this.directory.getPath());
 			}
 		}
 		return Optional.of((ESpringBootProject) this.project);

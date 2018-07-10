@@ -144,4 +144,5 @@ public class EAngularProject extends EProject {
 				.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
 	}
+
 }

@@ -9,6 +9,7 @@ public class XtoolCliApplication {
 	public final static String XTOOL_COMMAND_GROUP = "Xtool Commands";
 
 	public static void main(String[] args) {
+		System.setProperty("spring.devtools.restart.enabled", "false");
 		SpringApplication.run(XtoolCliApplication.class, args);
 	}
 

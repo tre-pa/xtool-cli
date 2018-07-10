@@ -1,14 +1,18 @@
 package br.xtool.core.representation;
 
-import java.util.HashMap;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import org.apache.commons.io.FilenameUtils;
+import org.jboss.forge.roaster.Roaster;
 import org.jboss.forge.roaster.model.JavaUnit;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.jboss.forge.roaster.model.source.JavaInterfaceSource;
@@ -21,7 +25,7 @@ import org.jboss.forge.roaster.model.source.JavaInterfaceSource;
  */
 public class ESpringBootProject extends EProject {
 
-	private Map<String, JavaUnit> javaUnits = new HashMap<>();
+	private Map<String, JavaUnit> javaUnits;
 
 	private SortedSet<EEntity> entities;
 
@@ -35,9 +39,8 @@ public class ESpringBootProject extends EProject {
 
 	private Optional<EClass> mainClass;
 
-	public ESpringBootProject(String path, Map<String, JavaUnit> javaUnits) {
+	public ESpringBootProject(String path) {
 		super(path);
-		this.javaUnits = javaUnits;
 	}
 
 	/**
@@ -57,7 +60,7 @@ public class ESpringBootProject extends EProject {
 	public Optional<EClass> getMainclass() {
 		if (Objects.isNull(this.mainClass)) {
 			// @formatter:off
-			this.mainClass = this.javaUnits.values()
+			this.mainClass = this.getJavaUnits().values()
 					.parallelStream()
 					.filter(javaUnit -> javaUnit.getGoverningType().isClass())
 					.map(javaUnit -> javaUnit.<JavaClassSource>getGoverningType())
@@ -110,7 +113,7 @@ public class ESpringBootProject extends EProject {
 	public SortedSet<EEntity> getEntities() {
 		if (Objects.isNull(this.entities)) {
 			// @formatter:off
-			this.entities = this.javaUnits.values()
+			this.entities = this.getJavaUnits().values()
 				.parallelStream()
 				.filter(javaUnit -> javaUnit.getGoverningType().isClass())
 				.map(javaUnit -> javaUnit.<JavaClassSource>getGoverningType())
@@ -130,7 +133,7 @@ public class ESpringBootProject extends EProject {
 	public SortedSet<ERepository> getRepositories() {
 		if (Objects.isNull(this.repositories)) {
 			// @formatter:off
-			this.repositories = this.javaUnits.values()
+			this.repositories = this.getJavaUnits().values()
 				.parallelStream()
 				.filter(javaUnit -> javaUnit.getGoverningType().isInterface())
 				.map(javaUnit -> javaUnit.<JavaInterfaceSource>getGoverningType())
@@ -149,7 +152,7 @@ public class ESpringBootProject extends EProject {
 	public SortedSet<ERest> getRests() {
 		if (Objects.isNull(this.rests)) {
 			// @formatter:off
-			this.rests = this.javaUnits.values()
+			this.rests = this.getJavaUnits().values()
 				.parallelStream()
 				.filter(javaUnit -> javaUnit.getGoverningType().isClass())
 				.map(javaUnit -> javaUnit.<JavaClassSource>getGoverningType())
@@ -159,6 +162,30 @@ public class ESpringBootProject extends EProject {
 			// @formatter:on
 		}
 		return this.rests;
+	}
+
+	public Map<String, JavaUnit> getJavaUnits() {
+		if (Objects.isNull(this.javaUnits)) {
+			// @formatter:off
+			this.javaUnits = this.getDirectory().getAllFiles().stream()
+				.filter(file -> file.getName().endsWith(".java"))
+				.map(this::getJavaUnit)
+				.filter(Optional::isPresent)
+				.map(Optional::get)
+				.collect(Collectors.toMap(javaUnit -> javaUnit.getGoverningType().getName(), Function.identity()));
+			// @formatter:on
+		}
+		return this.javaUnits;
+	}
+
+	private Optional<JavaUnit> getJavaUnit(File javaFile) {
+		try {
+			JavaUnit javaUnit = Roaster.parseUnit(new FileInputStream(javaFile));
+			return Optional.of(javaUnit);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		return Optional.empty();
 	}
 
 	public String getMainDir() {

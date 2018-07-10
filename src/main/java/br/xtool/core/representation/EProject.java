@@ -3,7 +3,7 @@ package br.xtool.core.representation;
 import br.xtool.core.representation.enums.ProjectType;
 import lombok.Getter;
 
-public class EProject {
+public abstract class EProject {
 
 	@Getter
 	private String path;
