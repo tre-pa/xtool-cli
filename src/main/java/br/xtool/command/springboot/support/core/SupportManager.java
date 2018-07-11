@@ -1,4 +1,4 @@
-package br.xtool.support.core;
+package br.xtool.command.springboot.support.core;
 
 import java.util.Set;
 
@@ -10,9 +10,9 @@ import org.springframework.stereotype.Service;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 
+import br.xtool.command.springboot.support.core.SpringBootSupport.SupportType;
 import br.xtool.core.representation.ESpringBootProject;
 import br.xtool.core.representation.enums.ProjectType;
-import br.xtool.support.core.SpringBootSupport.SupportType;
 
 /**
  * Classe que gerencia a adcição dos suports ao projeto.

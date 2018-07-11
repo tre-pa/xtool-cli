@@ -1,4 +1,4 @@
-package br.xtool.support;
+package br.xtool.command.springboot.support;
 
 import java.util.Map;
 
@@ -7,11 +7,11 @@ import org.springframework.stereotype.Component;
 
 import com.google.common.collect.ImmutableMap;
 
+import br.xtool.command.springboot.support.core.SpringBootSupport;
 import br.xtool.core.ConsoleLog;
 import br.xtool.core.FS;
 import br.xtool.core.representation.ESpringBootProject;
 import br.xtool.core.representation.enums.ProjectType;
-import br.xtool.support.core.SpringBootSupport;
 
 /**
  * 

@@ -1,4 +1,4 @@
-package br.xtool.generator.core;
+package br.xtool.command.angular.archetype;
 
 import java.io.IOException;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package br.xtool.generator.springboot;
+package br.xtool.command.springboot.generator;
 
 import java.io.IOException;
 import java.util.Map;

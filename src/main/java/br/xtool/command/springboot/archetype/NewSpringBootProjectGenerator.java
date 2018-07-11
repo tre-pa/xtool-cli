@@ -1,4 +1,4 @@
-package br.xtool.generator.core;
+package br.xtool.command.springboot.archetype;
 
 import java.io.IOException;
 import java.util.Map;
@@ -12,6 +12,8 @@ import org.springframework.shell.standard.ShellOption;
 import com.google.common.collect.ImmutableMap;
 
 import br.xtool.XtoolCliApplication;
+import br.xtool.command.springboot.support.core.SupportManager;
+import br.xtool.command.springboot.support.core.SpringBootSupport.SupportType;
 import br.xtool.core.ConsoleLog;
 import br.xtool.core.FS;
 import br.xtool.core.Names;
@@ -19,8 +21,6 @@ import br.xtool.core.WorkContext;
 import br.xtool.core.command.RegularCommand;
 import br.xtool.core.representation.EPackage;
 import br.xtool.core.representation.ESpringBootProject;
-import br.xtool.support.core.SpringBootSupport.SupportType;
-import br.xtool.support.core.SupportManager;
 
 /**
  * Shell Commando responsável por criar uma projeto Spring Boot 1.5.x

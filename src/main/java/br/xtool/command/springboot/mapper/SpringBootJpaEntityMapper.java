@@ -1,4 +1,4 @@
-package br.xtool.mapper;
+package br.xtool.command.springboot.mapper;
 
 import java.util.Arrays;
 import java.util.Objects;

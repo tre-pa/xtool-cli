@@ -1,4 +1,4 @@
-package br.xtool.support.core;
+package br.xtool.command.springboot.support.core;
 
 import br.xtool.core.representation.ESpringBootProject;
 import br.xtool.core.representation.enums.ProjectType;

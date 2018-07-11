@@ -1,4 +1,4 @@
-package br.xtool.generator.angular;
+package br.xtool.command.angular.generator;
 
 import java.io.IOException;
 import java.util.Map;
