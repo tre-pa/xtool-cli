@@ -9,6 +9,7 @@ import javax.annotation.PostConstruct;
 
 import org.apache.commons.io.monitor.FileAlterationMonitor;
 import org.apache.commons.io.monitor.FileAlterationObserver;
+import org.jline.utils.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
 import org.springframework.shell.Availability;
@@ -60,6 +61,7 @@ public class SpringBootCommand {
 			this.monitor.addObserver(this.fao);
 			this.monitor.start();
 			this.monitorRunning = true;
+			Log.info("Registrando observers do projeto ", this.getProject().getName());
 			log.info("Observers iniciando para projeto ", this.project.getName());
 		}
 		return this.project;
@@ -69,6 +71,7 @@ public class SpringBootCommand {
 	@SneakyThrows
 	protected void onChangeDirectory(ChangeDirectoryEvent evt) {
 		if (this.monitorRunning) {
+			Log.info("Parando observers do projeto ", this.getProject().getName());
 			log.info("Parando observers para projeto {}", this.project.getName());
 			this.monitor.removeObserver(this.fao);
 			this.monitor.stop();

@@ -11,6 +11,7 @@ import org.springframework.context.event.EventListener;
 import org.springframework.shell.Availability;
 import org.springframework.shell.standard.ShellMethodAvailability;
 
+import br.xtool.core.ConsoleLog;
 import br.xtool.core.WorkContext;
 import br.xtool.core.event.ChangeDirectoryEvent;
 import br.xtool.core.representation.angular.EAngularProject;
@@ -53,6 +54,7 @@ public class AngularCommand {
 			this.monitor.addObserver(this.fao);
 			this.monitor.start();
 			this.monitorRunning = true;
+			ConsoleLog.print(ConsoleLog.yellow("Registrando observers do projeto "), ConsoleLog.white(this.getProject().getName()));
 			log.info("Observers iniciando para projeto ", this.project.getName());
 		}
 		return this.project;
@@ -62,6 +64,7 @@ public class AngularCommand {
 	@SneakyThrows
 	protected void onChangeDirectory(ChangeDirectoryEvent evt) {
 		if (this.monitorRunning) {
+			ConsoleLog.print(ConsoleLog.yellow("Parando observers do projeto "), ConsoleLog.white(this.getProject().getName()));
 			log.info("Parando observers para projeto {}", this.project.getName());
 			this.monitor.removeObserver(this.fao);
 			this.monitor.stop();
