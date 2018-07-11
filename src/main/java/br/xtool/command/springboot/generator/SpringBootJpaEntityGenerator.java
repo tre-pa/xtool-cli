@@ -42,7 +42,7 @@ public class SpringBootJpaEntityGenerator extends SpringBootCommand {
 				.build();
 		// @formatter:on
 
-		fs.copy("generators/springboot/entity/entity.java.vm", "src/main/java/${groupId.dir}/domain/${entityName}.java", vars);
+		this.fs.copy("springboot/entity/entity.java.vm", "src/main/java/${groupId.dir}/domain/${entityName}.java", vars);
 	}
 
 }

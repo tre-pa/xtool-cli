@@ -12,8 +12,8 @@ import org.springframework.shell.standard.ShellOption;
 import com.google.common.collect.ImmutableMap;
 
 import br.xtool.XtoolCliApplication;
-import br.xtool.command.springboot.support.core.SupportManager;
 import br.xtool.command.springboot.support.core.SpringBootSupport.SupportType;
+import br.xtool.command.springboot.support.core.SupportManager;
 import br.xtool.core.ConsoleLog;
 import br.xtool.core.FS;
 import br.xtool.core.Names;
@@ -55,7 +55,7 @@ public class NewSpringBootProjectGenerator extends RegularCommand {
 		 */
 		// @formatter:off
 		Map<String, Object> vars = ImmutableMap.<String, Object>builder()
-				.put("templatePath", "generators/springboot/archetype/1.5.x")
+				.put("templatePath", "springboot/archetype/1.5.x")
 				.put("projectName", Names.asSpringBootProject(name))
 				.put("projectVersion", version)
 				.put("rootPackage", getFinalRootPackage(name, rootPackage))

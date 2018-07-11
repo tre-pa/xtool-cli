@@ -43,6 +43,6 @@ public class SpringBootJpaRepositoryGenerator extends SpringBootCommand {
 				.build();
 		// @formatter:on
 
-		fs.copy("generators/springboot/repository/repository.java.vm", "src/main/java/${groupId.dir}/repository/${repositoryName}.java", vars);
+		this.fs.copy("springboot/repository/repository.java.vm", "src/main/java/${groupId.dir}/repository/${repositoryName}.java", vars);
 	}
 }

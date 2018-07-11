@@ -37,7 +37,7 @@ public class NewAngularProjectGenerator extends RegularCommand {
 		 */
 		//// @formatter:off
 		Map<String, Object> vars = ImmutableMap.<String, Object>builder()
-				.put("templatePath", "generators/angular/5.x/archetype")
+				.put("templatePath", "angular/5.x/archetype")
 				.put("projectName", name)
 				.put("projectPath", FilenameUtils.concat(this.workContext.getDirectory().getPath(), name))
 				.build();

@@ -34,7 +34,7 @@ public class SpringBootServiceGenerator extends SpringBootCommand {
 				.build();
 		// @formatter:on
 
-		fs.copy("generators/springboot/service/service.java.vm", "src/main/java/${groupId.dir}/service/${serviceName}.java", vars);
+		this.fs.copy("springboot/service/service.java.vm", "src/main/java/${groupId.dir}/service/${serviceName}.java", vars);
 	}
 
 }
