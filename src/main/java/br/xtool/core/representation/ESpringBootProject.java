@@ -1,8 +1,6 @@
 package br.xtool.core.representation;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -13,12 +11,12 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.apache.commons.io.FilenameUtils;
-import org.jboss.forge.roaster.Roaster;
 import org.jboss.forge.roaster.model.JavaUnit;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.jboss.forge.roaster.model.source.JavaInterfaceSource;
 
 import br.xtool.core.representation.enums.ProjectType;
+import br.xtool.core.util.RoasterUtil;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -159,23 +157,13 @@ public class ESpringBootProject extends EProject {
 			// @formatter:off
 			this.javaUnits = this.getDirectory().getAllFiles().stream()
 				.filter(file -> file.getName().endsWith(".java"))
-				.map(this::createJavaUnit)
+				.map(RoasterUtil::createJavaUnit)
 				.filter(Optional::isPresent)
 				.map(Optional::get)
 				.collect(Collectors.toMap(javaUnit -> javaUnit.getGoverningType().getName(), Function.identity()));
 			// @formatter:on
 		}
 		return this.javaUnits;
-	}
-
-	private Optional<JavaUnit> createJavaUnit(File javaFile) {
-		try {
-			JavaUnit javaUnit = Roaster.parseUnit(new FileInputStream(javaFile));
-			return Optional.of(javaUnit);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-		return Optional.empty();
 	}
 
 	@Override
@@ -194,13 +182,13 @@ public class ESpringBootProject extends EProject {
 	@Override
 	public void onFileCreate(File file) {
 		log.info("onFileCreate: {}", file.getName());
-		this.createJavaUnit(file).ifPresent(javaUnit -> this.javaUnits.put(file.getAbsolutePath(), javaUnit));
+		RoasterUtil.createJavaUnit(file).ifPresent(javaUnit -> this.javaUnits.put(file.getAbsolutePath(), javaUnit));
 	}
 
 	@Override
 	public void onFileChange(File file) {
 		log.info("onFileChange: {}", file.getName());
-		this.createJavaUnit(file).ifPresent(javaUnit -> this.javaUnits.put(file.getAbsolutePath(), javaUnit));
+		RoasterUtil.createJavaUnit(file).ifPresent(javaUnit -> this.javaUnits.put(file.getAbsolutePath(), javaUnit));
 	}
 
 	@Override
