@@ -55,7 +55,7 @@ public class NewSpringBootProjectGenerator extends RegularCommand {
 		 */
 		// @formatter:off
 		Map<String, Object> vars = ImmutableMap.<String, Object>builder()
-				.put("templatePath", "generators/springboot/scaffold/1.5.x")
+				.put("templatePath", "generators/springboot/archetype/1.5.x")
 				.put("projectName", Names.asSpringBootProject(name))
 				.put("projectVersion", version)
 				.put("rootPackage", getFinalRootPackage(name, rootPackage))
@@ -66,21 +66,21 @@ public class NewSpringBootProjectGenerator extends RegularCommand {
 		// @formatter:on
 
 		ConsoleLog.print(ConsoleLog.cyan("\t-- Projeto Base --"));
-		fs.createEmptyPath("${projectName}/src/main/java/${rootPackage.dir}/config", vars);
-		fs.createEmptyPath("${projectName}/src/main/java/${rootPackage.dir}/exception", vars);
-		fs.createEmptyPath("${projectName}/src/main/java/${rootPackage.dir}/service", vars);
-		fs.createEmptyPath("${projectName}/src/main/java/${rootPackage.dir}/report", vars);
-		fs.copy("${templatePath}/src/main/java/SpringBootApplication.java.vm", "${projectName}/src/main/java/${rootPackage.dir}/${baseClassName}Application.java", vars);
-		fs.copy("${templatePath}/src/main/resources/application.properties.vm", "${projectName}/src/main/resources/application.properties", vars);
-		fs.copy("${templatePath}/gitignore", "${projectName}/.gitignore", vars);
-		fs.copy("${templatePath}/pom.xml.vm", "${projectName}/pom.xml", vars);
+		this.fs.createEmptyPath("${projectName}/src/main/java/${rootPackage.dir}/config", vars);
+		this.fs.createEmptyPath("${projectName}/src/main/java/${rootPackage.dir}/exception", vars);
+		this.fs.createEmptyPath("${projectName}/src/main/java/${rootPackage.dir}/service", vars);
+		this.fs.createEmptyPath("${projectName}/src/main/java/${rootPackage.dir}/report", vars);
+		this.fs.copy("${templatePath}/src/main/java/SpringBootApplication.java.vm", "${projectName}/src/main/java/${rootPackage.dir}/${baseClassName}Application.java", vars);
+		this.fs.copy("${templatePath}/src/main/resources/application.properties.vm", "${projectName}/src/main/resources/application.properties", vars);
+		this.fs.copy("${templatePath}/gitignore", "${projectName}/.gitignore", vars);
+		this.fs.copy("${templatePath}/pom.xml.vm", "${projectName}/pom.xml", vars);
 
-		workContext.changeRelativeTo((String) vars.get("projectName"));
+		this.workContext.changeRelativeTo((String) vars.get("projectName"));
 
-		if (workContext.getSpringBootProject().isPresent()) {
-			ESpringBootProject project = workContext.getSpringBootProject().get();
-			if (!noJpa) supportManager.addSupport(project, SupportType.JPA);
-			if (!noWeb) supportManager.addSupport(project, SupportType.WEB);
+		if (this.workContext.getSpringBootProject().isPresent()) {
+			ESpringBootProject project = this.workContext.getSpringBootProject().get();
+			if (!noJpa) this.supportManager.addSupport(project, SupportType.JPA);
+			if (!noWeb) this.supportManager.addSupport(project, SupportType.WEB);
 		}
 
 	}
