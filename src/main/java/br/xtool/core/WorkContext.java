@@ -16,7 +16,6 @@ import org.springframework.context.event.EventListener;
 import org.springframework.shell.jline.PromptProvider;
 import org.springframework.stereotype.Component;
 
-import br.xtool.core.event.ChangeDirectoryEvent;
 import br.xtool.core.representation.EDirectory;
 import br.xtool.core.representation.ESpringBootProject;
 import br.xtool.core.representation.angular.EAngularProject;
@@ -39,12 +38,11 @@ public class WorkContext implements PromptProvider {
 	 */
 	public void changeTo(String newAbsoluteDirectory) {
 		this.directory = EDirectory.of(newAbsoluteDirectory);
-		applicationEventPublisher.publishEvent(new ChangeDirectoryEvent(this.directory));
+		//		applicationEventPublisher.publishEvent(new ChangeDirectoryEvent(this.directory));
 	}
 
 	public void changeRelativeTo(String newRelativeDirectory) {
-		String newAbsoluteDirectory = FilenameUtils.concat(this.directory.getPath(), newRelativeDirectory);
-		this.changeTo(newAbsoluteDirectory);
+		this.changeTo(FilenameUtils.concat(this.directory.getPath(), newRelativeDirectory));
 	}
 
 	private void setupHomeDirectory() throws IOException {
@@ -80,18 +78,6 @@ public class WorkContext implements PromptProvider {
 	 * @return
 	 */
 	public Optional<EAngularProject> getAngularProject() {
-		//			if (Objects.isNull(this.project)) {
-		//				if (Stream.of(ProjectType.ANGULAR5_PROJECT, ProjectType.ANGULAR6_PROJECT).anyMatch(p -> p.equals(this.getDirectory().getProjectType()))) {
-//				// @formatter:off
-//				SortedSet<ENgClass> ngClasses = this.directory.getAllFiles().stream()
-//					.filter(file -> Arrays.asList(".module.ts", ".component.ts", ".service.ts").stream().anyMatch(p -> file.getPath().endsWith(p)))
-//					.map(ENgClass::new)
-//					.collect(Collectors.toCollection(TreeSet::new));
-//				// @formatter:on
-		//					this.project = new EAngularProject(this.directory.getPath(), ngClasses);
-		//				}
-		//			}
-		//			return Optional.of((EAngularProject) this.project);
 		return Optional.empty();
 	}
 

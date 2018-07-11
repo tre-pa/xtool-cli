@@ -32,12 +32,6 @@ public class ESpringBootProject extends EProject implements FileAlterationListen
 
 	private Map<String, JavaUnit> javaUnits;
 
-	private SortedSet<EEntity> entities;
-
-	private SortedSet<ERepository> repositories;
-
-	private SortedSet<ERest> rests;
-
 	private EPom pom;
 
 	private EApplicationProperties applicationProperties;
@@ -116,18 +110,15 @@ public class ESpringBootProject extends EProject implements FileAlterationListen
 	 * @return
 	 */
 	public SortedSet<EEntity> getEntities() {
-		if (Objects.isNull(this.entities)) {
-			// @formatter:off
-			this.entities = this.getJavaUnits().values()
-				.parallelStream()
-				.filter(javaUnit -> javaUnit.getGoverningType().isClass())
-				.map(javaUnit -> javaUnit.<JavaClassSource>getGoverningType())
-				.filter(j -> j.getAnnotations().stream().anyMatch(ann -> ann.getName().equals("Entity")))
-				.map(j -> new EEntity(this, j))
-				.collect(Collectors.toCollection(TreeSet::new));
-			// @formatter:on
-		}
-		return this.entities;
+		// @formatter:off
+		return this.getJavaUnits().values()
+			.parallelStream()
+			.filter(javaUnit -> javaUnit.getGoverningType().isClass())
+			.map(javaUnit -> javaUnit.<JavaClassSource>getGoverningType())
+			.filter(j -> j.getAnnotations().stream().anyMatch(ann -> ann.getName().equals("Entity")))
+			.map(j -> new EEntity(this, j))
+			.collect(Collectors.toCollection(TreeSet::new));
+		// @formatter:on
 	}
 
 	/**
@@ -136,18 +127,15 @@ public class ESpringBootProject extends EProject implements FileAlterationListen
 	 * @return
 	 */
 	public SortedSet<ERepository> getRepositories() {
-		if (Objects.isNull(this.repositories)) {
-			// @formatter:off
-			this.repositories = this.getJavaUnits().values()
-				.parallelStream()
-				.filter(javaUnit -> javaUnit.getGoverningType().isInterface())
-				.map(javaUnit -> javaUnit.<JavaInterfaceSource>getGoverningType())
-				.filter(j -> j.getAnnotations().stream().anyMatch(ann -> ann.getName().equals("Repository")))
-				.map(j -> new ERepository(this, j))
-				.collect(Collectors.toCollection(TreeSet::new));
-			// @formatter:on
-		}
-		return this.repositories;
+		// @formatter:off
+		return this.getJavaUnits().values()
+			.parallelStream()
+			.filter(javaUnit -> javaUnit.getGoverningType().isInterface())
+			.map(javaUnit -> javaUnit.<JavaInterfaceSource>getGoverningType())
+			.filter(j -> j.getAnnotations().stream().anyMatch(ann -> ann.getName().equals("Repository")))
+			.map(j -> new ERepository(this, j))
+			.collect(Collectors.toCollection(TreeSet::new));
+		// @formatter:on
 	}
 
 	/**
@@ -155,18 +143,15 @@ public class ESpringBootProject extends EProject implements FileAlterationListen
 	 * @return
 	 */
 	public SortedSet<ERest> getRests() {
-		if (Objects.isNull(this.rests)) {
-			// @formatter:off
-			this.rests = this.getJavaUnits().values()
-				.parallelStream()
-				.filter(javaUnit -> javaUnit.getGoverningType().isClass())
-				.map(javaUnit -> javaUnit.<JavaClassSource>getGoverningType())
-				.filter(j -> j.getAnnotations().stream().anyMatch(ann -> ann.getName().equals("RestController")))
-				.map(j -> new ERest(this, j))
-				.collect(Collectors.toCollection(TreeSet::new));
-			// @formatter:on
-		}
-		return this.rests;
+		// @formatter:off
+		return this.getJavaUnits().values()
+			.parallelStream()
+			.filter(javaUnit -> javaUnit.getGoverningType().isClass())
+			.map(javaUnit -> javaUnit.<JavaClassSource>getGoverningType())
+			.filter(j -> j.getAnnotations().stream().anyMatch(ann -> ann.getName().equals("RestController")))
+			.map(j -> new ERest(this, j))
+			.collect(Collectors.toCollection(TreeSet::new));
+		// @formatter:on
 	}
 
 	public Map<String, JavaUnit> getJavaUnits() {
@@ -207,25 +192,21 @@ public class ESpringBootProject extends EProject implements FileAlterationListen
 
 	@Override
 	public void onStart(FileAlterationObserver observer) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void onDirectoryCreate(File directory) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void onDirectoryChange(File directory) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void onDirectoryDelete(File directory) {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -251,7 +232,6 @@ public class ESpringBootProject extends EProject implements FileAlterationListen
 
 	@Override
 	public void onStop(FileAlterationObserver observer) {
-		// TODO Auto-generated method stub
 
 	}
 

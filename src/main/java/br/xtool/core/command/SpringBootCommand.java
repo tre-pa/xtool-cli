@@ -8,14 +8,11 @@ import java.util.stream.Stream;
 import javax.annotation.PostConstruct;
 
 import org.apache.commons.io.monitor.FileAlterationMonitor;
-import org.apache.commons.io.monitor.FileAlterationObserver;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.event.EventListener;
 import org.springframework.shell.Availability;
 import org.springframework.shell.standard.ShellMethodAvailability;
 
 import br.xtool.core.WorkContext;
-import br.xtool.core.event.ChangeDirectoryEvent;
 import br.xtool.core.representation.ESpringBootProject;
 import br.xtool.core.representation.enums.ProjectType;
 import lombok.SneakyThrows;
@@ -51,22 +48,14 @@ public class SpringBootCommand {
 	public ESpringBootProject getProject() {
 		if (Objects.isNull(this.project)) {
 			this.project = workContext.getSpringBootProject().get();
-			FileAlterationObserver fao = new FileAlterationObserver(this.project.getMainDir());
-			fao.addListener(this.project);
-			monitor.addObserver(fao);
-			monitor.start();
-			this.monitorRunning = true;
-			System.out.println(this.getProject().getMainDir());
+			//			FileAlterationObserver fao = new FileAlterationObserver(this.project.getMainDir());
+			//			fao.addListener(this.project);
+			//			monitor.addObserver(fao);
+			//			monitor.start();
+			//			this.monitorRunning = true;
+			//			System.out.println(this.getProject().getMainDir());
 		}
 		return this.project;
-	}
-
-	@EventListener
-	@SneakyThrows
-	protected void onChangeDirectory(ChangeDirectoryEvent evt) {
-		this.project = null;
-		if (monitorRunning) monitor.stop();
-		this.monitorRunning = false;
 	}
 
 }
