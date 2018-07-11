@@ -8,15 +8,20 @@ import java.util.stream.Stream;
 import javax.annotation.PostConstruct;
 
 import org.apache.commons.io.monitor.FileAlterationMonitor;
+import org.apache.commons.io.monitor.FileAlterationObserver;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.event.EventListener;
 import org.springframework.shell.Availability;
 import org.springframework.shell.standard.ShellMethodAvailability;
 
 import br.xtool.core.WorkContext;
+import br.xtool.core.event.ChangeDirectoryEvent;
 import br.xtool.core.representation.ESpringBootProject;
 import br.xtool.core.representation.enums.ProjectType;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class SpringBootCommand {
 
 	@Autowired
@@ -25,6 +30,8 @@ public class SpringBootCommand {
 	private ESpringBootProject project;
 
 	private final FileAlterationMonitor monitor = new FileAlterationMonitor();
+
+	private FileAlterationObserver fao;
 
 	private boolean monitorRunning = false;
 
@@ -40,22 +47,35 @@ public class SpringBootCommand {
 	 */
 	@ShellMethodAvailability
 	public Availability availabilitySpringBootCommand() throws IOException {
-		return Stream.of(ProjectType.SPRINGBOOT1_PROJECT, ProjectType.SPRINGBOOT2_PROJECT).anyMatch(p -> p.equals(workContext.getDirectory().getProjectType())) ? Availability.available()
+		return Stream.of(ProjectType.SPRINGBOOT1_PROJECT, ProjectType.SPRINGBOOT2_PROJECT).anyMatch(p -> p.equals(this.workContext.getDirectory().getProjectType())) ? Availability.available()
 				: Availability.unavailable("O diretório de trabalho não é um projeto maven válido. Use o comando cd para alterar o diretório de trabalho.");
 	}
 
 	@SneakyThrows
 	public ESpringBootProject getProject() {
 		if (Objects.isNull(this.project)) {
-			this.project = workContext.getSpringBootProject().get();
-			//			FileAlterationObserver fao = new FileAlterationObserver(this.project.getMainDir());
-			//			fao.addListener(this.project);
-			//			monitor.addObserver(fao);
-			//			monitor.start();
-			//			this.monitorRunning = true;
-			//			System.out.println(this.getProject().getMainDir());
+			this.project = this.workContext.getSpringBootProject().get();
+			this.fao = new FileAlterationObserver(this.project.getMainDir());
+			this.fao.addListener(this.project);
+			this.monitor.addObserver(this.fao);
+			this.monitor.start();
+			this.monitorRunning = true;
+			log.info("Observers iniciando para projeto ", this.project.getName());
 		}
 		return this.project;
+	}
+
+	@EventListener
+	@SneakyThrows
+	protected void onChangeDirectory(ChangeDirectoryEvent evt) {
+		if (this.monitorRunning) {
+			log.info("Parando observers para projeto {}", this.project.getName());
+			this.monitor.removeObserver(this.fao);
+			this.monitor.stop();
+			this.monitorRunning = false;
+			log.info("Observers parados para projeto {}", this.project.getName());
+			this.project = null;
+		}
 	}
 
 }

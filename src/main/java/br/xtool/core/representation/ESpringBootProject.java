@@ -21,6 +21,7 @@ import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.jboss.forge.roaster.model.source.JavaInterfaceSource;
 
 import br.xtool.core.representation.enums.ProjectType;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Classe que representa um projeto Spring Boot
@@ -28,6 +29,7 @@ import br.xtool.core.representation.enums.ProjectType;
  * @author jcruz
  *
  */
+@Slf4j
 public class ESpringBootProject extends EProject implements FileAlterationListener {
 
 	private Map<String, JavaUnit> javaUnits;
@@ -159,7 +161,7 @@ public class ESpringBootProject extends EProject implements FileAlterationListen
 			// @formatter:off
 			this.javaUnits = this.getDirectory().getAllFiles().stream()
 				.filter(file -> file.getName().endsWith(".java"))
-				.map(this::getJavaUnit)
+				.map(this::createJavaUnit)
 				.filter(Optional::isPresent)
 				.map(Optional::get)
 				.collect(Collectors.toMap(javaUnit -> javaUnit.getGoverningType().getName(), Function.identity()));
@@ -168,7 +170,7 @@ public class ESpringBootProject extends EProject implements FileAlterationListen
 		return this.javaUnits;
 	}
 
-	private Optional<JavaUnit> getJavaUnit(File javaFile) {
+	private Optional<JavaUnit> createJavaUnit(File javaFile) {
 		try {
 			JavaUnit javaUnit = Roaster.parseUnit(new FileInputStream(javaFile));
 			return Optional.of(javaUnit);
@@ -212,22 +214,20 @@ public class ESpringBootProject extends EProject implements FileAlterationListen
 
 	@Override
 	public void onFileCreate(File file) {
-		System.out.println("---Created---");
-		System.out.println(file);
+		log.info("onFileCreate: {}", file.getName());
+		this.createJavaUnit(file).ifPresent(javaUnit -> this.javaUnits.put(file.getAbsolutePath(), javaUnit));
 	}
 
 	@Override
 	public void onFileChange(File file) {
-		System.out.println("---Changed---");
-		System.out.println(file);
-
+		log.info("onFileChange: {}", file.getName());
+		this.createJavaUnit(file).ifPresent(javaUnit -> this.javaUnits.put(file.getAbsolutePath(), javaUnit));
 	}
 
 	@Override
 	public void onFileDelete(File file) {
-		System.out.println("---Deleted---");
-		System.out.println(file);
-
+		log.info("onFileDelete: {}", file.getName());
+		this.javaUnits.remove(file.getAbsolutePath());
 	}
 
 	@Override

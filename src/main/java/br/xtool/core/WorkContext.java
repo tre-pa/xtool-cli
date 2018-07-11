@@ -16,6 +16,7 @@ import org.springframework.context.event.EventListener;
 import org.springframework.shell.jline.PromptProvider;
 import org.springframework.stereotype.Component;
 
+import br.xtool.core.event.ChangeDirectoryEvent;
 import br.xtool.core.representation.EDirectory;
 import br.xtool.core.representation.ESpringBootProject;
 import br.xtool.core.representation.angular.EAngularProject;
@@ -38,7 +39,7 @@ public class WorkContext implements PromptProvider {
 	 */
 	public void changeTo(String newAbsoluteDirectory) {
 		this.directory = EDirectory.of(newAbsoluteDirectory);
-		//		applicationEventPublisher.publishEvent(new ChangeDirectoryEvent(this.directory));
+		this.applicationEventPublisher.publishEvent(new ChangeDirectoryEvent(this.directory));
 	}
 
 	public void changeRelativeTo(String newRelativeDirectory) {
