@@ -13,8 +13,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.io.monitor.FileAlterationListener;
-import org.apache.commons.io.monitor.FileAlterationObserver;
 import org.jboss.forge.roaster.Roaster;
 import org.jboss.forge.roaster.model.JavaUnit;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
@@ -30,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
  *
  */
 @Slf4j
-public class ESpringBootProject extends EProject implements FileAlterationListener {
+public class ESpringBootProject extends EProject {
 
 	private Map<String, JavaUnit> javaUnits;
 
@@ -193,26 +191,6 @@ public class ESpringBootProject extends EProject implements FileAlterationListen
 	}
 
 	@Override
-	public void onStart(FileAlterationObserver observer) {
-
-	}
-
-	@Override
-	public void onDirectoryCreate(File directory) {
-
-	}
-
-	@Override
-	public void onDirectoryChange(File directory) {
-
-	}
-
-	@Override
-	public void onDirectoryDelete(File directory) {
-
-	}
-
-	@Override
 	public void onFileCreate(File file) {
 		log.info("onFileCreate: {}", file.getName());
 		this.createJavaUnit(file).ifPresent(javaUnit -> this.javaUnits.put(file.getAbsolutePath(), javaUnit));
@@ -228,11 +206,6 @@ public class ESpringBootProject extends EProject implements FileAlterationListen
 	public void onFileDelete(File file) {
 		log.info("onFileDelete: {}", file.getName());
 		this.javaUnits.remove(file.getAbsolutePath());
-	}
-
-	@Override
-	public void onStop(FileAlterationObserver observer) {
-
 	}
 
 }

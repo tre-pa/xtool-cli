@@ -1,5 +1,6 @@
 package br.xtool.core.representation.angular;
 
+import java.io.File;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
@@ -54,7 +55,7 @@ public class EAngularProject extends EProject {
 	 */
 	private SortedSet<ENgModule> buildNgModules() {
 		// @formatter:off
-		return ngClasses.stream()
+		return this.ngClasses.stream()
 				.filter(ngClass -> ngClass.getFileName().endsWith(".module.ts"))
 				.map(ngClass -> new ENgModule(ngClass.getFile()))
 				.collect(Collectors.toCollection(TreeSet::new));
@@ -68,7 +69,7 @@ public class EAngularProject extends EProject {
 	 */
 	private SortedSet<ENgComponent> buildNgComponents() {
 		// @formatter:off
-		return ngClasses.stream()
+		return this.ngClasses.stream()
 				.filter(ngClass -> ngClass.getFileName().endsWith(".component.ts"))
 				.map(ngClass -> new ENgComponent(ngClass.getFile()))
 				.collect(Collectors.toCollection(TreeSet::new));
@@ -82,7 +83,7 @@ public class EAngularProject extends EProject {
 	 */
 	private SortedSet<ENgService> buildNgServices() {
 		// @formatter:off
-		return ngClasses.stream()
+		return this.ngClasses.stream()
 				.filter(ngClass -> ngClass.getFileName().endsWith(".service.ts"))
 				.map(ngClass -> new ENgService(ngClass.getFile()))
 				.collect(Collectors.toCollection(TreeSet::new));
@@ -96,7 +97,7 @@ public class EAngularProject extends EProject {
 	 */
 	private SortedSet<ENgLayout> buildNgLayouts() {
 		// @formatter:off
-		return ngClasses.stream()
+		return this.ngClasses.stream()
 				.filter(ngClass -> ngClass.getFileName().endsWith("-layout.component.ts"))
 				.map(ngClass -> new ENgLayout(ngClass.getFile()))
 				.collect(Collectors.toCollection(TreeSet::new));
@@ -110,7 +111,7 @@ public class EAngularProject extends EProject {
 	 */
 	private SortedSet<ENgPage> buildNgPages() {
 		// @formatter:off
-		return ngClasses.stream()
+		return this.ngClasses.stream()
 				.filter(ngClass -> ngClass.getFileName().endsWith("-page.component.ts"))
 				.map(ngClass -> new ENgPage(ngClass.getFile()))
 				.collect(Collectors.toCollection(TreeSet::new));
@@ -124,7 +125,7 @@ public class EAngularProject extends EProject {
 	 */
 	private SortedSet<ENgEdit> buildNgEdits() {
 		// @formatter:off
-		return ngClasses.stream()
+		return this.ngClasses.stream()
 				.filter(ngClass -> ngClass.getFileName().endsWith("-edit.component.ts"))
 				.map(ngClass -> new ENgEdit(ngClass.getFile()))
 				.collect(Collectors.toCollection(TreeSet::new));
@@ -138,11 +139,26 @@ public class EAngularProject extends EProject {
 	 */
 	private SortedSet<ENgDetail> buildNgDetails() {
 		// @formatter:off
-		return ngClasses.stream()
+		return this.ngClasses.stream()
 				.filter(ngClass -> ngClass.getFileName().endsWith("-detail.component.ts"))
 				.map(ngClass -> new ENgDetail(ngClass.getFile()))
 				.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
+	}
+
+	@Override
+	public void onFileCreate(File file) {
+
+	}
+
+	@Override
+	public void onFileChange(File file) {
+
+	}
+
+	@Override
+	public void onFileDelete(File file) {
+
 	}
 
 }
