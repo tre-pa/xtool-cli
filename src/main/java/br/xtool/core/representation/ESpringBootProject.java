@@ -178,6 +178,7 @@ public class ESpringBootProject extends EProject {
 		return Optional.empty();
 	}
 
+	@Override
 	public String getMainDir() {
 		return FilenameUtils.concat(this.getPath(), "src/main/java");
 	}

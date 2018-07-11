@@ -14,8 +14,6 @@ import com.google.common.collect.ImmutableMap;
 import br.xtool.XtoolCliApplication;
 import br.xtool.core.FS;
 import br.xtool.core.command.AngularCommand;
-import br.xtool.core.representation.angular.ENgModule;
-import br.xtool.core.representation.provider.ENgModuleValueProvider;
 import br.xtool.core.service.NgService;
 
 @ShellComponent
@@ -30,8 +28,7 @@ public class AngularComponentGenerator extends AngularCommand {
 	@ShellMethod(key = "gen:ng-component", value = "Gera uma classe component em um projeto Angular", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
 	// @formatter:off
 	public void run(
-			@ShellOption(help = "Nome da classe component") String name,
-			@ShellOption(help= "Nome do módulo", valueProvider=ENgModuleValueProvider.class, defaultValue="AppModule") ENgModule ngModule) throws JDOMException, IOException {
+			@ShellOption(help = "Nome da classe component") String name) throws JDOMException, IOException {
 	// @formatter:on
 		/*
 		 * Cria o mapa com as variáveis do gerador.
@@ -45,8 +42,9 @@ public class AngularComponentGenerator extends AngularCommand {
 		// File("/home/jcruz/git/a5-exemple/src/app/view/hello-page/hello-list/hello-list.component.ts")));
 
 		this.getProject().getNgPages().stream().forEach(System.out::println);
-		// System.out.println(this.getProject().getNgPackage());
-		// System.out.println(this.getProject().getNgPackage().getDependencies());
+		System.out.println(this.getProject().getNgModules());
+		System.out.println(this.getProject().getNgEdits());
+		System.out.println(this.getProject().getNgPackage().getDependencies());
 	}
 
 }

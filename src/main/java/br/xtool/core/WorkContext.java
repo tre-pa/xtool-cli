@@ -79,7 +79,7 @@ public class WorkContext implements PromptProvider {
 	 * @return
 	 */
 	public Optional<EAngularProject> getAngularProject() {
-		return Optional.empty();
+		return EAngularProject.of(this.directory.getPath());
 	}
 
 	@Override

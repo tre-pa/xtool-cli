@@ -31,6 +31,8 @@ public abstract class EProject implements FileAlterationListener {
 		return this.getDirectory().getBaseName();
 	}
 
+	public abstract String getMainDir();
+
 	/**
 	 * Retorna o tipo de projeto atual.
 	 * 
