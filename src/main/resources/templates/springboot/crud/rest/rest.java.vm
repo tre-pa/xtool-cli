@@ -1,12 +1,82 @@
+#set ($entityInstanceName = $Strman.lowerFirst($entity.name))
+#set ($repositoryInstanceName = $Strman.lowerFirst($repositoryName))
+#set ($serviceInstanceName = $Strman.lowerFirst($serviceName))
 package ${groupId.name}.rest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.http.HttpStatus;
+import ${groupId.name}.repository.${repositoryName};
+import ${groupId.name}.service.${serviceName};
+import ${groupId.name}.domain.${entity.name};
+import java.util.List;
+import javax.persistence.EntityNotFoundException;
+
 
 @RestController
 @CrossOrigin
 @RequestMapping("api/${restPath}")
 public class ${restName} {
 
+	@Autowired
+	private ${repositoryName} ${repositoryInstanceName};
+	
+	@Autowired
+	private ${serviceName} ${serviceInstanceName};
+	
+    @GetMapping
+    public List<${entity.name}> findAll() {
+        return ${repositoryInstanceName}.findAll();
+    }
+    
+    /**
+	 * Retorna uma instância da entidade ${entity.name}
+	 * 
+	 * @param id
+	 *            Id da entidade no banco.
+	 * @return Instância da entidade ${entity.name}
+	 * @throws EntityNotFoundException
+	 *             Id da entidade não encontrado no banco de dados.
+	 */
+    @GetMapping(path = "/{id}")
+    public ${entity.name} find(@PathVariable("id") Long id) {
+        if (${repositoryInstanceName}.exists(id)) {
+            return ${repositoryInstanceName}.findOne(id);
+        }
+        throw new EntityNotFoundException("Entidade ${entity.name} não encontrada.");
+    }
+	
+	@PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public ${entity.name} insert(@RequestBody ${entity.name} ${entityInstanceName}) {
+        return ${serviceInstanceName}.insert(${entityInstanceName});
+    }
+    
+    /**
+	 * Atualiza uma instância existente da entidade ${entity.name}
+	 * 
+	 * @param id
+	 *            Id da entidade no banco
+	 * @param ${entityInstanceName}
+	 *            Objeto ${entity.name} com as alterações.
+	 * @return Instância persistida com as alterações em ${entity.name}.
+	 * @throws EntityNotFoundException
+	 *             Id da entidade não encontrado no banco de dados.
+	 */
+    @PutMapping(path = "/{id}")
+    public ${entity.name} update(@PathVariable("id") Long id, @RequestBody ${entity.name} ${entityInstanceName}) {
+        if (${repositoryInstanceName}.exists(id)) {
+            return ${serviceInstanceName}.update(${entityInstanceName});
+        }
+        throw new EntityNotFoundException("Entidade ${entity.name} não encontrada");
+    }
+  	
 }
