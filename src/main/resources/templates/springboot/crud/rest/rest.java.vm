@@ -13,13 +13,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import ${groupId.name}.repository.projection.${entity.name}Info;
 import org.springframework.http.HttpStatus;
 import ${groupId.name}.repository.${repositoryName};
 import ${groupId.name}.service.${serviceName};
 import ${groupId.name}.domain.${entity.name};
 import java.util.List;
 import javax.persistence.EntityNotFoundException;
-
+import org.springframework.http.CacheControl;
+import org.springframework.http.ResponseEntity;
+import java.util.concurrent.TimeUnit;
+import org.springframework.data.domain.Pageable;
 
 @RestController
 @CrossOrigin
@@ -33,8 +37,11 @@ public class ${restName} {
 	private ${serviceName} ${serviceInstanceName};
 	
     @GetMapping
-    public List<${entity.name}> findAll() {
-        return ${repositoryInstanceName}.findAll();
+    public ResponseEntity<List<${entity.name}Info>> findAll(Pageable pageable) {
+    	return ResponseEntity
+            .ok()
+            .cacheControl(CacheControl.maxAge(10, TimeUnit.SECONDS))
+            .body(${repositoryInstanceName}.findAllInfo(pageable));
     }
     
     /**

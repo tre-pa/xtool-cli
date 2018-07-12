@@ -1,9 +1,13 @@
 package ${groupId.name}.repository;
 
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import ${entity.qualifiedName};
 import java.util.Optional;
+import ${groupId.name}.repository.projection.${entity.name}Info;
+import org.springframework.data.domain.Pageable;
+
 
 /**
  * Classe repositório da entidade {@link ${entity.name}}.
@@ -13,7 +17,14 @@ import java.util.Optional;
  */
 @Repository
 public interface ${repositoryName} extends JpaRepository<${entity.name}, Long> {
+	
+	/**
+	 * Retorna todas as instâncias de ${entity.name}.
+	 * 
+	 * @return Projection {@link ${entity.name}Info} com as instâncias de ${entity.name}.
+	 */
+	List<${entity.name}Info> findAllInfo(Pageable pageable);
 
-  Optional<${entity.name}> findById(Long id);
+	Optional<${entity.name}> findById(Long id);
 
 }
