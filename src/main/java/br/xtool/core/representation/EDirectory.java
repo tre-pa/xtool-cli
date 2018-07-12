@@ -32,9 +32,6 @@ public class EDirectory {
 	private String path;
 
 	@Getter(lazy = true)
-	private final List<File> allFiles = listFilesRecursively();
-
-	@Getter(lazy = true)
 	private final ProjectType projectType = buildProjectType();
 
 	// @formatter:off
@@ -51,19 +48,19 @@ public class EDirectory {
 	}
 
 	public String getBaseName() {
-		return FilenameUtils.getBaseName(path);
+		return FilenameUtils.getBaseName(this.path);
 	}
 
-	private List<File> listFilesRecursively() {
+	public List<File> getAllFiles() {
 		try (Stream<Path> pathStrem = Files.walk(Paths.get(this.path))) {
 			// @formatter:off
 			return pathStrem
 					.filter(Files::isRegularFile)
-					.filter(p -> !p.startsWith(FilenameUtils.concat(path, "target")))
-					.filter(p -> !p.startsWith(FilenameUtils.concat(path, ".git")))
-					.filter(p -> !p.startsWith(FilenameUtils.concat(path, ".settings")))
-					.filter(p -> !p.startsWith(FilenameUtils.concat(path, "node_modules")))
-					.filter(p -> !p.startsWith(FilenameUtils.concat(path, "dist")))
+					.filter(p -> !p.startsWith(FilenameUtils.concat(this.path, "target")))
+					.filter(p -> !p.startsWith(FilenameUtils.concat(this.path, ".git")))
+					.filter(p -> !p.startsWith(FilenameUtils.concat(this.path, ".settings")))
+					.filter(p -> !p.startsWith(FilenameUtils.concat(this.path, "node_modules")))
+					.filter(p -> !p.startsWith(FilenameUtils.concat(this.path, "dist")))
 					.map(p -> p.toFile())
 					.collect(Collectors.toList());
 			// @formatter:on

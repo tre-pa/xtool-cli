@@ -1,6 +1,5 @@
 package br.xtool.core.representation.angular;
 
-import java.io.File;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Objects;
@@ -178,18 +177,8 @@ public class EAngularProject extends EProject {
 	}
 
 	@Override
-	public void onFileCreate(File file) {
-
-	}
-
-	@Override
-	public void onFileChange(File file) {
-
-	}
-
-	@Override
-	public void onFileDelete(File file) {
-
+	public void refresh() {
+		this.ngClasses = null;
 	}
 
 }

@@ -1,6 +1,5 @@
 package br.xtool.core.representation;
 
-import java.io.File;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -180,21 +179,8 @@ public class ESpringBootProject extends EProject {
 	}
 
 	@Override
-	public void onFileCreate(File file) {
-		log.info("onFileCreate: {}", file.getName());
-		RoasterUtil.createJavaUnit(file).ifPresent(javaUnit -> this.getJavaUnits().put(file.getAbsolutePath(), javaUnit));
-	}
-
-	@Override
-	public void onFileChange(File file) {
-		log.info("onFileChange: {}", file.getName());
-		RoasterUtil.createJavaUnit(file).ifPresent(javaUnit -> this.getJavaUnits().put(file.getAbsolutePath(), javaUnit));
-	}
-
-	@Override
-	public void onFileDelete(File file) {
-		log.info("onFileDelete: {}", file.getName());
-		this.getJavaUnits().remove(file.getAbsolutePath());
+	public void refresh() {
+		this.javaUnits = null;
 	}
 
 }

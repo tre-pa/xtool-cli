@@ -3,6 +3,7 @@ package br.xtool.core;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Objects;
 import java.util.Optional;
 
 import org.apache.commons.io.FilenameUtils;
@@ -32,6 +33,10 @@ public class WorkContext implements PromptProvider {
 	@Autowired
 	private ApplicationEventPublisher applicationEventPublisher;
 
+	private Optional<ESpringBootProject> springBootProject;
+
+	private Optional<EAngularProject> angularProject;
+
 	/**
 	 * Altera o diretório de trabalho.
 	 * 
@@ -39,6 +44,8 @@ public class WorkContext implements PromptProvider {
 	 */
 	public void changeTo(String newAbsoluteDirectory) {
 		this.directory = EDirectory.of(newAbsoluteDirectory);
+		this.springBootProject = null;
+		this.angularProject = null;
 		this.applicationEventPublisher.publishEvent(new ChangeDirectoryEvent(this.directory));
 	}
 
@@ -70,7 +77,10 @@ public class WorkContext implements PromptProvider {
 	 * @return
 	 */
 	public Optional<ESpringBootProject> getSpringBootProject() {
-		return ESpringBootProject.of(this.directory.getPath());
+		if (Objects.isNull(this.springBootProject)) {
+			this.springBootProject = ESpringBootProject.of(this.directory.getPath());
+		}
+		return this.springBootProject;
 	}
 
 	/**
@@ -79,7 +89,10 @@ public class WorkContext implements PromptProvider {
 	 * @return
 	 */
 	public Optional<EAngularProject> getAngularProject() {
-		return EAngularProject.of(this.directory.getPath());
+		if (Objects.isNull(this.angularProject)) {
+			this.angularProject = EAngularProject.of(this.directory.getPath());
+		}
+		return this.angularProject;
 	}
 
 	@Override
