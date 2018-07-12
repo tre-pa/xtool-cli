@@ -1,0 +1,9 @@
+package ${groupId.name}.repository.projection;
+
+public interface ${entity.name}Info {
+#foreach($att in $entity.attributes) 
+#if(!$att.static || !$att.association)
+	$att.type.name get$Strman.capitalize($att.name)();
+#end##
+#end##
+}

@@ -49,13 +49,13 @@ public class AngularCommand {
 	public EAngularProject getProject() {
 		if (Objects.isNull(this.project)) {
 			this.project = this.workContext.getAngularProject().get();
-			this.fao = new FileAlterationObserver(this.project.getMainDir());
-			this.fao.addListener(this.project);
-			this.monitor.addObserver(this.fao);
-			this.monitor.start();
-			this.monitorRunning = true;
-			ConsoleLog.print(ConsoleLog.yellow("Registrando observers do projeto "), ConsoleLog.white(this.getProject().getName()));
-			log.info("Observers iniciando para projeto ", this.project.getName());
+			//			this.fao = new FileAlterationObserver(this.project.getMainDir());
+			//			this.fao.addListener(this.project);
+			//			this.monitor.addObserver(this.fao);
+			//			this.monitor.start();
+			//			this.monitorRunning = true;
+			//			ConsoleLog.print(ConsoleLog.yellow("Registrando observers do projeto "), ConsoleLog.white(this.getProject().getName()));
+			//			log.info("Observers iniciando para projeto ", this.project.getName());
 		}
 		return this.project;
 	}

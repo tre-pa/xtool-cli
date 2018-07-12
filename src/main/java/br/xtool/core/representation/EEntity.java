@@ -1,5 +1,6 @@
 package br.xtool.core.representation;
 
+import java.util.Objects;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
@@ -18,8 +19,7 @@ public class EEntity extends EClass implements Comparable<EEntity> {
 
 	private ESpringBootProject springBootProject;
 
-	@Getter(lazy = true)
-	private final SortedSet<EAttribute> attributes = buildAttributes();
+	private SortedSet<EAttribute> attributes;
 
 	@Getter(lazy = true)
 	private final SortedSet<EAssociation> associations = buildAssociations();
@@ -35,12 +35,15 @@ public class EEntity extends EClass implements Comparable<EEntity> {
 	 * 
 	 * @return
 	 */
-	private SortedSet<EAttribute> buildAttributes() {
-		// @formatter:off
-		return this.javaClassSource.getFields().stream()
-				.map(f -> new EAttribute(this.springBootProject,this, f))
-				.collect(Collectors.toCollection(TreeSet::new));
-		// @formatter:on
+	public SortedSet<EAttribute> getAttributes() {
+		if (Objects.isNull(this.attributes)) {
+			// @formatter:off
+			this.attributes = this.javaClassSource.getFields().stream()
+					.map(f -> new EAttribute(this.springBootProject,this, f))
+					.collect(Collectors.toCollection(TreeSet::new));
+			// @formatter:on
+		}
+		return this.attributes;
 	}
 
 	/**

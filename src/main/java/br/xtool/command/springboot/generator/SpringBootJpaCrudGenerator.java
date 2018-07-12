@@ -1,19 +1,20 @@
 package br.xtool.command.springboot.generator;
 
-import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
-import org.jdom2.JDOMException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 
-import com.google.common.collect.ImmutableMap;
-
 import br.xtool.XtoolCliApplication;
-import br.xtool.core.ConsoleLog;
+import br.xtool.core.FS;
+import br.xtool.core.Names;
 import br.xtool.core.command.SpringBootCommand;
 import br.xtool.core.representation.EEntity;
+import br.xtool.core.representation.provider.EEntityValueProvider;
+import strman.Strman;
 
 /**
  * Comando que gera um classe CRUD no projeto Spring Boot
@@ -24,84 +25,32 @@ import br.xtool.core.representation.EEntity;
 @ShellComponent
 public class SpringBootJpaCrudGenerator extends SpringBootCommand {
 
-	@ShellMethod(key = "gen:crud", value = "Gera as classes de CRUD (JpaRepository, Service e Rest) para entidade JPA", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
-	public void run(@ShellOption(help = "Entidade JPA") String entity) throws IOException, JDOMException {
+	@Autowired
+	private FS fs;
+
+	@ShellMethod(key = "gen:crud", value = "Gera as classes de CRUD (Repository, Service e Rest) para entidade JPA", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
+	public void run(@ShellOption(help = "Entidade JPA", valueProvider = EEntityValueProvider.class) EEntity entity) {
 		/*
 		 * Cria o mapa com as variáveis do gerador.
 		 */
 		//// @formatter:off
-		Map<String, Object> vars = ImmutableMap.<String, Object>builder()
-				.put("entity", entity)
-				.build();
-		
-		this.getProject().getEntities()
-			.stream()
-			.forEach(_entity -> {
-				_entity.getAttributes()
-					.stream()
-					.forEach(attr -> {
-						attr.getJavaDoc().getTags("@View")
-							.stream()
-							.forEach(javaDoc -> {
-								System.out.println(javaDoc.getName());
-								System.out.println(javaDoc.getValue());
-							});;
-					});
-			});
+		Map<String, Object> vars = new HashMap<>();
+		vars.put("Strman", Strman.class);
+		vars.put("templatePath", "springboot/crud");
+		vars.put("entity", entity);
+		vars.put("groupId", this.getProject().getPom().getGroupId());
+		vars.put("repositoryName", Names.asRepositoryClass(entity.getName()));
+		vars.put("serviceName", Names.asServiceClass(entity.getName()));
+		vars.put("restName", Names.asRestClass(entity.getName()));
+		vars.put("restPath", Names.asRestPath(entity.getName()));
 			
 		
+		this.fs.copy("${templatePath}/projection/projection.java.vm", "src/main/java/${groupId.dir}/repository/projection/${entity.name}Info.java", vars);
+		this.fs.copy("${templatePath}/repository/repository.java.vm", "src/main/java/${groupId.dir}/repository/${repositoryName}.java", vars);
+		this.fs.copy("${templatePath}/service/service.java.vm", "src/main/java/${groupId.dir}/service/${serviceName}.java", vars);
+		this.fs.copy("${templatePath}/rest/rest.java.vm", "src/main/java/${groupId.dir}/rest/${restName}.java", vars);
+
 	}
 
-	private void updateApplicationProperties() {
-		String context = this.getProject()
-			.getApplicationProperties()
-				.get("server.contextPath")
-				.orElse("Sem context");
-		
-		System.out.println("Context: "+context);
-		
-		this.getProject().getApplicationProperties()
-			.set("abc", "1");
-		this.getProject().getApplicationProperties()
-			.save();
-	}
-
-	private void showCollectionAssociations(EEntity entity) {
-		System.out.println(ConsoleLog.green("\nLista de associações compostas\n"));
-		// @formatter:off
-		entity.getAttributes().stream()
-				.filter(attr -> attr.isAssociation())
-				.filter(attr -> attr.getAssociation().get().isCollectionAssociation())
-				.forEach(attr -> System.out.println(attr.getName()
-						.concat(" : ")
-						.concat(attr.getType().getName())
-						.concat("<")
-						.concat(attr.getAssociation().get().getEntityTarget().getName()).concat(">")
-						.concat(" Bidirectional: "+attr.getAssociation().get().isBidirectional())));
-		// @formatter:on
-	}
-
-	private void showSingleAssociations(EEntity entity) {
-		System.out.println(ConsoleLog.green("\nLista de associações simples\n"));
-		//// @formatter:off
-		entity.getAttributes().stream()
-			.filter(attr -> attr.isAssociation())
-			.filter(attr -> attr.getAssociation().get().isSingleAssociation())
-			.forEach(attr -> System.out.println(attr.getName()
-						.concat(" : ")
-						.concat(attr.getAssociation().get().getEntityTarget().getName())
-						.concat(" Bidirectional: "+attr.getAssociation().get().isBidirectional())));
-		// @formatter:on
-	}
-
-	private void showEntityAnnotations(EEntity entity) {
-		System.out.println(ConsoleLog.green("\nLista de annotations da class\n"));
-
-		entity.getAnnotations().stream().forEach(a -> System.out.println(a.getName()));
-	}
-
-	private void showEntityAttributes(EEntity entity) {
-		System.out.println(ConsoleLog.green("Lista de atributos da classe "));
-		entity.getAttributes().stream().forEach(a -> System.out.println(a.getName().concat(" : ").concat(a.getType().getName())));
-	}
+	
 }

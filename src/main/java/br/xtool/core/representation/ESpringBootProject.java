@@ -182,19 +182,19 @@ public class ESpringBootProject extends EProject {
 	@Override
 	public void onFileCreate(File file) {
 		log.info("onFileCreate: {}", file.getName());
-		RoasterUtil.createJavaUnit(file).ifPresent(javaUnit -> this.javaUnits.put(file.getAbsolutePath(), javaUnit));
+		RoasterUtil.createJavaUnit(file).ifPresent(javaUnit -> this.getJavaUnits().put(file.getAbsolutePath(), javaUnit));
 	}
 
 	@Override
 	public void onFileChange(File file) {
 		log.info("onFileChange: {}", file.getName());
-		RoasterUtil.createJavaUnit(file).ifPresent(javaUnit -> this.javaUnits.put(file.getAbsolutePath(), javaUnit));
+		RoasterUtil.createJavaUnit(file).ifPresent(javaUnit -> this.getJavaUnits().put(file.getAbsolutePath(), javaUnit));
 	}
 
 	@Override
 	public void onFileDelete(File file) {
 		log.info("onFileDelete: {}", file.getName());
-		this.javaUnits.remove(file.getAbsolutePath());
+		this.getJavaUnits().remove(file.getAbsolutePath());
 	}
 
 }
