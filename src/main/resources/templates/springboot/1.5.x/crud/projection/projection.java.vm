@@ -2,8 +2,8 @@ package ${groupId.name}.repository.projection;
 
 public interface ${entity.name}Info {
 #foreach($att in $entity.attributes) 
-#if(!$att.static || !$att.association)
-	$att.type.name get$Strman.capitalize($att.name)();
+#if(!$att.static && !$att.isAssociation())
+	$att.type.name get$Strman.upperFirst($att.name)();
 #end##
 #end##
 }

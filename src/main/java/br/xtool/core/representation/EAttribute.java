@@ -26,9 +26,10 @@ public class EAttribute extends EField {
 	public boolean isAssociation() {
 		if (this.isCollection()) {
 			// @formatter:off
-			return this.springBootProject.getEntities().parallelStream()
-					.anyMatch(entity -> this.getType().getTypeArguments().stream()
-												.anyMatch(t -> t.getName().equals(entity.getName())));
+//			return this.springBootProject.getEntities().parallelStream()
+//					.anyMatch(entity -> this.getType().getTypeArguments().stream()
+//												.anyMatch(t -> t.getName().equals(entity.getName())));
+			return true;
 			// @formatter:on
 		}
 		// @formatter:off
@@ -52,14 +53,14 @@ public class EAttribute extends EField {
 				return this.springBootProject.getEntities().stream()
 						.filter(entity -> this.getType().getTypeArguments().stream()
 								.anyMatch(type -> type.getName().equals(entity.getName())))
-						.map(entityTarget -> new EAssociation(entitySource, entityTarget, this))
+						.map(entityTarget -> new EAssociation(this.entitySource, entityTarget, this))
 						.findFirst();
 				// @formatter:on
 			}
 			// @formatter:off
 			return this.springBootProject.getEntities().stream()
 					.filter(entity -> entity.getName().equals(this.getType().getName()))
-					.map(entityTarget -> new EAssociation(entitySource, entityTarget, this))
+					.map(entityTarget -> new EAssociation(this.entitySource, entityTarget, this))
 					.findFirst();
 			// @formatter:on
 		}

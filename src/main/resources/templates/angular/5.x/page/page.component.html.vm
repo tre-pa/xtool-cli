@@ -1,0 +1,12 @@
+<nav-list-layout>
+  <div top-toolbar-left>
+  </div>
+  <div top-toolbar-right>
+    <nav-link></nav-link>
+  </div>
+  <div sidenav>
+  </div>
+  <div main-content>
+    main-content
+  </div>
+</nav-list-layout>

@@ -7,6 +7,7 @@ import ${entity.qualifiedName};
 import java.util.Optional;
 import ${groupId.name}.repository.projection.${entity.name}Info;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Query;
 
 
 /**
@@ -23,6 +24,7 @@ public interface ${repositoryName} extends JpaRepository<${entity.name}, Long> {
 	 * 
 	 * @return Projection {@link ${entity.name}Info} com as instâncias de ${entity.name}.
 	 */
+	@Query("select p from ${entity.name} p")
 	List<${entity.name}Info> findAllInfo(Pageable pageable);
 
 	Optional<${entity.name}> findById(Long id);

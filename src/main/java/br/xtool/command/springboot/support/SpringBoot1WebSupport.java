@@ -57,7 +57,7 @@ public class SpringBoot1WebSupport implements SpringBootSupport {
 	}
 
 	private void addProperties(ESpringBootProject project) {
-		project.getApplicationProperties().set("server.context-path", project.getName());
+		project.getApplicationProperties().set("server.context-path", String.format("/%s", project.getName()));
 		project.getApplicationProperties().set("server.port", "8080");
 		project.getApplicationProperties().set("spring.jackson.serialization.WRITE_DATES_AS_TIMESTAMPS", "false");
 		project.getApplicationProperties().set("spring.jackson.serialization.FAIL_ON_EMPTY_BEANS", "false");
