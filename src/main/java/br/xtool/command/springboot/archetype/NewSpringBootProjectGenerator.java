@@ -54,7 +54,7 @@ public class NewSpringBootProjectGenerator extends RegularCommand {
 		 */
 		// @formatter:off
 		Map<String, Object> vars = new HashMap<>();
-		vars.put("templatePath", "springboot/archetype/1.5.x");
+		vars.put("templatePath", "springboot/1.5.x/archetype");
 		vars.put("projectName", Names.asSpringBootProject(name));
 		vars.put("projectVersion", version);
 		vars.put("rootPackage", getFinalRootPackage(name, rootPackage));

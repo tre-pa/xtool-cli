@@ -29,11 +29,9 @@ public class Names {
 	 */
 	public static String asSpringBootBaseClass(String name) {
 		// @formatter:off
-		return StringUtils.capitalize(
-					Strman.toKebabCase(
+		return Strman.toStudlyCase(
 						name.endsWith("Application") ? name.replace("Application", "") : name
-					)
-				);
+					);
 		// @formatter:on
 	}
 
