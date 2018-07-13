@@ -35,6 +35,6 @@ public class SpringBootRestGenerator extends SpringBootCommand {
 				.build();
 		// @formatter:on
 
-		this.fs.copy("springboot/rest/rest.java.vm", "src/main/java/${groupId.dir}/rest/${restName}.java", vars);
+		this.fs.copy("springboot/1.5.x/rest/rest.java.vm", "src/main/java/${groupId.dir}/rest/${restName}.java", vars);
 	}
 }

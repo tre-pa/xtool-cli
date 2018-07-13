@@ -36,7 +36,7 @@ public class SpringBootJpaCrudGenerator extends SpringBootCommand {
 		//// @formatter:off
 		Map<String, Object> vars = new HashMap<>();
 		vars.put("Strman", Strman.class);
-		vars.put("templatePath", "springboot/crud");
+		vars.put("templatePath", "springboot/1.5.x/crud");
 		vars.put("entity", entity);
 		vars.put("groupId", this.getProject().getPom().getGroupId());
 		vars.put("repositoryName", Names.asRepositoryClass(entity.getName()));
