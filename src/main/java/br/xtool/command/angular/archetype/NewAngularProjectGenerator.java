@@ -1,6 +1,7 @@
 package br.xtool.command.angular.archetype;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.io.FilenameUtils;
@@ -8,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
-
-import com.google.common.collect.ImmutableMap;
 
 import br.xtool.XtoolCliApplication;
 import br.xtool.core.CommandLineExecutor;
@@ -36,11 +35,10 @@ public class NewAngularProjectGenerator extends RegularCommand {
 		 * Cria o mapa com as variáveis do gerador.
 		 */
 		//// @formatter:off
-		Map<String, Object> vars = ImmutableMap.<String, Object>builder()
-				.put("templatePath", "angular/5.x/archetype")
-				.put("projectName", name)
-				.put("projectPath", FilenameUtils.concat(this.workContext.getDirectory().getPath(), name))
-				.build();
+		Map<String, Object> vars = new HashMap<>();
+		vars.put("templatePath", "angular/5.x/archetype");
+		vars.put("projectName", name);
+		vars.put("projectPath", FilenameUtils.concat(this.workContext.getDirectory().getPath(), name));
 		// @formatter:on
 
 		ConsoleLog.print("");

@@ -1,11 +1,10 @@
 package br.xtool.command.springboot.support;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import com.google.common.collect.ImmutableMap;
 
 import br.xtool.command.springboot.support.core.SpringBootSupport;
 import br.xtool.core.ConsoleLog;
@@ -39,16 +38,15 @@ public class SpringBoot1JpaSupport implements SpringBootSupport {
 	@Override
 	public void apply(ESpringBootProject project) {
 		//// @formatter:off
-		Map<String, Object> vars = ImmutableMap.<String, Object>builder()
-				.put("projectName", project.getName())
-				.put("projectVersion", project.getPom().getParentVersion())
-				.put("rootPackage", project.getRootPackage())
-				.put("baseClassName", project.getBaseClassName())
-				.build();
+		Map<String, Object> vars = new HashMap<>();
+		vars.put("projectName", project.getName());
+		vars.put("projectVersion", project.getPom().getParentVersion());
+		vars.put("rootPackage", project.getRootPackage());
+		vars.put("baseClassName", project.getBaseClassName());
 		// @formatter:on
 		ConsoleLog.print(ConsoleLog.cyan("\t-- Suporte JPA --"));
-		fs.createEmptyPath("src/main/java/${rootPackage.dir}/domain", vars);
-		fs.createEmptyPath("src/main/java/${rootPackage.dir}/repository", vars);
+		this.fs.createEmptyPath("src/main/java/${rootPackage.dir}/domain", vars);
+		this.fs.createEmptyPath("src/main/java/${rootPackage.dir}/repository", vars);
 		addDependencies(project);
 		addProperties(project);
 	}

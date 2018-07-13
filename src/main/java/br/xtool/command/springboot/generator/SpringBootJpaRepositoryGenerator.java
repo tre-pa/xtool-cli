@@ -1,6 +1,7 @@
 package br.xtool.command.springboot.generator;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.jdom2.JDOMException;
@@ -8,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
-
-import com.google.common.collect.ImmutableMap;
 
 import br.xtool.XtoolCliApplication;
 import br.xtool.core.FS;
@@ -36,11 +35,10 @@ public class SpringBootJpaRepositoryGenerator extends SpringBootCommand {
 		 * Cria o mapa com as variáveis do gerador.
 		 */
 		//// @formatter:off
-		Map<String, Object> vars = ImmutableMap.<String, Object>builder()
-				.put("groupId", this.getProject().getPom().getGroupId())
-				.put("repositoryName", Names.asRepositoryClass(entity.getName()))
-				.put("entity", entity)
-				.build();
+		Map<String, Object> vars = new HashMap<>();
+		vars.put("groupId", this.getProject().getPom().getGroupId());
+		vars.put("repositoryName", Names.asRepositoryClass(entity.getName()));
+		vars.put("entity", entity);
 		// @formatter:on
 
 		this.fs.copy("springboot/1.5.x/repository/repository.java.vm", "src/main/java/${groupId.dir}/repository/${repositoryName}.java", vars);

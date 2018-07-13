@@ -1,6 +1,7 @@
 package br.xtool.command.springboot.archetype;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
@@ -8,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
-
-import com.google.common.collect.ImmutableMap;
 
 import br.xtool.XtoolCliApplication;
 import br.xtool.command.springboot.support.core.SpringBootSupport.SupportType;
@@ -54,15 +53,14 @@ public class NewSpringBootProjectGenerator extends RegularCommand {
 		 * Cria o mapa com as variáveis do gerador.
 		 */
 		// @formatter:off
-		Map<String, Object> vars = ImmutableMap.<String, Object>builder()
-				.put("templatePath", "springboot/archetype/1.5.x")
-				.put("projectName", Names.asSpringBootProject(name))
-				.put("projectVersion", version)
-				.put("rootPackage", getFinalRootPackage(name, rootPackage))
-				.put("baseClassName", Names.asSpringBootBaseClass(name))
-				.put("noJpa", noJpa)
-				.put("noWeb", noWeb)
-				.build();
+		Map<String, Object> vars = new HashMap<>();
+		vars.put("templatePath", "springboot/archetype/1.5.x");
+		vars.put("projectName", Names.asSpringBootProject(name));
+		vars.put("projectVersion", version);
+		vars.put("rootPackage", getFinalRootPackage(name, rootPackage));
+		vars.put("baseClassName", Names.asSpringBootBaseClass(name));
+		vars.put("noJpa", noJpa);
+		vars.put("noWeb", noWeb);
 		// @formatter:on
 
 		ConsoleLog.print(ConsoleLog.cyan("\t-- Projeto Base --"));
