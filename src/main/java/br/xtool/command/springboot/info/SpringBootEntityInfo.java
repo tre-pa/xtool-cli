@@ -28,6 +28,8 @@ public class SpringBootEntityInfo extends SpringBootCommand {
 				.orElse(10);
 		this.getProject().getEntities().stream()
 			.forEach(entity -> ConsoleLog.print(ConsoleLog.cyan(StringUtils.rightPad(entity.getName(), maxLenghtEntityName)), " - ", ConsoleLog.gray(entity.getPackage().getName())));
+		
+//		this.getProject().getAssociatedAngularProject().ifPresent(a -> System.out.println(a.getName()));
 		// @formatter:on
 	}
 }

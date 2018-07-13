@@ -14,6 +14,7 @@ import org.jboss.forge.roaster.model.JavaUnit;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.jboss.forge.roaster.model.source.JavaInterfaceSource;
 
+import br.xtool.core.representation.angular.EAngularProject;
 import br.xtool.core.representation.enums.ProjectType;
 import br.xtool.core.util.RoasterUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -163,6 +164,11 @@ public class ESpringBootProject extends EProject {
 			// @formatter:on
 		}
 		return this.javaUnits;
+	}
+
+	public Optional<EAngularProject> getAssociatedAngularProject() {
+		String angularPath = this.getPath().replace("-service", "");
+		return EAngularProject.of(angularPath);
 	}
 
 	@Override
