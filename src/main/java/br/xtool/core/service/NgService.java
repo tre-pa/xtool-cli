@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import com.google.common.collect.ImmutableMap;
 
-import br.xtool.core.CommandLineExecutor;
 import br.xtool.core.FS;
 import br.xtool.core.WorkContext;
 import br.xtool.core.representation.angular.ENgComponent;
@@ -23,7 +22,7 @@ import lombok.NonNull;
 public class NgService {
 
 	@Autowired
-	private CommandLineExecutor cmdExecutor;
+	private ShellService shellService;
 
 	@Autowired
 	private WorkContext workContext;
@@ -50,7 +49,7 @@ public class NgService {
 		if (Files.notExists(Paths.get((String) vars.get("xtoolNg")))) {
 			fs.copy("${templatePath}/scripts/xtool-ng.js.vm", "scripts/xtool-ng.js", vars);
 		}
-		cmdExecutor.run("node ${xtoolNg} --module-path=${modulePath} --module-name=${moduleName} --component-path=${componentPath} --component-name=${componentName}", vars);
+		shellService.run("node ${xtoolNg} --module-path=${modulePath} --module-name=${moduleName} --component-path=${componentPath} --component-name=${componentName}", vars);
 	}
 
 	/**
@@ -72,7 +71,7 @@ public class NgService {
 		if (Files.notExists(Paths.get((String) vars.get("xtoolNg")))) {
 			fs.copy("${templatePath}/scripts/xtool-ng.js.vm", "scripts/xtool-ng.js", vars);
 		}
-		cmdExecutor.run("node ${xtoolNg} --module-path=${modulePath} --module-name=${moduleName} --service-path=${servicePath} --service-name=${serviceName}", vars);
+		shellService.run("node ${xtoolNg} --module-path=${modulePath} --module-name=${moduleName} --service-path=${servicePath} --service-name=${serviceName}", vars);
 	}
 
 	/**
@@ -94,6 +93,6 @@ public class NgService {
 		if (Files.notExists(Paths.get((String) vars.get("xtoolNg")))) {
 			fs.copy("${templatePath}/scripts/xtool-ng.js.vm", "scripts/xtool-ng.js", vars);
 		}
-		cmdExecutor.run("node ${xtoolNg} --module-path=${modulePath} --module-name=${moduleName} --dialog-path=${dialogPath} --dialog-name=${dialogName}", vars);
+		shellService.run("node ${xtoolNg} --module-path=${modulePath} --module-name=${moduleName} --dialog-path=${dialogPath} --dialog-name=${dialogName}", vars);
 	}
 }

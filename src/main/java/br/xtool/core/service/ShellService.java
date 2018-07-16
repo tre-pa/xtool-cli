@@ -1,4 +1,4 @@
-package br.xtool.core;
+package br.xtool.core.service;
 
 import java.io.File;
 import java.util.Map;
@@ -6,10 +6,12 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import br.xtool.core.FS;
+import br.xtool.core.WorkContext;
 import lombok.SneakyThrows;
 
 @Component
-public class CommandLineExecutor {
+public class ShellService {
 
 	@Autowired
 	private FS fs;

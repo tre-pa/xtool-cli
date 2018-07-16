@@ -11,11 +11,11 @@ import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 
 import br.xtool.XtoolCliApplication;
-import br.xtool.core.CommandLineExecutor;
 import br.xtool.core.ConsoleLog;
 import br.xtool.core.FS;
 import br.xtool.core.WorkContext;
 import br.xtool.core.command.RegularCommand;
+import br.xtool.core.service.ShellService;
 
 @ShellComponent
 public class NewAngularProjectGenerator extends RegularCommand {
@@ -24,7 +24,7 @@ public class NewAngularProjectGenerator extends RegularCommand {
 	private FS fs;
 
 	@Autowired
-	private CommandLineExecutor executor;
+	private ShellService shellService;
 
 	@Autowired
 	private WorkContext workContext;
@@ -93,7 +93,7 @@ public class NewAngularProjectGenerator extends RegularCommand {
 
 		ConsoleLog.print(ConsoleLog.cyan("\t-- npm install --"));
 
-		this.executor.run("npm i && code .");
+		this.shellService.run("npm i && code .");
 
 		// this.pathService.exec("npm i && code .");
 	}
