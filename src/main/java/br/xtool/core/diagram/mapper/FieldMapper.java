@@ -1,4 +1,4 @@
-package br.xtool.core.diagram;
+package br.xtool.core.diagram.mapper;
 
 import org.apache.commons.lang3.StringUtils;
 import org.jboss.forge.roaster.model.source.JavaClassSource;

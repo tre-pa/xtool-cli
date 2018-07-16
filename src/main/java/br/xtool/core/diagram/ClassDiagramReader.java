@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
+import br.xtool.core.diagram.mapper.FieldMapper;
 import br.xtool.core.representation.EClass;
 import br.xtool.core.representation.EPackage;
 import br.xtool.core.representation.ESpringBootProject;
