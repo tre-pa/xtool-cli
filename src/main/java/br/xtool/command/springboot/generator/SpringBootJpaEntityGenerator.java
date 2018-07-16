@@ -1,9 +1,11 @@
 package br.xtool.command.springboot.generator;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.io.FileUtils;
 import org.jdom2.JDOMException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
@@ -14,6 +16,7 @@ import br.xtool.XtoolCliApplication;
 import br.xtool.core.FS;
 import br.xtool.core.Names;
 import br.xtool.core.command.SpringBootCommand;
+import br.xtool.core.diagram.ClassDiagramReader;
 
 /**
  * Comando que gera uma classe Repository no projeto Spring Boot
@@ -27,8 +30,17 @@ public class SpringBootJpaEntityGenerator extends SpringBootCommand {
 	@Autowired
 	private FS fs;
 
+	@Autowired
+	private ClassDiagramReader diagramReader;
+
 	@ShellMethod(key = "gen:entity", value = "Gera uma classe de entidade JPA em um projeto Spring Boot", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
-	public void run(@ShellOption(help = "Nome da entidade JPA") String name) throws IOException, JDOMException {
+	public void run(@ShellOption(help = "Nome da entidade JPA", defaultValue = "") String name) throws IOException, JDOMException {
+		this.diagramReader.parse(FileUtils.readFileToString(new File("/home/jcruz/git/sb1-service/docs/diagrams/class.md"), "UTF-8"));
+		this.diagramReader.write(this.getProject());
+		//generateFromTemplate(name);
+	}
+
+	private void generateFromTemplate(String name) {
 		/*
 		 * Cria o mapa com as variáveis do gerador.
 		 */
