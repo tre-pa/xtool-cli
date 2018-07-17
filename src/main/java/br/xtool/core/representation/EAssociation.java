@@ -66,7 +66,7 @@ public class EAssociation implements Comparable<EAssociation> {
 	 * 
 	 * @return
 	 */
-	public boolean hasOneToOneAnnotation() {
+	public boolean isOneToOneAnnotation() {
 		return this.attributeSource.hasAnnotation("OneToOne");
 	}
 
@@ -75,7 +75,7 @@ public class EAssociation implements Comparable<EAssociation> {
 	 * 
 	 * @return
 	 */
-	public boolean hasOneToManyAnnotation() {
+	public boolean isOneToManyAnnotation() {
 		return this.attributeSource.hasAnnotation("OneToMany");
 	}
 
@@ -84,7 +84,7 @@ public class EAssociation implements Comparable<EAssociation> {
 	 * 
 	 * @return
 	 */
-	public boolean hasManyToOneAnnotation() {
+	public boolean isManyToOneAnnotation() {
 		return this.attributeSource.hasAnnotation("ManyToOne");
 	}
 
@@ -93,7 +93,7 @@ public class EAssociation implements Comparable<EAssociation> {
 	 * 
 	 * @return
 	 */
-	public boolean hasManyToManyAnnotation() {
+	public boolean isManyToManyAnnotation() {
 		return this.attributeSource.hasAnnotation("ManyToMany");
 	}
 
