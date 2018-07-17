@@ -23,7 +23,7 @@ public abstract class FieldMapper {
 
 	public abstract void map();
 
-	public String getClassName() {
+	protected String getClassName() {
 		return this.javaClass.getName();
 	}
 
@@ -35,16 +35,47 @@ public abstract class FieldMapper {
 		return StringUtils.trim(StringUtils.split(this.member.getDisplay(false), ":")[0]);
 	}
 
-	public JavaClassSource getJavaClass() {
+	protected JavaClassSource getJavaClass() {
 		return this.javaClass;
 	}
 
-	public void addImport(String importName) {
+	protected void addImport(String importName) {
 		this.javaClass.addImport(importName);
 	}
 
-	public Import addImport(Class<?> type) {
+	protected Import addImport(Class<?> type) {
 		return this.javaClass.addImport(type);
 	}
 
+	protected boolean isBoolean() {
+		return StringUtils.equalsIgnoreCase(this.getType(), "Boolean");
+	}
+
+	protected boolean isBigDecimal() {
+		return StringUtils.equalsIgnoreCase(this.getType(), "BigDecimal");
+	}
+
+	protected boolean isDate() {
+		return StringUtils.equalsIgnoreCase(this.getType(), "Date");
+	}
+
+	protected boolean isInteger() {
+		return StringUtils.equalsIgnoreCase(this.getType(), "Integer");
+	}
+
+	protected boolean isLocalDate() {
+		return StringUtils.equalsIgnoreCase(this.getType(), "LocalDate");
+	}
+
+	protected boolean isLocalDateTime() {
+		return StringUtils.equalsIgnoreCase(this.getType(), "LocalDateTime");
+	}
+
+	protected boolean isLong() {
+		return StringUtils.equalsIgnoreCase(this.getType(), "Long");
+	}
+
+	protected boolean isString() {
+		return StringUtils.equalsIgnoreCase(this.getType(), "String");
+	}
 }
