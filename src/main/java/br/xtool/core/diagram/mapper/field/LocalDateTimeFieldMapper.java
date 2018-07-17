@@ -9,25 +9,24 @@ import org.springframework.stereotype.Component;
 
 import br.xtool.core.diagram.mapper.FieldMapper;
 import lombok.extern.slf4j.Slf4j;
-import net.sourceforge.plantuml.cucadiagram.Member;
 
 @Component
 @Slf4j
-public class LocalDateTimeFieldMapper implements FieldMapper {
+public class LocalDateTimeFieldMapper extends FieldMapper {
 
 	@Override
-	public void map(JavaClassSource javaClass, Member member) {
-		String fieldName = this.getName(member);
-		String fieldType = this.getType(member);
+	public void map() {
+		String fieldName = this.getName();
+		String fieldType = this.getType();
 		if (StringUtils.equalsIgnoreCase(fieldType, "LocalDateTime")) {
-			log.info("Gerando atributo 'LocalDateTime {}' na classe {}", fieldName, javaClass.getName());
+			log.info("Gerando atributo 'LocalDateTime {}' na classe {}", fieldName, this.getClassName());
 			// @formatter:off
-			FieldSource<JavaClassSource> fieldSource = javaClass.addField()
+			FieldSource<JavaClassSource> fieldSource = this.getJavaClass().addField()
 				.setPrivate()
 				.setType(LocalDateTime.class)
 				.setName(fieldName);
 			// @formatter:on
-			javaClass.addImport("javax.persistence.Column");
+			addImport("javax.persistence.Column");
 			fieldSource.addAnnotation("Column");
 		}
 	}

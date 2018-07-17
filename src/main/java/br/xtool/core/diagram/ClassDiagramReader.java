@@ -93,7 +93,11 @@ public class ClassDiagramReader {
 	}
 
 	private void parserFields(JavaClassSource javaClass, Member member) {
-		this.fieldMappers.forEach(action -> action.map(javaClass, member));
+		// @formatter:off
+		this.fieldMappers.stream()
+			.peek(fieldMapper -> fieldMapper.init(javaClass, member))
+			.forEach(FieldMapper::map);
+		// @formatter:on
 	}
 
 	private void parseAssociations(ClassDiagram classDiagram) {

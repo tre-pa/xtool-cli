@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 import br.xtool.core.Names;
 import br.xtool.core.diagram.mapper.FieldMapper;
 import lombok.extern.slf4j.Slf4j;
-import net.sourceforge.plantuml.cucadiagram.Member;
 
 /**
  * Mapeia os atributo do tipo Long do diagrama de classe
@@ -18,44 +17,44 @@ import net.sourceforge.plantuml.cucadiagram.Member;
  */
 @Component
 @Slf4j
-public class LongFieldMapper implements FieldMapper {
+public class LongFieldMapper extends FieldMapper {
 
 	@Override
-	public void map(JavaClassSource javaClass, Member member) {
-		String fieldName = this.getName(member);
-		String fieldType = this.getType(member);
+	public void map() {
+		String fieldName = this.getName();
+		String fieldType = this.getType();
 		if (StringUtils.equalsIgnoreCase(fieldType, "Long")) {
-			log.info("Gerando atributo 'Long {}' na classe {}", fieldName, javaClass.getName());
+			log.info("Gerando atributo 'Long {}' na classe {}", fieldName, this.getClassName());
 			// @formatter:off
-			FieldSource<JavaClassSource> fieldSource = javaClass.addField()
+			FieldSource<JavaClassSource> fieldSource = this.getJavaClass().addField()
 				.setPrivate()
 				.setType(Long.class)
 				.setName(fieldName);
 			// @formatter:on
-			mapId(javaClass, fieldSource);
+			mapId(fieldSource);
 		}
 	}
 
-	private void mapId(JavaClassSource javaClass, FieldSource<JavaClassSource> fieldSource) {
+	private void mapId(FieldSource<JavaClassSource> fieldSource) {
 		if (fieldSource.getName().equals("id")) {
-			javaClass.addImport("javax.persistence.Id");
-			javaClass.addImport("javax.persistence.GeneratedValue");
-			javaClass.addImport("javax.persistence.GenerationType");
-			javaClass.addImport("javax.persistence.SequenceGenerator");
+			addImport("javax.persistence.Id");
+			addImport("javax.persistence.GeneratedValue");
+			addImport("javax.persistence.GenerationType");
+			addImport("javax.persistence.SequenceGenerator");
 
 			// @formatter:off
 			fieldSource.addAnnotation("Id");
 			fieldSource.addAnnotation("GeneratedValue")
 				.setLiteralValue("strategy", "GenerationType.SEQUENCE")
-				.setStringValue("generator", Names.asDBSequence(javaClass.getName()));
+				.setStringValue("generator", Names.asDBSequence(this.getJavaClass().getName()));
 			fieldSource.addAnnotation("SequenceGenerator")
 				.setLiteralValue("initialValue", "1")
 				.setLiteralValue("allocationSize", "1")
-				.setStringValue("name", Names.asDBSequence(javaClass.getName()))
-				.setStringValue("sequenceName", Names.asDBSequence(javaClass.getName()));
+				.setStringValue("name", Names.asDBSequence(this.getJavaClass().getName()))
+				.setStringValue("sequenceName", Names.asDBSequence(this.getJavaClass().getName()));
 			// @formatter:on
 		} else {
-			javaClass.addImport("javax.persistence.Column");
+			addImport("javax.persistence.Column");
 			fieldSource.addAnnotation("Column");
 		}
 	}
