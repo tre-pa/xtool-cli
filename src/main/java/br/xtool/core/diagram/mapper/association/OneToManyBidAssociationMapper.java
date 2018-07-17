@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.jboss.forge.roaster.model.source.FieldSource;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.springframework.stereotype.Component;
 
@@ -30,28 +31,42 @@ public class OneToManyBidAssociationMapper implements AssociationMapper {
 			if (manyMultiplicityPattern.matcher(targetQualifier).matches() && oneMultiplicityPattern.matcher(sourceQualifier).matches()) {
 				JavaClassSource sourceJavaClass = this.getJavaClassSource(javaClasses, link);
 				JavaClassSource targetJavaClass = this.getJavaClassTarget(javaClasses, link);
-				System.out.println(sourceJavaClass);
-				System.out.println(targetJavaClass);
-				// @formatter:off
-				targetJavaClass.addField()
-					.setPrivate()
-					.setType(sourceJavaClass)
-					.setName(Strman.lowerFirst(sourceJavaClass.getName()));
-				// @formatter:on
-				sourceJavaClass.addImport(List.class);
-				sourceJavaClass.addImport(ArrayList.class);
-				sourceJavaClass.addImport(targetJavaClass);
-				// @formatter:off
-				sourceJavaClass
-					.addField()
-					.setPrivate()
-					.setType(String.format("List<%s>", targetJavaClass.getName()))
-					.setName(Inflector.getInstance().pluralize(Strman.lowerFirst(targetJavaClass.getName())))
-					.setLiteralInitializer("new ArrayList<>()");
-				// @formatter:on
+				mapJavaTarget(sourceJavaClass, targetJavaClass);
+				mapJavaSource(sourceJavaClass, targetJavaClass);
 
 			}
 		}
+	}
+
+	private void mapJavaTarget(JavaClassSource sourceJavaClass, JavaClassSource targetJavaClass) {
+		targetJavaClass.addImport("javax.persistence.ManyToOne");
+		// @formatter:off
+		targetJavaClass.addField()
+			.setPrivate()
+			.setType(sourceJavaClass)
+			.setName(Strman.lowerFirst(sourceJavaClass.getName()))
+			.addAnnotation("ManyToOne");
+		// @formatter:on
+	}
+
+	private void mapJavaSource(JavaClassSource sourceJavaClass, JavaClassSource targetJavaClass) {
+		// @formatter:off
+		sourceJavaClass.addImport("javax.persistence.OneToMany");
+		// @formatter:on
+
+		sourceJavaClass.addImport(List.class);
+		sourceJavaClass.addImport(ArrayList.class);
+		sourceJavaClass.addImport(targetJavaClass);
+		// @formatter:off
+		FieldSource<JavaClassSource> field = sourceJavaClass
+			.addField()
+			.setPrivate()
+			.setType(String.format("List<%s>", targetJavaClass.getName()))
+			.setName(Inflector.getInstance().pluralize(Strman.lowerFirst(targetJavaClass.getName())))
+			.setLiteralInitializer("new ArrayList<>()");
+		field.addAnnotation("OneToMany")
+			.setStringValue("mappedBy", Strman.lowerFirst(sourceJavaClass.getName()));
+		// @formatter:on
 	}
 
 }
