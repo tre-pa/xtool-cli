@@ -88,6 +88,8 @@ public class ClassDiagramReader {
 		javaClass.addAnnotation("DynamicUpdate");
 		javaClass.addImport("lombok.Getter");
 		javaClass.addAnnotation("Getter");
+		javaClass.addImport("lombok.Setter");
+		javaClass.addAnnotation("Setter");
 	}
 
 	private void parserFields(JavaClassSource javaClass, Member member) {

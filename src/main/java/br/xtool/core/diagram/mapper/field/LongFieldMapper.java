@@ -54,6 +54,9 @@ public class LongFieldMapper implements JpaFieldMapper {
 				.setStringValue("name", Names.asDBSequence(javaClass.getName()))
 				.setStringValue("sequenceName", Names.asDBSequence(javaClass.getName()));
 			// @formatter:on
+		} else {
+			javaClass.addImport("javax.persistence.Column");
+			fieldSource.addAnnotation("Column");
 		}
 	}
 

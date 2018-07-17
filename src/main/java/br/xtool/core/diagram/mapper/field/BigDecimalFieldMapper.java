@@ -3,6 +3,7 @@ package br.xtool.core.diagram.mapper.field;
 import java.math.BigDecimal;
 
 import org.apache.commons.lang3.StringUtils;
+import org.jboss.forge.roaster.model.source.FieldSource;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.springframework.stereotype.Component;
 
@@ -21,11 +22,13 @@ public class BigDecimalFieldMapper implements JpaFieldMapper {
 		if (StringUtils.equalsIgnoreCase(fieldType, "BigDecimal")) {
 			log.info("Gerando atributo 'String {}' na classe {}", fieldName, javaClass.getName());
 			// @formatter:off
-			javaClass.addField()
+			FieldSource<JavaClassSource> fieldSource = javaClass.addField()
 				.setPrivate()
 				.setType(BigDecimal.class)
 				.setName(fieldName);
 			// @formatter:on
+			javaClass.addImport("javax.persistence.Column");
+			fieldSource.addAnnotation("Column");
 		}
 	}
 
