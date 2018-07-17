@@ -93,13 +93,11 @@ public class EDirectory {
 		public @Nullable ProjectType apply(@Nullable EDirectory dr) {
 			String pomFile = FilenameUtils.concat(dr.getPath(), "pom.xml");
 			if (Files.exists(Paths.get(pomFile))) {
-				Optional<EPom> pomRepresentation = EPom.of(pomFile);
-				if (pomRepresentation.isPresent()) {
-					Pattern pattern = Pattern.compile("1.5.\\d\\d?.RELEASE");
-					Matcher matcher = pattern.matcher(pomRepresentation.get().getParentVersion());
-					if (matcher.matches()) {
-						return ProjectType.SPRINGBOOT1_PROJECT;
-					}
+				EPom pomRepresentation = EPom.of(pomFile);
+				Pattern pattern = Pattern.compile("1.5.\\d\\d?.RELEASE");
+				Matcher matcher = pattern.matcher(pomRepresentation.getParentVersion());
+				if (matcher.matches()) {
+					return ProjectType.SPRINGBOOT1_PROJECT;
 				}
 			}
 			return null;

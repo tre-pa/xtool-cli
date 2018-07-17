@@ -8,7 +8,6 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -127,19 +126,19 @@ public class EPom {
 		}
 	}
 
-	public static Optional<EPom> of(String path) {
+	public static EPom of(String path) {
 		if (Files.exists(Paths.get(path))) {
 			try {
 				EPom pomRepresentation = new EPom(path);
 				pomRepresentation.file = new File(path);
 				SAXBuilder saxBuilder = new SAXBuilder();
 				pomRepresentation.pomDoc = saxBuilder.build(pomRepresentation.file);
-				return Optional.of(pomRepresentation);
+				return pomRepresentation;
 			} catch (JDOMException | IOException e) {
 				e.printStackTrace();
 			}
 		}
-		return Optional.empty();
+		throw new IllegalArgumentException("Não foi possível localizar ou ler o arquivo pom.xml. Verifique se o mesmo existe o contém erros.");
 	}
 
 	public void save() {

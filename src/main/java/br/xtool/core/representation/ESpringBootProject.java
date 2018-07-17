@@ -85,7 +85,7 @@ public class ESpringBootProject extends EProject {
 	 */
 	public EPom getPom() {
 		if (Objects.isNull(this.pom)) {
-			this.pom = EPom.of(FilenameUtils.concat(this.getPath(), "pom.xml")).orElse(null);
+			this.pom = EPom.of(FilenameUtils.concat(this.getPath(), "pom.xml"));
 		}
 		return this.pom;
 	}
