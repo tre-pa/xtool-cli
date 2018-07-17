@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
+import br.xtool.core.diagram.mapper.AssociationMapper;
 import br.xtool.core.diagram.mapper.FieldMapper;
 import br.xtool.core.representation.EClass;
 import br.xtool.core.representation.EPackage;
@@ -24,6 +25,7 @@ import net.sourceforge.plantuml.SourceStringReader;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.cucadiagram.IGroup;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
+import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.Member;
 
 @Component
@@ -33,6 +35,9 @@ public class ClassDiagramReader {
 	@Autowired
 	private Collection<FieldMapper> fieldMappers;
 
+	@Autowired
+	private Collection<AssociationMapper> associationMappers;
+
 	private Map<String, JavaClassSource> javaClassSources = new HashMap<>();
 
 	public void parse(String diagram) {
@@ -41,6 +46,7 @@ public class ClassDiagramReader {
 			if (blockUml.getDiagram() instanceof ClassDiagram) {
 				ClassDiagram classDiagram = (ClassDiagram) blockUml.getDiagram();
 				this.parseClasses(classDiagram);
+				this.parseAssociations(classDiagram);
 			}
 		}
 
@@ -75,6 +81,12 @@ public class ClassDiagramReader {
 
 	private void parserFields(JavaClassSource javaClass, Member member) {
 		this.fieldMappers.forEach(action -> action.map(javaClass, member));
+	}
+
+	private void parseAssociations(ClassDiagram classDiagram) {
+		for (Link link : classDiagram.getEntityFactory().getLinks()) {
+			this.associationMappers.forEach(action -> action.map(this.javaClassSources, link));
+		}
 	}
 
 	@SneakyThrows
