@@ -1,13 +1,10 @@
 package br.xtool.core.representation;
 
-import java.util.Objects;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 import org.jboss.forge.roaster.model.source.JavaClassSource;
-
-import lombok.Getter;
 
 /**
  * Classe que representa um entidade JPA
@@ -18,11 +15,6 @@ import lombok.Getter;
 public class EEntity extends EClass implements Comparable<EEntity> {
 
 	private ESpringBootProject springBootProject;
-
-	private SortedSet<EAttribute> attributes;
-
-	@Getter(lazy = true)
-	private final SortedSet<EAssociation> associations = buildAssociations();
 
 	public EEntity(ESpringBootProject springBootProject, JavaClassSource javaClassSource) {
 		super(springBootProject, javaClassSource);
@@ -36,14 +28,11 @@ public class EEntity extends EClass implements Comparable<EEntity> {
 	 * @return
 	 */
 	public SortedSet<EAttribute> getAttributes() {
-		if (Objects.isNull(this.attributes)) {
-			// @formatter:off
-			this.attributes = this.javaClassSource.getFields().stream()
-					.map(f -> new EAttribute(this.springBootProject,this, f))
-					.collect(Collectors.toCollection(TreeSet::new));
-			// @formatter:on
-		}
-		return this.attributes;
+		// @formatter:off
+		return this.javaClassSource.getFields().stream()
+			.map(f -> new EAttribute(this.springBootProject,this, f))
+			.collect(Collectors.toCollection(TreeSet::new));
+		// @formatter:on
 	}
 
 	/**
@@ -51,7 +40,7 @@ public class EEntity extends EClass implements Comparable<EEntity> {
 	 * 
 	 * @return
 	 */
-	private SortedSet<EAssociation> buildAssociations() {
+	public SortedSet<EAssociation> getAssociations() {
 		SortedSet<EAssociation> associations = new TreeSet<>();
 		// @formatter:off
 		this.getAttributes().stream()

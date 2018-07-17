@@ -10,14 +10,9 @@ import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.jboss.forge.roaster.model.source.MethodSource;
 import org.jboss.forge.roaster.model.source.ParameterSource;
 
-import lombok.Getter;
-
 public class EMethod implements Comparable<EMethod> {
 
 	private MethodSource<JavaClassSource> methodSource;
-
-	@Getter(lazy = true)
-	private final SortedSet<EAnnotation> annotations = buildAnnotations();
 
 	public EMethod(MethodSource<JavaClassSource> methodSource) {
 		super();
@@ -34,34 +29,34 @@ public class EMethod implements Comparable<EMethod> {
 	}
 
 	public boolean isStatic() {
-		return methodSource.isStatic();
+		return this.methodSource.isStatic();
 	}
 
 	public boolean isConstructor() {
-		return methodSource.isConstructor();
+		return this.methodSource.isConstructor();
 	}
 
 	public boolean hasAnnotation(String type) {
-		return methodSource.hasAnnotation(type);
+		return this.methodSource.hasAnnotation(type);
 	}
 
 	public Type<JavaClassSource> getReturnType() {
-		return methodSource.getReturnType();
+		return this.methodSource.getReturnType();
 	}
 
 	public int getLineNumber() {
-		return methodSource.getLineNumber();
+		return this.methodSource.getLineNumber();
 	}
 
 	public boolean isReturnTypeVoid() {
-		return methodSource.isReturnTypeVoid();
+		return this.methodSource.isReturnTypeVoid();
 	}
 
 	public List<ParameterSource<JavaClassSource>> getParameters() {
-		return methodSource.getParameters();
+		return this.methodSource.getParameters();
 	}
 
-	private SortedSet<EAnnotation> buildAnnotations() {
+	public SortedSet<EAnnotation> getAnnotations() {
 		// @formatter:off
 		return this.methodSource.getAnnotations()
 				.stream()

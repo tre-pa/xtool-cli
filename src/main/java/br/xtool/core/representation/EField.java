@@ -16,14 +16,9 @@ import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.jboss.forge.roaster.model.source.JavaDocSource;
 import org.jboss.forge.roaster.model.util.Types;
 
-import lombok.Getter;
-
 public class EField implements Comparable<EAttribute> {
 
 	protected FieldSource<JavaClassSource> fieldSource;
-
-	@Getter(lazy = true)
-	private final SortedSet<EAnnotation> annotations = buildAnnotations();
 
 	public EField(FieldSource<JavaClassSource> fieldSource) {
 		super();
@@ -78,7 +73,7 @@ public class EField implements Comparable<EAttribute> {
 		this.fieldSource.setLiteralInitializer(value);
 	}
 
-	private SortedSet<EAnnotation> buildAnnotations() {
+	public SortedSet<EAnnotation> getAnnotations() {
 		// @formatter:off
 		return this.fieldSource.getAnnotations()
 				.stream()

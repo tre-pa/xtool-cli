@@ -15,22 +15,11 @@ import org.jboss.forge.roaster.model.source.FieldSource;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.jboss.forge.roaster.model.util.Types;
 
-import lombok.Getter;
-
 public class EClass {
 
 	protected JavaClassSource javaClassSource;
 
 	private EProject project;
-
-	@Getter(lazy = true)
-	private final SortedSet<EField> fields = buildFields();
-
-	@Getter(lazy = true)
-	private final SortedSet<EAnnotation> annotations = buildAnnotations();
-
-	@Getter(lazy = true)
-	private final SortedSet<EMethod> methods = buildMethods();
 
 	public EClass(EProject project, JavaClassSource javaClassSource) {
 		super();
@@ -44,7 +33,7 @@ public class EClass {
 	 * @return
 	 */
 	public String getName() {
-		return javaClassSource.getName();
+		return this.javaClassSource.getName();
 	}
 
 	/**
@@ -53,7 +42,7 @@ public class EClass {
 	 * @return
 	 */
 	public String getQualifiedName() {
-		return javaClassSource.getQualifiedName();
+		return this.javaClassSource.getQualifiedName();
 	}
 
 	/**
@@ -62,7 +51,7 @@ public class EClass {
 	 * @return
 	 */
 	public EPackage getPackage() {
-		return EPackage.of(javaClassSource.getPackage());
+		return EPackage.of(this.javaClassSource.getPackage());
 	}
 
 	/**
@@ -85,7 +74,7 @@ public class EClass {
 		return FilenameUtils.concat(this.project.getPath(), String.format("src/main/java/%s/%s.java", this.getPackage().getDir(), this.getName()));
 	}
 
-	private SortedSet<EField> buildFields() {
+	public SortedSet<EField> getFields() {
 		// @formatter:off
 		return this.javaClassSource.getFields()
 				.stream()
@@ -94,7 +83,7 @@ public class EClass {
 		// @formatter:on
 	}
 
-	private SortedSet<EAnnotation> buildAnnotations() {
+	public SortedSet<EAnnotation> getAnnotations() {
 		// @formatter:off
 		return this.javaClassSource.getAnnotations()
 				.stream()
@@ -102,8 +91,8 @@ public class EClass {
 				.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
 	}
-	
-	private SortedSet<EMethod> buildMethods() {
+
+	public SortedSet<EMethod> getMethods() {
 		// @formatter:off
 		return this.javaClassSource.getMethods()
 				.stream()
@@ -120,7 +109,7 @@ public class EClass {
 	 */
 	public Optional<EAnnotation> addAnnotation(String qualifiedName) {
 		if (StringUtils.isNotBlank(qualifiedName)) {
-			if (!javaClassSource.hasAnnotation(Types.toSimpleName(qualifiedName))) {
+			if (!this.javaClassSource.hasAnnotation(Types.toSimpleName(qualifiedName))) {
 				AnnotationSource<JavaClassSource> annotationSource = this.javaClassSource.addAnnotation();
 				this.javaClassSource.addImport(qualifiedName);
 				annotationSource.setName(Types.toSimpleName(qualifiedName));
@@ -139,12 +128,12 @@ public class EClass {
 	 */
 	public Optional<EField> addField(String qualifiedType, String name) {
 		if (StringUtils.isNoneBlank(qualifiedType, name)) {
-			if (!javaClassSource.hasField(name)) {
+			if (!this.javaClassSource.hasField(name)) {
 				FieldSource<JavaClassSource> fieldSource = this.javaClassSource.addField();
 				this.javaClassSource.addImport(qualifiedType);
 				fieldSource.setName(name);
 				fieldSource.setType(Types.toSimpleName(qualifiedType));
-//				Log.print(Log.bold(Log.green("\t[+] ")), Log.purple(" Add: "), Log.white(relativeDestination));
+				//				Log.print(Log.bold(Log.green("\t[+] ")), Log.purple(" Add: "), Log.white(relativeDestination));
 				return Optional.of(new EField(fieldSource));
 			}
 		}
