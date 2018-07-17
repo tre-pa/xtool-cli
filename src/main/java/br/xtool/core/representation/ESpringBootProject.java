@@ -34,7 +34,7 @@ public class ESpringBootProject extends EProject {
 
 	private EApplicationProperties applicationProperties;
 
-	private Optional<EClass> mainClass;
+	private EClass mainClass;
 
 	public ESpringBootProject(String path) {
 		super(path);
@@ -47,14 +47,14 @@ public class ESpringBootProject extends EProject {
 	 * @return Nome da classe base.
 	 */
 	public String getBaseClassName() {
-		return this.getMainclass().get().getName().replaceAll("Application", "");
+		return this.getMainclass().getName().replaceAll("Application", "");
 	}
 
 	/**
 	 * 
 	 * @return
 	 */
-	public Optional<EClass> getMainclass() {
+	public EClass getMainclass() {
 		if (Objects.isNull(this.mainClass)) {
 			// @formatter:off
 			this.mainClass = this.getJavaUnits().values()
@@ -63,7 +63,8 @@ public class ESpringBootProject extends EProject {
 					.map(javaUnit -> javaUnit.<JavaClassSource>getGoverningType())
 					.filter(j -> j.getAnnotations().stream().anyMatch(ann -> ann.getName().equals("SpringBootApplication")))
 					.map(javaUnit -> new EClass(this, javaUnit))
-					.findFirst();
+					.findFirst()
+					.orElseThrow(() -> new IllegalArgumentException("Não foi possível localizar a classe principal (@SpringBootApplication). Verifique se a mesma existe ou contêm erros."));
 			// @formatter:on
 		}
 		return this.mainClass;
@@ -97,7 +98,7 @@ public class ESpringBootProject extends EProject {
 	 */
 	public EApplicationProperties getApplicationProperties() {
 		if (Objects.isNull(this.applicationProperties)) {
-			this.applicationProperties = EApplicationProperties.of(FilenameUtils.concat(this.getPath(), "src/main/resources/application.properties")).orElse(null);
+			this.applicationProperties = EApplicationProperties.of(FilenameUtils.concat(this.getPath(), "src/main/resources/application.properties"));
 		}
 		return this.applicationProperties;
 	}
