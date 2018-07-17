@@ -60,26 +60,35 @@ public class OneToManyBidAssociationMapper implements JpaAssociationMapper {
 			.setType(String.format("List<%s>", targetJavaClass.getName()))
 			.setName(Inflector.getInstance().pluralize(Strman.lowerFirst(targetJavaClass.getName())))
 			.setLiteralInitializer("new ArrayList<>()");
-		/*
-		 * Adicionar a annotation @OneToMany
-		 */
+		addOneToManyAnnotation(sourceJavaClass, field);
+		addBatchSizeAnnotation(sourceJavaClass, field);
+		addLazyCollectionAnnotation(sourceJavaClass, field);
+		// @formatter:on
+	}
+
+	/*
+	 * Adicionar a annotation @OneToMany
+	 */
+	private void addOneToManyAnnotation(JavaClassSource sourceJavaClass, FieldSource<JavaClassSource> field) {
 		sourceJavaClass.addImport("javax.persistence.OneToMany");
-		field.addAnnotation("OneToMany")
-			.setStringValue("mappedBy", Strman.lowerFirst(sourceJavaClass.getName()));
-		/*
-		 * Adicionar a annotation @BatchSize
-		 */
-		sourceJavaClass.addImport("org.hibernate.annotations.BatchSize");
-		field.addAnnotation("BatchSize")
-			.setLiteralValue("size", "10");
-		/*
-		 * Adicionar a annotation @LazyCollection
-		 */
+		field.addAnnotation("OneToMany").setStringValue("mappedBy", Strman.lowerFirst(sourceJavaClass.getName()));
+	}
+
+	/*
+	 * Adicionar a annotation @LazyCollection
+	 */
+	private void addLazyCollectionAnnotation(JavaClassSource sourceJavaClass, FieldSource<JavaClassSource> field) {
 		sourceJavaClass.addImport("org.hibernate.annotations.LazyCollection");
 		sourceJavaClass.addImport("org.hibernate.annotations.LazyCollectionOption");
-		field.addAnnotation("LazyCollection")
-			.setLiteralValue("LazyCollectionOption.EXTRA");
-		// @formatter:on
+		field.addAnnotation("LazyCollection").setLiteralValue("LazyCollectionOption.EXTRA");
+	}
+
+	/*
+	 * Adicionar a annotation @BatchSize
+	 */
+	private void addBatchSizeAnnotation(JavaClassSource sourceJavaClass, FieldSource<JavaClassSource> field) {
+		sourceJavaClass.addImport("org.hibernate.annotations.BatchSize");
+		field.addAnnotation("BatchSize").setLiteralValue("size", "10");
 	}
 
 }

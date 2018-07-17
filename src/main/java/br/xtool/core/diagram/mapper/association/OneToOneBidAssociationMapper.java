@@ -45,7 +45,7 @@ public class OneToOneBidAssociationMapper implements JpaAssociationMapper {
 			.setName(Strman.lowerFirst(sourceJavaClass.getName()));
 		// @formatter:on
 		AnnotationSource<JavaClassSource> ann = field.addAnnotation("OneToOne");
-		if (link.getLinkArrow().equals(LinkArrow.DIRECT_NORMAL) || link.getLinkArrow().equals(LinkArrow.NONE)) ann.setStringValue("mappedBy", Strman.lowerFirst(targetJavaClass.getName()));
+		if (link.getLinkArrow().equals(LinkArrow.BACKWARD)) ann.setStringValue("mappedBy", Strman.lowerFirst(sourceJavaClass.getName()));
 	}
 
 	private void mapJavaSource(JavaClassSource sourceJavaClass, JavaClassSource targetJavaClass, Link link) {
@@ -57,7 +57,7 @@ public class OneToOneBidAssociationMapper implements JpaAssociationMapper {
 			.setName(Strman.lowerFirst(targetJavaClass.getName()));
 		// @formatter:on
 		AnnotationSource<JavaClassSource> ann = field.addAnnotation("OneToOne");
-		if (link.getLinkArrow().equals(LinkArrow.BACKWARD)) ann.setStringValue("mappedBy", Strman.lowerFirst(targetJavaClass.getName()));
+		if (link.getLinkArrow().equals(LinkArrow.DIRECT_NORMAL) || link.getLinkArrow().equals(LinkArrow.NONE)) ann.setStringValue("mappedBy", Strman.lowerFirst(targetJavaClass.getName()));
 	}
 
 }
