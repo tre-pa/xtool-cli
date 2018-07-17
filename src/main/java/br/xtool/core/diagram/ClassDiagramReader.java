@@ -13,8 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
-import br.xtool.core.diagram.mapper.AssociationMapper;
-import br.xtool.core.diagram.mapper.FieldMapper;
+import br.xtool.core.diagram.mapper.JpaAssociationMapper;
+import br.xtool.core.diagram.mapper.JpaFieldMapper;
 import br.xtool.core.representation.EClass;
 import br.xtool.core.representation.EPackage;
 import br.xtool.core.representation.ESpringBootProject;
@@ -33,10 +33,10 @@ import net.sourceforge.plantuml.cucadiagram.Member;
 public class ClassDiagramReader {
 
 	@Autowired
-	private Collection<FieldMapper> fieldMappers;
+	private Collection<JpaFieldMapper> fieldMappers;
 
 	@Autowired
-	private Collection<AssociationMapper> associationMappers;
+	private Collection<JpaAssociationMapper> associationMappers;
 
 	private Map<String, JavaClassSource> javaClassSources = new HashMap<>();
 
@@ -53,8 +53,7 @@ public class ClassDiagramReader {
 	}
 
 	private String nomalizeDiagram(String diagram) {
-		diagram = diagram.replace("```plantuml", "@startuml");
-		return diagram.replace("```", "@enduml");
+		return diagram.replace("```plantuml", "@startuml").replace("```", "@enduml");
 	}
 
 	/*
@@ -83,6 +82,12 @@ public class ClassDiagramReader {
 	private void addJpaAnnotationToClass(JavaClassSource javaClass) {
 		javaClass.addImport("javax.persistence.Entity");
 		javaClass.addAnnotation("Entity");
+		javaClass.addImport("org.hibernate.annotations.DynamicInsert");
+		javaClass.addAnnotation("DynamicInsert");
+		javaClass.addImport("org.hibernate.annotations.DynamicUpdate");
+		javaClass.addAnnotation("DynamicUpdate");
+		javaClass.addImport("lombok.Getter");
+		javaClass.addAnnotation("Getter");
 	}
 
 	private void parserFields(JavaClassSource javaClass, Member member) {

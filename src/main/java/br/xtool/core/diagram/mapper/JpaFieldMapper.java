@@ -6,7 +6,7 @@ import org.jboss.forge.roaster.model.source.JavaClassSource;
 import net.sourceforge.plantuml.cucadiagram.Member;
 
 @FunctionalInterface
-public interface FieldMapper {
+public interface JpaFieldMapper {
 
 	public void map(JavaClassSource javaClass, Member member);
 
