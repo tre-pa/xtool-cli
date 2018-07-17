@@ -9,7 +9,7 @@ import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkType;
 
 @FunctionalInterface
-public interface JpaAssociationMapper {
+public interface AssociationMapper {
 
 	public Pattern manyMultiplicityPattern = Pattern.compile("\\*|(\\d\\.\\.\\*)");
 

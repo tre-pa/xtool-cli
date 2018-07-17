@@ -5,13 +5,13 @@ import org.jboss.forge.roaster.model.source.FieldSource;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.springframework.stereotype.Component;
 
-import br.xtool.core.diagram.mapper.JpaFieldMapper;
+import br.xtool.core.diagram.mapper.FieldMapper;
 import lombok.extern.slf4j.Slf4j;
 import net.sourceforge.plantuml.cucadiagram.Member;
 
 @Component
 @Slf4j
-public class BooleanFieldMapper implements JpaFieldMapper {
+public class BooleanFieldMapper implements FieldMapper {
 
 	@Override
 	public void map(JavaClassSource javaClass, Member member) {

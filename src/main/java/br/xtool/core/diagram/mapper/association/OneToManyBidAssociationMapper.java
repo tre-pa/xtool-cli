@@ -8,7 +8,7 @@ import org.jboss.forge.roaster.model.source.FieldSource;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.springframework.stereotype.Component;
 
-import br.xtool.core.diagram.mapper.JpaAssociationMapper;
+import br.xtool.core.diagram.mapper.AssociationMapper;
 import br.xtool.core.util.Inflector;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
@@ -21,7 +21,7 @@ import strman.Strman;
  *
  */
 @Component
-public class OneToManyBidAssociationMapper implements JpaAssociationMapper {
+public class OneToManyBidAssociationMapper implements AssociationMapper {
 
 	@Override
 	public void map(Map<String, JavaClassSource> javaClasses, Link link) {
