@@ -51,21 +51,34 @@ public class OneToManyBidAssociationMapper implements AssociationMapper {
 
 	private void mapJavaSource(JavaClassSource sourceJavaClass, JavaClassSource targetJavaClass) {
 		// @formatter:off
-		sourceJavaClass.addImport("javax.persistence.OneToMany");
-		// @formatter:on
-
 		sourceJavaClass.addImport(List.class);
 		sourceJavaClass.addImport(ArrayList.class);
 		sourceJavaClass.addImport(targetJavaClass);
-		// @formatter:off
 		FieldSource<JavaClassSource> field = sourceJavaClass
 			.addField()
 			.setPrivate()
 			.setType(String.format("List<%s>", targetJavaClass.getName()))
 			.setName(Inflector.getInstance().pluralize(Strman.lowerFirst(targetJavaClass.getName())))
 			.setLiteralInitializer("new ArrayList<>()");
+		/*
+		 * Adicionar a annotation @OneToMany
+		 */
+		sourceJavaClass.addImport("javax.persistence.OneToMany");
 		field.addAnnotation("OneToMany")
 			.setStringValue("mappedBy", Strman.lowerFirst(sourceJavaClass.getName()));
+		/*
+		 * Adicionar a annotation @BatchSize
+		 */
+		sourceJavaClass.addImport("org.hibernate.annotations.BatchSize");
+		field.addAnnotation("BatchSize")
+			.setLiteralValue("size", "10");
+		/*
+		 * Adicionar a annotation @LazyCollection
+		 */
+		sourceJavaClass.addImport("org.hibernate.annotations.LazyCollection");
+		sourceJavaClass.addImport("org.hibernate.annotations.LazyCollectionOption");
+		field.addAnnotation("LazyCollection")
+			.setLiteralValue("LazyCollectionOption.EXTRA");
 		// @formatter:on
 	}
 

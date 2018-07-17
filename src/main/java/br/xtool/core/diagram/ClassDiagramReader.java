@@ -69,6 +69,7 @@ public class ClassDiagramReader {
 				javaClass.setPackage(packageName);
 				javaClass.setName(leaf.getDisplay().asStringWithHiddenNewLine());
 				this.javaClassSources.put(javaClass.getName(), javaClass);
+				addJpaAnnotationToClass(javaClass);
 				for (Member member : leaf.getBodier().getFieldsToDisplay()) {
 					if (!StringUtils.isEmpty(member.getDisplay(false))) {
 						log.info("Iniciando parse para atributo: {}/{}", member.getDisplay(false), javaClass.getName());
@@ -77,6 +78,11 @@ public class ClassDiagramReader {
 				}
 			}
 		}
+	}
+
+	private void addJpaAnnotationToClass(JavaClassSource javaClass) {
+		javaClass.addImport("javax.persistence.Entity");
+		javaClass.addAnnotation("Entity");
 	}
 
 	private void parserFields(JavaClassSource javaClass, Member member) {
