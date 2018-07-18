@@ -1,4 +1,4 @@
-package br.xtool.core.command;
+package br.xtool.core.aware;
 
 import java.io.IOException;
 import java.util.stream.Stream;
@@ -14,7 +14,7 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class AngularCommand {
+public class AngularAware {
 
 	@Autowired
 	private WorkContext workContext;

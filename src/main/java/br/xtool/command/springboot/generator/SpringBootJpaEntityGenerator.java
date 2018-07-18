@@ -13,7 +13,7 @@ import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 
 import br.xtool.XtoolCliApplication;
-import br.xtool.core.command.SpringBootCommand;
+import br.xtool.core.aware.SpringBootAware;
 import br.xtool.core.diagram.ClassDiagramReader;
 import br.xtool.core.service.FileService;
 import br.xtool.core.util.Names;
@@ -25,7 +25,7 @@ import br.xtool.core.util.Names;
  *
  */
 @ShellComponent
-public class SpringBootJpaEntityGenerator extends SpringBootCommand {
+public class SpringBootJpaEntityGenerator extends SpringBootAware {
 
 	@Autowired
 	private FileService fs;

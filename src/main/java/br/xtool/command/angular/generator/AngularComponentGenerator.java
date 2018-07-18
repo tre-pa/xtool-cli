@@ -11,14 +11,14 @@ import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 
 import br.xtool.XtoolCliApplication;
-import br.xtool.core.command.AngularCommand;
+import br.xtool.core.aware.AngularAware;
 import br.xtool.core.representation.ENgModule;
 import br.xtool.core.representation.provider.ENgModuleValueProvider;
 import br.xtool.core.service.FileService;
 import br.xtool.core.service.NgService;
 
 @ShellComponent
-public class AngularComponentGenerator extends AngularCommand {
+public class AngularComponentGenerator extends AngularAware {
 
 	@Autowired
 	private FileService fs;

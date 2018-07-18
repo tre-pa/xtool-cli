@@ -9,7 +9,7 @@ import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 
 import br.xtool.XtoolCliApplication;
-import br.xtool.core.command.SpringBootCommand;
+import br.xtool.core.aware.SpringBootAware;
 import br.xtool.core.representation.impl.EJavaEntityImpl;
 import br.xtool.core.representation.provider.EJavaEntityValueProvider;
 import br.xtool.core.service.FileService;
@@ -23,7 +23,7 @@ import strman.Strman;
  *
  */
 @ShellComponent
-public class SpringBootJpaCrudGenerator extends SpringBootCommand {
+public class SpringBootJpaCrudGenerator extends SpringBootAware {
 
 	@Autowired
 	private FileService fs;

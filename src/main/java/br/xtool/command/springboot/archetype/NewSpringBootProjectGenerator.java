@@ -15,7 +15,7 @@ import br.xtool.command.springboot.support.core.SpringBootSupport.SupportType;
 import br.xtool.command.springboot.support.core.SupportManager;
 import br.xtool.core.ConsoleLog;
 import br.xtool.core.WorkContext;
-import br.xtool.core.command.RegularCommand;
+import br.xtool.core.aware.RegularAware;
 import br.xtool.core.representation.EJavaPackage;
 import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.impl.EJavaPackageImpl;
@@ -29,7 +29,7 @@ import br.xtool.core.util.Names;
  *
  */
 @ShellComponent
-public class NewSpringBootProjectGenerator extends RegularCommand {
+public class NewSpringBootProjectGenerator extends RegularAware {
 
 	@Autowired
 	private FileService fs;

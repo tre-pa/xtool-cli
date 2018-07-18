@@ -9,12 +9,12 @@ import org.springframework.shell.standard.ShellOption;
 import org.springframework.util.Assert;
 
 import br.xtool.XtoolCliApplication;
-import br.xtool.core.command.SpringBootCommand;
+import br.xtool.core.aware.SpringBootAware;
 import br.xtool.core.representation.EJavaEntity;
 import br.xtool.core.representation.provider.EJavaEntityValueProvider;
 
 //@ShellComponent
-public class SpringBootJpaEntityMapper extends SpringBootCommand {
+public class SpringBootJpaEntityMapper extends SpringBootAware {
 
 	@ShellMethod(key = "map:entity", value = "Mapeia uma entidade JPA existente", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
 	// @formatter:off

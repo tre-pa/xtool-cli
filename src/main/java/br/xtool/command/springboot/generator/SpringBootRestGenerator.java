@@ -11,12 +11,12 @@ import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 
 import br.xtool.XtoolCliApplication;
-import br.xtool.core.command.SpringBootCommand;
+import br.xtool.core.aware.SpringBootAware;
 import br.xtool.core.service.FileService;
 import br.xtool.core.util.Names;
 
 @ShellComponent
-public class SpringBootRestGenerator extends SpringBootCommand {
+public class SpringBootRestGenerator extends SpringBootAware {
 
 	@Autowired
 	private FileService fs;

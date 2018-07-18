@@ -8,11 +8,11 @@ import org.springframework.shell.standard.ShellMethod;
 
 import br.xtool.XtoolCliApplication;
 import br.xtool.core.ConsoleLog;
-import br.xtool.core.command.SpringBootCommand;
+import br.xtool.core.aware.SpringBootAware;
 import br.xtool.core.representation.EJavaEntity;
 
 @ShellComponent
-public class SpringBootEntityInfo extends SpringBootCommand {
+public class SpringBootEntityInfo extends SpringBootAware {
 
 	@ShellMethod(key = "info:entity", value = "Exibe informações sobre as entidades JPA do projeto", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
 	public void run() {

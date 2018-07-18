@@ -1,4 +1,4 @@
-package br.xtool.core.command;
+package br.xtool.core.aware;
 
 import java.io.IOException;
 
@@ -9,7 +9,7 @@ import org.springframework.shell.standard.ShellMethodAvailability;
 import br.xtool.core.WorkContext;
 import br.xtool.core.representation.EProject.ProjectType;
 
-public class RegularCommand {
+public class RegularAware {
 
 	@Autowired
 	private WorkContext workContext;

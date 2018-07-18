@@ -8,11 +8,11 @@ import org.springframework.shell.standard.ShellMethod;
 
 import br.xtool.XtoolCliApplication;
 import br.xtool.core.ConsoleLog;
-import br.xtool.core.command.SpringBootCommand;
+import br.xtool.core.aware.SpringBootAware;
 import br.xtool.core.representation.EJavaRepository;
 
 @ShellComponent
-public class SpringBootRepositoryInfo extends SpringBootCommand {
+public class SpringBootRepositoryInfo extends SpringBootAware {
 
 	@ShellMethod(key = "info:repository", value = "Exibe informações sobre os Repositórios do projeto", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
 	public void run() {

@@ -8,11 +8,11 @@ import org.springframework.shell.standard.ShellMethod;
 
 import br.xtool.XtoolCliApplication;
 import br.xtool.core.ConsoleLog;
-import br.xtool.core.command.SpringBootCommand;
+import br.xtool.core.aware.SpringBootAware;
 import br.xtool.core.representation.EJavaRest;
 
 @ShellComponent
-public class SpringBootRestInfo extends SpringBootCommand {
+public class SpringBootRestInfo extends SpringBootAware {
 
 	@ShellMethod(key = "info:rest", value = "Exibe informações sobre os Rests do projeto", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
 	public void run() {
