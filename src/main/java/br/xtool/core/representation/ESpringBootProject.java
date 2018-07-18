@@ -19,6 +19,8 @@ import br.xtool.core.representation.enums.ProjectType;
 import br.xtool.core.representation.impl.EApplicationPropertiesImpl;
 import br.xtool.core.representation.impl.EClassImpl;
 import br.xtool.core.representation.impl.EEntityImpl;
+import br.xtool.core.representation.impl.EPomImpl;
+import br.xtool.core.representation.impl.ERepositoryImpl;
 import br.xtool.core.util.RoasterUtil;
 import lombok.extern.slf4j.Slf4j;
 
@@ -89,7 +91,7 @@ public class ESpringBootProject extends EProject {
 	 */
 	public EPom getPom() {
 		if (Objects.isNull(this.pom)) {
-			this.pom = EPom.of(FilenameUtils.concat(this.getPath(), "pom.xml"));
+			this.pom = EPomImpl.of(FilenameUtils.concat(this.getPath(), "pom.xml"));
 		}
 		return this.pom;
 	}
@@ -135,7 +137,7 @@ public class ESpringBootProject extends EProject {
 			.filter(javaUnit -> javaUnit.getGoverningType().isInterface())
 			.map(javaUnit -> javaUnit.<JavaInterfaceSource>getGoverningType())
 			.filter(j -> j.getAnnotations().stream().anyMatch(ann -> ann.getName().equals("Repository")))
-			.map(j -> new ERepository(this, j))
+			.map(j -> new ERepositoryImpl(this, j))
 			.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
 	}

@@ -24,6 +24,7 @@ import com.google.common.collect.ImmutableSet;
 
 import br.xtool.core.representation.angular.ENgPackage;
 import br.xtool.core.representation.enums.ProjectType;
+import br.xtool.core.representation.impl.EPomImpl;
 import lombok.Getter;
 
 public class EDirectory {
@@ -93,7 +94,7 @@ public class EDirectory {
 		public @Nullable ProjectType apply(@Nullable EDirectory dr) {
 			String pomFile = FilenameUtils.concat(dr.getPath(), "pom.xml");
 			if (Files.exists(Paths.get(pomFile))) {
-				EPom pomRepresentation = EPom.of(pomFile);
+				EPom pomRepresentation = EPomImpl.of(pomFile);
 				Pattern pattern = Pattern.compile("1.5.\\d\\d?.RELEASE");
 				Matcher matcher = pattern.matcher(pomRepresentation.getParentVersion());
 				if (matcher.matches()) {
