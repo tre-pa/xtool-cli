@@ -12,9 +12,9 @@ import java.util.stream.Stream;
 
 import org.apache.commons.io.FilenameUtils;
 
-import br.xtool.core.representation.EDirectory;
 import br.xtool.core.representation.EProject;
 import br.xtool.core.representation.enums.ProjectType;
+import br.xtool.core.representation.impl.EDirectoryImpl;
 import lombok.Getter;
 
 @Getter
@@ -170,7 +170,7 @@ public class EAngularProject extends EProject {
 	}
 
 	public static Optional<EAngularProject> of(String path) {
-		if (Stream.of(ProjectType.ANGULAR5_PROJECT, ProjectType.ANGULAR6_PROJECT).anyMatch(p -> p.equals(EDirectory.of(path).getProjectType()))) {
+		if (Stream.of(ProjectType.ANGULAR5_PROJECT, ProjectType.ANGULAR6_PROJECT).anyMatch(p -> p.equals(EDirectoryImpl.of(path).getProjectType()))) {
 			return Optional.of(new EAngularProject(path));
 		}
 		return Optional.empty();

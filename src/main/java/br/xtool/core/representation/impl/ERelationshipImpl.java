@@ -2,11 +2,11 @@ package br.xtool.core.representation.impl;
 
 import java.util.Optional;
 
-import br.xtool.core.representation.EAssociation;
+import br.xtool.core.representation.ERelationship;
 import br.xtool.core.representation.EAttribute;
 import br.xtool.core.representation.EEntity;
 
-public class EAssociationImpl implements EAssociation {
+public class ERelationshipImpl implements ERelationship {
 
 	private EEntity entitySource;
 
@@ -14,7 +14,7 @@ public class EAssociationImpl implements EAssociation {
 
 	private EAttribute attributeSource;
 
-	public EAssociationImpl(EEntity source, EEntity target, EAttribute attributeSource) {
+	public ERelationshipImpl(EEntity source, EEntity target, EAttribute attributeSource) {
 		super();
 		this.entitySource = source;
 		this.entityTarget = target;
@@ -29,7 +29,7 @@ public class EAssociationImpl implements EAssociation {
 	@Override
 	public boolean isBidirectional() {
 		// @formatter:off
-		return this.entityTarget.getAssociations().stream()
+		return this.entityTarget.getRelationship().stream()
 				.filter(association -> association.getEntityTarget().isPresent())
 				.anyMatch(association -> association.getEntityTarget().get().getName().equals(this.entitySource.getName()));
 		// @formatter:on

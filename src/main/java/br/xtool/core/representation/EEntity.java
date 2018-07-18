@@ -7,5 +7,5 @@ public interface EEntity extends EClass {
 
 	SortedSet<EAttribute> getAttributes();
 
-	Set<EAssociation> getAssociations();
+	Set<ERelationship> getRelationship();
 }

@@ -1,6 +1,7 @@
 package br.xtool.core.representation;
 
 import br.xtool.core.representation.enums.ProjectType;
+import br.xtool.core.representation.impl.EDirectoryImpl;
 import lombok.Getter;
 
 public abstract class EProject {
@@ -14,7 +15,7 @@ public abstract class EProject {
 	public EProject(String path) {
 		super();
 		this.path = path;
-		this.directory = EDirectory.of(path);
+		this.directory = EDirectoryImpl.of(path);
 	}
 
 	/**

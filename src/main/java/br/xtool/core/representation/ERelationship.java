@@ -2,7 +2,7 @@ package br.xtool.core.representation;
 
 import java.util.Optional;
 
-public interface EAssociation {
+public interface ERelationship {
 
 	boolean isBidirectional();
 

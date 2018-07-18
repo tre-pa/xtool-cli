@@ -53,21 +53,21 @@ public class EAttributeImpl extends EFieldImpl implements EAttribute {
 	}
 
 	@Override
-	public Optional<EAssociationImpl> getAssociation() {
+	public Optional<ERelationshipImpl> getAssociation() {
 		if (this.isAssociation()) {
 			if (this.isCollection()) {
 				// @formatter:off
 				return this.springBootProject.getEntities().stream()
 						.filter(entity -> this.getType().getTypeArguments().stream()
 								.anyMatch(type -> type.getName().equals(entity.getName())))
-						.map(entityTarget -> new EAssociationImpl(this.entitySource, entityTarget, this))
+						.map(entityTarget -> new ERelationshipImpl(this.entitySource, entityTarget, this))
 						.findFirst();
 				// @formatter:on
 			}
 			// @formatter:off
 			return this.springBootProject.getEntities().stream()
 					.filter(entity -> entity.getName().equals(this.getType().getName()))
-					.map(entityTarget -> new EAssociationImpl(this.entitySource, entityTarget, this))
+					.map(entityTarget -> new ERelationshipImpl(this.entitySource, entityTarget, this))
 					.findFirst();
 			// @formatter:on
 		}

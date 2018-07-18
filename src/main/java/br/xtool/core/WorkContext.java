@@ -22,6 +22,7 @@ import br.xtool.core.representation.EDirectory;
 import br.xtool.core.representation.ESpringBootProject;
 import br.xtool.core.representation.angular.EAngularProject;
 import br.xtool.core.representation.enums.ProjectType;
+import br.xtool.core.representation.impl.EDirectoryImpl;
 import lombok.Getter;
 
 @Component
@@ -43,7 +44,7 @@ public class WorkContext implements PromptProvider {
 	 * @param newAbsoluteDirectory
 	 */
 	public void changeTo(String newAbsoluteDirectory) {
-		this.directory = EDirectory.of(newAbsoluteDirectory);
+		this.directory = EDirectoryImpl.of(newAbsoluteDirectory);
 		this.springBootProject = null;
 		this.angularProject = null;
 		this.applicationEventPublisher.publishEvent(new ChangeDirectoryEvent(this.directory));
@@ -56,7 +57,7 @@ public class WorkContext implements PromptProvider {
 	private void setupHomeDirectory() throws IOException {
 		String home = FilenameUtils.concat(System.getProperty("user.home"), "git");
 		Files.createDirectories(Paths.get(home));
-		this.directory = EDirectory.of(home);
+		this.directory = EDirectoryImpl.of(home);
 	}
 
 	/**

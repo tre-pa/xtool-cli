@@ -18,9 +18,11 @@ import br.xtool.core.representation.angular.EAngularProject;
 import br.xtool.core.representation.enums.ProjectType;
 import br.xtool.core.representation.impl.EApplicationPropertiesImpl;
 import br.xtool.core.representation.impl.EClassImpl;
+import br.xtool.core.representation.impl.EDirectoryImpl;
 import br.xtool.core.representation.impl.EEntityImpl;
 import br.xtool.core.representation.impl.EPomImpl;
 import br.xtool.core.representation.impl.ERepositoryImpl;
+import br.xtool.core.representation.impl.ERestImpl;
 import br.xtool.core.util.RoasterUtil;
 import lombok.extern.slf4j.Slf4j;
 
@@ -153,7 +155,7 @@ public class ESpringBootProject extends EProject {
 			.filter(javaUnit -> javaUnit.getGoverningType().isClass())
 			.map(javaUnit -> javaUnit.<JavaClassSource>getGoverningType())
 			.filter(j -> j.getAnnotations().stream().anyMatch(ann -> ann.getName().equals("RestController")))
-			.map(j -> new ERest(this, j))
+			.map(j -> new ERestImpl(this, j))
 			.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
 	}
@@ -183,7 +185,7 @@ public class ESpringBootProject extends EProject {
 	}
 
 	public static Optional<ESpringBootProject> of(String path) {
-		if (Stream.of(ProjectType.SPRINGBOOT1_PROJECT, ProjectType.SPRINGBOOT2_PROJECT).anyMatch(p -> p.equals(EDirectory.of(path).getProjectType()))) {
+		if (Stream.of(ProjectType.SPRINGBOOT1_PROJECT, ProjectType.SPRINGBOOT2_PROJECT).anyMatch(p -> p.equals(EDirectoryImpl.of(path).getProjectType()))) {
 			ESpringBootProject project = new ESpringBootProject(path);
 			return Optional.of(project);
 		}

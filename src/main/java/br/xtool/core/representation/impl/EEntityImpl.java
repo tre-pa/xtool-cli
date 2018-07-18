@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 
-import br.xtool.core.representation.EAssociation;
+import br.xtool.core.representation.ERelationship;
 import br.xtool.core.representation.EAttribute;
 import br.xtool.core.representation.EEntity;
 import br.xtool.core.representation.ESpringBootProject;
@@ -49,8 +49,8 @@ public class EEntityImpl extends EClassImpl implements EEntity {
 	 * @return
 	 */
 	@Override
-	public Set<EAssociation> getAssociations() {
-		Set<EAssociation> associations = new HashSet<>();
+	public Set<ERelationship> getRelationship() {
+		Set<ERelationship> associations = new HashSet<>();
 		// @formatter:off
 		this.getAttributes().stream()
 			.filter(EAttribute::isAssociation)
