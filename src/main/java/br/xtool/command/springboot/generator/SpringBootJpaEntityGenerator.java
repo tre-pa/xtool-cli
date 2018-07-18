@@ -13,10 +13,10 @@ import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 
 import br.xtool.XtoolCliApplication;
-import br.xtool.core.FS;
-import br.xtool.core.Names;
 import br.xtool.core.command.SpringBootCommand;
 import br.xtool.core.diagram.ClassDiagramReader;
+import br.xtool.core.service.FileService;
+import br.xtool.core.util.Names;
 
 /**
  * Comando que gera uma classe Repository no projeto Spring Boot
@@ -28,7 +28,7 @@ import br.xtool.core.diagram.ClassDiagramReader;
 public class SpringBootJpaEntityGenerator extends SpringBootCommand {
 
 	@Autowired
-	private FS fs;
+	private FileService fs;
 
 	@Autowired
 	private ClassDiagramReader diagramReader;

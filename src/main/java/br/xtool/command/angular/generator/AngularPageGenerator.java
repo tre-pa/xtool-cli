@@ -9,17 +9,17 @@ import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 
 import br.xtool.XtoolCliApplication;
-import br.xtool.core.FS;
 import br.xtool.core.command.AngularCommand;
 import br.xtool.core.representation.ENgModule;
 import br.xtool.core.representation.provider.ENgModuleValueProvider;
+import br.xtool.core.service.FileService;
 import br.xtool.core.service.NgService;
 
 @ShellComponent
 public class AngularPageGenerator extends AngularCommand {
 
 	@Autowired
-	private FS fs;
+	private FileService fs;
 
 	@Autowired
 	private NgService ngService;

@@ -1,4 +1,4 @@
-package br.xtool.core;
+package br.xtool.core.util;
 
 import org.apache.commons.lang3.StringUtils;
 

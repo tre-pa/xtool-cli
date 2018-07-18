@@ -12,16 +12,16 @@ import org.springframework.shell.standard.ShellOption;
 
 import br.xtool.XtoolCliApplication;
 import br.xtool.core.ConsoleLog;
-import br.xtool.core.FS;
 import br.xtool.core.WorkContext;
 import br.xtool.core.command.RegularCommand;
+import br.xtool.core.service.FileService;
 import br.xtool.core.service.ShellService;
 
 @ShellComponent
 public class NewAngularProjectGenerator extends RegularCommand {
 
 	@Autowired
-	private FS fs;
+	private FileService fs;
 
 	@Autowired
 	private ShellService shellService;

@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import com.google.common.collect.ImmutableMap;
 
-import br.xtool.core.FS;
 import br.xtool.core.WorkContext;
 import br.xtool.core.representation.ENgComponent;
 import br.xtool.core.representation.ENgDialog;
@@ -28,7 +27,7 @@ public class NgService {
 	private WorkContext workContext;
 
 	@Autowired
-	private FS fs;
+	private FileService fs;
 
 	/**
 	 * 

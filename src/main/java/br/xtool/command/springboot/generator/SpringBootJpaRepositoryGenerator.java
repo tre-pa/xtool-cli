@@ -11,11 +11,11 @@ import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 
 import br.xtool.XtoolCliApplication;
-import br.xtool.core.FS;
-import br.xtool.core.Names;
 import br.xtool.core.command.SpringBootCommand;
 import br.xtool.core.representation.impl.EJavaEntityImpl;
 import br.xtool.core.representation.provider.EJavaEntityValueProvider;
+import br.xtool.core.service.FileService;
+import br.xtool.core.util.Names;
 
 /**
  * Comando que gera um classe Repository no projeto Spring Boot
@@ -27,7 +27,7 @@ import br.xtool.core.representation.provider.EJavaEntityValueProvider;
 public class SpringBootJpaRepositoryGenerator extends SpringBootCommand {
 
 	@Autowired
-	private FS fs;
+	private FileService fs;
 
 	@ShellMethod(key = "gen:repository", value = "Gera uma classe de Repository (JpaRepository) para entidade JPA em um projeto Spring Boot", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
 	public void run(@ShellOption(help = "Entidade JPA", valueProvider = EJavaEntityValueProvider.class) EJavaEntityImpl entity) throws IOException, JDOMException {

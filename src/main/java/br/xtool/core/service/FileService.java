@@ -1,4 +1,4 @@
-package br.xtool.core;
+package br.xtool.core.service;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,12 +15,14 @@ import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
+import br.xtool.core.ConsoleLog;
+import br.xtool.core.WorkContext;
 import lombok.SneakyThrows;
 
-@Component
-public class FS {
+@Service
+public class FileService {
 
 	@Autowired
 	private VelocityEngine vEngine;
@@ -56,7 +58,7 @@ public class FS {
 		VelocityContext vContext = new VelocityContext(vars);
 		templatePath = this.inlineTemplate(templatePath, vars);
 		relativeDestination = this.inlineTemplate(relativeDestination, vars);
-		String finalDestination = FilenameUtils.concat(workContext.getDirectory().getPath(), relativeDestination);
+		String finalDestination = FilenameUtils.concat(this.workContext.getDirectory().getPath(), relativeDestination);
 		if (!Files.exists(Paths.get(finalDestination))) {
 			FileUtils.forceMkdirParent(new File(finalDestination));
 			if (binary) {
@@ -64,7 +66,7 @@ public class FS {
 				ConsoleLog.print(ConsoleLog.bold(ConsoleLog.green("\t[+] ")), ConsoleLog.purple("File: "), ConsoleLog.white(relativeDestination));
 				return;
 			}
-			Template t = vEngine.getTemplate(String.format("templates/%s", templatePath), "UTF-8");
+			Template t = this.vEngine.getTemplate(String.format("templates/%s", templatePath), "UTF-8");
 			FileWriterWithEncoding writer = new FileWriterWithEncoding(finalDestination, "UTF-8");
 			t.merge(vContext, writer);
 			writer.flush();
@@ -85,7 +87,7 @@ public class FS {
 	public String inlineTemplate(String inlineTemplate, Map<String, Object> vars) {
 		VelocityContext vContext = new VelocityContext(vars);
 		StringWriter stringWriter = new StringWriter();
-		vEngine.evaluate(vContext, stringWriter, new String(), inlineTemplate);
+		this.vEngine.evaluate(vContext, stringWriter, new String(), inlineTemplate);
 		return stringWriter.toString();
 	}
 
@@ -98,7 +100,7 @@ public class FS {
 	public void createEmptyPath(String relativeDestination, Map<String, Object> vars) {
 		try {
 			relativeDestination = this.inlineTemplate(relativeDestination, vars);
-			String finalDestination = FilenameUtils.concat(workContext.getDirectory().getPath(), relativeDestination);
+			String finalDestination = FilenameUtils.concat(this.workContext.getDirectory().getPath(), relativeDestination);
 			if (!Files.exists(Paths.get(finalDestination))) {
 				FileUtils.forceMkdir(new File(finalDestination));
 				FileUtils.touch(new File(FilenameUtils.concat(finalDestination, ".gitkeep")));

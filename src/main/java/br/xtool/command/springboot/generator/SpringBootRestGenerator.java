@@ -11,15 +11,15 @@ import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 
 import br.xtool.XtoolCliApplication;
-import br.xtool.core.FS;
-import br.xtool.core.Names;
 import br.xtool.core.command.SpringBootCommand;
+import br.xtool.core.service.FileService;
+import br.xtool.core.util.Names;
 
 @ShellComponent
 public class SpringBootRestGenerator extends SpringBootCommand {
 
 	@Autowired
-	private FS fs;
+	private FileService fs;
 
 	@ShellMethod(key = "gen:rest", value = "Gera uma classe Rest em um projeto Spring Boot", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
 	public void run(@ShellOption(help = "Nome da classe Rest") String name) throws JDOMException, IOException {

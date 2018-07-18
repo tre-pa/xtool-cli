@@ -14,13 +14,13 @@ import br.xtool.XtoolCliApplication;
 import br.xtool.command.springboot.support.core.SpringBootSupport.SupportType;
 import br.xtool.command.springboot.support.core.SupportManager;
 import br.xtool.core.ConsoleLog;
-import br.xtool.core.FS;
-import br.xtool.core.Names;
 import br.xtool.core.WorkContext;
 import br.xtool.core.command.RegularCommand;
 import br.xtool.core.representation.EJavaPackage;
 import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.impl.EJavaPackageImpl;
+import br.xtool.core.service.FileService;
+import br.xtool.core.util.Names;
 
 /**
  * Shell Commando responsável por criar uma projeto Spring Boot 1.5.x
@@ -32,7 +32,7 @@ import br.xtool.core.representation.impl.EJavaPackageImpl;
 public class NewSpringBootProjectGenerator extends RegularCommand {
 
 	@Autowired
-	private FS fs;
+	private FileService fs;
 
 	@Autowired
 	private WorkContext workContext;

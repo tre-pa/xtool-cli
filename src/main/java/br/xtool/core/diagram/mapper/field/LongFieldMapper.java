@@ -4,8 +4,8 @@ import org.jboss.forge.roaster.model.source.FieldSource;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.springframework.stereotype.Component;
 
-import br.xtool.core.Names;
 import br.xtool.core.diagram.mapper.FieldMapper;
+import br.xtool.core.util.Names;
 import lombok.extern.slf4j.Slf4j;
 
 /**

@@ -6,7 +6,6 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import br.xtool.core.FS;
 import br.xtool.core.WorkContext;
 import lombok.SneakyThrows;
 
@@ -14,7 +13,7 @@ import lombok.SneakyThrows;
 public class ShellService {
 
 	@Autowired
-	private FS fs;
+	private FileService fs;
 
 	@Autowired
 	private WorkContext workContext;

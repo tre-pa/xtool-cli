@@ -8,9 +8,9 @@ import org.springframework.stereotype.Component;
 
 import br.xtool.command.springboot.support.core.SpringBootSupport;
 import br.xtool.core.ConsoleLog;
-import br.xtool.core.FS;
 import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.EProject.ProjectType;
+import br.xtool.core.service.FileService;
 
 /**
  * 
@@ -23,7 +23,7 @@ import br.xtool.core.representation.EProject.ProjectType;
 public class SpringBoot1WebSupport implements SpringBootSupport {
 
 	@Autowired
-	private FS fs;
+	private FileService fs;
 
 	@Override
 	public ProjectType getApplyForType() {
