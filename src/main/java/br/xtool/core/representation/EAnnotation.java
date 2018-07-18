@@ -1,194 +1,98 @@
 package br.xtool.core.representation;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.jboss.forge.roaster.model.source.AnnotationSource;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 
 /**
- * Representação de uma annotation.
+ * Classe que representa uma annotation.
  * 
  * @author jcruz
  *
  */
-public class EAnnotation implements Comparable<EAnnotation> {
-
-	private AnnotationSource<JavaClassSource> annotation;
-
-	public EAnnotation(AnnotationSource<JavaClassSource> annotation) {
-		super();
-		this.annotation = annotation;
-	}
+public interface EAnnotation extends Comparable<EAnnotation> {
 
 	/**
 	 * Retorna o nome da annotation.
 	 * 
 	 * @return
 	 */
-	public String getName() {
-		return annotation.getName();
-	}
+	String getName();
 
-	public boolean isSingleValue() {
-		return annotation.isSingleValue();
-	}
+	boolean isSingleValue();
 
-	public AnnotationSource<JavaClassSource> getAnnotationValue() {
-		return annotation.getAnnotationValue();
-	}
+	boolean isMarker();
 
-	public boolean isMarker() {
-		return annotation.isMarker();
-	}
+	boolean isNormal();
 
-	public boolean isNormal() {
-		return annotation.isNormal();
-	}
+	AnnotationSource<JavaClassSource> getAnnotationValue();
 
-	public AnnotationSource<JavaClassSource> getAnnotationValue(String name) {
-		return annotation.getAnnotationValue(name);
-	}
+	AnnotationSource<JavaClassSource> getAnnotationValue(String name);
 
-	public String getQualifiedName() {
-		return annotation.getQualifiedName();
-	}
+	String getQualifiedName();
 
-	public <T extends Enum<T>> T getEnumValue(Class<T> type) {
-		return annotation.getEnumValue(type);
-	}
+	<T extends Enum<T>> T getEnumValue(Class<T> type);
 
-	public List<AnnotationSource<JavaClassSource>> getAnnotationArrayValue() {
-		return Arrays.asList(annotation.getAnnotationArrayValue());
-	}
+	List<AnnotationSource<JavaClassSource>> getAnnotationArrayValue();
 
-	public <T extends Enum<T>> T getEnumValue(Class<T> type, String name) {
-		return annotation.getEnumValue(type, name);
-	}
+	<T extends Enum<T>> T getEnumValue(Class<T> type, String name);
 
-	public List<AnnotationSource<JavaClassSource>> getAnnotationArrayValue(String name) {
-		return Arrays.asList(annotation.getAnnotationArrayValue(name));
-	}
+	List<AnnotationSource<JavaClassSource>> getAnnotationArrayValue(String name);
 
-	public <T extends Enum<T>> List<T> getEnumArrayValue(Class<T> type) {
-		return Arrays.asList(annotation.getEnumArrayValue(type));
-	}
+	<T extends Enum<T>> List<T> getEnumArrayValue(Class<T> type);
 
-	public <T extends Enum<T>> List<T> getEnumArrayValue(Class<T> type, String name) {
-		return Arrays.asList(annotation.getEnumArrayValue(type, name));
-	}
+	<T extends Enum<T>> List<T> getEnumArrayValue(Class<T> type, String name);
 
-	public String getLiteralValue() {
-		return annotation.getLiteralValue();
-	}
+	String getLiteralValue();
 
-	public String getStringValue() {
-		return annotation.getStringValue();
-	}
+	String getStringValue();
 
-	public String getStringValue(String name) {
-		return annotation.getStringValue(name);
-	}
+	String getStringValue(String name);
 
-	public String getLiteralValue(String name) {
-		return annotation.getLiteralValue(name);
-	}
+	String getLiteralValue(String name);
 
-	public List<String> getStringArrayValue() {
-		return Arrays.asList(annotation.getStringArrayValue());
-	}
+	List<String> getStringArrayValue();
 
-	public List<String> getStringArrayValue(String name) {
-		return Arrays.asList(annotation.getStringArrayValue(name));
-	}
+	List<String> getStringArrayValue(String name);
 
-	public Class<?> getClassValue() {
-		return annotation.getClassValue();
-	}
+	Class<?> getClassValue();
 
-	public Class<?> getClassValue(String name) {
-		return annotation.getClassValue(name);
-	}
+	Class<?> getClassValue(String name);
 
-	public List<Class<?>> getClassArrayValue() {
-		return Arrays.asList(annotation.getClassArrayValue());
-	}
+	List<Class<?>> getClassArrayValue();
 
-	public List<Class<?>> getClassArrayValue(String name) {
-		return Arrays.asList(annotation.getClassArrayValue(name));
-	}
+	List<Class<?>> getClassArrayValue(String name);
 
-//	public AnnotationSource<JavaClassSource> setName(String className) {
-//		return annotation.setName(className);
-//	}
+	AnnotationSource<JavaClassSource> setEnumValue(String name, Enum<?> value);
 
-	public AnnotationSource<JavaClassSource> setEnumValue(String name, Enum<?> value) {
-		return annotation.setEnumValue(name, value);
-	}
+	AnnotationSource<JavaClassSource> setEnumValue(Enum<?>... value);
 
-	public AnnotationSource<JavaClassSource> setEnumValue(Enum<?>... value) {
-		return annotation.setEnumValue(value);
-	}
+	AnnotationSource<JavaClassSource> setEnumArrayValue(String name, Enum<?>... values);
 
-	public AnnotationSource<JavaClassSource> setEnumArrayValue(String name, Enum<?>... values) {
-		return annotation.setEnumArrayValue(name, values);
-	}
+	public AnnotationSource<JavaClassSource> setEnumArrayValue(Enum<?>... values);
 
-	public AnnotationSource<JavaClassSource> setEnumArrayValue(Enum<?>... values) {
-		return annotation.setEnumArrayValue(values);
-	}
+	AnnotationSource<JavaClassSource> setLiteralValue(String value);
 
-	public AnnotationSource<JavaClassSource> setLiteralValue(String value) {
-		return annotation.setLiteralValue(value);
-	}
+	AnnotationSource<JavaClassSource> setLiteralValue(String name, String value);
 
-	public AnnotationSource<JavaClassSource> setLiteralValue(String name, String value) {
-		return annotation.setLiteralValue(name, value);
-	}
+	AnnotationSource<JavaClassSource> setStringValue(String value);
 
-	public AnnotationSource<JavaClassSource> setStringValue(String value) {
-		return annotation.setStringValue(value);
-	}
+	AnnotationSource<JavaClassSource> setStringValue(String name, String value);
 
-	public AnnotationSource<JavaClassSource> setStringValue(String name, String value) {
-		return annotation.setStringValue(name, value);
-	}
+	AnnotationSource<JavaClassSource> setAnnotationValue();
 
-	public AnnotationSource<JavaClassSource> setAnnotationValue() {
-		return annotation.setAnnotationValue();
-	}
+	AnnotationSource<JavaClassSource> setAnnotationValue(String name);
 
-	public AnnotationSource<JavaClassSource> setAnnotationValue(String name) {
-		return annotation.setAnnotationValue(name);
-	}
+	AnnotationSource<JavaClassSource> setClassValue(String name, Class<?> value);
 
-	public AnnotationSource<JavaClassSource> setClassValue(String name, Class<?> value) {
-		return annotation.setClassValue(name, value);
-	}
+	AnnotationSource<JavaClassSource> setClassValue(Class<?> value);
 
-	public AnnotationSource<JavaClassSource> setClassValue(Class<?> value) {
-		return annotation.setClassValue(value);
-	}
+	AnnotationSource<JavaClassSource> setClassArrayValue(String name, Class<?>... values);
 
-	public AnnotationSource<JavaClassSource> setClassArrayValue(String name, Class<?>... values) {
-		return annotation.setClassArrayValue(name, values);
-	}
+	AnnotationSource<JavaClassSource> setClassArrayValue(Class<?>... values);
 
-	public AnnotationSource<JavaClassSource> setClassArrayValue(Class<?>... values) {
-		return annotation.setClassArrayValue(values);
-	}
+	AnnotationSource<JavaClassSource> setStringArrayValue(String name, String[] values);
 
-	public AnnotationSource<JavaClassSource> setStringArrayValue(String name, String[] values) {
-		return annotation.setStringArrayValue(name, values);
-	}
-
-	public AnnotationSource<JavaClassSource> setStringArrayValue(String[] values) {
-		return annotation.setStringArrayValue(values);
-	}
-
-	@Override
-	public int compareTo(EAnnotation o) {
-		return this.getName().compareTo(o.getName());
-	}
-
+	AnnotationSource<JavaClassSource> setStringArrayValue(String[] values);
 }

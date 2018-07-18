@@ -10,9 +10,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.jboss.forge.roaster.model.source.MethodSource;
 
+import br.xtool.core.representation.impl.EClassImpl;
 import lombok.Getter;
 
-public class ERest extends EClass implements Comparable<ERest> {
+public class ERest extends EClassImpl {
 
 	private ESpringBootProject springBootProject;
 
@@ -90,11 +91,6 @@ public class ERest extends EClass implements Comparable<ERest> {
 			.map(EMethod::new)
 			.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
-	}
-
-	@Override
-	public int compareTo(ERest o) {
-		return this.getName().compareTo(o.getName());
 	}
 
 }

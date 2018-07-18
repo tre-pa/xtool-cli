@@ -16,6 +16,8 @@ import org.jboss.forge.roaster.model.source.JavaInterfaceSource;
 
 import br.xtool.core.representation.angular.EAngularProject;
 import br.xtool.core.representation.enums.ProjectType;
+import br.xtool.core.representation.impl.EApplicationPropertiesImpl;
+import br.xtool.core.representation.impl.EClassImpl;
 import br.xtool.core.util.RoasterUtil;
 import lombok.extern.slf4j.Slf4j;
 
@@ -62,7 +64,7 @@ public class ESpringBootProject extends EProject {
 					.filter(javaUnit -> javaUnit.getGoverningType().isClass())
 					.map(javaUnit -> javaUnit.<JavaClassSource>getGoverningType())
 					.filter(j -> j.getAnnotations().stream().anyMatch(ann -> ann.getName().equals("SpringBootApplication")))
-					.map(javaUnit -> new EClass(this, javaUnit))
+					.map(javaUnit -> new EClassImpl(this, javaUnit))
 					.findFirst()
 					.orElseThrow(() -> new IllegalArgumentException("Não foi possível localizar a classe principal (@SpringBootApplication). Verifique se a mesma existe ou contêm erros."));
 			// @formatter:on
@@ -98,7 +100,7 @@ public class ESpringBootProject extends EProject {
 	 */
 	public EApplicationProperties getApplicationProperties() {
 		if (Objects.isNull(this.applicationProperties)) {
-			this.applicationProperties = EApplicationProperties.of(FilenameUtils.concat(this.getPath(), "src/main/resources/application.properties"));
+			this.applicationProperties = EApplicationPropertiesImpl.of(FilenameUtils.concat(this.getPath(), "src/main/resources/application.properties"));
 		}
 		return this.applicationProperties;
 	}

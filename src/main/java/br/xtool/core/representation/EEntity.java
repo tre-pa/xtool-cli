@@ -1,10 +1,15 @@
 package br.xtool.core.representation;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 import org.jboss.forge.roaster.model.source.JavaClassSource;
+
+import br.xtool.core.representation.impl.EAttributeImpl;
+import br.xtool.core.representation.impl.EClassImpl;
 
 /**
  * Classe que representa um entidade JPA
@@ -12,7 +17,7 @@ import org.jboss.forge.roaster.model.source.JavaClassSource;
  * @author jcruz
  *
  */
-public class EEntity extends EClass implements Comparable<EEntity> {
+public class EEntity extends EClassImpl {
 
 	private ESpringBootProject springBootProject;
 
@@ -30,7 +35,7 @@ public class EEntity extends EClass implements Comparable<EEntity> {
 	public SortedSet<EAttribute> getAttributes() {
 		// @formatter:off
 		return this.javaClassSource.getFields().stream()
-			.map(f -> new EAttribute(this.springBootProject,this, f))
+			.map(f -> new EAttributeImpl(this.springBootProject,this, f))
 			.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
 	}
@@ -40,8 +45,8 @@ public class EEntity extends EClass implements Comparable<EEntity> {
 	 * 
 	 * @return
 	 */
-	public SortedSet<EAssociation> getAssociations() {
-		SortedSet<EAssociation> associations = new TreeSet<>();
+	public Set<EAssociation> getAssociations() {
+		Set<EAssociation> associations = new HashSet<>();
 		// @formatter:off
 		this.getAttributes().stream()
 			.filter(EAttribute::isAssociation)
@@ -49,11 +54,6 @@ public class EEntity extends EClass implements Comparable<EEntity> {
 			.forEach(association -> associations.add(association.get()));
 		// @formatter:on
 		return associations;
-	}
-
-	@Override
-	public int compareTo(EEntity o) {
-		return this.getName().compareTo(o.getName());
 	}
 
 }

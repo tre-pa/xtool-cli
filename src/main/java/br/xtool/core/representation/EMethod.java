@@ -10,6 +10,8 @@ import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.jboss.forge.roaster.model.source.MethodSource;
 import org.jboss.forge.roaster.model.source.ParameterSource;
 
+import br.xtool.core.representation.impl.EAnnotationImpl;
+
 public class EMethod implements Comparable<EMethod> {
 
 	private MethodSource<JavaClassSource> methodSource;
@@ -60,7 +62,7 @@ public class EMethod implements Comparable<EMethod> {
 		// @formatter:off
 		return this.methodSource.getAnnotations()
 				.stream()
-				.map(EAnnotation::new)
+				.map(EAnnotationImpl::new)
 				.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
 	}

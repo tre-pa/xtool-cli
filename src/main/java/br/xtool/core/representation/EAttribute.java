@@ -2,69 +2,16 @@ package br.xtool.core.representation;
 
 import java.util.Optional;
 
-import org.jboss.forge.roaster.model.source.FieldSource;
-import org.jboss.forge.roaster.model.source.JavaClassSource;
+import br.xtool.core.representation.impl.EAssociationImpl;
 
-/**
- * Classe que representa um atributo JPA de uma entidade.
- * 
- * @author jcruz
- *
- */
-public class EAttribute extends EField {
+public interface EAttribute extends EField {
 
-	private ESpringBootProject springBootProject;
+	boolean isAssociation();
 
-	private EEntity entitySource;
+	boolean isJpaTransient();
 
-	public EAttribute(ESpringBootProject springBootProject, EEntity entitySource, FieldSource<JavaClassSource> fieldSource) {
-		super(fieldSource);
-		this.springBootProject = springBootProject;
-		this.entitySource = entitySource;
-	}
+	boolean isJpaLob();
 
-	public boolean isAssociation() {
-		if (this.isCollection()) {
-			// @formatter:off
-//			return this.springBootProject.getEntities().parallelStream()
-//					.anyMatch(entity -> this.getType().getTypeArguments().stream()
-//												.anyMatch(t -> t.getName().equals(entity.getName())));
-			return true;
-			// @formatter:on
-		}
-		// @formatter:off
-		return this.springBootProject.getEntities().parallelStream()
-				.anyMatch(entity -> entity.getName().equals(this.getType().getName()));
-		// @formatter:on
-	}
-
-	public boolean isJpaTransient() {
-		return this.hasAnnotation("Transient");
-	}
-
-	public boolean isJpaLob() {
-		return this.hasAnnotation("Lob");
-	}
-
-	public Optional<EAssociation> getAssociation() {
-		if (this.isAssociation()) {
-			if (this.isCollection()) {
-				// @formatter:off
-				return this.springBootProject.getEntities().stream()
-						.filter(entity -> this.getType().getTypeArguments().stream()
-								.anyMatch(type -> type.getName().equals(entity.getName())))
-						.map(entityTarget -> new EAssociation(this.entitySource, entityTarget, this))
-						.findFirst();
-				// @formatter:on
-			}
-			// @formatter:off
-			return this.springBootProject.getEntities().stream()
-					.filter(entity -> entity.getName().equals(this.getType().getName()))
-					.map(entityTarget -> new EAssociation(this.entitySource, entityTarget, this))
-					.findFirst();
-			// @formatter:on
-		}
-		return Optional.empty();
-	}
+	Optional<EAssociationImpl> getAssociation();
 
 }

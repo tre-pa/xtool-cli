@@ -2,211 +2,84 @@ package br.xtool.core.representation;
 
 import java.util.Optional;
 import java.util.SortedSet;
-import java.util.TreeSet;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-import org.apache.commons.lang3.StringUtils;
 import org.jboss.forge.roaster.model.JavaType;
 import org.jboss.forge.roaster.model.Type;
 import org.jboss.forge.roaster.model.Visibility;
-import org.jboss.forge.roaster.model.source.AnnotationSource;
 import org.jboss.forge.roaster.model.source.FieldSource;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.jboss.forge.roaster.model.source.JavaDocSource;
-import org.jboss.forge.roaster.model.util.Types;
 
-public class EField implements Comparable<EAttribute> {
+public interface EField extends Comparable<EField> {
 
-	protected FieldSource<JavaClassSource> fieldSource;
+	String getName();
 
-	public EField(FieldSource<JavaClassSource> fieldSource) {
-		super();
-		this.fieldSource = fieldSource;
-	}
+	FieldSource<JavaClassSource> setName(String name);
 
-	/**
-	 * Retorna o nome do attributo.
-	 * 
-	 * @return
-	 */
-	public String getName() {
-		return this.fieldSource.getName();
-	}
+	Type<JavaClassSource> getType();
 
-	/**
-	 * Retorna o tipo do atributo.
-	 * 
-	 * @return
-	 */
-	public Type<JavaClassSource> getType() {
-		return this.fieldSource.getType();
-	}
+	boolean isCollection();
 
-	/**
-	 * Verifica se o atributo é uma coleção
-	 * 
-	 * @return
-	 */
-	public boolean isCollection() {
-		return Stream.of("List", "Set", "Collection").peek(type -> this.getType().getName()).anyMatch(type -> type.equals(this.getType().getName()));
-	}
+	boolean isStatic();
 
-	/**
-	 * Verifica se o atributo é static.
-	 * 
-	 * @return
-	 */
-	public boolean isStatic() {
-		return this.fieldSource.isStatic();
-	}
+	boolean hasAnnotation(String name);
 
-	public boolean hasAnnotation(String name) {
-		return this.fieldSource.hasAnnotation(name);
-	}
+	void setStringInitialize(String value);
 
-	public void setStringInitialize(String value) {
-		this.fieldSource.setStringInitializer(value);
-	}
+	void setLiteralInitialize(String value);
 
-	public void setLiteralInitialize(String value) {
-		this.fieldSource.setLiteralInitializer(value);
-	}
+	SortedSet<EAnnotation> getAnnotations();
 
-	public SortedSet<EAnnotation> getAnnotations() {
-		// @formatter:off
-		return this.fieldSource.getAnnotations()
-				.stream()
-				.map(EAnnotation::new)
-				.collect(Collectors.toCollection(TreeSet::new));
-		// @formatter:on
-	}
+	Optional<EAnnotation> addAnnotation(String qualifiedName);
 
-	/**
-	 * Adiciona uma nova annotation a classe
-	 * 
-	 * @param qualifiedName
-	 * @return
-	 */
-	public Optional<EAnnotation> addAnnotation(String qualifiedName) {
-		if (StringUtils.isNotBlank(qualifiedName)) {
-			if (!this.fieldSource.hasAnnotation(Types.toSimpleName(qualifiedName))) {
-				AnnotationSource<JavaClassSource> annotationSource = this.fieldSource.addAnnotation();
-				this.fieldSource.getOrigin().addImport(qualifiedName);
-				annotationSource.setName(Types.toSimpleName(qualifiedName));
-				return Optional.of(new EAnnotation(annotationSource));
-			}
-		}
-		return Optional.empty();
-	}
+	boolean isFinal();
 
-	@Override
-	public int compareTo(EAttribute o) {
-		return this.getName().compareTo(o.getName());
-	}
+	boolean isPackagePrivate();
 
-	public boolean isFinal() {
-		return this.fieldSource.isFinal();
-	}
+	boolean isPublic();
 
-	public boolean isPackagePrivate() {
-		return this.fieldSource.isPackagePrivate();
-	}
+	boolean isPrivate();
 
-	public boolean isPublic() {
-		return this.fieldSource.isPublic();
-	}
+	FieldSource<JavaClassSource> setFinal(boolean finl);
 
-	public FieldSource<JavaClassSource> setName(String name) {
-		return this.fieldSource.setName(name);
-	}
+	FieldSource<JavaClassSource> setStatic(boolean value);
 
-	public boolean isPrivate() {
-		return this.fieldSource.isPrivate();
-	}
+	boolean isProtected();
 
-	public FieldSource<JavaClassSource> setFinal(boolean finl) {
-		return this.fieldSource.setFinal(finl);
-	}
+	boolean hasJavaDoc();
 
-	public FieldSource<JavaClassSource> setStatic(boolean value) {
-		return this.fieldSource.setStatic(value);
-	}
+	Visibility getVisibility();
 
-	public boolean isProtected() {
-		return this.fieldSource.isProtected();
-	}
+	JavaDocSource<FieldSource<JavaClassSource>> getJavaDoc();
 
-	public boolean hasJavaDoc() {
-		return this.fieldSource.hasJavaDoc();
-	}
+	FieldSource<JavaClassSource> setPackagePrivate();
 
-	public Visibility getVisibility() {
-		return this.fieldSource.getVisibility();
-	}
+	FieldSource<JavaClassSource> setPublic();
 
-	public JavaDocSource<FieldSource<JavaClassSource>> getJavaDoc() {
-		return this.fieldSource.getJavaDoc();
-	}
+	boolean isTransient();
 
-	public FieldSource<JavaClassSource> setPackagePrivate() {
-		return this.fieldSource.setPackagePrivate();
-	}
+	FieldSource<JavaClassSource> setPrivate();
 
-	public FieldSource<JavaClassSource> setPublic() {
-		return this.fieldSource.setPublic();
-	}
+	FieldSource<JavaClassSource> setType(Class<?> clazz);
 
-	public boolean isTransient() {
-		return this.fieldSource.isTransient();
-	}
+	FieldSource<JavaClassSource> setProtected();
 
-	public FieldSource<JavaClassSource> setPrivate() {
-		return this.fieldSource.setPrivate();
-	}
+	FieldSource<JavaClassSource> setVisibility(Visibility scope);
 
-	public FieldSource<JavaClassSource> setType(Class<?> clazz) {
-		return this.fieldSource.setType(clazz);
-	}
+	boolean isVolatile();
 
-	public FieldSource<JavaClassSource> setProtected() {
-		return this.fieldSource.setProtected();
-	}
+	FieldSource<JavaClassSource> setType(String type);
 
-	public FieldSource<JavaClassSource> setVisibility(Visibility scope) {
-		return this.fieldSource.setVisibility(scope);
-	}
+	int getLineNumber();
 
-	public boolean isVolatile() {
-		return this.fieldSource.isVolatile();
-	}
+	FieldSource<JavaClassSource> setType(JavaType<?> entity);
 
-	public FieldSource<JavaClassSource> setType(String type) {
-		return this.fieldSource.setType(type);
-	}
+	FieldSource<JavaClassSource> setLiteralInitializer(String value);
 
-	public int getLineNumber() {
-		return this.fieldSource.getLineNumber();
-	}
+	FieldSource<JavaClassSource> setStringInitializer(String value);
 
-	public FieldSource<JavaClassSource> setType(JavaType<?> entity) {
-		return this.fieldSource.setType(entity);
-	}
+	FieldSource<JavaClassSource> setTransient(boolean value);
 
-	public FieldSource<JavaClassSource> setLiteralInitializer(String value) {
-		return this.fieldSource.setLiteralInitializer(value);
-	}
-
-	public FieldSource<JavaClassSource> setStringInitializer(String value) {
-		return this.fieldSource.setStringInitializer(value);
-	}
-
-	public FieldSource<JavaClassSource> setTransient(boolean value) {
-		return this.fieldSource.setTransient(value);
-	}
-
-	public FieldSource<JavaClassSource> setVolatile(boolean value) {
-		return this.fieldSource.setVolatile(value);
-	}
+	FieldSource<JavaClassSource> setVolatile(boolean value);
 
 }
