@@ -7,9 +7,8 @@ import java.util.stream.Stream;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import br.xtool.core.representation.angular.ENgClass;
+import br.xtool.core.representation.ENgClass;
 import lombok.Getter;
-import lombok.ToString;
 
 /**
  * Representa uma classe Typescript de um projeto Angular.
@@ -17,7 +16,6 @@ import lombok.ToString;
  * @author jcruz
  *
  */
-@ToString(of = { "name", "fileName" })
 public class ENgClassImpl implements ENgClass {
 
 	@Getter

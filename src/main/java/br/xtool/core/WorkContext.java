@@ -19,8 +19,8 @@ import org.springframework.stereotype.Component;
 
 import br.xtool.core.event.ChangeDirectoryEvent;
 import br.xtool.core.representation.EDirectory;
+import br.xtool.core.representation.ENgProject;
 import br.xtool.core.representation.EBootProject;
-import br.xtool.core.representation.angular.ENgProject;
 import br.xtool.core.representation.enums.ProjectType;
 import br.xtool.core.representation.impl.ENgProjectImpl;
 import br.xtool.core.representation.impl.EDirectoryImpl;

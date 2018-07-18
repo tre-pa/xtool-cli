@@ -1,8 +1,6 @@
-package br.xtool.core.representation.angular;
+package br.xtool.core.representation;
 
 import java.util.SortedSet;
-
-import br.xtool.core.representation.EProject;
 
 public interface ENgProject extends EProject {
 

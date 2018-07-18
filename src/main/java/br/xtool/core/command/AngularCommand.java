@@ -8,7 +8,7 @@ import org.springframework.shell.Availability;
 import org.springframework.shell.standard.ShellMethodAvailability;
 
 import br.xtool.core.WorkContext;
-import br.xtool.core.representation.angular.ENgProject;
+import br.xtool.core.representation.ENgProject;
 import br.xtool.core.representation.enums.ProjectType;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;

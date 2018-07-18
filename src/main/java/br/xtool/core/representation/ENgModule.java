@@ -1,4 +1,4 @@
-package br.xtool.core.representation.angular;
+package br.xtool.core.representation;
 
 /**
  * Classe que representa um módulo Angular

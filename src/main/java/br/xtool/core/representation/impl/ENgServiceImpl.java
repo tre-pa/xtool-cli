@@ -2,7 +2,7 @@ package br.xtool.core.representation.impl;
 
 import java.io.File;
 
-import br.xtool.core.representation.angular.ENgService;
+import br.xtool.core.representation.ENgService;
 
 public class ENgServiceImpl extends ENgClassImpl implements ENgService {
 

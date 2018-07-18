@@ -23,8 +23,8 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 import com.google.common.collect.ImmutableSet;
 
 import br.xtool.core.representation.EDirectory;
+import br.xtool.core.representation.ENgPackage;
 import br.xtool.core.representation.EPom;
-import br.xtool.core.representation.angular.ENgPackage;
 import br.xtool.core.representation.enums.ProjectType;
 import lombok.Getter;
 

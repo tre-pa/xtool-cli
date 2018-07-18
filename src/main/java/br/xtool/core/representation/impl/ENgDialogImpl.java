@@ -2,7 +2,7 @@ package br.xtool.core.representation.impl;
 
 import java.io.File;
 
-import br.xtool.core.representation.angular.ENgDialog;
+import br.xtool.core.representation.ENgDialog;
 
 public class ENgDialogImpl extends ENgClassImpl implements ENgDialog {
 

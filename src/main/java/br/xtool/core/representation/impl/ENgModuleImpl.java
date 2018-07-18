@@ -2,7 +2,7 @@ package br.xtool.core.representation.impl;
 
 import java.io.File;
 
-import br.xtool.core.representation.angular.ENgModule;
+import br.xtool.core.representation.ENgModule;
 
 /**
  * Classe que representa um módulo Angular

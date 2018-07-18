@@ -12,7 +12,7 @@ import org.springframework.shell.standard.ValueProviderSupport;
 import org.springframework.stereotype.Component;
 
 import br.xtool.core.WorkContext;
-import br.xtool.core.representation.angular.ENgModule;
+import br.xtool.core.representation.ENgModule;
 
 @Component
 public class ENgModuleValueProvider extends ValueProviderSupport {

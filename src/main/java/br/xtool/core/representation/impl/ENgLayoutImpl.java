@@ -2,7 +2,7 @@ package br.xtool.core.representation.impl;
 
 import java.io.File;
 
-import br.xtool.core.representation.angular.ENgLayout;
+import br.xtool.core.representation.ENgLayout;
 
 public class ENgLayoutImpl extends ENgComponentImpl implements ENgLayout {
 

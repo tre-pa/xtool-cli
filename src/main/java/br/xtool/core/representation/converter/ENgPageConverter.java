@@ -6,7 +6,7 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 import br.xtool.core.WorkContext;
-import br.xtool.core.representation.angular.ENgPage;
+import br.xtool.core.representation.ENgPage;
 
 @Component
 public class ENgPageConverter implements Converter<String, ENgPage> {

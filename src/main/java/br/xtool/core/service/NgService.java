@@ -12,10 +12,10 @@ import com.google.common.collect.ImmutableMap;
 
 import br.xtool.core.FS;
 import br.xtool.core.WorkContext;
-import br.xtool.core.representation.angular.ENgComponent;
-import br.xtool.core.representation.angular.ENgDialog;
-import br.xtool.core.representation.angular.ENgModule;
-import br.xtool.core.representation.angular.ENgService;
+import br.xtool.core.representation.ENgComponent;
+import br.xtool.core.representation.ENgDialog;
+import br.xtool.core.representation.ENgModule;
+import br.xtool.core.representation.ENgService;
 import lombok.NonNull;
 
 @Service

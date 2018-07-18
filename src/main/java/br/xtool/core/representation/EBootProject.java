@@ -3,8 +3,6 @@ package br.xtool.core.representation;
 import java.util.Optional;
 import java.util.SortedSet;
 
-import br.xtool.core.representation.angular.ENgProject;
-
 /**
  * Classe que representa um projeto Spring Boot
  * 

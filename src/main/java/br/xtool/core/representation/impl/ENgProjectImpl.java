@@ -12,16 +12,16 @@ import java.util.stream.Stream;
 
 import org.apache.commons.io.FilenameUtils;
 
-import br.xtool.core.representation.angular.ENgClass;
-import br.xtool.core.representation.angular.ENgComponent;
-import br.xtool.core.representation.angular.ENgDetail;
-import br.xtool.core.representation.angular.ENgEdit;
-import br.xtool.core.representation.angular.ENgLayout;
-import br.xtool.core.representation.angular.ENgModule;
-import br.xtool.core.representation.angular.ENgPackage;
-import br.xtool.core.representation.angular.ENgPage;
-import br.xtool.core.representation.angular.ENgProject;
-import br.xtool.core.representation.angular.ENgService;
+import br.xtool.core.representation.ENgClass;
+import br.xtool.core.representation.ENgComponent;
+import br.xtool.core.representation.ENgDetail;
+import br.xtool.core.representation.ENgEdit;
+import br.xtool.core.representation.ENgLayout;
+import br.xtool.core.representation.ENgModule;
+import br.xtool.core.representation.ENgPackage;
+import br.xtool.core.representation.ENgPage;
+import br.xtool.core.representation.ENgProject;
+import br.xtool.core.representation.ENgService;
 import br.xtool.core.representation.enums.ProjectType;
 import lombok.Getter;
 
