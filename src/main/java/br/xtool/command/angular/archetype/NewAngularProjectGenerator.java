@@ -93,7 +93,7 @@ public class NewAngularProjectGenerator extends RegularCommand {
 
 		ConsoleLog.print(ConsoleLog.cyan("\t-- npm install --"));
 
-		this.shellService.run("npm i && code .");
+		this.shellService.runCmd("npm i && code .");
 
 		// this.pathService.exec("npm i && code .");
 	}

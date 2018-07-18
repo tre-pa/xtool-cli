@@ -19,7 +19,7 @@ public class ShellService {
 	private WorkContext workContext;
 
 	@SneakyThrows
-	public int run(String command) {
+	public int runCmd(String command) {
 		ProcessBuilder processBuilder = new ProcessBuilder();
 		processBuilder.command("sh", "-c", command);
 		processBuilder.directory(new File(workContext.getDirectory().getPath()));
@@ -29,8 +29,8 @@ public class ShellService {
 	}
 
 	@SneakyThrows
-	public int run(String command, Map<String, Object> vars) {
-		return this.run(fs.inlineTemplate(command, vars));
+	public int runCmd(String command, Map<String, Object> vars) {
+		return this.runCmd(fs.inlineTemplate(command, vars));
 	}
 
 }
