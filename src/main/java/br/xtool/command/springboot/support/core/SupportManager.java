@@ -12,7 +12,7 @@ import com.google.common.collect.Table;
 
 import br.xtool.command.springboot.support.core.SpringBootSupport.SupportType;
 import br.xtool.core.representation.EBootProject;
-import br.xtool.core.representation.enums.ProjectType;
+import br.xtool.core.representation.EProject.ProjectType;
 
 /**
  * Classe que gerencia a adcição dos suports ao projeto.
@@ -30,7 +30,7 @@ public class SupportManager {
 
 	@PostConstruct
 	private void init() {
-		supports.forEach(support -> supportTable.put(support.getApplyForType(), support.getType(), support));
+		this.supports.forEach(support -> this.supportTable.put(support.getApplyForType(), support.getType(), support));
 	}
 
 	/**
@@ -42,7 +42,7 @@ public class SupportManager {
 	 *            Enum com tipo de support a ser adicionado. {@link SupportType}
 	 */
 	public void addSupport(EBootProject project, SupportType supportType) {
-		SpringBootSupport support = supportTable.get(project.getProjectType(), supportType);
+		SpringBootSupport support = this.supportTable.get(project.getProjectType(), supportType);
 		support.apply(project);
 	}
 

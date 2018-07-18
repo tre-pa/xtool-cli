@@ -10,7 +10,7 @@ import br.xtool.command.springboot.support.core.SpringBootSupport;
 import br.xtool.core.ConsoleLog;
 import br.xtool.core.FS;
 import br.xtool.core.representation.EBootProject;
-import br.xtool.core.representation.enums.ProjectType;
+import br.xtool.core.representation.EProject.ProjectType;
 
 /**
  * 

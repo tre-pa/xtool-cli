@@ -22,10 +22,10 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 
 import com.google.common.collect.ImmutableSet;
 
+import br.xtool.core.representation.EBootPom;
 import br.xtool.core.representation.EDirectory;
 import br.xtool.core.representation.ENgPackage;
-import br.xtool.core.representation.EBootPom;
-import br.xtool.core.representation.enums.ProjectType;
+import br.xtool.core.representation.EProject.ProjectType;
 import lombok.Getter;
 
 public class EDirectoryImpl implements EDirectory {

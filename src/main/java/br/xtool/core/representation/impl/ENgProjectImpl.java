@@ -22,7 +22,6 @@ import br.xtool.core.representation.ENgPackage;
 import br.xtool.core.representation.ENgPage;
 import br.xtool.core.representation.ENgProject;
 import br.xtool.core.representation.ENgService;
-import br.xtool.core.representation.enums.ProjectType;
 import lombok.Getter;
 
 @Getter

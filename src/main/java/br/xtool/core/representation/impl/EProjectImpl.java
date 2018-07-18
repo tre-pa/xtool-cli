@@ -2,7 +2,6 @@ package br.xtool.core.representation.impl;
 
 import br.xtool.core.representation.EDirectory;
 import br.xtool.core.representation.EProject;
-import br.xtool.core.representation.enums.ProjectType;
 import lombok.Getter;
 
 public abstract class EProjectImpl implements EProject {

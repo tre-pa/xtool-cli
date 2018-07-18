@@ -15,15 +15,14 @@ import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.jboss.forge.roaster.model.source.JavaInterfaceSource;
 
 import br.xtool.core.representation.EBootAppProperties;
+import br.xtool.core.representation.EBootPom;
+import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.EJavaClass;
 import br.xtool.core.representation.EJavaEntity;
-import br.xtool.core.representation.ENgProject;
 import br.xtool.core.representation.EJavaPackage;
-import br.xtool.core.representation.EBootPom;
 import br.xtool.core.representation.EJavaRepository;
 import br.xtool.core.representation.EJavaRest;
-import br.xtool.core.representation.EBootProject;
-import br.xtool.core.representation.enums.ProjectType;
+import br.xtool.core.representation.ENgProject;
 import br.xtool.core.util.RoasterUtil;
 import lombok.extern.slf4j.Slf4j;
 

@@ -2,6 +2,9 @@ package br.xtool.core.representation;
 
 import java.util.SortedSet;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
 /**
  * Representação de um projeto Angular.
  * 
@@ -10,6 +13,7 @@ import java.util.SortedSet;
  */
 public interface ENgProject extends EProject {
 
+	@AllArgsConstructor
 	enum ArtifactyType {
 		// @formatter:off
 		MODULE(".module.ts"),
@@ -22,16 +26,8 @@ public interface ENgProject extends EProject {
 		LIST("-list.component.ts"),
 		DIALOG("-dialog.component.ts");
 		// @formatter:on
+		@Getter
 		private String ext;
-
-		private ArtifactyType(String ext) {
-			this.ext = ext;
-		}
-
-		public String getExt() {
-			return this.ext;
-		}
-
 	}
 
 	ENgPackage getNgPackage();

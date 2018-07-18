@@ -1,6 +1,7 @@
 package br.xtool.core.representation;
 
-import br.xtool.core.representation.enums.ProjectType;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 /**
  * Interface genérica para projetos.
@@ -9,6 +10,20 @@ import br.xtool.core.representation.enums.ProjectType;
  *
  */
 public interface EProject {
+
+	@AllArgsConstructor
+	public enum ProjectType {
+		// @formatter:off
+		SPRINGBOOT1_PROJECT("Projeto Spring Boot v1.5.x"),
+		SPRINGBOOT2_PROJECT("Projeto Spring Boot v2.x.x"),
+		ANGULAR5_PROJECT("Projeto Angular v5"), 
+		ANGULAR6_PROJECT("Projeto Angular v6"),
+		NONE("");
+		// @formatter:on
+		@Getter
+		private String detail;
+
+	}
 
 	String getPath();
 

@@ -6,23 +6,23 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 import br.xtool.core.WorkContext;
-import br.xtool.core.representation.EJavaEntity;
+import br.xtool.core.representation.EJavaRepository;
 
 @Component
-public class EEntityConverter implements Converter<String, EJavaEntity> {
+public class EJavaRepositoryConverter implements Converter<String, EJavaRepository> {
 
 	@Autowired
 	private WorkContext workContext;
 
 	@Override
-	public EJavaEntity convert(String source) {
-		if (this.workContext.getSpringBootProject().isPresent() && StringUtils.isNotEmpty(source)) {
+	public EJavaRepository convert(String source) {
+		if (workContext.getSpringBootProject().isPresent() && StringUtils.isNotEmpty(source)) {
 			// @formatter:off
-			return this.workContext.getSpringBootProject().get().getEntities()
+			return workContext.getSpringBootProject().get().getRepositories()
 				.stream()
 				.filter(e -> e.getName().equals(source))
 				.findFirst()
-				.orElseThrow(() -> new RuntimeException("Erro ao converer entidade"));
+				.orElseThrow(() -> new RuntimeException("Erro ao converer repositório"));
 			// @formatter:on
 		}
 		return null;

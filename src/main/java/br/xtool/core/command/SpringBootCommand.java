@@ -12,7 +12,7 @@ import org.springframework.shell.standard.ShellMethodAvailability;
 
 import br.xtool.core.WorkContext;
 import br.xtool.core.representation.EBootProject;
-import br.xtool.core.representation.enums.ProjectType;
+import br.xtool.core.representation.EProject.ProjectType;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
