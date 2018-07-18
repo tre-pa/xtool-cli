@@ -7,7 +7,7 @@ import org.jboss.forge.roaster.model.Type;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.jboss.forge.roaster.model.source.ParameterSource;
 
-public interface EMethod extends Comparable<EMethod> {
+public interface EJavaMethod extends Comparable<EJavaMethod> {
 
 	String getName();
 
@@ -25,5 +25,5 @@ public interface EMethod extends Comparable<EMethod> {
 
 	List<ParameterSource<JavaClassSource>> getParameters();
 
-	SortedSet<EAnnotation> getAnnotations();
+	SortedSet<EJavaAnnotation> getAnnotations();
 }

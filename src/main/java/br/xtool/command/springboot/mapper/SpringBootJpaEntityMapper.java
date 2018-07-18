@@ -10,8 +10,8 @@ import org.springframework.util.Assert;
 
 import br.xtool.XtoolCliApplication;
 import br.xtool.core.command.SpringBootCommand;
-import br.xtool.core.representation.EEntity;
-import br.xtool.core.representation.provider.EEntityValueProvider;
+import br.xtool.core.representation.EJavaEntity;
+import br.xtool.core.representation.provider.EJavaEntityValueProvider;
 
 //@ShellComponent
 public class SpringBootJpaEntityMapper extends SpringBootCommand {
@@ -19,7 +19,7 @@ public class SpringBootJpaEntityMapper extends SpringBootCommand {
 	@ShellMethod(key = "map:entity", value = "Mapeia uma entidade JPA existente", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
 	// @formatter:off
 	public void run(
-			@ShellOption(help = "Entidade JPA", valueProvider = EEntityValueProvider.class, defaultValue="") EEntity entity,
+			@ShellOption(help = "Entidade JPA", valueProvider = EJavaEntityValueProvider.class, defaultValue="") EJavaEntity entity,
 			@ShellOption(help = "Todas as entidades JPA", defaultValue = "false", arity = 0) Boolean allEntities,
 			@ShellOption(help = "Mapeia a entidade com annotations JPA", defaultValue = "false", arity = 0) Boolean jpa,
 			@ShellOption(help = "Mapeia a entidade com annotations Lombok", defaultValue = "false", arity = 0) Boolean lombok,

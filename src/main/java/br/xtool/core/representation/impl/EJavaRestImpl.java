@@ -10,15 +10,15 @@ import org.apache.commons.lang3.StringUtils;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.jboss.forge.roaster.model.source.MethodSource;
 
-import br.xtool.core.representation.EMethod;
-import br.xtool.core.representation.ERest;
+import br.xtool.core.representation.EJavaMethod;
+import br.xtool.core.representation.EJavaRest;
 import br.xtool.core.representation.EBootProject;
 
-public class ERestImpl extends EClassImpl implements ERest {
+public class EJavaRestImpl extends EJavaClassImpl implements EJavaRest {
 
 	private EBootProject springBootProject;
 
-	public ERestImpl(EBootProject springBootProject, JavaClassSource javaClassSource) {
+	public EJavaRestImpl(EBootProject springBootProject, JavaClassSource javaClassSource) {
 		super(springBootProject, javaClassSource);
 		this.springBootProject = springBootProject;
 	}
@@ -37,7 +37,7 @@ public class ERestImpl extends EClassImpl implements ERest {
 	 * @see br.xtool.core.representation.ERest#getHttpGetMethods()
 	 */
 	@Override
-	public SortedSet<EMethod> getHttpGETMethods() {
+	public SortedSet<EJavaMethod> getHttpGETMethods() {
 		return this.getHttpMethods("GetMapping", "RequestMethod.GET");
 	}
 
@@ -46,7 +46,7 @@ public class ERestImpl extends EClassImpl implements ERest {
 	 * @see br.xtool.core.representation.ERest#getHttpPutMethods()
 	 */
 	@Override
-	public SortedSet<EMethod> getHttpPUTMethods() {
+	public SortedSet<EJavaMethod> getHttpPUTMethods() {
 		return this.getHttpMethods("PutMapping", "RequestMethod.PUT");
 	}
 
@@ -55,7 +55,7 @@ public class ERestImpl extends EClassImpl implements ERest {
 	 * @see br.xtool.core.representation.ERest#getHttpPostMethods()
 	 */
 	@Override
-	public SortedSet<EMethod> getHttpPOSTMethods() {
+	public SortedSet<EJavaMethod> getHttpPOSTMethods() {
 		return this.getHttpMethods("PostMapping", "RequestMethod.POST");
 	}
 
@@ -64,11 +64,11 @@ public class ERestImpl extends EClassImpl implements ERest {
 	 * @see br.xtool.core.representation.ERest#getHttpDeleteMethods()
 	 */
 	@Override
-	public SortedSet<EMethod> getHttpDELETEMethods() {
+	public SortedSet<EJavaMethod> getHttpDELETEMethods() {
 		return this.getHttpMethods("DeleteMapping", "RequestMethod.DELETE");
 	}
 
-	private SortedSet<EMethod> getHttpMethods(String httpAnnotation, String requestMappingMethod) {
+	private SortedSet<EJavaMethod> getHttpMethods(String httpAnnotation, String requestMappingMethod) {
 		Predicate<MethodSource<JavaClassSource>> hasHttpAnnotation = methodSource -> methodSource.hasAnnotation(httpAnnotation);
 		Predicate<MethodSource<JavaClassSource>> hasRequestMapping = methodSource -> methodSource.hasAnnotation("RequestMapping");
 		Predicate<MethodSource<JavaClassSource>> hasRequestMappingMethod = methodSource -> StringUtils.equals(methodSource.getAnnotation("RequestMapping").getStringValue("method"),
@@ -77,7 +77,7 @@ public class ERestImpl extends EClassImpl implements ERest {
 		return this.javaClassSource.getMethods()
 			.stream()
 			.filter(hasHttpAnnotation.or(hasRequestMapping.and(hasRequestMappingMethod)))
-			.map(EMethodImpl::new)
+			.map(EJavaMethodImpl::new)
 			.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
 	}

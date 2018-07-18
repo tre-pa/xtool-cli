@@ -12,10 +12,10 @@ import org.springframework.shell.standard.ValueProviderSupport;
 import org.springframework.stereotype.Component;
 
 import br.xtool.core.WorkContext;
-import br.xtool.core.representation.EEntity;
+import br.xtool.core.representation.EJavaEntity;
 
 @Component
-public class EEntityValueProvider extends ValueProviderSupport {
+public class EJavaEntityValueProvider extends ValueProviderSupport {
 
 	@Autowired
 	private WorkContext workContext;
@@ -25,7 +25,7 @@ public class EEntityValueProvider extends ValueProviderSupport {
 		if (this.workContext.getSpringBootProject().isPresent()) {
 			// @formatter:off
 			return this.workContext.getSpringBootProject().get().getEntities().stream()
-					.map(EEntity::getName)
+					.map(EJavaEntity::getName)
 					.map(CompletionProposal::new)
 					.collect(Collectors.toList());
 			// @formatter:on

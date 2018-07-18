@@ -15,10 +15,10 @@ import org.springframework.util.StringUtils;
 
 import br.xtool.core.diagram.mapper.AssociationMapper;
 import br.xtool.core.diagram.mapper.FieldMapper;
-import br.xtool.core.representation.EPackage;
+import br.xtool.core.representation.EJavaPackage;
 import br.xtool.core.representation.EBootProject;
-import br.xtool.core.representation.impl.EClassImpl;
-import br.xtool.core.representation.impl.EPackageImpl;
+import br.xtool.core.representation.impl.EJavaClassImpl;
+import br.xtool.core.representation.impl.EJavaPackageImpl;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import net.sourceforge.plantuml.BlockUml;
@@ -108,13 +108,13 @@ public class ClassDiagramReader {
 	}
 
 	@SneakyThrows
-	public Map<String, EClassImpl> write(EBootProject project) {
-		Map<String, EClassImpl> classes = new HashMap<>();
+	public Map<String, EJavaClassImpl> write(EBootProject project) {
+		Map<String, EJavaClassImpl> classes = new HashMap<>();
 		for (JavaClassSource javaClass : this.javaClassSources.values()) {
-			EPackage ePackage = EPackageImpl.of(javaClass.getPackage());
+			EJavaPackage ePackage = EJavaPackageImpl.of(javaClass.getPackage());
 			String javaFile = FilenameUtils.concat(project.getMainDir(), String.format("%s/%s.java", ePackage.getDir(), javaClass.getName()));
 			FileUtils.writeStringToFile(new File(javaFile), javaClass.toString(), "UTF-8");
-			classes.put(javaClass.getName(), new EClassImpl(project, javaClass));
+			classes.put(javaClass.getName(), new EJavaClassImpl(project, javaClass));
 		}
 		return classes;
 	}

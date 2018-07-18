@@ -14,14 +14,14 @@ import org.jboss.forge.roaster.model.JavaUnit;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.jboss.forge.roaster.model.source.JavaInterfaceSource;
 
-import br.xtool.core.representation.EAppProperties;
-import br.xtool.core.representation.EClass;
-import br.xtool.core.representation.EEntity;
+import br.xtool.core.representation.EBootAppProperties;
+import br.xtool.core.representation.EJavaClass;
+import br.xtool.core.representation.EJavaEntity;
 import br.xtool.core.representation.ENgProject;
-import br.xtool.core.representation.EPackage;
-import br.xtool.core.representation.EPom;
-import br.xtool.core.representation.ERepository;
-import br.xtool.core.representation.ERest;
+import br.xtool.core.representation.EJavaPackage;
+import br.xtool.core.representation.EBootPom;
+import br.xtool.core.representation.EJavaRepository;
+import br.xtool.core.representation.EJavaRest;
 import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.enums.ProjectType;
 import br.xtool.core.util.RoasterUtil;
@@ -38,11 +38,11 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 
 	private Map<String, JavaUnit> javaUnits;
 
-	private EPom pom;
+	private EBootPom pom;
 
-	private EAppProperties applicationProperties;
+	private EBootAppProperties applicationProperties;
 
-	private EClass mainClass;
+	private EJavaClass mainClass;
 
 	public EBootProjectImpl(String path) {
 		super(path);
@@ -64,7 +64,7 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 	 * @return
 	 */
 	@Override
-	public EClass getMainclass() {
+	public EJavaClass getMainclass() {
 		if (Objects.isNull(this.mainClass)) {
 			// @formatter:off
 			this.mainClass = this.getJavaUnits().values()
@@ -72,7 +72,7 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 					.filter(javaUnit -> javaUnit.getGoverningType().isClass())
 					.map(javaUnit -> javaUnit.<JavaClassSource>getGoverningType())
 					.filter(j -> j.getAnnotations().stream().anyMatch(ann -> ann.getName().equals("SpringBootApplication")))
-					.map(javaUnit -> new EClassImpl(this, javaUnit))
+					.map(javaUnit -> new EJavaClassImpl(this, javaUnit))
 					.findFirst()
 					.orElseThrow(() -> new IllegalArgumentException("Não foi possível localizar a classe principal (@SpringBootApplication). Verifique se a mesma existe ou contêm erros."));
 			// @formatter:on
@@ -86,7 +86,7 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 	 * @return
 	 */
 	@Override
-	public EPackage getRootPackage() {
+	public EJavaPackage getRootPackage() {
 		return this.getPom().getGroupId();
 	}
 
@@ -96,9 +96,9 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 	 * @return
 	 */
 	@Override
-	public EPom getPom() {
+	public EBootPom getPom() {
 		if (Objects.isNull(this.pom)) {
-			this.pom = EPomImpl.of(FilenameUtils.concat(this.getPath(), "pom.xml"));
+			this.pom = EBootPomImpl.of(FilenameUtils.concat(this.getPath(), "pom.xml"));
 		}
 		return this.pom;
 	}
@@ -109,9 +109,9 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 	 * @return
 	 */
 	@Override
-	public EAppProperties getApplicationProperties() {
+	public EBootAppProperties getApplicationProperties() {
 		if (Objects.isNull(this.applicationProperties)) {
-			this.applicationProperties = EAppPropertiesImpl.of(FilenameUtils.concat(this.getPath(), "src/main/resources/application.properties"));
+			this.applicationProperties = EBootAppPropertiesImpl.of(FilenameUtils.concat(this.getPath(), "src/main/resources/application.properties"));
 		}
 		return this.applicationProperties;
 	}
@@ -122,14 +122,14 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 	 * @return
 	 */
 	@Override
-	public SortedSet<EEntity> getEntities() {
+	public SortedSet<EJavaEntity> getEntities() {
 		// @formatter:off
 		return this.getJavaUnits().values()
 			.parallelStream()
 			.filter(javaUnit -> javaUnit.getGoverningType().isClass())
 			.map(javaUnit -> javaUnit.<JavaClassSource>getGoverningType())
 			.filter(j -> j.getAnnotations().stream().anyMatch(ann -> ann.getName().equals("Entity")))
-			.map(j -> new EEntityImpl(this, j))
+			.map(j -> new EJavaEntityImpl(this, j))
 			.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
 	}
@@ -140,14 +140,14 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 	 * @return
 	 */
 	@Override
-	public SortedSet<ERepository> getRepositories() {
+	public SortedSet<EJavaRepository> getRepositories() {
 		// @formatter:off
 		return this.getJavaUnits().values()
 			.parallelStream()
 			.filter(javaUnit -> javaUnit.getGoverningType().isInterface())
 			.map(javaUnit -> javaUnit.<JavaInterfaceSource>getGoverningType())
 			.filter(j -> j.getAnnotations().stream().anyMatch(ann -> ann.getName().equals("Repository")))
-			.map(j -> new ERepositoryImpl(this, j))
+			.map(j -> new EJavaRepositoryImpl(this, j))
 			.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
 	}
@@ -157,14 +157,14 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 	 * @return
 	 */
 	@Override
-	public SortedSet<ERest> getRests() {
+	public SortedSet<EJavaRest> getRests() {
 		// @formatter:off
 		return this.getJavaUnits().values()
 			.parallelStream()
 			.filter(javaUnit -> javaUnit.getGoverningType().isClass())
 			.map(javaUnit -> javaUnit.<JavaClassSource>getGoverningType())
 			.filter(j -> j.getAnnotations().stream().anyMatch(ann -> ann.getName().equals("RestController")))
-			.map(j -> new ERestImpl(this, j))
+			.map(j -> new EJavaRestImpl(this, j))
 			.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
 	}

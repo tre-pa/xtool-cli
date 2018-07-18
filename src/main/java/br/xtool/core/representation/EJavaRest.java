@@ -3,7 +3,7 @@ package br.xtool.core.representation;
 import java.util.Optional;
 import java.util.SortedSet;
 
-public interface ERest extends EClass {
+public interface EJavaRest extends EJavaClass {
 
 	/**
 	 * Retorna o contexto raiz da api rest.
@@ -17,27 +17,27 @@ public interface ERest extends EClass {
 	 * 
 	 * @return
 	 */
-	SortedSet<EMethod> getHttpGETMethods();
+	SortedSet<EJavaMethod> getHttpGETMethods();
 
 	/**
 	 * Retorna todos os métodos HTTP Put
 	 * 
 	 * @return
 	 */
-	SortedSet<EMethod> getHttpPUTMethods();
+	SortedSet<EJavaMethod> getHttpPUTMethods();
 
 	/**
 	 * Retorna todos os métodos HTTP Post
 	 * 
 	 * @return
 	 */
-	SortedSet<EMethod> getHttpPOSTMethods();
+	SortedSet<EJavaMethod> getHttpPOSTMethods();
 
 	/**
 	 * Retorna todos os métodos HTTP Delete
 	 * 
 	 * @return
 	 */
-	public SortedSet<EMethod> getHttpDELETEMethods();
+	public SortedSet<EJavaMethod> getHttpDELETEMethods();
 
 }

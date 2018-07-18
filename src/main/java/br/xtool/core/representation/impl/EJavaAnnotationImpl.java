@@ -6,7 +6,7 @@ import java.util.List;
 import org.jboss.forge.roaster.model.source.AnnotationSource;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 
-import br.xtool.core.representation.EAnnotation;
+import br.xtool.core.representation.EJavaAnnotation;
 
 /**
  * Representação de uma annotation.
@@ -14,11 +14,11 @@ import br.xtool.core.representation.EAnnotation;
  * @author jcruz
  *
  */
-public class EAnnotationImpl implements EAnnotation {
+public class EJavaAnnotationImpl implements EJavaAnnotation {
 
 	private AnnotationSource<JavaClassSource> annotation;
 
-	public EAnnotationImpl(AnnotationSource<JavaClassSource> annotation) {
+	public EJavaAnnotationImpl(AnnotationSource<JavaClassSource> annotation) {
 		super();
 		this.annotation = annotation;
 	}
@@ -224,7 +224,7 @@ public class EAnnotationImpl implements EAnnotation {
 	}
 
 	@Override
-	public int compareTo(EAnnotation o) {
+	public int compareTo(EJavaAnnotation o) {
 		return this.getName().compareTo(o.getName());
 	}
 

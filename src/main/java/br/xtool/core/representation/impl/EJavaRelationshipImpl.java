@@ -2,19 +2,19 @@ package br.xtool.core.representation.impl;
 
 import java.util.Optional;
 
-import br.xtool.core.representation.ERelationship;
-import br.xtool.core.representation.EAttribute;
-import br.xtool.core.representation.EEntity;
+import br.xtool.core.representation.EJavaRelationship;
+import br.xtool.core.representation.EJavaAttribute;
+import br.xtool.core.representation.EJavaEntity;
 
-public class ERelationshipImpl implements ERelationship {
+public class EJavaRelationshipImpl implements EJavaRelationship {
 
-	private EEntity entitySource;
+	private EJavaEntity entitySource;
 
-	private EEntity entityTarget;
+	private EJavaEntity entityTarget;
 
-	private EAttribute attributeSource;
+	private EJavaAttribute attributeSource;
 
-	public ERelationshipImpl(EEntity source, EEntity target, EAttribute attributeSource) {
+	public EJavaRelationshipImpl(EJavaEntity source, EJavaEntity target, EJavaAttribute attributeSource) {
 		super();
 		this.entitySource = source;
 		this.entityTarget = target;
@@ -106,7 +106,7 @@ public class ERelationshipImpl implements ERelationship {
 	}
 
 	@Override
-	public Optional<EAttribute> getTargetAttribute() {
+	public Optional<EJavaAttribute> getTargetAttribute() {
 		// @formatter:off
 		return this.entityTarget.getAttributes().stream()
 				.filter(attrTarget -> attrTarget.getType().getName().equals(this.entityTarget.getName()))
@@ -115,17 +115,17 @@ public class ERelationshipImpl implements ERelationship {
 	}
 
 	@Override
-	public EAttribute getSourceAttribute() {
+	public EJavaAttribute getSourceAttribute() {
 		return this.attributeSource;
 	}
 
 	@Override
-	public EEntity getSourceEntity() {
+	public EJavaEntity getSourceEntity() {
 		return this.entitySource;
 	}
 
 	@Override
-	public Optional<EEntity> getTargetEntity() {
+	public Optional<EJavaEntity> getTargetEntity() {
 		return Optional.ofNullable(this.entityTarget);
 	}
 

@@ -8,7 +8,7 @@ import java.util.Optional;
  * @author jcruz
  *
  */
-public interface ERepository extends Comparable<ERepository> {
+public interface EJavaRepository extends Comparable<EJavaRepository> {
 
 	/**
 	 * Nome do Repository
@@ -22,13 +22,13 @@ public interface ERepository extends Comparable<ERepository> {
 	 * 
 	 * @return
 	 */
-	EPackage getPackage();
+	EJavaPackage getPackage();
 
 	/**
 	 * Retorna a entidade alvo do repositório.
 	 * 
 	 * @return
 	 */
-	Optional<EEntity> getTargetEntity();
+	Optional<EJavaEntity> getTargetEntity();
 
 }

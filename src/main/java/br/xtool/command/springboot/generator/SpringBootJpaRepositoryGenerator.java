@@ -14,8 +14,8 @@ import br.xtool.XtoolCliApplication;
 import br.xtool.core.FS;
 import br.xtool.core.Names;
 import br.xtool.core.command.SpringBootCommand;
-import br.xtool.core.representation.impl.EEntityImpl;
-import br.xtool.core.representation.provider.EEntityValueProvider;
+import br.xtool.core.representation.impl.EJavaEntityImpl;
+import br.xtool.core.representation.provider.EJavaEntityValueProvider;
 
 /**
  * Comando que gera um classe Repository no projeto Spring Boot
@@ -30,7 +30,7 @@ public class SpringBootJpaRepositoryGenerator extends SpringBootCommand {
 	private FS fs;
 
 	@ShellMethod(key = "gen:repository", value = "Gera uma classe de Repository (JpaRepository) para entidade JPA em um projeto Spring Boot", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
-	public void run(@ShellOption(help = "Entidade JPA", valueProvider = EEntityValueProvider.class) EEntityImpl entity) throws IOException, JDOMException {
+	public void run(@ShellOption(help = "Entidade JPA", valueProvider = EJavaEntityValueProvider.class) EJavaEntityImpl entity) throws IOException, JDOMException {
 		/*
 		 * Cria o mapa com as variáveis do gerador.
 		 */

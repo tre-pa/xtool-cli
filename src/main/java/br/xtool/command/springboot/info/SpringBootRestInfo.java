@@ -9,7 +9,7 @@ import org.springframework.shell.standard.ShellMethod;
 import br.xtool.XtoolCliApplication;
 import br.xtool.core.ConsoleLog;
 import br.xtool.core.command.SpringBootCommand;
-import br.xtool.core.representation.ERest;
+import br.xtool.core.representation.EJavaRest;
 
 @ShellComponent
 public class SpringBootRestInfo extends SpringBootCommand {
@@ -22,7 +22,7 @@ public class SpringBootRestInfo extends SpringBootCommand {
 	private void infoAllRests() {
 		//// @formatter:off
 		int maxLenghtEntityName = this.getProject().getRests().stream()
-				.map(ERest::getName)
+				.map(EJavaRest::getName)
 				.map(String::length)
 				.max(Comparator.naturalOrder())
 				.orElse(10);

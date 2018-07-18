@@ -15,20 +15,20 @@ import org.jboss.forge.roaster.model.source.FieldSource;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.jboss.forge.roaster.model.util.Types;
 
-import br.xtool.core.representation.EAnnotation;
-import br.xtool.core.representation.EClass;
-import br.xtool.core.representation.EField;
-import br.xtool.core.representation.EMethod;
-import br.xtool.core.representation.EPackage;
+import br.xtool.core.representation.EJavaAnnotation;
+import br.xtool.core.representation.EJavaClass;
+import br.xtool.core.representation.EJavaField;
+import br.xtool.core.representation.EJavaMethod;
+import br.xtool.core.representation.EJavaPackage;
 import br.xtool.core.representation.EProject;
 
-public class EClassImpl implements EClass {
+public class EJavaClassImpl implements EJavaClass {
 
 	protected JavaClassSource javaClassSource;
 
 	private EProject project;
 
-	public EClassImpl(EProject project, JavaClassSource javaClassSource) {
+	public EJavaClassImpl(EProject project, JavaClassSource javaClassSource) {
 		super();
 		this.project = project;
 		this.javaClassSource = javaClassSource;
@@ -60,8 +60,8 @@ public class EClassImpl implements EClass {
 	 * @return
 	 */
 	@Override
-	public EPackage getPackage() {
-		return EPackageImpl.of(this.javaClassSource.getPackage());
+	public EJavaPackage getPackage() {
+		return EJavaPackageImpl.of(this.javaClassSource.getPackage());
 	}
 
 	/**
@@ -87,31 +87,31 @@ public class EClassImpl implements EClass {
 	}
 
 	@Override
-	public SortedSet<EField> getFields() {
+	public SortedSet<EJavaField> getFields() {
 		// @formatter:off
 		return this.javaClassSource.getFields()
 				.stream()
-				.map(EFieldImpl::new)
+				.map(EJavaFieldImpl::new)
 				.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
 	}
 
 	@Override
-	public SortedSet<EAnnotation> getAnnotations() {
+	public SortedSet<EJavaAnnotation> getAnnotations() {
 		// @formatter:off
 		return this.javaClassSource.getAnnotations()
 				.stream()
-				.map(EAnnotationImpl::new)
+				.map(EJavaAnnotationImpl::new)
 				.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
 	}
 
 	@Override
-	public SortedSet<EMethod> getMethods() {
+	public SortedSet<EJavaMethod> getMethods() {
 		// @formatter:off
 		return this.javaClassSource.getMethods()
 				.stream()
-				.map(EMethodImpl::new)
+				.map(EJavaMethodImpl::new)
 				.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
 	}
@@ -123,13 +123,13 @@ public class EClassImpl implements EClass {
 	 * @return
 	 */
 	@Override
-	public Optional<EAnnotation> addAnnotation(String qualifiedName) {
+	public Optional<EJavaAnnotation> addAnnotation(String qualifiedName) {
 		if (StringUtils.isNotBlank(qualifiedName)) {
 			if (!this.javaClassSource.hasAnnotation(Types.toSimpleName(qualifiedName))) {
 				AnnotationSource<JavaClassSource> annotationSource = this.javaClassSource.addAnnotation();
 				this.javaClassSource.addImport(qualifiedName);
 				annotationSource.setName(Types.toSimpleName(qualifiedName));
-				return Optional.of(new EAnnotationImpl(annotationSource));
+				return Optional.of(new EJavaAnnotationImpl(annotationSource));
 			}
 		}
 		return Optional.empty();
@@ -143,7 +143,7 @@ public class EClassImpl implements EClass {
 	 * @return
 	 */
 	@Override
-	public Optional<EField> addField(String qualifiedType, String name) {
+	public Optional<EJavaField> addField(String qualifiedType, String name) {
 		if (StringUtils.isNoneBlank(qualifiedType, name)) {
 			if (!this.javaClassSource.hasField(name)) {
 				FieldSource<JavaClassSource> fieldSource = this.javaClassSource.addField();
@@ -151,7 +151,7 @@ public class EClassImpl implements EClass {
 				fieldSource.setName(name);
 				fieldSource.setType(Types.toSimpleName(qualifiedType));
 				//				Log.print(Log.bold(Log.green("\t[+] ")), Log.purple(" Add: "), Log.white(relativeDestination));
-				return Optional.of(new EFieldImpl(fieldSource));
+				return Optional.of(new EJavaFieldImpl(fieldSource));
 			}
 		}
 		return Optional.empty();
@@ -184,7 +184,7 @@ public class EClassImpl implements EClass {
 	}
 
 	@Override
-	public int compareTo(EClass o) {
+	public int compareTo(EJavaClass o) {
 		return this.getName().compareTo(o.getName());
 	}
 

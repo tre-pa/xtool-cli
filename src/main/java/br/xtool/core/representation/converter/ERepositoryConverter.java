@@ -6,16 +6,16 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 import br.xtool.core.WorkContext;
-import br.xtool.core.representation.ERepository;
+import br.xtool.core.representation.EJavaRepository;
 
 @Component
-public class ERepositoryConverter implements Converter<String, ERepository> {
+public class ERepositoryConverter implements Converter<String, EJavaRepository> {
 
 	@Autowired
 	private WorkContext workContext;
 
 	@Override
-	public ERepository convert(String source) {
+	public EJavaRepository convert(String source) {
 		if (workContext.getSpringBootProject().isPresent() && StringUtils.isNotEmpty(source)) {
 			// @formatter:off
 			return workContext.getSpringBootProject().get().getRepositories()

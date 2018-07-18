@@ -12,10 +12,10 @@ import org.springframework.shell.standard.ValueProviderSupport;
 import org.springframework.stereotype.Component;
 
 import br.xtool.core.WorkContext;
-import br.xtool.core.representation.ERepository;
+import br.xtool.core.representation.EJavaRepository;
 
 @Component
-public class ERepositoryValueProvider extends ValueProviderSupport {
+public class EJavaRepositoryValueProvider extends ValueProviderSupport {
 
 	@Autowired
 	private WorkContext workContext;
@@ -25,7 +25,7 @@ public class ERepositoryValueProvider extends ValueProviderSupport {
 		if (workContext.getSpringBootProject().isPresent()) {
 			// @formatter:off
 			return workContext.getSpringBootProject().get().getRepositories()
-					.stream().map(ERepository::getName)
+					.stream().map(EJavaRepository::getName)
 					.map(CompletionProposal::new)
 					.collect(Collectors.toList());
 			// @formatter:on

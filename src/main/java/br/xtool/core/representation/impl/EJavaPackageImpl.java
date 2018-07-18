@@ -2,7 +2,7 @@ package br.xtool.core.representation.impl;
 
 import org.apache.commons.lang3.StringUtils;
 
-import br.xtool.core.representation.EPackage;
+import br.xtool.core.representation.EJavaPackage;
 
 /**
  * Representa um pacote Java.
@@ -11,32 +11,32 @@ import br.xtool.core.representation.EPackage;
  *
  */
 
-public class EPackageImpl implements EPackage {
+public class EJavaPackageImpl implements EJavaPackage {
 
 	private String name;
 
 	private String dir;
 
-	private EPackageImpl() {
+	private EJavaPackageImpl() {
 		super();
 	}
 
-	public static EPackage of(String packageName) {
-		EPackageImpl package1 = new EPackageImpl();
+	public static EJavaPackage of(String packageName) {
+		EJavaPackageImpl package1 = new EJavaPackageImpl();
 		package1.name = packageName;
 		package1.dir = packageName.replaceAll("\\.", "/");
 		return package1;
 	}
 
-	public static EPackage of(String... packageElements) {
-		EPackageImpl package1 = new EPackageImpl();
+	public static EJavaPackage of(String... packageElements) {
+		EJavaPackageImpl package1 = new EJavaPackageImpl();
 		package1.name = StringUtils.join(packageElements, ".");
 		package1.dir = package1.name.replaceAll("\\.", "/");
 		return package1;
 	}
 
 	@Override
-	public int compareTo(EPackage o) {
+	public int compareTo(EJavaPackage o) {
 		// TODO Auto-generated method stub
 		return 0;
 	}

@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import org.jdom2.Element;
 
-public interface EDependency {
+public interface EBootPomDependency {
 
 	public String getGroupId();
 

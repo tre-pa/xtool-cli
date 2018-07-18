@@ -7,7 +7,7 @@ package br.xtool.core.representation;
  *
  */
 
-public interface EPackage extends Comparable<EPackage> {
+public interface EJavaPackage extends Comparable<EJavaPackage> {
 
 	String getName();
 

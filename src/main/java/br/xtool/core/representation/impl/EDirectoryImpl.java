@@ -24,7 +24,7 @@ import com.google.common.collect.ImmutableSet;
 
 import br.xtool.core.representation.EDirectory;
 import br.xtool.core.representation.ENgPackage;
-import br.xtool.core.representation.EPom;
+import br.xtool.core.representation.EBootPom;
 import br.xtool.core.representation.enums.ProjectType;
 import lombok.Getter;
 
@@ -97,7 +97,7 @@ public class EDirectoryImpl implements EDirectory {
 		public @Nullable ProjectType apply(@Nullable EDirectoryImpl dr) {
 			String pomFile = FilenameUtils.concat(dr.getPath(), "pom.xml");
 			if (Files.exists(Paths.get(pomFile))) {
-				EPom pomRepresentation = EPomImpl.of(pomFile);
+				EBootPom pomRepresentation = EBootPomImpl.of(pomFile);
 				Pattern pattern = Pattern.compile("1.5.\\d\\d?.RELEASE");
 				Matcher matcher = pattern.matcher(pomRepresentation.getParentVersion());
 				if (matcher.matches()) {

@@ -9,7 +9,7 @@ import org.springframework.shell.standard.ShellMethod;
 import br.xtool.XtoolCliApplication;
 import br.xtool.core.ConsoleLog;
 import br.xtool.core.command.SpringBootCommand;
-import br.xtool.core.representation.ERepository;
+import br.xtool.core.representation.EJavaRepository;
 
 @ShellComponent
 public class SpringBootRepositoryInfo extends SpringBootCommand {
@@ -22,7 +22,7 @@ public class SpringBootRepositoryInfo extends SpringBootCommand {
 	private void infoAllRepositories() {
 		//// @formatter:off
 		int maxLenghtEntityName = this.getProject().getRepositories().stream()
-				.map(ERepository::getName)
+				.map(EJavaRepository::getName)
 				.map(String::length)
 				.max(Comparator.naturalOrder())
 				.orElse(10);

@@ -23,48 +23,48 @@ public interface EBootProject extends EProject {
 	 * 
 	 * @return
 	 */
-	EClass getMainclass();
+	EJavaClass getMainclass();
 
 	/**
 	 * Retorna o pacote raiz.
 	 * 
 	 * @return
 	 */
-	EPackage getRootPackage();
+	EJavaPackage getRootPackage();
 
 	/**
 	 * Retorna a representação do arquivo pom.xml
 	 * 
 	 * @return
 	 */
-	EPom getPom();
+	EBootPom getPom();
 
 	/**
 	 * Retorna a representação do arquivo application.properties
 	 * 
 	 * @return
 	 */
-	EAppProperties getApplicationProperties();
+	EBootAppProperties getApplicationProperties();
 
 	/**
 	 * Retorna a lista das entidades JPA do projeto
 	 * 
 	 * @return
 	 */
-	SortedSet<EEntity> getEntities();
+	SortedSet<EJavaEntity> getEntities();
 
 	/**
 	 * Retorna a lista de repositórios.
 	 * 
 	 * @return
 	 */
-	SortedSet<ERepository> getRepositories();
+	SortedSet<EJavaRepository> getRepositories();
 
 	/**
 	 * 
 	 * @return
 	 */
-	SortedSet<ERest> getRests();
+	SortedSet<EJavaRest> getRests();
 
 	Optional<ENgProject> getAssociatedAngularProject();
 

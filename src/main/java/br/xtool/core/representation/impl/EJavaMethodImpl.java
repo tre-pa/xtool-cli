@@ -10,14 +10,14 @@ import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.jboss.forge.roaster.model.source.MethodSource;
 import org.jboss.forge.roaster.model.source.ParameterSource;
 
-import br.xtool.core.representation.EAnnotation;
-import br.xtool.core.representation.EMethod;
+import br.xtool.core.representation.EJavaAnnotation;
+import br.xtool.core.representation.EJavaMethod;
 
-public class EMethodImpl implements EMethod {
+public class EJavaMethodImpl implements EJavaMethod {
 
 	private MethodSource<JavaClassSource> methodSource;
 
-	public EMethodImpl(MethodSource<JavaClassSource> methodSource) {
+	public EJavaMethodImpl(MethodSource<JavaClassSource> methodSource) {
 		super();
 		this.methodSource = methodSource;
 	}
@@ -68,17 +68,17 @@ public class EMethodImpl implements EMethod {
 	}
 
 	@Override
-	public SortedSet<EAnnotation> getAnnotations() {
+	public SortedSet<EJavaAnnotation> getAnnotations() {
 		// @formatter:off
 		return this.methodSource.getAnnotations()
 				.stream()
-				.map(EAnnotationImpl::new)
+				.map(EJavaAnnotationImpl::new)
 				.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
 	}
 
 	@Override
-	public int compareTo(EMethod o) {
+	public int compareTo(EJavaMethod o) {
 		return this.getName().compareTo(o.getName());
 	}
 

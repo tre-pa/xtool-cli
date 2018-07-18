@@ -6,16 +6,16 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 import br.xtool.core.WorkContext;
-import br.xtool.core.representation.EEntity;
+import br.xtool.core.representation.EJavaEntity;
 
 @Component
-public class EEntityConverter implements Converter<String, EEntity> {
+public class EEntityConverter implements Converter<String, EJavaEntity> {
 
 	@Autowired
 	private WorkContext workContext;
 
 	@Override
-	public EEntity convert(String source) {
+	public EJavaEntity convert(String source) {
 		if (this.workContext.getSpringBootProject().isPresent() && StringUtils.isNotEmpty(source)) {
 			// @formatter:off
 			return this.workContext.getSpringBootProject().get().getEntities()

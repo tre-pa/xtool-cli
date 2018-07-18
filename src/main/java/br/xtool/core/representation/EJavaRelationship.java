@@ -2,7 +2,7 @@ package br.xtool.core.representation;
 
 import java.util.Optional;
 
-public interface ERelationship {
+public interface EJavaRelationship {
 
 	boolean isBidirectional();
 
@@ -20,11 +20,11 @@ public interface ERelationship {
 
 	boolean isManyToMany();
 
-	EAttribute getSourceAttribute();
+	EJavaAttribute getSourceAttribute();
 
-	Optional<EAttribute> getTargetAttribute();
+	Optional<EJavaAttribute> getTargetAttribute();
 
-	EEntity getSourceEntity();
+	EJavaEntity getSourceEntity();
 
-	Optional<EEntity> getTargetEntity();
+	Optional<EJavaEntity> getTargetEntity();
 }

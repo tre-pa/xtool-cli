@@ -16,14 +16,14 @@ import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.jboss.forge.roaster.model.source.JavaDocSource;
 import org.jboss.forge.roaster.model.util.Types;
 
-import br.xtool.core.representation.EAnnotation;
-import br.xtool.core.representation.EField;
+import br.xtool.core.representation.EJavaAnnotation;
+import br.xtool.core.representation.EJavaField;
 
-public class EFieldImpl implements EField {
+public class EJavaFieldImpl implements EJavaField {
 
 	protected FieldSource<JavaClassSource> fieldSource;
 
-	public EFieldImpl(FieldSource<JavaClassSource> fieldSource) {
+	public EJavaFieldImpl(FieldSource<JavaClassSource> fieldSource) {
 		super();
 		this.fieldSource = fieldSource;
 	}
@@ -84,11 +84,11 @@ public class EFieldImpl implements EField {
 	}
 
 	@Override
-	public SortedSet<EAnnotation> getAnnotations() {
+	public SortedSet<EJavaAnnotation> getAnnotations() {
 		// @formatter:off
 		return this.fieldSource.getAnnotations()
 				.stream()
-				.map(EAnnotationImpl::new)
+				.map(EJavaAnnotationImpl::new)
 				.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
 	}
@@ -100,13 +100,13 @@ public class EFieldImpl implements EField {
 	 * @return
 	 */
 	@Override
-	public Optional<EAnnotation> addAnnotation(String qualifiedName) {
+	public Optional<EJavaAnnotation> addAnnotation(String qualifiedName) {
 		if (StringUtils.isNotBlank(qualifiedName)) {
 			if (!this.fieldSource.hasAnnotation(Types.toSimpleName(qualifiedName))) {
 				AnnotationSource<JavaClassSource> annotationSource = this.fieldSource.addAnnotation();
 				this.fieldSource.getOrigin().addImport(qualifiedName);
 				annotationSource.setName(Types.toSimpleName(qualifiedName));
-				return Optional.of(new EAnnotationImpl(annotationSource));
+				return Optional.of(new EJavaAnnotationImpl(annotationSource));
 			}
 		}
 		return Optional.empty();
@@ -243,7 +243,7 @@ public class EFieldImpl implements EField {
 	}
 
 	@Override
-	public int compareTo(EField o) {
+	public int compareTo(EJavaField o) {
 		return this.getName().compareTo(o.getName());
 	}
 

@@ -10,7 +10,7 @@ import org.jboss.forge.roaster.model.source.FieldSource;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.jboss.forge.roaster.model.source.JavaDocSource;
 
-public interface EField extends Comparable<EField> {
+public interface EJavaField extends Comparable<EJavaField> {
 
 	String getName();
 
@@ -28,9 +28,9 @@ public interface EField extends Comparable<EField> {
 
 	void setLiteralInitialize(String value);
 
-	SortedSet<EAnnotation> getAnnotations();
+	SortedSet<EJavaAnnotation> getAnnotations();
 
-	Optional<EAnnotation> addAnnotation(String qualifiedName);
+	Optional<EJavaAnnotation> addAnnotation(String qualifiedName);
 
 	boolean isFinal();
 

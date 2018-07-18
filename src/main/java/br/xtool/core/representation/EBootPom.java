@@ -10,7 +10,7 @@ import org.jdom2.Namespace;
  * @author jcruz
  *
  */
-public interface EPom {
+public interface EBootPom {
 
 	public static final Namespace NAMESPACE = Namespace.getNamespace("http://maven.apache.org/POM/4.0.0");
 
@@ -19,7 +19,7 @@ public interface EPom {
 	 * 
 	 * @return
 	 */
-	EPackage getGroupId();
+	EJavaPackage getGroupId();
 
 	/**
 	 * Retorna a versão da aplicação.
@@ -49,7 +49,7 @@ public interface EPom {
 	 * 
 	 * @return
 	 */
-	List<EDependency> getDependencies();
+	List<EBootPomDependency> getDependencies();
 
 	/**
 	 * Adciona uma dependência o pom.xml caso não exista.

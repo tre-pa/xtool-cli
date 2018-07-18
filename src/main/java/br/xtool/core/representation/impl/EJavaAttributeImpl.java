@@ -5,8 +5,8 @@ import java.util.Optional;
 import org.jboss.forge.roaster.model.source.FieldSource;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 
-import br.xtool.core.representation.EAttribute;
-import br.xtool.core.representation.ERelationship;
+import br.xtool.core.representation.EJavaAttribute;
+import br.xtool.core.representation.EJavaRelationship;
 import br.xtool.core.representation.EBootProject;
 
 /**
@@ -15,13 +15,13 @@ import br.xtool.core.representation.EBootProject;
  * @author jcruz
  *
  */
-public class EAttributeImpl extends EFieldImpl implements EAttribute {
+public class EJavaAttributeImpl extends EJavaFieldImpl implements EJavaAttribute {
 
 	private EBootProject springBootProject;
 
-	private EEntityImpl entitySource;
+	private EJavaEntityImpl entitySource;
 
-	public EAttributeImpl(EBootProject springBootProject, EEntityImpl entitySource, FieldSource<JavaClassSource> fieldSource) {
+	public EJavaAttributeImpl(EBootProject springBootProject, EJavaEntityImpl entitySource, FieldSource<JavaClassSource> fieldSource) {
 		super(fieldSource);
 		this.springBootProject = springBootProject;
 		this.entitySource = entitySource;
@@ -54,22 +54,22 @@ public class EAttributeImpl extends EFieldImpl implements EAttribute {
 	}
 
 	@Override
-	public Optional<ERelationship> getRelationship() {
+	public Optional<EJavaRelationship> getRelationship() {
 		if (this.isAssociation()) {
 			if (this.isCollection()) {
 				// @formatter:off
 				return this.springBootProject.getEntities().stream()
 						.filter(entity -> this.getType().getTypeArguments().stream().anyMatch(type -> type.getName().equals(entity.getName())))
-						.map(entityTarget -> new ERelationshipImpl(this.entitySource, entityTarget, this))
-						.map(ERelationship.class::cast)
+						.map(entityTarget -> new EJavaRelationshipImpl(this.entitySource, entityTarget, this))
+						.map(EJavaRelationship.class::cast)
 						.findFirst();
 				// @formatter:on
 			}
 			// @formatter:off
 			return this.springBootProject.getEntities().stream()
 					.filter(entity -> entity.getName().equals(this.getType().getName()))
-					.map(entityTarget -> new ERelationshipImpl(this.entitySource, entityTarget, this))
-					.map(ERelationship.class::cast)
+					.map(entityTarget -> new EJavaRelationshipImpl(this.entitySource, entityTarget, this))
+					.map(EJavaRelationship.class::cast)
 					.findFirst();
 			// @formatter:on
 		}

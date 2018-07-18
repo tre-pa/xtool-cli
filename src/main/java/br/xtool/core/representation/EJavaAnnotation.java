@@ -11,7 +11,7 @@ import org.jboss.forge.roaster.model.source.JavaClassSource;
  * @author jcruz
  *
  */
-public interface EAnnotation extends Comparable<EAnnotation> {
+public interface EJavaAnnotation extends Comparable<EJavaAnnotation> {
 
 	/**
 	 * Retorna o nome da annotation.

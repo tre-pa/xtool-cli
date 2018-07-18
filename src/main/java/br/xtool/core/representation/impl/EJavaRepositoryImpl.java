@@ -4,9 +4,9 @@ import java.util.Optional;
 
 import org.jboss.forge.roaster.model.source.JavaInterfaceSource;
 
-import br.xtool.core.representation.EEntity;
-import br.xtool.core.representation.EPackage;
-import br.xtool.core.representation.ERepository;
+import br.xtool.core.representation.EJavaEntity;
+import br.xtool.core.representation.EJavaPackage;
+import br.xtool.core.representation.EJavaRepository;
 import br.xtool.core.representation.EBootProject;
 
 /**
@@ -15,13 +15,13 @@ import br.xtool.core.representation.EBootProject;
  * @author jcruz
  *
  */
-public class ERepositoryImpl implements ERepository {
+public class EJavaRepositoryImpl implements EJavaRepository {
 
 	private EBootProject springBootProject;
 
 	private JavaInterfaceSource javaInterfaceSource;
 
-	public ERepositoryImpl(EBootProject springBootProject, JavaInterfaceSource javaInterfaceSource) {
+	public EJavaRepositoryImpl(EBootProject springBootProject, JavaInterfaceSource javaInterfaceSource) {
 		super();
 		this.springBootProject = springBootProject;
 		this.javaInterfaceSource = javaInterfaceSource;
@@ -43,8 +43,8 @@ public class ERepositoryImpl implements ERepository {
 	 * @return
 	 */
 	@Override
-	public EPackage getPackage() {
-		return EPackageImpl.of(this.javaInterfaceSource.getPackage());
+	public EJavaPackage getPackage() {
+		return EJavaPackageImpl.of(this.javaInterfaceSource.getPackage());
 	}
 
 	/**
@@ -53,7 +53,7 @@ public class ERepositoryImpl implements ERepository {
 	 * @return
 	 */
 	@Override
-	public Optional<EEntity> getTargetEntity() {
+	public Optional<EJavaEntity> getTargetEntity() {
 		// @formatter:off
 		return this.springBootProject.getEntities().stream()
 				.filter(e -> e.getName().concat("Repository").equals(this.getName()))
@@ -62,7 +62,7 @@ public class ERepositoryImpl implements ERepository {
 	}
 
 	@Override
-	public int compareTo(ERepository o) {
+	public int compareTo(EJavaRepository o) {
 		return this.getName().compareTo(o.getName());
 	}
 }
