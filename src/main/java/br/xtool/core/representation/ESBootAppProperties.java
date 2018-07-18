@@ -8,7 +8,7 @@ import java.util.Optional;
  * @author jcruz
  *
  */
-public interface EBootAppProperties {
+public interface ESBootAppProperties {
 
 	Optional<String> get(String key);
 

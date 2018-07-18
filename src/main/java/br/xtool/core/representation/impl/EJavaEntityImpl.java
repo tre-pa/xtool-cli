@@ -11,7 +11,7 @@ import org.jboss.forge.roaster.model.source.JavaClassSource;
 import br.xtool.core.representation.EJavaRelationship;
 import br.xtool.core.representation.EJavaAttribute;
 import br.xtool.core.representation.EJavaEntity;
-import br.xtool.core.representation.EBootProject;
+import br.xtool.core.representation.ESBootProject;
 
 /**
  * Classe que representa um entidade JPA
@@ -21,9 +21,9 @@ import br.xtool.core.representation.EBootProject;
  */
 public class EJavaEntityImpl extends EJavaClassImpl implements EJavaEntity {
 
-	private EBootProject springBootProject;
+	private ESBootProject springBootProject;
 
-	public EJavaEntityImpl(EBootProject springBootProject, JavaClassSource javaClassSource) {
+	public EJavaEntityImpl(ESBootProject springBootProject, JavaClassSource javaClassSource) {
 		super(springBootProject, javaClassSource);
 		this.springBootProject = springBootProject;
 		this.javaClassSource = javaClassSource;

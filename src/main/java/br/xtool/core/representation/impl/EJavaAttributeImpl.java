@@ -7,7 +7,7 @@ import org.jboss.forge.roaster.model.source.JavaClassSource;
 
 import br.xtool.core.representation.EJavaAttribute;
 import br.xtool.core.representation.EJavaRelationship;
-import br.xtool.core.representation.EBootProject;
+import br.xtool.core.representation.ESBootProject;
 
 /**
  * Classe que representa um atributo JPA de uma entidade.
@@ -17,11 +17,11 @@ import br.xtool.core.representation.EBootProject;
  */
 public class EJavaAttributeImpl extends EJavaFieldImpl implements EJavaAttribute {
 
-	private EBootProject springBootProject;
+	private ESBootProject springBootProject;
 
 	private EJavaEntityImpl entitySource;
 
-	public EJavaAttributeImpl(EBootProject springBootProject, EJavaEntityImpl entitySource, FieldSource<JavaClassSource> fieldSource) {
+	public EJavaAttributeImpl(ESBootProject springBootProject, EJavaEntityImpl entitySource, FieldSource<JavaClassSource> fieldSource) {
 		super(fieldSource);
 		this.springBootProject = springBootProject;
 		this.entitySource = entitySource;

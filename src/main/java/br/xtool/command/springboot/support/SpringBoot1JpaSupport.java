@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 import br.xtool.command.springboot.support.core.SpringBootSupport;
 import br.xtool.core.ConsoleLog;
-import br.xtool.core.representation.EBootProject;
+import br.xtool.core.representation.ESBootProject;
 import br.xtool.core.representation.EProject.ProjectType;
 import br.xtool.core.service.FileService;
 
@@ -36,7 +36,7 @@ public class SpringBoot1JpaSupport implements SpringBootSupport {
 	}
 
 	@Override
-	public void apply(EBootProject project) {
+	public void apply(ESBootProject project) {
 		//// @formatter:off
 		Map<String, Object> vars = new HashMap<>();
 		vars.put("projectName", project.getName());
@@ -51,7 +51,7 @@ public class SpringBoot1JpaSupport implements SpringBootSupport {
 		addProperties(project);
 	}
 
-	private void addDependencies(EBootProject project) {
+	private void addDependencies(ESBootProject project) {
 		project.getPom().addDependency("org.springframework.boot", "spring-boot-starter-data-jpa");
 		project.getPom().addDependency("com.h2database", "h2");
 		project.getPom().addDependency("org.hibernate", "hibernate-java8");
@@ -59,7 +59,7 @@ public class SpringBoot1JpaSupport implements SpringBootSupport {
 		project.getPom().save();
 	}
 
-	private void addProperties(EBootProject project) {
+	private void addProperties(ESBootProject project) {
 		project.getApplicationProperties().set("spring.h2.console.enabled", "true");
 		project.getApplicationProperties().set("spring.h2.console.path", "/h2");
 		project.getApplicationProperties().set("spring.datasource.url", String.format("jdbc:h2:./target/db/%s;DB_CLOSE_ON_EXIT=FALSE", project.getName()));
@@ -75,7 +75,7 @@ public class SpringBoot1JpaSupport implements SpringBootSupport {
 	}
 
 	@Override
-	public boolean hasSupport(EBootProject project) {
+	public boolean hasSupport(ESBootProject project) {
 		return project.getPom().hasArtifactId("spring-boot-starter-data-jpa");
 	}
 

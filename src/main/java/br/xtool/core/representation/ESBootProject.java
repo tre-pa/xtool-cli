@@ -9,7 +9,7 @@ import java.util.SortedSet;
  * @author jcruz
  *
  */
-public interface EBootProject extends EProject {
+public interface ESBootProject extends EProject {
 
 	/**
 	 * Retorna o nome da classe base. O nome da classe base é o nome da classe que
@@ -37,14 +37,14 @@ public interface EBootProject extends EProject {
 	 * 
 	 * @return
 	 */
-	EBootPom getPom();
+	ESBootPom getPom();
 
 	/**
 	 * Retorna a representação do arquivo application.properties
 	 * 
 	 * @return
 	 */
-	EBootAppProperties getApplicationProperties();
+	ESBootAppProperties getApplicationProperties();
 
 	/**
 	 * Retorna a lista das entidades JPA do projeto

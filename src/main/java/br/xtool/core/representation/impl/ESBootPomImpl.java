@@ -18,9 +18,9 @@ import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
 import br.xtool.core.ConsoleLog;
-import br.xtool.core.representation.EBootPomDependency;
+import br.xtool.core.representation.ESBootPomDependency;
 import br.xtool.core.representation.EJavaPackage;
-import br.xtool.core.representation.EBootPom;
+import br.xtool.core.representation.ESBootPom;
 
 /**
  * Representa o arquivo pom.xml
@@ -28,7 +28,7 @@ import br.xtool.core.representation.EBootPom;
  * @author jcruz
  *
  */
-public class EBootPomImpl implements EBootPom {
+public class ESBootPomImpl implements ESBootPom {
 
 	public static final Namespace NAMESPACE = Namespace.getNamespace("http://maven.apache.org/POM/4.0.0");
 
@@ -36,7 +36,7 @@ public class EBootPomImpl implements EBootPom {
 
 	private File file;
 
-	private EBootPomImpl(String path) {
+	private ESBootPomImpl(String path) {
 		super();
 
 	}
@@ -89,18 +89,18 @@ public class EBootPomImpl implements EBootPom {
 	 * @return
 	 */
 	@Override
-	public List<EBootPomDependency> getDependencies() {
-		List<EBootPomDependency> dependencies = new ArrayList<>();
+	public List<ESBootPomDependency> getDependencies() {
+		List<ESBootPomDependency> dependencies = new ArrayList<>();
 		Element dependenciesNode = this.pomDoc.getRootElement().getChild("dependencies", NAMESPACE);
 		for (Element dependency : dependenciesNode.getChildren()) {
 			String groupId = dependency.getChild("groupId", NAMESPACE).getTextTrim();
 			String artifactId = dependency.getChild("artifactId", NAMESPACE).getTextTrim();
 			if (Objects.nonNull(dependency.getChild("version", NAMESPACE))) {
 				String version = dependency.getChild("version", NAMESPACE).getTextTrim();
-				dependencies.add(new EBootPomDependencyImpl(groupId, artifactId, version));
+				dependencies.add(new ESBootPomDependencyImpl(groupId, artifactId, version));
 				continue;
 			}
-			dependencies.add(new EBootPomDependencyImpl(groupId, artifactId));
+			dependencies.add(new ESBootPomDependencyImpl(groupId, artifactId));
 		}
 		return dependencies;
 	}
@@ -112,7 +112,7 @@ public class EBootPomImpl implements EBootPom {
 	 */
 	@Override
 	public void addDependency(String groupId, String artifactId) {
-		EBootPomDependencyImpl dependency = new EBootPomDependencyImpl(groupId, artifactId);
+		ESBootPomDependencyImpl dependency = new ESBootPomDependencyImpl(groupId, artifactId);
 		if (!hasArtifactId(dependency.getArtifactId())) {
 			this.pomDoc.getRootElement().getChild("dependencies", NAMESPACE).addContent(dependency.getAsDom());
 			ConsoleLog.print(ConsoleLog.bold(ConsoleLog.yellow("\t[~] ")), ConsoleLog.purple("Item: "), ConsoleLog.white("pom.xml"), ConsoleLog.gray(" -- "), ConsoleLog.gray(dependency.toString()));
@@ -126,16 +126,16 @@ public class EBootPomImpl implements EBootPom {
 	 */
 	@Override
 	public void addDependency(String groupId, String artifactId, String version) {
-		EBootPomDependencyImpl dependency = new EBootPomDependencyImpl(groupId, artifactId, version);
+		ESBootPomDependencyImpl dependency = new ESBootPomDependencyImpl(groupId, artifactId, version);
 		if (!hasArtifactId(dependency.getArtifactId())) {
 			this.pomDoc.getRootElement().getChild("dependencies", NAMESPACE).addContent(dependency.getAsDom());
 		}
 	}
 
-	public static EBootPomImpl of(String path) {
+	public static ESBootPomImpl of(String path) {
 		if (Files.exists(Paths.get(path))) {
 			try {
-				EBootPomImpl pomRepresentation = new EBootPomImpl(path);
+				ESBootPomImpl pomRepresentation = new ESBootPomImpl(path);
 				pomRepresentation.file = new File(path);
 				SAXBuilder saxBuilder = new SAXBuilder();
 				pomRepresentation.pomDoc = saxBuilder.build(pomRepresentation.file);

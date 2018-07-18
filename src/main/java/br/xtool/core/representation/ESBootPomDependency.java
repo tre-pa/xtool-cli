@@ -10,7 +10,7 @@ import org.jdom2.Element;
  * @author jcruz
  *
  */
-public interface EBootPomDependency {
+public interface ESBootPomDependency {
 
 	public String getGroupId();
 

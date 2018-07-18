@@ -17,7 +17,7 @@ import br.xtool.core.ConsoleLog;
 import br.xtool.core.WorkContext;
 import br.xtool.core.aware.RegularAware;
 import br.xtool.core.representation.EJavaPackage;
-import br.xtool.core.representation.EBootProject;
+import br.xtool.core.representation.ESBootProject;
 import br.xtool.core.representation.impl.EJavaPackageImpl;
 import br.xtool.core.service.FileService;
 import br.xtool.core.util.Names;
@@ -77,7 +77,7 @@ public class NewSpringBootProjectGenerator extends RegularAware {
 		this.workContext.changeRelativeTo((String) vars.get("projectName"));
 
 		if (this.workContext.getSpringBootProject().isPresent()) {
-			EBootProject project = this.workContext.getSpringBootProject().get();
+			ESBootProject project = this.workContext.getSpringBootProject().get();
 			if (!noJpa) this.supportManager.addSupport(project, SupportType.JPA);
 			if (!noWeb) this.supportManager.addSupport(project, SupportType.WEB);
 		}

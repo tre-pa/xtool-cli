@@ -7,7 +7,7 @@ import org.jboss.forge.roaster.model.source.JavaInterfaceSource;
 import br.xtool.core.representation.EJavaEntity;
 import br.xtool.core.representation.EJavaPackage;
 import br.xtool.core.representation.EJavaRepository;
-import br.xtool.core.representation.EBootProject;
+import br.xtool.core.representation.ESBootProject;
 
 /**
  * Classe que representa uma inteface Repository
@@ -17,11 +17,11 @@ import br.xtool.core.representation.EBootProject;
  */
 public class EJavaRepositoryImpl implements EJavaRepository {
 
-	private EBootProject springBootProject;
+	private ESBootProject springBootProject;
 
 	private JavaInterfaceSource javaInterfaceSource;
 
-	public EJavaRepositoryImpl(EBootProject springBootProject, JavaInterfaceSource javaInterfaceSource) {
+	public EJavaRepositoryImpl(ESBootProject springBootProject, JavaInterfaceSource javaInterfaceSource) {
 		super();
 		this.springBootProject = springBootProject;
 		this.javaInterfaceSource = javaInterfaceSource;

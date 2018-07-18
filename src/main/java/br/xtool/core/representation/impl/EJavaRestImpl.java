@@ -12,13 +12,13 @@ import org.jboss.forge.roaster.model.source.MethodSource;
 
 import br.xtool.core.representation.EJavaMethod;
 import br.xtool.core.representation.EJavaRest;
-import br.xtool.core.representation.EBootProject;
+import br.xtool.core.representation.ESBootProject;
 
 public class EJavaRestImpl extends EJavaClassImpl implements EJavaRest {
 
-	private EBootProject springBootProject;
+	private ESBootProject springBootProject;
 
-	public EJavaRestImpl(EBootProject springBootProject, JavaClassSource javaClassSource) {
+	public EJavaRestImpl(ESBootProject springBootProject, JavaClassSource javaClassSource) {
 		super(springBootProject, javaClassSource);
 		this.springBootProject = springBootProject;
 	}

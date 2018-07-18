@@ -4,8 +4,8 @@ import java.util.Optional;
 
 import org.jdom2.Element;
 
-import br.xtool.core.representation.EBootPomDependency;
-import br.xtool.core.representation.EBootPom;
+import br.xtool.core.representation.ESBootPomDependency;
+import br.xtool.core.representation.ESBootPom;
 import lombok.EqualsAndHashCode;
 
 /**
@@ -15,21 +15,21 @@ import lombok.EqualsAndHashCode;
  *
  */
 @EqualsAndHashCode
-public class EBootPomDependencyImpl implements EBootPomDependency {
+public class ESBootPomDependencyImpl implements ESBootPomDependency {
 	private String groupId;
 
 	private String artifactId;
 
 	private String version;
 
-	public EBootPomDependencyImpl(String groupId, String artifactId, String version) {
+	public ESBootPomDependencyImpl(String groupId, String artifactId, String version) {
 		super();
 		this.groupId = groupId;
 		this.artifactId = artifactId;
 		this.version = version;
 	}
 
-	public EBootPomDependencyImpl(String groupId, String artifactId) {
+	public ESBootPomDependencyImpl(String groupId, String artifactId) {
 		super();
 		this.groupId = groupId;
 		this.artifactId = artifactId;
@@ -42,7 +42,7 @@ public class EBootPomDependencyImpl implements EBootPomDependency {
 	 */
 	@Override
 	public Element getAsDom() {
-		Element dependency = new Element("dependency", EBootPom.NAMESPACE);
+		Element dependency = new Element("dependency", ESBootPom.NAMESPACE);
 		this.buildGroupId(dependency);
 		this.buildArtifiactId(dependency);
 		this.buildVersion(dependency);
@@ -50,20 +50,20 @@ public class EBootPomDependencyImpl implements EBootPomDependency {
 	}
 
 	private void buildGroupId(Element dependency) {
-		Element groupId = new Element("groupId", EBootPom.NAMESPACE);
+		Element groupId = new Element("groupId", ESBootPom.NAMESPACE);
 		groupId.setText(this.getGroupId());
 		dependency.addContent(groupId);
 	}
 
 	private void buildArtifiactId(Element dependency) {
-		Element artifactId = new Element("artifactId", EBootPom.NAMESPACE);
+		Element artifactId = new Element("artifactId", ESBootPom.NAMESPACE);
 		artifactId.setText(this.getArtifactId());
 		dependency.addContent(artifactId);
 	}
 
 	private void buildVersion(Element dependency) {
 		if (this.getVersion().isPresent()) {
-			Element version = new Element("version", EBootPom.NAMESPACE);
+			Element version = new Element("version", ESBootPom.NAMESPACE);
 			version.setText(this.getVersion().get());
 			dependency.addContent(version);
 		}

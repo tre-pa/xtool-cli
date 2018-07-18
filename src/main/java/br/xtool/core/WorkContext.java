@@ -18,11 +18,11 @@ import org.springframework.shell.jline.PromptProvider;
 import org.springframework.stereotype.Component;
 
 import br.xtool.core.event.ChangeDirectoryEvent;
-import br.xtool.core.representation.EBootProject;
+import br.xtool.core.representation.ESBootProject;
 import br.xtool.core.representation.EDirectory;
 import br.xtool.core.representation.ENgProject;
 import br.xtool.core.representation.EProject.ProjectType;
-import br.xtool.core.representation.impl.EBootProjectImpl;
+import br.xtool.core.representation.impl.ESBootProjectImpl;
 import br.xtool.core.representation.impl.EDirectoryImpl;
 import br.xtool.core.representation.impl.ENgProjectImpl;
 import lombok.Getter;
@@ -36,7 +36,7 @@ public class WorkContext implements PromptProvider {
 	@Autowired
 	private ApplicationEventPublisher applicationEventPublisher;
 
-	private Optional<EBootProject> springBootProject;
+	private Optional<ESBootProject> springBootProject;
 
 	private Optional<ENgProject> angularProject;
 
@@ -79,9 +79,9 @@ public class WorkContext implements PromptProvider {
 	 * 
 	 * @return
 	 */
-	public Optional<EBootProject> getSpringBootProject() {
+	public Optional<ESBootProject> getSpringBootProject() {
 		if (Objects.isNull(this.springBootProject)) {
-			this.springBootProject = EBootProjectImpl.of(this.directory.getPath());
+			this.springBootProject = ESBootProjectImpl.of(this.directory.getPath());
 		}
 		return this.springBootProject;
 	}

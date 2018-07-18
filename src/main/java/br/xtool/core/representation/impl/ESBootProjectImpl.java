@@ -14,9 +14,9 @@ import org.jboss.forge.roaster.model.JavaUnit;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.jboss.forge.roaster.model.source.JavaInterfaceSource;
 
-import br.xtool.core.representation.EBootAppProperties;
-import br.xtool.core.representation.EBootPom;
-import br.xtool.core.representation.EBootProject;
+import br.xtool.core.representation.ESBootAppProperties;
+import br.xtool.core.representation.ESBootPom;
+import br.xtool.core.representation.ESBootProject;
 import br.xtool.core.representation.EJavaClass;
 import br.xtool.core.representation.EJavaEntity;
 import br.xtool.core.representation.EJavaPackage;
@@ -33,17 +33,17 @@ import lombok.extern.slf4j.Slf4j;
  *
  */
 @Slf4j
-public class EBootProjectImpl extends EProjectImpl implements EBootProject {
+public class ESBootProjectImpl extends EProjectImpl implements ESBootProject {
 
 	private Map<String, JavaUnit> javaUnits;
 
-	private EBootPom pom;
+	private ESBootPom pom;
 
-	private EBootAppProperties applicationProperties;
+	private ESBootAppProperties applicationProperties;
 
 	private EJavaClass mainClass;
 
-	public EBootProjectImpl(String path) {
+	public ESBootProjectImpl(String path) {
 		super(path);
 	}
 
@@ -95,9 +95,9 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 	 * @return
 	 */
 	@Override
-	public EBootPom getPom() {
+	public ESBootPom getPom() {
 		if (Objects.isNull(this.pom)) {
-			this.pom = EBootPomImpl.of(FilenameUtils.concat(this.getPath(), "pom.xml"));
+			this.pom = ESBootPomImpl.of(FilenameUtils.concat(this.getPath(), "pom.xml"));
 		}
 		return this.pom;
 	}
@@ -108,9 +108,9 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 	 * @return
 	 */
 	@Override
-	public EBootAppProperties getApplicationProperties() {
+	public ESBootAppProperties getApplicationProperties() {
 		if (Objects.isNull(this.applicationProperties)) {
-			this.applicationProperties = EBootAppPropertiesImpl.of(FilenameUtils.concat(this.getPath(), "src/main/resources/application.properties"));
+			this.applicationProperties = ESBootAppPropertiesImpl.of(FilenameUtils.concat(this.getPath(), "src/main/resources/application.properties"));
 		}
 		return this.applicationProperties;
 	}
@@ -198,9 +198,9 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 		this.javaUnits = null;
 	}
 
-	public static Optional<EBootProject> of(String path) {
+	public static Optional<ESBootProject> of(String path) {
 		if (Stream.of(ProjectType.SPRINGBOOT1_PROJECT, ProjectType.SPRINGBOOT2_PROJECT).anyMatch(p -> p.equals(EDirectoryImpl.of(path).getProjectType()))) {
-			EBootProjectImpl project = new EBootProjectImpl(path);
+			ESBootProjectImpl project = new ESBootProjectImpl(path);
 			return Optional.of(project);
 		}
 		return Optional.empty();
