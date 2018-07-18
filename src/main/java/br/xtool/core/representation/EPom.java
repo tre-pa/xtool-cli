@@ -18,7 +18,8 @@ import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
 import br.xtool.core.ConsoleLog;
-import lombok.Getter;
+import br.xtool.core.representation.impl.EDependencyImpl;
+import br.xtool.core.representation.impl.EPackageImpl;
 
 /**
  * Representa o arquivo pom.xml
@@ -31,9 +32,6 @@ public class EPom {
 	public static final Namespace NAMESPACE = Namespace.getNamespace("http://maven.apache.org/POM/4.0.0");
 
 	private Document pomDoc;
-
-	@Getter(lazy = true)
-	private final List<EDependency> dependencies = buildDependencies();
 
 	private File file;
 
@@ -48,7 +46,7 @@ public class EPom {
 	 * @return
 	 */
 	public EPackage getGroupId() {
-		return EPackage.of(this.pomDoc.getRootElement().getChild("groupId", NAMESPACE).getText());
+		return EPackageImpl.of(this.pomDoc.getRootElement().getChild("groupId", NAMESPACE).getText());
 	}
 
 	/**
@@ -85,7 +83,7 @@ public class EPom {
 	 * 
 	 * @return
 	 */
-	private List<EDependency> buildDependencies() {
+	private List<EDependency> getDependencies() {
 		List<EDependency> dependencies = new ArrayList<>();
 		Element dependenciesNode = this.pomDoc.getRootElement().getChild("dependencies", NAMESPACE);
 		for (Element dependency : dependenciesNode.getChildren()) {
@@ -93,10 +91,10 @@ public class EPom {
 			String artifactId = dependency.getChild("artifactId", NAMESPACE).getTextTrim();
 			if (Objects.nonNull(dependency.getChild("version", NAMESPACE))) {
 				String version = dependency.getChild("version", NAMESPACE).getTextTrim();
-				dependencies.add(new EDependency(groupId, artifactId, version));
+				dependencies.add(new EDependencyImpl(groupId, artifactId, version));
 				continue;
 			}
-			dependencies.add(new EDependency(groupId, artifactId));
+			dependencies.add(new EDependencyImpl(groupId, artifactId));
 		}
 		return dependencies;
 	}
@@ -107,7 +105,7 @@ public class EPom {
 	 * @param dependency
 	 */
 	public void addDependency(String groupId, String artifactId) {
-		EDependency dependency = new EDependency(groupId, artifactId);
+		EDependencyImpl dependency = new EDependencyImpl(groupId, artifactId);
 		if (!hasArtifactId(dependency.getArtifactId())) {
 			this.pomDoc.getRootElement().getChild("dependencies", NAMESPACE).addContent(dependency.getAsDom());
 			ConsoleLog.print(ConsoleLog.bold(ConsoleLog.yellow("\t[~] ")), ConsoleLog.purple("Item: "), ConsoleLog.white("pom.xml"), ConsoleLog.gray(" -- "), ConsoleLog.gray(dependency.toString()));
@@ -120,7 +118,7 @@ public class EPom {
 	 * @param dependency
 	 */
 	public void addDependency(String groupId, String artifactId, String version) {
-		EDependency dependency = new EDependency(groupId, artifactId, version);
+		EDependencyImpl dependency = new EDependencyImpl(groupId, artifactId, version);
 		if (!hasArtifactId(dependency.getArtifactId())) {
 			this.pomDoc.getRootElement().getChild("dependencies", NAMESPACE).addContent(dependency.getAsDom());
 		}

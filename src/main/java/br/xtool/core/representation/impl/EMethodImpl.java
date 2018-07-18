@@ -1,0 +1,85 @@
+package br.xtool.core.representation.impl;
+
+import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
+import java.util.stream.Collectors;
+
+import org.jboss.forge.roaster.model.Type;
+import org.jboss.forge.roaster.model.source.JavaClassSource;
+import org.jboss.forge.roaster.model.source.MethodSource;
+import org.jboss.forge.roaster.model.source.ParameterSource;
+
+import br.xtool.core.representation.EAnnotation;
+import br.xtool.core.representation.EMethod;
+
+public class EMethodImpl implements EMethod {
+
+	private MethodSource<JavaClassSource> methodSource;
+
+	public EMethodImpl(MethodSource<JavaClassSource> methodSource) {
+		super();
+		this.methodSource = methodSource;
+	}
+
+	/**
+	 * Retorna o nome do método.
+	 * 
+	 * @return Nome do método.
+	 */
+	@Override
+	public String getName() {
+		return this.methodSource.getName();
+	}
+
+	@Override
+	public boolean isStatic() {
+		return this.methodSource.isStatic();
+	}
+
+	@Override
+	public boolean isConstructor() {
+		return this.methodSource.isConstructor();
+	}
+
+	@Override
+	public boolean hasAnnotation(String type) {
+		return this.methodSource.hasAnnotation(type);
+	}
+
+	@Override
+	public Type<JavaClassSource> getReturnType() {
+		return this.methodSource.getReturnType();
+	}
+
+	@Override
+	public int getLineNumber() {
+		return this.methodSource.getLineNumber();
+	}
+
+	@Override
+	public boolean isReturnTypeVoid() {
+		return this.methodSource.isReturnTypeVoid();
+	}
+
+	@Override
+	public List<ParameterSource<JavaClassSource>> getParameters() {
+		return this.methodSource.getParameters();
+	}
+
+	@Override
+	public SortedSet<EAnnotation> getAnnotations() {
+		// @formatter:off
+		return this.methodSource.getAnnotations()
+				.stream()
+				.map(EAnnotationImpl::new)
+				.collect(Collectors.toCollection(TreeSet::new));
+		// @formatter:on
+	}
+
+	@Override
+	public int compareTo(EMethod o) {
+		return this.getName().compareTo(o.getName());
+	}
+
+}

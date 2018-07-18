@@ -18,6 +18,7 @@ import br.xtool.core.diagram.mapper.FieldMapper;
 import br.xtool.core.representation.EPackage;
 import br.xtool.core.representation.ESpringBootProject;
 import br.xtool.core.representation.impl.EClassImpl;
+import br.xtool.core.representation.impl.EPackageImpl;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import net.sourceforge.plantuml.BlockUml;
@@ -110,7 +111,7 @@ public class ClassDiagramReader {
 	public Map<String, EClassImpl> write(ESpringBootProject project) {
 		Map<String, EClassImpl> classes = new HashMap<>();
 		for (JavaClassSource javaClass : this.javaClassSources.values()) {
-			EPackage ePackage = EPackage.of(javaClass.getPackage());
+			EPackage ePackage = EPackageImpl.of(javaClass.getPackage());
 			String javaFile = FilenameUtils.concat(project.getMainDir(), String.format("%s/%s.java", ePackage.getDir(), javaClass.getName()));
 			FileUtils.writeStringToFile(new File(javaFile), javaClass.toString(), "UTF-8");
 			classes.put(javaClass.getName(), new EClassImpl(project, javaClass));

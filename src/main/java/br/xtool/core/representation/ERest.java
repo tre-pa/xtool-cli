@@ -11,23 +11,11 @@ import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.jboss.forge.roaster.model.source.MethodSource;
 
 import br.xtool.core.representation.impl.EClassImpl;
-import lombok.Getter;
+import br.xtool.core.representation.impl.EMethodImpl;
 
 public class ERest extends EClassImpl {
 
 	private ESpringBootProject springBootProject;
-
-	@Getter(lazy = true)
-	private final SortedSet<EMethod> httpGetMethods = buildHttpGetMethods();
-
-	@Getter(lazy = true)
-	private final SortedSet<EMethod> httpPutMethods = buildHttpPutMethods();
-
-	@Getter(lazy = true)
-	private final SortedSet<EMethod> httpPostMethods = buildHttpPostMethods();
-
-	@Getter(lazy = true)
-	private final SortedSet<EMethod> httpDeleteMethods = buildHttpDeleteMethods();
 
 	public ERest(ESpringBootProject springBootProject, JavaClassSource javaClassSource) {
 		super(springBootProject, javaClassSource);
@@ -48,7 +36,7 @@ public class ERest extends EClassImpl {
 	 * 
 	 * @return
 	 */
-	private SortedSet<EMethod> buildHttpGetMethods() {
+	public SortedSet<EMethod> getHttpGetMethods() {
 		return this.getHttpMethods("GetMapping", "RequestMethod.GET");
 	}
 
@@ -57,7 +45,7 @@ public class ERest extends EClassImpl {
 	 * 
 	 * @return
 	 */
-	private SortedSet<EMethod> buildHttpPutMethods() {
+	public SortedSet<EMethod> getHttpPutMethods() {
 		return this.getHttpMethods("PutMapping", "RequestMethod.PUT");
 	}
 
@@ -66,7 +54,7 @@ public class ERest extends EClassImpl {
 	 * 
 	 * @return
 	 */
-	private SortedSet<EMethod> buildHttpPostMethods() {
+	public SortedSet<EMethod> getHttpPostMethods() {
 		return this.getHttpMethods("PostMapping", "RequestMethod.POST");
 	}
 
@@ -75,7 +63,7 @@ public class ERest extends EClassImpl {
 	 * 
 	 * @return
 	 */
-	private SortedSet<EMethod> buildHttpDeleteMethods() {
+	public SortedSet<EMethod> getHttpDeleteMethods() {
 		return this.getHttpMethods("DeleteMapping", "RequestMethod.DELETE");
 	}
 
@@ -88,7 +76,7 @@ public class ERest extends EClassImpl {
 		return this.javaClassSource.getMethods()
 			.stream()
 			.filter(hasHttpAnnotation.or(hasRequestMapping.and(hasRequestMappingMethod)))
-			.map(EMethod::new)
+			.map(EMethodImpl::new)
 			.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
 	}

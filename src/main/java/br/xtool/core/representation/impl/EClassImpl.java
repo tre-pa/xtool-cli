@@ -61,7 +61,7 @@ public class EClassImpl implements EClass {
 	 */
 	@Override
 	public EPackage getPackage() {
-		return EPackage.of(this.javaClassSource.getPackage());
+		return EPackageImpl.of(this.javaClassSource.getPackage());
 	}
 
 	/**
@@ -111,7 +111,7 @@ public class EClassImpl implements EClass {
 		// @formatter:off
 		return this.javaClassSource.getMethods()
 				.stream()
-				.map(EMethod::new)
+				.map(EMethodImpl::new)
 				.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
 	}

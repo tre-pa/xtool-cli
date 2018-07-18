@@ -12,7 +12,7 @@ import br.xtool.XtoolCliApplication;
 import br.xtool.core.FS;
 import br.xtool.core.Names;
 import br.xtool.core.command.SpringBootCommand;
-import br.xtool.core.representation.EEntity;
+import br.xtool.core.representation.impl.EEntityImpl;
 import br.xtool.core.representation.provider.EEntityValueProvider;
 import strman.Strman;
 
@@ -29,7 +29,7 @@ public class SpringBootJpaCrudGenerator extends SpringBootCommand {
 	private FS fs;
 
 	@ShellMethod(key = "gen:crud", value = "Gera as classes de CRUD (Repository, Service e Rest) para entidade JPA", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
-	public void run(@ShellOption(help = "Entidade JPA", valueProvider = EEntityValueProvider.class) EEntity entity) {
+	public void run(@ShellOption(help = "Entidade JPA", valueProvider = EEntityValueProvider.class) EEntityImpl entity) {
 		/*
 		 * Cria o mapa com as variáveis do gerador.
 		 */

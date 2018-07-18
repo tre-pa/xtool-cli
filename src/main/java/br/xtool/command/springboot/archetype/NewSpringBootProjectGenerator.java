@@ -20,6 +20,7 @@ import br.xtool.core.WorkContext;
 import br.xtool.core.command.RegularCommand;
 import br.xtool.core.representation.EPackage;
 import br.xtool.core.representation.ESpringBootProject;
+import br.xtool.core.representation.impl.EPackageImpl;
 
 /**
  * Shell Commando responsável por criar uma projeto Spring Boot 1.5.x
@@ -88,7 +89,7 @@ public class NewSpringBootProjectGenerator extends RegularCommand {
 	 */
 	private EPackage getFinalRootPackage(String name, String rootPackage) {
 		String packageName = StringUtils.isEmpty(rootPackage) ? "br.jus.tre_pa.".concat(Names.asDotCase(name)) : rootPackage;
-		return EPackage.of(packageName);
+		return EPackageImpl.of(packageName);
 	}
 
 }

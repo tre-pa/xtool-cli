@@ -1,9 +1,5 @@
 package br.xtool.core.representation;
 
-import org.apache.commons.lang3.StringUtils;
-
-import lombok.Getter;
-
 /**
  * Representa um pacote Java.
  * 
@@ -11,28 +7,10 @@ import lombok.Getter;
  *
  */
 
-@Getter
-public class EPackage {
+public interface EPackage extends Comparable<EPackage> {
 
-	private String name;
+	String getName();
 
-	private String dir;
+	String getDir();
 
-	private EPackage() {
-		super();
-	}
-
-	public static EPackage of(String packageName) {
-		EPackage package1 = new EPackage();
-		package1.name = packageName;
-		package1.dir = packageName.replaceAll("\\.", "/");
-		return package1;
-	}
-
-	public static EPackage of(String... packageElements) {
-		EPackage package1 = new EPackage();
-		package1.name = StringUtils.join(packageElements, ".");
-		package1.dir = package1.name.replaceAll("\\.", "/");
-		return package1;
-	}
 }

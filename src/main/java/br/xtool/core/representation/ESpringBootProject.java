@@ -18,6 +18,7 @@ import br.xtool.core.representation.angular.EAngularProject;
 import br.xtool.core.representation.enums.ProjectType;
 import br.xtool.core.representation.impl.EApplicationPropertiesImpl;
 import br.xtool.core.representation.impl.EClassImpl;
+import br.xtool.core.representation.impl.EEntityImpl;
 import br.xtool.core.util.RoasterUtil;
 import lombok.extern.slf4j.Slf4j;
 
@@ -117,7 +118,7 @@ public class ESpringBootProject extends EProject {
 			.filter(javaUnit -> javaUnit.getGoverningType().isClass())
 			.map(javaUnit -> javaUnit.<JavaClassSource>getGoverningType())
 			.filter(j -> j.getAnnotations().stream().anyMatch(ann -> ann.getName().equals("Entity")))
-			.map(j -> new EEntity(this, j))
+			.map(j -> new EEntityImpl(this, j))
 			.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
 	}

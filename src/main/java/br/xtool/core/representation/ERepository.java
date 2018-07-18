@@ -4,6 +4,8 @@ import java.util.Optional;
 
 import org.jboss.forge.roaster.model.source.JavaInterfaceSource;
 
+import br.xtool.core.representation.impl.EPackageImpl;
+
 /**
  * Classe que representa uma inteface Repository
  * 
@@ -37,7 +39,7 @@ public class ERepository implements Comparable<ERepository> {
 	 * @return
 	 */
 	public EPackage getPackage() {
-		return EPackage.of(javaInterfaceSource.getPackage());
+		return EPackageImpl.of(this.javaInterfaceSource.getPackage());
 	}
 
 	/**

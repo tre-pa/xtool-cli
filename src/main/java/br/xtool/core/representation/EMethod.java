@@ -2,74 +2,28 @@ package br.xtool.core.representation;
 
 import java.util.List;
 import java.util.SortedSet;
-import java.util.TreeSet;
-import java.util.stream.Collectors;
 
 import org.jboss.forge.roaster.model.Type;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
-import org.jboss.forge.roaster.model.source.MethodSource;
 import org.jboss.forge.roaster.model.source.ParameterSource;
 
-import br.xtool.core.representation.impl.EAnnotationImpl;
+public interface EMethod extends Comparable<EMethod> {
 
-public class EMethod implements Comparable<EMethod> {
+	String getName();
 
-	private MethodSource<JavaClassSource> methodSource;
+	boolean isStatic();
 
-	public EMethod(MethodSource<JavaClassSource> methodSource) {
-		super();
-		this.methodSource = methodSource;
-	}
+	boolean isConstructor();
 
-	/**
-	 * Retorna o nome do método.
-	 * 
-	 * @return Nome do método.
-	 */
-	public String getName() {
-		return this.methodSource.getName();
-	}
+	boolean hasAnnotation(String type);
 
-	public boolean isStatic() {
-		return this.methodSource.isStatic();
-	}
+	Type<JavaClassSource> getReturnType();
 
-	public boolean isConstructor() {
-		return this.methodSource.isConstructor();
-	}
+	int getLineNumber();
 
-	public boolean hasAnnotation(String type) {
-		return this.methodSource.hasAnnotation(type);
-	}
+	boolean isReturnTypeVoid();
 
-	public Type<JavaClassSource> getReturnType() {
-		return this.methodSource.getReturnType();
-	}
+	List<ParameterSource<JavaClassSource>> getParameters();
 
-	public int getLineNumber() {
-		return this.methodSource.getLineNumber();
-	}
-
-	public boolean isReturnTypeVoid() {
-		return this.methodSource.isReturnTypeVoid();
-	}
-
-	public List<ParameterSource<JavaClassSource>> getParameters() {
-		return this.methodSource.getParameters();
-	}
-
-	public SortedSet<EAnnotation> getAnnotations() {
-		// @formatter:off
-		return this.methodSource.getAnnotations()
-				.stream()
-				.map(EAnnotationImpl::new)
-				.collect(Collectors.toCollection(TreeSet::new));
-		// @formatter:on
-	}
-
-	@Override
-	public int compareTo(EMethod o) {
-		return this.getName().compareTo(o.getName());
-	}
-
+	SortedSet<EAnnotation> getAnnotations();
 }

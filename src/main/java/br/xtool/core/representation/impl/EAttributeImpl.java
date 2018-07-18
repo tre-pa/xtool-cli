@@ -6,7 +6,6 @@ import org.jboss.forge.roaster.model.source.FieldSource;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 
 import br.xtool.core.representation.EAttribute;
-import br.xtool.core.representation.EEntity;
 import br.xtool.core.representation.ESpringBootProject;
 
 /**
@@ -19,9 +18,9 @@ public class EAttributeImpl extends EFieldImpl implements EAttribute {
 
 	private ESpringBootProject springBootProject;
 
-	private EEntity entitySource;
+	private EEntityImpl entitySource;
 
-	public EAttributeImpl(ESpringBootProject springBootProject, EEntity entitySource, FieldSource<JavaClassSource> fieldSource) {
+	public EAttributeImpl(ESpringBootProject springBootProject, EEntityImpl entitySource, FieldSource<JavaClassSource> fieldSource) {
 		super(fieldSource);
 		this.springBootProject = springBootProject;
 		this.entitySource = entitySource;
