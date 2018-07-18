@@ -37,7 +37,7 @@ public class ERestImpl extends EClassImpl implements ERest {
 	 * @see br.xtool.core.representation.ERest#getHttpGetMethods()
 	 */
 	@Override
-	public SortedSet<EMethod> getHttpGetMethods() {
+	public SortedSet<EMethod> getHttpGETMethods() {
 		return this.getHttpMethods("GetMapping", "RequestMethod.GET");
 	}
 
@@ -46,7 +46,7 @@ public class ERestImpl extends EClassImpl implements ERest {
 	 * @see br.xtool.core.representation.ERest#getHttpPutMethods()
 	 */
 	@Override
-	public SortedSet<EMethod> getHttpPutMethods() {
+	public SortedSet<EMethod> getHttpPUTMethods() {
 		return this.getHttpMethods("PutMapping", "RequestMethod.PUT");
 	}
 
@@ -55,7 +55,7 @@ public class ERestImpl extends EClassImpl implements ERest {
 	 * @see br.xtool.core.representation.ERest#getHttpPostMethods()
 	 */
 	@Override
-	public SortedSet<EMethod> getHttpPostMethods() {
+	public SortedSet<EMethod> getHttpPOSTMethods() {
 		return this.getHttpMethods("PostMapping", "RequestMethod.POST");
 	}
 
@@ -64,7 +64,7 @@ public class ERestImpl extends EClassImpl implements ERest {
 	 * @see br.xtool.core.representation.ERest#getHttpDeleteMethods()
 	 */
 	@Override
-	public SortedSet<EMethod> getHttpDeleteMethods() {
+	public SortedSet<EMethod> getHttpDELETEMethods() {
 		return this.getHttpMethods("DeleteMapping", "RequestMethod.DELETE");
 	}
 

@@ -54,7 +54,7 @@ public class EEntityImpl extends EClassImpl implements EEntity {
 		// @formatter:off
 		this.getAttributes().stream()
 			.filter(EAttribute::isAssociation)
-			.map(EAttribute::getAssociation)
+			.map(EAttribute::getRelationship)
 			.forEach(association -> associations.add(association.get()));
 		// @formatter:on
 		return associations;

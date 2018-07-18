@@ -1,43 +1,29 @@
 package br.xtool.core.representation;
 
 import br.xtool.core.representation.enums.ProjectType;
-import br.xtool.core.representation.impl.EDirectoryImpl;
-import lombok.Getter;
 
-public abstract class EProject {
+public interface EProject {
 
-	@Getter
-	private String path;
+	String getPath();
 
-	@Getter
-	private EDirectory directory;
-
-	public EProject(String path) {
-		super();
-		this.path = path;
-		this.directory = EDirectoryImpl.of(path);
-	}
+	EDirectory getDirectory();
 
 	/**
 	 * Retorna o nome do projeto.
 	 * 
 	 * @return
 	 */
-	public String getName() {
-		return this.getDirectory().getBaseName();
-	}
+	String getName();
 
-	public abstract String getMainDir();
+	String getMainDir();
 
-	public abstract void refresh();
+	void refresh();
 
 	/**
 	 * Retorna o tipo de projeto atual.
 	 * 
 	 * @return
 	 */
-	public ProjectType getProjectType() {
-		return this.getDirectory().getProjectType();
-	}
+	public ProjectType getProjectType();
 
 }

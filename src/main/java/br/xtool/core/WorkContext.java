@@ -22,7 +22,9 @@ import br.xtool.core.representation.EDirectory;
 import br.xtool.core.representation.ESpringBootProject;
 import br.xtool.core.representation.angular.EAngularProject;
 import br.xtool.core.representation.enums.ProjectType;
+import br.xtool.core.representation.impl.EAngularProjectImpl;
 import br.xtool.core.representation.impl.EDirectoryImpl;
+import br.xtool.core.representation.impl.ESpringBootProjectImpl;
 import lombok.Getter;
 
 @Component
@@ -79,7 +81,7 @@ public class WorkContext implements PromptProvider {
 	 */
 	public Optional<ESpringBootProject> getSpringBootProject() {
 		if (Objects.isNull(this.springBootProject)) {
-			this.springBootProject = ESpringBootProject.of(this.directory.getPath());
+			this.springBootProject = ESpringBootProjectImpl.of(this.directory.getPath());
 		}
 		return this.springBootProject;
 	}
@@ -91,7 +93,7 @@ public class WorkContext implements PromptProvider {
 	 */
 	public Optional<EAngularProject> getAngularProject() {
 		if (Objects.isNull(this.angularProject)) {
-			this.angularProject = EAngularProject.of(this.directory.getPath());
+			this.angularProject = EAngularProjectImpl.of(this.directory.getPath());
 		}
 		return this.angularProject;
 	}

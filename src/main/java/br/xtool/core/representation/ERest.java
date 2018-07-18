@@ -17,27 +17,27 @@ public interface ERest extends EClass {
 	 * 
 	 * @return
 	 */
-	SortedSet<EMethod> getHttpGetMethods();
+	SortedSet<EMethod> getHttpGETMethods();
 
 	/**
 	 * Retorna todos os métodos HTTP Put
 	 * 
 	 * @return
 	 */
-	SortedSet<EMethod> getHttpPutMethods();
+	SortedSet<EMethod> getHttpPUTMethods();
 
 	/**
 	 * Retorna todos os métodos HTTP Post
 	 * 
 	 * @return
 	 */
-	SortedSet<EMethod> getHttpPostMethods();
+	SortedSet<EMethod> getHttpPOSTMethods();
 
 	/**
 	 * Retorna todos os métodos HTTP Delete
 	 * 
 	 * @return
 	 */
-	public SortedSet<EMethod> getHttpDeleteMethods();
+	public SortedSet<EMethod> getHttpDELETEMethods();
 
 }

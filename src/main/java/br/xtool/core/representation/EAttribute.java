@@ -2,8 +2,6 @@ package br.xtool.core.representation;
 
 import java.util.Optional;
 
-import br.xtool.core.representation.impl.ERelationshipImpl;
-
 public interface EAttribute extends EField {
 
 	boolean isAssociation();
@@ -12,6 +10,6 @@ public interface EAttribute extends EField {
 
 	boolean isJpaLob();
 
-	Optional<ERelationshipImpl> getAssociation();
+	Optional<ERelationship> getRelationship();
 
 }

@@ -6,6 +6,7 @@ import org.jboss.forge.roaster.model.source.FieldSource;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 
 import br.xtool.core.representation.EAttribute;
+import br.xtool.core.representation.ERelationship;
 import br.xtool.core.representation.ESpringBootProject;
 
 /**
@@ -53,14 +54,14 @@ public class EAttributeImpl extends EFieldImpl implements EAttribute {
 	}
 
 	@Override
-	public Optional<ERelationshipImpl> getAssociation() {
+	public Optional<ERelationship> getRelationship() {
 		if (this.isAssociation()) {
 			if (this.isCollection()) {
 				// @formatter:off
 				return this.springBootProject.getEntities().stream()
-						.filter(entity -> this.getType().getTypeArguments().stream()
-								.anyMatch(type -> type.getName().equals(entity.getName())))
+						.filter(entity -> this.getType().getTypeArguments().stream().anyMatch(type -> type.getName().equals(entity.getName())))
 						.map(entityTarget -> new ERelationshipImpl(this.entitySource, entityTarget, this))
+						.map(ERelationship.class::cast)
 						.findFirst();
 				// @formatter:on
 			}
@@ -68,6 +69,7 @@ public class EAttributeImpl extends EFieldImpl implements EAttribute {
 			return this.springBootProject.getEntities().stream()
 					.filter(entity -> entity.getName().equals(this.getType().getName()))
 					.map(entityTarget -> new ERelationshipImpl(this.entitySource, entityTarget, this))
+					.map(ERelationship.class::cast)
 					.findFirst();
 			// @formatter:on
 		}

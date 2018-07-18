@@ -8,23 +8,23 @@ public interface ERelationship {
 
 	boolean isUnidirectional();
 
-	boolean isSingleAssociation();
+	boolean isSingleRelationship();
 
-	boolean isCollectionAssociation();
+	boolean isCollectionRelationship();
 
-	boolean isOneToOneAnnotation();
+	boolean isOneToOne();
 
-	boolean isOneToManyAnnotation();
+	boolean isOneToMany();
 
-	boolean isManyToOneAnnotation();
+	boolean isManyToOne();
 
-	boolean isManyToManyAnnotation();
+	boolean isManyToMany();
 
-	EAttribute getAttributeSource();
+	EAttribute getSourceAttribute();
 
-	Optional<EAttribute> getAttributeTarget();
+	Optional<EAttribute> getTargetAttribute();
 
-	EEntity getEntitySource();
+	EEntity getSourceEntity();
 
-	Optional<EEntity> getEntityTarget();
+	Optional<EEntity> getTargetEntity();
 }

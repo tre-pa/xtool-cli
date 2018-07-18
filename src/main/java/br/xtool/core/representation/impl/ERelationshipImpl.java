@@ -30,8 +30,8 @@ public class ERelationshipImpl implements ERelationship {
 	public boolean isBidirectional() {
 		// @formatter:off
 		return this.entityTarget.getRelationship().stream()
-				.filter(association -> association.getEntityTarget().isPresent())
-				.anyMatch(association -> association.getEntityTarget().get().getName().equals(this.entitySource.getName()));
+				.filter(association -> association.getTargetEntity().isPresent())
+				.anyMatch(association -> association.getTargetEntity().get().getName().equals(this.entitySource.getName()));
 		// @formatter:on
 	}
 
@@ -51,8 +51,8 @@ public class ERelationshipImpl implements ERelationship {
 	 * @return
 	 */
 	@Override
-	public boolean isSingleAssociation() {
-		return !this.isCollectionAssociation();
+	public boolean isSingleRelationship() {
+		return !this.isCollectionRelationship();
 	}
 
 	/**
@@ -61,7 +61,7 @@ public class ERelationshipImpl implements ERelationship {
 	 * @return
 	 */
 	@Override
-	public boolean isCollectionAssociation() {
+	public boolean isCollectionRelationship() {
 		return this.attributeSource.isCollection();
 	}
 
@@ -71,7 +71,7 @@ public class ERelationshipImpl implements ERelationship {
 	 * @return
 	 */
 	@Override
-	public boolean isOneToOneAnnotation() {
+	public boolean isOneToOne() {
 		return this.attributeSource.hasAnnotation("OneToOne");
 	}
 
@@ -81,7 +81,7 @@ public class ERelationshipImpl implements ERelationship {
 	 * @return
 	 */
 	@Override
-	public boolean isOneToManyAnnotation() {
+	public boolean isOneToMany() {
 		return this.attributeSource.hasAnnotation("OneToMany");
 	}
 
@@ -91,7 +91,7 @@ public class ERelationshipImpl implements ERelationship {
 	 * @return
 	 */
 	@Override
-	public boolean isManyToOneAnnotation() {
+	public boolean isManyToOne() {
 		return this.attributeSource.hasAnnotation("ManyToOne");
 	}
 
@@ -101,12 +101,12 @@ public class ERelationshipImpl implements ERelationship {
 	 * @return
 	 */
 	@Override
-	public boolean isManyToManyAnnotation() {
+	public boolean isManyToMany() {
 		return this.attributeSource.hasAnnotation("ManyToMany");
 	}
 
 	@Override
-	public Optional<EAttribute> getAttributeTarget() {
+	public Optional<EAttribute> getTargetAttribute() {
 		// @formatter:off
 		return this.entityTarget.getAttributes().stream()
 				.filter(attrTarget -> attrTarget.getType().getName().equals(this.entityTarget.getName()))
@@ -115,17 +115,17 @@ public class ERelationshipImpl implements ERelationship {
 	}
 
 	@Override
-	public EAttribute getAttributeSource() {
+	public EAttribute getSourceAttribute() {
 		return this.attributeSource;
 	}
 
 	@Override
-	public EEntity getEntitySource() {
+	public EEntity getSourceEntity() {
 		return this.entitySource;
 	}
 
 	@Override
-	public Optional<EEntity> getEntityTarget() {
+	public Optional<EEntity> getTargetEntity() {
 		return Optional.ofNullable(this.entityTarget);
 	}
 
