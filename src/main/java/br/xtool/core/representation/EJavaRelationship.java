@@ -2,6 +2,12 @@ package br.xtool.core.representation;
 
 import java.util.Optional;
 
+/**
+ * Representação de um relacionamento java JPA.
+ * 
+ * @author jcruz
+ *
+ */
 public interface EJavaRelationship {
 
 	boolean isBidirectional();

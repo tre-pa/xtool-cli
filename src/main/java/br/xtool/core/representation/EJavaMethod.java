@@ -7,6 +7,12 @@ import org.jboss.forge.roaster.model.Type;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.jboss.forge.roaster.model.source.ParameterSource;
 
+/**
+ * Representação de um método java.
+ * 
+ * @author jcruz
+ *
+ */
 public interface EJavaMethod extends Comparable<EJavaMethod> {
 
 	String getName();

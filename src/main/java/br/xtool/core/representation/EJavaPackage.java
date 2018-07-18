@@ -1,7 +1,7 @@
 package br.xtool.core.representation;
 
 /**
- * Representa um pacote Java.
+ * Representação de pacote Java.
  * 
  * @author jcruz
  *

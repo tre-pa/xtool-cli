@@ -2,6 +2,12 @@ package br.xtool.core.representation;
 
 import br.xtool.core.representation.enums.ProjectType;
 
+/**
+ * Interface genérica para projetos.
+ * 
+ * @author jcruz
+ *
+ */
 public interface EProject {
 
 	String getPath();

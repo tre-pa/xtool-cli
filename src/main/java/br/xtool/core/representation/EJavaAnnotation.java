@@ -6,7 +6,7 @@ import org.jboss.forge.roaster.model.source.AnnotationSource;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 
 /**
- * Classe que representa uma annotation.
+ * Representação de uma annotation java.
  * 
  * @author jcruz
  *

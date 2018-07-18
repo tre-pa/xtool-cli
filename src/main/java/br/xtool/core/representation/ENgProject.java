@@ -2,6 +2,12 @@ package br.xtool.core.representation;
 
 import java.util.SortedSet;
 
+/**
+ * Representação de um projeto Angular.
+ * 
+ * @author jcruz
+ *
+ */
 public interface ENgProject extends EProject {
 
 	enum ArtifactyType {

@@ -1,7 +1,7 @@
 package br.xtool.core.representation;
 
 /**
- * Classe que representa um módulo Angular
+ * Representação de um módulo Angular
  * 
  * @author jcruz
  *

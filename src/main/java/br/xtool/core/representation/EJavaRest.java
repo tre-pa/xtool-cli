@@ -3,6 +3,12 @@ package br.xtool.core.representation;
 import java.util.Optional;
 import java.util.SortedSet;
 
+/**
+ * Representação de uma classe Rest.
+ * 
+ * @author jcruz
+ *
+ */
 public interface EJavaRest extends EJavaClass {
 
 	/**

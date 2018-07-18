@@ -3,7 +3,7 @@ package br.xtool.core.representation;
 import java.util.Optional;
 
 /**
- * Classe que representa uma inteface Repository
+ * Representação de um Repository
  * 
  * @author jcruz
  *

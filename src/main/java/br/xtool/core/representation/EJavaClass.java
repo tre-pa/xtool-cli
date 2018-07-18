@@ -3,6 +3,12 @@ package br.xtool.core.representation;
 import java.util.Optional;
 import java.util.SortedSet;
 
+/**
+ * Representação de uma classe java.
+ * 
+ * @author jcruz
+ *
+ */
 public interface EJavaClass extends Comparable<EJavaClass> {
 
 	String getName();

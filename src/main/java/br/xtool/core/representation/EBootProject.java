@@ -4,7 +4,7 @@ import java.util.Optional;
 import java.util.SortedSet;
 
 /**
- * Classe que representa um projeto Spring Boot
+ * Representação de um projeto Spring Boot
  * 
  * @author jcruz
  *
@@ -68,7 +68,9 @@ public interface EBootProject extends EProject {
 
 	Optional<ENgProject> getAssociatedAngularProject();
 
+	@Override
 	String getMainDir();
 
+	@Override
 	void refresh();
 }

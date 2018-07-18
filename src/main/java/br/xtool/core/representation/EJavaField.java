@@ -10,6 +10,12 @@ import org.jboss.forge.roaster.model.source.FieldSource;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.jboss.forge.roaster.model.source.JavaDocSource;
 
+/**
+ * Representação de um campo de classe java.
+ * 
+ * @author jcruz
+ *
+ */
 public interface EJavaField extends Comparable<EJavaField> {
 
 	String getName();

@@ -5,7 +5,7 @@ import java.util.List;
 import org.jdom2.Namespace;
 
 /**
- * Representa o arquivo pom.xml
+ * Representação do arquivo pom.xml do projeto Spring Boot.
  * 
  * @author jcruz
  *
