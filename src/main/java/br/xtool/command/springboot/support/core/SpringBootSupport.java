@@ -1,6 +1,6 @@
 package br.xtool.command.springboot.support.core;
 
-import br.xtool.core.representation.ESpringBootProject;
+import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.enums.ProjectType;
 
 public interface SpringBootSupport {
@@ -9,9 +9,9 @@ public interface SpringBootSupport {
 
 	public SupportType getType();
 
-	public void apply(ESpringBootProject project);
+	public void apply(EBootProject project);
 	
-	public boolean hasSupport(ESpringBootProject project);
+	public boolean hasSupport(EBootProject project);
 	
 	// @formatter:off
 	public enum SupportType {

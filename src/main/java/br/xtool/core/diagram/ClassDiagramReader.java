@@ -16,7 +16,7 @@ import org.springframework.util.StringUtils;
 import br.xtool.core.diagram.mapper.AssociationMapper;
 import br.xtool.core.diagram.mapper.FieldMapper;
 import br.xtool.core.representation.EPackage;
-import br.xtool.core.representation.ESpringBootProject;
+import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.impl.EClassImpl;
 import br.xtool.core.representation.impl.EPackageImpl;
 import lombok.SneakyThrows;
@@ -108,7 +108,7 @@ public class ClassDiagramReader {
 	}
 
 	@SneakyThrows
-	public Map<String, EClassImpl> write(ESpringBootProject project) {
+	public Map<String, EClassImpl> write(EBootProject project) {
 		Map<String, EClassImpl> classes = new HashMap<>();
 		for (JavaClassSource javaClass : this.javaClassSources.values()) {
 			EPackage ePackage = EPackageImpl.of(javaClass.getPackage());

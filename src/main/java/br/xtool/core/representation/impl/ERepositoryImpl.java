@@ -7,7 +7,7 @@ import org.jboss.forge.roaster.model.source.JavaInterfaceSource;
 import br.xtool.core.representation.EEntity;
 import br.xtool.core.representation.EPackage;
 import br.xtool.core.representation.ERepository;
-import br.xtool.core.representation.ESpringBootProject;
+import br.xtool.core.representation.EBootProject;
 
 /**
  * Classe que representa uma inteface Repository
@@ -17,11 +17,11 @@ import br.xtool.core.representation.ESpringBootProject;
  */
 public class ERepositoryImpl implements ERepository {
 
-	private ESpringBootProject springBootProject;
+	private EBootProject springBootProject;
 
 	private JavaInterfaceSource javaInterfaceSource;
 
-	public ERepositoryImpl(ESpringBootProject springBootProject, JavaInterfaceSource javaInterfaceSource) {
+	public ERepositoryImpl(EBootProject springBootProject, JavaInterfaceSource javaInterfaceSource) {
 		super();
 		this.springBootProject = springBootProject;
 		this.javaInterfaceSource = javaInterfaceSource;

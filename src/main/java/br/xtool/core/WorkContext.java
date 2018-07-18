@@ -19,12 +19,12 @@ import org.springframework.stereotype.Component;
 
 import br.xtool.core.event.ChangeDirectoryEvent;
 import br.xtool.core.representation.EDirectory;
-import br.xtool.core.representation.ESpringBootProject;
-import br.xtool.core.representation.angular.EAngularProject;
+import br.xtool.core.representation.EBootProject;
+import br.xtool.core.representation.angular.ENgProject;
 import br.xtool.core.representation.enums.ProjectType;
-import br.xtool.core.representation.impl.EAngularProjectImpl;
+import br.xtool.core.representation.impl.ENgProjectImpl;
 import br.xtool.core.representation.impl.EDirectoryImpl;
-import br.xtool.core.representation.impl.ESpringBootProjectImpl;
+import br.xtool.core.representation.impl.EBootProjectImpl;
 import lombok.Getter;
 
 @Component
@@ -36,9 +36,9 @@ public class WorkContext implements PromptProvider {
 	@Autowired
 	private ApplicationEventPublisher applicationEventPublisher;
 
-	private Optional<ESpringBootProject> springBootProject;
+	private Optional<EBootProject> springBootProject;
 
-	private Optional<EAngularProject> angularProject;
+	private Optional<ENgProject> angularProject;
 
 	/**
 	 * Altera o diretório de trabalho.
@@ -79,9 +79,9 @@ public class WorkContext implements PromptProvider {
 	 * 
 	 * @return
 	 */
-	public Optional<ESpringBootProject> getSpringBootProject() {
+	public Optional<EBootProject> getSpringBootProject() {
 		if (Objects.isNull(this.springBootProject)) {
-			this.springBootProject = ESpringBootProjectImpl.of(this.directory.getPath());
+			this.springBootProject = EBootProjectImpl.of(this.directory.getPath());
 		}
 		return this.springBootProject;
 	}
@@ -91,9 +91,9 @@ public class WorkContext implements PromptProvider {
 	 * 
 	 * @return
 	 */
-	public Optional<EAngularProject> getAngularProject() {
+	public Optional<ENgProject> getAngularProject() {
 		if (Objects.isNull(this.angularProject)) {
-			this.angularProject = EAngularProjectImpl.of(this.directory.getPath());
+			this.angularProject = ENgProjectImpl.of(this.directory.getPath());
 		}
 		return this.angularProject;
 	}

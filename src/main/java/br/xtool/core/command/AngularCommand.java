@@ -8,7 +8,7 @@ import org.springframework.shell.Availability;
 import org.springframework.shell.standard.ShellMethodAvailability;
 
 import br.xtool.core.WorkContext;
-import br.xtool.core.representation.angular.EAngularProject;
+import br.xtool.core.representation.angular.ENgProject;
 import br.xtool.core.representation.enums.ProjectType;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -32,7 +32,7 @@ public class AngularCommand {
 	}
 
 	@SneakyThrows
-	public EAngularProject getProject() {
+	public ENgProject getProject() {
 		return this.workContext.getAngularProject().get();
 	}
 }

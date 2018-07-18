@@ -14,15 +14,15 @@ import org.jboss.forge.roaster.model.JavaUnit;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.jboss.forge.roaster.model.source.JavaInterfaceSource;
 
-import br.xtool.core.representation.EApplicationProperties;
+import br.xtool.core.representation.EAppProperties;
 import br.xtool.core.representation.EClass;
 import br.xtool.core.representation.EEntity;
 import br.xtool.core.representation.EPackage;
 import br.xtool.core.representation.EPom;
 import br.xtool.core.representation.ERepository;
 import br.xtool.core.representation.ERest;
-import br.xtool.core.representation.ESpringBootProject;
-import br.xtool.core.representation.angular.EAngularProject;
+import br.xtool.core.representation.EBootProject;
+import br.xtool.core.representation.angular.ENgProject;
 import br.xtool.core.representation.enums.ProjectType;
 import br.xtool.core.util.RoasterUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -34,17 +34,17 @@ import lombok.extern.slf4j.Slf4j;
  *
  */
 @Slf4j
-public class ESpringBootProjectImpl extends EProjectImpl implements ESpringBootProject {
+public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 
 	private Map<String, JavaUnit> javaUnits;
 
 	private EPom pom;
 
-	private EApplicationProperties applicationProperties;
+	private EAppProperties applicationProperties;
 
 	private EClass mainClass;
 
-	public ESpringBootProjectImpl(String path) {
+	public EBootProjectImpl(String path) {
 		super(path);
 	}
 
@@ -109,9 +109,9 @@ public class ESpringBootProjectImpl extends EProjectImpl implements ESpringBootP
 	 * @return
 	 */
 	@Override
-	public EApplicationProperties getApplicationProperties() {
+	public EAppProperties getApplicationProperties() {
 		if (Objects.isNull(this.applicationProperties)) {
-			this.applicationProperties = EApplicationPropertiesImpl.of(FilenameUtils.concat(this.getPath(), "src/main/resources/application.properties"));
+			this.applicationProperties = EAppPropertiesImpl.of(FilenameUtils.concat(this.getPath(), "src/main/resources/application.properties"));
 		}
 		return this.applicationProperties;
 	}
@@ -184,9 +184,9 @@ public class ESpringBootProjectImpl extends EProjectImpl implements ESpringBootP
 	}
 
 	@Override
-	public Optional<EAngularProject> getAssociatedAngularProject() {
+	public Optional<ENgProject> getAssociatedAngularProject() {
 		String angularPath = this.getPath().replace("-service", "");
-		return EAngularProjectImpl.of(angularPath);
+		return ENgProjectImpl.of(angularPath);
 	}
 
 	@Override
@@ -199,9 +199,9 @@ public class ESpringBootProjectImpl extends EProjectImpl implements ESpringBootP
 		this.javaUnits = null;
 	}
 
-	public static Optional<ESpringBootProject> of(String path) {
+	public static Optional<EBootProject> of(String path) {
 		if (Stream.of(ProjectType.SPRINGBOOT1_PROJECT, ProjectType.SPRINGBOOT2_PROJECT).anyMatch(p -> p.equals(EDirectoryImpl.of(path).getProjectType()))) {
-			ESpringBootProjectImpl project = new ESpringBootProjectImpl(path);
+			EBootProjectImpl project = new EBootProjectImpl(path);
 			return Optional.of(project);
 		}
 		return Optional.empty();

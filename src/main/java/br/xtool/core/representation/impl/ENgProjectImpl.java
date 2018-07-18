@@ -12,7 +12,6 @@ import java.util.stream.Stream;
 
 import org.apache.commons.io.FilenameUtils;
 
-import br.xtool.core.representation.angular.EAngularProject;
 import br.xtool.core.representation.angular.ENgClass;
 import br.xtool.core.representation.angular.ENgComponent;
 import br.xtool.core.representation.angular.ENgDetail;
@@ -21,12 +20,13 @@ import br.xtool.core.representation.angular.ENgLayout;
 import br.xtool.core.representation.angular.ENgModule;
 import br.xtool.core.representation.angular.ENgPackage;
 import br.xtool.core.representation.angular.ENgPage;
+import br.xtool.core.representation.angular.ENgProject;
 import br.xtool.core.representation.angular.ENgService;
 import br.xtool.core.representation.enums.ProjectType;
 import lombok.Getter;
 
 @Getter
-public class EAngularProjectImpl extends EProjectImpl implements EAngularProject {
+public class ENgProjectImpl extends EProjectImpl implements ENgProject {
 
 	private Map<String, ENgClass> ngClasses;
 
@@ -54,13 +54,13 @@ public class EAngularProjectImpl extends EProjectImpl implements EAngularProject
 
 	}
 
-	private EAngularProjectImpl(String path) {
+	private ENgProjectImpl(String path) {
 		super(path);
 	}
 
 	@Override
 	public ENgPackage getNgPackage() {
-		return ENgPackage.of(FilenameUtils.concat(this.getPath(), "package.json")).orElse(null);
+		return ENgPackageImpl.of(FilenameUtils.concat(this.getPath(), "package.json")).orElse(null);
 	}
 
 	/**
@@ -73,7 +73,7 @@ public class EAngularProjectImpl extends EProjectImpl implements EAngularProject
 		// @formatter:off
 		return this.getNgClasses().values().stream()
 				.filter(ngClass -> ngClass.getFileName().endsWith(ArtifactyType.MODULE.ext))
-				.map(ngClass -> new ENgModule(ngClass.getFile()))
+				.map(ngClass -> new ENgModuleImpl(ngClass.getFile()))
 				.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
 	}
@@ -88,7 +88,7 @@ public class EAngularProjectImpl extends EProjectImpl implements EAngularProject
 		// @formatter:off
 		return this.getNgClasses().values().stream()
 				.filter(ngClass -> ngClass.getFileName().endsWith(ArtifactyType.COMPONENT.ext))
-				.map(ngClass -> new ENgComponent(ngClass.getFile()))
+				.map(ngClass -> new ENgComponentImpl(ngClass.getFile()))
 				.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
 	}
@@ -103,7 +103,7 @@ public class EAngularProjectImpl extends EProjectImpl implements EAngularProject
 		// @formatter:off
 		return this.getNgClasses().values().stream()
 				.filter(ngClass -> ngClass.getFileName().endsWith(ArtifactyType.SERVICE.ext))
-				.map(ngClass -> new ENgService(ngClass.getFile()))
+				.map(ngClass -> new ENgServiceImpl(ngClass.getFile()))
 				.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
 	}
@@ -118,7 +118,7 @@ public class EAngularProjectImpl extends EProjectImpl implements EAngularProject
 		// @formatter:off
 		return this.getNgClasses().values().stream()
 				.filter(ngClass -> ngClass.getFileName().endsWith(ArtifactyType.LAYOUT.ext))
-				.map(ngClass -> new ENgLayout(ngClass.getFile()))
+				.map(ngClass -> new ENgLayoutImpl(ngClass.getFile()))
 				.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
 	}
@@ -133,7 +133,7 @@ public class EAngularProjectImpl extends EProjectImpl implements EAngularProject
 		// @formatter:off
 		return this.getNgClasses().values().stream()
 				.filter(ngClass -> ngClass.getFileName().endsWith(ArtifactyType.PAGE.ext))
-				.map(ngClass -> new ENgPage(ngClass.getFile()))
+				.map(ngClass -> new ENgPageImpl(ngClass.getFile()))
 				.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
 	}
@@ -148,7 +148,7 @@ public class EAngularProjectImpl extends EProjectImpl implements EAngularProject
 		// @formatter:off
 		return this.getNgClasses().values().stream()
 				.filter(ngClass -> ngClass.getFileName().endsWith(ArtifactyType.EDIT.ext))
-				.map(ngClass -> new ENgEdit(ngClass.getFile()))
+				.map(ngClass -> new ENgEditImpl(ngClass.getFile()))
 				.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
 	}
@@ -163,7 +163,7 @@ public class EAngularProjectImpl extends EProjectImpl implements EAngularProject
 		// @formatter:off
 		return this.getNgClasses().values().stream()
 				.filter(ngClass -> ngClass.getFileName().endsWith(ArtifactyType.DETAIL.ext))
-				.map(ngClass -> new ENgDetail(ngClass.getFile()))
+				.map(ngClass -> new ENgDetailImpl(ngClass.getFile()))
 				.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
 	}
@@ -173,7 +173,7 @@ public class EAngularProjectImpl extends EProjectImpl implements EAngularProject
 			// @formatter:off
 			this.ngClasses = this.getDirectory().getAllFiles().stream()
 				.filter(file -> Arrays.asList(ArtifactyType.values()).stream().anyMatch(p -> file.getPath().endsWith(p.ext)))
-				.map(ENgClass::new)
+				.map(ENgClassImpl::new)
 				.collect(Collectors.toMap(ngClass -> ngClass.getFile().getAbsolutePath(), Function.identity()));
 			// @formatter:on
 		}
@@ -190,9 +190,9 @@ public class EAngularProjectImpl extends EProjectImpl implements EAngularProject
 		this.ngClasses = null;
 	}
 
-	public static Optional<EAngularProject> of(String path) {
+	public static Optional<ENgProject> of(String path) {
 		if (Stream.of(ProjectType.ANGULAR5_PROJECT, ProjectType.ANGULAR6_PROJECT).anyMatch(p -> p.equals(EDirectoryImpl.of(path).getProjectType()))) {
-			return Optional.of(new EAngularProjectImpl(path));
+			return Optional.of(new ENgProjectImpl(path));
 		}
 		return Optional.empty();
 	}

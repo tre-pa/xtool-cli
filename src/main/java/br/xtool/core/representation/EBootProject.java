@@ -3,7 +3,7 @@ package br.xtool.core.representation;
 import java.util.Optional;
 import java.util.SortedSet;
 
-import br.xtool.core.representation.angular.EAngularProject;
+import br.xtool.core.representation.angular.ENgProject;
 
 /**
  * Classe que representa um projeto Spring Boot
@@ -11,7 +11,7 @@ import br.xtool.core.representation.angular.EAngularProject;
  * @author jcruz
  *
  */
-public interface ESpringBootProject extends EProject {
+public interface EBootProject extends EProject {
 
 	/**
 	 * Retorna o nome da classe base. O nome da classe base é o nome da classe que
@@ -46,7 +46,7 @@ public interface ESpringBootProject extends EProject {
 	 * 
 	 * @return
 	 */
-	EApplicationProperties getApplicationProperties();
+	EAppProperties getApplicationProperties();
 
 	/**
 	 * Retorna a lista das entidades JPA do projeto
@@ -68,7 +68,7 @@ public interface ESpringBootProject extends EProject {
 	 */
 	SortedSet<ERest> getRests();
 
-	Optional<EAngularProject> getAssociatedAngularProject();
+	Optional<ENgProject> getAssociatedAngularProject();
 
 	String getMainDir();
 

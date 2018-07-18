@@ -2,7 +2,7 @@ package br.xtool.core.representation;
 
 import java.util.Optional;
 
-public interface EApplicationProperties {
+public interface EAppProperties {
 
 	Optional<String> get(String key);
 

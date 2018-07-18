@@ -11,7 +11,7 @@ import org.springframework.shell.Availability;
 import org.springframework.shell.standard.ShellMethodAvailability;
 
 import br.xtool.core.WorkContext;
-import br.xtool.core.representation.ESpringBootProject;
+import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.enums.ProjectType;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -39,7 +39,7 @@ public class SpringBootCommand {
 	}
 
 	@SneakyThrows
-	public ESpringBootProject getProject() {
+	public EBootProject getProject() {
 		return this.workContext.getSpringBootProject().get();
 	}
 

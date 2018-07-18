@@ -12,13 +12,13 @@ import org.jboss.forge.roaster.model.source.MethodSource;
 
 import br.xtool.core.representation.EMethod;
 import br.xtool.core.representation.ERest;
-import br.xtool.core.representation.ESpringBootProject;
+import br.xtool.core.representation.EBootProject;
 
 public class ERestImpl extends EClassImpl implements ERest {
 
-	private ESpringBootProject springBootProject;
+	private EBootProject springBootProject;
 
-	public ERestImpl(ESpringBootProject springBootProject, JavaClassSource javaClassSource) {
+	public ERestImpl(EBootProject springBootProject, JavaClassSource javaClassSource) {
 		super(springBootProject, javaClassSource);
 		this.springBootProject = springBootProject;
 	}

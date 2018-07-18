@@ -114,7 +114,7 @@ public class EDirectoryImpl implements EDirectory {
 		public ProjectType apply(EDirectoryImpl dr) {
 			String packageJsonFile = FilenameUtils.concat(dr.getPath(), "package.json");
 			if (Files.exists(Paths.get(packageJsonFile))) {
-				Optional<ENgPackage> ngPackage = ENgPackage.of(packageJsonFile);
+				Optional<ENgPackage> ngPackage = ENgPackageImpl.of(packageJsonFile);
 				if (ngPackage.isPresent()) {
 					Map<String, String> dependencies = ngPackage.get().getDependencies();
 					if (dependencies.containsKey("@angular/core")) {

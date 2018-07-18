@@ -19,7 +19,7 @@ import br.xtool.core.Names;
 import br.xtool.core.WorkContext;
 import br.xtool.core.command.RegularCommand;
 import br.xtool.core.representation.EPackage;
-import br.xtool.core.representation.ESpringBootProject;
+import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.impl.EPackageImpl;
 
 /**
@@ -77,7 +77,7 @@ public class NewSpringBootProjectGenerator extends RegularCommand {
 		this.workContext.changeRelativeTo((String) vars.get("projectName"));
 
 		if (this.workContext.getSpringBootProject().isPresent()) {
-			ESpringBootProject project = this.workContext.getSpringBootProject().get();
+			EBootProject project = this.workContext.getSpringBootProject().get();
 			if (!noJpa) this.supportManager.addSupport(project, SupportType.JPA);
 			if (!noWeb) this.supportManager.addSupport(project, SupportType.WEB);
 		}

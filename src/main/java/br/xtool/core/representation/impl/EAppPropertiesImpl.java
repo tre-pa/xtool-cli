@@ -10,16 +10,16 @@ import java.util.Optional;
 import java.util.Properties;
 
 import br.xtool.core.ConsoleLog;
-import br.xtool.core.representation.EApplicationProperties;
+import br.xtool.core.representation.EAppProperties;
 import strman.Strman;
 
-public class EApplicationPropertiesImpl implements EApplicationProperties {
+public class EAppPropertiesImpl implements EAppProperties {
 
 	private String path;
 
 	private Properties properties;
 
-	private EApplicationPropertiesImpl(String path) {
+	private EAppPropertiesImpl(String path) {
 		super();
 		this.path = path;
 	}
@@ -55,10 +55,10 @@ public class EApplicationPropertiesImpl implements EApplicationProperties {
 		}
 	}
 
-	public static EApplicationProperties of(String path) {
+	public static EAppProperties of(String path) {
 		if (Files.exists(Paths.get(path))) {
 			try {
-				EApplicationPropertiesImpl representation = new EApplicationPropertiesImpl(path);
+				EAppPropertiesImpl representation = new EAppPropertiesImpl(path);
 				Properties properties = new Properties();
 				properties.load(new FileInputStream(new File(path)));
 				representation.properties = properties;

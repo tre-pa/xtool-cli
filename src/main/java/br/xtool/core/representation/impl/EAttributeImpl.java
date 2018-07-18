@@ -7,7 +7,7 @@ import org.jboss.forge.roaster.model.source.JavaClassSource;
 
 import br.xtool.core.representation.EAttribute;
 import br.xtool.core.representation.ERelationship;
-import br.xtool.core.representation.ESpringBootProject;
+import br.xtool.core.representation.EBootProject;
 
 /**
  * Classe que representa um atributo JPA de uma entidade.
@@ -17,11 +17,11 @@ import br.xtool.core.representation.ESpringBootProject;
  */
 public class EAttributeImpl extends EFieldImpl implements EAttribute {
 
-	private ESpringBootProject springBootProject;
+	private EBootProject springBootProject;
 
 	private EEntityImpl entitySource;
 
-	public EAttributeImpl(ESpringBootProject springBootProject, EEntityImpl entitySource, FieldSource<JavaClassSource> fieldSource) {
+	public EAttributeImpl(EBootProject springBootProject, EEntityImpl entitySource, FieldSource<JavaClassSource> fieldSource) {
 		super(fieldSource);
 		this.springBootProject = springBootProject;
 		this.entitySource = entitySource;

@@ -4,7 +4,7 @@ import java.util.SortedSet;
 
 import br.xtool.core.representation.EProject;
 
-public interface EAngularProject extends EProject {
+public interface ENgProject extends EProject {
 
 	enum ArtifactyType {
 		// @formatter:off

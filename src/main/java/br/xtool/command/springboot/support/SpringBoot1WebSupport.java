@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import br.xtool.command.springboot.support.core.SpringBootSupport;
 import br.xtool.core.ConsoleLog;
 import br.xtool.core.FS;
-import br.xtool.core.representation.ESpringBootProject;
+import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.enums.ProjectType;
 
 /**
@@ -36,7 +36,7 @@ public class SpringBoot1WebSupport implements SpringBootSupport {
 	}
 
 	@Override
-	public void apply(ESpringBootProject project) {
+	public void apply(EBootProject project) {
 		//// @formatter:off
 		Map<String, Object> vars = new HashMap<>();
 		vars.put("projectName", project.getName());
@@ -50,13 +50,13 @@ public class SpringBoot1WebSupport implements SpringBootSupport {
 		addProperties(project);
 	}
 
-	private void addDependencies(ESpringBootProject project) {
+	private void addDependencies(EBootProject project) {
 		project.getPom().addDependency("org.springframework.boot", "spring-boot-starter-web");
 		project.getPom().addDependency("com.fasterxml.jackson.datatype", "jackson-datatype-jsr310");
 		project.getPom().save();
 	}
 
-	private void addProperties(ESpringBootProject project) {
+	private void addProperties(EBootProject project) {
 		project.getApplicationProperties().set("server.context-path", String.format("/%s", project.getName()));
 		project.getApplicationProperties().set("server.port", "8080");
 		project.getApplicationProperties().set("spring.jackson.serialization.WRITE_DATES_AS_TIMESTAMPS", "false");
@@ -65,7 +65,7 @@ public class SpringBoot1WebSupport implements SpringBootSupport {
 	}
 
 	@Override
-	public boolean hasSupport(ESpringBootProject project) {
+	public boolean hasSupport(EBootProject project) {
 		return project.getPom().hasArtifactId("spring-boot-starter-web") && project.getApplicationProperties().hasProperty("server.context-path");
 	}
 
