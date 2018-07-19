@@ -54,8 +54,8 @@ public class EUmlFieldImpl implements EUmlField {
 
 	@Override
 	public Optional<EUmlMultiplicity> getMultiplicity() {
-		String[] multiplicity = Strman.between(memberType(), "[", "]");
-		if (multiplicity.length > 0) {
+		if (Strman.containsAll(memberType(), new String[] { "[", "]" })) {
+			String[] multiplicity = Strman.between(memberType(), "[", "]");
 			return Optional.of(new EUmlMultiplicityImpl(StringUtils.join(multiplicity)));
 		}
 		return Optional.empty();
@@ -70,13 +70,11 @@ public class EUmlFieldImpl implements EUmlField {
 	public Set<String> getProperties() {
 		if (Strman.containsAll(memberType(), new String[] { "{", "}" })) {
 			String[] propertiesBlock = Strman.between(memberType(), "{", "}");
-			if (propertiesBlock.length > 0) {
-				String[] propertiesItens = StringUtils.split(StringUtils.join(propertiesBlock), ",");
-				if (propertiesItens.length > 0) {
-					return Sets.newHashSet(propertiesItens);
-				}
-				return Sets.newHashSet(propertiesBlock[0]);
+			String[] propertiesItens = StringUtils.split(StringUtils.join(propertiesBlock), ",");
+			if (propertiesItens.length > 0) {
+				return Sets.newHashSet(propertiesItens);
 			}
+			return Sets.newHashSet(propertiesBlock[0]);
 		}
 		return new HashSet<>();
 	}
