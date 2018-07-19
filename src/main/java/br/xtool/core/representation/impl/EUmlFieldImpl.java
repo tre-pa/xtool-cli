@@ -3,13 +3,15 @@ package br.xtool.core.representation.impl;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 
 import com.google.common.collect.Sets;
 
 import br.xtool.core.representation.EUmlField;
-import br.xtool.core.representation.EUmlMultiplicity;
 import net.sourceforge.plantuml.cucadiagram.Member;
 import strman.Strman;
 
@@ -39,26 +41,46 @@ public class EUmlFieldImpl implements EUmlField {
 
 	@Override
 	public boolean isNotNull() {
-		return this.getProperties().stream().anyMatch(prop -> prop.equalsIgnoreCase("unique"));
+		return this.getProperties().stream().anyMatch(prop -> prop.equalsIgnoreCase("notnull"));
+	}
+
+	@Override
+	public boolean isArray() {
+		return Strman.containsAll(memberType(), new String[] { "[", "]" });
+	}
+
+	@Override
+	public Optional<Integer> getMinArrayLength() {
+		if (this.isArray()) {
+			Pattern arrayRangePattern = Pattern.compile("(\\d*)\\.\\.\\d*");
+			String[] arrayMultiplicity = Strman.between(memberType(), "[", "]");
+			Matcher matcher = arrayRangePattern.matcher(StringUtils.join(arrayMultiplicity));
+			if (matcher.find()) {
+				Integer min = Integer.parseInt(matcher.group(1));
+				return Optional.of(min);
+			}
+		}
+		return Optional.empty();
+	}
+
+	@Override
+	public Optional<Integer> getMaxArrayLength() {
+		if (this.isArray()) {
+			String[] arrayMultiplicity = Strman.between(memberType(), "[", "]");
+			String multiplicityValue = StringUtils.join(arrayMultiplicity);
+			if (NumberUtils.isDigits(multiplicityValue)) return Optional.of(Integer.parseInt(multiplicityValue));
+			Matcher matcher = Pattern.compile("\\d*\\.\\.(\\d*)").matcher(multiplicityValue);
+			if (matcher.find()) {
+				Integer max = Integer.parseInt(matcher.group(1));
+				return Optional.of(max);
+			}
+		}
+		return Optional.empty();
 	}
 
 	@Override
 	public boolean hasProperty(String name) {
 		return this.getProperties().stream().anyMatch(prop -> prop.equalsIgnoreCase(name));
-	}
-
-	@Override
-	public boolean hasMultiplicity() {
-		return this.getMultiplicity().isPresent();
-	}
-
-	@Override
-	public Optional<EUmlMultiplicity> getMultiplicity() {
-		if (Strman.containsAll(memberType(), new String[] { "[", "]" })) {
-			String[] multiplicity = Strman.between(memberType(), "[", "]");
-			return Optional.of(new EUmlMultiplicityImpl(StringUtils.join(multiplicity)));
-		}
-		return Optional.empty();
 	}
 
 	@Override

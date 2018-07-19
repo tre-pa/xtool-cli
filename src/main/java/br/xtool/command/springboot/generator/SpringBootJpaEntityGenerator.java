@@ -36,6 +36,11 @@ public class SpringBootJpaEntityGenerator extends SpringBootAware {
 				System.out.println("Classe: " + umlClass.getName());
 				umlClass.getFields().stream().forEach(umlField -> {
 					System.out.println("\tField: " + umlField.getName() + umlField.getProperties());
+					if (umlField.isArray()) {
+						umlField.getMinArrayLength().ifPresent(v -> System.out.print("\t\tMin: " + v));
+						umlField.getMaxArrayLength().ifPresent(v -> System.out.print("\t\tMan: " + v));
+						System.out.println();
+					}
 				});
 			});
 		});

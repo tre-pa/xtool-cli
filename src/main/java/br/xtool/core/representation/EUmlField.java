@@ -61,17 +61,15 @@ public interface EUmlField {
 	boolean isNotNull();
 
 	/**
+	 * Retorna se o atributo é um array.
 	 * 
 	 * @return
 	 */
-	boolean hasMultiplicity();
+	boolean isArray();
 
-	/**
-	 * Retorna a multiplicidade do atributo.
-	 * 
-	 * @return
-	 */
-	Optional<EUmlMultiplicity> getMultiplicity();
+	Optional<Integer> getMinArrayLength();
+
+	Optional<Integer> getMaxArrayLength();
 
 	/**
 	 * 
