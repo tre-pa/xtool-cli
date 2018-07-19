@@ -1,7 +1,5 @@
 package br.xtool.core.representation;
 
-import java.util.Optional;
-
 /**
  * Representação de um relacionamento no diagrama de classe UML.
  * 
@@ -17,18 +15,53 @@ public interface EUmlRelationship {
 	 */
 	boolean isBidirectional();
 
+	/**
+	 * Retorna se o relacionamento é unidirecional.
+	 * 
+	 * @return
+	 */
 	boolean isUnidirectional();
 
+	/**
+	 * Retorna se o relacionamento é uma associação.
+	 * 
+	 * @return
+	 */
+	boolean isAssociation();
+
+	/**
+	 * Retorna se o relacionamento é uma composição.
+	 * 
+	 * @return
+	 */
+	boolean isComposition();
+
+	/**
+	 * Retorna a classe UML source do relacionamento.
+	 * 
+	 * @return
+	 */
 	EUmlClass getSourceClass();
 
+	/**
+	 * Retorna a classe UML target do relacionamento.
+	 * 
+	 * @return
+	 */
 	EUmlClass getTargetClass();
 
-	Optional<EUmlMultiplicity> getSourceMutiplicity();
+	/**
+	 * Retorna a multiplicidade do source do relacionamento.
+	 * 
+	 * @return
+	 */
+	EUmlMultiplicity getSourceMultiplicity();
 
-	Optional<EUmlMultiplicity> getTargetMultiplicity();
-
-	Optional<String> getSourceRole();
-
-	Optional<String> getTargetRole();
+	/**
+	 * Retorna a multiplicidade target do relacionamento.
+	 * 
+	 * @return
+	 */
+	EUmlMultiplicity getTargetMultiplicity();
 
 }

@@ -1,6 +1,5 @@
 package br.xtool.core.representation.impl;
 
-import java.util.Optional;
 import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
@@ -9,6 +8,7 @@ import br.xtool.core.representation.EUmlClass;
 import br.xtool.core.representation.EUmlMultiplicity;
 import br.xtool.core.representation.EUmlRelationship;
 import net.sourceforge.plantuml.cucadiagram.Link;
+import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 
 public class EUmlRelationshipImpl implements EUmlRelationship {
 
@@ -22,16 +22,28 @@ public class EUmlRelationshipImpl implements EUmlRelationship {
 		this.classes = classes;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EUmlRelationship#isBidirectional()
+	 */
 	@Override
 	public boolean isBidirectional() {
-		return false;
+		return this.link.getType().getDecor1().equals(LinkDecor.ARROW) && this.link.getType().getDecor2().equals(LinkDecor.ARROW);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EUmlRelationship#isUnidirectional()
+	 */
 	@Override
 	public boolean isUnidirectional() {
-		return false;
+		return this.link.getType().getDecor1().equals(LinkDecor.ARROW) ^ this.link.getType().getDecor2().equals(LinkDecor.ARROW);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EUmlRelationship#getSourceClass()
+	 */
 	@Override
 	public EUmlClass getSourceClass() {
 		String error = "Classe '%s' não definida no pacote. Insira a definção da classe e os atributos correspondentes no pacote.";
@@ -43,6 +55,10 @@ public class EUmlRelationshipImpl implements EUmlRelationship {
 		// @formatter:on
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EUmlRelationship#getTargetClass()
+	 */
 	@Override
 	public EUmlClass getTargetClass() {
 		String error = "Classe '%s' não definida no pacote. Insira a definção da classe e os atributos correspondentes no pacote.";
@@ -54,32 +70,48 @@ public class EUmlRelationshipImpl implements EUmlRelationship {
 		// @formatter:on
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EUmlRelationship#getSourceMutiplicity()
+	 */
 	@Override
-	public Optional<EUmlMultiplicity> getSourceMutiplicity() {
-		return null;
+	public EUmlMultiplicity getSourceMultiplicity() {
+		return new EUmlMultiplicityImpl(this.getSourceClass(), this.getTargetClass(), getSourceQualifier());
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EUmlRelationship#getTargetMultiplicity()
+	 */
 	@Override
-	public Optional<EUmlMultiplicity> getTargetMultiplicity() {
-		return null;
+	public EUmlMultiplicity getTargetMultiplicity() {
+		return new EUmlMultiplicityImpl(this.getSourceClass(), this.getTargetClass(), getTargetQualifier());
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EUmlRelationship#isAssociation()
+	 */
 	@Override
-	public Optional<String> getSourceRole() {
-		return null;
+	public boolean isAssociation() {
+		return false;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EUmlRelationship#isComposition()
+	 */
 	@Override
-	public Optional<String> getTargetRole() {
-		return null;
+	public boolean isComposition() {
+		return false;
 	}
 
-	private String[] getSourceQualifiers() {
-		return StringUtils.split(StringUtils.trim(this.link.getQualifier1()));
+	private String getSourceQualifier() {
+		return StringUtils.trim(this.link.getQualifier1());
 	}
 
-	private String[] getTargetQualifiers() {
-		return StringUtils.split(StringUtils.trim(this.link.getQualifier2()));
+	private String getTargetQualifier() {
+		return StringUtils.trim(this.link.getQualifier2());
 	}
 
 }

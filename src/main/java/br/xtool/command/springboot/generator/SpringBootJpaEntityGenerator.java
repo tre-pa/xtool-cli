@@ -43,6 +43,14 @@ public class SpringBootJpaEntityGenerator extends SpringBootAware {
 					}
 				});
 			});
+			System.out.println("===============");
+			classDiagram.getRelationships().forEach(umlRelationship -> {
+				System.out.println(String.format("Source: %s , Target: %s", umlRelationship.getSourceClass().getName(), umlRelationship.getTargetClass().getName()));
+				System.out.println("\tSource: " + umlRelationship.getSourceMultiplicity().getMutiplicityType());
+				System.out.println("\tSource: " + umlRelationship.getTargetMultiplicity().getMutiplicityType());
+				//				umlRelationship.getSourceMultiplicity().ifPresent(m -> System.out.println("\tSource: " + m.getMutiplicityType()));
+				//				umlRelationship.getTargetMultiplicity().ifPresent(m -> System.out.println("\tTarget: " + m.getMutiplicityType()));
+			});
 		});
 
 		//this.getProject().get
