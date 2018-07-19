@@ -1,5 +1,6 @@
 package br.xtool.core.representation.impl;
 
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
@@ -67,7 +68,17 @@ public class EUmlFieldImpl implements EUmlField {
 
 	@Override
 	public Set<String> getProperties() {
-		return Sets.newHashSet(StringUtils.split(StringUtils.join(Strman.between(memberType(), "{", "}")), ","));
+		if (Strman.containsAll(memberType(), new String[] { "{", "}" })) {
+			String[] propertiesBlock = Strman.between(memberType(), "{", "}");
+			if (propertiesBlock.length > 0) {
+				String[] propertiesItens = StringUtils.split(StringUtils.join(propertiesBlock), ",");
+				if (propertiesItens.length > 0) {
+					return Sets.newHashSet(propertiesItens);
+				}
+				return Sets.newHashSet(propertiesBlock[0]);
+			}
+		}
+		return new HashSet<>();
 	}
 
 	private String memberName() {
