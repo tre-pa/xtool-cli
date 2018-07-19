@@ -61,16 +61,37 @@ public interface ESBootProject extends EProject {
 	SortedSet<EJavaRepository> getRepositories();
 
 	/**
+	 * Retorna a lsta de classes rests.
 	 * 
 	 * @return
 	 */
 	SortedSet<EJavaRest> getRests();
 
+	/**
+	 * Retorna o projeto Angular associado ao projeto SpringBoot. Por conveção o
+	 * projeto angular associado possui o mesmo nome do projeto Spring Boot menos
+	 * -service
+	 * 
+	 * @return
+	 */
 	Optional<ENgProject> getAssociatedAngularProject();
 
+	/**
+	 * Retorna o diretório principal do java.
+	 */
 	@Override
 	String getMainDir();
 
+	/**
+	 * Retorna o diagrama de classe das entidades de domínio.
+	 * 
+	 * @return
+	 */
+	Optional<EUmlClassDiagram> getDomainClassDiagram();
+
+	/**
+	 * 
+	 */
 	@Override
 	void refresh();
 }

@@ -65,6 +65,7 @@ public class ClassDiagramReader {
 		for (IGroup group : groups) {
 			String packageName = group.getCode().getFullName();
 			for (ILeaf leaf : group.getLeafsDirect()) {
+				leaf.getParentContainer().getCode().getFullName();
 				JavaClassSource javaClass = Roaster.create(JavaClassSource.class);
 				javaClass.setPackage(packageName);
 				javaClass.setName(leaf.getDisplay().asStringWithHiddenNewLine());

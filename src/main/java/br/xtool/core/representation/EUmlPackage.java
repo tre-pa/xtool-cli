@@ -8,5 +8,10 @@ package br.xtool.core.representation;
  */
 public interface EUmlPackage {
 
+	/**
+	 * Retorna o nome do pacote UML.
+	 * 
+	 * @return
+	 */
 	String getName();
 }

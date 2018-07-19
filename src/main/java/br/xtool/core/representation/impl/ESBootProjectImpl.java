@@ -1,5 +1,6 @@
 package br.xtool.core.representation.impl;
 
+import java.io.IOException;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -14,17 +15,17 @@ import org.jboss.forge.roaster.model.JavaUnit;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.jboss.forge.roaster.model.source.JavaInterfaceSource;
 
-import br.xtool.core.representation.ESBootAppProperties;
-import br.xtool.core.representation.ESBootPom;
-import br.xtool.core.representation.ESBootProject;
 import br.xtool.core.representation.EJavaClass;
 import br.xtool.core.representation.EJavaEntity;
 import br.xtool.core.representation.EJavaPackage;
 import br.xtool.core.representation.EJavaRepository;
 import br.xtool.core.representation.EJavaRest;
 import br.xtool.core.representation.ENgProject;
+import br.xtool.core.representation.ESBootAppProperties;
+import br.xtool.core.representation.ESBootPom;
+import br.xtool.core.representation.ESBootProject;
+import br.xtool.core.representation.EUmlClassDiagram;
 import br.xtool.core.util.RoasterUtil;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * Classe que representa um projeto Spring Boot
@@ -32,7 +33,6 @@ import lombok.extern.slf4j.Slf4j;
  * @author jcruz
  *
  */
-@Slf4j
 public class ESBootProjectImpl extends EProjectImpl implements ESBootProject {
 
 	private Map<String, JavaUnit> javaUnits;
@@ -194,6 +194,17 @@ public class ESBootProjectImpl extends EProjectImpl implements ESBootProject {
 	}
 
 	@Override
+	public Optional<EUmlClassDiagram> getDomainClassDiagram() {
+		try {
+			EUmlClassDiagram classDiagram = EUmlClassDiagramImpl.of(FilenameUtils.concat(this.getPath(), "docs/diagrams/domain-class.md"));
+			return Optional.of(classDiagram);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return Optional.empty();
+	}
+
+	@Override
 	public void refresh() {
 		this.javaUnits = null;
 	}
@@ -205,4 +216,5 @@ public class ESBootProjectImpl extends EProjectImpl implements ESBootProject {
 		}
 		return Optional.empty();
 	}
+
 }
