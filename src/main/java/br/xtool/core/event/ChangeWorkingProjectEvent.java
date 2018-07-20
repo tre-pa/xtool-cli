@@ -1,16 +1,16 @@
 package br.xtool.core.event;
 
-import br.xtool.core.representation.EDirectory;
+import br.xtool.core.representation.EProject;
 import lombok.Getter;
 
 @Getter
 public class ChangeWorkingProjectEvent {
 
-	private EDirectory directory;
+	private EProject project;
 
-	public ChangeWorkingProjectEvent(EDirectory directory) {
+	public ChangeWorkingProjectEvent(EProject project) {
 		super();
-		this.directory = directory;
+		this.project = project;
 	}
 
 }

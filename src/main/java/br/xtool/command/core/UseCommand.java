@@ -7,6 +7,7 @@ import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 
 import br.xtool.XtoolCliApplication;
+import br.xtool.core.event.ChangeWorkingProjectEvent;
 import br.xtool.core.provider.EProjectValueProvider;
 import br.xtool.core.representation.EProject;
 
@@ -18,6 +19,6 @@ public class UseCommand {
 
 	@ShellMethod(value = "Define o projeto de trabalho atual", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
 	public void use(@ShellOption(help = "Nome do projeto do workspace", valueProvider = EProjectValueProvider.class) EProject project) {
-		System.out.println("Projeto selecionado: " + project.getName());
+		this.eventPublisher.publishEvent(new ChangeWorkingProjectEvent(project));
 	}
 }
