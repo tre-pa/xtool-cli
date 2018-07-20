@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import br.xtool.core.representation.EDirectory;
+import br.xtool.core.representation.EProject;
 import br.xtool.core.representation.EWorkspace;
 import br.xtool.core.representation.impl.EDirectoryImpl;
 import br.xtool.core.representation.impl.EWorkspaceImpl;
@@ -19,6 +20,9 @@ public class WorkspaceService {
 
 	@Getter
 	private EDirectory directory;
+
+	@Getter
+	private EProject workingProject;
 
 	@PostConstruct
 	private void init() {

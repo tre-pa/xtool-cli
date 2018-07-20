@@ -4,11 +4,11 @@ import br.xtool.core.representation.EDirectory;
 import lombok.Getter;
 
 @Getter
-public class ChangeDirectoryEvent {
+public class ChangeWorkingProjectEvent {
 
 	private EDirectory directory;
 
-	public ChangeDirectoryEvent(EDirectory directory) {
+	public ChangeWorkingProjectEvent(EDirectory directory) {
 		super();
 		this.directory = directory;
 	}

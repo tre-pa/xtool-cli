@@ -13,7 +13,7 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
-import br.xtool.core.event.ChangeDirectoryEvent;
+import br.xtool.core.event.ChangeWorkingProjectEvent;
 import br.xtool.core.representation.EDirectory;
 import br.xtool.core.representation.ENgProject;
 import br.xtool.core.representation.ESBootProject;
@@ -44,7 +44,7 @@ public class WorkContext {
 		this.directory = EDirectoryImpl.of(newAbsoluteDirectory);
 		this.springBootProject = null;
 		this.angularProject = null;
-		this.applicationEventPublisher.publishEvent(new ChangeDirectoryEvent(this.directory));
+		this.applicationEventPublisher.publishEvent(new ChangeWorkingProjectEvent(this.directory));
 	}
 
 	@Deprecated
