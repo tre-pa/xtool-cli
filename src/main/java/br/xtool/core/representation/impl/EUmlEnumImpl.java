@@ -16,7 +16,7 @@ public class EUmlEnumImpl implements EUmlEnum {
 
 	@Override
 	public Set<String> getValues() {
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 }

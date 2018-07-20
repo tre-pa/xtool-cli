@@ -14,9 +14,7 @@ import br.xtool.core.WorkContext;
 import br.xtool.core.representation.EProject.ProjectType;
 import br.xtool.core.representation.ESBootProject;
 import lombok.SneakyThrows;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 public class SpringBootAware {
 
 	@Autowired
