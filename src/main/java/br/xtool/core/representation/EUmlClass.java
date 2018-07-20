@@ -36,5 +36,5 @@ public interface EUmlClass {
 	 * 
 	 * @return
 	 */
-	Set<String> getStereotypes();
+	Set<EUmlStereotype> getStereotypes();
 }

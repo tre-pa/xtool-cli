@@ -34,6 +34,7 @@ public class SpringBootJpaEntityGenerator extends SpringBootAware {
 		this.getProject().getDomainClassDiagram().ifPresent(classDiagram -> {
 			classDiagram.getClasses().forEach(umlClass -> {
 				System.out.println("Classe: " + umlClass.getName());
+				umlClass.getStereotypes().forEach(s -> System.out.println("Stereotype: " + s.getStereotypeType()));
 				umlClass.getFields().stream().forEach(umlField -> {
 					System.out.print("\tField: " + umlField.getName());
 					umlField.getProperties().forEach(p -> System.out.print(p.getFieldProperty()));

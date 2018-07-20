@@ -1,6 +1,7 @@
 package br.xtool.core.representation.impl;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -9,7 +10,9 @@ import org.apache.commons.lang3.StringUtils;
 import br.xtool.core.representation.EUmlClass;
 import br.xtool.core.representation.EUmlField;
 import br.xtool.core.representation.EUmlPackage;
+import br.xtool.core.representation.EUmlStereotype;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
+import strman.Strman;
 
 public class EUmlClassImpl implements EUmlClass {
 
@@ -57,8 +60,17 @@ public class EUmlClassImpl implements EUmlClass {
 	 * @see br.xtool.core.representation.EUmlClass#getStereotypes()
 	 */
 	@Override
-	public Set<String> getStereotypes() {
-		return new HashSet<>(this.leaf.getStereotype().getLabels(false));
+	public Set<EUmlStereotype> getStereotypes() {
+		// @formatter:off
+		if(Objects.nonNull(this.leaf.getStereotype())) {
+			return this.leaf.getStereotype().getLabels(false).stream()
+					.map(value -> Strman.between(value, "<<", ">>"))
+					.map(StringUtils::join)
+					.map(value -> new EUmlStereotypeImpl(this, value))
+					.collect(Collectors.toSet());
+		}
+		// @formatter:on
+		return new HashSet<>();
 	}
 
 }
