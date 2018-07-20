@@ -76,11 +76,9 @@ public class NewSpringBootProjectGenerator extends RegularAware {
 
 		this.workContext.changeRelativeTo((String) vars.get("projectName"));
 
-		if (this.workContext.getSpringBootProject().isPresent()) {
-			ESBootProject project = this.workContext.getSpringBootProject().get();
-			if (!noJpa) this.supportManager.addSupport(project, SupportType.JPA);
-			if (!noWeb) this.supportManager.addSupport(project, SupportType.WEB);
-		}
+		ESBootProject project = this.workContext.getSpringBootProject();
+		if (!noJpa) this.supportManager.addSupport(project, SupportType.JPA);
+		if (!noWeb) this.supportManager.addSupport(project, SupportType.WEB);
 
 	}
 

@@ -16,9 +16,9 @@ public class EJavaRepositoryConverter implements Converter<String, EJavaReposito
 
 	@Override
 	public EJavaRepository convert(String source) {
-		if (workContext.getSpringBootProject().isPresent() && StringUtils.isNotEmpty(source)) {
+		if (StringUtils.isNotEmpty(source)) {
 			// @formatter:off
-			return workContext.getSpringBootProject().get().getRepositories()
+			return this.workContext.getSpringBootProject().getRepositories()
 				.stream()
 				.filter(e -> e.getName().equals(source))
 				.findFirst()

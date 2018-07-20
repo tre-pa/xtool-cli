@@ -1,6 +1,8 @@
 package br.xtool.core.representation.impl;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -209,12 +211,13 @@ public class ESBootProjectImpl extends EProjectImpl implements ESBootProject {
 		this.javaUnits = null;
 	}
 
-	public static Optional<ESBootProject> of(String path) {
-		if (Stream.of(ProjectType.SPRINGBOOT1_PROJECT, ProjectType.SPRINGBOOT2_PROJECT).anyMatch(p -> p.equals(EDirectoryImpl.of(path).getProjectType()))) {
-			ESBootProjectImpl project = new ESBootProjectImpl(path);
-			return Optional.of(project);
+	public static ESBootProject of(String path) {
+		if (Files.exists(Paths.get(path))) {
+			if (Stream.of(ProjectType.SPRINGBOOT1_PROJECT, ProjectType.SPRINGBOOT2_PROJECT).anyMatch(p -> p.equals(EDirectoryImpl.of(path).getProjectType()))) {
+				return new ESBootProjectImpl(path);
+			}
 		}
-		return Optional.empty();
+		throw new IllegalArgumentException("O diretório não possui um projeto Spring Boot válido.");
 	}
 
 }

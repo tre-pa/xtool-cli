@@ -16,9 +16,9 @@ public class EJavaEntityConverter implements Converter<String, EJavaEntity> {
 
 	@Override
 	public EJavaEntity convert(String source) {
-		if (this.workContext.getSpringBootProject().isPresent() && StringUtils.isNotEmpty(source)) {
+		if (StringUtils.isNotEmpty(source)) {
 			// @formatter:off
-			return this.workContext.getSpringBootProject().get().getEntities()
+			return this.workContext.getSpringBootProject().getEntities()
 				.stream()
 				.filter(e -> e.getName().equals(source))
 				.findFirst()

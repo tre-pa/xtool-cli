@@ -1,6 +1,5 @@
 package br.xtool.core.representation.provider;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,15 +21,12 @@ public class EJavaEntityValueProvider extends ValueProviderSupport {
 
 	@Override
 	public List<CompletionProposal> complete(MethodParameter parameter, CompletionContext completionContext, String[] hints) {
-		if (this.workContext.getSpringBootProject().isPresent()) {
-			// @formatter:off
-			return this.workContext.getSpringBootProject().get().getEntities().stream()
-					.map(EJavaEntity::getName)
-					.map(CompletionProposal::new)
-					.collect(Collectors.toList());
-			// @formatter:on
-		}
-		return new ArrayList<>();
+		// @formatter:off
+		return this.workContext.getSpringBootProject().getEntities().stream()
+				.map(EJavaEntity::getName)
+				.map(CompletionProposal::new)
+				.collect(Collectors.toList());
+		// @formatter:on
 	}
 
 }

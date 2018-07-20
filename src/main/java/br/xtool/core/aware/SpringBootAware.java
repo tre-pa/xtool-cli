@@ -11,8 +11,8 @@ import org.springframework.shell.Availability;
 import org.springframework.shell.standard.ShellMethodAvailability;
 
 import br.xtool.core.WorkContext;
-import br.xtool.core.representation.ESBootProject;
 import br.xtool.core.representation.EProject.ProjectType;
+import br.xtool.core.representation.ESBootProject;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
@@ -40,7 +40,7 @@ public class SpringBootAware {
 
 	@SneakyThrows
 	public ESBootProject getProject() {
-		return this.workContext.getSpringBootProject().get();
+		return this.workContext.getSpringBootProject();
 	}
 
 }
