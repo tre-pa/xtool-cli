@@ -18,7 +18,6 @@ import br.xtool.core.representation.EDirectory;
 import br.xtool.core.representation.ENgProject;
 import br.xtool.core.representation.ESBootProject;
 import br.xtool.core.representation.impl.EDirectoryImpl;
-import br.xtool.core.representation.impl.ENgProjectImpl;
 import br.xtool.core.representation.impl.ESBootProjectImpl;
 import lombok.Getter;
 
@@ -92,9 +91,9 @@ public class WorkContext {
 	 */
 	@Deprecated
 	public Optional<ENgProject> getAngularProject() {
-		if (Objects.isNull(this.angularProject)) {
-			this.angularProject = ENgProjectImpl.of(this.directory);
-		}
+		//		if (Objects.isNull(this.angularProject)) {
+		//			this.angularProject = ENgProjectImpl.of(this.directory);
+		//		}
 		return this.angularProject;
 	}
 

@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import br.xtool.core.representation.EDirectory;
 import br.xtool.core.representation.ENgProject;
+import br.xtool.core.representation.EProject;
 import br.xtool.core.representation.EProject.ProjectType;
 import br.xtool.core.representation.ESBootProject;
 import br.xtool.core.representation.EWorkspace;
@@ -39,7 +40,23 @@ public class EWorkspaceImpl implements EWorkspace {
 
 	@Override
 	public SortedSet<ENgProject> getAngularProjections() {
+		if (Objects.isNull(this.angularProjects)) {
+			// @formatter:off
+			this.angularProjects = this.directory.getChildrenDirectories().stream()
+					.filter(dir -> dir.getProjectType().equals(ProjectType.ANGULAR_PROJECT))
+					.map(ENgProjectImpl::of)
+					.collect(Collectors.toCollection(TreeSet::new));
+			// @formatter:on
+		}
 		return this.angularProjects;
+	}
+
+	@Override
+	public SortedSet<EProject> getProjects() {
+		SortedSet<EProject> projects = new TreeSet<>();
+		projects.addAll(this.getSpringBootProjects());
+		projects.addAll(this.getAngularProjections());
+		return projects;
 	}
 
 	@Override

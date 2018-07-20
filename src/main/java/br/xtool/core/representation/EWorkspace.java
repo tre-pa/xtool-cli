@@ -25,6 +25,12 @@ public interface EWorkspace {
 	SortedSet<ENgProject> getAngularProjections();
 
 	/**
+	 * 
+	 * @return
+	 */
+	SortedSet<EProject> getProjects();
+
+	/**
 	 * Atualiza o workspace.
 	 */
 	void refresh();

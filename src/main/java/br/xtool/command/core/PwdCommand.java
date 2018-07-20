@@ -20,7 +20,7 @@ public class PwdCommand {
 		//		directory.getChildrenDirectories().forEach(System.out::println);
 		// @formatter:off
 		this.workspaceService.getWorkspace()
-			.getSpringBootProjects()
+			.getProjects()
 			.forEach(sb -> System.out.println("Projeto: "+sb.getName()+" version: "+sb.getFrameworkVersion()));
 		// @formatter:on
 	}

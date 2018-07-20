@@ -3,7 +3,6 @@ package br.xtool.core.representation.impl;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.function.Function;
@@ -194,11 +193,11 @@ public class ENgProjectImpl extends EProjectImpl implements ENgProject {
 		this.ngClasses = null;
 	}
 
-	public static Optional<ENgProject> of(EDirectory directory) {
+	public static ENgProject of(EDirectory directory) {
 		if (directory.getProjectType().equals(ProjectType.ANGULAR_PROJECT)) {
-			return Optional.of(new ENgProjectImpl(directory));
+			return new ENgProjectImpl(directory);
 		}
-		return Optional.empty();
+		throw new IllegalArgumentException("O diretório não possui um projeto Angular válido.");
 	}
 
 }
