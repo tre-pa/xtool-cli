@@ -35,7 +35,7 @@ public class EDirectoryImpl implements EDirectory {
 	private final ProjectType projectType = buildProjectType();
 
 	// @formatter:off
-	private Set<Function<EDirectoryImpl, ProjectType>> typeResolvers = 
+	private Set<Function<EDirectory, ProjectType>> typeResolvers = 
 			ImmutableSet.of(
 					new SpringBootProjectTypeResolver(),
 					new AngularProjectProjectTypeResolver()
@@ -100,10 +100,10 @@ public class EDirectoryImpl implements EDirectory {
 		return new EDirectoryImpl(path);
 	}
 
-	private class SpringBootProjectTypeResolver implements Function<EDirectoryImpl, ProjectType> {
+	private class SpringBootProjectTypeResolver implements Function<EDirectory, ProjectType> {
 
 		@Override
-		public @Nullable ProjectType apply(@Nullable EDirectoryImpl dr) {
+		public @Nullable ProjectType apply(@Nullable EDirectory dr) {
 			String pomFile = FilenameUtils.concat(dr.getPath(), "pom.xml");
 			if (Files.exists(Paths.get(pomFile))) {
 				ESBootPom ePom = ESBootPomImpl.of(pomFile);
@@ -115,10 +115,10 @@ public class EDirectoryImpl implements EDirectory {
 		}
 	}
 
-	private class AngularProjectProjectTypeResolver implements Function<EDirectoryImpl, ProjectType> {
+	private class AngularProjectProjectTypeResolver implements Function<EDirectory, ProjectType> {
 
 		@Override
-		public ProjectType apply(EDirectoryImpl dr) {
+		public ProjectType apply(EDirectory dr) {
 			String packageJsonFile = FilenameUtils.concat(dr.getPath(), "package.json");
 			if (Files.exists(Paths.get(packageJsonFile))) {
 				Optional<ENgPackage> ngPackage = ENgPackageImpl.of(packageJsonFile);
