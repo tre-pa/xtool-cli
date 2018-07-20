@@ -7,13 +7,10 @@ import java.util.Objects;
 import java.util.Optional;
 
 import org.apache.commons.io.FilenameUtils;
-import org.jline.utils.AttributedString;
-import org.jline.utils.AttributedStyle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
-import org.springframework.shell.jline.PromptProvider;
 import org.springframework.stereotype.Component;
 
 import br.xtool.core.event.ChangeDirectoryEvent;
@@ -26,7 +23,7 @@ import br.xtool.core.representation.impl.ESBootProjectImpl;
 import lombok.Getter;
 
 @Component
-public class WorkContext implements PromptProvider {
+public class WorkContext {
 
 	@Getter
 	private EDirectory directory;
@@ -99,11 +96,6 @@ public class WorkContext implements PromptProvider {
 			this.angularProject = ENgProjectImpl.of(this.directory);
 		}
 		return this.angularProject;
-	}
-
-	@Override
-	public AttributedString getPrompt() {
-		return new AttributedString("xtool ~ ", AttributedStyle.DEFAULT.bold().foreground(AttributedStyle.YELLOW));
 	}
 
 }
