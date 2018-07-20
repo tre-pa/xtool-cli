@@ -16,11 +16,8 @@ import br.xtool.core.representation.ESBootProject;
 
 public class EJavaRestImpl extends EJavaClassImpl implements EJavaRest {
 
-	private ESBootProject springBootProject;
-
 	public EJavaRestImpl(ESBootProject springBootProject, JavaClassSource javaClassSource) {
 		super(springBootProject, javaClassSource);
-		this.springBootProject = springBootProject;
 	}
 
 	/*

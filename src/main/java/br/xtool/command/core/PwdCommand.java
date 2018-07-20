@@ -5,8 +5,6 @@ import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 
 import br.xtool.XtoolCliApplication;
-import br.xtool.core.representation.impl.EDirectoryImpl;
-import br.xtool.core.representation.impl.EWorkspaceImpl;
 import br.xtool.core.service.WorkspaceService;
 
 @ShellComponent
@@ -21,11 +19,11 @@ public class PwdCommand {
 		//		EDirectory directory = EDirectoryImpl.of(this.workspaceService.getWorkspace());
 		//		directory.getChildrenDirectories().forEach(System.out::println);
 		// @formatter:off
-		new EWorkspaceImpl(EDirectoryImpl.of(this.workspaceService.getWorkspace()))
+		this.workspaceService.getWorkspace()
 			.getSpringBootProjects()
 			.forEach(sb -> System.out.println("Projeto: "+sb.getName()));
 		// @formatter:on
-		return this.workspaceService.getWorkspace();
+		return this.workspaceService.getPath();
 
 	}
 }
