@@ -5,6 +5,8 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
@@ -12,6 +14,8 @@ import org.apache.commons.lang3.math.NumberUtils;
 import com.google.common.collect.Sets;
 
 import br.xtool.core.representation.EUmlField;
+import br.xtool.core.representation.EUmlFieldProperty;
+import br.xtool.core.representation.EUmlFieldProperty.FieldPropertyType;
 import net.sourceforge.plantuml.cucadiagram.Member;
 import strman.Strman;
 
@@ -32,16 +36,6 @@ public class EUmlFieldImpl implements EUmlField {
 	@Override
 	public boolean isId() {
 		return StringUtils.equalsIgnoreCase(this.getName(), "id");
-	}
-
-	@Override
-	public boolean isUnique() {
-		return this.getProperties().stream().anyMatch(prop -> prop.equalsIgnoreCase("unique"));
-	}
-
-	@Override
-	public boolean isNotNull() {
-		return this.getProperties().stream().anyMatch(prop -> prop.equalsIgnoreCase("notnull"));
 	}
 
 	@Override
@@ -79,8 +73,8 @@ public class EUmlFieldImpl implements EUmlField {
 	}
 
 	@Override
-	public boolean hasProperty(String name) {
-		return this.getProperties().stream().anyMatch(prop -> prop.equalsIgnoreCase(name));
+	public boolean hasProperty(FieldPropertyType property) {
+		return this.getProperties().stream().anyMatch(prop -> prop.getFieldProperty().equals(property));
 	}
 
 	@Override
@@ -89,14 +83,18 @@ public class EUmlFieldImpl implements EUmlField {
 	}
 
 	@Override
-	public Set<String> getProperties() {
+	public Set<EUmlFieldProperty> getProperties() {
 		if (Strman.containsAll(memberType(), new String[] { "{", "}" })) {
 			String[] propertiesBlock = Strman.between(memberType(), "{", "}");
 			String[] propertiesItens = StringUtils.split(StringUtils.join(propertiesBlock), ",");
-			if (propertiesItens.length > 0) {
-				return Sets.newHashSet(propertiesItens);
+			if (propertiesItens.length > 1) {
+				// @formatter:off
+				return Stream.of(propertiesItens)
+					.map(item -> new EUmlFieldPropertyImpl(this, item))
+					.collect(Collectors.toSet());
+				// @formatter:on
 			}
-			return Sets.newHashSet(propertiesBlock[0]);
+			return Sets.newHashSet(new EUmlFieldPropertyImpl(this, propertiesBlock[0]));
 		}
 		return new HashSet<>();
 	}

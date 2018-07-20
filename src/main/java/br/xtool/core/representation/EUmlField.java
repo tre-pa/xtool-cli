@@ -3,6 +3,7 @@ package br.xtool.core.representation;
 import java.util.Optional;
 import java.util.Set;
 
+import br.xtool.core.representation.EUmlFieldProperty.FieldPropertyType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -47,20 +48,6 @@ public interface EUmlField {
 	boolean isId();
 
 	/**
-	 * Retorna de o atributo é unico.
-	 * 
-	 * @return
-	 */
-	boolean isUnique();
-
-	/**
-	 * Retorna se o atributo é não nulo.
-	 * 
-	 * @return
-	 */
-	boolean isNotNull();
-
-	/**
 	 * Retorna se o atributo é um array.
 	 * 
 	 * @return
@@ -81,13 +68,13 @@ public interface EUmlField {
 	 * 
 	 * @return
 	 */
-	Set<String> getProperties();
+	Set<EUmlFieldProperty> getProperties();
 
 	/**
 	 * 
 	 * @param name
 	 * @return
 	 */
-	boolean hasProperty(String name);
+	boolean hasProperty(FieldPropertyType propertyType);
 
 }

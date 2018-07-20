@@ -1,6 +1,6 @@
 package br.xtool.core.representation.impl;
 
-import java.util.Arrays;
+import java.util.stream.Stream;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -29,7 +29,7 @@ public class EUmlMultiplicityImpl implements EUmlMultiplicity {
 		String multiplicities = StringUtils.join(MultiplicityType.values(), ", ");
 		if (StringUtils.isBlank(this.multiplicity)) throw new IllegalArgumentException(String.format(blankMultiplicity, this.sourceClass.getName(), this.targetClass.getName()));
 		// @formatter:off
-		return Arrays.asList(MultiplicityType.values()).stream()
+		return Stream.of(MultiplicityType.values())
 				.filter(multiplicityType -> multiplicityType.getPattern().equals(this.multiplicity))
 				.findAny()
 				.orElseThrow(() -> new IllegalArgumentException(String.format(invalidMultiplicity, this.multiplicity, this.sourceClass.getName(), this.targetClass.getName(), multiplicities)));
