@@ -1,4 +1,4 @@
-package br.xtool.core.representation.converter;
+package br.xtool.core.converter;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -6,19 +6,19 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 import br.xtool.core.WorkContext;
-import br.xtool.core.representation.EJavaEntity;
+import br.xtool.core.representation.ENgModule;
 
 @Component
-public class EJavaEntityConverter implements Converter<String, EJavaEntity> {
+public class ENgModuleConverter implements Converter<String, ENgModule> {
 
 	@Autowired
 	private WorkContext workContext;
 
 	@Override
-	public EJavaEntity convert(String source) {
-		if (StringUtils.isNotEmpty(source)) {
+	public ENgModule convert(String source) {
+		if (workContext.getAngularProject().isPresent() && StringUtils.isNotEmpty(source)) {
 			// @formatter:off
-			return this.workContext.getSpringBootProject().getEntities()
+			return workContext.getAngularProject().get().getNgModules()
 				.stream()
 				.filter(e -> e.getName().equals(source))
 				.findFirst()

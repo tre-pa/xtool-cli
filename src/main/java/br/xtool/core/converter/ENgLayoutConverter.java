@@ -1,4 +1,4 @@
-package br.xtool.core.representation.converter;
+package br.xtool.core.converter;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -6,19 +6,19 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 import br.xtool.core.WorkContext;
-import br.xtool.core.representation.ENgPage;
+import br.xtool.core.representation.ENgLayout;
 
 @Component
-public class ENgPageConverter implements Converter<String, ENgPage> {
+public class ENgLayoutConverter implements Converter<String, ENgLayout> {
 
 	@Autowired
 	private WorkContext workContext;
 
 	@Override
-	public ENgPage convert(String source) {
+	public ENgLayout convert(String source) {
 		if (workContext.getAngularProject().isPresent() && StringUtils.isNotEmpty(source)) {
 			// @formatter:off
-			return workContext.getAngularProject().get().getNgPages()
+			return workContext.getAngularProject().get().getNgLayouts()
 				.stream()
 				.filter(e -> e.getName().equals(source))
 				.findFirst()
