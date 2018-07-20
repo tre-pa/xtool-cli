@@ -10,8 +10,8 @@ import org.springframework.util.Assert;
 
 import br.xtool.XtoolCliApplication;
 import br.xtool.core.aware.SpringBootAware;
+import br.xtool.core.provider.EJavaEntityValueProvider;
 import br.xtool.core.representation.EJavaEntity;
-import br.xtool.core.representation.provider.EJavaEntityValueProvider;
 
 //@ShellComponent
 public class SpringBootJpaEntityMapper extends SpringBootAware {

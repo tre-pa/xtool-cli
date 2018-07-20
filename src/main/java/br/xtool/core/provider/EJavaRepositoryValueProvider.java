@@ -1,4 +1,4 @@
-package br.xtool.core.representation.provider;
+package br.xtool.core.provider;
 
 import java.util.List;
 import java.util.stream.Collectors;

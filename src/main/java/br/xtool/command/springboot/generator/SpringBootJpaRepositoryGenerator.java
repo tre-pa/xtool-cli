@@ -12,8 +12,8 @@ import org.springframework.shell.standard.ShellOption;
 
 import br.xtool.XtoolCliApplication;
 import br.xtool.core.aware.SpringBootAware;
+import br.xtool.core.provider.EJavaEntityValueProvider;
 import br.xtool.core.representation.impl.EJavaEntityImpl;
-import br.xtool.core.representation.provider.EJavaEntityValueProvider;
 import br.xtool.core.service.FileService;
 import br.xtool.core.util.Names;
 

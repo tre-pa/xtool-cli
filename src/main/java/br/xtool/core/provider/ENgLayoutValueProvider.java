@@ -1,5 +1,6 @@
-package br.xtool.core.representation.provider;
+package br.xtool.core.provider;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -11,22 +12,25 @@ import org.springframework.shell.standard.ValueProviderSupport;
 import org.springframework.stereotype.Component;
 
 import br.xtool.core.WorkContext;
-import br.xtool.core.representation.EJavaEntity;
+import br.xtool.core.representation.ENgLayout;
 
 @Component
-public class EJavaEntityValueProvider extends ValueProviderSupport {
+public class ENgLayoutValueProvider extends ValueProviderSupport {
 
 	@Autowired
 	private WorkContext workContext;
 
 	@Override
 	public List<CompletionProposal> complete(MethodParameter parameter, CompletionContext completionContext, String[] hints) {
-		// @formatter:off
-		return this.workContext.getSpringBootProject().getEntities().stream()
-				.map(EJavaEntity::getName)
-				.map(CompletionProposal::new)
-				.collect(Collectors.toList());
-		// @formatter:on
+		if (workContext.getAngularProject().isPresent()) {
+			// @formatter:off
+			return workContext.getAngularProject().get().getNgLayouts().stream()
+					.map(ENgLayout::getName)
+					.map(CompletionProposal::new)
+					.collect(Collectors.toList());
+			// @formatter:on
+		}
+		return new ArrayList<>();
 	}
 
 }

@@ -10,8 +10,8 @@ import org.springframework.shell.standard.ShellOption;
 
 import br.xtool.XtoolCliApplication;
 import br.xtool.core.aware.AngularAware;
+import br.xtool.core.provider.ENgModuleValueProvider;
 import br.xtool.core.representation.ENgModule;
-import br.xtool.core.representation.provider.ENgModuleValueProvider;
 import br.xtool.core.service.FileService;
 import br.xtool.core.service.NgService;
 

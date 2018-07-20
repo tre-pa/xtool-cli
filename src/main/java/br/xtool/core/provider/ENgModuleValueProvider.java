@@ -1,4 +1,4 @@
-package br.xtool.core.representation.provider;
+package br.xtool.core.provider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,10 +12,10 @@ import org.springframework.shell.standard.ValueProviderSupport;
 import org.springframework.stereotype.Component;
 
 import br.xtool.core.WorkContext;
-import br.xtool.core.representation.ENgLayout;
+import br.xtool.core.representation.ENgModule;
 
 @Component
-public class ENgLayoutValueProvider extends ValueProviderSupport {
+public class ENgModuleValueProvider extends ValueProviderSupport {
 
 	@Autowired
 	private WorkContext workContext;
@@ -24,8 +24,8 @@ public class ENgLayoutValueProvider extends ValueProviderSupport {
 	public List<CompletionProposal> complete(MethodParameter parameter, CompletionContext completionContext, String[] hints) {
 		if (workContext.getAngularProject().isPresent()) {
 			// @formatter:off
-			return workContext.getAngularProject().get().getNgLayouts().stream()
-					.map(ENgLayout::getName)
+			return workContext.getAngularProject().get().getNgModules().stream()
+					.map(ENgModule::getName)
 					.map(CompletionProposal::new)
 					.collect(Collectors.toList());
 			// @formatter:on
