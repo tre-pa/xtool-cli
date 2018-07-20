@@ -1,5 +1,6 @@
 package br.xtool.core.provider;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -10,22 +11,27 @@ import org.springframework.shell.CompletionProposal;
 import org.springframework.shell.standard.ValueProviderSupport;
 import org.springframework.stereotype.Component;
 
-import br.xtool.core.WorkContext;
 import br.xtool.core.representation.EJavaEntity;
+import br.xtool.core.representation.ESBootProject;
+import br.xtool.core.service.WorkspaceService;
 
 @Component
 public class EJavaEntityValueProvider extends ValueProviderSupport {
 
 	@Autowired
-	private WorkContext workContext;
+	private WorkspaceService workspaceService;
 
 	@Override
 	public List<CompletionProposal> complete(MethodParameter parameter, CompletionContext completionContext, String[] hints) {
 		// @formatter:off
-		return this.workContext.getSpringBootProject().getEntities().stream()
-				.map(EJavaEntity::getName)
-				.map(CompletionProposal::new)
-				.collect(Collectors.toList());
+		if(this.workspaceService.getWorkingProject() instanceof ESBootProject) {
+			ESBootProject project = ESBootProject.class.cast(this.workspaceService.getWorkingProject());
+			return project.getEntities().stream()
+					.map(EJavaEntity::getName)
+					.map(CompletionProposal::new)
+					.collect(Collectors.toList());
+		}
+		return new ArrayList<>();
 		// @formatter:on
 	}
 
