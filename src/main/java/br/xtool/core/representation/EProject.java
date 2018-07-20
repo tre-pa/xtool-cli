@@ -36,6 +36,12 @@ public interface EProject {
 
 	String getMainDir();
 
+	/**
+	 * 
+	 * @return
+	 */
+	String getFrameworkVersion();
+
 	void refresh();
 
 	/**

@@ -21,7 +21,7 @@ public class PwdCommand {
 		// @formatter:off
 		this.workspaceService.getWorkspace()
 			.getSpringBootProjects()
-			.forEach(sb -> System.out.println("Projeto: "+sb.getName()));
+			.forEach(sb -> System.out.println("Projeto: "+sb.getName()+" version: "+sb.getFrameworkVersion()));
 		// @formatter:on
 	}
 }

@@ -207,6 +207,11 @@ public class ESBootProjectImpl extends EProjectImpl implements ESBootProject {
 	}
 
 	@Override
+	public String getFrameworkVersion() {
+		return this.getPom().getParentVersion().get();
+	}
+
+	@Override
 	public void refresh() {
 		this.javaUnits = null;
 	}

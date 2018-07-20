@@ -186,6 +186,11 @@ public class ENgProjectImpl extends EProjectImpl implements ENgProject {
 	}
 
 	@Override
+	public String getFrameworkVersion() {
+		return this.getNgPackage().getDependencies().get("@angular/core");
+	}
+
+	@Override
 	public void refresh() {
 		this.ngClasses = null;
 	}
