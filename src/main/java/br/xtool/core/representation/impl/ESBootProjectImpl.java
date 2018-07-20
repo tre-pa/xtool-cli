@@ -8,7 +8,6 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.apache.commons.io.FilenameUtils;
 import org.jboss.forge.roaster.model.JavaUnit;
@@ -217,7 +216,7 @@ public class ESBootProjectImpl extends EProjectImpl implements ESBootProject {
 	}
 
 	public static ESBootProject of(EDirectory directory) {
-		if (Stream.of(ProjectType.SPRINGBOOT1_PROJECT, ProjectType.SPRINGBOOT2_PROJECT).anyMatch(p -> p.equals(directory.getProjectType()))) {
+		if (directory.getProjectType().equals(ProjectType.SPRINGBOOT_PROJECT)) {
 			return new ESBootProjectImpl(directory);
 		}
 		throw new IllegalArgumentException("O diretório não possui um projeto Spring Boot válido.");

@@ -39,8 +39,8 @@ public class EDirectoryImpl implements EDirectory {
 	// @formatter:off
 	private Set<Function<EDirectoryImpl, ProjectType>> typeResolvers = 
 			ImmutableSet.of(
-					new SpringBoot1ProjectTypeResolver(),
-					new Angular5ProjectProjectTypeResolver()
+					new SpringBootProjectTypeResolver(),
+					new AngularProjectProjectTypeResolver()
 			);
 	// @formatter:on
 
@@ -102,26 +102,22 @@ public class EDirectoryImpl implements EDirectory {
 		return new EDirectoryImpl(path);
 	}
 
-	private class SpringBoot1ProjectTypeResolver implements Function<EDirectoryImpl, ProjectType> {
+	private class SpringBootProjectTypeResolver implements Function<EDirectoryImpl, ProjectType> {
 
 		@Override
 		public @Nullable ProjectType apply(@Nullable EDirectoryImpl dr) {
 			String pomFile = FilenameUtils.concat(dr.getPath(), "pom.xml");
 			if (Files.exists(Paths.get(pomFile))) {
-				ESBootPom pomRepresentation = ESBootPomImpl.of(pomFile);
-				Pattern pattern = Pattern.compile("1.5.\\d\\d?.RELEASE");
-				if (pomRepresentation.getParentVersion().isPresent()) {
-					Matcher matcher = pattern.matcher(pomRepresentation.getParentVersion().get());
-					if (matcher.matches()) {
-						return ProjectType.SPRINGBOOT1_PROJECT;
-					}
+				ESBootPom ePom = ESBootPomImpl.of(pomFile);
+				if (ePom.getParentVersion().isPresent()) {
+					if (ePom.getParentGroupId().get().equals("org.springframework.boot")) return ProjectType.SPRINGBOOT_PROJECT;
 				}
 			}
 			return null;
 		}
 	}
 
-	private class Angular5ProjectProjectTypeResolver implements Function<EDirectoryImpl, ProjectType> {
+	private class AngularProjectProjectTypeResolver implements Function<EDirectoryImpl, ProjectType> {
 
 		@Override
 		public ProjectType apply(EDirectoryImpl dr) {
@@ -134,7 +130,7 @@ public class EDirectoryImpl implements EDirectory {
 						Pattern pattern = Pattern.compile("[~|^]?5\\.\\d\\.\\d$");
 						Matcher matcher = pattern.matcher(dependencies.get("@angular/core"));
 						if (matcher.matches()) {
-							return ProjectType.ANGULAR5_PROJECT;
+							return ProjectType.ANGULAR_PROJECT;
 						}
 					}
 				}

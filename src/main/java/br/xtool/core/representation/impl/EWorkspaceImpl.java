@@ -28,7 +28,7 @@ public class EWorkspaceImpl implements EWorkspace {
 		if (Objects.isNull(this.springBootProjects)) {
 			// @formatter:off
 			this.springBootProjects = this.directory.getChildrenDirectories().stream()
-					.filter(dir -> dir.getProjectType().equals(ProjectType.SPRINGBOOT1_PROJECT) || dir.getProjectType().equals(ProjectType.SPRINGBOOT2_PROJECT))
+					.filter(dir -> dir.getProjectType().equals(ProjectType.SPRINGBOOT_PROJECT))
 					.map(ESBootProjectImpl::of)
 					.collect(Collectors.toList());
 			// @formatter:on

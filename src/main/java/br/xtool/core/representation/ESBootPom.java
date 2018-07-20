@@ -30,6 +30,12 @@ public interface ESBootPom {
 	String getVersion();
 
 	/**
+	 * 
+	 * @return
+	 */
+	Optional<String> getParentGroupId();
+
+	/**
 	 * Retorna a versão do parent.
 	 * 
 	 * @return

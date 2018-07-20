@@ -27,7 +27,7 @@ public class SpringBoot1JpaSupport implements SpringBootSupport {
 
 	@Override
 	public ProjectType getApplyForType() {
-		return ProjectType.SPRINGBOOT1_PROJECT;
+		return ProjectType.SPRINGBOOT_PROJECT;
 	}
 
 	@Override

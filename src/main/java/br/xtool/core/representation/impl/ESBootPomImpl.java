@@ -62,6 +62,14 @@ public class ESBootPomImpl implements ESBootPom {
 		return this.pomDoc.getRootElement().getChild("version", NAMESPACE).getText();
 	}
 
+	@Override
+	public Optional<String> getParentGroupId() {
+		if (Objects.nonNull(this.pomDoc.getRootElement().getChild("parent", NAMESPACE))) {
+			return Optional.ofNullable(this.pomDoc.getRootElement().getChild("parent", NAMESPACE).getChild("groupId", NAMESPACE).getText());
+		}
+		return Optional.empty();
+	}
+
 	/**
 	 * Retorna a versão do parent.
 	 * 

@@ -8,7 +8,6 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.apache.commons.io.FilenameUtils;
 
@@ -196,7 +195,7 @@ public class ENgProjectImpl extends EProjectImpl implements ENgProject {
 	}
 
 	public static Optional<ENgProject> of(EDirectory directory) {
-		if (Stream.of(ProjectType.ANGULAR5_PROJECT, ProjectType.ANGULAR6_PROJECT).anyMatch(p -> p.equals(directory.getProjectType()))) {
+		if (directory.getProjectType().equals(ProjectType.ANGULAR_PROJECT)) {
 			return Optional.of(new ENgProjectImpl(directory));
 		}
 		return Optional.empty();
