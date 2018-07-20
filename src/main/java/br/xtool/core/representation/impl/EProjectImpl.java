@@ -42,4 +42,9 @@ public abstract class EProjectImpl implements EProject {
 		return this.getDirectory().getProjectType();
 	}
 
+	@Override
+	public int compareTo(EProject o) {
+		return this.getName().compareTo(o.getName());
+	}
+
 }

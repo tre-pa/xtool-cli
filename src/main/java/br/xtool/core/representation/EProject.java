@@ -6,7 +6,7 @@ package br.xtool.core.representation;
  * @author jcruz
  *
  */
-public interface EProject {
+public interface EProject extends Comparable<EProject> {
 
 	public enum ProjectType {
 		SPRINGBOOT_PROJECT, ANGULAR_PROJECT, NONE;

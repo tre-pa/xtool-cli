@@ -1,6 +1,6 @@
 package br.xtool.core.representation;
 
-import java.util.Collection;
+import java.util.SortedSet;
 
 /**
  * Representão do workspace.
@@ -15,14 +15,14 @@ public interface EWorkspace {
 	 * 
 	 * @return
 	 */
-	Collection<ESBootProject> getSpringBootProjects();
+	SortedSet<ESBootProject> getSpringBootProjects();
 
 	/**
 	 * Retorna a lista de projetos angular de aplicação.
 	 * 
 	 * @return
 	 */
-	Collection<ENgProject> getAngularProjections();
+	SortedSet<ENgProject> getAngularProjections();
 
 	/**
 	 * Atualiza o workspace.
