@@ -6,13 +6,11 @@ import org.springframework.stereotype.Component;
 import br.xtool.core.representation.EWorkspace;
 import br.xtool.core.representation.impl.EDirectoryImpl;
 import br.xtool.core.representation.impl.EWorkspaceImpl;
-import lombok.Getter;
 
 @Component
 public class WorkspaceService {
 
 	@Value("${workspace}")
-	@Getter
 	private String path;
 
 	public EWorkspace getWorkspace() {
