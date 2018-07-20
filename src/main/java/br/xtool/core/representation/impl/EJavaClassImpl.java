@@ -83,7 +83,7 @@ public class EJavaClassImpl implements EJavaClass {
 	 */
 	@Override
 	public String getPath() {
-		return FilenameUtils.concat(this.project.getPath(), String.format("src/main/java/%s/%s.java", this.getPackage().getDir(), this.getName()));
+		return FilenameUtils.concat(this.project.getDirectory().getPath(), String.format("src/main/java/%s/%s.java", this.getPackage().getDir(), this.getName()));
 	}
 
 	@Override

@@ -1,5 +1,7 @@
 package br.xtool.core.representation.impl;
 
+import org.apache.commons.io.FilenameUtils;
+
 import br.xtool.core.representation.EDirectory;
 import br.xtool.core.representation.EProject;
 import lombok.Getter;
@@ -7,15 +9,11 @@ import lombok.Getter;
 public abstract class EProjectImpl implements EProject {
 
 	@Getter
-	private String path;
-
-	@Getter
 	private EDirectory directory;
 
-	public EProjectImpl(String path) {
+	public EProjectImpl(EDirectory directory) {
 		super();
-		this.path = path;
-		this.directory = EDirectoryImpl.of(path);
+		this.directory = directory;
 	}
 
 	/**
@@ -25,7 +23,7 @@ public abstract class EProjectImpl implements EProject {
 	 */
 	@Override
 	public String getName() {
-		return this.getDirectory().getBaseName();
+		return FilenameUtils.getBaseName(this.getDirectory().getPath());
 	}
 
 	@Override

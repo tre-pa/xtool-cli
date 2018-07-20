@@ -9,6 +9,7 @@ import org.springframework.shell.standard.ShellMethodAvailability;
 import br.xtool.core.WorkContext;
 import br.xtool.core.representation.EProject.ProjectType;
 
+@Deprecated
 public class RegularAware {
 
 	@Autowired

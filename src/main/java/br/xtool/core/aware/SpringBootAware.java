@@ -15,6 +15,7 @@ import br.xtool.core.representation.EProject.ProjectType;
 import br.xtool.core.representation.ESBootProject;
 import lombok.SneakyThrows;
 
+@Deprecated
 public class SpringBootAware {
 
 	@Autowired

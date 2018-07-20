@@ -8,7 +8,6 @@ import java.util.Optional;
 
 import org.apache.commons.io.FilenameUtils;
 import org.jline.utils.AttributedString;
-import org.jline.utils.AttributedStringBuilder;
 import org.jline.utils.AttributedStyle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
@@ -20,7 +19,6 @@ import org.springframework.stereotype.Component;
 import br.xtool.core.event.ChangeDirectoryEvent;
 import br.xtool.core.representation.EDirectory;
 import br.xtool.core.representation.ENgProject;
-import br.xtool.core.representation.EProject.ProjectType;
 import br.xtool.core.representation.ESBootProject;
 import br.xtool.core.representation.impl.EDirectoryImpl;
 import br.xtool.core.representation.impl.ENgProjectImpl;
@@ -45,6 +43,7 @@ public class WorkContext implements PromptProvider {
 	 * 
 	 * @param newAbsoluteDirectory
 	 */
+	@Deprecated
 	public void changeTo(String newAbsoluteDirectory) {
 		this.directory = EDirectoryImpl.of(newAbsoluteDirectory);
 		this.springBootProject = null;
@@ -52,10 +51,12 @@ public class WorkContext implements PromptProvider {
 		this.applicationEventPublisher.publishEvent(new ChangeDirectoryEvent(this.directory));
 	}
 
+	@Deprecated
 	public void changeRelativeTo(String newRelativeDirectory) {
 		this.changeTo(FilenameUtils.concat(this.directory.getPath(), newRelativeDirectory));
 	}
 
+	@Deprecated
 	private void setupHomeDirectory() throws IOException {
 		String home = FilenameUtils.concat(System.getProperty("user.home"), "git");
 		Files.createDirectories(Paths.get(home));
@@ -79,9 +80,10 @@ public class WorkContext implements PromptProvider {
 	 * 
 	 * @return
 	 */
+	@Deprecated
 	public ESBootProject getSpringBootProject() {
 		if (Objects.isNull(this.springBootProject)) {
-			this.springBootProject = ESBootProjectImpl.of(this.directory.getPath());
+			this.springBootProject = ESBootProjectImpl.of(this.directory);
 		}
 		return this.springBootProject;
 	}
@@ -91,29 +93,17 @@ public class WorkContext implements PromptProvider {
 	 * 
 	 * @return
 	 */
+	@Deprecated
 	public Optional<ENgProject> getAngularProject() {
 		if (Objects.isNull(this.angularProject)) {
-			this.angularProject = ENgProjectImpl.of(this.directory.getPath());
+			this.angularProject = ENgProjectImpl.of(this.directory);
 		}
 		return this.angularProject;
 	}
 
 	@Override
 	public AttributedString getPrompt() {
-		if (!this.getDirectory().getProjectType().equals(ProjectType.NONE)) {
-			// @formatter:off
-			return new AttributedStringBuilder()
-					.append("xtool@", AttributedStyle.DEFAULT.foreground(AttributedStyle.YELLOW))
-					.append(this.directory.getBaseName(), AttributedStyle.BOLD.foreground(AttributedStyle.GREEN))
-					.append(" > ", AttributedStyle.DEFAULT.foreground(AttributedStyle.YELLOW))
-					.toAttributedString();
-			// @formatter:on
-		}
-		// @formatter:off
-		return new AttributedString(
-				String.format("xtool@%s > ", this.getDirectory().getBaseName()), 
-					AttributedStyle.DEFAULT.foreground(AttributedStyle.YELLOW));
-		// @formatter:on
+		return new AttributedString("xtool ~ ", AttributedStyle.DEFAULT.bold().foreground(AttributedStyle.YELLOW));
 	}
 
 }

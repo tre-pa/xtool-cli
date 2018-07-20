@@ -13,12 +13,32 @@ import br.xtool.core.representation.EProject.ProjectType;
  */
 public interface EDirectory {
 
+	/**
+	 * Retorna o caminho do diretório.
+	 * 
+	 * @return
+	 */
 	String getPath();
 
+	/**
+	 * Retorna o tipo de projeto representado pelo diretório atual.
+	 * 
+	 * @return
+	 */
 	ProjectType getProjectType();
 
-	String getBaseName();
-
+	/**
+	 * Retorna todos os arquivos recursivamente.
+	 * 
+	 * @return
+	 */
 	List<File> getAllFiles();
+
+	/**
+	 * Retorna todos os diretórios.
+	 * 
+	 * @return
+	 */
+	List<EDirectory> getChildrenDirectories();
 
 }

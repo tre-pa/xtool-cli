@@ -22,10 +22,10 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 
 import com.google.common.collect.ImmutableSet;
 
-import br.xtool.core.representation.ESBootPom;
 import br.xtool.core.representation.EDirectory;
 import br.xtool.core.representation.ENgPackage;
 import br.xtool.core.representation.EProject.ProjectType;
+import br.xtool.core.representation.ESBootPom;
 import lombok.Getter;
 
 public class EDirectoryImpl implements EDirectory {
@@ -47,11 +47,6 @@ public class EDirectoryImpl implements EDirectory {
 	private EDirectoryImpl(String directory) {
 		super();
 		this.path = FilenameUtils.normalizeNoEndSeparator(directory, true);
-	}
-
-	@Override
-	public String getBaseName() {
-		return FilenameUtils.getBaseName(this.path);
 	}
 
 	@Override
@@ -84,6 +79,22 @@ public class EDirectoryImpl implements EDirectory {
 		// @formatter:on
 	}
 
+	@Override
+	public List<EDirectory> getChildrenDirectories() {
+		// @formatter:off
+		try {
+			return Files.list(Paths.get(this.path))
+					.filter(Files::isDirectory)
+					.map(Path::toFile)
+					.map(file -> EDirectoryImpl.of(file.getAbsolutePath()))
+					.collect(Collectors.toList());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return new ArrayList<>();
+		// @formatter:on
+	}
+
 	public static EDirectoryImpl of(String path) {
 		if (!Files.isDirectory(Paths.get(path))) {
 			throw new IllegalArgumentException(String.format("O diretório %s não existe", path));
@@ -99,9 +110,11 @@ public class EDirectoryImpl implements EDirectory {
 			if (Files.exists(Paths.get(pomFile))) {
 				ESBootPom pomRepresentation = ESBootPomImpl.of(pomFile);
 				Pattern pattern = Pattern.compile("1.5.\\d\\d?.RELEASE");
-				Matcher matcher = pattern.matcher(pomRepresentation.getParentVersion());
-				if (matcher.matches()) {
-					return ProjectType.SPRINGBOOT1_PROJECT;
+				if (pomRepresentation.getParentVersion().isPresent()) {
+					Matcher matcher = pattern.matcher(pomRepresentation.getParentVersion().get());
+					if (matcher.matches()) {
+						return ProjectType.SPRINGBOOT1_PROJECT;
+					}
 				}
 			}
 			return null;

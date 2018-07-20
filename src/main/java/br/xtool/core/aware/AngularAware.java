@@ -12,6 +12,7 @@ import br.xtool.core.representation.ENgProject;
 import br.xtool.core.representation.EProject.ProjectType;
 import lombok.SneakyThrows;
 
+@Deprecated
 public class AngularAware {
 
 	@Autowired

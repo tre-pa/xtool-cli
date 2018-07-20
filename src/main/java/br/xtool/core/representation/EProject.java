@@ -25,8 +25,6 @@ public interface EProject {
 
 	}
 
-	String getPath();
-
 	EDirectory getDirectory();
 
 	/**

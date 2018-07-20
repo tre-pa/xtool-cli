@@ -1,8 +1,6 @@
 package br.xtool.core.representation.impl;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -17,6 +15,7 @@ import org.jboss.forge.roaster.model.JavaUnit;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.jboss.forge.roaster.model.source.JavaInterfaceSource;
 
+import br.xtool.core.representation.EDirectory;
 import br.xtool.core.representation.EJavaClass;
 import br.xtool.core.representation.EJavaEntity;
 import br.xtool.core.representation.EJavaPackage;
@@ -45,8 +44,8 @@ public class ESBootProjectImpl extends EProjectImpl implements ESBootProject {
 
 	private EJavaClass mainClass;
 
-	public ESBootProjectImpl(String path) {
-		super(path);
+	public ESBootProjectImpl(EDirectory directory) {
+		super(directory);
 	}
 
 	/**
@@ -99,7 +98,7 @@ public class ESBootProjectImpl extends EProjectImpl implements ESBootProject {
 	@Override
 	public ESBootPom getPom() {
 		if (Objects.isNull(this.pom)) {
-			this.pom = ESBootPomImpl.of(FilenameUtils.concat(this.getPath(), "pom.xml"));
+			this.pom = ESBootPomImpl.of(FilenameUtils.concat(this.getDirectory().getPath(), "pom.xml"));
 		}
 		return this.pom;
 	}
@@ -112,7 +111,7 @@ public class ESBootProjectImpl extends EProjectImpl implements ESBootProject {
 	@Override
 	public ESBootAppProperties getApplicationProperties() {
 		if (Objects.isNull(this.applicationProperties)) {
-			this.applicationProperties = ESBootAppPropertiesImpl.of(FilenameUtils.concat(this.getPath(), "src/main/resources/application.properties"));
+			this.applicationProperties = ESBootAppPropertiesImpl.of(FilenameUtils.concat(this.getDirectory().getPath(), "src/main/resources/application.properties"));
 		}
 		return this.applicationProperties;
 	}
@@ -186,19 +185,20 @@ public class ESBootProjectImpl extends EProjectImpl implements ESBootProject {
 
 	@Override
 	public Optional<ENgProject> getAssociatedAngularProject() {
-		String angularPath = this.getPath().replace("-service", "");
-		return ENgProjectImpl.of(angularPath);
+		throw new UnsupportedOperationException();
+		//		String angularPath = EDirectoryImpl.of(this.getDirectory().getPath().replace("-service", ""));
+		//		return ENgProjectImpl.of(angularPath);
 	}
 
 	@Override
 	public String getMainDir() {
-		return FilenameUtils.concat(this.getPath(), "src/main/java");
+		return FilenameUtils.concat(this.getDirectory().getPath(), "src/main/java");
 	}
 
 	@Override
 	public Optional<EUmlClassDiagram> getDomainClassDiagram() {
 		try {
-			EUmlClassDiagram classDiagram = EUmlClassDiagramImpl.of(FilenameUtils.concat(this.getPath(), "docs/diagrams/domain-class.md"));
+			EUmlClassDiagram classDiagram = EUmlClassDiagramImpl.of(FilenameUtils.concat(this.getDirectory().getPath(), "docs/diagrams/domain-class.md"));
 			return Optional.of(classDiagram);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -211,11 +211,9 @@ public class ESBootProjectImpl extends EProjectImpl implements ESBootProject {
 		this.javaUnits = null;
 	}
 
-	public static ESBootProject of(String path) {
-		if (Files.exists(Paths.get(path))) {
-			if (Stream.of(ProjectType.SPRINGBOOT1_PROJECT, ProjectType.SPRINGBOOT2_PROJECT).anyMatch(p -> p.equals(EDirectoryImpl.of(path).getProjectType()))) {
-				return new ESBootProjectImpl(path);
-			}
+	public static ESBootProject of(EDirectory directory) {
+		if (Stream.of(ProjectType.SPRINGBOOT1_PROJECT, ProjectType.SPRINGBOOT2_PROJECT).anyMatch(p -> p.equals(directory.getProjectType()))) {
+			return new ESBootProjectImpl(directory);
 		}
 		throw new IllegalArgumentException("O diretório não possui um projeto Spring Boot válido.");
 	}

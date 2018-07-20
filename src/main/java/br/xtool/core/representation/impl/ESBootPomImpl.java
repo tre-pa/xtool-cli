@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -18,9 +19,9 @@ import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
 import br.xtool.core.ConsoleLog;
-import br.xtool.core.representation.ESBootPomDependency;
 import br.xtool.core.representation.EJavaPackage;
 import br.xtool.core.representation.ESBootPom;
+import br.xtool.core.representation.ESBootPomDependency;
 
 /**
  * Representa o arquivo pom.xml
@@ -67,8 +68,11 @@ public class ESBootPomImpl implements ESBootPom {
 	 * @return
 	 */
 	@Override
-	public String getParentVersion() {
-		return this.pomDoc.getRootElement().getChild("parent", NAMESPACE).getChild("version", NAMESPACE).getText();
+	public Optional<String> getParentVersion() {
+		if (Objects.nonNull(this.pomDoc.getRootElement().getChild("parent", NAMESPACE))) {
+			return Optional.ofNullable(this.pomDoc.getRootElement().getChild("parent", NAMESPACE).getChild("version", NAMESPACE).getText());
+		}
+		return Optional.empty();
 	}
 
 	/**

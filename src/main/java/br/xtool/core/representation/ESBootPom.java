@@ -1,6 +1,7 @@
 package br.xtool.core.representation;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.jdom2.Namespace;
 
@@ -33,7 +34,7 @@ public interface ESBootPom {
 	 * 
 	 * @return
 	 */
-	public String getParentVersion();
+	Optional<String> getParentVersion();
 
 	/**
 	 * Verifica se um atefato existe no pom.xml

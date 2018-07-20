@@ -12,6 +12,7 @@ import java.util.stream.Stream;
 
 import org.apache.commons.io.FilenameUtils;
 
+import br.xtool.core.representation.EDirectory;
 import br.xtool.core.representation.ENgClass;
 import br.xtool.core.representation.ENgComponent;
 import br.xtool.core.representation.ENgDetail;
@@ -53,13 +54,13 @@ public class ENgProjectImpl extends EProjectImpl implements ENgProject {
 
 	}
 
-	private ENgProjectImpl(String path) {
-		super(path);
+	private ENgProjectImpl(EDirectory directory) {
+		super(directory);
 	}
 
 	@Override
 	public ENgPackage getNgPackage() {
-		return ENgPackageImpl.of(FilenameUtils.concat(this.getPath(), "package.json")).orElse(null);
+		return ENgPackageImpl.of(FilenameUtils.concat(this.getDirectory().getPath(), "package.json")).orElse(null);
 	}
 
 	/**
@@ -181,7 +182,7 @@ public class ENgProjectImpl extends EProjectImpl implements ENgProject {
 
 	@Override
 	public String getMainDir() {
-		return FilenameUtils.concat(this.getPath(), "src/app");
+		return FilenameUtils.concat(this.getDirectory().getPath(), "src/app");
 	}
 
 	@Override
@@ -189,9 +190,9 @@ public class ENgProjectImpl extends EProjectImpl implements ENgProject {
 		this.ngClasses = null;
 	}
 
-	public static Optional<ENgProject> of(String path) {
-		if (Stream.of(ProjectType.ANGULAR5_PROJECT, ProjectType.ANGULAR6_PROJECT).anyMatch(p -> p.equals(EDirectoryImpl.of(path).getProjectType()))) {
-			return Optional.of(new ENgProjectImpl(path));
+	public static Optional<ENgProject> of(EDirectory directory) {
+		if (Stream.of(ProjectType.ANGULAR5_PROJECT, ProjectType.ANGULAR6_PROJECT).anyMatch(p -> p.equals(directory.getProjectType()))) {
+			return Optional.of(new ENgProjectImpl(directory));
 		}
 		return Optional.empty();
 	}

@@ -1,14 +1,14 @@
 package br.xtool.command.core;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 
 import br.xtool.XtoolCliApplication;
 import br.xtool.core.WorkContext;
 import br.xtool.core.representation.EProject.ProjectType;
 
-@ShellComponent
+//@ShellComponent
+@Deprecated
 public class RefreshCommand {
 
 	@Autowired
