@@ -18,7 +18,6 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
 import br.xtool.core.ConsoleLog;
-import br.xtool.core.WorkContext;
 import lombok.SneakyThrows;
 
 @Service
@@ -28,7 +27,7 @@ public class FileService {
 	private VelocityEngine vEngine;
 
 	@Autowired
-	private WorkContext workContext;
+	private WorkspaceService workspaceService;
 
 	/**
 	 * Realiza uma cópia com substituição de variáveis no template.
@@ -58,7 +57,7 @@ public class FileService {
 		VelocityContext vContext = new VelocityContext(vars);
 		templatePath = this.inlineTemplate(templatePath, vars);
 		relativeDestination = this.inlineTemplate(relativeDestination, vars);
-		String finalDestination = FilenameUtils.concat(this.workContext.getDirectory().getPath(), relativeDestination);
+		String finalDestination = FilenameUtils.concat(this.workspaceService.getWorkingDirectory().getPath(), relativeDestination);
 		if (!Files.exists(Paths.get(finalDestination))) {
 			FileUtils.forceMkdirParent(new File(finalDestination));
 			if (binary) {
@@ -100,7 +99,7 @@ public class FileService {
 	public void createEmptyPath(String relativeDestination, Map<String, Object> vars) {
 		try {
 			relativeDestination = this.inlineTemplate(relativeDestination, vars);
-			String finalDestination = FilenameUtils.concat(this.workContext.getDirectory().getPath(), relativeDestination);
+			String finalDestination = FilenameUtils.concat(this.workspaceService.getWorkingDirectory().getPath(), relativeDestination);
 			if (!Files.exists(Paths.get(finalDestination))) {
 				FileUtils.forceMkdir(new File(finalDestination));
 				FileUtils.touch(new File(FilenameUtils.concat(finalDestination, ".gitkeep")));
