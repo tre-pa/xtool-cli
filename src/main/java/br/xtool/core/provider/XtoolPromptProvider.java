@@ -12,8 +12,6 @@ import br.xtool.core.service.WorkspaceService;
 @Component
 public class XtoolPromptProvider implements PromptProvider {
 
-	//	private EProject workingProject;
-
 	@Autowired
 	private WorkspaceService workspaceService;
 
@@ -24,8 +22,4 @@ public class XtoolPromptProvider implements PromptProvider {
 		return new AttributedString(promptLabel, AttributedStyle.DEFAULT.bold().foreground(AttributedStyle.YELLOW));
 	}
 
-	//	@EventListener
-	//	private void onChangeWorkingProject(ChangeWorkingProjectEvent evt) {
-	//		this.workingProject = evt.getProject();
-	//	}
 }
