@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import com.google.common.collect.ImmutableMap;
 
-import br.xtool.core.WorkContext;
 import br.xtool.core.representation.ENgComponent;
 import br.xtool.core.representation.ENgDialog;
 import br.xtool.core.representation.ENgModule;
@@ -24,7 +23,7 @@ public class NgService {
 	private ShellService shellService;
 
 	@Autowired
-	private WorkContext workContext;
+	private WorkspaceService workspaceService;
 
 	@Autowired
 	private FileService fs;
@@ -38,7 +37,7 @@ public class NgService {
 		// @formatter:off
 		Map<String, Object> vars = ImmutableMap.<String, Object>builder()
 				.put("templatePath", "generators/angular/5.x/scaffold")
-				.put("xtoolNg", FilenameUtils.concat(workContext.getDirectory().getPath(), "scripts/xtool-ng.js"))
+				.put("xtoolNg", FilenameUtils.concat(this.workspaceService.getWorkingProject().getDirectory().getPath(), "scripts/xtool-ng.js"))
 				.put("modulePath", ngModule.getFile().getAbsolutePath())
 				.put("moduleName", ngModule.getName())
 				.put("componentPath", ngComponent.getFile().getAbsolutePath())
@@ -46,9 +45,9 @@ public class NgService {
 				.build();
 		// @formatter:on
 		if (Files.notExists(Paths.get((String) vars.get("xtoolNg")))) {
-			fs.copy("${templatePath}/scripts/xtool-ng.js.vm", "scripts/xtool-ng.js", vars);
+			this.fs.copy("${templatePath}/scripts/xtool-ng.js.vm", "scripts/xtool-ng.js", vars);
 		}
-		shellService.runCmd("node ${xtoolNg} --module-path=${modulePath} --module-name=${moduleName} --component-path=${componentPath} --component-name=${componentName}", vars);
+		this.shellService.runCmd("node ${xtoolNg} --module-path=${modulePath} --module-name=${moduleName} --component-path=${componentPath} --component-name=${componentName}", vars);
 	}
 
 	/**
@@ -60,7 +59,7 @@ public class NgService {
 		// @formatter:off
 		Map<String, Object> vars = ImmutableMap.<String, Object>builder()
 				.put("templatePath", "generators/angular/5.x/scaffold")
-				.put("xtoolNg", FilenameUtils.concat(workContext.getDirectory().getPath(), "scripts/xtool-ng.js"))
+				.put("xtoolNg", FilenameUtils.concat(this.workspaceService.getWorkingProject().getDirectory().getPath(), "scripts/xtool-ng.js"))
 				.put("modulePath", ngModule.getFile().getAbsolutePath())
 				.put("moduleName", ngModule.getName())
 				.put("servicePath", ngService.getFile().getAbsolutePath())
@@ -68,9 +67,9 @@ public class NgService {
 				.build();
 		// @formatter:on
 		if (Files.notExists(Paths.get((String) vars.get("xtoolNg")))) {
-			fs.copy("${templatePath}/scripts/xtool-ng.js.vm", "scripts/xtool-ng.js", vars);
+			this.fs.copy("${templatePath}/scripts/xtool-ng.js.vm", "scripts/xtool-ng.js", vars);
 		}
-		shellService.runCmd("node ${xtoolNg} --module-path=${modulePath} --module-name=${moduleName} --service-path=${servicePath} --service-name=${serviceName}", vars);
+		this.shellService.runCmd("node ${xtoolNg} --module-path=${modulePath} --module-name=${moduleName} --service-path=${servicePath} --service-name=${serviceName}", vars);
 	}
 
 	/**
@@ -82,7 +81,7 @@ public class NgService {
 		// @formatter:off
 		Map<String, Object> vars = ImmutableMap.<String, Object>builder()
 				.put("templatePath", "generators/angular/5.x/scaffold")
-				.put("xtoolNg", FilenameUtils.concat(workContext.getDirectory().getPath(), "scripts/xtool-ng.js"))
+				.put("xtoolNg", FilenameUtils.concat(this.workspaceService.getWorkingProject().getDirectory().getPath(), "scripts/xtool-ng.js"))
 				.put("modulePath", ngModule.getFile().getAbsolutePath())
 				.put("moduleName", ngModule.getName())
 				.put("dialogPath", ngDialog.getFile().getAbsolutePath())
@@ -90,8 +89,8 @@ public class NgService {
 				.build();
 		// @formatter:on
 		if (Files.notExists(Paths.get((String) vars.get("xtoolNg")))) {
-			fs.copy("${templatePath}/scripts/xtool-ng.js.vm", "scripts/xtool-ng.js", vars);
+			this.fs.copy("${templatePath}/scripts/xtool-ng.js.vm", "scripts/xtool-ng.js", vars);
 		}
-		shellService.runCmd("node ${xtoolNg} --module-path=${modulePath} --module-name=${moduleName} --dialog-path=${dialogPath} --dialog-name=${dialogName}", vars);
+		this.shellService.runCmd("node ${xtoolNg} --module-path=${modulePath} --module-name=${moduleName} --dialog-path=${dialogPath} --dialog-name=${dialogName}", vars);
 	}
 }

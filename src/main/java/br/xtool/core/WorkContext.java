@@ -79,7 +79,7 @@ public class WorkContext {
 	@Deprecated
 	public ESBootProject getSpringBootProject() {
 		if (Objects.isNull(this.springBootProject)) {
-			this.springBootProject = ESBootProjectImpl.of(this.directory);
+			this.springBootProject = ESBootProjectImpl.create(this.directory);
 		}
 		return this.springBootProject;
 	}

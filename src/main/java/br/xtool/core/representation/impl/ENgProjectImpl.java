@@ -193,7 +193,7 @@ public class ENgProjectImpl extends EProjectImpl implements ENgProject {
 		this.ngClasses = null;
 	}
 
-	public static ENgProject of(EDirectory directory) {
+	public static ENgProject create(EDirectory directory) {
 		if (directory.getProjectType().equals(ProjectType.ANGULAR_PROJECT)) {
 			return new ENgProjectImpl(directory);
 		}

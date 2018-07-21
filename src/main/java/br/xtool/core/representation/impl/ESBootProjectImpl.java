@@ -215,7 +215,7 @@ public class ESBootProjectImpl extends EProjectImpl implements ESBootProject {
 		this.javaUnits = null;
 	}
 
-	public static ESBootProject of(EDirectory directory) {
+	public static ESBootProject create(EDirectory directory) {
 		if (directory.getProjectType().equals(ProjectType.SPRINGBOOT_PROJECT)) {
 			return new ESBootProjectImpl(directory);
 		}

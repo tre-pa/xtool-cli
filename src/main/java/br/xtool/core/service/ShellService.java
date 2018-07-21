@@ -6,7 +6,6 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import br.xtool.core.WorkContext;
 import lombok.SneakyThrows;
 
 @Component
@@ -16,13 +15,13 @@ public class ShellService {
 	private FileService fs;
 
 	@Autowired
-	private WorkContext workContext;
+	private WorkspaceService workspaceService;
 
 	@SneakyThrows
 	public int runCmd(String command) {
 		ProcessBuilder processBuilder = new ProcessBuilder();
 		processBuilder.command("sh", "-c", command);
-		processBuilder.directory(new File(workContext.getDirectory().getPath()));
+		processBuilder.directory(new File(this.workspaceService.getWorkingProject().getDirectory().getPath()));
 		processBuilder.inheritIO();
 		Process process = processBuilder.start();
 		return process.waitFor();
@@ -30,7 +29,7 @@ public class ShellService {
 
 	@SneakyThrows
 	public int runCmd(String command, Map<String, Object> vars) {
-		return this.runCmd(fs.inlineTemplate(command, vars));
+		return this.runCmd(this.fs.inlineTemplate(command, vars));
 	}
 
 }
