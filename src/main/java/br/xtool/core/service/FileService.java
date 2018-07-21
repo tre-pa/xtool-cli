@@ -57,7 +57,7 @@ public class FileService {
 		VelocityContext vContext = new VelocityContext(vars);
 		templatePath = this.inlineTemplate(templatePath, vars);
 		relativeDestination = this.inlineTemplate(relativeDestination, vars);
-		String finalDestination = FilenameUtils.concat(this.workspaceService.getWorkingDirectory().getPath(), relativeDestination);
+		String finalDestination = FilenameUtils.concat(this.workspaceService.getWorkingProject().getDirectory().getPath(), relativeDestination);
 		if (!Files.exists(Paths.get(finalDestination))) {
 			FileUtils.forceMkdirParent(new File(finalDestination));
 			if (binary) {
@@ -99,7 +99,7 @@ public class FileService {
 	public void createEmptyPath(String relativeDestination, Map<String, Object> vars) {
 		try {
 			relativeDestination = this.inlineTemplate(relativeDestination, vars);
-			String finalDestination = FilenameUtils.concat(this.workspaceService.getWorkingDirectory().getPath(), relativeDestination);
+			String finalDestination = FilenameUtils.concat(this.workspaceService.getWorkingProject().getDirectory().getPath(), relativeDestination);
 			if (!Files.exists(Paths.get(finalDestination))) {
 				FileUtils.forceMkdir(new File(finalDestination));
 				FileUtils.touch(new File(FilenameUtils.concat(finalDestination, ".gitkeep")));

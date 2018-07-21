@@ -22,7 +22,7 @@ public class RegularAware {
 	 */
 	@ShellMethodAvailability
 	public Availability availabilitySpringBootCommand() throws IOException {
-		return this.workspaceService.getWorkingDirectory().getProjectType().equals(ProjectType.NONE) ? Availability.available()
+		return this.workspaceService.getWorkingProject().getProjectType().equals(ProjectType.NONE) ? Availability.available()
 				: Availability.unavailable("O commando não é aplicável ao diretório atual.");
 	}
 

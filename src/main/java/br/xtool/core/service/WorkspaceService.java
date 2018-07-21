@@ -7,10 +7,10 @@ import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 import br.xtool.core.event.ChangeWorkingProjectEvent;
-import br.xtool.core.representation.EDirectory;
 import br.xtool.core.representation.EProject;
 import br.xtool.core.representation.EWorkspace;
 import br.xtool.core.representation.impl.EDirectoryImpl;
+import br.xtool.core.representation.impl.ENoneProjectImpl;
 import br.xtool.core.representation.impl.EWorkspaceImpl;
 import lombok.Getter;
 
@@ -21,14 +21,11 @@ public class WorkspaceService {
 	private String path;
 
 	@Getter
-	private EDirectory workingDirectory;
-
-	@Getter
 	private EProject workingProject;
 
 	@PostConstruct
 	private void init() {
-		this.workingDirectory = EDirectoryImpl.of(this.path);
+		this.workingProject = new ENoneProjectImpl(EDirectoryImpl.of(this.path));
 	}
 
 	public EWorkspace getWorkspace() {
@@ -38,7 +35,6 @@ public class WorkspaceService {
 	@EventListener
 	private void onChangeWorkingProject(ChangeWorkingProjectEvent evt) {
 		this.workingProject = evt.getProject();
-		this.workingDirectory = this.workingProject.getDirectory();
 	}
 
 }
