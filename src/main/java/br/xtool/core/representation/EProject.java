@@ -21,7 +21,7 @@ public interface EProject extends Comparable<EProject> {
 	 */
 	String getName();
 
-	String getMainDir();
+	//	String getMainDir();
 
 	/**
 	 * 

@@ -81,8 +81,8 @@ public interface ENgProject extends EProject {
 	 */
 	SortedSet<ENgDetail> getNgDetails();
 
-	@Override
-	public String getMainDir();
+	//	@Override
+	//	public String getMainDir();
 
 	@Override
 	public void refresh();

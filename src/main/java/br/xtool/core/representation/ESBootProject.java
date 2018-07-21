@@ -33,6 +33,18 @@ public interface ESBootProject extends EProject {
 	EJavaPackage getRootPackage();
 
 	/**
+	 * 
+	 * @return
+	 */
+	EJavaSourceFolder getMainSourceFolder();
+
+	/**
+	 * 
+	 * @return
+	 */
+	EJavaSourceFolder getTestSourceFolder();
+
+	/**
 	 * Retorna a representação do arquivo pom.xml
 	 * 
 	 * @return
@@ -79,8 +91,8 @@ public interface ESBootProject extends EProject {
 	/**
 	 * Retorna o diretório principal do java.
 	 */
-	@Override
-	String getMainDir();
+	//	@Override
+	//	String getMainDir();
 
 	/**
 	 * Retorna o diagrama de classe das entidades de domínio.

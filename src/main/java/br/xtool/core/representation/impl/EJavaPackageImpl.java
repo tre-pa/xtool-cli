@@ -37,8 +37,7 @@ public class EJavaPackageImpl implements EJavaPackage {
 
 	@Override
 	public int compareTo(EJavaPackage o) {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.getName().compareTo(o.getName());
 	}
 
 	@Override

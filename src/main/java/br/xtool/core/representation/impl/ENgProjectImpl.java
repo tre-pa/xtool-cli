@@ -178,10 +178,10 @@ public class ENgProjectImpl extends EProjectImpl implements ENgProject {
 		return this.ngClasses;
 	}
 
-	@Override
-	public String getMainDir() {
-		return FilenameUtils.concat(this.getDirectory().getPath(), "src/app");
-	}
+	//	@Override
+	//	public String getMainDir() {
+	//		return FilenameUtils.concat(this.getDirectory().getPath(), "src/app");
+	//	}
 
 	@Override
 	public String getFrameworkVersion() {
@@ -193,7 +193,7 @@ public class ENgProjectImpl extends EProjectImpl implements ENgProject {
 		this.ngClasses = null;
 	}
 
-	public static ENgProject create(EDirectory directory) {
+	public static ENgProject load(EDirectory directory) {
 		if (directory.getProjectType().equals(ProjectType.ANGULAR_PROJECT)) {
 			return new ENgProjectImpl(directory);
 		}

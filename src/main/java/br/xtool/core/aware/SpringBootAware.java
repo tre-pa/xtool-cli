@@ -30,7 +30,7 @@ public class SpringBootAware {
 
 	@SneakyThrows
 	public ESBootProject getProject() {
-		throw new UnsupportedOperationException();
+		return ESBootProject.class.cast(this.workspaceService.getWorkingProject());
 	}
 
 }

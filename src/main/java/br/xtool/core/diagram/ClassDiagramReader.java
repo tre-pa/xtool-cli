@@ -1,12 +1,9 @@
 package br.xtool.core.diagram;
 
-import java.io.File;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.FilenameUtils;
 import org.jboss.forge.roaster.Roaster;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -113,8 +110,8 @@ public class ClassDiagramReader {
 		Map<String, EJavaClassImpl> classes = new HashMap<>();
 		for (JavaClassSource javaClass : this.javaClassSources.values()) {
 			EJavaPackage ePackage = EJavaPackageImpl.of(javaClass.getPackage());
-			String javaFile = FilenameUtils.concat(project.getMainDir(), String.format("%s/%s.java", ePackage.getDir(), javaClass.getName()));
-			FileUtils.writeStringToFile(new File(javaFile), javaClass.toString(), "UTF-8");
+			//			String javaFile = FilenameUtils.concat(project.getMainDir(), String.format("%s/%s.java", ePackage.getDir(), javaClass.getName()));
+			//			FileUtils.writeStringToFile(new File(javaFile), javaClass.toString(), "UTF-8");
 			classes.put(javaClass.getName(), new EJavaClassImpl(project, javaClass));
 		}
 		return classes;

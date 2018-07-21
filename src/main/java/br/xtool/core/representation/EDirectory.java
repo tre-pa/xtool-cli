@@ -2,6 +2,7 @@ package br.xtool.core.representation;
 
 import java.io.File;
 import java.util.List;
+import java.util.SortedSet;
 
 import br.xtool.core.representation.EProject.ProjectType;
 
@@ -11,7 +12,7 @@ import br.xtool.core.representation.EProject.ProjectType;
  * @author jcruz
  *
  */
-public interface EDirectory {
+public interface EDirectory extends Comparable<EDirectory> {
 
 	/**
 	 * Retorna o caminho do diretório.
@@ -35,10 +36,12 @@ public interface EDirectory {
 	List<File> getAllFiles();
 
 	/**
-	 * Retorna todos os diretórios.
+	 * Retorna os diretórios.
 	 * 
 	 * @return
 	 */
-	List<EDirectory> getChildrenDirectories();
+	SortedSet<EDirectory> getChildrenDirectories();
+
+	SortedSet<EDirectory> getAllChildrenDirectories();
 
 }

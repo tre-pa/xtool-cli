@@ -11,6 +11,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -67,6 +69,57 @@ public class EDirectoryImpl implements EDirectory {
 		return new ArrayList<>();
 	}
 
+	@Override
+	public SortedSet<EDirectory> getChildrenDirectories() {
+		// @formatter:off
+		try {
+			return Files.list(Paths.get(this.path))
+					.filter(Files::isDirectory)
+					.map(Path::toFile)
+					.map(file -> EDirectoryImpl.of(file.getAbsolutePath()))
+					.collect(Collectors.toCollection(TreeSet::new));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return new TreeSet<>();
+		// @formatter:on
+	}
+
+	@Override
+	public SortedSet<EDirectory> getAllChildrenDirectories() {
+		try (Stream<Path> pathStrem = Files.walk(Paths.get(this.path))) {
+			// @formatter:off
+			return pathStrem
+				.filter(Files::isDirectory)
+				.filter(p -> !p.startsWith(FilenameUtils.concat(this.path, "target")))
+				.filter(p -> !p.startsWith(FilenameUtils.concat(this.path, ".git")))
+				.filter(p -> !p.startsWith(FilenameUtils.concat(this.path, ".settings")))
+				.filter(p -> !p.startsWith(FilenameUtils.concat(this.path, "node_modules")))
+				.filter(p -> !p.startsWith(FilenameUtils.concat(this.path, "dist")))
+				.map(Path::toFile)
+				.map(file -> EDirectoryImpl.of(file.getAbsolutePath()))
+				.collect(Collectors.toCollection(TreeSet::new));
+			// @formatter:on
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return new TreeSet<>();
+	}
+
+	public static EDirectoryImpl of(String path) {
+		if (!Files.isDirectory(Paths.get(path))) {
+			throw new IllegalArgumentException(String.format("O diretório %s não existe", path));
+		}
+		return new EDirectoryImpl(path);
+	}
+
+	public static EDirectoryImpl of(Path path) {
+		if (!Files.isDirectory(path)) {
+			throw new IllegalArgumentException(String.format("O diretório %s não existe", path));
+		}
+		return new EDirectoryImpl(path.toAbsolutePath().toString());
+	}
+
 	protected ProjectType buildProjectType() {
 		// @formatter:off
 		return this.typeResolvers.stream()
@@ -75,29 +128,6 @@ public class EDirectoryImpl implements EDirectory {
 				.findFirst()
 				.orElse(ProjectType.NONE);
 		// @formatter:on
-	}
-
-	@Override
-	public List<EDirectory> getChildrenDirectories() {
-		// @formatter:off
-		try {
-			return Files.list(Paths.get(this.path))
-					.filter(Files::isDirectory)
-					.map(Path::toFile)
-					.map(file -> EDirectoryImpl.of(file.getAbsolutePath()))
-					.collect(Collectors.toList());
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return new ArrayList<>();
-		// @formatter:on
-	}
-
-	public static EDirectoryImpl of(String path) {
-		if (!Files.isDirectory(Paths.get(path))) {
-			throw new IllegalArgumentException(String.format("O diretório %s não existe", path));
-		}
-		return new EDirectoryImpl(path);
 	}
 
 	private class SpringBootProjectTypeResolver implements Function<EDirectory, ProjectType> {
@@ -131,4 +161,10 @@ public class EDirectoryImpl implements EDirectory {
 		}
 
 	}
+
+	@Override
+	public int compareTo(EDirectory o) {
+		return this.getPath().compareTo(o.getPath());
+	}
+
 }

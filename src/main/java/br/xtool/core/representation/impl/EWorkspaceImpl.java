@@ -31,7 +31,7 @@ public class EWorkspaceImpl implements EWorkspace {
 			// @formatter:off
 			this.springBootProjects = this.directory.getChildrenDirectories().stream()
 					.filter(dir -> dir.getProjectType().equals(ProjectType.SPRINGBOOT_PROJECT))
-					.map(ESBootProjectImpl::create)
+					.map(ESBootProjectImpl::load)
 					.collect(Collectors.toCollection(TreeSet::new));
 			// @formatter:on
 		}
@@ -44,7 +44,7 @@ public class EWorkspaceImpl implements EWorkspace {
 			// @formatter:off
 			this.angularProjects = this.directory.getChildrenDirectories().stream()
 					.filter(dir -> dir.getProjectType().equals(ProjectType.ANGULAR_PROJECT))
-					.map(ENgProjectImpl::create)
+					.map(ENgProjectImpl::load)
 					.collect(Collectors.toCollection(TreeSet::new));
 			// @formatter:on
 		}

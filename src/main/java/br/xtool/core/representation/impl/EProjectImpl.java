@@ -26,8 +26,8 @@ public abstract class EProjectImpl implements EProject {
 		return FilenameUtils.getBaseName(this.getDirectory().getPath());
 	}
 
-	@Override
-	public abstract String getMainDir();
+	//	@Override
+	//	public abstract String getMainDir();
 
 	@Override
 	public abstract void refresh();

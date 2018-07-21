@@ -20,6 +20,7 @@ import br.xtool.core.representation.EJavaEntity;
 import br.xtool.core.representation.EJavaPackage;
 import br.xtool.core.representation.EJavaRepository;
 import br.xtool.core.representation.EJavaRest;
+import br.xtool.core.representation.EJavaSourceFolder;
 import br.xtool.core.representation.ENgProject;
 import br.xtool.core.representation.ESBootAppProperties;
 import br.xtool.core.representation.ESBootPom;
@@ -58,41 +59,68 @@ public class ESBootProjectImpl extends EProjectImpl implements ESBootProject {
 		return this.getMainclass().getName().replaceAll("Application", "");
 	}
 
-	/**
-	 * 
-	 * @return
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.ESBootProject#getMainclass()
 	 */
 	@Override
 	public EJavaClass getMainclass() {
 		if (Objects.isNull(this.mainClass)) {
 			// @formatter:off
 			this.mainClass = this.getJavaUnits().values()
-					.parallelStream()
-					.filter(javaUnit -> javaUnit.getGoverningType().isClass())
-					.map(javaUnit -> javaUnit.<JavaClassSource>getGoverningType())
-					.filter(j -> j.getAnnotations().stream().anyMatch(ann -> ann.getName().equals("SpringBootApplication")))
-					.map(javaUnit -> new EJavaClassImpl(this, javaUnit))
-					.findFirst()
-					.orElseThrow(() -> new IllegalArgumentException("Não foi possível localizar a classe principal (@SpringBootApplication). Verifique se a mesma existe ou contêm erros."));
+				.parallelStream()
+				.filter(javaUnit -> javaUnit.getGoverningType().isClass())
+				.map(javaUnit -> javaUnit.<JavaClassSource>getGoverningType())
+				.filter(j -> j.getAnnotations().stream().anyMatch(ann -> ann.getName().equals("SpringBootApplication")))
+				.map(javaUnit -> new EJavaClassImpl(this, javaUnit))
+				.findFirst()
+				.orElseThrow(() -> new IllegalArgumentException("Não foi possível localizar a classe principal (@SpringBootApplication). Verifique se a mesma existe ou contêm erros."));
 			// @formatter:on
 		}
 		return this.mainClass;
 	}
 
-	/**
-	 * Retorna o pacote raiz.
-	 * 
-	 * @return
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.ESBootProject#getRootPackage()
 	 */
 	@Override
 	public EJavaPackage getRootPackage() {
 		return this.getPom().getGroupId();
 	}
 
-	/**
-	 * Retorna a representação do arquivo pom.xml
-	 * 
-	 * @return
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.ESBootProject#getMainSourceFolder()
+	 */
+	@Override
+	public EJavaSourceFolder getMainSourceFolder() {
+		// @formatter:off
+		return new EJavaSourceFolderImpl(this.getRootPackage(), 
+				FilenameUtils.concat(this.getDirectory().getPath(), 
+						FilenameUtils.concat("src/main/java", this.getRootPackage().getDir())
+						)
+				);
+		// @formatter:on
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.ESBootProject#getTestSourceFolder()
+	 */
+	@Override
+	public EJavaSourceFolder getTestSourceFolder() {
+		// @formatter:off
+		return new EJavaSourceFolderImpl(this.getRootPackage(), 
+				FilenameUtils.concat(this.getDirectory().getPath(), 
+						FilenameUtils.concat("src/test/java", this.getRootPackage().getDir())
+						)
+				);	}
+	// @formatter:on
+
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.ESBootProject#getPom()
 	 */
 	@Override
 	public ESBootPom getPom() {
@@ -189,10 +217,10 @@ public class ESBootProjectImpl extends EProjectImpl implements ESBootProject {
 		//		return ENgProjectImpl.of(angularPath);
 	}
 
-	@Override
-	public String getMainDir() {
-		return FilenameUtils.concat(this.getDirectory().getPath(), "src/main/java");
-	}
+	//	@Override
+	//	public String getMainDir() {
+	//		return FilenameUtils.concat(this.getDirectory().getPath(), "src/main/java");
+	//	}
 
 	@Override
 	public Optional<EUmlClassDiagram> getDomainClassDiagram() {
@@ -215,7 +243,7 @@ public class ESBootProjectImpl extends EProjectImpl implements ESBootProject {
 		this.javaUnits = null;
 	}
 
-	public static ESBootProject create(EDirectory directory) {
+	public static ESBootProject load(EDirectory directory) {
 		if (directory.getProjectType().equals(ProjectType.SPRINGBOOT_PROJECT)) {
 			return new ESBootProjectImpl(directory);
 		}

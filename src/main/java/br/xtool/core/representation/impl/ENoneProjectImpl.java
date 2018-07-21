@@ -14,10 +14,10 @@ public class ENoneProjectImpl extends EProjectImpl implements ENoneProject {
 		return "";
 	}
 
-	@Override
-	public String getMainDir() {
-		return "";
-	}
+	//	@Override
+	//	public String getMainDir() {
+	//		return "";
+	//	}
 
 	@Override
 	public void refresh() {
