@@ -21,6 +21,7 @@ import br.xtool.core.representation.impl.ESBootProjectImpl;
 import lombok.Getter;
 
 @Component
+@Deprecated
 public class WorkContext {
 
 	@Getter

@@ -24,7 +24,7 @@ public class AngularAware {
 	 */
 	@ShellMethodAvailability
 	public Availability availabilitySpringBootCommand() throws IOException {
-		return this.workspaceService.getDirectory().getProjectType().equals(ProjectType.ANGULAR_PROJECT) ? Availability.available()
+		return this.workspaceService.getWorkingDirectory().getProjectType().equals(ProjectType.ANGULAR_PROJECT) ? Availability.available()
 				: Availability.unavailable("O diretório de trabalho não é um projeto angular válido. Use o comando cd para alterar o diretório de trabalho.");
 	}
 

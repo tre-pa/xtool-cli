@@ -11,20 +11,22 @@ import org.springframework.shell.CompletionProposal;
 import org.springframework.shell.standard.ValueProviderSupport;
 import org.springframework.stereotype.Component;
 
-import br.xtool.core.WorkContext;
 import br.xtool.core.representation.ENgModule;
+import br.xtool.core.representation.ENgProject;
+import br.xtool.core.service.WorkspaceService;
 
 @Component
 public class ENgModuleValueProvider extends ValueProviderSupport {
 
 	@Autowired
-	private WorkContext workContext;
+	private WorkspaceService workspaceService;
 
 	@Override
 	public List<CompletionProposal> complete(MethodParameter parameter, CompletionContext completionContext, String[] hints) {
-		if (workContext.getAngularProject().isPresent()) {
+		if (this.workspaceService.getWorkingProject() instanceof ENgProject) {
+			ENgProject project = ENgProject.class.cast(this.workspaceService.getWorkingProject());
 			// @formatter:off
-			return workContext.getAngularProject().get().getNgModules().stream()
+			return project.getNgModules().stream()
 					.map(ENgModule::getName)
 					.map(CompletionProposal::new)
 					.collect(Collectors.toList());

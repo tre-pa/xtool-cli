@@ -21,14 +21,14 @@ public class WorkspaceService {
 	private String path;
 
 	@Getter
-	private EDirectory directory;
+	private EDirectory workingDirectory;
 
 	@Getter
 	private EProject workingProject;
 
 	@PostConstruct
 	private void init() {
-		this.directory = EDirectoryImpl.of(this.path);
+		this.workingDirectory = EDirectoryImpl.of(this.path);
 	}
 
 	public EWorkspace getWorkspace() {
@@ -38,6 +38,7 @@ public class WorkspaceService {
 	@EventListener
 	private void onChangeWorkingProject(ChangeWorkingProjectEvent evt) {
 		this.workingProject = evt.getProject();
+		this.workingDirectory = this.workingProject.getDirectory();
 	}
 
 }
