@@ -25,7 +25,7 @@ public class EJavaRepositoryConverter implements Converter<String, EJavaReposito
 					.stream()
 					.filter(e -> e.getName().equals(source))
 					.findFirst()
-					.orElseThrow(() -> new RuntimeException("Erro ao converer repositório"));
+					.orElseThrow(() -> new RuntimeException("Erro ao converter repositório."));
 				// @formatter:on
 			}
 		}

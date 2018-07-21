@@ -25,7 +25,7 @@ public class EJavaEntityConverter implements Converter<String, EJavaEntity> {
 					.stream()
 					.filter(e -> e.getName().equals(source))
 					.findFirst()
-					.orElseThrow(() -> new RuntimeException("Erro ao converer entidade"));
+					.orElseThrow(() -> new RuntimeException("Erro ao converter entidade."));
 				// @formatter:on
 			}
 		}

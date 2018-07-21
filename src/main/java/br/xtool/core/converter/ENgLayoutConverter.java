@@ -23,7 +23,7 @@ public class ENgLayoutConverter implements Converter<String, ENgLayout> {
 				.stream()
 				.filter(e -> e.getName().equals(source))
 				.findFirst()
-				.orElseThrow(() -> new RuntimeException("Erro ao converter Layout"));
+				.orElseThrow(() -> new RuntimeException("Erro ao converter Layout."));
 			// @formatter:on
 		}
 		return null;
