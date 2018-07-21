@@ -70,7 +70,7 @@ public class EDirectoryImpl implements EDirectory {
 	}
 
 	@Override
-	public SortedSet<EDirectory> getChildrenDirectories() {
+	public SortedSet<EDirectory> getDirectories() {
 		// @formatter:off
 		try {
 			return Files.list(Paths.get(this.path))
@@ -86,7 +86,7 @@ public class EDirectoryImpl implements EDirectory {
 	}
 
 	@Override
-	public SortedSet<EDirectory> getAllChildrenDirectories() {
+	public SortedSet<EDirectory> getAllDirectories() {
 		try (Stream<Path> pathStrem = Files.walk(Paths.get(this.path))) {
 			// @formatter:off
 			return pathStrem

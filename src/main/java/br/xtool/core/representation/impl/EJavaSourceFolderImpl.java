@@ -22,15 +22,23 @@ public class EJavaSourceFolderImpl implements EJavaSourceFolder {
 		this.groupId = groupId;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EJavaSourceFolder#getPath()
+	 */
 	@Override
 	public String getPath() {
 		return this.directory.getPath();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EJavaSourceFolder#getPackages()
+	 */
 	@Override
 	public SortedSet<EJavaPackage> getPackages() {
 		// @formatter:off
-		return this.directory.getAllChildrenDirectories().stream()
+		return this.directory.getAllDirectories().stream()
 				.map(dir -> StringUtils.substring(dir.getPath() , StringUtils.indexOf(dir.getPath(), this.groupId.getDir())))
 				.map(str -> StringUtils.split(str, "/"))
 				.map(EJavaPackageImpl::of)

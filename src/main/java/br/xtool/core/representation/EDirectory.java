@@ -40,8 +40,8 @@ public interface EDirectory extends Comparable<EDirectory> {
 	 * 
 	 * @return
 	 */
-	SortedSet<EDirectory> getChildrenDirectories();
+	SortedSet<EDirectory> getDirectories();
 
-	SortedSet<EDirectory> getAllChildrenDirectories();
+	SortedSet<EDirectory> getAllDirectories();
 
 }

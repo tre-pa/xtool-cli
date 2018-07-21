@@ -29,7 +29,7 @@ public class EWorkspaceImpl implements EWorkspace {
 	public SortedSet<ESBootProject> getSpringBootProjects() {
 		if (Objects.isNull(this.springBootProjects)) {
 			// @formatter:off
-			this.springBootProjects = this.directory.getChildrenDirectories().stream()
+			this.springBootProjects = this.directory.getDirectories().stream()
 					.filter(dir -> dir.getProjectType().equals(ProjectType.SPRINGBOOT_PROJECT))
 					.map(ESBootProjectImpl::load)
 					.collect(Collectors.toCollection(TreeSet::new));
@@ -42,7 +42,7 @@ public class EWorkspaceImpl implements EWorkspace {
 	public SortedSet<ENgProject> getAngularProjections() {
 		if (Objects.isNull(this.angularProjects)) {
 			// @formatter:off
-			this.angularProjects = this.directory.getChildrenDirectories().stream()
+			this.angularProjects = this.directory.getDirectories().stream()
 					.filter(dir -> dir.getProjectType().equals(ProjectType.ANGULAR_PROJECT))
 					.map(ENgProjectImpl::load)
 					.collect(Collectors.toCollection(TreeSet::new));
