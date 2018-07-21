@@ -3,10 +3,8 @@ package br.xtool.core.service;
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
-import br.xtool.core.event.ChangeWorkingProjectEvent;
 import br.xtool.core.representation.EProject;
 import br.xtool.core.representation.EWorkspace;
 import br.xtool.core.representation.impl.EDirectoryImpl;
@@ -32,9 +30,8 @@ public class WorkspaceService {
 		return new EWorkspaceImpl(EDirectoryImpl.of(this.path));
 	}
 
-	@EventListener
-	private void onChangeWorkingProject(ChangeWorkingProjectEvent evt) {
-		this.workingProject = evt.getProject();
+	public void use(EProject project) {
+		this.workingProject = project;
 	}
 
 }
