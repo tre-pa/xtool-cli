@@ -23,31 +23,46 @@ public class EJavaAnnotationImpl implements EJavaAnnotation {
 		this.annotation = annotation;
 	}
 
-	/**
-	 * Retorna o nome da annotation.
-	 * 
-	 * @return
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EJavaAnnotation#getName()
 	 */
 	@Override
 	public String getName() {
 		return this.annotation.getName();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EJavaAnnotation#isSingleValue()
+	 */
 	@Override
 	public boolean isSingleValue() {
 		return this.annotation.isSingleValue();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EJavaAnnotation#getAnnotationValue()
+	 */
 	@Override
 	public AnnotationSource<JavaClassSource> getAnnotationValue() {
 		return this.annotation.getAnnotationValue();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EJavaAnnotation#isMarker()
+	 */
 	@Override
 	public boolean isMarker() {
 		return this.annotation.isMarker();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EJavaAnnotation#isNormal()
+	 */
 	@Override
 	public boolean isNormal() {
 		return this.annotation.isNormal();

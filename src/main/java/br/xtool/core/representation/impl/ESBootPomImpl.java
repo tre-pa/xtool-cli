@@ -23,12 +23,6 @@ import br.xtool.core.representation.EJavaPackage;
 import br.xtool.core.representation.ESBootPom;
 import br.xtool.core.representation.ESBootPomDependency;
 
-/**
- * Representa o arquivo pom.xml
- * 
- * @author jcruz
- *
- */
 public class ESBootPomImpl implements ESBootPom {
 
 	public static final Namespace NAMESPACE = Namespace.getNamespace("http://maven.apache.org/POM/4.0.0");
@@ -42,26 +36,28 @@ public class ESBootPomImpl implements ESBootPom {
 
 	}
 
-	/**
-	 * Retorna o groupId da aplicação.
-	 * 
-	 * @return
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.ESBootPom#getGroupId()
 	 */
 	@Override
 	public EJavaPackage getGroupId() {
 		return EJavaPackageImpl.of(this.pomDoc.getRootElement().getChild("groupId", NAMESPACE).getText());
 	}
 
-	/**
-	 * Retorna a versão da aplicação.
-	 * 
-	 * @return
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.ESBootPom#getVersion()
 	 */
 	@Override
 	public String getVersion() {
 		return this.pomDoc.getRootElement().getChild("version", NAMESPACE).getText();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.ESBootPom#getParentGroupId()
+	 */
 	@Override
 	public Optional<String> getParentGroupId() {
 		if (Objects.nonNull(this.pomDoc.getRootElement().getChild("parent", NAMESPACE))) {
@@ -70,10 +66,9 @@ public class ESBootPomImpl implements ESBootPom {
 		return Optional.empty();
 	}
 
-	/**
-	 * Retorna a versão do parent.
-	 * 
-	 * @return
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.ESBootPom#getParentVersion()
 	 */
 	@Override
 	public Optional<String> getParentVersion() {
@@ -83,22 +78,18 @@ public class ESBootPomImpl implements ESBootPom {
 		return Optional.empty();
 	}
 
-	/**
-	 * Verifica se um atefato existe no pom.xml
-	 * 
-	 * @param artifactId
-	 *            Nome do artefato
-	 * @return
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.ESBootPom#hasArtifactId(java.lang.String)
 	 */
 	@Override
 	public boolean hasArtifactId(String artifactId) {
 		return this.getDependencies().stream().anyMatch(dependency -> dependency.getArtifactId().equals(artifactId));
 	}
 
-	/**
-	 * Retorna a lista de dependências do projeto.
-	 * 
-	 * @return
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.ESBootPom#getDependencies()
 	 */
 	@Override
 	public List<ESBootPomDependency> getDependencies() {
@@ -117,10 +108,9 @@ public class ESBootPomImpl implements ESBootPom {
 		return dependencies;
 	}
 
-	/**
-	 * Adciona uma dependência o pom.xml caso não exista.
-	 * 
-	 * @param dependency
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.ESBootPom#addDependency(java.lang.String, java.lang.String)
 	 */
 	@Override
 	public void addDependency(String groupId, String artifactId) {
@@ -131,10 +121,9 @@ public class ESBootPomImpl implements ESBootPom {
 		}
 	}
 
-	/**
-	 * Adciona uma dependência o pom.xml caso não exista.
-	 * 
-	 * @param dependency
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.ESBootPom#addDependency(java.lang.String, java.lang.String, java.lang.String)
 	 */
 	@Override
 	public void addDependency(String groupId, String artifactId, String version) {
