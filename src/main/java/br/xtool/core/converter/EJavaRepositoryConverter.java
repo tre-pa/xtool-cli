@@ -6,7 +6,7 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 import br.xtool.core.representation.EJavaRepository;
-import br.xtool.core.representation.ESBootProject;
+import br.xtool.core.representation.EBootProject;
 import br.xtool.core.service.WorkspaceService;
 
 @Component
@@ -18,8 +18,8 @@ public class EJavaRepositoryConverter implements Converter<String, EJavaReposito
 	@Override
 	public EJavaRepository convert(String source) {
 		if (StringUtils.isNotEmpty(source)) {
-			if (this.workspaceService.getWorkingProject() instanceof ESBootProject) {
-				ESBootProject project = ESBootProject.class.cast(this.workspaceService.getWorkingProject());
+			if (this.workspaceService.getWorkingProject() instanceof EBootProject) {
+				EBootProject project = EBootProject.class.cast(this.workspaceService.getWorkingProject());
 				// @formatter:off
 				return project.getRepositories()
 					.stream()

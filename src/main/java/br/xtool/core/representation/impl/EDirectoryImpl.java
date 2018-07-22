@@ -25,7 +25,7 @@ import com.google.common.collect.ImmutableSet;
 import br.xtool.core.representation.EDirectory;
 import br.xtool.core.representation.ENgPackage;
 import br.xtool.core.representation.EProject.ProjectType;
-import br.xtool.core.representation.ESBootPom;
+import br.xtool.core.representation.EBootPom;
 import lombok.Getter;
 
 public class EDirectoryImpl implements EDirectory {
@@ -136,7 +136,7 @@ public class EDirectoryImpl implements EDirectory {
 		public @Nullable ProjectType apply(@Nullable EDirectory dr) {
 			String pomFile = FilenameUtils.concat(dr.getPath(), "pom.xml");
 			if (Files.exists(Paths.get(pomFile))) {
-				ESBootPom ePom = ESBootPomImpl.of(pomFile);
+				EBootPom ePom = EBootPomImpl.of(pomFile);
 				if (ePom.getParentVersion().isPresent()) {
 					if (ePom.getParentGroupId().get().equals("org.springframework.boot")) return ProjectType.SPRINGBOOT_PROJECT;
 				}

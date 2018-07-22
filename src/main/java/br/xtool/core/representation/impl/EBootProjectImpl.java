@@ -22,9 +22,9 @@ import br.xtool.core.representation.EJavaRepository;
 import br.xtool.core.representation.EJavaRest;
 import br.xtool.core.representation.EJavaSourceFolder;
 import br.xtool.core.representation.ENgProject;
-import br.xtool.core.representation.ESBootAppProperties;
-import br.xtool.core.representation.ESBootPom;
-import br.xtool.core.representation.ESBootProject;
+import br.xtool.core.representation.EBootAppProperties;
+import br.xtool.core.representation.EBootPom;
+import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.EUmlClassDiagram;
 import br.xtool.core.util.RoasterUtil;
 
@@ -34,17 +34,17 @@ import br.xtool.core.util.RoasterUtil;
  * @author jcruz
  *
  */
-public class ESBootProjectImpl extends EProjectImpl implements ESBootProject {
+public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 
 	private Map<String, JavaUnit> javaUnits;
 
-	private ESBootPom pom;
+	private EBootPom pom;
 
-	private ESBootAppProperties applicationProperties;
+	private EBootAppProperties applicationProperties;
 
 	private EJavaClass mainClass;
 
-	public ESBootProjectImpl(EDirectory directory) {
+	public EBootProjectImpl(EDirectory directory) {
 		super(directory);
 	}
 
@@ -123,9 +123,9 @@ public class ESBootProjectImpl extends EProjectImpl implements ESBootProject {
 	 * @see br.xtool.core.representation.ESBootProject#getPom()
 	 */
 	@Override
-	public ESBootPom getPom() {
+	public EBootPom getPom() {
 		if (Objects.isNull(this.pom)) {
-			this.pom = ESBootPomImpl.of(FilenameUtils.concat(this.getDirectory().getPath(), "pom.xml"));
+			this.pom = EBootPomImpl.of(FilenameUtils.concat(this.getDirectory().getPath(), "pom.xml"));
 		}
 		return this.pom;
 	}
@@ -136,9 +136,9 @@ public class ESBootProjectImpl extends EProjectImpl implements ESBootProject {
 	 * @return
 	 */
 	@Override
-	public ESBootAppProperties getApplicationProperties() {
+	public EBootAppProperties getApplicationProperties() {
 		if (Objects.isNull(this.applicationProperties)) {
-			this.applicationProperties = ESBootAppPropertiesImpl.of(FilenameUtils.concat(this.getDirectory().getPath(), "src/main/resources/application.properties"));
+			this.applicationProperties = EBootAppPropertiesImpl.of(FilenameUtils.concat(this.getDirectory().getPath(), "src/main/resources/application.properties"));
 		}
 		return this.applicationProperties;
 	}
@@ -238,9 +238,9 @@ public class ESBootProjectImpl extends EProjectImpl implements ESBootProject {
 		this.javaUnits = null;
 	}
 
-	public static ESBootProject load(EDirectory directory) {
+	public static EBootProject load(EDirectory directory) {
 		if (directory.getProjectType().equals(ProjectType.SPRINGBOOT_PROJECT)) {
-			return new ESBootProjectImpl(directory);
+			return new EBootProjectImpl(directory);
 		}
 		throw new IllegalArgumentException("O diretório não possui um projeto Spring Boot válido.");
 	}

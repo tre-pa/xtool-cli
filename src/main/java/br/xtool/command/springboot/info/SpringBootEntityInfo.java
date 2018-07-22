@@ -3,6 +3,7 @@ package br.xtool.command.springboot.info;
 import java.util.Comparator;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 
@@ -10,23 +11,29 @@ import br.xtool.XtoolCliApplication;
 import br.xtool.core.ConsoleLog;
 import br.xtool.core.aware.SpringBootAware;
 import br.xtool.core.representation.EJavaEntity;
+import br.xtool.core.representation.EBootProject;
+import br.xtool.core.service.ProjectService;
 
 @ShellComponent
 public class SpringBootEntityInfo extends SpringBootAware {
 
+	@Autowired
+	private ProjectService projectService;
+
 	@ShellMethod(key = "info:entity", value = "Exibe informações sobre as entidades JPA do projeto", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
 	public void run() {
-		infoAllEntities();
+		EBootProject bootProject = this.projectService.load(EBootProject.class);
+		infoAllEntities(bootProject);
 	}
 
-	private void infoAllEntities() {
+	private void infoAllEntities(EBootProject bootProject) {
 		//// @formatter:off
-		int maxLenghtEntityName = this.getProject().getEntities().stream()
+		int maxLenghtEntityName = bootProject.getEntities().stream()
 				.map(EJavaEntity::getName)
 				.map(String::length)
 				.max(Comparator.naturalOrder())
 				.orElse(10);
-		this.getProject().getEntities().stream()
+		bootProject.getEntities().stream()
 			.forEach(entity -> ConsoleLog.print(ConsoleLog.cyan(StringUtils.rightPad(entity.getName(), maxLenghtEntityName)), " - ", ConsoleLog.gray(entity.getPackage().getName())));
 		
 //		this.getProject().getAssociatedAngularProject().ifPresent(a -> System.out.println(a.getName()));

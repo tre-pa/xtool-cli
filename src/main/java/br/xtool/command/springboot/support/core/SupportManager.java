@@ -11,7 +11,7 @@ import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 
 import br.xtool.command.springboot.support.core.SpringBootSupport.SupportType;
-import br.xtool.core.representation.ESBootProject;
+import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.EProject.ProjectType;
 
 /**
@@ -41,7 +41,7 @@ public class SupportManager {
 	 * @param supportType
 	 *            Enum com tipo de support a ser adicionado. {@link SupportType}
 	 */
-	public void addSupport(ESBootProject project, SupportType supportType) {
+	public void addSupport(EBootProject project, SupportType supportType) {
 		SpringBootSupport support = this.supportTable.get(project.getProjectType(), supportType);
 		support.apply(project);
 	}

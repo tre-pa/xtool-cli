@@ -12,7 +12,7 @@ import org.springframework.shell.standard.ValueProviderSupport;
 import org.springframework.stereotype.Component;
 
 import br.xtool.core.representation.EJavaEntity;
-import br.xtool.core.representation.ESBootProject;
+import br.xtool.core.representation.EBootProject;
 import br.xtool.core.service.WorkspaceService;
 
 @Component
@@ -24,8 +24,8 @@ public class EJavaEntityValueProvider extends ValueProviderSupport {
 	@Override
 	public List<CompletionProposal> complete(MethodParameter parameter, CompletionContext completionContext, String[] hints) {
 		// @formatter:off
-		if(this.workspaceService.getWorkingProject() instanceof ESBootProject) {
-			ESBootProject project = ESBootProject.class.cast(this.workspaceService.getWorkingProject());
+		if(this.workspaceService.getWorkingProject() instanceof EBootProject) {
+			EBootProject project = EBootProject.class.cast(this.workspaceService.getWorkingProject());
 			return project.getEntities().stream()
 					.map(EJavaEntity::getName)
 					.map(CompletionProposal::new)

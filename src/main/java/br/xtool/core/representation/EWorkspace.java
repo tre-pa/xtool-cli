@@ -15,7 +15,7 @@ public interface EWorkspace {
 	 * 
 	 * @return
 	 */
-	SortedSet<ESBootProject> getSpringBootProjects();
+	SortedSet<EBootProject> getSpringBootProjects();
 
 	/**
 	 * Retorna a lista de projetos angular de aplicação.

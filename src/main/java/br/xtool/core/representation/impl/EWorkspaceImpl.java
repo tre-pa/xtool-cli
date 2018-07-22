@@ -9,12 +9,12 @@ import br.xtool.core.representation.EDirectory;
 import br.xtool.core.representation.ENgProject;
 import br.xtool.core.representation.EProject;
 import br.xtool.core.representation.EProject.ProjectType;
-import br.xtool.core.representation.ESBootProject;
+import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.EWorkspace;
 
 public class EWorkspaceImpl implements EWorkspace {
 
-	private SortedSet<ESBootProject> springBootProjects;
+	private SortedSet<EBootProject> springBootProjects;
 
 	private SortedSet<ENgProject> angularProjects;
 
@@ -26,12 +26,12 @@ public class EWorkspaceImpl implements EWorkspace {
 	}
 
 	@Override
-	public SortedSet<ESBootProject> getSpringBootProjects() {
+	public SortedSet<EBootProject> getSpringBootProjects() {
 		if (Objects.isNull(this.springBootProjects)) {
 			// @formatter:off
 			this.springBootProjects = this.directory.getDirectories().stream()
 					.filter(dir -> dir.getProjectType().equals(ProjectType.SPRINGBOOT_PROJECT))
-					.map(ESBootProjectImpl::load)
+					.map(EBootProjectImpl::load)
 					.collect(Collectors.toCollection(TreeSet::new));
 			// @formatter:on
 		}

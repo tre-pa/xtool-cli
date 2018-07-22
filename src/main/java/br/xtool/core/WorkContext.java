@@ -15,9 +15,9 @@ import org.springframework.stereotype.Component;
 
 import br.xtool.core.representation.EDirectory;
 import br.xtool.core.representation.ENgProject;
-import br.xtool.core.representation.ESBootProject;
+import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.impl.EDirectoryImpl;
-import br.xtool.core.representation.impl.ESBootProjectImpl;
+import br.xtool.core.representation.impl.EBootProjectImpl;
 import lombok.Getter;
 
 @Component
@@ -30,7 +30,7 @@ public class WorkContext {
 	@Autowired
 	private ApplicationEventPublisher applicationEventPublisher;
 
-	private ESBootProject springBootProject;
+	private EBootProject springBootProject;
 
 	private Optional<ENgProject> angularProject;
 
@@ -77,9 +77,9 @@ public class WorkContext {
 	 * @return
 	 */
 	@Deprecated
-	public ESBootProject getSpringBootProject() {
+	public EBootProject getSpringBootProject() {
 		if (Objects.isNull(this.springBootProject)) {
-			this.springBootProject = ESBootProjectImpl.load(this.directory);
+			this.springBootProject = EBootProjectImpl.load(this.directory);
 		}
 		return this.springBootProject;
 	}

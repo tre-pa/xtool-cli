@@ -7,9 +7,7 @@ import org.springframework.shell.Availability;
 import org.springframework.shell.standard.ShellMethodAvailability;
 
 import br.xtool.core.representation.EProject.ProjectType;
-import br.xtool.core.representation.ESBootProject;
 import br.xtool.core.service.WorkspaceService;
-import lombok.SneakyThrows;
 
 public class SpringBootAware {
 
@@ -26,11 +24,6 @@ public class SpringBootAware {
 	public Availability availabilitySpringBootCommand() throws IOException {
 		return this.workspaceService.getWorkingProject().getProjectType().equals(ProjectType.SPRINGBOOT_PROJECT) ? Availability.available()
 				: Availability.unavailable("O diretório de trabalho não é um projeto maven válido. Use o comando cd para alterar o diretório de trabalho.");
-	}
-
-	@SneakyThrows
-	public ESBootProject getProject() {
-		return ESBootProject.class.cast(this.workspaceService.getWorkingProject());
 	}
 
 }

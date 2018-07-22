@@ -3,6 +3,7 @@ package br.xtool.command.springboot.info;
 import java.util.Comparator;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 
@@ -10,25 +11,31 @@ import br.xtool.XtoolCliApplication;
 import br.xtool.core.ConsoleLog;
 import br.xtool.core.aware.SpringBootAware;
 import br.xtool.core.representation.EJavaRest;
+import br.xtool.core.representation.EBootProject;
+import br.xtool.core.service.ProjectService;
 
 @ShellComponent
 public class SpringBootRestInfo extends SpringBootAware {
 
+	@Autowired
+	private ProjectService projectService;
+
 	@ShellMethod(key = "info:rest", value = "Exibe informações sobre os Rests do projeto", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
 	public void run() {
-		infoAllRests();
+		EBootProject bootProject = this.projectService.load(EBootProject.class);
+		infoAllRests(bootProject);
 	}
 
-	private void infoAllRests() {
+	private void infoAllRests(EBootProject bootProject) {
 		//// @formatter:off
-		int maxLenghtEntityName = this.getProject().getRests().stream()
+		int maxLenghtEntityName = bootProject.getRests().stream()
 				.map(EJavaRest::getName)
 				.map(String::length)
 				.max(Comparator.naturalOrder())
 				.orElse(10);
-		this.getProject().getRests().stream()
+		bootProject.getRests().stream()
 			.forEach(rest -> ConsoleLog.print(ConsoleLog.white(StringUtils.rightPad(rest.getName(), maxLenghtEntityName))));
 		// @formatter:on
-		ConsoleLog.print(ConsoleLog.yellow(String.valueOf(this.getProject().getRests().size())), ConsoleLog.yellow(" classe(s) rest(s) encontrada(s)"));
+		ConsoleLog.print(ConsoleLog.yellow(String.valueOf(bootProject.getRests().size())), ConsoleLog.yellow(" classe(s) rest(s) encontrada(s)"));
 	}
 }

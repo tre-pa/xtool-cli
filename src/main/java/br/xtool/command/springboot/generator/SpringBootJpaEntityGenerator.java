@@ -11,7 +11,9 @@ import org.springframework.shell.standard.ShellOption;
 import br.xtool.XtoolCliApplication;
 import br.xtool.core.aware.SpringBootAware;
 import br.xtool.core.diagram.ClassDiagramReader;
+import br.xtool.core.representation.EBootProject;
 import br.xtool.core.service.FileService;
+import br.xtool.core.service.ProjectService;
 
 /**
  * Comando que gera uma classe Repository no projeto Spring Boot
@@ -28,10 +30,15 @@ public class SpringBootJpaEntityGenerator extends SpringBootAware {
 	@Autowired
 	private ClassDiagramReader diagramReader;
 
+	@Autowired
+	private ProjectService projectService;
+
 	@ShellMethod(key = "gen:entity", value = "Gera uma classe de entidade JPA em um projeto Spring Boot", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
 	public void run(@ShellOption(help = "Nome da entidade JPA", defaultValue = "") String name) throws IOException, JDOMException {
 
-		this.getProject().getDomainClassDiagram().ifPresent(classDiagram -> {
+		EBootProject bootProject = this.projectService.load(EBootProject.class);
+
+		bootProject.getDomainClassDiagram().ifPresent(classDiagram -> {
 			classDiagram.getClasses().forEach(umlClass -> {
 				System.out.println("Classe: " + umlClass.getName());
 				umlClass.getStereotypes().forEach(s -> System.out.println("Stereotype: " + s.getStereotypeType()));

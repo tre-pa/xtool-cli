@@ -11,7 +11,7 @@ import org.jdom2.Namespace;
  * @author jcruz
  *
  */
-public interface ESBootPom {
+public interface EBootPom {
 
 	public static final Namespace NAMESPACE = Namespace.getNamespace("http://maven.apache.org/POM/4.0.0");
 
@@ -56,7 +56,7 @@ public interface ESBootPom {
 	 * 
 	 * @return
 	 */
-	List<ESBootPomDependency> getDependencies();
+	List<EBootPomDependency> getDependencies();
 
 	/**
 	 * Adciona uma dependência o pom.xml caso não exista.
