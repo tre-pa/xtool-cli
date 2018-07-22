@@ -11,15 +11,13 @@ import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 
 import br.xtool.XtoolCliApplication;
-import br.xtool.command.springboot.support.core.SpringBootSupport.SupportType;
 import br.xtool.command.springboot.support.core.SupportManager;
 import br.xtool.core.ConsoleLog;
-import br.xtool.core.WorkContext;
 import br.xtool.core.aware.RegularAware;
 import br.xtool.core.representation.EJavaPackage;
-import br.xtool.core.representation.ESBootProject;
 import br.xtool.core.representation.impl.EJavaPackageImpl;
 import br.xtool.core.service.FileService;
+import br.xtool.core.service.WorkspaceService;
 import br.xtool.core.util.Names;
 
 /**
@@ -35,7 +33,7 @@ public class NewSpringBootProjectGenerator extends RegularAware {
 	private FileService fs;
 
 	@Autowired
-	private WorkContext workContext;
+	private WorkspaceService workspaceService;
 
 	@Autowired
 	private SupportManager supportManager;
@@ -74,11 +72,12 @@ public class NewSpringBootProjectGenerator extends RegularAware {
 		this.fs.copy("${templatePath}/gitignore", "${projectName}/.gitignore", vars);
 		this.fs.copy("${templatePath}/pom.xml.vm", "${projectName}/pom.xml", vars);
 
-		this.workContext.changeRelativeTo((String) vars.get("projectName"));
+		//		ESBootProject bootProject = ESBootProjectImpl.load(directory)
+		//		this.workContext.changeRelativeTo((String) vars.get("projectName"));
 
-		ESBootProject project = this.workContext.getSpringBootProject();
-		if (!noJpa) this.supportManager.addSupport(project, SupportType.JPA);
-		if (!noWeb) this.supportManager.addSupport(project, SupportType.WEB);
+		//		ESBootProject project = this.workContext.getSpringBootProject();
+		//		if (!noJpa) this.supportManager.addSupport(project, SupportType.JPA);
+		//		if (!noWeb) this.supportManager.addSupport(project, SupportType.WEB);
 
 	}
 
@@ -86,7 +85,7 @@ public class NewSpringBootProjectGenerator extends RegularAware {
 	 * Retorna o nome final do pacote raiz do projeto.
 	 */
 	private EJavaPackage getFinalRootPackage(String name, String rootPackage) {
-		String packageName = StringUtils.isEmpty(rootPackage) ? "br.jus.tre_pa.".concat(Names.asDotCase(name)) : rootPackage;
+		String packageName = StringUtils.isEmpty(rootPackage) ? EJavaPackage.getDefaultPrefix().concat(Names.asDotCase(name)) : rootPackage;
 		return EJavaPackageImpl.of(packageName);
 	}
 

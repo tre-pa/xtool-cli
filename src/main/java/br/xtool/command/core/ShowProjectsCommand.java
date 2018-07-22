@@ -8,14 +8,13 @@ import br.xtool.XtoolCliApplication;
 import br.xtool.core.service.WorkspaceService;
 
 @ShellComponent
-@Deprecated
-public class PwdCommand {
+public class ShowProjectsCommand {
 
 	@Autowired
 	private WorkspaceService workspaceService;
 
-	@ShellMethod(value = "Exibe o diretório de trabalho atual", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
-	public void pwd() {
+	@ShellMethod(key = { "show:projects" }, value = "Exibe os projetos do workspace", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
+	public void run() {
 		//		EDirectory directory = EDirectoryImpl.of(this.workspaceService.getWorkspace());
 		//		directory.getChildrenDirectories().forEach(System.out::println);
 		// @formatter:off

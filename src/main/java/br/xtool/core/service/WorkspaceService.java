@@ -5,6 +5,7 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import br.xtool.core.representation.EDirectory;
 import br.xtool.core.representation.EProject;
 import br.xtool.core.representation.EWorkspace;
 import br.xtool.core.representation.impl.EDirectoryImpl;
@@ -19,11 +20,15 @@ public class WorkspaceService {
 	private String path;
 
 	@Getter
+	private EDirectory home;
+
+	@Getter
 	private EProject workingProject;
 
 	@PostConstruct
 	private void init() {
 		this.workingProject = new ENoneProjectImpl(EDirectoryImpl.of(this.path));
+		this.home = EDirectoryImpl.of(this.path);
 	}
 
 	public EWorkspace getWorkspace() {

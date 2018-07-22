@@ -217,11 +217,6 @@ public class ESBootProjectImpl extends EProjectImpl implements ESBootProject {
 		//		return ENgProjectImpl.of(angularPath);
 	}
 
-	//	@Override
-	//	public String getMainDir() {
-	//		return FilenameUtils.concat(this.getDirectory().getPath(), "src/main/java");
-	//	}
-
 	@Override
 	public Optional<EUmlClassDiagram> getDomainClassDiagram() {
 		try {

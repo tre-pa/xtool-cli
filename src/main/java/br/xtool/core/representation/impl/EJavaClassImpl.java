@@ -1,13 +1,10 @@
 package br.xtool.core.representation.impl;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.Optional;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.jboss.forge.roaster.model.source.AnnotationSource;
@@ -171,17 +168,22 @@ public class EJavaClassImpl implements EJavaClass {
 		}
 	}
 
+	@Override
+	public JavaClassSource getRoasterJavaClass() {
+		return this.javaClassSource;
+	}
+
 	/**
 	 * Salva as alteração realizadas no model.
 	 */
-	@Override
-	public void save() {
-		try {
-			FileUtils.writeStringToFile(new File(this.getPath()), this.javaClassSource.toUnformattedString(), "UTF-8");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+	//	@Override
+	//	public void save() {
+	//		try {
+	//			FileUtils.writeStringToFile(new File(this.getPath()), this.javaClassSource.toUnformattedString(), "UTF-8");
+	//		} catch (IOException e) {
+	//			e.printStackTrace();
+	//		}
+	//	}
 
 	@Override
 	public int compareTo(EJavaClass o) {

@@ -13,4 +13,8 @@ public interface EJavaPackage extends Comparable<EJavaPackage> {
 
 	String getDir();
 
+	static String getDefaultPrefix() {
+		return "br.jus.tre_pa";
+	}
+
 }

@@ -3,6 +3,8 @@ package br.xtool.core.representation;
 import java.util.Optional;
 import java.util.SortedSet;
 
+import org.jboss.forge.roaster.model.source.JavaClassSource;
+
 /**
  * Representação de uma classe java.
  * 
@@ -33,5 +35,7 @@ public interface EJavaClass extends Comparable<EJavaClass> {
 
 	void addImport(String importName);
 
-	void save();
+	JavaClassSource getRoasterJavaClass();
+
+	//	void save();
 }

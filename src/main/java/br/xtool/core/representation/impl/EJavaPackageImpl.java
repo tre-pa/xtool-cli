@@ -10,7 +10,6 @@ import br.xtool.core.representation.EJavaPackage;
  * @author jcruz
  *
  */
-
 public class EJavaPackageImpl implements EJavaPackage {
 
 	private String name;
@@ -36,11 +35,6 @@ public class EJavaPackageImpl implements EJavaPackage {
 	}
 
 	@Override
-	public int compareTo(EJavaPackage o) {
-		return this.getName().compareTo(o.getName());
-	}
-
-	@Override
 	public String getName() {
 		return this.name;
 	}
@@ -49,4 +43,10 @@ public class EJavaPackageImpl implements EJavaPackage {
 	public String getDir() {
 		return this.dir;
 	}
+
+	@Override
+	public int compareTo(EJavaPackage o) {
+		return this.getName().compareTo(o.getName());
+	}
+
 }
