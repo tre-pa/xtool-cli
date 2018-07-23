@@ -18,7 +18,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
 import br.xtool.core.ConsoleLog;
-import br.xtool.core.representation.EJavaSourceFolder;
+import br.xtool.core.representation.ESourceFolder;
 import lombok.SneakyThrows;
 
 @Service
@@ -121,7 +121,7 @@ public class FileService {
 	 * @param name
 	 * @param vars
 	 */
-	public void createEmptyPath(EJavaSourceFolder sourceFolder, String name, Map<String, Object> vars) {
+	public <T extends ESourceFolder> void createEmptyPath(T sourceFolder, String name, Map<String, Object> vars) {
 		//		this.createEmptyPath(FilenameUtils.concat(sourceFolder.getPath(), name), vars);
 	}
 
@@ -130,7 +130,7 @@ public class FileService {
 	 * @param sourceFolder
 	 * @param name
 	 */
-	public void createEmptyPath(EJavaSourceFolder sourceFolder, String name) {
+	public <T extends ESourceFolder> void createEmptyPath(T sourceFolder, String name) {
 		//		this.createEmptyPath(sourceFolder.getPath(), new HashMap<>());
 	}
 }
