@@ -1,11 +1,11 @@
 package br.xtool.command.springboot.support.core;
 
 import br.xtool.core.representation.EBootProject;
-import br.xtool.core.representation.EProject.ProjectType;
+import br.xtool.core.representation.EProject.Type;
 
 public interface SpringBootSupport {
 
-	public ProjectType getApplyForType();
+	public Type getApplyForType();
 
 	public SupportType getType();
 

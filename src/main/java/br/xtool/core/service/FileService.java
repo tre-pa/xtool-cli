@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
@@ -18,6 +19,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
 import br.xtool.core.ConsoleLog;
+import br.xtool.core.representation.EJavaSourceFolder;
 import lombok.SneakyThrows;
 
 @Service
@@ -93,22 +95,41 @@ public class FileService {
 	/**
 	 * Cria um diretório vazio.
 	 * 
-	 * @param relativeDestination
+	 * @param relativeHomeDestination
 	 * @param vars
 	 */
-	public void createEmptyPath(String relativeDestination, Map<String, Object> vars) {
+	public void createEmptyPath(String relativeHomeDestination, Map<String, Object> vars) {
 		try {
-			relativeDestination = this.inlineTemplate(relativeDestination, vars);
-			String finalDestination = FilenameUtils.concat(this.workspaceService.getWorkingProject().getDirectory().getPath(), relativeDestination);
+			relativeHomeDestination = this.inlineTemplate(relativeHomeDestination, vars);
+			String finalDestination = FilenameUtils.concat(this.workspaceService.getHome().getPath(), relativeHomeDestination);
 			if (!Files.exists(Paths.get(finalDestination))) {
 				FileUtils.forceMkdir(new File(finalDestination));
 				FileUtils.touch(new File(FilenameUtils.concat(finalDestination, ".gitkeep")));
-				ConsoleLog.print(ConsoleLog.bold(ConsoleLog.green("\t[+] ")), ConsoleLog.purple("Path: "), ConsoleLog.white(relativeDestination));
+				ConsoleLog.print(ConsoleLog.bold(ConsoleLog.green("\t[+] ")), ConsoleLog.purple("Path: "), ConsoleLog.white(relativeHomeDestination));
 				return;
 			}
-			ConsoleLog.print(ConsoleLog.bold(ConsoleLog.gray("\t[!] ")), ConsoleLog.purple("Path: "), ConsoleLog.gray(relativeDestination), ConsoleLog.yellow(" -- Skip "));
+			ConsoleLog.print(ConsoleLog.bold(ConsoleLog.gray("\t[!] ")), ConsoleLog.purple("Path: "), ConsoleLog.gray(relativeHomeDestination), ConsoleLog.yellow(" -- Skip "));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	/**
+	 * 
+	 * @param sourceFolder
+	 * @param name
+	 * @param vars
+	 */
+	public void createEmptyPath(EJavaSourceFolder sourceFolder, String name, Map<String, Object> vars) {
+		this.createEmptyPath(FilenameUtils.concat(sourceFolder.getPath(), name), vars);
+	}
+
+	/**
+	 * 
+	 * @param sourceFolder
+	 * @param name
+	 */
+	public void createEmptyPath(EJavaSourceFolder sourceFolder, String name) {
+		this.createEmptyPath(sourceFolder.getPath(), new HashMap<>());
 	}
 }

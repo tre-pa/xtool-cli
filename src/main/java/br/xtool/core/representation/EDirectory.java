@@ -4,7 +4,7 @@ import java.io.File;
 import java.util.List;
 import java.util.SortedSet;
 
-import br.xtool.core.representation.EProject.ProjectType;
+import br.xtool.core.representation.EProject.Type;
 
 /**
  * Representação de um diretório do sistema de arquivos.
@@ -26,7 +26,7 @@ public interface EDirectory extends Comparable<EDirectory> {
 	 * 
 	 * @return
 	 */
-	ProjectType getProjectType();
+	Type getProjectType();
 
 	/**
 	 * Retorna todos os arquivos recursivamente.

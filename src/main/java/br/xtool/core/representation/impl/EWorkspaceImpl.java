@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 import br.xtool.core.representation.EDirectory;
 import br.xtool.core.representation.ENgProject;
 import br.xtool.core.representation.EProject;
-import br.xtool.core.representation.EProject.ProjectType;
+import br.xtool.core.representation.EProject.Type;
 import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.EWorkspace;
 
@@ -30,7 +30,7 @@ public class EWorkspaceImpl implements EWorkspace {
 		if (Objects.isNull(this.springBootProjects)) {
 			// @formatter:off
 			this.springBootProjects = this.directory.getDirectories().stream()
-					.filter(dir -> dir.getProjectType().equals(ProjectType.SPRINGBOOT_PROJECT))
+					.filter(dir -> dir.getProjectType().equals(Type.SPRINGBOOT_PROJECT))
 					.map(EBootProjectImpl::load)
 					.collect(Collectors.toCollection(TreeSet::new));
 			// @formatter:on
@@ -43,7 +43,7 @@ public class EWorkspaceImpl implements EWorkspace {
 		if (Objects.isNull(this.angularProjects)) {
 			// @formatter:off
 			this.angularProjects = this.directory.getDirectories().stream()
-					.filter(dir -> dir.getProjectType().equals(ProjectType.ANGULAR_PROJECT))
+					.filter(dir -> dir.getProjectType().equals(Type.ANGULAR_PROJECT))
 					.map(ENgProjectImpl::load)
 					.collect(Collectors.toCollection(TreeSet::new));
 			// @formatter:on

@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.jline.PromptProvider;
 import org.springframework.stereotype.Component;
 
-import br.xtool.core.representation.EProject.ProjectType;
+import br.xtool.core.representation.EProject.Type;
 import br.xtool.core.service.WorkspaceService;
 
 @Component
@@ -17,7 +17,7 @@ public class XtoolPromptProvider implements PromptProvider {
 
 	@Override
 	public AttributedString getPrompt() {
-		String promptLabel = !this.workspaceService.getWorkingProject().getProjectType().equals(ProjectType.NONE) ? String.format("xtool/%s ~ ", this.workspaceService.getWorkingProject().getName())
+		String promptLabel = !this.workspaceService.getWorkingProject().getProjectType().equals(Type.NONE) ? String.format("xtool/%s ~ ", this.workspaceService.getWorkingProject().getName())
 				: "xtool ~ ";
 		return new AttributedString(promptLabel, AttributedStyle.DEFAULT.bold().foreground(AttributedStyle.YELLOW));
 	}

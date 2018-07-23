@@ -194,7 +194,7 @@ public class ENgProjectImpl extends EProjectImpl implements ENgProject {
 	}
 
 	public static ENgProject load(EDirectory directory) {
-		if (directory.getProjectType().equals(ProjectType.ANGULAR_PROJECT)) {
+		if (directory.getProjectType().equals(Type.ANGULAR_PROJECT)) {
 			return new ENgProjectImpl(directory);
 		}
 		throw new IllegalArgumentException("O diretório não possui um projeto Angular válido.");

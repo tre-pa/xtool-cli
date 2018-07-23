@@ -3,6 +3,11 @@ package br.xtool.core.representation;
 import java.util.Optional;
 import java.util.SortedSet;
 
+import org.apache.commons.lang3.StringUtils;
+
+import br.xtool.core.representation.impl.EJavaPackageImpl;
+import strman.Strman;
+
 /**
  * Representação de um projeto Spring Boot
  * 
@@ -106,4 +111,39 @@ public interface EBootProject extends EProject {
 	 */
 	@Override
 	void refresh();
+
+	/**
+	 * gera um nome valido de projeto.
+	 * 
+	 * @param commomName
+	 * @return
+	 */
+	static String genProjectName(String commomName) {
+		// @formatter:off
+		return StringUtils.lowerCase(
+				Strman.toKebabCase(
+						StringUtils.endsWithIgnoreCase(commomName, "-service") ? 
+								commomName : 
+								commomName.concat("-service")
+								)
+				);
+		// @formatter:on
+	}
+
+	static String genBaseClassName(String projectName) {
+		return Strman.toStudlyCase(projectName.endsWith("Application") ? projectName.replace("Application", "") : projectName);
+
+	}
+
+	/**
+	 * Gera um pacote raiz para um nome de projeto.
+	 * 
+	 * @param projectName
+	 * @return
+	 */
+	static EJavaPackage genRootPackage(String projectName) {
+		String packageName = EJavaPackage.getDefaultPrefix().concat(StringUtils.join(StringUtils.split(Strman.toKebabCase(projectName), "-"), "."));
+		return EJavaPackageImpl.of(packageName);
+	}
+
 }

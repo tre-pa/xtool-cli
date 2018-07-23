@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.Availability;
 import org.springframework.shell.standard.ShellMethodAvailability;
 
-import br.xtool.core.representation.EProject.ProjectType;
+import br.xtool.core.representation.EProject.Type;
 import br.xtool.core.service.WorkspaceService;
 
 public class RegularAware {
@@ -22,7 +22,7 @@ public class RegularAware {
 	 */
 	@ShellMethodAvailability
 	public Availability availabilitySpringBootCommand() throws IOException {
-		return this.workspaceService.getWorkingProject().getProjectType().equals(ProjectType.NONE) ? Availability.available()
+		return this.workspaceService.getWorkingProject().getProjectType().equals(Type.NONE) ? Availability.available()
 				: Availability.unavailable("O commando não é aplicável ao diretório atual.");
 	}
 

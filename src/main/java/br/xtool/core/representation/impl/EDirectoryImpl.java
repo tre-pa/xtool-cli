@@ -24,7 +24,7 @@ import com.google.common.collect.ImmutableSet;
 
 import br.xtool.core.representation.EDirectory;
 import br.xtool.core.representation.ENgPackage;
-import br.xtool.core.representation.EProject.ProjectType;
+import br.xtool.core.representation.EProject.Type;
 import br.xtool.core.representation.EBootPom;
 import lombok.Getter;
 
@@ -34,10 +34,10 @@ public class EDirectoryImpl implements EDirectory {
 	private String path;
 
 	@Getter(lazy = true)
-	private final ProjectType projectType = buildProjectType();
+	private final Type projectType = buildProjectType();
 
 	// @formatter:off
-	private Set<Function<EDirectory, ProjectType>> typeResolvers = 
+	private Set<Function<EDirectory, Type>> typeResolvers = 
 			ImmutableSet.of(
 					new SpringBootProjectTypeResolver(),
 					new AngularProjectProjectTypeResolver()
@@ -120,41 +120,41 @@ public class EDirectoryImpl implements EDirectory {
 		return new EDirectoryImpl(path.toAbsolutePath().toString());
 	}
 
-	protected ProjectType buildProjectType() {
+	protected Type buildProjectType() {
 		// @formatter:off
 		return this.typeResolvers.stream()
 				.map(fun -> fun.apply(this))
 				.filter(Objects::nonNull)
 				.findFirst()
-				.orElse(ProjectType.NONE);
+				.orElse(Type.NONE);
 		// @formatter:on
 	}
 
-	private class SpringBootProjectTypeResolver implements Function<EDirectory, ProjectType> {
+	private class SpringBootProjectTypeResolver implements Function<EDirectory, Type> {
 
 		@Override
-		public @Nullable ProjectType apply(@Nullable EDirectory dr) {
+		public @Nullable Type apply(@Nullable EDirectory dr) {
 			String pomFile = FilenameUtils.concat(dr.getPath(), "pom.xml");
 			if (Files.exists(Paths.get(pomFile))) {
 				EBootPom ePom = EBootPomImpl.of(pomFile);
 				if (ePom.getParentVersion().isPresent()) {
-					if (ePom.getParentGroupId().get().equals("org.springframework.boot")) return ProjectType.SPRINGBOOT_PROJECT;
+					if (ePom.getParentGroupId().get().equals("org.springframework.boot")) return Type.SPRINGBOOT_PROJECT;
 				}
 			}
 			return null;
 		}
 	}
 
-	private class AngularProjectProjectTypeResolver implements Function<EDirectory, ProjectType> {
+	private class AngularProjectProjectTypeResolver implements Function<EDirectory, Type> {
 
 		@Override
-		public ProjectType apply(EDirectory dr) {
+		public Type apply(EDirectory dr) {
 			String packageJsonFile = FilenameUtils.concat(dr.getPath(), "package.json");
 			if (Files.exists(Paths.get(packageJsonFile))) {
 				Optional<ENgPackage> ngPackage = ENgPackageImpl.of(packageJsonFile);
 				if (ngPackage.isPresent()) {
 					Map<String, String> dependencies = ngPackage.get().getDependencies();
-					if (dependencies.containsKey("@angular/core")) return ProjectType.ANGULAR_PROJECT;
+					if (dependencies.containsKey("@angular/core")) return Type.ANGULAR_PROJECT;
 				}
 			}
 			return null;

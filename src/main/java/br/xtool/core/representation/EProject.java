@@ -8,8 +8,12 @@ package br.xtool.core.representation;
  */
 public interface EProject extends Comparable<EProject> {
 
-	public enum ProjectType {
+	enum Type {
 		SPRINGBOOT_PROJECT, ANGULAR_PROJECT, NONE;
+	}
+
+	enum Version {
+		V1, V2, V3, V4, V5, V6, V7, V8, V9, V10
 	}
 
 	EDirectory getDirectory();
@@ -36,6 +40,6 @@ public interface EProject extends Comparable<EProject> {
 	 * 
 	 * @return
 	 */
-	public ProjectType getProjectType();
+	public Type getProjectType();
 
 }

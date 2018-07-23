@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import br.xtool.command.springboot.support.core.SpringBootSupport;
 import br.xtool.core.ConsoleLog;
 import br.xtool.core.representation.EBootProject;
-import br.xtool.core.representation.EProject.ProjectType;
+import br.xtool.core.representation.EProject.Type;
 import br.xtool.core.service.FileService;
 
 /**
@@ -26,8 +26,8 @@ public class SpringBoot1JpaSupport implements SpringBootSupport {
 	private FileService fs;
 
 	@Override
-	public ProjectType getApplyForType() {
-		return ProjectType.SPRINGBOOT_PROJECT;
+	public Type getApplyForType() {
+		return Type.SPRINGBOOT_PROJECT;
 	}
 
 	@Override

@@ -12,7 +12,7 @@ import com.google.common.collect.Table;
 
 import br.xtool.command.springboot.support.core.SpringBootSupport.SupportType;
 import br.xtool.core.representation.EBootProject;
-import br.xtool.core.representation.EProject.ProjectType;
+import br.xtool.core.representation.EProject.Type;
 
 /**
  * Classe que gerencia a adcição dos suports ao projeto.
@@ -26,7 +26,7 @@ public class SupportManager {
 	@Autowired
 	private Set<SpringBootSupport> supports;
 
-	private Table<ProjectType, SupportType, SpringBootSupport> supportTable = HashBasedTable.create();
+	private Table<Type, SupportType, SpringBootSupport> supportTable = HashBasedTable.create();
 
 	@PostConstruct
 	private void init() {

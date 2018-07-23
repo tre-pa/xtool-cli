@@ -13,44 +13,44 @@ import strman.Strman;
  */
 public class Names {
 
-	/**
-	 * 
-	 * @param name
-	 * @return
-	 */
-	public static String asDotCase(String name) {
-		return StringUtils.join(StringUtils.split(Strman.toKebabCase(name), "-"), ".");
-	}
+	//	/**
+	//	 * 
+	//	 * @param name
+	//	 * @return
+	//	 */
+	//	public static String asDotCase(String name) {
+	//		return StringUtils.join(StringUtils.split(Strman.toKebabCase(name), "-"), ".");
+	//	}
 
-	/**
-	 * 
-	 * @param name
-	 * @return
-	 */
-	public static String asSpringBootBaseClass(String name) {
-		// @formatter:off
-		return Strman.toStudlyCase(
-						name.endsWith("Application") ? name.replace("Application", "") : name
-					);
-		// @formatter:on
-	}
+	//	/**
+	//	 * 
+	//	 * @param name
+	//	 * @return
+	//	 */
+	//	public static String asSpringBootBaseClass(String name) {
+//		// @formatter:off
+//		return Strman.toStudlyCase(
+//						name.endsWith("Application") ? name.replace("Application", "") : name
+//					);
+//		// @formatter:on
+	//	}
 
-	/**
-	 * 
-	 * Retorna um nome válido de projeto Spring Boot.
-	 * 
-	 * @param name
-	 * @return
-	 */
-	public static String asSpringBootProject(String name) {
-		// @formatter:off
-		return StringUtils.lowerCase(
-				Strman.toKebabCase(
-						StringUtils.endsWithIgnoreCase(name, "-service") ? 
-								name : 
-								name.concat("-service")));
-		// @formatter:on
-	}
+	//	/**
+	//	 * 
+	//	 * Retorna um nome válido de projeto Spring Boot.
+	//	 * 
+	//	 * @param name
+	//	 * @return
+	//	 */
+	//	public static String asSpringBootProject(String name) {
+//		// @formatter:off
+//		return StringUtils.lowerCase(
+//				Strman.toKebabCase(
+//						StringUtils.endsWithIgnoreCase(name, "-service") ? 
+//								name : 
+//								name.concat("-service")));
+//		// @formatter:on
+	//	}
 
 	/**
 	 * Retorna um nome válido de classe JPA.

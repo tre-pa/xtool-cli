@@ -12,20 +12,20 @@ import org.jboss.forge.roaster.model.source.FieldSource;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.jboss.forge.roaster.model.util.Types;
 
+import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.EJavaAnnotation;
 import br.xtool.core.representation.EJavaClass;
 import br.xtool.core.representation.EJavaField;
 import br.xtool.core.representation.EJavaMethod;
 import br.xtool.core.representation.EJavaPackage;
-import br.xtool.core.representation.EProject;
 
 public class EJavaClassImpl implements EJavaClass {
 
 	protected JavaClassSource javaClassSource;
 
-	private EProject project;
+	private EBootProject project;
 
-	public EJavaClassImpl(EProject project, JavaClassSource javaClassSource) {
+	public EJavaClassImpl(EBootProject project, JavaClassSource javaClassSource) {
 		super();
 		this.project = project;
 		this.javaClassSource = javaClassSource;

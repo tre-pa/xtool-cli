@@ -36,7 +36,7 @@ public abstract class EProjectImpl implements EProject {
 	 * 
 	 */
 	@Override
-	public ProjectType getProjectType() {
+	public Type getProjectType() {
 		return this.getDirectory().getProjectType();
 	}
 
