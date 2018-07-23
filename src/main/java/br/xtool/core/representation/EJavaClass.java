@@ -1,5 +1,6 @@
 package br.xtool.core.representation;
 
+import java.nio.file.Path;
 import java.util.Optional;
 import java.util.SortedSet;
 
@@ -21,7 +22,7 @@ public interface EJavaClass extends Comparable<EJavaClass> {
 
 	boolean hasAnnotation(String name);
 
-	String getPath();
+	Path getPath();
 
 	SortedSet<EJavaField> getFields();
 

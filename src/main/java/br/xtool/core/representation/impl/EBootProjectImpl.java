@@ -9,11 +9,13 @@ import java.util.TreeSet;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import org.apache.commons.io.FilenameUtils;
 import org.jboss.forge.roaster.model.JavaUnit;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.jboss.forge.roaster.model.source.JavaInterfaceSource;
 
+import br.xtool.core.representation.EBootAppProperties;
+import br.xtool.core.representation.EBootPom;
+import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.EDirectory;
 import br.xtool.core.representation.EJavaClass;
 import br.xtool.core.representation.EJavaEntity;
@@ -22,9 +24,6 @@ import br.xtool.core.representation.EJavaRepository;
 import br.xtool.core.representation.EJavaRest;
 import br.xtool.core.representation.EJavaSourceFolder;
 import br.xtool.core.representation.ENgProject;
-import br.xtool.core.representation.EBootAppProperties;
-import br.xtool.core.representation.EBootPom;
-import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.EUmlClassDiagram;
 import br.xtool.core.util.RoasterUtil;
 
@@ -95,13 +94,7 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 	 */
 	@Override
 	public EJavaSourceFolder getMainSourceFolder() {
-		// @formatter:off
-		return new EJavaSourceFolderImpl(this.getRootPackage(), 
-				FilenameUtils.concat(this.getDirectory().getPath(), 
-						FilenameUtils.concat("src/main/java", this.getRootPackage().getDir())
-						)
-				);
-		// @formatter:on
+		return new EJavaSourceFolderImpl(this.getDirectory().getPath().resolve("src/main/java"));
 	}
 
 	/*
@@ -110,13 +103,8 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 	 */
 	@Override
 	public EJavaSourceFolder getTestSourceFolder() {
-		// @formatter:off
-		return new EJavaSourceFolderImpl(this.getRootPackage(), 
-				FilenameUtils.concat(this.getDirectory().getPath(), 
-						FilenameUtils.concat("src/test/java", this.getRootPackage().getDir())
-						)
-				);	}
-	// @formatter:on
+		return new EJavaSourceFolderImpl(this.getDirectory().getPath().resolve("src/test/java"));
+	}
 
 	/*
 	 * (non-Javadoc)
@@ -125,7 +113,7 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 	@Override
 	public EBootPom getPom() {
 		if (Objects.isNull(this.pom)) {
-			this.pom = EBootPomImpl.of(FilenameUtils.concat(this.getDirectory().getPath(), "pom.xml"));
+			this.pom = EBootPomImpl.of(this.getDirectory().getPath().resolve("pom.xml"));
 		}
 		return this.pom;
 	}
@@ -138,7 +126,7 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 	@Override
 	public EBootAppProperties getApplicationProperties() {
 		if (Objects.isNull(this.applicationProperties)) {
-			this.applicationProperties = EBootAppPropertiesImpl.of(FilenameUtils.concat(this.getDirectory().getPath(), "src/main/resources/application.properties"));
+			this.applicationProperties = EBootAppPropertiesImpl.of(this.getDirectory().getPath().resolve("src/main/resources/application.properties"));
 		}
 		return this.applicationProperties;
 	}
@@ -220,7 +208,7 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 	@Override
 	public Optional<EUmlClassDiagram> getDomainClassDiagram() {
 		try {
-			EUmlClassDiagram classDiagram = EUmlClassDiagramImpl.of(FilenameUtils.concat(this.getDirectory().getPath(), "docs/diagrams/domain-class.md"));
+			EUmlClassDiagram classDiagram = EUmlClassDiagramImpl.of(this.getDirectory().getPath().resolve("docs/diagrams/domain-class.md"));
 			return Optional.of(classDiagram);
 		} catch (IOException e) {
 			e.printStackTrace();

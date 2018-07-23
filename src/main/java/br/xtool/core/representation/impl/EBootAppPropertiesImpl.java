@@ -1,11 +1,9 @@
 package br.xtool.core.representation.impl;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileWriter;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.nio.file.Path;
 import java.util.Optional;
 import java.util.Properties;
 
@@ -15,11 +13,11 @@ import strman.Strman;
 
 public class EBootAppPropertiesImpl implements EBootAppProperties {
 
-	private String path;
+	private Path path;
 
 	private Properties properties;
 
-	private EBootAppPropertiesImpl(String path) {
+	private EBootAppPropertiesImpl(Path path) {
 		super();
 		this.path = path;
 	}
@@ -46,7 +44,7 @@ public class EBootAppPropertiesImpl implements EBootAppProperties {
 	@Override
 	public void save() {
 		try {
-			FileWriter fos = new FileWriter(new File(this.path));
+			BufferedWriter fos = Files.newBufferedWriter(this.path);
 			this.properties.store(fos, " ");
 			fos.flush();
 			fos.close();
@@ -55,12 +53,12 @@ public class EBootAppPropertiesImpl implements EBootAppProperties {
 		}
 	}
 
-	public static EBootAppProperties of(String path) {
-		if (Files.exists(Paths.get(path))) {
+	public static EBootAppProperties of(Path path) {
+		if (Files.exists(path)) {
 			try {
 				EBootAppPropertiesImpl representation = new EBootAppPropertiesImpl(path);
 				Properties properties = new Properties();
-				properties.load(new FileInputStream(new File(path)));
+				properties.load(Files.newBufferedReader(path));
 				representation.properties = properties;
 				return representation;
 			} catch (IOException e) {

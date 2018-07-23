@@ -1,5 +1,6 @@
 package br.xtool.core.representation.impl;
 
+import java.nio.file.Path;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
@@ -14,12 +15,9 @@ public class EJavaSourceFolderImpl implements EJavaSourceFolder {
 
 	private EDirectory directory;
 
-	private EJavaPackage groupId;
-
-	public EJavaSourceFolderImpl(EJavaPackage groupId, String path) {
+	public EJavaSourceFolderImpl(Path path) {
 		super();
 		this.directory = EDirectoryImpl.of(path);
-		this.groupId = groupId;
 	}
 
 	/*
@@ -27,7 +25,7 @@ public class EJavaSourceFolderImpl implements EJavaSourceFolder {
 	 * @see br.xtool.core.representation.EJavaSourceFolder#getPath()
 	 */
 	@Override
-	public String getPath() {
+	public Path getPath() {
 		return this.directory.getPath();
 	}
 
@@ -39,8 +37,10 @@ public class EJavaSourceFolderImpl implements EJavaSourceFolder {
 	public SortedSet<EJavaPackage> getPackages() {
 		// @formatter:off
 		return this.directory.getAllDirectories().stream()
-				.map(dir -> StringUtils.substring(dir.getPath() , StringUtils.indexOf(dir.getPath(), this.groupId.getDir())))
-				.map(str -> StringUtils.split(str, "/"))
+				.map(dir -> this.getPath().relativize(dir.getPath()))
+				.map(Path::toString)
+				.filter(StringUtils::isNotBlank)
+				.map(p -> StringUtils.split(p.toString(), "/"))
 				.map(EJavaPackageImpl::of)
 				.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on

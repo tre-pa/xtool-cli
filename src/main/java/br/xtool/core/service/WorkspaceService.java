@@ -1,5 +1,7 @@
 package br.xtool.core.service;
 
+import java.nio.file.Paths;
+
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -27,12 +29,12 @@ public class WorkspaceService {
 
 	@PostConstruct
 	private void init() {
-		this.workingProject = new ENoneProjectImpl(EDirectoryImpl.of(this.path));
-		this.home = EDirectoryImpl.of(this.path);
+		this.workingProject = new ENoneProjectImpl(EDirectoryImpl.of(Paths.get(this.path)));
+		this.home = EDirectoryImpl.of(Paths.get(this.path));
 	}
 
 	public EWorkspace getWorkspace() {
-		return new EWorkspaceImpl(EDirectoryImpl.of(this.path));
+		return new EWorkspaceImpl(EDirectoryImpl.of(Paths.get(this.path)));
 	}
 
 	public void use(EProject project) {

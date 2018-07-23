@@ -1,6 +1,7 @@
 package br.xtool.core.representation;
 
 import java.io.File;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.SortedSet;
 
@@ -19,7 +20,7 @@ public interface EDirectory extends Comparable<EDirectory> {
 	 * 
 	 * @return
 	 */
-	String getPath();
+	Path getPath();
 
 	/**
 	 * Retorna o tipo de projeto representado pelo diretório atual.

@@ -13,10 +13,9 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
+import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.EDirectory;
 import br.xtool.core.representation.ENgProject;
-import br.xtool.core.representation.EBootProject;
-import br.xtool.core.representation.impl.EDirectoryImpl;
 import br.xtool.core.representation.impl.EBootProjectImpl;
 import lombok.Getter;
 
@@ -41,7 +40,7 @@ public class WorkContext {
 	 */
 	@Deprecated
 	public void changeTo(String newAbsoluteDirectory) {
-		this.directory = EDirectoryImpl.of(newAbsoluteDirectory);
+		//		this.directory = EDirectoryImpl.of(newAbsoluteDirectory);
 		this.springBootProject = null;
 		this.angularProject = null;
 		//		this.applicationEventPublisher.publishEvent(new ChangeWorkingProjectEvent(this.directory));
@@ -49,14 +48,14 @@ public class WorkContext {
 
 	@Deprecated
 	public void changeRelativeTo(String newRelativeDirectory) {
-		this.changeTo(FilenameUtils.concat(this.directory.getPath(), newRelativeDirectory));
+		//		this.changeTo(FilenameUtils.concat(this.directory.getPath(), newRelativeDirectory));
 	}
 
 	@Deprecated
 	private void setupHomeDirectory() throws IOException {
 		String home = FilenameUtils.concat(System.getProperty("user.home"), "git");
 		Files.createDirectories(Paths.get(home));
-		this.directory = EDirectoryImpl.of(home);
+		//		this.directory = EDirectoryImpl.of(home);
 	}
 
 	/**

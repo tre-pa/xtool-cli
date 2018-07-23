@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
@@ -38,7 +37,7 @@ public class NewAngularProjectGenerator extends RegularAware {
 		Map<String, Object> vars = new HashMap<>();
 		vars.put("templatePath", "angular/5.x/archetype");
 		vars.put("projectName", name);
-		vars.put("projectPath", FilenameUtils.concat(this.workContext.getDirectory().getPath(), name));
+//		vars.put("projectPath", FilenameUtils.concat(this.workContext.getDirectory().getPath(), name));
 		// @formatter:on
 
 		ConsoleLog.print("");

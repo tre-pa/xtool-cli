@@ -10,8 +10,8 @@ import org.springframework.shell.standard.ShellOption;
 import br.xtool.XtoolCliApplication;
 import br.xtool.core.aware.SpringBootAware;
 import br.xtool.core.provider.EJavaEntityValueProvider;
-import br.xtool.core.representation.EJavaEntity;
 import br.xtool.core.representation.EBootProject;
+import br.xtool.core.representation.EJavaEntity;
 import br.xtool.core.service.ProjectService;
 
 @ShellComponent
@@ -31,7 +31,7 @@ public class SpringBootJpaEntityMapper extends SpringBootAware {
 	// @formatter:on
 		EBootProject bootProject = this.projectService.load(EBootProject.class);
 
-		bootProject.getMainSourceFolder().getPackages().forEach(pkg -> System.out.println(pkg.getName()));
+		bootProject.getMainSourceFolder().getPackages().forEach(pkg -> System.out.println("Pacote: " + pkg.getName()));
 
 		//		Assert.isTrue(Objects.nonNull(entity) || allEntities,
 		//				"Selecione uma entidade ou a opção 'all-entities' para selecionar todas as entidades. Digite 'help map-springboot-jpa-entity' para mais detalhes.");

@@ -1,6 +1,5 @@
 package br.xtool.core.service;
 
-import java.io.File;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +20,7 @@ public class ShellService {
 	public int runCmd(String command) {
 		ProcessBuilder processBuilder = new ProcessBuilder();
 		processBuilder.command("sh", "-c", command);
-		processBuilder.directory(new File(this.workspaceService.getWorkingProject().getDirectory().getPath()));
+		processBuilder.directory(this.workspaceService.getWorkingProject().getDirectory().getPath().toFile());
 		processBuilder.inheritIO();
 		Process process = processBuilder.start();
 		return process.waitFor();

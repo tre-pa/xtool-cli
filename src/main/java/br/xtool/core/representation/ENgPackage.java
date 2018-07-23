@@ -1,5 +1,6 @@
 package br.xtool.core.representation;
 
+import java.nio.file.Path;
 import java.util.Map;
 
 /**
@@ -10,7 +11,7 @@ import java.util.Map;
  */
 public interface ENgPackage {
 
-	String getPath();
+	Path getPath();
 
 	String getName();
 

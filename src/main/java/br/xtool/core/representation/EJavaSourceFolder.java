@@ -1,5 +1,6 @@
 package br.xtool.core.representation;
 
+import java.nio.file.Path;
 import java.util.SortedSet;
 
 /**
@@ -15,7 +16,7 @@ public interface EJavaSourceFolder {
 	 * 
 	 * @return
 	 */
-	String getPath();
+	Path getPath();
 
 	/**
 	 * Retorna a lista de pacotes do source folder java.

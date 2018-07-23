@@ -1,9 +1,8 @@
 package br.xtool.core.representation.impl;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.nio.file.Path;
 import java.util.Map;
 import java.util.Optional;
 
@@ -27,7 +26,7 @@ import lombok.ToString;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ENgPackageImpl implements ENgPackage {
 
-	private String path;
+	private Path path;
 
 	private String name;
 
@@ -41,11 +40,11 @@ public class ENgPackageImpl implements ENgPackage {
 		super();
 	}
 
-	public static Optional<ENgPackage> of(String path) {
-		if (Files.exists(Paths.get(path))) {
+	public static Optional<ENgPackage> of(Path path) {
+		if (Files.exists(path)) {
 			ObjectMapper mapper = new ObjectMapper();
 			try {
-				ENgPackageImpl ngPackage = mapper.readValue(new File(path), ENgPackageImpl.class);
+				ENgPackageImpl ngPackage = mapper.readValue(Files.newBufferedReader(path), ENgPackageImpl.class);
 				return Optional.of(ngPackage);
 			} catch (IOException e) {
 				e.printStackTrace();

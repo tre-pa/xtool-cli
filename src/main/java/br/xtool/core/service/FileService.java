@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
@@ -59,7 +58,8 @@ public class FileService {
 		VelocityContext vContext = new VelocityContext(vars);
 		templatePath = this.inlineTemplate(templatePath, vars);
 		relativeDestination = this.inlineTemplate(relativeDestination, vars);
-		String finalDestination = FilenameUtils.concat(this.workspaceService.getWorkingProject().getDirectory().getPath(), relativeDestination);
+		//		String finalDestination = FilenameUtils.concat(this.workspaceService.getWorkingProject().getDirectory().getPath(), relativeDestination);
+		String finalDestination = null;
 		if (!Files.exists(Paths.get(finalDestination))) {
 			FileUtils.forceMkdirParent(new File(finalDestination));
 			if (binary) {
@@ -101,7 +101,8 @@ public class FileService {
 	public void createEmptyPath(String relativeHomeDestination, Map<String, Object> vars) {
 		try {
 			relativeHomeDestination = this.inlineTemplate(relativeHomeDestination, vars);
-			String finalDestination = FilenameUtils.concat(this.workspaceService.getHome().getPath(), relativeHomeDestination);
+			//			String finalDestination = FilenameUtils.concat(this.workspaceService.getHome().getPath(), relativeHomeDestination);
+			String finalDestination = null;
 			if (!Files.exists(Paths.get(finalDestination))) {
 				FileUtils.forceMkdir(new File(finalDestination));
 				FileUtils.touch(new File(FilenameUtils.concat(finalDestination, ".gitkeep")));
@@ -121,7 +122,7 @@ public class FileService {
 	 * @param vars
 	 */
 	public void createEmptyPath(EJavaSourceFolder sourceFolder, String name, Map<String, Object> vars) {
-		this.createEmptyPath(FilenameUtils.concat(sourceFolder.getPath(), name), vars);
+		//		this.createEmptyPath(FilenameUtils.concat(sourceFolder.getPath(), name), vars);
 	}
 
 	/**
@@ -130,6 +131,6 @@ public class FileService {
 	 * @param name
 	 */
 	public void createEmptyPath(EJavaSourceFolder sourceFolder, String name) {
-		this.createEmptyPath(sourceFolder.getPath(), new HashMap<>());
+		//		this.createEmptyPath(sourceFolder.getPath(), new HashMap<>());
 	}
 }

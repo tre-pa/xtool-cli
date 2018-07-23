@@ -1,10 +1,9 @@
 package br.xtool.core.representation.impl;
 
-import java.io.File;
-import java.io.FileOutputStream;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -19,21 +18,23 @@ import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
 import br.xtool.core.ConsoleLog;
-import br.xtool.core.representation.EJavaPackage;
 import br.xtool.core.representation.EBootPom;
 import br.xtool.core.representation.EBootPomDependency;
+import br.xtool.core.representation.EJavaPackage;
 
 public class EBootPomImpl implements EBootPom {
 
 	public static final Namespace NAMESPACE = Namespace.getNamespace("http://maven.apache.org/POM/4.0.0");
 
+	private Path path;
+
 	private Document pomDoc;
 
-	private File file;
+	//	private File file;
 
-	private EBootPomImpl(String path) {
+	private EBootPomImpl(Path path) {
 		super();
-
+		this.path = path;
 	}
 
 	/*
@@ -133,13 +134,12 @@ public class EBootPomImpl implements EBootPom {
 		}
 	}
 
-	public static EBootPomImpl of(String path) {
-		if (Files.exists(Paths.get(path))) {
+	public static EBootPomImpl of(Path path) {
+		if (Files.exists(path)) {
 			try {
 				EBootPomImpl pomRepresentation = new EBootPomImpl(path);
-				pomRepresentation.file = new File(path);
 				SAXBuilder saxBuilder = new SAXBuilder();
-				pomRepresentation.pomDoc = saxBuilder.build(pomRepresentation.file);
+				pomRepresentation.pomDoc = saxBuilder.build(Files.newBufferedReader(path));
 				return pomRepresentation;
 			} catch (JDOMException | IOException e) {
 				e.printStackTrace();
@@ -150,14 +150,14 @@ public class EBootPomImpl implements EBootPom {
 
 	@Override
 	public void save() {
-		try (FileOutputStream fos = new FileOutputStream(this.file)) {
+		try (BufferedWriter bw = Files.newBufferedWriter(this.path)) {
 			XMLOutputter xmlOutputter = new XMLOutputter();
 			Format format = Format.getPrettyFormat();
 			format.setIndent("\t");
 			xmlOutputter.setFormat(format);
-			xmlOutputter.output(this.pomDoc, fos);
-			fos.flush();
-			fos.close();
+			xmlOutputter.output(this.pomDoc, bw);
+			bw.flush();
+			bw.close();
 			// Log.print(Log.green("\t[UPDATE] ") + Log.white("pom.xml"));
 		} catch (IOException e) {
 			e.printStackTrace();

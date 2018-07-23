@@ -8,8 +8,6 @@ import java.util.TreeSet;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import org.apache.commons.io.FilenameUtils;
-
 import br.xtool.core.representation.EDirectory;
 import br.xtool.core.representation.ENgClass;
 import br.xtool.core.representation.ENgComponent;
@@ -58,7 +56,7 @@ public class ENgProjectImpl extends EProjectImpl implements ENgProject {
 
 	@Override
 	public ENgPackage getNgPackage() {
-		return ENgPackageImpl.of(FilenameUtils.concat(this.getDirectory().getPath(), "package.json")).orElse(null);
+		return ENgPackageImpl.of(this.getDirectory().getPath().resolve("package.json")).orElse(null);
 	}
 
 	/**

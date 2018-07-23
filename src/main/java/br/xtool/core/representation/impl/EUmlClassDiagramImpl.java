@@ -1,11 +1,10 @@
 package br.xtool.core.representation.impl;
 
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import org.apache.commons.io.FileUtils;
 
 import br.xtool.core.representation.EUmlClass;
 import br.xtool.core.representation.EUmlClassDiagram;
@@ -56,8 +55,9 @@ public class EUmlClassDiagramImpl implements EUmlClassDiagram {
 		// @formatter:on
 	}
 
-	public static EUmlClassDiagram of(String path) throws IOException {
-		String diagram = FileUtils.readFileToString(new File(path), "UTF-8");
+	public static EUmlClassDiagram of(Path path) throws IOException {
+		//		String diagram = FileUtils.readFileToString(new File(path), "UTF-8");
+		String diagram = new String(Files.readAllBytes(path));
 		SourceStringReader reader = new SourceStringReader(diagram.replace("```plantuml", "@startuml").replace("```", "@enduml"));
 		// @formatter:off
 		ClassDiagram classDiagram = reader.getBlocks().stream()

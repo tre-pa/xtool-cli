@@ -1,11 +1,11 @@
 package br.xtool.core.representation.impl;
 
+import java.nio.file.Path;
 import java.util.Optional;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
-import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.jboss.forge.roaster.model.source.AnnotationSource;
 import org.jboss.forge.roaster.model.source.FieldSource;
@@ -79,8 +79,8 @@ public class EJavaClassImpl implements EJavaClass {
 	 * @return
 	 */
 	@Override
-	public String getPath() {
-		return FilenameUtils.concat(this.project.getDirectory().getPath(), String.format("src/main/java/%s/%s.java", this.getPackage().getDir(), this.getName()));
+	public Path getPath() {
+		return this.project.getDirectory().getPath().resolve(String.format("src/main/java/%s/%s.java", this.getPackage().getDir(), this.getName()));
 	}
 
 	@Override
