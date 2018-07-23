@@ -11,7 +11,6 @@ import org.springframework.shell.standard.ShellOption;
 
 import br.xtool.XtoolCliApplication;
 import br.xtool.core.ConsoleLog;
-import br.xtool.core.WorkContext;
 import br.xtool.core.aware.RegularAware;
 import br.xtool.core.service.FileService;
 import br.xtool.core.service.ShellService;
@@ -25,8 +24,8 @@ public class NewAngularProjectGenerator extends RegularAware {
 	@Autowired
 	private ShellService shellService;
 
-	@Autowired
-	private WorkContext workContext;
+	//	@Autowired
+	//	private WorkContext workContext;
 
 	@ShellMethod(key = "new:angular", value = "Novo projeto Angular 5.x", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
 	public void run(@ShellOption(help = "Nome do projeto") String name) throws IOException {
@@ -88,7 +87,7 @@ public class NewAngularProjectGenerator extends RegularAware {
 		this.fs.copy("${templatePath}/protractor.conf.js.vm", "${projectName}/protractor.conf.js", vars);
 		this.fs.copy("${templatePath}/readme.md.vm", "${projectName}/README.md", vars);
 
-		this.workContext.changeRelativeTo((String) vars.get("projectName"));
+		//		this.workContext.changeRelativeTo((String) vars.get("projectName"));
 
 		ConsoleLog.print(ConsoleLog.cyan("\t-- npm install --"));
 
