@@ -41,6 +41,6 @@ public class SpringBootRestGenerator extends SpringBootAware {
 		vars.put("restPath", Names.asRestPath(name));
 		// @formatter:on
 
-		this.fs.copy("springboot/1.5.x/rest/rest.java.vm", "src/main/java/${groupId.dir}/rest/${restName}.java", vars);
+		//		this.fs.copy("springboot/1.5.x/rest/rest.java.vm", "src/main/java/${groupId.dir}/rest/${restName}.java", vars);
 	}
 }

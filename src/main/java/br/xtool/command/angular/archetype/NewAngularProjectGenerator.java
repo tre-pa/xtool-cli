@@ -41,51 +41,51 @@ public class NewAngularProjectGenerator extends RegularAware {
 
 		ConsoleLog.print("");
 
-		this.fs.createEmptyPath("${projectName}/data", vars);
-		this.fs.createEmptyPath("${projectName}/scripts", vars);
-		this.fs.createEmptyPath("${projectName}/src/app/service", vars);
-		this.fs.createEmptyPath("${projectName}/src/app/domain", vars);
-		this.fs.createEmptyPath("${projectName}/src/assets", vars);
-		this.fs.copy("${templatePath}/scripts/xtool-ng.js.vm", "${projectName}/scripts/xtool-ng.js", vars);
-		this.fs.copy("${templatePath}/src/app/@core/layout/nav-list-layout/nav-list-layout.component.html.vm", "${projectName}/src/app/@core/layout/nav-list-layout/nav-list-layout.component.html",
-				vars);
-		this.fs.copy("${templatePath}/src/app/@core/layout/nav-list-layout/nav-list-layout.component.ts.vm", "${projectName}/src/app/@core/layout/nav-list-layout/nav-list-layout.component.ts", vars);
-		this.fs.copy("${templatePath}/src/app/@core/layout/nav-view-layout/nav-view-layout.component.html.vm", "${projectName}/src/app/@core/layout/nav-view-layout/nav-view-layout.component.html",
-				vars);
-		this.fs.copy("${templatePath}/src/app/@core/layout/nav-view-layout/nav-view-layout.component.ts.vm", "${projectName}/src/app/@core/layout/nav-view-layout/nav-view-layout.component.ts", vars);
-		this.fs.copy("${templatePath}/src/app/@core/security/keycloak.js.vm", "${projectName}/src/app/@core/security/keycloak.js", vars);
-		this.fs.copy("${templatePath}/src/app/@core/security/keycloak.service.ts.vm", "${projectName}/src/app/@core/security/keycloak.service.ts", vars);
-		this.fs.copy("${templatePath}/src/app/@core/shared.module.ts.vm", "${projectName}/src/app/@core/shared.module.ts", vars);
-		this.fs.copy("${templatePath}/src/app/@core/page.ts.vm", "${projectName}/src/app/@core/page.ts", vars);
-		this.fs.copy("${templatePath}/src/app/view/@common/nav-link/nav-link.component.html.vm", "${projectName}/src/app/view/@common/nav-link/nav-link.component.html", vars);
-		this.fs.copy("${templatePath}/src/app/view/@common/nav-link/nav-link.component.ts.vm", "${projectName}/src/app/view/@common/nav-link/nav-link.component.ts", vars);
-		this.fs.copy("${templatePath}/src/app/app-routing.module.ts.vm", "${projectName}/src/app/app-routing.module.ts", vars);
-		this.fs.copy("${templatePath}/src/app/app.component.css.vm", "${projectName}/src/app/app.component.css", vars);
-		this.fs.copy("${templatePath}/src/app/app.component.html.vm", "${projectName}/src/app/app.component.html", vars);
-		this.fs.copy("${templatePath}/src/app/app.component.ts.vm", "${projectName}/src/app/app.component.ts", vars);
-		this.fs.copy("${templatePath}/src/app/app.module.ts.vm", "${projectName}/src/app/app.module.ts", vars);
-		this.fs.copy("${templatePath}/src/environments/environment.dev.ts.vm", "${projectName}/src/environments/environment.dev.ts", vars);
-		this.fs.copy("${templatePath}/src/environments/environment.prod.ts.vm", "${projectName}/src/environments/environment.prod.ts", vars);
-		this.fs.copy("${templatePath}/src/environments/environment.ts.vm", "${projectName}/src/environments/environment.ts", vars);
-		this.fs.copy("${templatePath}/src/favicon.ico", "${projectName}/src/favicon.ico", vars, true);
-		this.fs.copy("${templatePath}/src/index.html.vm", "${projectName}/src/index.html", vars);
-		this.fs.copy("${templatePath}/src/main.ts.vm", "${projectName}/src/main.ts", vars);
-		this.fs.copy("${templatePath}/src/polyfills.ts.vm", "${projectName}/src/polyfills.ts", vars);
-		this.fs.copy("${templatePath}/src/styles.scss.vm", "${projectName}/src/styles.scss", vars);
-		this.fs.copy("${templatePath}/src/test.ts.vm", "${projectName}/src/test.ts", vars);
-		this.fs.copy("${templatePath}/src/theme.scss.vm", "${projectName}/src/theme.scss", vars);
-		this.fs.copy("${templatePath}/src/tsconfig.app.json.vm", "${projectName}/src/tsconfig.app.json", vars);
-		this.fs.copy("${templatePath}/src/tsconfig.spec.json.vm", "${projectName}/src/tsconfig.spec.json", vars);
-		this.fs.copy("${templatePath}/src/typings.d.ts.vm", "${projectName}/src/typings.d.ts.json", vars);
-		this.fs.copy("${templatePath}/angular-cli.json.vm", "${projectName}/.angular-cli.json", vars);
-		this.fs.copy("${templatePath}/angulardoc.json.vm", "${projectName}/.angulardoc.json", vars);
-		this.fs.copy("${templatePath}/editorconfig.vm", "${projectName}/.editorconfig", vars);
-		this.fs.copy("${templatePath}/gitignore.vm", "${projectName}/.gitignore", vars);
-		this.fs.copy("${templatePath}/gitlab-ci.yml.vm", "${projectName}/.gitlab-ci.yml", vars);
-		this.fs.copy("${templatePath}/karma.conf.js.vm", "${projectName}/karma.conf.js", vars);
-		this.fs.copy("${templatePath}/package.json.vm", "${projectName}/package.json", vars);
-		this.fs.copy("${templatePath}/protractor.conf.js.vm", "${projectName}/protractor.conf.js", vars);
-		this.fs.copy("${templatePath}/readme.md.vm", "${projectName}/README.md", vars);
+		//		this.fs.createEmptyPath("${projectName}/data", vars);
+		//		this.fs.createEmptyPath("${projectName}/scripts", vars);
+		//		this.fs.createEmptyPath("${projectName}/src/app/service", vars);
+		//		this.fs.createEmptyPath("${projectName}/src/app/domain", vars);
+		//		this.fs.createEmptyPath("${projectName}/src/assets", vars);
+		//		this.fs.copy("${templatePath}/scripts/xtool-ng.js.vm", "${projectName}/scripts/xtool-ng.js", vars);
+		//		this.fs.copy("${templatePath}/src/app/@core/layout/nav-list-layout/nav-list-layout.component.html.vm", "${projectName}/src/app/@core/layout/nav-list-layout/nav-list-layout.component.html",
+		//				vars);
+		//		this.fs.copy("${templatePath}/src/app/@core/layout/nav-list-layout/nav-list-layout.component.ts.vm", "${projectName}/src/app/@core/layout/nav-list-layout/nav-list-layout.component.ts", vars);
+		//		this.fs.copy("${templatePath}/src/app/@core/layout/nav-view-layout/nav-view-layout.component.html.vm", "${projectName}/src/app/@core/layout/nav-view-layout/nav-view-layout.component.html",
+		//				vars);
+		//		this.fs.copy("${templatePath}/src/app/@core/layout/nav-view-layout/nav-view-layout.component.ts.vm", "${projectName}/src/app/@core/layout/nav-view-layout/nav-view-layout.component.ts", vars);
+		//		this.fs.copy("${templatePath}/src/app/@core/security/keycloak.js.vm", "${projectName}/src/app/@core/security/keycloak.js", vars);
+		//		this.fs.copy("${templatePath}/src/app/@core/security/keycloak.service.ts.vm", "${projectName}/src/app/@core/security/keycloak.service.ts", vars);
+		//		this.fs.copy("${templatePath}/src/app/@core/shared.module.ts.vm", "${projectName}/src/app/@core/shared.module.ts", vars);
+		//		this.fs.copy("${templatePath}/src/app/@core/page.ts.vm", "${projectName}/src/app/@core/page.ts", vars);
+		//		this.fs.copy("${templatePath}/src/app/view/@common/nav-link/nav-link.component.html.vm", "${projectName}/src/app/view/@common/nav-link/nav-link.component.html", vars);
+		//		this.fs.copy("${templatePath}/src/app/view/@common/nav-link/nav-link.component.ts.vm", "${projectName}/src/app/view/@common/nav-link/nav-link.component.ts", vars);
+		//		this.fs.copy("${templatePath}/src/app/app-routing.module.ts.vm", "${projectName}/src/app/app-routing.module.ts", vars);
+		//		this.fs.copy("${templatePath}/src/app/app.component.css.vm", "${projectName}/src/app/app.component.css", vars);
+		//		this.fs.copy("${templatePath}/src/app/app.component.html.vm", "${projectName}/src/app/app.component.html", vars);
+		//		this.fs.copy("${templatePath}/src/app/app.component.ts.vm", "${projectName}/src/app/app.component.ts", vars);
+		//		this.fs.copy("${templatePath}/src/app/app.module.ts.vm", "${projectName}/src/app/app.module.ts", vars);
+		//		this.fs.copy("${templatePath}/src/environments/environment.dev.ts.vm", "${projectName}/src/environments/environment.dev.ts", vars);
+		//		this.fs.copy("${templatePath}/src/environments/environment.prod.ts.vm", "${projectName}/src/environments/environment.prod.ts", vars);
+		//		this.fs.copy("${templatePath}/src/environments/environment.ts.vm", "${projectName}/src/environments/environment.ts", vars);
+		//		this.fs.copy("${templatePath}/src/favicon.ico", "${projectName}/src/favicon.ico", vars, true);
+		//		this.fs.copy("${templatePath}/src/index.html.vm", "${projectName}/src/index.html", vars);
+		//		this.fs.copy("${templatePath}/src/main.ts.vm", "${projectName}/src/main.ts", vars);
+		//		this.fs.copy("${templatePath}/src/polyfills.ts.vm", "${projectName}/src/polyfills.ts", vars);
+		//		this.fs.copy("${templatePath}/src/styles.scss.vm", "${projectName}/src/styles.scss", vars);
+		//		this.fs.copy("${templatePath}/src/test.ts.vm", "${projectName}/src/test.ts", vars);
+		//		this.fs.copy("${templatePath}/src/theme.scss.vm", "${projectName}/src/theme.scss", vars);
+		//		this.fs.copy("${templatePath}/src/tsconfig.app.json.vm", "${projectName}/src/tsconfig.app.json", vars);
+		//		this.fs.copy("${templatePath}/src/tsconfig.spec.json.vm", "${projectName}/src/tsconfig.spec.json", vars);
+		//		this.fs.copy("${templatePath}/src/typings.d.ts.vm", "${projectName}/src/typings.d.ts.json", vars);
+		//		this.fs.copy("${templatePath}/angular-cli.json.vm", "${projectName}/.angular-cli.json", vars);
+		//		this.fs.copy("${templatePath}/angulardoc.json.vm", "${projectName}/.angulardoc.json", vars);
+		//		this.fs.copy("${templatePath}/editorconfig.vm", "${projectName}/.editorconfig", vars);
+		//		this.fs.copy("${templatePath}/gitignore.vm", "${projectName}/.gitignore", vars);
+		//		this.fs.copy("${templatePath}/gitlab-ci.yml.vm", "${projectName}/.gitlab-ci.yml", vars);
+		//		this.fs.copy("${templatePath}/karma.conf.js.vm", "${projectName}/karma.conf.js", vars);
+		//		this.fs.copy("${templatePath}/package.json.vm", "${projectName}/package.json", vars);
+		//		this.fs.copy("${templatePath}/protractor.conf.js.vm", "${projectName}/protractor.conf.js", vars);
+		//		this.fs.copy("${templatePath}/readme.md.vm", "${projectName}/README.md", vars);
 
 		//		this.workContext.changeRelativeTo((String) vars.get("projectName"));
 

@@ -43,7 +43,8 @@ public class NgService {
 				.build();
 		// @formatter:on
 		if (Files.notExists(this.workspaceService.getWorkingProject().getDirectory().getPath().resolve("scripts/xtool-ng.js"))) {
-			this.fs.copy("${templatePath}/scripts/xtool-ng.js.vm", "scripts/xtool-ng.js", vars);
+			throw new UnsupportedOperationException();
+			//			this.fs.copy("${templatePath}/scripts/xtool-ng.js.vm", "scripts/xtool-ng.js", vars);
 		}
 		this.shellService.runCmd("node ${xtoolNg} --module-path=${modulePath} --module-name=${moduleName} --component-path=${componentPath} --component-name=${componentName}", vars);
 	}
@@ -65,7 +66,8 @@ public class NgService {
 				.build();
 		// @formatter:on
 		if (Files.notExists(this.workspaceService.getWorkingProject().getDirectory().getPath().resolve("scripts/xtool-ng.js"))) {
-			this.fs.copy("${templatePath}/scripts/xtool-ng.js.vm", "scripts/xtool-ng.js", vars);
+			throw new UnsupportedOperationException();
+			//			this.fs.copy("${templatePath}/scripts/xtool-ng.js.vm", "scripts/xtool-ng.js", vars);
 		}
 		this.shellService.runCmd("node ${xtoolNg} --module-path=${modulePath} --module-name=${moduleName} --service-path=${servicePath} --service-name=${serviceName}", vars);
 	}
@@ -87,7 +89,8 @@ public class NgService {
 				.build();
 		// @formatter:on
 		if (Files.notExists(this.workspaceService.getWorkingProject().getDirectory().getPath().resolve("scripts/xtool-ng.js"))) {
-			this.fs.copy("${templatePath}/scripts/xtool-ng.js.vm", "scripts/xtool-ng.js", vars);
+			throw new UnsupportedOperationException();
+			//			this.fs.copy("${templatePath}/scripts/xtool-ng.js.vm", "scripts/xtool-ng.js", vars);
 		}
 		this.shellService.runCmd("node ${xtoolNg} --module-path=${modulePath} --module-name=${moduleName} --dialog-path=${dialogPath} --dialog-name=${dialogName}", vars);
 	}

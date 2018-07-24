@@ -45,8 +45,8 @@ public class SpringBoot1JpaSupport implements SpringBootSupport {
 		vars.put("baseClassName", project.getBaseClassName());
 		// @formatter:on
 		ConsoleLog.print(ConsoleLog.cyan("\t-- Suporte JPA --"));
-		this.fs.createEmptyPath("src/main/java/${rootPackage.dir}/domain", vars);
-		this.fs.createEmptyPath("src/main/java/${rootPackage.dir}/repository", vars);
+		//		this.fs.createEmptyPath("src/main/java/${rootPackage.dir}/domain", vars);
+		//		this.fs.createEmptyPath("src/main/java/${rootPackage.dir}/repository", vars);
 		addDependencies(project);
 		addProperties(project);
 	}

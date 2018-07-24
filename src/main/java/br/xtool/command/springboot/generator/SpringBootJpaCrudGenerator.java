@@ -53,10 +53,10 @@ public class SpringBootJpaCrudGenerator extends SpringBootAware {
 		vars.put("restPath", Names.asRestPath(entity.getName()));
 			
 		
-		this.fs.copy("${templatePath}/projection/projection.java.vm", "src/main/java/${groupId.dir}/repository/projection/${entity.name}Info.java", vars);
-		this.fs.copy("${templatePath}/repository/repository.java.vm", "src/main/java/${groupId.dir}/repository/${repositoryName}.java", vars);
-		this.fs.copy("${templatePath}/service/service.java.vm", "src/main/java/${groupId.dir}/service/${serviceName}.java", vars);
-		this.fs.copy("${templatePath}/rest/rest.java.vm", "src/main/java/${groupId.dir}/rest/${restName}.java", vars);
+//		this.fs.copy("${templatePath}/projection/projection.java.vm", "src/main/java/${groupId.dir}/repository/projection/${entity.name}Info.java", vars);
+//		this.fs.copy("${templatePath}/repository/repository.java.vm", "src/main/java/${groupId.dir}/repository/${repositoryName}.java", vars);
+//		this.fs.copy("${templatePath}/service/service.java.vm", "src/main/java/${groupId.dir}/service/${serviceName}.java", vars);
+//		this.fs.copy("${templatePath}/rest/rest.java.vm", "src/main/java/${groupId.dir}/rest/${restName}.java", vars);
 
 	}
 

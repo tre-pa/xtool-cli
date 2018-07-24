@@ -10,7 +10,6 @@ import org.springframework.shell.standard.ShellOption;
 
 import br.xtool.XtoolCliApplication;
 import br.xtool.core.aware.SpringBootAware;
-import br.xtool.core.diagram.ClassDiagramReader;
 import br.xtool.core.representation.EBootProject;
 import br.xtool.core.service.FileService;
 import br.xtool.core.service.ProjectService;
@@ -27,8 +26,8 @@ public class SpringBootJpaEntityGenerator extends SpringBootAware {
 	@Autowired
 	private FileService fs;
 
-	@Autowired
-	private ClassDiagramReader diagramReader;
+	//	@Autowired
+	//	private ClassDiagramReader diagramReader;
 
 	@Autowired
 	private ProjectService projectService;

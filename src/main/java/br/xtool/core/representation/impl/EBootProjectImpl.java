@@ -233,4 +233,8 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 		throw new IllegalArgumentException("O diretório não possui um projeto Spring Boot válido.");
 	}
 
+	public static EBootProject create(EDirectory directory) {
+		return new EBootProjectImpl(directory);
+	}
+
 }

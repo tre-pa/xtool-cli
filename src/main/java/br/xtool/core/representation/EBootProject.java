@@ -142,7 +142,7 @@ public interface EBootProject extends EProject {
 	 * @return
 	 */
 	static EJavaPackage genRootPackage(String projectName) {
-		String packageName = EJavaPackage.getDefaultPrefix().concat(StringUtils.join(StringUtils.split(Strman.toKebabCase(projectName), "-"), "."));
+		String packageName = EJavaPackage.getDefaultPrefix().concat(".").concat(StringUtils.join(StringUtils.split(Strman.toKebabCase(projectName), "-"), "."));
 		return EJavaPackageImpl.of(packageName);
 	}
 

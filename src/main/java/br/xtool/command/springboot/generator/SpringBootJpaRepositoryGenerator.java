@@ -49,6 +49,6 @@ public class SpringBootJpaRepositoryGenerator extends SpringBootAware {
 		vars.put("entity", entity);
 		// @formatter:on
 
-		this.fs.copy("springboot/1.5.x/repository/repository.java.vm", "src/main/java/${groupId.dir}/repository/${repositoryName}.java", vars);
+		//		this.fs.copy("springboot/1.5.x/repository/repository.java.vm", "src/main/java/${groupId.dir}/repository/${repositoryName}.java", vars);
 	}
 }

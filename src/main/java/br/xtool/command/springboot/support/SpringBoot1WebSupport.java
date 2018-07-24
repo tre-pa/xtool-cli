@@ -45,7 +45,7 @@ public class SpringBoot1WebSupport implements SpringBootSupport {
 		vars.put("baseClassName", project.getBaseClassName());
 		// @formatter:on
 		ConsoleLog.print(ConsoleLog.cyan("\t-- Suporte WEB --"));
-		this.fs.createEmptyPath("src/main/java/${rootPackage.dir}/rest", vars);
+		//		this.fs.createEmptyPath("src/main/java/${rootPackage.dir}/rest", vars);
 		addDependencies(project);
 		addProperties(project);
 	}

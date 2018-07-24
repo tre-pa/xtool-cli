@@ -40,7 +40,7 @@ public class SpringBootServiceGenerator extends SpringBootAware {
 		vars.put("serviceName", Names.asServiceClass((name)));
 		// @formatter:on
 
-		this.fs.copy("springboot/1.5.x/service/service.java.vm", "src/main/java/${groupId.dir}/service/${serviceName}.java", vars);
+		//		this.fs.copy("springboot/1.5.x/service/service.java.vm", "src/main/java/${groupId.dir}/service/${serviceName}.java", vars);
 	}
 
 }

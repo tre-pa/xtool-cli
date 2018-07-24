@@ -1,5 +1,11 @@
 package br.xtool.core.factory;
 
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.PathMatcher;
+import java.nio.file.Paths;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
@@ -8,8 +14,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import br.xtool.core.representation.EBootProject;
+import br.xtool.core.representation.ETemplate;
+import br.xtool.core.representation.impl.EBootProjectImpl;
+import br.xtool.core.representation.impl.EDirectoryImpl;
 import br.xtool.core.service.FileService;
 import br.xtool.core.service.WorkspaceService;
+import lombok.SneakyThrows;
 
 @Component
 public class EBootProjectV1Factory implements Function<String, EBootProject> {
@@ -21,19 +31,22 @@ public class EBootProjectV1Factory implements Function<String, EBootProject> {
 	private WorkspaceService workspaceService;
 
 	@Override
+	@SneakyThrows
 	public EBootProject apply(String name) {
+
+		Path projectPath = Files.createDirectory(this.workspaceService.getHome().getPath().resolve(name));
+		EBootProject project = EBootProjectImpl.create(EDirectoryImpl.of(projectPath));
+
 		Map<String, Object> vars = new HashMap<>();
-		vars.put("templatePath", "springboot/1.5.x/archetype");
 		vars.put("projectName", EBootProject.genProjectName(name));
 		vars.put("rootPackage", EBootProject.genRootPackage(name));
 		vars.put("baseClassName", EBootProject.genBaseClassName(name));
 
-		this.fs.copy("${templatePath}/src/main/java/SpringBootApplication.java.vm", "${projectName}/src/main/java/${rootPackage.dir}/${baseClassName}Application.java", vars);
-		this.fs.copy("${templatePath}/src/main/resources/application.properties.vm", "${projectName}/src/main/resources/application.properties", vars);
-		this.fs.copy("${templatePath}/gitignore", "${projectName}/.gitignore", vars);
-		this.fs.copy("${templatePath}/pom.xml.vm", "${projectName}/pom.xml", vars);
+		PathMatcher pathMatcher = FileSystems.getDefault().getPathMatcher("glob:**/*.vm");
+		Collection<ETemplate> templates = this.fs.getTemplates(Paths.get("src/main/resources/templates/springboot/1.5.x/archetype"), pathMatcher, vars);
+		this.fs.copy(templates, project);
 
-		return null;
+		return project;
 	}
 
 }

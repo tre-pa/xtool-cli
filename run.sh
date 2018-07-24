@@ -8,4 +8,5 @@ if [ -z $1 ];then
 fi
 
 echo "Iniciando xtool... Aguarde."
-mvn clean install -Dmaven.test.skip=true && clear && java -Xms32m -Xmx256m  -jar target/xtool-cli-0.0.1-SNAPSHOT.jar --workspace=$1
+
+mvn spring-boot:run -Dworkspace=$1

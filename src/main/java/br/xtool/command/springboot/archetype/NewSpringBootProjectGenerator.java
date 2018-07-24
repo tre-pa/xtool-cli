@@ -67,9 +67,9 @@ public class NewSpringBootProjectGenerator extends RegularAware {
 
 		ConsoleLog.print(ConsoleLog.cyan("\t-- Projeto Base --"));
 		//		this.fs.createEmptyPath("${projectName}/src/main/java/${rootPackage.dir}/config", vars);
-		this.fs.createEmptyPath(bootProject.getMainSourceFolder(), "config");
-		this.fs.createEmptyPath(bootProject.getMainSourceFolder(), "exception");
-		this.fs.createEmptyPath(bootProject.getMainSourceFolder(), "service");
+		//		this.fs.createEmptyPath(bootProject.getMainSourceFolder(), "config");
+		//		this.fs.createEmptyPath(bootProject.getMainSourceFolder(), "exception");
+		//		this.fs.createEmptyPath(bootProject.getMainSourceFolder(), "service");
 		//		this.fs.createEmptyPath("${projectName}/src/main/java/${rootPackage.dir}/report", vars);
 		//		this.fs.copy("${templatePath}/src/main/java/SpringBootApplication.java.vm", "${projectName}/src/main/java/${rootPackage.dir}/${baseClassName}Application.java", vars);
 		//		this.fs.copy("${templatePath}/src/main/resources/application.properties.vm", "${projectName}/src/main/resources/application.properties", vars);

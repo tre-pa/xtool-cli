@@ -28,7 +28,8 @@ public class ShellService {
 
 	@SneakyThrows
 	public int runCmd(String command, Map<String, Object> vars) {
-		return this.runCmd(this.fs.inlineTemplate(command, vars));
+		throw new UnsupportedOperationException();
+		//		return this.runCmd(this.fs.getTemplate(command, vars));
 	}
 
 }
