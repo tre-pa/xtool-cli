@@ -11,7 +11,6 @@ import org.springframework.shell.standard.ShellOption;
 
 import br.xtool.XtoolCliApplication;
 import br.xtool.command.springboot.support.core.SupportManager;
-import br.xtool.core.ConsoleLog;
 import br.xtool.core.aware.RegularAware;
 import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.EProject;
@@ -65,7 +64,6 @@ public class NewSpringBootProjectGenerator extends RegularAware {
 		vars.put("noWeb", noWeb);
 		// @formatter:on
 
-		ConsoleLog.print(ConsoleLog.cyan("\t-- Projeto Base --"));
 		//		this.fs.createEmptyPath("${projectName}/src/main/java/${rootPackage.dir}/config", vars);
 		//		this.fs.createEmptyPath(bootProject.getMainSourceFolder(), "config");
 		//		this.fs.createEmptyPath(bootProject.getMainSourceFolder(), "exception");

@@ -13,6 +13,7 @@ import java.util.function.Function;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import br.xtool.core.ConsoleLog;
 import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.ETemplate;
 import br.xtool.core.representation.impl.EBootProjectImpl;
@@ -42,6 +43,8 @@ public class EBootProjectV1Factory implements Function<String, EBootProject> {
 		vars.put("projectName", EBootProject.genProjectName(name));
 		vars.put("rootPackage", EBootProject.genRootPackage(name));
 		vars.put("baseClassName", EBootProject.genBaseClassName(name));
+
+		ConsoleLog.print(ConsoleLog.cyan("\t-- Projeto Base --"));
 
 		PathMatcher pathMatcher = FileSystems.getDefault().getPathMatcher("glob:**/*.vm");
 		Collection<ETemplate> templates = this.fs.getTemplates(Paths.get("src/main/resources/templates/springboot/1.5.x/archetype"), pathMatcher, vars);

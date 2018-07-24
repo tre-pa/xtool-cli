@@ -14,6 +14,7 @@ import org.apache.velocity.app.VelocityEngine;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.xtool.core.ConsoleLog;
 import br.xtool.core.representation.EProject;
 import br.xtool.core.representation.ETemplate;
 import br.xtool.core.representation.impl.ETemplateImpl;
@@ -64,6 +65,7 @@ public class FileServiceImpl implements FileService {
 		bufferedWriter.write(template.merge());
 		bufferedWriter.flush();
 		bufferedWriter.close();
+		ConsoleLog.print("\t" + ConsoleLog.green("[+] "), template.getPath().toString());
 	}
 
 	@Override
