@@ -16,7 +16,6 @@ import org.springframework.stereotype.Component;
 import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.ETemplate;
 import br.xtool.core.representation.impl.EBootProjectImpl;
-import br.xtool.core.representation.impl.EDirectoryImpl;
 import br.xtool.core.service.FileService;
 import br.xtool.core.service.WorkspaceService;
 import lombok.SneakyThrows;
@@ -35,7 +34,7 @@ public class EBootProjectV1Factory implements Function<String, EBootProject> {
 	public EBootProject apply(String name) {
 
 		Path projectPath = Files.createDirectory(this.workspaceService.getHome().getPath().resolve(name));
-		EBootProject project = EBootProjectImpl.create(EDirectoryImpl.of(projectPath));
+		EBootProject project = EBootProjectImpl.create(projectPath);
 
 		Map<String, Object> vars = new HashMap<>();
 		vars.put("projectName", EBootProject.genProjectName(name));

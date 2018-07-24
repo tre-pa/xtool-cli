@@ -1,5 +1,6 @@
 package br.xtool.core.representation.impl;
 
+import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Objects;
@@ -8,7 +9,6 @@ import java.util.TreeSet;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import br.xtool.core.representation.EDirectory;
 import br.xtool.core.representation.ENgClass;
 import br.xtool.core.representation.ENgComponent;
 import br.xtool.core.representation.ENgDetail;
@@ -50,8 +50,8 @@ public class ENgProjectImpl extends EProjectImpl implements ENgProject {
 
 	}
 
-	private ENgProjectImpl(EDirectory directory) {
-		super(directory);
+	private ENgProjectImpl(Path path) {
+		super(path);
 	}
 
 	@Override
@@ -191,11 +191,8 @@ public class ENgProjectImpl extends EProjectImpl implements ENgProject {
 		this.ngClasses = null;
 	}
 
-	public static ENgProject load(EDirectory directory) {
-		if (directory.getProjectType().equals(Type.ANGULAR_PROJECT)) {
-			return new ENgProjectImpl(directory);
-		}
-		throw new IllegalArgumentException("O diretório não possui um projeto Angular válido.");
+	public static ENgProject create(Path path) {
+		return new ENgProjectImpl(path);
 	}
 
 }

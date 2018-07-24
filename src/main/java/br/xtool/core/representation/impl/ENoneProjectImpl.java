@@ -1,12 +1,13 @@
 package br.xtool.core.representation.impl;
 
-import br.xtool.core.representation.EDirectory;
+import java.nio.file.Path;
+
 import br.xtool.core.representation.ENoneProject;
 
 public class ENoneProjectImpl extends EProjectImpl implements ENoneProject {
 
-	public ENoneProjectImpl(EDirectory directory) {
-		super(directory);
+	public ENoneProjectImpl(Path path) {
+		super(path);
 	}
 
 	@Override

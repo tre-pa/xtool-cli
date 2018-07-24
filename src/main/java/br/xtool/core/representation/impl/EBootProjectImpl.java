@@ -1,6 +1,7 @@
 package br.xtool.core.representation.impl;
 
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -16,7 +17,6 @@ import org.jboss.forge.roaster.model.source.JavaInterfaceSource;
 import br.xtool.core.representation.EBootAppProperties;
 import br.xtool.core.representation.EBootPom;
 import br.xtool.core.representation.EBootProject;
-import br.xtool.core.representation.EDirectory;
 import br.xtool.core.representation.EJavaClass;
 import br.xtool.core.representation.EJavaEntity;
 import br.xtool.core.representation.EJavaPackage;
@@ -43,8 +43,8 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 
 	private EJavaClass mainClass;
 
-	public EBootProjectImpl(EDirectory directory) {
-		super(directory);
+	public EBootProjectImpl(Path path) {
+		super(path);
 	}
 
 	/**
@@ -226,15 +226,8 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 		this.javaUnits = null;
 	}
 
-	public static EBootProject load(EDirectory directory) {
-		if (directory.getProjectType().equals(Type.SPRINGBOOT_PROJECT)) {
-			return new EBootProjectImpl(directory);
-		}
-		throw new IllegalArgumentException("O diretório não possui um projeto Spring Boot válido.");
-	}
-
-	public static EBootProject create(EDirectory directory) {
-		return new EBootProjectImpl(directory);
+	public static EBootProject create(Path path) {
+		return new EBootProjectImpl(path);
 	}
 
 }

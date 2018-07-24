@@ -29,7 +29,7 @@ public class WorkspaceService {
 
 	@PostConstruct
 	private void init() {
-		this.workingProject = new ENoneProjectImpl(EDirectoryImpl.of(Paths.get(this.path)));
+		this.workingProject = new ENoneProjectImpl(Paths.get(this.path));
 		this.home = EDirectoryImpl.of(Paths.get(this.path));
 	}
 

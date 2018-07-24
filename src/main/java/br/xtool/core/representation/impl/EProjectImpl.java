@@ -1,5 +1,7 @@
 package br.xtool.core.representation.impl;
 
+import java.nio.file.Path;
+
 import br.xtool.core.representation.EDirectory;
 import br.xtool.core.representation.EProject;
 import lombok.Getter;
@@ -9,9 +11,9 @@ public abstract class EProjectImpl implements EProject {
 	@Getter
 	private EDirectory directory;
 
-	public EProjectImpl(EDirectory directory) {
+	public EProjectImpl(Path path) {
 		super();
-		this.directory = directory;
+		this.directory = EDirectoryImpl.of(path);
 	}
 
 	/**

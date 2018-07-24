@@ -5,11 +5,11 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
+import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.EDirectory;
 import br.xtool.core.representation.ENgProject;
 import br.xtool.core.representation.EProject;
 import br.xtool.core.representation.EProject.Type;
-import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.EWorkspace;
 
 public class EWorkspaceImpl implements EWorkspace {
@@ -31,7 +31,8 @@ public class EWorkspaceImpl implements EWorkspace {
 			// @formatter:off
 			this.springBootProjects = this.directory.getDirectories().stream()
 					.filter(dir -> dir.getProjectType().equals(Type.SPRINGBOOT_PROJECT))
-					.map(EBootProjectImpl::load)
+					.map(EDirectory::getPath)
+					.map(EBootProjectImpl::create)
 					.collect(Collectors.toCollection(TreeSet::new));
 			// @formatter:on
 		}
@@ -44,7 +45,8 @@ public class EWorkspaceImpl implements EWorkspace {
 			// @formatter:off
 			this.angularProjects = this.directory.getDirectories().stream()
 					.filter(dir -> dir.getProjectType().equals(Type.ANGULAR_PROJECT))
-					.map(ENgProjectImpl::load)
+					.map(EDirectory::getPath)
+					.map(ENgProjectImpl::create)
 					.collect(Collectors.toCollection(TreeSet::new));
 			// @formatter:on
 		}
