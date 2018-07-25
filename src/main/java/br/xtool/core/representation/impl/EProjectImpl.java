@@ -29,12 +29,10 @@ public abstract class EProjectImpl implements EProject {
 		return this.getPath().getFileName().toString();
 	}
 
-	//	@Override
-	//	public abstract String getMainDir();
-
-	@Override
-	public abstract void refresh();
-
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EProject#listAllFiles()
+	 */
 	@Override
 	public Collection<Path> listAllFiles() {
 		try (Stream<Path> pathStrem = Files.walk(this.path)) {
@@ -60,20 +58,10 @@ public abstract class EProjectImpl implements EProject {
 		return new ArrayList<>();
 	}
 
-	@Override
-	public Collection<Path> listDirectories() {
-		// @formatter:off
-		try {
-			return Files.list(this.path)
-					.filter(Files::isDirectory)
-					.collect(Collectors.toList());
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return new ArrayList<>();
-		// @formatter:on
-	}
-
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EProject#listAllDirectories()
+	 */
 	@Override
 	public Collection<Path> listAllDirectories() {
 		try (Stream<Path> pathStrem = Files.walk(this.path)) {
@@ -94,6 +82,15 @@ public abstract class EProjectImpl implements EProject {
 		return new ArrayList<>();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EProject#getPath()
+	 */
+	@Override
+	public Path getPath() {
+		return this.path;
+	}
+
 	/**
 	 * 
 	 */
@@ -101,10 +98,4 @@ public abstract class EProjectImpl implements EProject {
 	public int compareTo(EProject o) {
 		return this.getName().compareTo(o.getName());
 	}
-
-	@Override
-	public Path getPath() {
-		return this.path;
-	}
-
 }

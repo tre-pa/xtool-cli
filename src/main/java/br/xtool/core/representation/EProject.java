@@ -11,10 +11,22 @@ import java.util.Collection;
  */
 public interface EProject extends Comparable<EProject> {
 
+	/**
+	 * Enum com os tipos de projeto
+	 * 
+	 * @author jcruz
+	 *
+	 */
 	enum Type {
 		SPRINGBOOT_PROJECT, ANGULAR_PROJECT, NONE;
 	}
 
+	/**
+	 * Enum com as versões do projeto.
+	 * 
+	 * @author jcruz
+	 *
+	 */
 	enum Version {
 		V1, V2, V3, V4, V5, V6, V7, V8, V9, V10
 	}
@@ -52,8 +64,11 @@ public interface EProject extends Comparable<EProject> {
 	 */
 	Collection<Path> listAllFiles();
 
-	Collection<Path> listDirectories();
-
+	/**
+	 * Lista todos os diretórios recursivamente.
+	 * 
+	 * @return
+	 */
 	Collection<Path> listAllDirectories();
 
 }
