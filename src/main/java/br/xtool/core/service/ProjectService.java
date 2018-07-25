@@ -16,6 +16,7 @@ import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.EProject;
 
 @Service
+@Deprecated
 public class ProjectService {
 
 	@Autowired
@@ -39,6 +40,7 @@ public class ProjectService {
 	 * @param workspaceProjectClass
 	 * @return
 	 */
+	@Deprecated
 	public <T extends EProject> T load(Class<T> workspaceProjectClass) {
 		return workspaceProjectClass.cast(this.workspaceService.getWorkingProject());
 	}
