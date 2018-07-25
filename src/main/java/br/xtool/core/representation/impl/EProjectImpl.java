@@ -51,7 +51,7 @@ public abstract class EProjectImpl implements EProject {
 				.filter(p -> !this.path.relativize(p).startsWith(".gitignore"))
 				.filter(p -> !this.path.relativize(p).startsWith(".factorypath"))
 				.filter(p -> !this.path.relativize(p).startsWith(".springBeans"))
-				.filter(p -> !this.path.relativize(p).startsWith(".gitkeep"))
+				.filter(p -> !this.path.relativize(p).endsWith(".gitkeep"))
 				.collect(Collectors.toList());
 			// @formatter:on
 		} catch (IOException e) {
