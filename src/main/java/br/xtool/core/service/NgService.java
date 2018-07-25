@@ -35,14 +35,14 @@ public class NgService {
 		// @formatter:off
 		Map<String, Object> vars = ImmutableMap.<String, Object>builder()
 				.put("templatePath", "generators/angular/5.x/scaffold")
-				.put("xtoolNg", this.workspaceService.getWorkingProject().getDirectory().getPath().resolve("scripts/xtool-ng.js"))
+				.put("xtoolNg", this.workspaceService.getWorkingProject().getPath().resolve("scripts/xtool-ng.js"))
 				.put("modulePath", ngModule.getFile().getAbsolutePath())
 				.put("moduleName", ngModule.getName())
 				.put("componentPath", ngComponent.getFile().getAbsolutePath())
 				.put("componentName", ngComponent.getName())
 				.build();
 		// @formatter:on
-		if (Files.notExists(this.workspaceService.getWorkingProject().getDirectory().getPath().resolve("scripts/xtool-ng.js"))) {
+		if (Files.notExists(this.workspaceService.getWorkingProject().getPath().resolve("scripts/xtool-ng.js"))) {
 			throw new UnsupportedOperationException();
 			//			this.fs.copy("${templatePath}/scripts/xtool-ng.js.vm", "scripts/xtool-ng.js", vars);
 		}
@@ -58,14 +58,14 @@ public class NgService {
 		// @formatter:off
 		Map<String, Object> vars = ImmutableMap.<String, Object>builder()
 				.put("templatePath", "generators/angular/5.x/scaffold")
-				.put("xtoolNg", this.workspaceService.getWorkingProject().getDirectory().getPath().resolve("scripts/xtool-ng.js"))
+				.put("xtoolNg", this.workspaceService.getWorkingProject().getPath().resolve("scripts/xtool-ng.js"))
 				.put("modulePath", ngModule.getFile().getAbsolutePath())
 				.put("moduleName", ngModule.getName())
 				.put("servicePath", ngService.getFile().getAbsolutePath())
 				.put("serviceName", ngService.getName())
 				.build();
 		// @formatter:on
-		if (Files.notExists(this.workspaceService.getWorkingProject().getDirectory().getPath().resolve("scripts/xtool-ng.js"))) {
+		if (Files.notExists(this.workspaceService.getWorkingProject().getPath().resolve("scripts/xtool-ng.js"))) {
 			throw new UnsupportedOperationException();
 			//			this.fs.copy("${templatePath}/scripts/xtool-ng.js.vm", "scripts/xtool-ng.js", vars);
 		}
@@ -81,14 +81,14 @@ public class NgService {
 		// @formatter:off
 		Map<String, Object> vars = ImmutableMap.<String, Object>builder()
 				.put("templatePath", "generators/angular/5.x/scaffold")
-				.put("xtoolNg", this.workspaceService.getWorkingProject().getDirectory().getPath().resolve("scripts/xtool-ng.js"))
+				.put("xtoolNg", this.workspaceService.getWorkingProject().getPath().resolve("scripts/xtool-ng.js"))
 				.put("modulePath", ngModule.getFile().getAbsolutePath())
 				.put("moduleName", ngModule.getName())
 				.put("dialogPath", ngDialog.getFile().getAbsolutePath())
 				.put("dialogName", ngDialog.getName())
 				.build();
 		// @formatter:on
-		if (Files.notExists(this.workspaceService.getWorkingProject().getDirectory().getPath().resolve("scripts/xtool-ng.js"))) {
+		if (Files.notExists(this.workspaceService.getWorkingProject().getPath().resolve("scripts/xtool-ng.js"))) {
 			throw new UnsupportedOperationException();
 			//			this.fs.copy("${templatePath}/scripts/xtool-ng.js.vm", "scripts/xtool-ng.js", vars);
 		}

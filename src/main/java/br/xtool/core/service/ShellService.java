@@ -20,7 +20,7 @@ public class ShellService {
 	public int runCmd(String command) {
 		ProcessBuilder processBuilder = new ProcessBuilder();
 		processBuilder.command("sh", "-c", command);
-		processBuilder.directory(this.workspaceService.getWorkingProject().getDirectory().getPath().toFile());
+		processBuilder.directory(this.workspaceService.getWorkingProject().getPath().toFile());
 		processBuilder.inheritIO();
 		Process process = processBuilder.start();
 		return process.waitFor();

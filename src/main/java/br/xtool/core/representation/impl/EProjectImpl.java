@@ -8,21 +8,15 @@ import java.util.Collection;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import br.xtool.core.representation.EDirectory;
 import br.xtool.core.representation.EProject;
-import lombok.Getter;
 
 public abstract class EProjectImpl implements EProject {
-
-	@Getter
-	private EDirectory directory;
 
 	private Path path;
 
 	public EProjectImpl(Path path) {
 		super();
 		this.path = path;
-		this.directory = EDirectoryImpl.of(path);
 	}
 
 	/**

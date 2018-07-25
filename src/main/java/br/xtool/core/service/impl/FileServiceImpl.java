@@ -59,7 +59,7 @@ public class FileServiceImpl implements FileService {
 	@Override
 	@SneakyThrows
 	public <T extends EProject> void copy(ETemplate template, T project) {
-		Path finalPath = project.getDirectory().getPath().resolve(template.getPath());
+		Path finalPath = project.getPath().resolve(template.getPath());
 		if (Files.notExists(finalPath.getParent())) Files.createDirectories(finalPath.getParent());
 		BufferedWriter bufferedWriter = Files.newBufferedWriter(finalPath, StandardCharsets.UTF_8);
 		bufferedWriter.write(template.merge());

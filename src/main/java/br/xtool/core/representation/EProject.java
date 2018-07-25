@@ -21,8 +21,6 @@ public interface EProject extends Comparable<EProject> {
 
 	Path getPath();
 
-	EDirectory getDirectory();
-
 	/**
 	 * Retorna o nome do projeto.
 	 * 

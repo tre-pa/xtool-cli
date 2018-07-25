@@ -8,18 +8,17 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
 
-import br.xtool.core.representation.EDirectory;
 import br.xtool.core.representation.EJavaPackage;
 import br.xtool.core.representation.EJavaSourceFolder;
 import lombok.SneakyThrows;
 
 public class EJavaSourceFolderImpl implements EJavaSourceFolder {
 
-	private EDirectory directory;
+	private Path path;
 
 	public EJavaSourceFolderImpl(Path path) {
 		super();
-		this.directory = EDirectoryImpl.of(path);
+		this.path = path;
 	}
 
 	/*
@@ -28,7 +27,7 @@ public class EJavaSourceFolderImpl implements EJavaSourceFolder {
 	 */
 	@Override
 	public Path getPath() {
-		return this.directory.getPath();
+		return this.path;
 	}
 
 	/*

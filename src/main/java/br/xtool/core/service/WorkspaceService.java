@@ -25,7 +25,6 @@ public class WorkspaceService {
 
 	@PostConstruct
 	private void init() {
-		System.out.println(this.home);
 		this.workingProject = new ENoneProjectImpl(this.home);
 	}
 

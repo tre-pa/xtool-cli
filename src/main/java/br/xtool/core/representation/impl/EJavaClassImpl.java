@@ -80,7 +80,7 @@ public class EJavaClassImpl implements EJavaClass {
 	 */
 	@Override
 	public Path getPath() {
-		return this.project.getDirectory().getPath().resolve(String.format("src/main/java/%s/%s.java", this.getPackage().getDir(), this.getName()));
+		return this.project.getPath().resolve(String.format("src/main/java/%s/%s.java", this.getPackage().getDir(), this.getName()));
 	}
 
 	@Override

@@ -33,7 +33,7 @@ public class ENgProjectImpl extends EProjectImpl implements ENgProject {
 
 	@Override
 	public ENgPackage getNgPackage() {
-		return ENgPackageImpl.of(this.getDirectory().getPath().resolve("package.json")).orElse(null);
+		return ENgPackageImpl.of(this.getPath().resolve("package.json")).orElse(null);
 	}
 
 	/**

@@ -95,7 +95,7 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 	 */
 	@Override
 	public EJavaSourceFolder getMainSourceFolder() {
-		return new EJavaSourceFolderImpl(this.getDirectory().getPath().resolve("src/main/java"));
+		return new EJavaSourceFolderImpl(this.getPath().resolve("src/main/java"));
 	}
 
 	/*
@@ -104,7 +104,7 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 	 */
 	@Override
 	public EJavaSourceFolder getTestSourceFolder() {
-		return new EJavaSourceFolderImpl(this.getDirectory().getPath().resolve("src/test/java"));
+		return new EJavaSourceFolderImpl(this.getPath().resolve("src/test/java"));
 	}
 
 	/*
@@ -114,7 +114,7 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 	@Override
 	public EBootPom getPom() {
 		if (Objects.isNull(this.pom)) {
-			this.pom = EBootPomImpl.of(this.getDirectory().getPath().resolve("pom.xml"));
+			this.pom = EBootPomImpl.of(this.getPath().resolve("pom.xml"));
 		}
 		return this.pom;
 	}
@@ -127,7 +127,7 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 	@Override
 	public EBootAppProperties getApplicationProperties() {
 		if (Objects.isNull(this.applicationProperties)) {
-			this.applicationProperties = EBootAppPropertiesImpl.of(this.getDirectory().getPath().resolve("src/main/resources/application.properties"));
+			this.applicationProperties = EBootAppPropertiesImpl.of(this.getPath().resolve("src/main/resources/application.properties"));
 		}
 		return this.applicationProperties;
 	}
@@ -210,7 +210,7 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 	@Override
 	public Optional<EUmlClassDiagram> getDomainClassDiagram() {
 		try {
-			EUmlClassDiagram classDiagram = EUmlClassDiagramImpl.of(this.getDirectory().getPath().resolve("docs/diagrams/domain-class.md"));
+			EUmlClassDiagram classDiagram = EUmlClassDiagramImpl.of(this.getPath().resolve("docs/diagrams/domain-class.md"));
 			return Optional.of(classDiagram);
 		} catch (IOException e) {
 			e.printStackTrace();
