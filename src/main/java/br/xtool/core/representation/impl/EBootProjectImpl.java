@@ -188,8 +188,9 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 	public Map<String, JavaUnit> getJavaUnits() {
 		if (Objects.isNull(this.javaUnits)) {
 			// @formatter:off
-			this.javaUnits = this.getDirectory().getAllFiles().stream()
-				.filter(file -> file.getName().endsWith(".java"))
+			this.javaUnits = this.listAllFiles().stream()
+				.filter(path -> path.getFileName().endsWith(".java"))
+				.map(Path::toFile)
 				.map(RoasterUtil::createJavaUnit)
 				.filter(Optional::isPresent)
 				.map(Optional::get)

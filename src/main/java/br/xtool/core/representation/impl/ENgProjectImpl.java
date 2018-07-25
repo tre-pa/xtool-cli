@@ -144,8 +144,9 @@ public class ENgProjectImpl extends EProjectImpl implements ENgProject {
 	private Map<String, ENgClass> getNgClasses() {
 		if (Objects.isNull(this.ngClasses)) {
 			// @formatter:off
-			this.ngClasses = this.getDirectory().getAllFiles().stream()
-				.filter(file -> Arrays.asList(ArtifactyType.values()).stream().anyMatch(p -> file.getPath().endsWith(p.ext)))
+			this.ngClasses = this.listAllFiles().stream()
+				.filter(path -> Arrays.asList(ArtifactyType.values()).stream().anyMatch(p -> path.getFileName().endsWith(p.ext)))
+				.map(Path::toFile)
 				.map(ENgClassImpl::new)
 				.collect(Collectors.toMap(ngClass -> ngClass.getFile().getAbsolutePath(), Function.identity()));
 			// @formatter:on

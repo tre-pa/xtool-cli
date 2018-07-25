@@ -1,8 +1,6 @@
 package br.xtool.core.representation;
 
-import java.io.File;
 import java.nio.file.Path;
-import java.util.List;
 import java.util.SortedSet;
 
 import br.xtool.core.representation.EProject.Type;
@@ -35,7 +33,7 @@ public interface EDirectory extends Comparable<EDirectory> {
 	 * 
 	 * @return
 	 */
-	List<File> getAllFiles();
+	//	List<File> getAllFiles();
 
 	/**
 	 * Retorna os diretórios.
@@ -44,6 +42,6 @@ public interface EDirectory extends Comparable<EDirectory> {
 	 */
 	SortedSet<EDirectory> getDirectories();
 
-	SortedSet<EDirectory> getAllDirectories();
+	//	SortedSet<EDirectory> getAllDirectories();
 
 }

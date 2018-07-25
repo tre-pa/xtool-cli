@@ -1,5 +1,8 @@
 package br.xtool.core.representation;
 
+import java.nio.file.Path;
+import java.util.Collection;
+
 /**
  * Interface genérica para projetos.
  * 
@@ -15,6 +18,8 @@ public interface EProject extends Comparable<EProject> {
 	enum Version {
 		V1, V2, V3, V4, V5, V6, V7, V8, V9, V10
 	}
+
+	Path getPath();
 
 	EDirectory getDirectory();
 
@@ -40,6 +45,17 @@ public interface EProject extends Comparable<EProject> {
 	 * 
 	 * @return
 	 */
-	public Type getProjectType();
+	Type getProjectType();
+
+	/**
+	 * Lista todos os arquivo do projeto recursivamente.
+	 * 
+	 * @return
+	 */
+	Collection<Path> listAllFiles();
+
+	Collection<Path> listDirectories();
+
+	Collection<Path> listAllDirectories();
 
 }

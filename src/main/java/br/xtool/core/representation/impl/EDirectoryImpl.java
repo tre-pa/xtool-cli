@@ -1,11 +1,8 @@
 package br.xtool.core.representation.impl;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -14,7 +11,6 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.checkerframework.checker.nullness.qual.Nullable;
 
@@ -48,25 +44,25 @@ public class EDirectoryImpl implements EDirectory {
 		this.path = path.normalize();
 	}
 
-	@Override
-	public List<File> getAllFiles() {
-		try (Stream<Path> pathStrem = Files.walk(this.path)) {
-			// @formatter:off
-			return pathStrem
-					.filter(Files::isRegularFile)
-					.filter(p -> !p.startsWith("target"))
-					.filter(p -> !p.startsWith(".git"))
-					.filter(p -> !p.startsWith(".settings"))
-					.filter(p -> !p.startsWith("node_modules"))
-					.filter(p -> !p.startsWith("dist"))
-					.map(p -> p.toFile())
-					.collect(Collectors.toList());
-			// @formatter:on
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return new ArrayList<>();
-	}
+	//	@Override
+	//	public List<File> getAllFiles() {
+	//		try (Stream<Path> pathStrem = Files.walk(this.path)) {
+//			// @formatter:off
+//			return pathStrem
+//					.filter(Files::isRegularFile)
+//					.filter(p -> !p.startsWith("target"))
+//					.filter(p -> !p.startsWith(".git"))
+//					.filter(p -> !p.startsWith(".settings"))
+//					.filter(p -> !p.startsWith("node_modules"))
+//					.filter(p -> !p.startsWith("dist"))
+//					.map(p -> p.toFile())
+//					.collect(Collectors.toList());
+//			// @formatter:on
+	//		} catch (IOException e) {
+	//			e.printStackTrace();
+	//		}
+	//		return new ArrayList<>();
+	//	}
 
 	@Override
 	public SortedSet<EDirectory> getDirectories() {
@@ -83,25 +79,25 @@ public class EDirectoryImpl implements EDirectory {
 		// @formatter:on
 	}
 
-	@Override
-	public SortedSet<EDirectory> getAllDirectories() {
-		try (Stream<Path> pathStrem = Files.walk(this.path)) {
-			// @formatter:off
-			return pathStrem
-				.filter(Files::isDirectory)
-				.filter(p -> !p.startsWith("target"))
-				.filter(p -> !p.startsWith(".git"))
-				.filter(p -> !p.startsWith(".settings"))
-				.filter(p -> !p.startsWith("node_modules"))
-				.filter(p -> !p.startsWith("dist"))
-				.map(EDirectoryImpl::of)
-				.collect(Collectors.toCollection(TreeSet::new));
-			// @formatter:on
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return new TreeSet<>();
-	}
+	//	@Override
+	//	public SortedSet<EDirectory> getAllDirectories() {
+	//		try (Stream<Path> pathStrem = Files.walk(this.path)) {
+//			// @formatter:off
+//			return pathStrem
+//				.filter(Files::isDirectory)
+//				.filter(p -> !p.startsWith("target"))
+//				.filter(p -> !p.startsWith(".git"))
+//				.filter(p -> !p.startsWith(".settings"))
+//				.filter(p -> !p.startsWith("node_modules"))
+//				.filter(p -> !p.startsWith("dist"))
+//				.map(EDirectoryImpl::of)
+//				.collect(Collectors.toCollection(TreeSet::new));
+//			// @formatter:on
+	//		} catch (IOException e) {
+	//			e.printStackTrace();
+	//		}
+	//		return new TreeSet<>();
+	//	}
 
 	public static EDirectoryImpl of(Path path) {
 		if (!Files.isDirectory(path)) {
