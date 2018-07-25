@@ -37,7 +37,7 @@ public class EBootProjectV1Factory implements Function<String, EBootProject> {
 		Path projectPath = this.workspaceService.getHome().getPath().resolve(name);
 		if (Files.exists(projectPath)) throw new IllegalArgumentException(String.format("O projeto com nome %s já existe no workspace.", name));
 		Files.createDirectory(projectPath);
-		EBootProject project = EBootProjectImpl.create(projectPath);
+		EBootProject project = new EBootProjectImpl(projectPath);
 
 		Map<String, Object> vars = new HashMap<>();
 		vars.put("projectName", EBootProject.genProjectName(name));

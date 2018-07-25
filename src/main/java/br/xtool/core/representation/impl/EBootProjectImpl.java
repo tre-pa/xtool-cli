@@ -226,8 +226,4 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 		this.javaUnits = null;
 	}
 
-	public static EBootProject create(Path path) {
-		return new EBootProjectImpl(path);
-	}
-
 }

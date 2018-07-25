@@ -26,31 +26,7 @@ public class ENgProjectImpl extends EProjectImpl implements ENgProject {
 
 	private Map<String, ENgClass> ngClasses;
 
-	enum ArtifactyType {
-		// @formatter:off
-		MODULE(".module.ts"),
-		COMPONENT(".component.ts"),
-		SERVICE("-service.ts"),
-		LAYOUT("-layout.component.ts"),
-		PAGE("-page.component.ts"),
-		EDIT("-edit.component.ts"),
-		DETAIL("-detail.component.ts"),
-		LIST("-list.component.ts"),
-		DIALOG("-dialog.component.ts");
-		// @formatter:on
-		private String ext;
-
-		private ArtifactyType(String ext) {
-			this.ext = ext;
-		}
-
-		public String getExt() {
-			return this.ext;
-		}
-
-	}
-
-	private ENgProjectImpl(Path path) {
+	public ENgProjectImpl(Path path) {
 		super(path);
 	}
 
@@ -191,8 +167,28 @@ public class ENgProjectImpl extends EProjectImpl implements ENgProject {
 		this.ngClasses = null;
 	}
 
-	public static ENgProject create(Path path) {
-		return new ENgProjectImpl(path);
+	enum ArtifactyType {
+		// @formatter:off
+		MODULE(".module.ts"),
+		COMPONENT(".component.ts"),
+		SERVICE("-service.ts"),
+		LAYOUT("-layout.component.ts"),
+		PAGE("-page.component.ts"),
+		EDIT("-edit.component.ts"),
+		DETAIL("-detail.component.ts"),
+		LIST("-list.component.ts"),
+		DIALOG("-dialog.component.ts");
+		// @formatter:on
+		private String ext;
+
+		private ArtifactyType(String ext) {
+			this.ext = ext;
+		}
+
+		public String getExt() {
+			return this.ext;
+		}
+
 	}
 
 }
