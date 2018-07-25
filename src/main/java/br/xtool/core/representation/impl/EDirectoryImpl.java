@@ -1,16 +1,12 @@
 package br.xtool.core.representation.impl;
 
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 import org.checkerframework.checker.nullness.qual.Nullable;
 
@@ -64,20 +60,20 @@ public class EDirectoryImpl implements EDirectory {
 	//		return new ArrayList<>();
 	//	}
 
-	@Override
-	public SortedSet<EDirectory> getDirectories() {
-		// @formatter:off
-		try {
-			return Files.list(this.path)
-					.filter(Files::isDirectory)
-					.map(EDirectoryImpl::of)
-					.collect(Collectors.toCollection(TreeSet::new));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return new TreeSet<>();
-		// @formatter:on
-	}
+	//	@Override
+	//	public SortedSet<EDirectory> getDirectories() {
+//		// @formatter:off
+//		try {
+//			return Files.list(this.path)
+//					.filter(Files::isDirectory)
+//					.map(EDirectoryImpl::of)
+//					.collect(Collectors.toCollection(TreeSet::new));
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//		return new TreeSet<>();
+//		// @formatter:on
+	//	}
 
 	//	@Override
 	//	public SortedSet<EDirectory> getAllDirectories() {

@@ -34,7 +34,7 @@ public class EBootProjectV1Factory implements Function<String, EBootProject> {
 	@SneakyThrows
 	public EBootProject apply(String name) {
 
-		Path projectPath = this.workspaceService.getHome().getPath().resolve(name);
+		Path projectPath = this.workspaceService.getHome().resolve(name);
 		if (Files.exists(projectPath)) throw new IllegalArgumentException(String.format("O projeto com nome %s já existe no workspace.", name));
 		Files.createDirectory(projectPath);
 		EBootProject project = new EBootProjectImpl(projectPath);

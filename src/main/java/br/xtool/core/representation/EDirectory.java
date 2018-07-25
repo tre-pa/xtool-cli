@@ -1,7 +1,6 @@
 package br.xtool.core.representation;
 
 import java.nio.file.Path;
-import java.util.SortedSet;
 
 import br.xtool.core.representation.EProject.Type;
 
@@ -40,7 +39,7 @@ public interface EDirectory extends Comparable<EDirectory> {
 	 * 
 	 * @return
 	 */
-	SortedSet<EDirectory> getDirectories();
+	//	SortedSet<EDirectory> getDirectories();
 
 	//	SortedSet<EDirectory> getAllDirectories();
 

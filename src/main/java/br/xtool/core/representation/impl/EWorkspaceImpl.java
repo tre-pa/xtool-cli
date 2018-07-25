@@ -1,16 +1,17 @@
 package br.xtool.core.representation.impl;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Objects;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 import br.xtool.core.representation.EBootProject;
-import br.xtool.core.representation.EDirectory;
 import br.xtool.core.representation.ENgProject;
 import br.xtool.core.representation.EProject;
-import br.xtool.core.representation.EProject.Type;
 import br.xtool.core.representation.EWorkspace;
+import lombok.SneakyThrows;
 
 public class EWorkspaceImpl implements EWorkspace {
 
@@ -18,20 +19,21 @@ public class EWorkspaceImpl implements EWorkspace {
 
 	private SortedSet<ENgProject> angularProjects;
 
-	private EDirectory directory;
+	private Path path;
 
-	public EWorkspaceImpl(EDirectory directory) {
+	public EWorkspaceImpl(Path path) {
 		super();
-		this.directory = directory;
+		this.path = path;
 	}
 
 	@Override
+	@SneakyThrows
 	public SortedSet<EBootProject> getSpringBootProjects() {
 		if (Objects.isNull(this.springBootProjects)) {
 			// @formatter:off
-			this.springBootProjects = this.directory.getDirectories().stream()
-					.filter(dir -> dir.getProjectType().equals(Type.SPRINGBOOT_PROJECT))
-					.map(EDirectory::getPath)
+			this.springBootProjects = Files.list(this.path)
+					.filter(Files::isDirectory)
+					.filter(EBootProject::isValid)
 					.map(EBootProjectImpl::new)
 					.collect(Collectors.toCollection(TreeSet::new));
 			// @formatter:on
@@ -40,12 +42,13 @@ public class EWorkspaceImpl implements EWorkspace {
 	}
 
 	@Override
+	@SneakyThrows
 	public SortedSet<ENgProject> getAngularProjections() {
 		if (Objects.isNull(this.angularProjects)) {
 			// @formatter:off
-			this.angularProjects = this.directory.getDirectories().stream()
-					.filter(dir -> dir.getProjectType().equals(Type.ANGULAR_PROJECT))
-					.map(EDirectory::getPath)
+			this.angularProjects = Files.list(this.path)
+					.filter(Files::isDirectory)
+					.filter(ENgProject::isValid)
 					.map(ENgProjectImpl::new)
 					.collect(Collectors.toCollection(TreeSet::new));
 			// @formatter:on
