@@ -20,8 +20,8 @@ import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.EJavaClass;
 import br.xtool.core.representation.EJavaEntity;
 import br.xtool.core.representation.EJavaPackage;
-import br.xtool.core.representation.EJavaRepository;
-import br.xtool.core.representation.EJavaRest;
+import br.xtool.core.representation.EBootRepository;
+import br.xtool.core.representation.EBootRest;
 import br.xtool.core.representation.EJavaSourceFolder;
 import br.xtool.core.representation.ENgProject;
 import br.xtool.core.representation.EProject;
@@ -156,7 +156,7 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 	 * @return
 	 */
 	@Override
-	public SortedSet<EJavaRepository> getRepositories() {
+	public SortedSet<EBootRepository> getRepositories() {
 		// @formatter:off
 		return this.getJavaUnits().values()
 			.parallelStream()
@@ -173,7 +173,7 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 	 * @return
 	 */
 	@Override
-	public SortedSet<EJavaRest> getRests() {
+	public SortedSet<EBootRest> getRests() {
 		// @formatter:off
 		return this.getJavaUnits().values()
 			.parallelStream()

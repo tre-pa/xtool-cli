@@ -10,7 +10,7 @@ import org.springframework.shell.standard.ShellMethod;
 import br.xtool.XtoolCliApplication;
 import br.xtool.core.ConsoleLog;
 import br.xtool.core.aware.SpringBootAware;
-import br.xtool.core.representation.EJavaRepository;
+import br.xtool.core.representation.EBootRepository;
 import br.xtool.core.representation.EBootProject;
 import br.xtool.core.service.ProjectService;
 
@@ -29,7 +29,7 @@ public class SpringBootRepositoryInfo extends SpringBootAware {
 	private void infoAllRepositories(EBootProject bootProject) {
 		//// @formatter:off
 		int maxLenghtEntityName = bootProject.getRepositories().stream()
-				.map(EJavaRepository::getName)
+				.map(EBootRepository::getName)
 				.map(String::length)
 				.max(Comparator.naturalOrder())
 				.orElse(10);

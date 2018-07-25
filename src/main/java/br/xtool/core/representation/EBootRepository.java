@@ -8,7 +8,7 @@ import java.util.Optional;
  * @author jcruz
  *
  */
-public interface EJavaRepository extends Comparable<EJavaRepository> {
+public interface EBootRepository extends Comparable<EBootRepository> {
 
 	/**
 	 * Nome do Repository

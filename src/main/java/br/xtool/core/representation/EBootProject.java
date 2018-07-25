@@ -78,14 +78,14 @@ public interface EBootProject extends EProject {
 	 * 
 	 * @return
 	 */
-	SortedSet<EJavaRepository> getRepositories();
+	SortedSet<EBootRepository> getRepositories();
 
 	/**
 	 * Retorna a lsta de classes rests.
 	 * 
 	 * @return
 	 */
-	SortedSet<EJavaRest> getRests();
+	SortedSet<EBootRest> getRests();
 
 	/**
 	 * Retorna o projeto Angular associado ao projeto SpringBoot. Por conveção o

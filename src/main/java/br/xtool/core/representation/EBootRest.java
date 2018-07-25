@@ -9,7 +9,7 @@ import java.util.SortedSet;
  * @author jcruz
  *
  */
-public interface EJavaRest extends EJavaClass {
+public interface EBootRest extends EJavaClass {
 
 	/**
 	 * Retorna o contexto raiz da api rest.

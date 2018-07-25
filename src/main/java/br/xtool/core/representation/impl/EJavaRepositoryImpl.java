@@ -6,7 +6,7 @@ import org.jboss.forge.roaster.model.source.JavaInterfaceSource;
 
 import br.xtool.core.representation.EJavaEntity;
 import br.xtool.core.representation.EJavaPackage;
-import br.xtool.core.representation.EJavaRepository;
+import br.xtool.core.representation.EBootRepository;
 import br.xtool.core.representation.EBootProject;
 
 /**
@@ -15,7 +15,7 @@ import br.xtool.core.representation.EBootProject;
  * @author jcruz
  *
  */
-public class EJavaRepositoryImpl implements EJavaRepository {
+public class EJavaRepositoryImpl implements EBootRepository {
 
 	private EBootProject springBootProject;
 
@@ -62,7 +62,7 @@ public class EJavaRepositoryImpl implements EJavaRepository {
 	}
 
 	@Override
-	public int compareTo(EJavaRepository o) {
+	public int compareTo(EBootRepository o) {
 		return this.getName().compareTo(o.getName());
 	}
 }

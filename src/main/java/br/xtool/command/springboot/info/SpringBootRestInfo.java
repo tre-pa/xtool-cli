@@ -10,7 +10,7 @@ import org.springframework.shell.standard.ShellMethod;
 import br.xtool.XtoolCliApplication;
 import br.xtool.core.ConsoleLog;
 import br.xtool.core.aware.SpringBootAware;
-import br.xtool.core.representation.EJavaRest;
+import br.xtool.core.representation.EBootRest;
 import br.xtool.core.representation.EBootProject;
 import br.xtool.core.service.ProjectService;
 
@@ -29,7 +29,7 @@ public class SpringBootRestInfo extends SpringBootAware {
 	private void infoAllRests(EBootProject bootProject) {
 		//// @formatter:off
 		int maxLenghtEntityName = bootProject.getRests().stream()
-				.map(EJavaRest::getName)
+				.map(EBootRest::getName)
 				.map(String::length)
 				.max(Comparator.naturalOrder())
 				.orElse(10);

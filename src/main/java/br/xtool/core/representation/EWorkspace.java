@@ -3,7 +3,7 @@ package br.xtool.core.representation;
 import java.util.SortedSet;
 
 /**
- * Representão do workspace.
+ * Representação do workspace.
  * 
  * @author jcruz
  *

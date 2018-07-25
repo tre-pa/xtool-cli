@@ -17,6 +17,7 @@ import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.impl.EJavaEntityImpl;
 import br.xtool.core.service.FileService;
 import br.xtool.core.service.ProjectService;
+import br.xtool.core.service.WorkspaceService;
 import br.xtool.core.util.Names;
 
 /**
@@ -33,6 +34,9 @@ public class SpringBootJpaRepositoryGenerator extends SpringBootAware {
 
 	@Autowired
 	private ProjectService projectService;
+
+	@Autowired
+	private WorkspaceService workspaceService;
 
 	@ShellMethod(key = "gen:repository", value = "Gera uma classe de Repository (JpaRepository) para entidade JPA em um projeto Spring Boot", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
 	public void run(@ShellOption(help = "Entidade JPA", valueProvider = EJavaEntityValueProvider.class) EJavaEntityImpl entity) throws IOException, JDOMException {

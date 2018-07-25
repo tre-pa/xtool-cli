@@ -10,11 +10,11 @@ import org.apache.commons.lang3.StringUtils;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.jboss.forge.roaster.model.source.MethodSource;
 
-import br.xtool.core.representation.EJavaMethod;
-import br.xtool.core.representation.EJavaRest;
 import br.xtool.core.representation.EBootProject;
+import br.xtool.core.representation.EBootRest;
+import br.xtool.core.representation.EJavaMethod;
 
-public class EJavaRestImpl extends EJavaClassImpl implements EJavaRest {
+public class EJavaRestImpl extends EJavaClassImpl implements EBootRest {
 
 	public EJavaRestImpl(EBootProject springBootProject, JavaClassSource javaClassSource) {
 		super(springBootProject, javaClassSource);
