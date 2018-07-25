@@ -19,6 +19,7 @@ import br.xtool.core.representation.ENgPackage;
 import br.xtool.core.representation.ENgPage;
 import br.xtool.core.representation.ENgProject;
 import br.xtool.core.representation.ENgService;
+import br.xtool.core.representation.EProject;
 import lombok.Getter;
 
 @Getter
@@ -165,6 +166,11 @@ public class ENgProjectImpl extends EProjectImpl implements ENgProject {
 	@Override
 	public void refresh() {
 		this.ngClasses = null;
+	}
+
+	@Override
+	public Type getProjectType() {
+		return EProject.Type.ANGULAR_PROJECT;
 	}
 
 	enum ArtifactyType {

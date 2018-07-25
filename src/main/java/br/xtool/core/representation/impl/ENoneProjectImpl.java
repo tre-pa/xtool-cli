@@ -3,6 +3,7 @@ package br.xtool.core.representation.impl;
 import java.nio.file.Path;
 
 import br.xtool.core.representation.ENoneProject;
+import br.xtool.core.representation.EProject;
 
 public class ENoneProjectImpl extends EProjectImpl implements ENoneProject {
 
@@ -15,14 +16,14 @@ public class ENoneProjectImpl extends EProjectImpl implements ENoneProject {
 		return "";
 	}
 
-	//	@Override
-	//	public String getMainDir() {
-	//		return "";
-	//	}
-
 	@Override
 	public void refresh() {
 
+	}
+
+	@Override
+	public Type getProjectType() {
+		return EProject.Type.NONE;
 	}
 
 }

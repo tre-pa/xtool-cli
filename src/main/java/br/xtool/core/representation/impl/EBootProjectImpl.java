@@ -24,6 +24,7 @@ import br.xtool.core.representation.EJavaRepository;
 import br.xtool.core.representation.EJavaRest;
 import br.xtool.core.representation.EJavaSourceFolder;
 import br.xtool.core.representation.ENgProject;
+import br.xtool.core.representation.EProject;
 import br.xtool.core.representation.EUmlClassDiagram;
 import br.xtool.core.util.RoasterUtil;
 
@@ -224,6 +225,11 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 	@Override
 	public void refresh() {
 		this.javaUnits = null;
+	}
+
+	@Override
+	public Type getProjectType() {
+		return EProject.Type.SPRINGBOOT_PROJECT;
 	}
 
 }
