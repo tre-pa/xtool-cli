@@ -21,6 +21,7 @@ import br.xtool.core.representation.EProject.Type;
  *
  */
 @Service
+@Deprecated
 public class SupportManager {
 
 	@Autowired
