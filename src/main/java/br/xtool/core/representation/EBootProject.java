@@ -1,10 +1,13 @@
 package br.xtool.core.representation;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Optional;
 import java.util.SortedSet;
 
 import org.apache.commons.lang3.StringUtils;
 
+import br.xtool.core.representation.impl.EBootPomImpl;
 import br.xtool.core.representation.impl.EJavaPackageImpl;
 import strman.Strman;
 
@@ -144,6 +147,24 @@ public interface EBootProject extends EProject {
 	static EJavaPackage genRootPackage(String projectName) {
 		String packageName = EJavaPackage.getDefaultPrefix().concat(".").concat(StringUtils.join(StringUtils.split(Strman.toKebabCase(projectName), "-"), "."));
 		return EJavaPackageImpl.of(packageName);
+	}
+
+	/**
+	 * Verifica se o path possui um projeto spring boot válido.
+	 * 
+	 * @param path
+	 *            Caminho do projeto
+	 * @return
+	 */
+	static boolean isValid(Path path) {
+		Path pomFile = path.resolve("pom.xml");
+		if (Files.exists(pomFile)) {
+			EBootPom ePom = EBootPomImpl.of(pomFile);
+			if (ePom.getParentVersion().isPresent()) {
+				return ePom.getParentGroupId().get().equals("org.springframework.boot");
+			}
+		}
+		return false;
 	}
 
 }

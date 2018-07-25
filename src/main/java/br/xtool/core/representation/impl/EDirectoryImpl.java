@@ -26,6 +26,7 @@ import br.xtool.core.representation.ENgPackage;
 import br.xtool.core.representation.EProject.Type;
 import lombok.Getter;
 
+@Deprecated
 public class EDirectoryImpl implements EDirectory {
 
 	@Getter
@@ -119,6 +120,7 @@ public class EDirectoryImpl implements EDirectory {
 		// @formatter:on
 	}
 
+	@Deprecated
 	private class SpringBootProjectTypeResolver implements Function<EDirectory, Type> {
 
 		@Override
@@ -134,6 +136,7 @@ public class EDirectoryImpl implements EDirectory {
 		}
 	}
 
+	@Deprecated
 	private class AngularProjectProjectTypeResolver implements Function<EDirectory, Type> {
 
 		@Override

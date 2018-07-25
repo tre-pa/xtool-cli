@@ -1,7 +1,12 @@
 package br.xtool.core.representation;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Map;
+import java.util.Optional;
 import java.util.SortedSet;
 
+import br.xtool.core.representation.impl.ENgPackageImpl;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -87,4 +92,22 @@ public interface ENgProject extends EProject {
 	@Override
 	public void refresh();
 
+	/**
+	 * Verifica se o path possui um projeto angular válido.
+	 * 
+	 * @param path
+	 *            Caminho do projeto
+	 * @return
+	 */
+	static boolean isValid(Path path) {
+		Path packageJsonFile = path.resolve("package.json");
+		if (Files.exists(packageJsonFile)) {
+			Optional<ENgPackage> ngPackage = ENgPackageImpl.of(packageJsonFile);
+			if (ngPackage.isPresent()) {
+				Map<String, String> dependencies = ngPackage.get().getDependencies();
+				return dependencies.containsKey("@angular/core");
+			}
+		}
+		return false;
+	}
 }
