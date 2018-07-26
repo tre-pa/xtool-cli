@@ -11,6 +11,7 @@ import org.springframework.shell.standard.ShellOption;
 import br.xtool.XtoolCliApplication;
 import br.xtool.core.aware.SpringBootAware;
 import br.xtool.core.representation.EBootProject;
+import br.xtool.core.representation.EUmlEnum;
 import br.xtool.core.service.FileService;
 import br.xtool.core.service.WorkspaceService;
 
@@ -61,6 +62,10 @@ public class SpringBootJpaEntityGenerator extends SpringBootAware {
 				//				umlRelationship.getSourceMultiplicity().ifPresent(m -> System.out.println("\tSource: " + m.getMutiplicityType()));
 				//				umlRelationship.getTargetMultiplicity().ifPresent(m -> System.out.println("\tTarget: " + m.getMutiplicityType()));
 			});
+			System.out.println("ENUMS");
+			classDiagram.getEnums().stream()
+				.flatMap(eUmlEnums -> eUmlEnums.getValues().stream())
+				.forEach(System.out::println);
 		});
 
 		//this.getProject().get
