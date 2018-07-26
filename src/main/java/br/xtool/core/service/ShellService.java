@@ -1,32 +1,50 @@
 package br.xtool.core.service;
 
+import java.nio.file.Path;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+/**
+ * Operação do shell.
+ * 
+ * @author jcruz
+ *
+ */
+public interface ShellService {
 
-import lombok.SneakyThrows;
+	/**
+	 * Roda o comando no shell.
+	 * 
+	 * @param command
+	 * @return
+	 */
+	public int runCmd(String command);
 
-@Component
-public class ShellService {
+	/**
+	 * Roda o comando no shell substituindo variáveis no comando.
+	 * 
+	 * @param command
+	 * @param vars
+	 * @return
+	 */
+	public int runCmd(String command, Map<String, Object> vars);
 
-	@Autowired
-	private WorkspaceService workspaceService;
+	/**
+	 * Roda o comando no caminho especificado.
+	 * 
+	 * @param path
+	 * @param command
+	 * @return
+	 */
+	public int runCmd(Path path, String command);
 
-	@SneakyThrows
-	public int runCmd(String command) {
-		ProcessBuilder processBuilder = new ProcessBuilder();
-		processBuilder.command("sh", "-c", command);
-		processBuilder.directory(this.workspaceService.getWorkingProject().getPath().toFile());
-		processBuilder.inheritIO();
-		Process process = processBuilder.start();
-		return process.waitFor();
-	}
-
-	@SneakyThrows
-	public int runCmd(String command, Map<String, Object> vars) {
-		throw new UnsupportedOperationException();
-		//		return this.runCmd(this.fs.getTemplate(command, vars));
-	}
+	/**
+	 * Roda o comando no shell no caminho especificado substituindo variáveis.
+	 * 
+	 * @param path
+	 * @param command
+	 * @param vars
+	 * @return
+	 */
+	public int runCmd(Path path, String command, Map<String, Object> vars);
 
 }

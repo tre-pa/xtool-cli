@@ -31,7 +31,7 @@ public class NewSpringBootProjectGenerator extends RegularAware {
 	// @formatter:off
 	public void run(
 			@ShellOption(help = "Nome do projeto") String name, 
-			@ShellOption(help = "Versão do projeto", defaultValue = "0.0.1") String version,
+//			@ShellOption(help = "Versão do projeto", defaultValue = "0.0.1") String version,
 			@ShellOption(help = "Desativa a dependência jpa", defaultValue = "false", arity = 0) Boolean noJpa,
 			@ShellOption(help = "Desativa a dependência web", defaultValue = "false", arity = 0) boolean noWeb) throws IOException {
 	// @formatter:on
