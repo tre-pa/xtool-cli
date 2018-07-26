@@ -1,0 +1,7 @@
+```plantuml
+
+package "${rootPackage.name}.domain" {
+
+}
+
+```

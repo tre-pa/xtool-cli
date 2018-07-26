@@ -43,7 +43,7 @@ public class NewSpringBootProjectGenerator extends RegularAware {
 				put("baseClassName", EBootProject.genBaseClassName(name));
 			}
 		};
-		this.workspaceService.createProject(EBootProject.class, EProject.Type.SPRINGBOOT, name, EProject.Version.V1, vars);
+		this.workspaceService.createProject(EBootProject.class, EProject.Type.SPRINGBOOT, EBootProject.genProjectName(name), EProject.Version.V1, vars);
 	}
 
 }
