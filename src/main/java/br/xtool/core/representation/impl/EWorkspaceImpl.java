@@ -65,6 +65,11 @@ public class EWorkspaceImpl implements EWorkspace {
 	}
 
 	@Override
+	public Path getPath() {
+		return this.path;
+	}
+
+	@Override
 	public void refresh() {
 
 	}

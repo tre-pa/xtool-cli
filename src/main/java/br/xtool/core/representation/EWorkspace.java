@@ -1,5 +1,6 @@
 package br.xtool.core.representation;
 
+import java.nio.file.Path;
 import java.util.SortedSet;
 
 /**
@@ -9,6 +10,8 @@ import java.util.SortedSet;
  *
  */
 public interface EWorkspace {
+
+	Path getPath();
 
 	/**
 	 * Retorna a lista de projetos spring boot do workspace.
