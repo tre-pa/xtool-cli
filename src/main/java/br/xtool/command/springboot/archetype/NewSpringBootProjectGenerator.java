@@ -13,7 +13,6 @@ import br.xtool.XtoolCliApplication;
 import br.xtool.core.aware.RegularAware;
 import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.EProject;
-import br.xtool.core.service.FileService;
 import br.xtool.core.service.WorkspaceService;
 
 /**
@@ -26,13 +25,7 @@ import br.xtool.core.service.WorkspaceService;
 public class NewSpringBootProjectGenerator extends RegularAware {
 
 	@Autowired
-	private FileService fs;
-
-	@Autowired
 	private WorkspaceService workspaceService;
-
-	//	@Autowired
-	//	private SupportManager supportManager;
 
 	@ShellMethod(key = "new:springboot", value = "Novo projeto Spring Boot 1.5.x", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
 	// @formatter:off
@@ -51,7 +44,6 @@ public class NewSpringBootProjectGenerator extends RegularAware {
 			}
 		};
 		this.workspaceService.createProject(EBootProject.class, EProject.Type.SPRINGBOOT, name, EProject.Version.V1, vars);
-
 	}
 
 }
