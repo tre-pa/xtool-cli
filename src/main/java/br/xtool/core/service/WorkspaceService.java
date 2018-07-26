@@ -32,7 +32,7 @@ public class WorkspaceService {
 		return new EWorkspaceImpl(this.home);
 	}
 
-	public void useProject(EProject project) {
+	public void setWorkingProject(EProject project) {
 		this.workingProject = project;
 	}
 

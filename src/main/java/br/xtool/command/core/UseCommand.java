@@ -18,7 +18,7 @@ public class UseCommand {
 
 	@ShellMethod(value = "Define o projeto de trabalho atual", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
 	public void use(@ShellOption(help = "Nome do projeto do workspace", valueProvider = EProjectValueProvider.class) EProject project) {
-		this.workspaceService.useProject(project);
-		project.listAllDirectories().forEach(System.out::println);
+		this.workspaceService.setWorkingProject(project);
+		//		project.listAllDirectories().forEach(System.out::println);
 	}
 }
