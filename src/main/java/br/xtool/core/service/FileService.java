@@ -5,12 +5,12 @@ import java.nio.file.PathMatcher;
 import java.util.Collection;
 import java.util.Map;
 
-import br.xtool.core.template.Resource;
+import br.xtool.core.representation.EResource;
 
 public interface FileService {
 
-	Collection<Resource> getTemplates(Path rootPath, PathMatcher pathMatcher, Map<String, Object> vars);
+	Collection<EResource> getTemplates(Path rootPath, PathMatcher pathMatcher, Map<String, Object> vars);
 
-	void copy(Collection<Resource> resources, Path path);
+	void copy(Collection<EResource> resources, Path path);
 
 }

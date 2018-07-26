@@ -15,10 +15,10 @@ import org.springframework.stereotype.Component;
 
 import br.xtool.core.ConsoleLog;
 import br.xtool.core.representation.EBootProject;
+import br.xtool.core.representation.EResource;
 import br.xtool.core.representation.impl.EBootProjectImpl;
 import br.xtool.core.service.FileService;
 import br.xtool.core.service.WorkspaceService;
-import br.xtool.core.template.Resource;
 import lombok.SneakyThrows;
 
 @Component
@@ -47,7 +47,7 @@ public class EBootProjectV1Factory implements Function<String, EBootProject> {
 		ConsoleLog.print(ConsoleLog.cyan("\t-- Projeto Base --"));
 
 		PathMatcher pathMatcher = FileSystems.getDefault().getPathMatcher("glob:**/*.*");
-		Collection<Resource> templates = this.fs.getTemplates(Paths.get("src/main/resources/templates/springboot/v1/archetype"), pathMatcher, vars);
+		Collection<EResource> templates = this.fs.getTemplates(Paths.get("src/main/resources/templates/springboot/v1/archetype"), pathMatcher, vars);
 		this.fs.copy(templates, project.getPath());
 
 		return project;

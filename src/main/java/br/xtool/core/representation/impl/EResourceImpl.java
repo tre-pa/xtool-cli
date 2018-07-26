@@ -1,4 +1,4 @@
-package br.xtool.core.template.impl;
+package br.xtool.core.representation.impl;
 
 import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
@@ -10,10 +10,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 
-import br.xtool.core.template.Resource;
+import br.xtool.core.representation.EResource;
 import lombok.SneakyThrows;
 
-public class ResourceImpl implements Resource {
+public class EResourceImpl implements EResource {
 
 	private Path rootPath;
 
@@ -23,7 +23,7 @@ public class ResourceImpl implements Resource {
 
 	private VelocityContext velocityContext;
 
-	public ResourceImpl(Path rootPath, Path path, VelocityEngine velocityEngine, VelocityContext velocityContext) {
+	public EResourceImpl(Path rootPath, Path path, VelocityEngine velocityEngine, VelocityContext velocityContext) {
 		super();
 		this.rootPath = rootPath;
 		this.path = path;

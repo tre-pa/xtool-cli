@@ -14,9 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.xtool.core.ConsoleLog;
+import br.xtool.core.representation.EResource;
+import br.xtool.core.representation.impl.EResourceImpl;
 import br.xtool.core.service.FileService;
-import br.xtool.core.template.Resource;
-import br.xtool.core.template.impl.ResourceImpl;
 import lombok.SneakyThrows;
 
 @Service
@@ -27,12 +27,12 @@ public class FileServiceImpl implements FileService {
 
 	@Override
 	@SneakyThrows
-	public Collection<Resource> getTemplates(Path rootPath, PathMatcher pathMatcher, Map<String, Object> vars) {
+	public Collection<EResource> getTemplates(Path rootPath, PathMatcher pathMatcher, Map<String, Object> vars) {
 		VelocityContext velocityContext = new VelocityContext(vars);
 		// @formatter:off
 		return Files.walk(rootPath)
 				.filter(Files::isRegularFile)
-			.map(path -> new ResourceImpl(rootPath,rootPath.relativize(path),this.velocityEngine, velocityContext))
+			.map(path -> new EResourceImpl(rootPath,rootPath.relativize(path),this.velocityEngine, velocityContext))
 			.collect(Collectors.toList());
 		// @formatter:on
 	}
@@ -43,7 +43,7 @@ public class FileServiceImpl implements FileService {
 	}
 
 	@SneakyThrows
-	private void copy(Resource resource, Path path) {
+	private void copy(EResource resource, Path path) {
 		Path finalPath = path.resolve(resource.getPath());
 		if (Files.notExists(finalPath.getParent())) Files.createDirectories(finalPath.getParent());
 		OutputStream os = Files.newOutputStream(finalPath);
@@ -54,7 +54,7 @@ public class FileServiceImpl implements FileService {
 	}
 
 	@Override
-	public void copy(Collection<Resource> resources, Path path) {
+	public void copy(Collection<EResource> resources, Path path) {
 		resources.forEach(resource -> this.copy(resource, path));
 	}
 
