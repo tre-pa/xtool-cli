@@ -114,12 +114,13 @@ public class EBootPomImpl implements EBootPom {
 	 * @see br.xtool.core.representation.ESBootPom#addDependency(java.lang.String, java.lang.String)
 	 */
 	@Override
-	public void addDependency(String groupId, String artifactId) {
+	public EBootPom addDependency(String groupId, String artifactId) {
 		EBootPomDependencyImpl dependency = new EBootPomDependencyImpl(groupId, artifactId);
 		if (!hasArtifactId(dependency.getArtifactId())) {
 			this.pomDoc.getRootElement().getChild("dependencies", NAMESPACE).addContent(dependency.getAsDom());
 			ConsoleLog.print(ConsoleLog.bold(ConsoleLog.yellow("\t[~] ")), ConsoleLog.purple("Item: "), ConsoleLog.white("pom.xml"), ConsoleLog.gray(" -- "), ConsoleLog.gray(dependency.toString()));
 		}
+		return this;
 	}
 
 	/*
@@ -127,11 +128,12 @@ public class EBootPomImpl implements EBootPom {
 	 * @see br.xtool.core.representation.ESBootPom#addDependency(java.lang.String, java.lang.String, java.lang.String)
 	 */
 	@Override
-	public void addDependency(String groupId, String artifactId, String version) {
+	public EBootPom addDependency(String groupId, String artifactId, String version) {
 		EBootPomDependencyImpl dependency = new EBootPomDependencyImpl(groupId, artifactId, version);
 		if (!hasArtifactId(dependency.getArtifactId())) {
 			this.pomDoc.getRootElement().getChild("dependencies", NAMESPACE).addContent(dependency.getAsDom());
 		}
+		return this;
 	}
 
 	public static EBootPomImpl of(Path path) {

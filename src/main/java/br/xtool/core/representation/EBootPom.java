@@ -63,14 +63,14 @@ public interface EBootPom {
 	 * 
 	 * @param dependency
 	 */
-	void addDependency(String groupId, String artifactId);
+	EBootPom addDependency(String groupId, String artifactId);
 
 	/**
 	 * Adciona uma dependência o pom.xml caso não exista.
 	 * 
 	 * @param dependency
 	 */
-	void addDependency(String groupId, String artifactId, String version);
+	EBootPom addDependency(String groupId, String artifactId, String version);
 
 	void save();
 

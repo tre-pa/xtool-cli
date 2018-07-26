@@ -12,7 +12,7 @@ public interface EBootAppProperties {
 
 	Optional<String> get(String key);
 
-	void set(String key, String value);
+	EBootAppProperties set(String key, String value);
 
 	boolean hasProperty(String key);
 

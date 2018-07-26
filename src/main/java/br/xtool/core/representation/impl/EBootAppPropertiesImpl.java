@@ -28,12 +28,13 @@ public class EBootAppPropertiesImpl implements EBootAppProperties {
 	}
 
 	@Override
-	public void set(String key, String value) {
+	public EBootAppProperties set(String key, String value) {
 		if (!this.properties.containsKey(key)) {
 			this.properties.setProperty(key, value);
 			ConsoleLog.print(ConsoleLog.bold(ConsoleLog.yellow("\t[~] ")), ConsoleLog.purple("Item: "), ConsoleLog.white("application.properties"), ConsoleLog.gray(" -- "),
 					ConsoleLog.gray(Strman.surround(key, "Key [", "]")));
 		}
+		return this;
 	}
 
 	@Override
