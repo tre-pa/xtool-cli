@@ -14,15 +14,11 @@ import br.xtool.core.ConsoleLog;
 import br.xtool.core.aware.RegularAware;
 import br.xtool.core.representation.ENgProject;
 import br.xtool.core.representation.EProject;
-import br.xtool.core.service.FileService;
 import br.xtool.core.service.ShellService;
 import br.xtool.core.service.WorkspaceService;
 
 @ShellComponent
 public class NewAngularProjectGenerator extends RegularAware {
-
-	@Autowired
-	private FileService fs;
 
 	@Autowired
 	private ShellService shellService;
