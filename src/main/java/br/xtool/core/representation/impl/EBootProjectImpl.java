@@ -17,11 +17,11 @@ import org.jboss.forge.roaster.model.source.JavaInterfaceSource;
 import br.xtool.core.representation.EBootAppProperties;
 import br.xtool.core.representation.EBootPom;
 import br.xtool.core.representation.EBootProject;
+import br.xtool.core.representation.EBootRepository;
+import br.xtool.core.representation.EBootRest;
 import br.xtool.core.representation.EJavaClass;
 import br.xtool.core.representation.EJavaEntity;
 import br.xtool.core.representation.EJavaPackage;
-import br.xtool.core.representation.EBootRepository;
-import br.xtool.core.representation.EBootRest;
 import br.xtool.core.representation.EJavaSourceFolder;
 import br.xtool.core.representation.ENgProject;
 import br.xtool.core.representation.EProject;
@@ -191,7 +191,7 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 			this.javaUnits = this.listAllFiles().stream()
 				.filter(path -> path.toString().endsWith(".java"))
 				.map(Path::toFile)
-				.map(RoasterUtil::createJavaUnit)
+				.map(RoasterUtil::loadJavaUnit)
 				.filter(Optional::isPresent)
 				.map(Optional::get)
 				.collect(Collectors.toMap(javaUnit -> javaUnit.getGoverningType().getName(), Function.identity()));
@@ -226,6 +226,18 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 	@Override
 	public void refresh() {
 		this.javaUnits = null;
+	}
+
+	@Override
+	public EJavaClass findJavaClassByName(String name) {
+		// @formatter:off
+		return this.javaUnits.values().stream()
+				.filter(javaUnit -> javaUnit.getGoverningType().isClass())
+				.filter(javaUnit -> javaUnit.getGoverningType().getName().equals(name))
+				.map(javaUnit -> new EJavaClassImpl(this, javaUnit.<JavaClassSource>getGoverningType()))
+				.findFirst()
+				.orElseGet(() -> new EJavaClassImpl(this, RoasterUtil.createJavaClassSource(name)));
+		// @formatter:on
 	}
 
 	@Override

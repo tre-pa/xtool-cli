@@ -110,6 +110,14 @@ public interface EBootProject extends EProject {
 	Optional<EUmlClassDiagram> getDomainClassDiagram();
 
 	/**
+	 * Busca uma classe pelo nome. Caso não encontra retorna um EJavaClass novo.
+	 * 
+	 * @param name
+	 * @return
+	 */
+	EJavaClass findJavaClassByName(String name);
+
+	/**
 	 * 
 	 */
 	@Override

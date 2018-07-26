@@ -8,13 +8,14 @@ import java.util.Optional;
 import org.jboss.forge.roaster.ParserException;
 import org.jboss.forge.roaster.Roaster;
 import org.jboss.forge.roaster.model.JavaUnit;
+import org.jboss.forge.roaster.model.source.JavaClassSource;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class RoasterUtil {
 
-	public static Optional<JavaUnit> createJavaUnit(File javaFile) {
+	public static Optional<JavaUnit> loadJavaUnit(File javaFile) {
 		try {
 			log.info("Realizando parse do arquivo {}", javaFile.getAbsolutePath());
 			JavaUnit javaUnit = Roaster.parseUnit(new FileInputStream(javaFile));
@@ -23,5 +24,11 @@ public class RoasterUtil {
 			log.error(e.getMessage());
 		}
 		return Optional.empty();
+	}
+
+	public static JavaClassSource createJavaClassSource(String name) {
+		JavaClassSource javaClassSource = Roaster.create(JavaClassSource.class);
+		javaClassSource.setName(name);
+		return javaClassSource;
 	}
 }
