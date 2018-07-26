@@ -19,11 +19,25 @@ public interface WorkspaceService {
 	EProject getWorkingProject();
 
 	/**
+	 * Retorna a representação do workspace.
 	 * 
 	 * @return
 	 */
 	EWorkspace getWorkspace();
 
+	/**
+	 * Define o projeto do parametro como o projeto de trabalho atual.
+	 * 
+	 * @param project
+	 */
 	void setWorkingProject(EProject project);
+
+	/**
+	 * Retorna o projeto de trabalho atual.
+	 * 
+	 * @param projectClass
+	 * @return
+	 */
+	<T extends EProject> T getWorkingProject(Class<T> projectClass);
 
 }

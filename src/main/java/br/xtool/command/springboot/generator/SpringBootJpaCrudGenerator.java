@@ -14,7 +14,7 @@ import br.xtool.core.provider.EJavaEntityValueProvider;
 import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.impl.EJavaEntityImpl;
 import br.xtool.core.service.FileService;
-import br.xtool.core.service.ProjectService;
+import br.xtool.core.service.WorkspaceService;
 import br.xtool.core.util.Names;
 import strman.Strman;
 
@@ -31,12 +31,12 @@ public class SpringBootJpaCrudGenerator extends SpringBootAware {
 	private FileService fs;
 
 	@Autowired
-	private ProjectService projectService;
+	private WorkspaceService workspaceService;
 
 	@ShellMethod(key = "gen:crud", value = "Gera as classes de CRUD (Repository, Service e Rest) para entidade JPA", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
 	public void run(@ShellOption(help = "Entidade JPA", valueProvider = EJavaEntityValueProvider.class) EJavaEntityImpl entity) {
 
-		EBootProject bootProject = this.projectService.load(EBootProject.class);
+		EBootProject bootProject = this.workspaceService.getWorkingProject(EBootProject.class);
 
 		/*
 		 * Cria o mapa com as variáveis do gerador.

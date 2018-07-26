@@ -12,13 +12,13 @@ import br.xtool.core.aware.SpringBootAware;
 import br.xtool.core.provider.EJavaEntityValueProvider;
 import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.EJavaEntity;
-import br.xtool.core.service.ProjectService;
+import br.xtool.core.service.WorkspaceService;
 
 @ShellComponent
 public class SpringBootJpaEntityMapper extends SpringBootAware {
 
 	@Autowired
-	private ProjectService projectService;
+	private WorkspaceService workspaceService;
 
 	@ShellMethod(key = "map:entity", value = "Mapeia uma entidade JPA existente", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
 	// @formatter:off
@@ -29,7 +29,7 @@ public class SpringBootJpaEntityMapper extends SpringBootAware {
 			@ShellOption(help = "Mapeia a entidade com annotations Lombok", defaultValue = "false", arity = 0) Boolean lombok,
 			@ShellOption(help = "Mapeia a entidade com annotations Jackson", defaultValue = "false", arity = 0) Boolean jackson) {
 	// @formatter:on
-		EBootProject bootProject = this.projectService.load(EBootProject.class);
+		EBootProject bootProject = this.workspaceService.getWorkingProject(EBootProject.class);
 
 		bootProject.getMainSourceFolder().getPackages().forEach(pkg -> System.out.println("Pacote: " + pkg.getName()));
 

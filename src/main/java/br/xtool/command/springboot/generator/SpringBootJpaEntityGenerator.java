@@ -12,7 +12,7 @@ import br.xtool.XtoolCliApplication;
 import br.xtool.core.aware.SpringBootAware;
 import br.xtool.core.representation.EBootProject;
 import br.xtool.core.service.FileService;
-import br.xtool.core.service.ProjectService;
+import br.xtool.core.service.WorkspaceService;
 
 /**
  * Comando que gera uma classe Repository no projeto Spring Boot
@@ -30,12 +30,12 @@ public class SpringBootJpaEntityGenerator extends SpringBootAware {
 	//	private ClassDiagramReader diagramReader;
 
 	@Autowired
-	private ProjectService projectService;
+	private WorkspaceService workspaceService;
 
 	@ShellMethod(key = "gen:entity", value = "Gera uma classe de entidade JPA em um projeto Spring Boot", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
 	public void run(@ShellOption(help = "Nome da entidade JPA", defaultValue = "") String name) throws IOException, JDOMException {
 
-		EBootProject bootProject = this.projectService.load(EBootProject.class);
+		EBootProject bootProject = this.workspaceService.getWorkingProject(EBootProject.class);
 
 		bootProject.getDomainClassDiagram().ifPresent(classDiagram -> {
 			classDiagram.getClasses().forEach(umlClass -> {

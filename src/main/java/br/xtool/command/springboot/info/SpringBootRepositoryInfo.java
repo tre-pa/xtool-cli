@@ -10,19 +10,19 @@ import org.springframework.shell.standard.ShellMethod;
 import br.xtool.XtoolCliApplication;
 import br.xtool.core.ConsoleLog;
 import br.xtool.core.aware.SpringBootAware;
-import br.xtool.core.representation.EBootRepository;
 import br.xtool.core.representation.EBootProject;
-import br.xtool.core.service.ProjectService;
+import br.xtool.core.representation.EBootRepository;
+import br.xtool.core.service.WorkspaceService;
 
 @ShellComponent
 public class SpringBootRepositoryInfo extends SpringBootAware {
 
 	@Autowired
-	private ProjectService projectService;
+	private WorkspaceService workspaceService;
 
 	@ShellMethod(key = "info:repository", value = "Exibe informações sobre os Repositórios do projeto", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
 	public void run() {
-		EBootProject bootProject = this.projectService.load(EBootProject.class);
+		EBootProject bootProject = this.workspaceService.getWorkingProject(EBootProject.class);
 		infoAllRepositories(bootProject);
 	}
 

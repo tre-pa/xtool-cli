@@ -11,9 +11,6 @@ import lombok.SneakyThrows;
 public class ShellService {
 
 	@Autowired
-	private FileService fs;
-
-	@Autowired
 	private WorkspaceService workspaceService;
 
 	@SneakyThrows

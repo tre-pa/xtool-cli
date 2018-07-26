@@ -12,10 +12,7 @@ import org.springframework.shell.standard.ShellOption;
 import br.xtool.XtoolCliApplication;
 import br.xtool.command.springboot.support.core.SupportManager;
 import br.xtool.core.aware.RegularAware;
-import br.xtool.core.representation.EBootProject;
-import br.xtool.core.representation.EProject;
 import br.xtool.core.service.FileService;
-import br.xtool.core.service.ProjectService;
 import br.xtool.core.service.WorkspaceService;
 
 /**
@@ -34,9 +31,6 @@ public class NewSpringBootProjectGenerator extends RegularAware {
 	private WorkspaceService workspaceService;
 
 	@Autowired
-	private ProjectService projectService;
-
-	@Autowired
 	private SupportManager supportManager;
 
 	@ShellMethod(key = "new:springboot", value = "Novo projeto Spring Boot 1.5.x", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
@@ -48,7 +42,7 @@ public class NewSpringBootProjectGenerator extends RegularAware {
 			@ShellOption(help = "Desativa a dependência web", defaultValue = "false", arity = 0) boolean noWeb) throws IOException {
 	// @formatter:on
 
-		EBootProject bootProject = this.projectService.create(EBootProject.class, EProject.Version.V1, name);
+		//		EBootProject bootProject = this.projectService.create(EBootProject.class, EProject.Version.V1, name);
 
 		/*
 		 * Cria o mapa com as variáveis do gerador.
@@ -56,9 +50,9 @@ public class NewSpringBootProjectGenerator extends RegularAware {
 		// @formatter:off
 		Map<String, Object> vars = new HashMap<>();
 		vars.put("templatePath", "springboot/1.5.x/archetype");
-		vars.put("projectName", bootProject.getName());
+//		vars.put("projectName", bootProject.getName());
 		vars.put("projectVersion", version);
-		vars.put("rootPackage", bootProject.getRootPackage());
+//		vars.put("rootPackage", bootProject.getRootPackage());
 //		vars.put("baseClassName", Names.asSpringBootBaseClass(name));
 		vars.put("noJpa", noJpa);
 		vars.put("noWeb", noWeb);
