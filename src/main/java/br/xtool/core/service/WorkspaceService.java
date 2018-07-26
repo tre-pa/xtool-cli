@@ -1,5 +1,7 @@
 package br.xtool.core.service;
 
+import java.nio.file.Path;
+
 import br.xtool.core.representation.EProject;
 import br.xtool.core.representation.EWorkspace;
 
@@ -39,5 +41,12 @@ public interface WorkspaceService {
 	 * @return
 	 */
 	<T extends EProject> T getWorkingProject(Class<T> projectClass);
+
+	/**
+	 * 
+	 * @param name
+	 * @return
+	 */
+	Path createDirectory(String name);
 
 }

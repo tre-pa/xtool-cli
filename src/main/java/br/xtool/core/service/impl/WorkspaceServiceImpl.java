@@ -1,5 +1,6 @@
 package br.xtool.core.service.impl;
 
+import java.nio.file.Files;
 import java.nio.file.Path;
 
 import javax.annotation.PostConstruct;
@@ -13,6 +14,7 @@ import br.xtool.core.representation.impl.ENoneProjectImpl;
 import br.xtool.core.representation.impl.EWorkspaceImpl;
 import br.xtool.core.service.WorkspaceService;
 import lombok.Getter;
+import lombok.SneakyThrows;
 
 @Component
 public class WorkspaceServiceImpl implements WorkspaceService {
@@ -53,6 +55,20 @@ public class WorkspaceServiceImpl implements WorkspaceService {
 	@Override
 	public <T extends EProject> T getWorkingProject(Class<T> projectClass) {
 		return projectClass.cast(this.workingProject);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.service.WorkspaceService#createDirectory(java.lang.String)
+	 */
+	@Override
+	@SneakyThrows
+	public Path createDirectory(String name) {
+		Path directory = this.home.resolve(name);
+		if (Files.exists(directory)) {
+			throw new IllegalArgumentException(String.format("O diretório %s já existe no workspace", name));
+		}
+		return Files.createDirectory(directory);
 	}
 
 }
