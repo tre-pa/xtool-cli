@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.util.StringUtils;
 
 import br.xtool.core.representation.EUmlEnum;
+import br.xtool.core.representation.EUmlPackage;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
 
 public class EUmlEnumImpl implements EUmlEnum {
@@ -15,6 +16,11 @@ public class EUmlEnumImpl implements EUmlEnum {
 	public EUmlEnumImpl(ILeaf leaf) {
 		super();
 		this.leaf = leaf;
+	}
+
+	@Override
+	public EUmlPackage getPackage() {
+		return new EUmlPackageImpl(this.leaf.getParentContainer());
 	}
 
 	@Override

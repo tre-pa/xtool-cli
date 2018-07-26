@@ -11,6 +11,13 @@ import java.util.Set;
 public interface EUmlEnum {
 
 	/**
+	 * Retorna o pacote UML da classe.
+	 * 
+	 * @return
+	 */
+	EUmlPackage getPackage();
+
+	/**
 	 * Retorna a lista de valores do Enum UML.
 	 * 
 	 * @return
