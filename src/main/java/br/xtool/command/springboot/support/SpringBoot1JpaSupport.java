@@ -20,6 +20,7 @@ import br.xtool.core.service.FileService;
  *
  */
 @Component
+@Deprecated
 public class SpringBoot1JpaSupport implements SpringBootSupport {
 
 	@Autowired

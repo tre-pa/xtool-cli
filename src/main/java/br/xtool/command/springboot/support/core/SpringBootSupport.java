@@ -16,10 +16,10 @@ public interface SpringBootSupport {
 	// @formatter:off
 	public enum SupportType {
 		JPA,
-		JPA_AUDIT,
 		FLYWAY,
 		EHCACHE,
 		REPORT,
+		HIBERNATE_ENVERS,
 		HIBERNATE_SEARCH,
 		WEB,
 		SWAGGER,
