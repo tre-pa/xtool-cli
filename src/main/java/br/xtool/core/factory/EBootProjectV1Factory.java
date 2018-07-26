@@ -1,9 +1,7 @@
 package br.xtool.core.factory;
 
-import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.PathMatcher;
 import java.nio.file.Paths;
 import java.util.Collection;
 import java.util.HashMap;
@@ -46,8 +44,7 @@ public class EBootProjectV1Factory implements Function<String, EBootProject> {
 
 		ConsoleLog.print(ConsoleLog.cyan("\t-- Projeto Base --"));
 
-		PathMatcher pathMatcher = FileSystems.getDefault().getPathMatcher("glob:**/*.*");
-		Collection<EResource> templates = this.fs.getTemplates(Paths.get("src/main/resources/templates/springboot/v1/archetype"), pathMatcher, vars);
+		Collection<EResource> templates = this.fs.getTemplates(Paths.get("src/main/resources/templates/springboot/v1/archetype"), vars);
 		this.fs.copy(templates, project.getPath());
 
 		return project;

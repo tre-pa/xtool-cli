@@ -3,7 +3,6 @@ package br.xtool.core.service.impl;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.PathMatcher;
 import java.util.Collection;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -27,11 +26,11 @@ public class FileServiceImpl implements FileService {
 
 	@Override
 	@SneakyThrows
-	public Collection<EResource> getTemplates(Path rootPath, PathMatcher pathMatcher, Map<String, Object> vars) {
+	public Collection<EResource> getTemplates(Path rootPath, Map<String, Object> vars) {
 		VelocityContext velocityContext = new VelocityContext(vars);
 		// @formatter:off
 		return Files.walk(rootPath)
-				.filter(Files::isRegularFile)
+			.filter(Files::isRegularFile)
 			.map(path -> new EResourceImpl(rootPath,rootPath.relativize(path),this.velocityEngine, velocityContext))
 			.collect(Collectors.toList());
 		// @formatter:on

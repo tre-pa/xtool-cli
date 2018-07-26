@@ -1,16 +1,35 @@
 package br.xtool.core.service;
 
 import java.nio.file.Path;
-import java.nio.file.PathMatcher;
 import java.util.Collection;
 import java.util.Map;
 
 import br.xtool.core.representation.EResource;
 
+/**
+ * Classe que realiza operação no FileSystem.
+ * 
+ * @author jcruz
+ *
+ */
 public interface FileService {
 
-	Collection<EResource> getTemplates(Path rootPath, PathMatcher pathMatcher, Map<String, Object> vars);
+	/**
+	 * Retorna uma lista de recursos do diretório src/main/resources/templates/**
+	 * 
+	 * @param resourcePath
+	 * @param pathMatcher
+	 * @param vars
+	 * @return
+	 */
+	Collection<EResource> getTemplates(Path resourcePath, Map<String, Object> vars);
 
-	void copy(Collection<EResource> resources, Path path);
+	/**
+	 * Copia a lista de recursos para o path de destino.
+	 * 
+	 * @param resources
+	 * @param destinationPath
+	 */
+	void copy(Collection<EResource> resources, Path destinationPath);
 
 }
