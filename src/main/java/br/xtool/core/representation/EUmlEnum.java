@@ -10,6 +10,8 @@ import java.util.Set;
  */
 public interface EUmlEnum {
 
+	String getName();
+
 	/**
 	 * Retorna o pacote UML da classe.
 	 * 

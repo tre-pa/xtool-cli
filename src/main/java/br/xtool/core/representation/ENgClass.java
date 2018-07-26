@@ -1,6 +1,6 @@
 package br.xtool.core.representation;
 
-import java.io.File;
+import java.nio.file.Path;
 
 /**
  * Representação de um classe Typescript de um projeto Angular.
@@ -10,7 +10,7 @@ import java.io.File;
  */
 public interface ENgClass extends Comparable<ENgClass> {
 
-	File getFile();
+	Path getPath();
 
 	String getName();
 

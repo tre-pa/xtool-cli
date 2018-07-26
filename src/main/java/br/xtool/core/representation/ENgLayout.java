@@ -8,4 +8,9 @@ package br.xtool.core.representation;
  */
 public interface ENgLayout extends ENgComponent {
 
+	enum LayoutType {
+		NAV_VIEW, NAV_LIST
+	}
+
+	LayoutType getLayoutType();
 }

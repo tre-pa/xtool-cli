@@ -40,9 +40,9 @@ public class NgServiceImpl implements NgService {
 		Map<String, Object> vars = ImmutableMap.<String, Object>builder()
 				.put("templatePath", "generators/angular/5.x/scaffold")
 				.put("xtoolNg", this.workspaceService.getWorkingProject().getPath().resolve("scripts/xtool-ng.js"))
-				.put("modulePath", ngModule.getFile().getAbsolutePath())
+				.put("modulePath", ngModule.getPath().toString())
 				.put("moduleName", ngModule.getName())
-				.put("componentPath", ngComponent.getFile().getAbsolutePath())
+				.put("componentPath", ngComponent.getPath().toString())
 				.put("componentName", ngComponent.getName())
 				.build();
 		// @formatter:on
@@ -63,9 +63,9 @@ public class NgServiceImpl implements NgService {
 		Map<String, Object> vars = ImmutableMap.<String, Object>builder()
 				.put("templatePath", "generators/angular/5.x/scaffold")
 				.put("xtoolNg", this.workspaceService.getWorkingProject().getPath().resolve("scripts/xtool-ng.js"))
-				.put("modulePath", ngModule.getFile().getAbsolutePath())
+				.put("modulePath", ngModule.getPath().toString())
 				.put("moduleName", ngModule.getName())
-				.put("servicePath", ngService.getFile().getAbsolutePath())
+				.put("servicePath", ngService.getPath().toString())
 				.put("serviceName", ngService.getName())
 				.build();
 		// @formatter:on
@@ -86,9 +86,9 @@ public class NgServiceImpl implements NgService {
 		Map<String, Object> vars = ImmutableMap.<String, Object>builder()
 				.put("templatePath", "generators/angular/5.x/scaffold")
 				.put("xtoolNg", this.workspaceService.getWorkingProject().getPath().resolve("scripts/xtool-ng.js"))
-				.put("modulePath", ngModule.getFile().getAbsolutePath())
+				.put("modulePath", ngModule.getPath().toString())
 				.put("moduleName", ngModule.getName())
-				.put("dialogPath", ngDialog.getFile().getAbsolutePath())
+				.put("dialogPath", ngDialog.getPath().toString())
 				.put("dialogName", ngDialog.getName())
 				.build();
 		// @formatter:on

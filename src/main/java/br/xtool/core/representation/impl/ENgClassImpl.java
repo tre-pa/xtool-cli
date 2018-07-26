@@ -1,6 +1,6 @@
 package br.xtool.core.representation.impl;
 
-import java.io.File;
+import java.nio.file.Path;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -19,17 +19,17 @@ import lombok.Getter;
 public class ENgClassImpl implements ENgClass {
 
 	@Getter
-	private File file;
+	private Path path;
 
-	public ENgClassImpl(File file) {
+	public ENgClassImpl(Path path) {
 		super();
-		this.file = file;
+		this.path = path;
 	}
 
 	@Override
 	public String getName() {
 		// @formatter:off
-		return Stream.of(FilenameUtils.getBaseName(this.getFile().getPath()).split("\\-|\\."))
+		return Stream.of(FilenameUtils.getBaseName(this.getPath().toString()).split("\\-|\\."))
 			.map(StringUtils::capitalize)
 			.collect(Collectors.joining());
 		// @formatter:on
@@ -37,7 +37,7 @@ public class ENgClassImpl implements ENgClass {
 
 	@Override
 	public String getFileName() {
-		return FilenameUtils.getName(this.getFile().getPath());
+		return this.getPath().getFileName().toString();
 	}
 
 	@Override

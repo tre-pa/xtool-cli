@@ -19,6 +19,11 @@ public class EUmlEnumImpl implements EUmlEnum {
 	}
 
 	@Override
+	public String getName() {
+		return this.leaf.getDisplay().asStringWithHiddenNewLine();
+	}
+
+	@Override
 	public EUmlPackage getPackage() {
 		return new EUmlPackageImpl(this.leaf.getParentContainer());
 	}

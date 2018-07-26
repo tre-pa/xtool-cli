@@ -1,13 +1,13 @@
 package br.xtool.core.representation.impl;
 
-import java.io.File;
+import java.nio.file.Path;
 
 import br.xtool.core.representation.ENgDialog;
 
 public class ENgDialogImpl extends ENgClassImpl implements ENgDialog {
 
-	public ENgDialogImpl(File file) {
-		super(file);
+	public ENgDialogImpl(Path path) {
+		super(path);
 	}
 
 	@Override

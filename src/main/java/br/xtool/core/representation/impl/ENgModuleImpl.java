@@ -1,6 +1,6 @@
 package br.xtool.core.representation.impl;
 
-import java.io.File;
+import java.nio.file.Path;
 
 import br.xtool.core.representation.ENgModule;
 
@@ -12,8 +12,8 @@ import br.xtool.core.representation.ENgModule;
  */
 public class ENgModuleImpl extends ENgClassImpl implements ENgModule {
 
-	public ENgModuleImpl(File file) {
-		super(file);
+	public ENgModuleImpl(Path path) {
+		super(path);
 	}
 
 	@Override

@@ -1,13 +1,13 @@
 package br.xtool.core.representation.impl;
 
-import java.io.File;
+import java.nio.file.Path;
 
 import br.xtool.core.representation.ENgService;
 
 public class ENgServiceImpl extends ENgClassImpl implements ENgService {
 
-	public ENgServiceImpl(File file) {
-		super(file);
+	public ENgServiceImpl(Path path) {
+		super(path);
 	}
 
 	@Override

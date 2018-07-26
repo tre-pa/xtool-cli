@@ -1,13 +1,13 @@
 package br.xtool.core.representation.impl;
 
-import java.io.File;
+import java.nio.file.Path;
 
 import br.xtool.core.representation.ENgEdit;
 
 public class ENgEditImpl extends ENgComponentImpl implements ENgEdit {
 
-	public ENgEditImpl(File file) {
-		super(file);
+	public ENgEditImpl(Path path) {
+		super(path);
 	}
 
 }
