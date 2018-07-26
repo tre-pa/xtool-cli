@@ -27,7 +27,7 @@ public class SpringBoot1WebSupport implements SpringBootSupport {
 
 	@Override
 	public Type getApplyForType() {
-		return Type.SPRINGBOOT_PROJECT;
+		return Type.SPRINGBOOT;
 	}
 
 	@Override

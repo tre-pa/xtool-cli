@@ -2,16 +2,22 @@ package br.xtool.core.service.impl;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Collection;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import br.xtool.core.representation.EProject;
+import br.xtool.core.representation.EProject.Version;
+import br.xtool.core.representation.EResource;
 import br.xtool.core.representation.EWorkspace;
 import br.xtool.core.representation.impl.ENoneProjectImpl;
 import br.xtool.core.representation.impl.EWorkspaceImpl;
+import br.xtool.core.service.FileService;
 import br.xtool.core.service.WorkspaceService;
 import lombok.Getter;
 import lombok.SneakyThrows;
@@ -24,6 +30,9 @@ public class WorkspaceServiceImpl implements WorkspaceService {
 
 	@Getter
 	private EProject workingProject;
+
+	@Autowired
+	private FileService fs;
 
 	@PostConstruct
 	private void init() {
@@ -69,6 +78,19 @@ public class WorkspaceServiceImpl implements WorkspaceService {
 			throw new IllegalArgumentException(String.format("O diretório %s já existe no workspace", name));
 		}
 		return Files.createDirectory(directory);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.service.WorkspaceService#createProject(java.lang.Class, java.lang.String, br.xtool.core.representation.EProject.Version)
+	 */
+	@Override
+	public <T extends EProject> T createProject(Class<T> projectClass, EProject.Type type, String name, Version version, Map<String, Object> vars) {
+		Path archetypePath = EResource.ROOT_PATH.resolve(type.getName()).resolve(version.getName()).resolve("archetype");
+		Path projectPath = this.createDirectory(name);
+		Collection<EResource> resources = this.fs.getTemplates(archetypePath, vars);
+		this.fs.copy(resources, projectPath);
+		return projectClass.cast(EProject.factory(projectClass, projectPath));
 	}
 
 }

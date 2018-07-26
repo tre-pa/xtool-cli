@@ -171,7 +171,7 @@ public class ENgProjectImpl extends EProjectImpl implements ENgProject {
 
 	@Override
 	public Type getProjectType() {
-		return EProject.Type.ANGULAR_PROJECT;
+		return EProject.Type.ANGULAR;
 	}
 
 	enum ArtifactyType {

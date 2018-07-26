@@ -22,7 +22,7 @@ public class SpringBootAware {
 	 */
 	@ShellMethodAvailability
 	public Availability availabilitySpringBootCommand() throws IOException {
-		return this.workspaceService.getWorkingProject().getProjectType().equals(EProject.Type.SPRINGBOOT_PROJECT) ? Availability.available()
+		return this.workspaceService.getWorkingProject().getProjectType().equals(EProject.Type.SPRINGBOOT) ? Availability.available()
 				: Availability.unavailable("O diretório de trabalho não é um projeto maven válido. Use o comando cd para alterar o diretório de trabalho.");
 	}
 

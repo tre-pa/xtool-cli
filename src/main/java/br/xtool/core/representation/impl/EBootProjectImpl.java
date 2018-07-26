@@ -230,7 +230,7 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 
 	@Override
 	public Type getProjectType() {
-		return EProject.Type.SPRINGBOOT_PROJECT;
+		return EProject.Type.SPRINGBOOT;
 	}
 
 }

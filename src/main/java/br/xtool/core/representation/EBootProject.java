@@ -125,10 +125,10 @@ public interface EBootProject extends EProject {
 		// @formatter:off
 		return StringUtils.lowerCase(
 				Strman.toKebabCase(
-						StringUtils.endsWithIgnoreCase(commomName, "-service") ? 
-								commomName : 
-								commomName.concat("-service")
-								)
+					StringUtils.endsWithIgnoreCase(commomName, "-service") ? 
+						commomName : 
+						commomName.concat("-service")
+						)
 				);
 		// @formatter:on
 	}

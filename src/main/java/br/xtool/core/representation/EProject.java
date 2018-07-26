@@ -3,6 +3,8 @@ package br.xtool.core.representation;
 import java.nio.file.Path;
 import java.util.Collection;
 
+import br.xtool.core.representation.impl.EBootProjectImpl;
+import br.xtool.core.representation.impl.ENgProjectImpl;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -20,8 +22,11 @@ public interface EProject extends Comparable<EProject> {
 	 * @author jcruz
 	 *
 	 */
+	@AllArgsConstructor
+	@Getter
 	enum Type {
-		SPRINGBOOT_PROJECT, ANGULAR_PROJECT, NONE;
+		SPRINGBOOT("springboot"), ANGULAR("angular"), NONE("none");
+		private String name;
 	}
 
 	/**
@@ -76,5 +81,20 @@ public interface EProject extends Comparable<EProject> {
 	 * @return
 	 */
 	Collection<Path> listAllDirectories();
+
+	/**
+	 * 
+	 * @param projectClass
+	 * @param path
+	 * @return
+	 */
+	static <T extends EProject> EProject factory(Class<T> projectClass, Path path) {
+		if (EBootProject.class.isAssignableFrom(projectClass)) {
+			return new EBootProjectImpl(path);
+		} else if (ENgProject.class.isAssignableFrom(projectClass)) {
+			return new ENgProjectImpl(path);
+		}
+		throw new IllegalArgumentException(String.format("Factory de projeto não encontrada para %s", projectClass.getName()));
+	}
 
 }
