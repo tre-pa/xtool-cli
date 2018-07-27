@@ -18,6 +18,7 @@ import br.xtool.core.representation.ENgModule;
 import br.xtool.core.representation.ENgPage;
 import br.xtool.core.representation.ENgProject;
 import br.xtool.core.representation.ENgService;
+import br.xtool.core.representation.EProject;
 import br.xtool.core.representation.EResource;
 import br.xtool.core.representation.impl.ENgPageImpl;
 import br.xtool.core.service.FileService;
@@ -52,7 +53,6 @@ public class NgServiceImpl implements NgService {
 				.put("componentName", ngComponent.getName())
 				.build();
 		// @formatter:on
-		System.out.println(vars);
 		copyXtoolNg(ngProject, vars);
 		this.shellService.runCmd("node ${xtoolNg} --module-path=${modulePath} --module-name=${moduleName} --component-path=${componentPath} --component-name=${componentName}", vars);
 	}
@@ -95,8 +95,12 @@ public class NgServiceImpl implements NgService {
 		this.shellService.runCmd("node ${xtoolNg} --module-path=${modulePath} --module-name=${moduleName} --dialog-path=${dialogPath} --dialog-name=${dialogName}", vars);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.service.NgService#createNgPage(br.xtool.core.representation.ENgProject, br.xtool.core.representation.EProject.Version, br.xtool.core.representation.ENgModule, java.lang.String)
+	 */
 	@Override
-	public ENgPage createNgPage(ENgProject ngProject, ENgModule ngModule, String name) {
+	public ENgPage createNgPage(ENgProject ngProject, EProject.Version version, ENgModule ngModule, String name) {
 		Map<String, Object> vars = new HashMap<String, Object>() {
 			private static final long serialVersionUID = 1L;
 			{
@@ -104,7 +108,7 @@ public class NgServiceImpl implements NgService {
 				put("pageClassName", ENgPage.genClassName(name));
 			}
 		};
-		Collection<EResource> resources = this.fs.getTemplates(Paths.get("angular/v5/page"), vars);
+		Collection<EResource> resources = this.fs.getTemplates(Paths.get("angular").resolve(version.getName()).resolve("page"), vars);
 		this.fs.copy(resources, ngModule.getPath().getParent());
 		Path ngPagePath = ngModule.getPath().getParent().resolve(ENgPage.genFileName(name)).resolve(ENgPage.genFileName(name).concat(".component.ts"));
 		ENgPage ngPage = new ENgPageImpl(ngPagePath);

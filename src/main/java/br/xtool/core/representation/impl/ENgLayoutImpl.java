@@ -15,9 +15,4 @@ public class ENgLayoutImpl extends ENgComponentImpl implements ENgLayout {
 		return "ENgLayout [" + (getName() != null ? "name=" + getName() + ", " : "") + (getFileName() != null ? "fileName=" + getFileName() : "") + "]";
 	}
 
-	@Override
-	public LayoutType getLayoutType() {
-		return null;
-	}
-
 }
