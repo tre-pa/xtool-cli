@@ -52,11 +52,9 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 		super(path);
 	}
 
-	/**
-	 * Retorna o nome da classe base. O nome da classe base é o nome da classe que
-	 * possui a annotation @SpringBootApplication sem o sufixo 'Application'
-	 * 
-	 * @return Nome da classe base.
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EBootProject#getBaseClassName()
 	 */
 	@Override
 	public String getBaseClassName() {
@@ -123,10 +121,9 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 		return this.pom;
 	}
 
-	/**
-	 * Retorna a representação do arquivo application.properties
-	 * 
-	 * @return
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EBootProject#getApplicationProperties()
 	 */
 	@Override
 	public EBootAppProperties getApplicationProperties() {
@@ -136,10 +133,9 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 		return this.applicationProperties;
 	}
 
-	/**
-	 * Retorna a lista das entidades JPA do projeto
-	 * 
-	 * @return
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EBootProject#getEntities()
 	 */
 	@Override
 	public SortedSet<EJavaEntity> getEntities() {
@@ -154,10 +150,9 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 		// @formatter:on
 	}
 
-	/**
-	 * Retorna a lista de repositórios.
-	 * 
-	 * @return
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EBootProject#getRepositories()
 	 */
 	@Override
 	public SortedSet<EBootRepository> getRepositories() {
@@ -172,9 +167,9 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 		// @formatter:on
 	}
 
-	/**
-	 * 
-	 * @return
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EBootProject#getRests()
 	 */
 	@Override
 	public SortedSet<EBootRest> getRests() {
@@ -204,6 +199,10 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 		return this.javaUnits;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EBootProject#getAssociatedAngularProject()
+	 */
 	@Override
 	public Optional<ENgProject> getAssociatedAngularProject() {
 		String angularPath = this.getPath().toString().replace("-service", "");
@@ -217,6 +216,10 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 		return Optional.empty();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EBootProject#getDomainClassDiagram()
+	 */
 	@Override
 	public Optional<EUmlClassDiagram> getDomainClassDiagram() {
 		try {
@@ -228,11 +231,19 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 		return Optional.empty();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EProject#getFrameworkVersion()
+	 */
 	@Override
 	public String getFrameworkVersion() {
 		return this.getPom().getParentVersion().get();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EProject#getProjectVersion()
+	 */
 	@Override
 	public Version getProjectVersion() {
 		Pattern v5pattern = Pattern.compile("1\\.5\\.\\d+\\.\\w*");
@@ -242,11 +253,19 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 		return Version.NONE;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EProject#refresh()
+	 */
 	@Override
 	public void refresh() {
 		this.javaUnits = null;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EBootProject#findJavaClassByName(java.lang.String)
+	 */
 	@Override
 	public EJavaClass findJavaClassByName(String name) {
 		// @formatter:off
@@ -259,6 +278,10 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 		// @formatter:on
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EProject#getProjectType()
+	 */
 	@Override
 	public Type getProjectType() {
 		return EProject.Type.SPRINGBOOT;

@@ -99,4 +99,21 @@ public interface EProject extends Comparable<EProject> {
 		throw new IllegalArgumentException(String.format("Factory de projeto não encontrada para %s", projectClass.getName()));
 	}
 
+	/**
+	 * 
+	 * @author jcruz
+	 *
+	 * @param <T>
+	 */
+	interface Support<T extends EProject> {
+		/**
+		 * 
+		 * @param project
+		 * @param version
+		 */
+		void apply(T project);
+
+		boolean has(T project);
+	}
+
 }

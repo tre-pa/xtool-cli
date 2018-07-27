@@ -13,7 +13,9 @@ import br.xtool.XtoolCliApplication;
 import br.xtool.core.aware.RegularAware;
 import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.EProject;
+import br.xtool.core.service.BootService;
 import br.xtool.core.service.WorkspaceService;
+import br.xtool.core.support.BootProjectJpaSupport;
 
 /**
  * Shell Commando responsável por criar uma projeto Spring Boot 1.5.x
@@ -26,6 +28,9 @@ public class NewSpringBootProjectGenerator extends RegularAware {
 
 	@Autowired
 	private WorkspaceService workspaceService;
+
+	@Autowired
+	private BootService bootService;
 
 	@ShellMethod(key = "new:springboot", value = "Novo projeto Spring Boot 1.5.x", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
 	// @formatter:off
@@ -43,7 +48,8 @@ public class NewSpringBootProjectGenerator extends RegularAware {
 				put("baseClassName", EBootProject.genBaseClassName(name));
 			}
 		};
-		this.workspaceService.createProject(EBootProject.class, EProject.Type.SPRINGBOOT, EBootProject.genProjectName(name), EProject.Version.V1, vars);
+		EBootProject bootProject = this.workspaceService.createProject(EBootProject.class, EProject.Type.SPRINGBOOT, EBootProject.genProjectName(name), EProject.Version.V1, vars);
+		if (!noJpa) this.bootService.addSupport(bootProject, BootProjectJpaSupport.class);
 	}
 
 }

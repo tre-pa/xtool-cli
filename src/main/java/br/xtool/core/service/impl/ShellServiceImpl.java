@@ -8,13 +8,13 @@ import java.util.Map;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import br.xtool.core.service.ShellService;
 import br.xtool.core.service.WorkspaceService;
 import lombok.SneakyThrows;
 
-@Component
+@Service
 public class ShellServiceImpl implements ShellService {
 
 	@Autowired

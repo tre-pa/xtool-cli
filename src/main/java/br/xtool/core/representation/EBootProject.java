@@ -175,4 +175,8 @@ public interface EBootProject extends EProject {
 		return false;
 	}
 
+	interface BootSupport extends Support<EBootProject> {
+
+	}
+
 }

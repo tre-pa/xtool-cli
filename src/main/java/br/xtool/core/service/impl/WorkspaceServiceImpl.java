@@ -10,7 +10,7 @@ import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import br.xtool.core.representation.EProject;
 import br.xtool.core.representation.EProject.Version;
@@ -23,7 +23,7 @@ import br.xtool.core.service.WorkspaceService;
 import lombok.Getter;
 import lombok.SneakyThrows;
 
-@Component
+@Service
 public class WorkspaceServiceImpl implements WorkspaceService {
 
 	@Value("${workspace}")
