@@ -3,6 +3,7 @@ package br.xtool.core.service.impl;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -92,7 +93,15 @@ public class NgServiceImpl implements NgService {
 	}
 
 	@Override
-	public ENgPage createNgPage(ENgProject ngProject) {
+	public ENgPage createNgPage(ENgProject ngProject, String name) {
+		Map<String, Object> vars = new HashMap<String, Object>() {
+			private static final long serialVersionUID = 1L;
+			{
+				put("pageFileName", ENgPage.genFileName(name));
+				put("pageClassName", ENgPage.genClassName(name));
+			}
+		};
+
 		return null;
 	}
 

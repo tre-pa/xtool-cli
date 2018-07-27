@@ -19,6 +19,7 @@ import lombok.Getter;
 public interface ENgProject extends EProject {
 
 	@AllArgsConstructor
+	@Getter
 	enum ArtifactyType {
 		// @formatter:off
 		MODULE(".module.ts"),
@@ -29,10 +30,11 @@ public interface ENgProject extends EProject {
 		EDIT("-edit.component.ts"),
 		DETAIL("-detail.component.ts"),
 		LIST("-list.component.ts"),
-		DIALOG("-dialog.component.ts");
+		DIALOG("-dialog.component.ts"),
+		ROUTING_MODULE("-routing.module.ts");
 		// @formatter:on
-		@Getter
 		private String ext;
+
 	}
 
 	/**
@@ -58,6 +60,8 @@ public interface ENgProject extends EProject {
 	 * @return
 	 */
 	Path getViewPath();
+
+	ENgModule getNgViewModule();
 
 	ENgPackage getNgPackage();
 

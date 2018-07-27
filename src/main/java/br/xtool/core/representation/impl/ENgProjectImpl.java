@@ -72,6 +72,12 @@ public class ENgProjectImpl extends EProjectImpl implements ENgProject {
 		return ENgPackageImpl.of(this.getPath().resolve("package.json")).orElse(null);
 	}
 
+	@Override
+	public ENgModule getNgViewModule() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	/**
 	 * Retorna as classes modulos do projeto.
 	 * 
@@ -81,7 +87,8 @@ public class ENgProjectImpl extends EProjectImpl implements ENgProject {
 	public SortedSet<ENgModule> getNgModules() {
 		// @formatter:off
 		return this.getNgClasses().values().stream()
-				.filter(ngClass -> ngClass.getFileName().endsWith(ArtifactyType.MODULE.ext))
+				.filter(ngClass -> !ngClass.getFileName().endsWith(ENgProject.ArtifactyType.ROUTING_MODULE.getExt()))
+				.filter(ngClass -> ngClass.getFileName().endsWith(ENgProject.ArtifactyType.MODULE.getExt()))
 				.map(ngClass -> new ENgModuleImpl(ngClass.getPath()))
 				.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
@@ -96,7 +103,7 @@ public class ENgProjectImpl extends EProjectImpl implements ENgProject {
 	public SortedSet<ENgComponent> getNgComponents() {
 		// @formatter:off
 		return this.getNgClasses().values().stream()
-				.filter(ngClass -> ngClass.getFileName().endsWith(ArtifactyType.COMPONENT.ext))
+				.filter(ngClass -> ngClass.getFileName().endsWith(ENgProject.ArtifactyType.MODULE.getExt()))
 				.map(ngClass -> new ENgComponentImpl(ngClass.getPath()))
 				.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
@@ -111,7 +118,7 @@ public class ENgProjectImpl extends EProjectImpl implements ENgProject {
 	public SortedSet<ENgService> getNgServices() {
 		// @formatter:off
 		return this.getNgClasses().values().stream()
-				.filter(ngClass -> ngClass.getFileName().endsWith(ArtifactyType.SERVICE.ext))
+				.filter(ngClass -> ngClass.getFileName().endsWith(ENgProject.ArtifactyType.MODULE.getExt()))
 				.map(ngClass -> new ENgServiceImpl(ngClass.getPath()))
 				.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
@@ -126,7 +133,7 @@ public class ENgProjectImpl extends EProjectImpl implements ENgProject {
 	public SortedSet<ENgLayout> getNgLayouts() {
 		// @formatter:off
 		return this.getNgClasses().values().stream()
-				.filter(ngClass -> ngClass.getFileName().endsWith(ArtifactyType.LAYOUT.ext))
+				.filter(ngClass -> ngClass.getFileName().endsWith(ENgProject.ArtifactyType.MODULE.getExt()))
 				.map(ngClass -> new ENgLayoutImpl(ngClass.getPath()))
 				.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
@@ -141,7 +148,7 @@ public class ENgProjectImpl extends EProjectImpl implements ENgProject {
 	public SortedSet<ENgPage> getNgPages() {
 		// @formatter:off
 		return this.getNgClasses().values().stream()
-				.filter(ngClass -> ngClass.getFileName().endsWith(ArtifactyType.PAGE.ext))
+				.filter(ngClass -> ngClass.getFileName().endsWith(ENgProject.ArtifactyType.MODULE.getExt()))
 				.map(ngClass -> new ENgPageImpl(ngClass.getPath()))
 				.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
@@ -156,7 +163,7 @@ public class ENgProjectImpl extends EProjectImpl implements ENgProject {
 	public SortedSet<ENgEdit> getNgEdits() {
 		// @formatter:off
 		return this.getNgClasses().values().stream()
-				.filter(ngClass -> ngClass.getFileName().endsWith(ArtifactyType.EDIT.ext))
+				.filter(ngClass -> ngClass.getFileName().endsWith(ENgProject.ArtifactyType.MODULE.getExt()))
 				.map(ngClass -> new ENgEditImpl(ngClass.getPath()))
 				.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
@@ -171,7 +178,7 @@ public class ENgProjectImpl extends EProjectImpl implements ENgProject {
 	public SortedSet<ENgDetail> getNgDetails() {
 		// @formatter:off
 		return this.getNgClasses().values().stream()
-				.filter(ngClass -> ngClass.getFileName().endsWith(ArtifactyType.DETAIL.ext))
+				.filter(ngClass -> ngClass.getFileName().endsWith(ENgProject.ArtifactyType.MODULE.getExt()))
 				.map(ngClass -> new ENgDetailImpl(ngClass.getPath()))
 				.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
@@ -181,7 +188,7 @@ public class ENgProjectImpl extends EProjectImpl implements ENgProject {
 		if (Objects.isNull(this.ngClasses)) {
 			// @formatter:off
 			this.ngClasses = this.listAllFiles().stream()
-				.filter(path -> Arrays.asList(ArtifactyType.values()).stream().anyMatch(artifactType -> path.toString().endsWith(artifactType.ext)))
+				.filter(path -> Arrays.asList(ArtifactyType.values()).stream().anyMatch(artifactType -> path.toString().endsWith(artifactType.getExt())))
 				.map(ENgClassImpl::new)
 				.collect(Collectors.toMap(ngClass -> ngClass.getPath().toString(), Function.identity()));
 			// @formatter:on
@@ -207,30 +214,6 @@ public class ENgProjectImpl extends EProjectImpl implements ENgProject {
 	@Override
 	public Type getProjectType() {
 		return EProject.Type.ANGULAR;
-	}
-
-	enum ArtifactyType {
-		// @formatter:off
-		MODULE(".module.ts"),
-		COMPONENT(".component.ts"),
-		SERVICE("-service.ts"),
-		LAYOUT("-layout.component.ts"),
-		PAGE("-page.component.ts"),
-		EDIT("-edit.component.ts"),
-		DETAIL("-detail.component.ts"),
-		LIST("-list.component.ts"),
-		DIALOG("-dialog.component.ts");
-		// @formatter:on
-		private String ext;
-
-		private ArtifactyType(String ext) {
-			this.ext = ext;
-		}
-
-		public String getExt() {
-			return this.ext;
-		}
-
 	}
 
 }

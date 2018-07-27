@@ -37,5 +37,5 @@ public interface NgService {
 	 * @param ngProject
 	 * @return
 	 */
-	ENgPage createNgPage(ENgProject ngProject);
+	ENgPage createNgPage(ENgProject ngProject, String name);
 }
