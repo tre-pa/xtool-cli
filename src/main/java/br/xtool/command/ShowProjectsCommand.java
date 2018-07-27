@@ -1,4 +1,4 @@
-package br.xtool.command.core;
+package br.xtool.command;
 
 import static br.xtool.core.ConsoleLog.cyan;
 import static br.xtool.core.ConsoleLog.print;

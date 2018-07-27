@@ -1,4 +1,4 @@
-package br.xtool.command.core;
+package br.xtool.command;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
