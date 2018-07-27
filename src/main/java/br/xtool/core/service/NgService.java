@@ -9,6 +9,12 @@ import br.xtool.core.representation.ENgService;
 import br.xtool.core.representation.EProject;
 import lombok.NonNull;
 
+/**
+ * Classe de serviço para projetos Angular.
+ * 
+ * @author jcruz
+ *
+ */
 public interface NgService {
 
 	/**
