@@ -38,7 +38,7 @@ public interface EProject extends Comparable<EProject> {
 	@AllArgsConstructor
 	@Getter
 	enum Version {
-		V1("v1"), V2("v2"), V3("v3"), V4("v4"), V5("v5"), V6("v6"), V7("v7"), V8("v8"), V9("v9"), V10("v10");
+		NONE(""), V1("v1"), V2("v2"), V3("v3"), V4("v4"), V5("v5"), V6("v6"), V7("v7"), V8("v8"), V9("v9"), V10("v10");
 		private String name;
 	}
 
@@ -58,6 +58,8 @@ public interface EProject extends Comparable<EProject> {
 	 * @return
 	 */
 	String getFrameworkVersion();
+
+	Version getProjectVersion();
 
 	void refresh();
 

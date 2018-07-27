@@ -7,6 +7,7 @@ import java.util.Objects;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.function.Function;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import br.xtool.core.representation.ENgClass;
@@ -218,6 +219,15 @@ public class ENgProjectImpl extends EProjectImpl implements ENgProject {
 	@Override
 	public String getFrameworkVersion() {
 		return this.getNgPackage().getDependencies().get("@angular/core");
+	}
+
+	@Override
+	public Version getProjectVersion() {
+		Pattern v5pattern = Pattern.compile("[\\^~]?5\\.2\\.\\d");
+		Pattern v6pattern = Pattern.compile("[\\^~]?6\\.\\d\\.\\d");
+		if (v5pattern.matcher(getFrameworkVersion()).matches()) return Version.V5;
+		if (v6pattern.matcher(getFrameworkVersion()).matches()) return Version.V6;
+		return Version.NONE;
 	}
 
 	@Override

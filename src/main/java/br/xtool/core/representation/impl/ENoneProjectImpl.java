@@ -26,4 +26,9 @@ public class ENoneProjectImpl extends EProjectImpl implements ENoneProject {
 		return EProject.Type.NONE;
 	}
 
+	@Override
+	public Version getProjectVersion() {
+		return Version.NONE;
+	}
+
 }

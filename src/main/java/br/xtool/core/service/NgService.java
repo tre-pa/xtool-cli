@@ -20,6 +20,8 @@ public interface NgService {
 
 	/**
 	 * 
+	 * Adiciona uma classe Service ao modulo correspondente.
+	 * 
 	 * @param ngModule
 	 * @param ngService
 	 */

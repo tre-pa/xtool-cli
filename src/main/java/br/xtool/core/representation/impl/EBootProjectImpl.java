@@ -1,15 +1,19 @@
 package br.xtool.core.representation.impl;
 
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.function.Function;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.StringUtils;
 import org.jboss.forge.roaster.model.JavaUnit;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.jboss.forge.roaster.model.source.JavaInterfaceSource;
@@ -202,9 +206,15 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 
 	@Override
 	public Optional<ENgProject> getAssociatedAngularProject() {
-		throw new UnsupportedOperationException();
-		//		String angularPath = EDirectoryImpl.of(this.getDirectory().getPath().replace("-service", ""));
-		//		return ENgProjectImpl.of(angularPath);
+		String angularPath = this.getPath().toString().replace("-service", "");
+		if (StringUtils.isNotEmpty(angularPath)) {
+			if (Files.exists(Paths.get(angularPath))) {
+				if (ENgProject.isValid(Paths.get(angularPath))) {
+					return Optional.of(new ENgProjectImpl(Paths.get(angularPath)));
+				}
+			}
+		}
+		return Optional.empty();
 	}
 
 	@Override
@@ -221,6 +231,15 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 	@Override
 	public String getFrameworkVersion() {
 		return this.getPom().getParentVersion().get();
+	}
+
+	@Override
+	public Version getProjectVersion() {
+		Pattern v5pattern = Pattern.compile("1\\.5\\.\\d+\\.\\w*");
+		Pattern v6pattern = Pattern.compile("2\\.\\d+\\.\\d+\\.\\w*");
+		if (v5pattern.matcher(getFrameworkVersion()).matches()) return Version.V1;
+		if (v6pattern.matcher(getFrameworkVersion()).matches()) return Version.V2;
+		return Version.NONE;
 	}
 
 	@Override
