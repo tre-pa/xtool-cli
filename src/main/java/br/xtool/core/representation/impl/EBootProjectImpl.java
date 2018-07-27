@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Collection;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -199,6 +200,11 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 		return this.javaUnits;
 	}
 
+	@Override
+	public Collection<JavaUnit> getRoasterJavaUnits() {
+		return this.getJavaUnits().values();
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * @see br.xtool.core.representation.EBootProject#getAssociatedAngularProject()
@@ -260,22 +266,6 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 	@Override
 	public void refresh() {
 		this.javaUnits = null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see br.xtool.core.representation.EBootProject#findJavaClassByName(java.lang.String)
-	 */
-	@Override
-	public EJavaClass findJavaClassByName(String name) {
-		// @formatter:off
-		return this.javaUnits.values().stream()
-				.filter(javaUnit -> javaUnit.getGoverningType().isClass())
-				.filter(javaUnit -> javaUnit.getGoverningType().getName().equals(name))
-				.map(javaUnit -> new EJavaClassImpl(this, javaUnit.<JavaClassSource>getGoverningType()))
-				.findFirst()
-				.orElseGet(() -> new EJavaClassImpl(this, RoasterUtil.createJavaClassSource(name)));
-		// @formatter:on
 	}
 
 	/*

@@ -11,7 +11,6 @@ import br.xtool.core.provider.ENgModuleValueProvider;
 import br.xtool.core.representation.ENgModule;
 import br.xtool.core.representation.ENgPage;
 import br.xtool.core.representation.ENgProject;
-import br.xtool.core.representation.EProject;
 import br.xtool.core.service.NgService;
 import br.xtool.core.service.WorkspaceService;
 
@@ -30,7 +29,7 @@ public class AngularPageGenerator extends AngularAware {
 			@ShellOption(help = "Nome da classe page") String name,
 			@ShellOption(help= "Nome do módulo", valueProvider=ENgModuleValueProvider.class, defaultValue="AppModule") ENgModule ngModule)  {
 	// @formatter:on
-		ENgPage ngPage = this.ngService.createNgPage(this.workspaceService.getWorkingProject(ENgProject.class), EProject.Version.V5, ngModule, name);
+		ENgPage ngPage = this.ngService.createNgPage(this.workspaceService.getWorkingProject(ENgProject.class), ngModule, name);
 	}
 
 }

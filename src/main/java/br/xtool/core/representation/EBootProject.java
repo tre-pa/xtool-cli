@@ -2,10 +2,12 @@ package br.xtool.core.representation;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Collection;
 import java.util.Optional;
 import java.util.SortedSet;
 
 import org.apache.commons.lang3.StringUtils;
+import org.jboss.forge.roaster.model.JavaUnit;
 
 import br.xtool.core.representation.impl.EBootPomImpl;
 import br.xtool.core.representation.impl.EJavaPackageImpl;
@@ -26,6 +28,8 @@ public interface EBootProject extends EProject {
 	 * @return Nome da classe base.
 	 */
 	String getBaseClassName();
+
+	Collection<JavaUnit> getRoasterJavaUnits();
 
 	/**
 	 * 
@@ -108,14 +112,6 @@ public interface EBootProject extends EProject {
 	 * @return
 	 */
 	Optional<EUmlClassDiagram> getDomainClassDiagram();
-
-	/**
-	 * Busca uma classe pelo nome. Caso não encontra retorna um EJavaClass novo.
-	 * 
-	 * @param name
-	 * @return
-	 */
-	EJavaClass findJavaClassByName(String name);
 
 	/**
 	 * 
