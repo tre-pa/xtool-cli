@@ -31,6 +31,42 @@ public class ENgProjectImpl extends EProjectImpl implements ENgProject {
 		super(path);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.ENgProject#getAppPath()
+	 */
+	@Override
+	public Path getAppPath() {
+		return this.getPath().resolve("src/app");
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.ENgProject#getDomainPath()
+	 */
+	@Override
+	public Path getDomainPath() {
+		return this.getPath().resolve("src/app/domain");
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.ENgProject#getServicePath()
+	 */
+	@Override
+	public Path getServicePath() {
+		return this.getPath().resolve("src/app/service");
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.ENgProject#getViewPath()
+	 */
+	@Override
+	public Path getViewPath() {
+		return this.getPath().resolve("src/app/view");
+	}
+
 	@Override
 	public ENgPackage getNgPackage() {
 		return ENgPackageImpl.of(this.getPath().resolve("package.json")).orElse(null);

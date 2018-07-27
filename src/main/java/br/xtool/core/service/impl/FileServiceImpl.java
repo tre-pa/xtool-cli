@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.xtool.core.ConsoleLog;
+import br.xtool.core.representation.EProject;
 import br.xtool.core.representation.EResource;
 import br.xtool.core.representation.impl.EResourceImpl;
 import br.xtool.core.service.FileService;
@@ -24,16 +25,39 @@ public class FileServiceImpl implements FileService {
 	@Autowired
 	private VelocityEngine velocityEngine;
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.service.FileService#getTemplates(java.nio.file.Path, java.util.Map)
+	 */
 	@Override
 	@SneakyThrows
 	public Collection<EResource> getTemplates(Path rootPath, Map<String, Object> vars) {
+		Path realRootPath = EResource.ROOT_PATH.resolve(rootPath);
 		VelocityContext velocityContext = new VelocityContext(vars);
 		// @formatter:off
-		return Files.walk(rootPath)
+		return Files.walk(realRootPath)
 			.filter(Files::isRegularFile)
-			.map(path -> new EResourceImpl(rootPath,rootPath.relativize(path),this.velocityEngine, velocityContext))
+			.map(path -> new EResourceImpl(realRootPath,realRootPath.relativize(path),this.velocityEngine, velocityContext))
 			.collect(Collectors.toList());
 		// @formatter:on
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.service.FileService#copy(java.util.Collection, br.xtool.core.representation.EProject)
+	 */
+	@Override
+	public <T extends EProject> void copy(Collection<EResource> resources, T destProject) {
+		resources.forEach(resource -> this.copy(resource, destProject.getPath()));
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.service.FileService#copy(java.util.Collection, java.nio.file.Path)
+	 */
+	@Override
+	public void copy(Collection<EResource> resources, Path path) {
+		resources.forEach(resource -> this.copy(resource, path));
 	}
 
 	@SneakyThrows
@@ -50,11 +74,6 @@ public class FileServiceImpl implements FileService {
 		os.flush();
 		os.close();
 		ConsoleLog.print("\t" + ConsoleLog.green("[+] "), resource.getPath().toString());
-	}
-
-	@Override
-	public void copy(Collection<EResource> resources, Path path) {
-		resources.forEach(resource -> this.copy(resource, path));
 	}
 
 }

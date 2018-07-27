@@ -2,6 +2,7 @@ package br.xtool.core.service.impl;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Collection;
 import java.util.Map;
 
@@ -86,7 +87,7 @@ public class WorkspaceServiceImpl implements WorkspaceService {
 	 */
 	@Override
 	public <T extends EProject> T createProject(Class<T> projectClass, EProject.Type type, String name, Version version, Map<String, Object> vars) {
-		Path archetypePath = EResource.ROOT_PATH.resolve(type.getName()).resolve(version.getName()).resolve("archetype");
+		Path archetypePath = Paths.get(type.getName()).resolve(version.getName()).resolve("archetype");
 		Path projectPath = this.createDirectory(name);
 		Collection<EResource> resources = this.fs.getTemplates(archetypePath, vars);
 		this.fs.copy(resources, projectPath);

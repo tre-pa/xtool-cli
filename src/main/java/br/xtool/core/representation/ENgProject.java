@@ -35,6 +35,30 @@ public interface ENgProject extends EProject {
 		private String ext;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
+	Path getAppPath();
+
+	/**
+	 * 
+	 * @return
+	 */
+	Path getDomainPath();
+
+	/**
+	 * 
+	 * @return
+	 */
+	Path getServicePath();
+
+	/**
+	 * 
+	 * @return
+	 */
+	Path getViewPath();
+
 	ENgPackage getNgPackage();
 
 	/**
