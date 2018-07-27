@@ -63,6 +63,8 @@ public interface ENgProject extends EProject {
 
 	ENgModule getNgViewModule();
 
+	ENgModule getNgAppModule();
+
 	ENgPackage getNgPackage();
 
 	/**

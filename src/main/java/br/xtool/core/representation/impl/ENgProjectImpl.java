@@ -74,8 +74,22 @@ public class ENgProjectImpl extends EProjectImpl implements ENgProject {
 
 	@Override
 	public ENgModule getNgViewModule() {
-		// TODO Auto-generated method stub
-		return null;
+		// @formatter:off
+		return this.getNgModules().stream()
+				.filter(ngModule -> ngModule.getName().equals("ViewModule"))
+				.findFirst()
+				.orElseThrow(() -> new IllegalArgumentException("O projeto não possui o módulo 'view.module.ts'."));
+		// @formatter:on
+	}
+
+	@Override
+	public ENgModule getNgAppModule() {
+		// @formatter:off
+		return this.getNgModules().stream()
+				.filter(ngModule -> ngModule.getName().equals("AppModule"))
+				.findFirst()
+				.orElseThrow(() -> new IllegalArgumentException("O projeto não possui o módulo 'app.module.ts'."));
+		// @formatter:on
 	}
 
 	/**

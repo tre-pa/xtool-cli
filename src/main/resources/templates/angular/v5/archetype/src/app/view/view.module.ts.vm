@@ -1,0 +1,20 @@
+import { NgModule } from '@angular/core';
+import { SharedModule } from './../@core/shared.module';
+import { viewRoutes } from './view-routing.module';
+
+@NgModule({
+    declarations: [
+
+    ],
+    imports: [
+        SharedModule,
+        viewRoutes
+    ],
+    providers: [
+
+    ],
+    entryComponents: [
+
+    ]
+})
+export class ViewModule { }
