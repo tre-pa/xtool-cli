@@ -2,7 +2,6 @@ package br.xtool.core.support;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,7 +10,6 @@ import org.springframework.stereotype.Component;
 
 import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.EBootProject.BootSupport;
-import br.xtool.core.representation.EResource;
 import br.xtool.core.service.FileService;
 
 @Component
@@ -31,9 +29,8 @@ public class BootProjectJpaSupport implements BootSupport {
 				put("baseClassName", project.getBaseClassName());
 			}
 		};
-		Path templatePath = Paths.get("springboot").resolve(project.getProjectVersion().getName()).resolve("support/jpa");
-		Collection<EResource> resources = this.fs.getTemplates(templatePath, vars);
-		this.fs.copy(resources, project);
+		Path templatesPath = Paths.get("springboot").resolve(project.getProjectVersion().getName()).resolve("support/jpa");
+		this.fs.copy(templatesPath, vars, project);
 		// @formatter:off
 		project.getPom()
 			.addDependency("org.springframework.boot", "spring-boot-starter-data-jpa")

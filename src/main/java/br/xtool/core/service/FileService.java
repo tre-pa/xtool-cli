@@ -1,11 +1,9 @@
 package br.xtool.core.service;
 
 import java.nio.file.Path;
-import java.util.Collection;
 import java.util.Map;
 
 import br.xtool.core.representation.EProject;
-import br.xtool.core.representation.EResource;
 
 /**
  * Classe que realiza operação no FileSystem.
@@ -23,21 +21,22 @@ public interface FileService {
 	 * @param vars
 	 * @return
 	 */
-	Collection<EResource> getTemplates(Path resourcePath, Map<String, Object> vars);
+	//	Collection<EResource> getTemplates(Path resourcePath, Map<String, Object> vars);
 
 	/**
 	 * 
-	 * @param resources
+	 * @param resourcePath
+	 * @param vars
 	 * @param destinationProject
 	 */
-	<T extends EProject> void copy(Collection<EResource> resources, T destinationProject);
+	<T extends EProject> void copy(Path resourcePath, Map<String, Object> vars, T destinationProject);
 
 	/**
-	 * Copia a lista de recursos para o path de destino.
 	 * 
-	 * @param resources
+	 * @param resourcePath
+	 * @param vars
 	 * @param destinationPath
 	 */
-	void copy(Collection<EResource> resources, Path path);
+	void copy(Path resourcePath, Map<String, Object> vars, Path destinationPath);
 
 }

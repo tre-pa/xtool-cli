@@ -3,7 +3,6 @@ package br.xtool.core.service.impl;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,7 +18,6 @@ import br.xtool.core.representation.ENgPage;
 import br.xtool.core.representation.ENgProject;
 import br.xtool.core.representation.ENgService;
 import br.xtool.core.representation.EProject;
-import br.xtool.core.representation.EResource;
 import br.xtool.core.representation.impl.ENgPageImpl;
 import br.xtool.core.service.FileService;
 import br.xtool.core.service.NgService;
@@ -108,8 +106,7 @@ public class NgServiceImpl implements NgService {
 				put("pageClassName", ENgPage.genClassName(name));
 			}
 		};
-		Collection<EResource> resources = this.fs.getTemplates(Paths.get("angular").resolve(version.getName()).resolve("page"), vars);
-		this.fs.copy(resources, ngModule.getPath().getParent());
+		this.fs.copy(Paths.get("angular").resolve(version.getName()).resolve("page"), vars, ngModule.getPath().getParent());
 		Path ngPagePath = ngModule.getPath().getParent().resolve(ENgPage.genFileName(name)).resolve(ENgPage.genFileName(name).concat(".component.ts"));
 		ENgPage ngPage = new ENgPageImpl(ngPagePath);
 		this.addDeclarationToModule(ngProject, ngModule, ngPage);
@@ -118,8 +115,7 @@ public class NgServiceImpl implements NgService {
 
 	private void copyXtoolNg(ENgProject ngProject, Map<String, Object> vars) {
 		if (Files.notExists(ngProject.getPath().resolve("scripts/xtool-ng.js"))) {
-			Collection<EResource> resources = this.fs.getTemplates(Paths.get("angular/v5/archetype/scripts"), vars);
-			this.fs.copy(resources, ngProject.getPath());
+			this.fs.copy(Paths.get("angular/v5/archetype/scripts"), vars, ngProject.getPath());
 		}
 	}
 }

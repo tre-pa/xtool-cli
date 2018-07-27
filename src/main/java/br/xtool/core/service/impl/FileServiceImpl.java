@@ -29,9 +29,8 @@ public class FileServiceImpl implements FileService {
 	 * (non-Javadoc)
 	 * @see br.xtool.core.service.FileService#getTemplates(java.nio.file.Path, java.util.Map)
 	 */
-	@Override
 	@SneakyThrows
-	public Collection<EResource> getTemplates(Path rootPath, Map<String, Object> vars) {
+	private Collection<EResource> getResources(Path rootPath, Map<String, Object> vars) {
 		Path realRootPath = EResource.ROOT_PATH.resolve(rootPath);
 		VelocityContext velocityContext = new VelocityContext(vars);
 		// @formatter:off
@@ -47,7 +46,8 @@ public class FileServiceImpl implements FileService {
 	 * @see br.xtool.core.service.FileService#copy(java.util.Collection, br.xtool.core.representation.EProject)
 	 */
 	@Override
-	public <T extends EProject> void copy(Collection<EResource> resources, T destProject) {
+	public <T extends EProject> void copy(Path resourcePath, Map<String, Object> vars, T destProject) {
+		Collection<EResource> resources = this.getResources(resourcePath, vars);
 		resources.forEach(resource -> this.copy(resource, destProject.getPath()));
 	}
 
@@ -56,7 +56,8 @@ public class FileServiceImpl implements FileService {
 	 * @see br.xtool.core.service.FileService#copy(java.util.Collection, java.nio.file.Path)
 	 */
 	@Override
-	public void copy(Collection<EResource> resources, Path path) {
+	public void copy(Path resourcePath, Map<String, Object> vars, Path path) {
+		Collection<EResource> resources = this.getResources(resourcePath, vars);
 		resources.forEach(resource -> this.copy(resource, path));
 	}
 

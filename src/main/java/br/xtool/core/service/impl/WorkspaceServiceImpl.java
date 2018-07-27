@@ -3,7 +3,6 @@ package br.xtool.core.service.impl;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Collection;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import br.xtool.core.representation.EProject;
 import br.xtool.core.representation.EProject.Version;
-import br.xtool.core.representation.EResource;
 import br.xtool.core.representation.EWorkspace;
 import br.xtool.core.representation.impl.ENoneProjectImpl;
 import br.xtool.core.representation.impl.EWorkspaceImpl;
@@ -89,8 +87,7 @@ public class WorkspaceServiceImpl implements WorkspaceService {
 	public <T extends EProject> T createProject(Class<T> projectClass, EProject.Type type, String name, Version version, Map<String, Object> vars) {
 		Path archetypePath = Paths.get(type.getName()).resolve(version.getName()).resolve("archetype");
 		Path projectPath = this.createDirectory(name);
-		Collection<EResource> resources = this.fs.getTemplates(archetypePath, vars);
-		this.fs.copy(resources, projectPath);
+		this.fs.copy(archetypePath, vars, projectPath);
 		return projectClass.cast(EProject.factory(projectClass, projectPath));
 	}
 
