@@ -1,6 +1,7 @@
 package br.xtool.core.service.impl;
 
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collection;
 import java.util.HashMap;
@@ -18,6 +19,7 @@ import br.xtool.core.representation.ENgPage;
 import br.xtool.core.representation.ENgProject;
 import br.xtool.core.representation.ENgService;
 import br.xtool.core.representation.EResource;
+import br.xtool.core.representation.impl.ENgPageImpl;
 import br.xtool.core.service.FileService;
 import br.xtool.core.service.NgService;
 import br.xtool.core.service.ShellService;
@@ -50,6 +52,7 @@ public class NgServiceImpl implements NgService {
 				.put("componentName", ngComponent.getName())
 				.build();
 		// @formatter:on
+		System.out.println(vars);
 		copyXtoolNg(ngProject, vars);
 		this.shellService.runCmd("node ${xtoolNg} --module-path=${modulePath} --module-name=${moduleName} --component-path=${componentPath} --component-name=${componentName}", vars);
 	}
@@ -93,7 +96,7 @@ public class NgServiceImpl implements NgService {
 	}
 
 	@Override
-	public ENgPage createNgPage(ENgProject ngProject, String name) {
+	public ENgPage createNgPage(ENgProject ngProject, ENgModule ngModule, String name) {
 		Map<String, Object> vars = new HashMap<String, Object>() {
 			private static final long serialVersionUID = 1L;
 			{
@@ -101,8 +104,12 @@ public class NgServiceImpl implements NgService {
 				put("pageClassName", ENgPage.genClassName(name));
 			}
 		};
-
-		return null;
+		Collection<EResource> resources = this.fs.getTemplates(Paths.get("angular/v5/page"), vars);
+		this.fs.copy(resources, ngModule.getPath().getParent());
+		Path ngPagePath = ngModule.getPath().getParent().resolve(ENgPage.genFileName(name)).resolve(ENgPage.genFileName(name).concat(".component.ts"));
+		ENgPage ngPage = new ENgPageImpl(ngPagePath);
+		this.addDeclarationToModule(ngProject, ngModule, ngPage);
+		return ngPage;
 	}
 
 	private void copyXtoolNg(ENgProject ngProject, Map<String, Object> vars) {

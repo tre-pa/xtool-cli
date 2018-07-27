@@ -16,7 +16,7 @@ public interface ENgPage extends ENgComponent {
 	 * @return
 	 */
 	static String genFileName(String name) {
-		return Strman.toKebabCase(name);
+		return Strman.toKebabCase(name.concat("-page"));
 	}
 
 	/**
@@ -25,6 +25,6 @@ public interface ENgPage extends ENgComponent {
 	 * @return
 	 */
 	static String genClassName(String name) {
-		return Strman.toStudlyCase(name);
+		return Strman.toStudlyCase(name.concat("Page"));
 	}
 }
