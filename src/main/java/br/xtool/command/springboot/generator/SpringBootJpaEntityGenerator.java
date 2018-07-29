@@ -42,7 +42,7 @@ public class SpringBootJpaEntityGenerator extends SpringBootAware {
 				System.out.println("Classe: " + umlClass.getName());
 				umlClass.getStereotypes().forEach(s -> System.out.println("Stereotype: " + s.getStereotypeType()));
 				umlClass.getFields().stream().forEach(umlField -> {
-					System.out.print("\tField: " + umlField.getName() + " : " + umlField.getType());
+					System.out.print("\tField: " + umlField.getName() + " : " + umlField.getType() + " ");
 					umlField.getProperties().forEach(p -> System.out.print(p.getFieldProperty()));
 					//					System.out.println("\tField: " + umlField.getName() + umlField.getProperties().str);
 					System.out.println();
@@ -57,7 +57,7 @@ public class SpringBootJpaEntityGenerator extends SpringBootAware {
 			classDiagram.getRelationships().forEach(umlRelationship -> {
 				System.out.println(String.format("Source: %s , Target: %s", umlRelationship.getSourceClass().getName(), umlRelationship.getTargetClass().getName()));
 				System.out.println("\tSource: " + umlRelationship.getSourceMultiplicity().getMutiplicityType());
-				System.out.println("\tSource: " + umlRelationship.getTargetMultiplicity().getMutiplicityType());
+				System.out.println("\tTarget: " + umlRelationship.getTargetMultiplicity().getMutiplicityType());
 				//				umlRelationship.getSourceMultiplicity().ifPresent(m -> System.out.println("\tSource: " + m.getMutiplicityType()));
 				//				umlRelationship.getTargetMultiplicity().ifPresent(m -> System.out.println("\tTarget: " + m.getMutiplicityType()));
 			});
