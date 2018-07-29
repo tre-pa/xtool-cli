@@ -21,7 +21,7 @@ import br.xtool.core.service.WorkspaceService;
  *
  */
 @ShellComponent
-public class SpringBootJpaEntityGenerator extends SpringBootAware {
+public class GenJpaEntityCommand extends SpringBootAware {
 
 	@Autowired
 	private FileService fs;

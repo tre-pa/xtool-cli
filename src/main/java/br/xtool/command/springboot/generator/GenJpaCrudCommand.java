@@ -25,7 +25,7 @@ import strman.Strman;
  *
  */
 @ShellComponent
-public class SpringBootJpaCrudGenerator extends SpringBootAware {
+public class GenJpaCrudCommand extends SpringBootAware {
 
 	@Autowired
 	private FileService fs;

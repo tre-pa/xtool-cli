@@ -15,7 +15,7 @@ import br.xtool.core.representation.EBootRest;
 import br.xtool.core.service.WorkspaceService;
 
 @ShellComponent
-public class SpringBootRestInfo extends SpringBootAware {
+public class InfoRestCommand extends SpringBootAware {
 
 	@Autowired
 	private WorkspaceService workspaceService;

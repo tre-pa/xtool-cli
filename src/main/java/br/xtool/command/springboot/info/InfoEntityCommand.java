@@ -15,7 +15,7 @@ import br.xtool.core.representation.EJavaEntity;
 import br.xtool.core.service.WorkspaceService;
 
 @ShellComponent
-public class SpringBootEntityInfo extends SpringBootAware {
+public class InfoEntityCommand extends SpringBootAware {
 
 	@Autowired
 	private WorkspaceService workspaceService;

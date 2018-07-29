@@ -12,6 +12,7 @@ import br.xtool.core.representation.EJavaClass;
 public interface BootService {
 
 	/**
+	 * Adicionar um suporte ao projeto.
 	 * 
 	 * @param bootProject
 	 * @param supportClass
@@ -19,6 +20,7 @@ public interface BootService {
 	<T extends BootSupport> void addSupport(EBootProject bootProject, Class<T> supportClass);
 
 	/**
+	 * Verifica se o projeto possui suporte.
 	 * 
 	 * @param bootProject
 	 * @param supportClass
@@ -33,4 +35,5 @@ public interface BootService {
 	 * @return
 	 */
 	EJavaClass findJavaClassByName(EBootProject bootProject, String name);
+
 }
