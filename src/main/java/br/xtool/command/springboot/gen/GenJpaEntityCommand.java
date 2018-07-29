@@ -1,4 +1,4 @@
-package br.xtool.command.springboot.generator;
+package br.xtool.command.springboot.gen;
 
 import java.io.IOException;
 

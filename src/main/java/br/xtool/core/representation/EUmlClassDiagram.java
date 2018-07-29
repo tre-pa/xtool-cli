@@ -25,7 +25,9 @@ public interface EUmlClassDiagram {
 	Set<EUmlEnum> getEnums();
 
 	/**
+	 * Retorna os relacionamento UML.
 	 * 
+	 * @return
 	 */
 	Set<EUmlRelationship> getRelationships();
 }

@@ -1,4 +1,4 @@
-package br.xtool.command.springboot.mapper;
+package br.xtool.command.springboot.map;
 
 import java.util.Objects;
 
@@ -9,22 +9,22 @@ import org.springframework.shell.standard.ShellOption;
 
 import br.xtool.XtoolCliApplication;
 import br.xtool.core.aware.SpringBootAware;
-import br.xtool.core.provider.EJavaEntityValueProvider;
+import br.xtool.core.provider.EUmlClassValueProvider;
 import br.xtool.core.representation.EBootProject;
-import br.xtool.core.representation.EJavaEntity;
+import br.xtool.core.representation.EUmlClass;
 import br.xtool.core.service.WorkspaceService;
 
 @ShellComponent
-public class SpringBootJpaEntityMapper extends SpringBootAware {
+public class MapClassCommand extends SpringBootAware {
 
 	@Autowired
 	private WorkspaceService workspaceService;
 
-	@ShellMethod(key = "map:entity", value = "Mapeia uma entidade JPA existente", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
+	@ShellMethod(key = "map:class", value = "Mapeia uma classe do diagrama de classe UML.", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
 	// @formatter:off
 	public void run(
-			@ShellOption(help = "Entidade JPA", valueProvider = EJavaEntityValueProvider.class, defaultValue="") EJavaEntity entity,
-			@ShellOption(help = "Todas as entidades JPA", defaultValue = "false", arity = 0) Boolean allEntities,
+			@ShellOption(help = "Classe UML", valueProvider = EUmlClassValueProvider.class, defaultValue="", value= {"--class"}) EUmlClass umlClass,
+			@ShellOption(help = "Todas as classes UML", defaultValue = "false", arity = 0) Boolean allClasses,
 			@ShellOption(help = "Mapeia a entidade com annotations JPA", defaultValue = "false", arity = 0) Boolean jpa,
 			@ShellOption(help = "Mapeia a entidade com annotations Lombok", defaultValue = "false", arity = 0) Boolean lombok,
 			@ShellOption(help = "Mapeia a entidade com annotations Jackson", defaultValue = "false", arity = 0) Boolean jackson) {
@@ -37,21 +37,7 @@ public class SpringBootJpaEntityMapper extends SpringBootAware {
 		//				"Selecione uma entidade ou a opção 'all-entities' para selecionar todas as entidades. Digite 'help map-springboot-jpa-entity' para mais detalhes.");
 		//		Assert.isTrue(jpa || lombok || jackson, "Selecione pelo menos uma opção de mapeamento. Digite 'help map-springboot-jpa-entity' para mais detalhes.");
 
-		//		System.out.println(Types.getPackage("lombok.Getter"));
-		//		System.out.println(Types.toSimpleName("lombok.Getter"));
-		//		System.out.println(Arrays.deepToString(Types.splitGenerics("Map<String, Long>")));
-
-		if (Objects.nonNull(entity)) {
-			// entity.addAnnotation("foo.Abc");
-			// entity.save();
-			// entity.addUpdate(requests -> {
-			// requests.add(AddImport.of(""));
-			// });
-			// entity.addUpdate(AddImport.of("br.jus.tre_pa"));
-			// entity.addUpdate(AddEntityAnnotation.of("lombok.Getter"));
-			// entity.addUpdate(AddEntityAnnotation.of("lombok.EqualsAndHashCode",
-			// AddAnnotationStringValue.of("of", new String[] { "id", "name" })));
-			// entity.commitUpdates();
+		if (Objects.nonNull(umlClass)) {
 			return;
 		}
 	}
