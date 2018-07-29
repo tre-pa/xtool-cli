@@ -1,4 +1,4 @@
-package br.xtool.command.angular.generator;
+package br.xtool.command.angular.gen;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
@@ -15,7 +15,7 @@ import br.xtool.core.service.NgService;
 import br.xtool.core.service.WorkspaceService;
 
 @ShellComponent
-public class AngularPageGenerator extends AngularAware {
+public class GenPageCommand extends AngularAware {
 
 	@Autowired
 	private NgService ngService;

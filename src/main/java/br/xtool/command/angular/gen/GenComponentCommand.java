@@ -1,4 +1,4 @@
-package br.xtool.command.angular.generator;
+package br.xtool.command.angular.gen;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -18,7 +18,7 @@ import br.xtool.core.service.FileService;
 import br.xtool.core.service.NgService;
 
 @ShellComponent
-public class AngularComponentGenerator extends AngularAware {
+public class GenComponentCommand extends AngularAware {
 
 	@Autowired
 	private FileService fs;
