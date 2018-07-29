@@ -28,21 +28,54 @@ public class EUmlFieldImpl implements EUmlField {
 		this.member = member;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EUmlField#getName()
+	 */
 	@Override
 	public String getName() {
 		return memberName();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EUmlField#getType()
+	 */
+	@Override
+	public FieldType getType() {
+		if (this.isArray()) {
+			String type = StringUtils.substring(this.memberType(), 0, StringUtils.indexOf(this.memberType(), "[")).trim();
+			return FieldType.valueOf(StringUtils.upperCase(type));
+		}
+		if (this.hasProperties()) {
+			String type = StringUtils.substring(this.memberType(), 0, StringUtils.indexOf(this.memberType(), "{")).trim();
+			return FieldType.valueOf(StringUtils.upperCase(type));
+		}
+		return FieldType.valueOf(StringUtils.upperCase(this.memberType()));
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EUmlField#isId()
+	 */
 	@Override
 	public boolean isId() {
 		return StringUtils.equalsIgnoreCase(this.getName(), "id");
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EUmlField#isArray()
+	 */
 	@Override
 	public boolean isArray() {
 		return Strman.containsAll(memberType(), new String[] { "[", "]" });
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EUmlField#getMinArrayLength()
+	 */
 	@Override
 	public Optional<Integer> getMinArrayLength() {
 		if (this.isArray()) {
@@ -57,6 +90,10 @@ public class EUmlFieldImpl implements EUmlField {
 		return Optional.empty();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EUmlField#getMaxArrayLength()
+	 */
 	@Override
 	public Optional<Integer> getMaxArrayLength() {
 		if (this.isArray()) {
@@ -72,16 +109,28 @@ public class EUmlFieldImpl implements EUmlField {
 		return Optional.empty();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EUmlField#hasProperty(br.xtool.core.representation.EUmlFieldProperty.FieldPropertyType)
+	 */
 	@Override
 	public boolean hasProperty(FieldPropertyType property) {
 		return this.getProperties().stream().anyMatch(prop -> prop.getFieldProperty().equals(property));
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EUmlField#hasProperties()
+	 */
 	@Override
 	public boolean hasProperties() {
 		return !this.getProperties().isEmpty();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EUmlField#getProperties()
+	 */
 	@Override
 	public Set<EUmlFieldProperty> getProperties() {
 		if (Strman.containsAll(memberType(), new String[] { "{", "}" })) {

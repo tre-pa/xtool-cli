@@ -19,8 +19,8 @@ public interface EUmlField {
 	@Getter
 	enum FieldType {
 		// @formatter:off
-		BIGDECIMAL("BigDecimal", "java.math.BigDecimal"),
 		LONG("Long", ""), 
+		BIGDECIMAL("BigDecimal", "java.math.BigDecimal"),
 		INTEGER("Integer", ""), 
 		STRING("String", ""), 
 		BYTE("byte", ""), 
@@ -39,6 +39,13 @@ public interface EUmlField {
 	 * @return
 	 */
 	String getName();
+
+	/**
+	 * Retorna o tipo do atributo
+	 * 
+	 * @return
+	 */
+	FieldType getType();
 
 	/**
 	 * Retorna se o atributo é o Id da classe.
