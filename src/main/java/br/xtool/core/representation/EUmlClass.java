@@ -2,13 +2,17 @@ package br.xtool.core.representation;
 
 import java.util.Set;
 
+import org.jboss.forge.roaster.model.source.JavaClassSource;
+
+import br.xtool.core.visitor.Visitable;
+
 /**
  * Representação de uma classe no diagrama de classe UML.
  * 
  * @author jcruz
  *
  */
-public interface EUmlClass {
+public interface EUmlClass extends Visitable {
 
 	/**
 	 * Retorna o nome da classe UML.
@@ -37,4 +41,12 @@ public interface EUmlClass {
 	 * @return
 	 */
 	Set<EUmlStereotype> getStereotypes();
+
+	/**
+	 * Converte de UmlClass para JavaClassSource.
+	 * 
+	 * @param bootProject
+	 * @return
+	 */
+	JavaClassSource convertToJavaClassSource(EBootProject bootProject);
 }

@@ -2,6 +2,7 @@ package br.xtool.core.service.impl;
 
 import java.io.BufferedWriter;
 import java.nio.file.Files;
+import java.nio.file.Path;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -41,9 +42,12 @@ public class BootServiceImpl implements BootService {
 	@Override
 	@SneakyThrows
 	public void save(EJavaSourceFolder sourceFolder, EJavaClass javaClass) {
-		try (BufferedWriter write = Files.newBufferedWriter(sourceFolder.getPath().resolve(javaClass.getPackage().getDir()))) {
-			write.write(javaClass.getRoasterJavaClass().toUnformattedString());
+		Path javaPath = sourceFolder.getPath().resolve(javaClass.getPackage().getDir()).resolve(String.format("%s.java", javaClass.getName()));
+		if (Files.notExists(javaPath.getParent())) Files.createDirectories(javaPath);
+		try (BufferedWriter write = Files.newBufferedWriter(javaPath)) {
+			write.write(javaClass.getRoasterJavaClass().toString());
 			write.flush();
+			sourceFolder.getBootProject().refresh();
 		}
 	}
 

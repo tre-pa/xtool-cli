@@ -96,7 +96,7 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 	 */
 	@Override
 	public EJavaSourceFolder getMainSourceFolder() {
-		return new EJavaSourceFolderImpl(this.getPath().resolve("src/main/java"));
+		return new EJavaSourceFolderImpl(this, this.getPath().resolve("src/main/java"));
 	}
 
 	/*
@@ -105,7 +105,7 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 	 */
 	@Override
 	public EJavaSourceFolder getTestSourceFolder() {
-		return new EJavaSourceFolderImpl(this.getPath().resolve("src/test/java"));
+		return new EJavaSourceFolderImpl(this, this.getPath().resolve("src/test/java"));
 	}
 
 	/*

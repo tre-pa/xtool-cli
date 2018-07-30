@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
 
+import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.EJavaPackage;
 import br.xtool.core.representation.EJavaSourceFolder;
 import lombok.SneakyThrows;
@@ -16,8 +17,11 @@ public class EJavaSourceFolderImpl implements EJavaSourceFolder {
 
 	private Path path;
 
-	public EJavaSourceFolderImpl(Path path) {
+	private EBootProject bootProject;
+
+	public EJavaSourceFolderImpl(EBootProject bootProject, Path path) {
 		super();
+		this.bootProject = bootProject;
 		this.path = path;
 	}
 
@@ -47,6 +51,11 @@ public class EJavaSourceFolderImpl implements EJavaSourceFolder {
 				.map(EJavaPackageImpl::of)
 				.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
+	}
+
+	@Override
+	public EBootProject getBootProject() {
+		return this.bootProject;
 	}
 
 }

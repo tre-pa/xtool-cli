@@ -90,7 +90,7 @@ public interface EUmlField {
 		LOCALDATETIME("LocalDateTime", "java.time.LocalDateTime"), 
 		DATE("Date", "java.util.Date");
 		private String javaName;
-		private String importName;
+		private String className;
 		// @formatter:on
 	}
 

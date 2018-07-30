@@ -17,4 +17,11 @@ public interface EJavaSourceFolder extends ESourceFolder {
 	 */
 	SortedSet<EJavaPackage> getPackages();
 
+	/**
+	 * Retorna o projeto Spring Boot associado.
+	 * 
+	 * @return
+	 */
+	EBootProject getBootProject();
+
 }
