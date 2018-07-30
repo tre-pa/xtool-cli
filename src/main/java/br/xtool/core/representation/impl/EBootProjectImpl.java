@@ -5,12 +5,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collection;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.SortedSet;
 import java.util.TreeSet;
-import java.util.function.Function;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -41,7 +39,7 @@ import br.xtool.core.util.RoasterUtil;
  */
 public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 
-	private Map<String, JavaUnit> javaUnits;
+	private Collection<JavaUnit> javaUnits;
 
 	private EBootPom pom;
 
@@ -70,7 +68,7 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 	public EJavaClass getMainclass() {
 		if (Objects.isNull(this.mainClass)) {
 			// @formatter:off
-			this.mainClass = this.getJavaUnits().values()
+			this.mainClass = this.getJavaUnits()
 				.parallelStream()
 				.filter(javaUnit -> javaUnit.getGoverningType().isClass())
 				.map(javaUnit -> javaUnit.<JavaClassSource>getGoverningType())
@@ -141,7 +139,7 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 	@Override
 	public SortedSet<EJavaEntity> getEntities() {
 		// @formatter:off
-		return this.getJavaUnits().values()
+		return this.getJavaUnits()
 			.parallelStream()
 			.filter(javaUnit -> javaUnit.getGoverningType().isClass())
 			.map(javaUnit -> javaUnit.<JavaClassSource>getGoverningType())
@@ -158,7 +156,7 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 	@Override
 	public SortedSet<EBootRepository> getRepositories() {
 		// @formatter:off
-		return this.getJavaUnits().values()
+		return this.getJavaUnits()
 			.parallelStream()
 			.filter(javaUnit -> javaUnit.getGoverningType().isInterface())
 			.map(javaUnit -> javaUnit.<JavaInterfaceSource>getGoverningType())
@@ -175,7 +173,7 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 	@Override
 	public SortedSet<EBootRest> getRests() {
 		// @formatter:off
-		return this.getJavaUnits().values()
+		return this.getJavaUnits()
 			.parallelStream()
 			.filter(javaUnit -> javaUnit.getGoverningType().isClass())
 			.map(javaUnit -> javaUnit.<JavaClassSource>getGoverningType())
@@ -185,7 +183,7 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 		// @formatter:on
 	}
 
-	public Map<String, JavaUnit> getJavaUnits() {
+	public Collection<JavaUnit> getJavaUnits() {
 		if (Objects.isNull(this.javaUnits)) {
 			// @formatter:off
 			this.javaUnits = this.listAllFiles().stream()
@@ -194,7 +192,7 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 				.map(RoasterUtil::loadJavaUnit)
 				.filter(Optional::isPresent)
 				.map(Optional::get)
-				.collect(Collectors.toMap(javaUnit -> javaUnit.getGoverningType().getName(), Function.identity()));
+				.collect(Collectors.toList());
 			// @formatter:on
 		}
 		return this.javaUnits;
@@ -202,7 +200,7 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 
 	@Override
 	public Collection<JavaUnit> getRoasterJavaUnits() {
-		return this.getJavaUnits().values();
+		return this.getJavaUnits();
 	}
 
 	/*
