@@ -29,7 +29,7 @@ public class EJavaRelationshipImpl implements EJavaRelationship {
 	@Override
 	public boolean isBidirectional() {
 		// @formatter:off
-		return this.entityTarget.getRelationship().stream()
+		return this.entityTarget.getRelationships().stream()
 				.filter(association -> association.getTargetEntity().isPresent())
 				.anyMatch(association -> association.getTargetEntity().get().getName().equals(this.entitySource.getName()));
 		// @formatter:on

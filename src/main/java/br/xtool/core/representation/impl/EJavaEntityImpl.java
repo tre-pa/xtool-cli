@@ -49,7 +49,7 @@ public class EJavaEntityImpl extends EJavaClassImpl implements EJavaEntity {
 	 * @return
 	 */
 	@Override
-	public Set<EJavaRelationship> getRelationship() {
+	public Set<EJavaRelationship> getRelationships() {
 		Set<EJavaRelationship> associations = new HashSet<>();
 		// @formatter:off
 		this.getAttributes().stream()

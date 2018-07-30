@@ -14,16 +14,16 @@ $ git clone git@git.tre-pa.jus.br:sds/support/xtool-cli.git
 $ cd xtool-cli
 ```
 
-**2.** Rodar o projeto com comando `run.sh`:
+**2.** Rodar o projeto com comando `run.sh` indicando o diretório de workspace (*na maioria dos casos ~/git/*):
 
 ```sh
-$ ./run.sh
+$ ./run.sh ~/git/
 ```
 
-**3.** Após rodar a aplicação o prompt da ferramenta será exibido. O **Diretório de trabalho padrão** é `$HOME/git`
+**3.** Após rodar a aplicação o prompt da ferramenta será exibido.
 
 ```sh
-xtool@git >
+xtool ~
 
 ## Help do Sistema
 
@@ -34,13 +34,13 @@ Com o comando `help` é possível visualizar os comandos disponíveis:
 **1.** Para visualizar os comando disponéveis digitar no prompt o comando `help`:
 
 ```sh
-xtool@git > help
+xtool ~ help
 ```
 
 **2.** Para visualizar o help de um comando específico digitar: 
 
 ```sh
-xtool@git > help NOME_COMANDO
+xtool ~ help NOME_COMANDO
 ```
 
 
@@ -49,5 +49,11 @@ xtool@git > help NOME_COMANDO
 Para criar um novo projeto Spring Boot 1.5.x digitar o comando abaixo:
 
 ```sh
-xtool@git > new-springboot-project NOME_PROJETO
+xtool ~ new:springboot NOME_PROJETO
+```
+
+## Criando projeto Angular 5.x
+
+```sh
+xtool ~ new:angular NOME_PROJETO
 ```

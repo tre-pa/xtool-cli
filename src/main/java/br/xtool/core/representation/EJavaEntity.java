@@ -11,7 +11,17 @@ import java.util.SortedSet;
  */
 public interface EJavaEntity extends EJavaClass {
 
+	/**
+	 * Retorna os atributos JPA da entidade.
+	 * 
+	 * @return
+	 */
 	SortedSet<EJavaAttribute> getAttributes();
 
-	Set<EJavaRelationship> getRelationship();
+	/**
+	 * Retorna os relacionamentos da entidade.
+	 * 
+	 * @return
+	 */
+	Set<EJavaRelationship> getRelationships();
 }
