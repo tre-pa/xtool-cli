@@ -18,6 +18,10 @@ public class EUmlFieldPropertyImpl implements EUmlFieldProperty {
 		this.property = property;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EUmlFieldProperty#getFieldProperty()
+	 */
 	@Override
 	public FieldPropertyType getFieldProperty() {
 		String invalidProperty = "Proriedade '%s' inválida no atributo %s. Os tipos válidos são: %s";
@@ -30,6 +34,15 @@ public class EUmlFieldPropertyImpl implements EUmlFieldProperty {
 				.findAny()
 				.orElseThrow(() -> new IllegalArgumentException(String.format(invalidProperty, this.property, this.field.getName(), properties)));
 		// @formatter:on
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EUmlFieldProperty#getField()
+	 */
+	@Override
+	public EUmlField getField() {
+		return this.field;
 	}
 
 }

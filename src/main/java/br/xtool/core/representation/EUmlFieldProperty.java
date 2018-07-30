@@ -18,4 +18,11 @@ public interface EUmlFieldProperty {
 
 	FieldPropertyType getFieldProperty();
 
+	/**
+	 * Retorna o field associado a propriedade.
+	 * 
+	 * @return
+	 */
+	EUmlField getField();
+
 }

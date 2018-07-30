@@ -42,6 +42,10 @@ public interface EJavaClass extends Comparable<EJavaClass> {
 	 */
 	boolean hasAnnotation(String name);
 
+	/**
+	 * 
+	 * @return
+	 */
 	Path getPath();
 
 	/**
