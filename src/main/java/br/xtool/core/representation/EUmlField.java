@@ -15,24 +15,6 @@ import lombok.Getter;
  */
 public interface EUmlField {
 
-	@AllArgsConstructor
-	@Getter
-	enum FieldType {
-		// @formatter:off
-		LONG("Long", ""), 
-		BIGDECIMAL("BigDecimal", "java.math.BigDecimal"),
-		INTEGER("Integer", ""), 
-		STRING("String", ""), 
-		BYTE("byte", ""), 
-		BOOLEAN("Boolean", ""), 
-		LOCALDATE("LocalDate", "java.time.LocalDate"), 
-		LOCALDATETIME("LocalDateTime", "java.time.LocalDateTime"), 
-		DATE("Date", "java.util.Date");
-		private String javaName;
-		private String importName;
-		// @formatter:on
-	}
-
 	/**
 	 * Retorna o nome do atributo.
 	 * 
@@ -61,8 +43,18 @@ public interface EUmlField {
 	 */
 	boolean isArray();
 
+	/**
+	 * Retorna o valor mínimo do attributo array.
+	 * 
+	 * @return
+	 */
 	Optional<Integer> getMinArrayLength();
 
+	/**
+	 * Retorna o valor máximo do atributo array.
+	 * 
+	 * @return
+	 */
 	Optional<Integer> getMaxArrayLength();
 
 	/**
@@ -83,5 +75,23 @@ public interface EUmlField {
 	 * @return
 	 */
 	boolean hasProperty(FieldPropertyType propertyType);
+
+	@AllArgsConstructor
+	@Getter
+	enum FieldType {
+		// @formatter:off
+		LONG("Long", ""), 
+		BIGDECIMAL("BigDecimal", "java.math.BigDecimal"),
+		INTEGER("Integer", ""), 
+		STRING("String", ""), 
+		BYTE("byte", ""), 
+		BOOLEAN("Boolean", ""), 
+		LOCALDATE("LocalDate", "java.time.LocalDate"), 
+		LOCALDATETIME("LocalDateTime", "java.time.LocalDateTime"), 
+		DATE("Date", "java.util.Date");
+		private String javaName;
+		private String importName;
+		// @formatter:on
+	}
 
 }
