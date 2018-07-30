@@ -1,4 +1,4 @@
-package br.xtool.command.springboot.gen;
+package br.xtool.command.springboot;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -18,7 +18,7 @@ import br.xtool.core.service.WorkspaceService;
 import br.xtool.core.util.Names;
 
 @ShellComponent
-public class GenRestCommand extends SpringBootAware {
+public class GenServiceCommand extends SpringBootAware {
 
 	@Autowired
 	private FileService fs;
@@ -26,8 +26,8 @@ public class GenRestCommand extends SpringBootAware {
 	@Autowired
 	private WorkspaceService workspaceService;
 
-	@ShellMethod(key = "gen:rest", value = "Gera uma classe Rest em um projeto Spring Boot", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
-	public void run(@ShellOption(help = "Nome da classe Rest") String name) throws JDOMException, IOException {
+	@ShellMethod(key = "gen:service", value = "Gera uma classe Service em um projeto Spring Boot", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
+	public void run(@ShellOption(help = "Nome da classe Service") String name) throws JDOMException, IOException {
 
 		EBootProject bootProject = this.workspaceService.getWorkingProject(EBootProject.class);
 
@@ -37,10 +37,10 @@ public class GenRestCommand extends SpringBootAware {
 		//// @formatter:off
 		Map<String, Object> vars = new HashMap<>();
 		vars.put("groupId", bootProject.getPom().getGroupId());
-		vars.put("restName", Names.asRestClass(name));
-		vars.put("restPath", Names.asRestPath(name));
+		vars.put("serviceName", Names.asServiceClass((name)));
 		// @formatter:on
 
-		//		this.fs.copy("springboot/1.5.x/rest/rest.java.vm", "src/main/java/${groupId.dir}/rest/${restName}.java", vars);
+		//		this.fs.copy("springboot/1.5.x/service/service.java.vm", "src/main/java/${groupId.dir}/service/${serviceName}.java", vars);
 	}
+
 }

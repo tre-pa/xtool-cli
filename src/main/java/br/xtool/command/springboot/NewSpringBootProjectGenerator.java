@@ -1,4 +1,4 @@
-package br.xtool.command.springboot.archetype;
+package br.xtool.command.springboot;
 
 import java.io.IOException;
 import java.util.HashMap;

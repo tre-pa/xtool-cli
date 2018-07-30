@@ -1,4 +1,4 @@
-package br.xtool.command.springboot.info;
+package br.xtool.command.springboot;
 
 import java.util.Comparator;
 

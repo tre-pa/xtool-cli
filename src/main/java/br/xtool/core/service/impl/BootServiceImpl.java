@@ -1,6 +1,8 @@
 package br.xtool.core.service.impl;
 
-import org.jboss.forge.roaster.model.source.JavaClassSource;
+import java.io.BufferedWriter;
+import java.nio.file.Files;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
@@ -8,9 +10,9 @@ import org.springframework.stereotype.Service;
 import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.EBootProject.BootSupport;
 import br.xtool.core.representation.EJavaClass;
-import br.xtool.core.representation.impl.EJavaClassImpl;
+import br.xtool.core.representation.EJavaSourceFolder;
 import br.xtool.core.service.BootService;
-import br.xtool.core.util.RoasterUtil;
+import lombok.SneakyThrows;
 
 @Service
 public class BootServiceImpl implements BootService {
@@ -36,20 +38,29 @@ public class BootServiceImpl implements BootService {
 		return this.applicationContext.getBean(supportClass).has(bootProject);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see br.xtool.core.service.BootService#findJavaClassByName(br.xtool.core.representation.EBootProject, java.lang.String)
-	 */
 	@Override
-	public EJavaClass findJavaClassByName(EBootProject bootProject, String name) {
-		// @formatter:off
-		return bootProject.getRoasterJavaUnits().stream()
-				.filter(javaUnit -> javaUnit.getGoverningType().isClass())
-				.filter(javaUnit -> javaUnit.getGoverningType().getName().equals(name))
-				.map(javaUnit -> new EJavaClassImpl(bootProject, javaUnit.<JavaClassSource>getGoverningType()))
-				.findFirst()
-				.orElseGet(() -> new EJavaClassImpl(bootProject, RoasterUtil.createJavaClassSource(name)));
-		// @formatter:on
+	@SneakyThrows
+	public void save(EJavaSourceFolder sourceFolder, EJavaClass javaClass) {
+		try (BufferedWriter write = Files.newBufferedWriter(sourceFolder.getPath().resolve(javaClass.getPackage().getDir()))) {
+			write.write(javaClass.getRoasterJavaClass().toUnformattedString());
+			write.flush();
+		}
 	}
+
+	//	/*
+	//	 * (non-Javadoc)
+	//	 * @see br.xtool.core.service.BootService#findJavaClassByName(br.xtool.core.representation.EBootProject, java.lang.String)
+	//	 */
+	//	@Override
+	//	public EJavaClass findJavaClassByName(EBootProject bootProject, String name) {
+//		// @formatter:off
+//		return bootProject.getRoasterJavaUnits().stream()
+//				.filter(javaUnit -> javaUnit.getGoverningType().isClass())
+//				.filter(javaUnit -> javaUnit.getGoverningType().getName().equals(name))
+//				.map(javaUnit -> new EJavaClassImpl(bootProject, javaUnit.<JavaClassSource>getGoverningType()))
+//				.findFirst()
+//				.orElseGet(() -> new EJavaClassImpl(bootProject, RoasterUtil.createJavaClassSource(name)));
+//		// @formatter:on
+	//	}
 
 }

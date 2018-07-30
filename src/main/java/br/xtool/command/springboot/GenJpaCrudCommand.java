@@ -1,4 +1,4 @@
-package br.xtool.command.springboot.gen;
+package br.xtool.command.springboot;
 
 import java.util.HashMap;
 import java.util.Map;

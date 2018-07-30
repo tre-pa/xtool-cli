@@ -1,4 +1,4 @@
-package br.xtool.command.springboot.info;
+package br.xtool.command.springboot;
 
 import java.util.Comparator;
 
@@ -11,30 +11,31 @@ import br.xtool.XtoolCliApplication;
 import br.xtool.core.ConsoleLog;
 import br.xtool.core.aware.SpringBootAware;
 import br.xtool.core.representation.EBootProject;
-import br.xtool.core.representation.EBootRepository;
+import br.xtool.core.representation.EBootRest;
 import br.xtool.core.service.WorkspaceService;
 
 @ShellComponent
-public class InfoRepositoryCommand extends SpringBootAware {
+public class InfoRestCommand extends SpringBootAware {
 
 	@Autowired
 	private WorkspaceService workspaceService;
 
-	@ShellMethod(key = "info:repository", value = "Exibe informações sobre os Repositórios do projeto", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
+	@ShellMethod(key = "info:rest", value = "Exibe informações sobre os Rests do projeto", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
 	public void run() {
 		EBootProject bootProject = this.workspaceService.getWorkingProject(EBootProject.class);
-		infoAllRepositories(bootProject);
+		infoAllRests(bootProject);
 	}
 
-	private void infoAllRepositories(EBootProject bootProject) {
+	private void infoAllRests(EBootProject bootProject) {
 		//// @formatter:off
-		int maxLenghtEntityName = bootProject.getRepositories().stream()
-				.map(EBootRepository::getName)
+		int maxLenghtEntityName = bootProject.getRests().stream()
+				.map(EBootRest::getName)
 				.map(String::length)
 				.max(Comparator.naturalOrder())
 				.orElse(10);
-		bootProject.getRepositories().stream()
-			.forEach(repository -> ConsoleLog.print(ConsoleLog.cyan(StringUtils.rightPad(repository.getName(), maxLenghtEntityName)), " - ", ConsoleLog.gray(repository.getPackage().getName())));
+		bootProject.getRests().stream()
+			.forEach(rest -> ConsoleLog.print(ConsoleLog.white(StringUtils.rightPad(rest.getName(), maxLenghtEntityName))));
 		// @formatter:on
+		ConsoleLog.print(ConsoleLog.yellow(String.valueOf(bootProject.getRests().size())), ConsoleLog.yellow(" classe(s) rest(s) encontrada(s)"));
 	}
 }

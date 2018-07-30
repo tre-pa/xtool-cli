@@ -1,4 +1,4 @@
-package br.xtool.command.springboot.map;
+package br.xtool.command.springboot;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;

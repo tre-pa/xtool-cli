@@ -1,4 +1,4 @@
-package br.xtool.command.angular.gen;
+package br.xtool.command.angular;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;

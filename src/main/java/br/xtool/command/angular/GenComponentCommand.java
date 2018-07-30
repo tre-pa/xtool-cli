@@ -1,4 +1,4 @@
-package br.xtool.command.angular.gen;
+package br.xtool.command.angular;
 
 import java.io.IOException;
 import java.util.HashMap;
