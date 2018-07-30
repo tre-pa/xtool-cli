@@ -122,32 +122,4 @@ public class Names {
 		// @formatter:on
 	}
 
-	/**
-	 * Retorna um nome válido de uma tabela do banco de dados com no máximo 30
-	 * carateres (Limite do oracle).
-	 * 
-	 * @param name
-	 * @return
-	 */
-	public static String asDBTable(String name) {
-		// @formatter:off
-		return StringUtils.abbreviate(
-				StringUtils.upperCase(
-						Strman.toSnakeCase(name)), "", 30);
-		// @formatter:on
-	}
-
-	/**
-	 * Retorna um nome válido de sequence do banco de dados.
-	 * 
-	 * @param name
-	 * @return
-	 */
-	public static String asDBSequence(String name) {
-		// @formatter:off
-		return StringUtils.abbreviate(
-				StringUtils.upperCase(
-				"SEQ_" + Strman.toSnakeCase(name)), "", 30);
-		// @formatter:on
-	}
 }
