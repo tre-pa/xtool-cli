@@ -1,5 +1,6 @@
 package br.xtool.core.representation;
 
+import java.util.Collection;
 import java.util.Set;
 
 import org.jboss.forge.roaster.model.source.JavaClassSource;
@@ -33,7 +34,7 @@ public interface EUmlClass extends Visitable {
 	 * 
 	 * @return
 	 */
-	Set<EUmlField> getFields();
+	Collection<EUmlField> getFields();
 
 	/**
 	 * Retorna os stereotipos da classe UML.

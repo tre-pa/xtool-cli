@@ -1,5 +1,6 @@
 package br.xtool.core.representation.impl;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -51,12 +52,12 @@ public class EUmlClassImpl implements EUmlClass {
 	 * @see br.xtool.core.representation.EUmlClass#getFields()
 	 */
 	@Override
-	public Set<EUmlField> getFields() {
+	public Collection<EUmlField> getFields() {
 		// @formatter:off
 		return this.leaf.getBodier().getFieldsToDisplay().stream()
 				.filter(member -> StringUtils.isNotEmpty(member.getDisplay(false)))
 				.map(EUmlFieldImpl::new)
-				.collect(Collectors.toSet());
+				.collect(Collectors.toList());
 		// @formatter:on
 	}
 
@@ -94,12 +95,12 @@ public class EUmlClassImpl implements EUmlClass {
 	}
 
 	private void createOrUpdateFieldSource(JavaClassSource javaClassSource, EUmlField umlField) {
-		FieldSource<JavaClassSource> fieldSource = RoasterUtil.findFieldSourceOrCreate(javaClassSource, umlField.getName());
+		FieldSource<JavaClassSource> fieldSource = javaClassSource.addField();
 		RoasterUtil.addImport(javaClassSource, umlField.getType().getClassName());
 		// @formatter:off
 		fieldSource
-			.setPrivate()
 			.setName(umlField.getName())
+			.setPrivate()
 			.setType(umlField.getType().getJavaName());
 		// @formatter:on
 	}

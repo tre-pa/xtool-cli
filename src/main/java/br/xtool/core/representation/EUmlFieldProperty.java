@@ -10,8 +10,9 @@ public interface EUmlFieldProperty {
 	enum FieldPropertyType {
 		// @formatter:off
 		NOTNULL("notnull"), 
+		UNIQUE("unique"),
+		TRANSIENT("transient");
 		// @formatter:on
-		UNIQUE("unique");
 		private String property;
 
 	}

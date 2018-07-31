@@ -45,5 +45,6 @@ public class MapClassesCommand extends SpringBootAware {
 	private void jpaVisitor(EUmlClass umlClass, JavaClassSource javaClassSource) {
 		JpaVisitor jpaVisitor = new JpaVisitor(javaClassSource);
 		jpaVisitor.visit(umlClass);
+		umlClass.getFields().forEach(jpaVisitor::visit);
 	}
 }
