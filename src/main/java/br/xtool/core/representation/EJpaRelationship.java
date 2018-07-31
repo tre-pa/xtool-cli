@@ -10,20 +10,60 @@ import java.util.Optional;
  */
 public interface EJpaRelationship {
 
+	/**
+	 * Verifica se o relacionamento é bidirecional.
+	 * 
+	 * @return
+	 */
 	boolean isBidirectional();
 
+	/**
+	 * Verifica se o relacionamento é unidirecional.
+	 * 
+	 * @return
+	 */
 	boolean isUnidirectional();
 
-	boolean isSingleRelationship();
+	/**
+	 * Verifica se o relacionamento é uma associação.
+	 * 
+	 * @return
+	 */
+	boolean isAssociation();
 
-	boolean isCollectionRelationship();
+	/**
+	 * Verifica se o relacionamento é uma composição.
+	 * 
+	 * @return
+	 */
+	boolean isComposition();
 
+	/**
+	 * Retorna se o relacionamento é OneToOne.
+	 * 
+	 * @return
+	 */
 	boolean isOneToOne();
 
+	/**
+	 * Retorna se o relacionamento OneToMany.
+	 * 
+	 * @return
+	 */
 	boolean isOneToMany();
 
+	/**
+	 * Retorna se o relacionamento é ManyToOne.
+	 * 
+	 * @return
+	 */
 	boolean isManyToOne();
 
+	/**
+	 * Retorna se o relacionamento é ManyToMany
+	 * 
+	 * @return
+	 */
 	boolean isManyToMany();
 
 	EJpaAttribute getSourceAttribute();

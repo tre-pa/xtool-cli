@@ -48,24 +48,23 @@ public class EJpaRelationshipImpl implements EJpaRelationship {
 		return !this.isBidirectional();
 	}
 
-	/**
-	 * Verifica se a associação é @OneToOne ou @ManyToOne
-	 * 
-	 * @return
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EJpaRelationship#isAssociation()
 	 */
 	@Override
-	public boolean isSingleRelationship() {
-		return !this.isCollectionRelationship();
+	public boolean isAssociation() {
+		return !this.isComposition();
 	}
 
-	/**
-	 * Verifica se a associação é @ManyToMany ou @OneToMany
-	 * 
-	 * @return
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EJpaRelationship#isComposition()
 	 */
 	@Override
-	public boolean isCollectionRelationship() {
-		return this.attributeSource.isCollection();
+	public boolean isComposition() {
+		//		if(this.getSourceAttribute().getRoasterFieldSource().hasAnnotation(type))
+		return false;
 	}
 
 	/**
