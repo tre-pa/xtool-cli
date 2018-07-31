@@ -36,20 +36,60 @@ public interface EUmlField {
 	 */
 	boolean isId();
 
+	/**
+	 * Retorna se o atributo é do tipo Long.
+	 * 
+	 * @return
+	 */
 	boolean isLong();
 
+	/**
+	 * Retorna se o atributo é do tipo array de bytes.
+	 * 
+	 * @return
+	 */
 	boolean isByteArray();
 
+	/**
+	 * Retorna se o atributo é do tipo Boolean.
+	 * 
+	 * @return
+	 */
 	boolean isBoolean();
 
+	/**
+	 * Retorna se o atributo é do tipo integer.
+	 * 
+	 * @return
+	 */
 	boolean isInteger();
 
+	/**
+	 * Retorna se o atributo é do tipo LocalDate.
+	 * 
+	 * @return
+	 */
 	boolean isLocalDate();
 
+	/**
+	 * Retorna se o atributo é do tipo LocalDateTime.
+	 * 
+	 * @return
+	 */
 	boolean isLocalDateTime();
 
+	/**
+	 * Retorna se o atributo é do tipo BigDecimal.
+	 * 
+	 * @return
+	 */
 	boolean isBigDecimal();
 
+	/**
+	 * Retorna se o atributo é do tipo String.
+	 * 
+	 * @return
+	 */
 	boolean isString();
 
 	/**
