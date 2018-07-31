@@ -108,6 +108,10 @@ public class EJpaRelationshipImpl implements EJpaRelationship {
 		return this.attributeSource.getRoasterFieldSource().hasAnnotation(ManyToMany.class);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EJpaRelationship#getTargetAttribute()
+	 */
 	@Override
 	public Optional<EJpaAttribute> getTargetAttribute() {
 		if (this.isManyToMany() || this.isManyToOne()) {
@@ -124,16 +128,28 @@ public class EJpaRelationshipImpl implements EJpaRelationship {
 		// @formatter:on
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EJpaRelationship#getSourceAttribute()
+	 */
 	@Override
 	public EJpaAttribute getSourceAttribute() {
 		return this.attributeSource;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EJpaRelationship#getSourceEntity()
+	 */
 	@Override
 	public EJpaEntity getSourceEntity() {
 		return this.entitySource;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EJpaRelationship#getTargetEntity()
+	 */
 	@Override
 	public EJpaEntity getTargetEntity() {
 		return this.entityTarget;
