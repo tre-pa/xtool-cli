@@ -96,14 +96,12 @@ public class JpaVisitor implements Visitor {
 
 	@Override
 	public void visitIntegerField(EUmlField umlField) {
-		FieldSource<JavaClassSource> integerField = this.javaClassSource.getField(umlField.getName());
-		integerField.addAnnotation(Column.class);
+		this.javaClassSource.getField(umlField.getName()).addAnnotation(Column.class);
 	}
 
 	@Override
 	public void visitBigDecimalField(EUmlField umlField) {
-		FieldSource<JavaClassSource> bigDecimalField = this.javaClassSource.getField(umlField.getName());
-		bigDecimalField.addAnnotation(Column.class);
+		this.javaClassSource.getField(umlField.getName()).addAnnotation(Column.class);
 	}
 
 	@Override
@@ -113,14 +111,12 @@ public class JpaVisitor implements Visitor {
 
 	@Override
 	public void visitLocalDateField(EUmlField umlField) {
-		FieldSource<JavaClassSource> localDateField = this.javaClassSource.getField(umlField.getName());
-		localDateField.addAnnotation(Column.class);
+		this.javaClassSource.getField(umlField.getName()).addAnnotation(Column.class);
 	}
 
 	@Override
 	public void visitLocalDateTimeField(EUmlField umlField) {
-		FieldSource<JavaClassSource> localDateTimeField = this.javaClassSource.getField(umlField.getName());
-		localDateTimeField.addAnnotation(Column.class);
+		this.javaClassSource.getField(umlField.getName()).addAnnotation(Column.class);
 	}
 
 	@Override
