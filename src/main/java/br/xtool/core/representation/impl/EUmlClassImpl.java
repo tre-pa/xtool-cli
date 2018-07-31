@@ -107,7 +107,7 @@ public class EUmlClassImpl implements EUmlClass {
 
 	@Override
 	public void accept(Visitor visitor) {
-		visitor.visit(this);
+		visitor.visitClass(this);
 	}
 
 }

@@ -33,7 +33,7 @@ public class JpaVisitor implements Visitor {
 	}
 
 	@Override
-	public void visit(EUmlClass umlClass) {
+	public void visitClass(EUmlClass umlClass) {
 		// @formatter:off
 		this.javaClassSource.addAnnotation(Entity.class)
 				.getOrigin()
@@ -44,10 +44,6 @@ public class JpaVisitor implements Visitor {
 			.addAnnotation(Table.class)
 				.setStringValue("name", EJavaEntity.genDBTableName(umlClass.getName()));
 		// @formatter:on
-	}
-
-	@Override
-	public void visit(EUmlField umlField) {
 	}
 
 	@Override

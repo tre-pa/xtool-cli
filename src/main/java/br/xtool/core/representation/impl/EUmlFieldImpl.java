@@ -63,6 +63,46 @@ public class EUmlFieldImpl implements EUmlField {
 		return StringUtils.equalsIgnoreCase(this.getName(), "id");
 	}
 
+	@Override
+	public boolean isLong() {
+		return this.getType().equals(FieldType.LONG) && !this.isId();
+	}
+
+	@Override
+	public boolean isByteArray() {
+		return getType().equals(FieldType.BYTE) && this.isArray();
+	}
+
+	@Override
+	public boolean isBoolean() {
+		return getType().equals(FieldType.BOOLEAN);
+	}
+
+	@Override
+	public boolean isInteger() {
+		return getType().equals(FieldType.INTEGER);
+	}
+
+	@Override
+	public boolean isLocalDate() {
+		return getType().equals(FieldType.LOCALDATE);
+	}
+
+	@Override
+	public boolean isLocalDateTime() {
+		return getType().equals(FieldType.LOCALDATETIME);
+	}
+
+	@Override
+	public boolean isBigDecimal() {
+		return getType().equals(FieldType.BIGDECIMAL);
+	}
+
+	@Override
+	public boolean isString() {
+		return getType().equals(FieldType.STRING);
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * @see br.xtool.core.representation.EUmlField#isArray()

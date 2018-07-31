@@ -36,6 +36,22 @@ public interface EUmlField {
 	 */
 	boolean isId();
 
+	boolean isLong();
+
+	boolean isByteArray();
+
+	boolean isBoolean();
+
+	boolean isInteger();
+
+	boolean isLocalDate();
+
+	boolean isLocalDateTime();
+
+	boolean isBigDecimal();
+
+	boolean isString();
+
 	/**
 	 * Retorna se o atributo é um array.
 	 * 

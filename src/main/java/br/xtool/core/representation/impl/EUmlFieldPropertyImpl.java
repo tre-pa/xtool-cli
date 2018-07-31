@@ -45,4 +45,19 @@ public class EUmlFieldPropertyImpl implements EUmlFieldProperty {
 		return this.field;
 	}
 
+	@Override
+	public boolean isNotNull() {
+		return getFieldProperty().equals(FieldPropertyType.NOTNULL);
+	}
+
+	@Override
+	public boolean isUnique() {
+		return getFieldProperty().equals(FieldPropertyType.UNIQUE);
+	}
+
+	@Override
+	public boolean isTransient() {
+		return getFieldProperty().equals(FieldPropertyType.TRANSIENT);
+	}
+
 }

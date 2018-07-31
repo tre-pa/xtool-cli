@@ -12,9 +12,7 @@ import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.EUmlClass;
 import br.xtool.core.representation.EUmlClassDiagram;
 import br.xtool.core.representation.EUmlField;
-import br.xtool.core.representation.EUmlField.FieldType;
 import br.xtool.core.representation.EUmlFieldProperty;
-import br.xtool.core.representation.EUmlFieldProperty.FieldPropertyType;
 import br.xtool.core.representation.impl.EJavaClassImpl;
 import br.xtool.core.service.BootService;
 import br.xtool.core.service.WorkspaceService;
@@ -36,36 +34,34 @@ public class MapClassesCommand extends SpringBootAware {
 			@ShellOption(help = "Desabilita o mapeamento Lombok da classe", defaultValue = "false", arity = 0) Boolean noLombok,
 			@ShellOption(help = "Desabilita o mapeamento Jackson da classe", defaultValue = "false", arity = 0) Boolean noJackson) {
 	// @formatter:on
+		String diagramNotFoundError = "O projeto não possui o diagram de classe em docs/diagrams/domain-class.md";
 		EBootProject bootProject = this.workspaceService.getWorkingProject(EBootProject.class);
-		EUmlClassDiagram classDiagram = bootProject.getDomainClassDiagram()
-				.orElseThrow(() -> new IllegalArgumentException("O projeto não possui o diagram de classe em docs/diagrams/domain-class.md"));
-		for (EUmlClass umlClass : classDiagram.getClasses()) {
+		EUmlClassDiagram umlClassDiagram = bootProject.getDomainClassDiagram().orElseThrow(() -> new IllegalArgumentException(diagramNotFoundError));
+		for (EUmlClass umlClass : umlClassDiagram.getClasses()) {
 			JavaClassSource javaClassSource = umlClass.convertToJavaClassSource(bootProject);
-			if (!noJpa) this.jpaVisitor(umlClass, javaClassSource);
+			if (!noJpa) this.jpaVisitor(umlClassDiagram, umlClass, javaClassSource);
 			this.bootService.save(bootProject.getMainSourceFolder(), new EJavaClassImpl(bootProject, javaClassSource));
 		}
 	}
 
-	private void jpaVisitor(EUmlClass umlClass, JavaClassSource javaClassSource) {
+	private void jpaVisitor(EUmlClassDiagram classDiagram, EUmlClass umlClass, JavaClassSource javaClassSource) {
 		JpaVisitor jpaVisitor = new JpaVisitor(javaClassSource);
-		jpaVisitor.visit(umlClass);
+		jpaVisitor.visitClass(umlClass);
 		for (EUmlField umlField : umlClass.getFields()) {
-			jpaVisitor.visit(umlField);
 			if (umlField.isId()) jpaVisitor.visitIdField(umlField);
-			if (umlField.getType().equals(FieldType.LONG) && !umlField.isId()) jpaVisitor.visitLongField(umlField);
-			if (umlField.getType().equals(FieldType.BYTE) && umlField.isArray()) jpaVisitor.visitByteArrayField(umlField);
-			if (umlField.getType().equals(FieldType.BOOLEAN)) jpaVisitor.visitBooleanField(umlField);
-			if (umlField.getType().equals(FieldType.INTEGER)) jpaVisitor.visitIntegerField(umlField);
-			if (umlField.getType().equals(FieldType.LOCALDATE)) jpaVisitor.visitLocalDateField(umlField);
-			if (umlField.getType().equals(FieldType.LOCALDATETIME)) jpaVisitor.visitLocalDateTimeField(umlField);
-			if (umlField.getType().equals(FieldType.BIGDECIMAL)) jpaVisitor.visitBigDecimalField(umlField);
-			if (umlField.getType().equals(FieldType.STRING)) jpaVisitor.visitStringField(umlField);
+			if (umlField.isLong()) jpaVisitor.visitLongField(umlField);
+			if (umlField.isByteArray()) jpaVisitor.visitByteArrayField(umlField);
+			if (umlField.isBoolean()) jpaVisitor.visitBooleanField(umlField);
+			if (umlField.isInteger()) jpaVisitor.visitIntegerField(umlField);
+			if (umlField.isLocalDate()) jpaVisitor.visitLocalDateField(umlField);
+			if (umlField.isLocalDateTime()) jpaVisitor.visitLocalDateTimeField(umlField);
+			if (umlField.isBigDecimal()) jpaVisitor.visitBigDecimalField(umlField);
+			if (umlField.isString()) jpaVisitor.visitStringField(umlField);
 			for (EUmlFieldProperty umlFieldProperty : umlField.getProperties()) {
-				if (umlFieldProperty.getFieldProperty().equals(FieldPropertyType.NOTNULL)) jpaVisitor.visitNotNullProperty(umlFieldProperty);
-				if (umlFieldProperty.getFieldProperty().equals(FieldPropertyType.UNIQUE)) jpaVisitor.visitUniqueProperty(umlFieldProperty);
-				if (umlFieldProperty.getFieldProperty().equals(FieldPropertyType.TRANSIENT)) jpaVisitor.visitTransientProperty(umlFieldProperty);
+				if (umlFieldProperty.isNotNull()) jpaVisitor.visitNotNullProperty(umlFieldProperty);
+				if (umlFieldProperty.isUnique()) jpaVisitor.visitUniqueProperty(umlFieldProperty);
+				if (umlFieldProperty.isTransient()) jpaVisitor.visitTransientProperty(umlFieldProperty);
 			}
 		}
-
 	}
 }

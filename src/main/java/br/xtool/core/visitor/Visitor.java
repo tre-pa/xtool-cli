@@ -7,9 +7,7 @@ import br.xtool.core.representation.EUmlRelationship;
 
 public interface Visitor {
 
-	void visit(EUmlClass umlClass);
-
-	void visit(EUmlField umlField);
+	void visitClass(EUmlClass umlClass);
 
 	void visitIdField(EUmlField umlField);
 

@@ -26,4 +26,10 @@ public interface EUmlFieldProperty {
 	 */
 	EUmlField getField();
 
+	boolean isNotNull();
+
+	boolean isUnique();
+
+	boolean isTransient();
+
 }
