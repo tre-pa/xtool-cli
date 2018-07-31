@@ -34,10 +34,16 @@ public class JpaVisitor implements Visitor {
 
 	@Override
 	public void visit(EUmlClass umlClass) {
-		this.javaClassSource.addAnnotation(Entity.class);
-		this.javaClassSource.addAnnotation(DynamicUpdate.class);
-		this.javaClassSource.addAnnotation(DynamicInsert.class);
-		this.javaClassSource.addAnnotation(Table.class).setStringValue("name", EJavaEntity.genDBTableName(umlClass.getName()));
+		// @formatter:off
+		this.javaClassSource.addAnnotation(Entity.class)
+				.getOrigin()
+			.addAnnotation(DynamicUpdate.class)
+				.getOrigin()
+			.addAnnotation(DynamicInsert.class)
+				.getOrigin()
+			.addAnnotation(Table.class)
+				.setStringValue("name", EJavaEntity.genDBTableName(umlClass.getName()));
+		// @formatter:on
 	}
 
 	@Override
@@ -46,13 +52,17 @@ public class JpaVisitor implements Visitor {
 
 	@Override
 	public void visitIdField(EUmlField umlField) {
-		FieldSource<JavaClassSource> idField = this.javaClassSource.getField(umlField.getName());
-		idField.addAnnotation(Id.class);
 		// @formatter:off
-		idField.addAnnotation(GeneratedValue.class)
+		this.javaClassSource.getField(umlField.getName())
+			.addAnnotation(Id.class)
+				.getOrigin()
+			.getField(umlField.getName())
+			.addAnnotation(GeneratedValue.class)
 			.setEnumValue("strategy", GenerationType.SEQUENCE)
-			.setStringValue("generator", EJavaEntity.genDBSequenceName(this.javaClassSource.getName()));
-		idField.addAnnotation(SequenceGenerator.class)
+			.setStringValue("generator", EJavaEntity.genDBSequenceName(this.javaClassSource.getName()))
+				.getOrigin()
+			.getField(umlField.getName())
+			.addAnnotation(SequenceGenerator.class)
 			.setLiteralValue("initialValue", "1")
 			.setLiteralValue("allocationSize", "1")
 			.setStringValue("name", EJavaEntity.genDBSequenceName(this.javaClassSource.getName()))
