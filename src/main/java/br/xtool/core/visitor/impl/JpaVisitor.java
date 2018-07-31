@@ -53,16 +53,16 @@ public class JpaVisitor implements Visitor {
 			.addAnnotation(Id.class)
 				.getOrigin()
 			.getField(umlField.getName())
-			.addAnnotation(GeneratedValue.class)
-			.setEnumValue("strategy", GenerationType.SEQUENCE)
-			.setStringValue("generator", EJavaEntity.genDBSequenceName(this.javaClassSource.getName()))
-				.getOrigin()
+				.addAnnotation(GeneratedValue.class)
+				.setEnumValue("strategy", GenerationType.SEQUENCE)
+				.setStringValue("generator", EJavaEntity.genDBSequenceName(this.javaClassSource.getName()))
+					.getOrigin()
 			.getField(umlField.getName())
-			.addAnnotation(SequenceGenerator.class)
-			.setLiteralValue("initialValue", "1")
-			.setLiteralValue("allocationSize", "1")
-			.setStringValue("name", EJavaEntity.genDBSequenceName(this.javaClassSource.getName()))
-			.setStringValue("sequenceName", EJavaEntity.genDBSequenceName(this.javaClassSource.getName()));
+				.addAnnotation(SequenceGenerator.class)
+				.setLiteralValue("initialValue", "1")
+				.setLiteralValue("allocationSize", "1")
+				.setStringValue("name", EJavaEntity.genDBSequenceName(this.javaClassSource.getName()))
+				.setStringValue("sequenceName", EJavaEntity.genDBSequenceName(this.javaClassSource.getName()));
 		// @formatter:on
 	}
 
