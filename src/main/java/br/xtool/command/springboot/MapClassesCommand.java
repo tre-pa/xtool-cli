@@ -11,6 +11,10 @@ import br.xtool.core.aware.SpringBootAware;
 import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.EUmlClass;
 import br.xtool.core.representation.EUmlClassDiagram;
+import br.xtool.core.representation.EUmlField;
+import br.xtool.core.representation.EUmlField.FieldType;
+import br.xtool.core.representation.EUmlFieldProperty;
+import br.xtool.core.representation.EUmlFieldProperty.FieldPropertyType;
 import br.xtool.core.representation.impl.EJavaClassImpl;
 import br.xtool.core.service.BootService;
 import br.xtool.core.service.WorkspaceService;
@@ -45,6 +49,23 @@ public class MapClassesCommand extends SpringBootAware {
 	private void jpaVisitor(EUmlClass umlClass, JavaClassSource javaClassSource) {
 		JpaVisitor jpaVisitor = new JpaVisitor(javaClassSource);
 		jpaVisitor.visit(umlClass);
-		umlClass.getFields().forEach(jpaVisitor::visit);
+		for (EUmlField umlField : umlClass.getFields()) {
+			jpaVisitor.visit(umlField);
+			if (umlField.isId()) jpaVisitor.visitIdField(umlField);
+			if (umlField.getType().equals(FieldType.LONG) && !umlField.isId()) jpaVisitor.visitLongField(umlField);
+			if (umlField.getType().equals(FieldType.BYTE) && umlField.isArray()) jpaVisitor.visitByteArrayField(umlField);
+			if (umlField.getType().equals(FieldType.BOOLEAN)) jpaVisitor.visitBooleanField(umlField);
+			if (umlField.getType().equals(FieldType.INTEGER)) jpaVisitor.visitIntegerField(umlField);
+			if (umlField.getType().equals(FieldType.LOCALDATE)) jpaVisitor.visitLocalDateField(umlField);
+			if (umlField.getType().equals(FieldType.LOCALDATETIME)) jpaVisitor.visitLocalDateTimeField(umlField);
+			if (umlField.getType().equals(FieldType.BIGDECIMAL)) jpaVisitor.visitBigDecimalField(umlField);
+			if (umlField.getType().equals(FieldType.STRING)) jpaVisitor.visitStringField(umlField);
+			for (EUmlFieldProperty umlFieldProperty : umlField.getProperties()) {
+				if (umlFieldProperty.getFieldProperty().equals(FieldPropertyType.NOTNULL)) jpaVisitor.visitNotNullProperty(umlFieldProperty);
+				if (umlFieldProperty.getFieldProperty().equals(FieldPropertyType.UNIQUE)) jpaVisitor.visitUniqueProperty(umlFieldProperty);
+				if (umlFieldProperty.getFieldProperty().equals(FieldPropertyType.TRANSIENT)) jpaVisitor.visitTransientProperty(umlFieldProperty);
+			}
+		}
+
 	}
 }

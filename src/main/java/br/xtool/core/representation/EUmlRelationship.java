@@ -44,6 +44,13 @@ public interface EUmlRelationship {
 	EUmlClass getSourceClass();
 
 	/**
+	 * Verifica se a classe source é proprietária da relação
+	 * 
+	 * @return
+	 */
+	boolean isSourceClassOwner();
+
+	/**
 	 * Retorna a classe UML target do relacionamento.
 	 * 
 	 * @return

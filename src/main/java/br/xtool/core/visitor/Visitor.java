@@ -11,7 +11,29 @@ public interface Visitor {
 
 	void visit(EUmlField umlField);
 
-	void visit(EUmlFieldProperty umlFieldProperty);
+	void visitIdField(EUmlField umlField);
+
+	void visitLongField(EUmlField umlField);
+
+	void visitBooleanField(EUmlField umlField);
+
+	void visitStringField(EUmlField umlField);
+
+	void visitIntegerField(EUmlField umlField);
+
+	void visitBigDecimalField(EUmlField umlField);
+
+	void visitByteArrayField(EUmlField umlField);
+
+	void visitLocalDateField(EUmlField umlField);
+
+	void visitLocalDateTimeField(EUmlField umlField);
+
+	void visitUniqueProperty(EUmlFieldProperty umlFieldProperty);
+
+	void visitNotNullProperty(EUmlFieldProperty umlFieldProperty);
+
+	void visitTransientProperty(EUmlFieldProperty umlFieldProperty);
 
 	void visit(EUmlRelationship umlRelationship);
 }

@@ -8,6 +8,7 @@ import br.xtool.core.representation.EUmlClass;
 import br.xtool.core.representation.EUmlMultiplicity;
 import br.xtool.core.representation.EUmlRelationship;
 import net.sourceforge.plantuml.cucadiagram.Link;
+import net.sourceforge.plantuml.cucadiagram.LinkArrow;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 
 public class EUmlRelationshipImpl implements EUmlRelationship {
@@ -53,6 +54,11 @@ public class EUmlRelationshipImpl implements EUmlRelationship {
 				.findFirst()
 				.orElseThrow(() -> new IllegalArgumentException(String.format(error, this.link.getEntity1().getDisplay().asStringWithHiddenNewLine())));
 		// @formatter:on
+	}
+
+	@Override
+	public boolean isSourceClassOwner() {
+		return this.link.getLinkArrow().equals(LinkArrow.DIRECT_NORMAL) || this.link.getLinkArrow().equals(LinkArrow.NONE);
 	}
 
 	/*
@@ -103,7 +109,7 @@ public class EUmlRelationshipImpl implements EUmlRelationship {
 	 */
 	@Override
 	public boolean isComposition() {
-		return false;
+		return this.link.getType().getDecor1().equals(LinkDecor.COMPOSITION) || this.link.getType().getDecor2().equals(LinkDecor.COMPOSITION);
 	}
 
 	private String getSourceQualifier() {
