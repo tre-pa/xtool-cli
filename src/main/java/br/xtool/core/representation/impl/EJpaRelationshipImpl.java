@@ -7,6 +7,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import org.jboss.forge.roaster.model.util.Types;
+
 import br.xtool.core.representation.EJpaAttribute;
 import br.xtool.core.representation.EJpaEntity;
 import br.xtool.core.representation.EJpaRelationship;
@@ -33,12 +35,7 @@ public class EJpaRelationshipImpl implements EJpaRelationship {
 	 */
 	@Override
 	public boolean isBidirectional() {
-		throw new UnsupportedOperationException();
-		// @formatter:off
-//		return this.entityTarget.getRelationships().stream()
-//				.filter(association -> association.getTargetEntity().isPresent())
-//				.anyMatch(association -> association.getTargetEntity().get().getName().equals(this.entitySource.getName()));
-		// @formatter:on
+		return this.getTargetAttribute().isPresent();
 	}
 
 	/**
@@ -113,9 +110,16 @@ public class EJpaRelationshipImpl implements EJpaRelationship {
 
 	@Override
 	public Optional<EJpaAttribute> getTargetAttribute() {
+		if (this.isManyToMany() || this.isManyToOne()) {
+			// @formatter:off
+			return this.entityTarget.getAttributes().stream()
+					.filter(attrTarget -> Types.getGenericsTypeParameter(attrTarget.getType().getQualifiedNameWithGenerics()).equals(this.entitySource.getName()))
+					.findFirst();
+			// @formatter:on
+		}
 		// @formatter:off
 		return this.entityTarget.getAttributes().stream()
-				.filter(attrTarget -> attrTarget.getType().getName().equals(this.entityTarget.getName()))
+				.filter(attrTarget -> attrTarget.getType().getName().equals(this.entitySource.getName()))
 				.findFirst();
 		// @formatter:on
 	}

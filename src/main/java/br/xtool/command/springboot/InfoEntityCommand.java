@@ -34,16 +34,16 @@ public class InfoEntityCommand extends SpringBootAware {
 				.orElse(10);
 //		bootProject.getEntities().stream()
 //			.forEach(entity -> ConsoleLog.print(ConsoleLog.cyan(StringUtils.rightPad(entity.getName(), maxLenghtEntityName)), " - ", ConsoleLog.gray(entity.getPackage().getName())));
-		for(EJpaEntity entity : bootProject.getEntities()) {
+		// @formatter:on
+		for (EJpaEntity entity : bootProject.getEntities()) {
 			System.out.println(entity.getName());
-			for(EJpaAttribute attribute: entity.getAttributes()) {
+			for (EJpaAttribute attribute : entity.getAttributes()) {
 				System.out.print(String.format("\t%s: %s ", attribute.getName(), attribute.getType().getName()));
-				attribute.getRelationship().ifPresent(relationship -> System.out.println(" Target: "+relationship.getTargetEntity().getName()));
+				attribute.getRelationship().ifPresent(relationship -> System.out.println(" Target: " + relationship.getTargetEntity().getName() + " Bidirectional: " + relationship.isBidirectional()));
 				System.out.println();
 			}
 		}
-		
-//		this.getProject().getAssociatedAngularProject().ifPresent(a -> System.out.println(a.getName()));
-		// @formatter:on
+
+		//		this.getProject().getAssociatedAngularProject().ifPresent(a -> System.out.println(a.getName()));
 	}
 }
