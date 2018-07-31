@@ -1,17 +1,13 @@
 package br.xtool.core.representation.impl;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.Collection;
 import java.util.stream.Collectors;
 
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 
-import br.xtool.core.representation.EJpaRelationship;
+import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.EJpaAttribute;
 import br.xtool.core.representation.EJpaEntity;
-import br.xtool.core.representation.EBootProject;
 
 /**
  * Classe que representa um entidade JPA
@@ -35,29 +31,31 @@ public class EJpaEntityImpl extends EJavaClassImpl implements EJpaEntity {
 	 * @return
 	 */
 	@Override
-	public SortedSet<EJpaAttribute> getAttributes() {
+	public Collection<EJpaAttribute> getAttributes() {
 		// @formatter:off
 		return this.javaClassSource.getFields().stream()
+			.filter(fieldSource -> !fieldSource.isStatic())
 			.map(f -> new EJpaAttributeImpl(this.springBootProject,this, f))
-			.collect(Collectors.toCollection(TreeSet::new));
+			.collect(Collectors.toList());
 		// @formatter:on
 	}
 
-	/**
-	 * Retorna as associações da entidade.
-	 * 
-	 * @return
-	 */
-	@Override
-	public Set<EJpaRelationship> getRelationships() {
-		Set<EJpaRelationship> associations = new HashSet<>();
-		// @formatter:off
-		this.getAttributes().stream()
-			.filter(EJpaAttribute::isAssociation)
-			.map(EJpaAttribute::getRelationship)
-			.forEach(association -> associations.add(association.get()));
-		// @formatter:on
-		return associations;
-	}
+	//	/**
+	//	 * Retorna as associações da entidade.
+	//	 * 
+	//	 * @return
+	//	 */
+	//	@Override
+	//	@Deprecated
+	//	public Set<EJpaRelationship> getRelationships() {
+	//		Set<EJpaRelationship> associations = new HashSet<>();
+//		// @formatter:off
+//		this.getAttributes().stream()
+//			.filter(EJpaAttribute::isRelationship)
+//			.map(EJpaAttribute::getRelationship)
+//			.forEach(association -> associations.add(association.get()));
+//		// @formatter:on
+	//		return associations;
+	//	}
 
 }

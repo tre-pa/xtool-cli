@@ -33,10 +33,11 @@ public class EJpaRelationshipImpl implements EJpaRelationship {
 	 */
 	@Override
 	public boolean isBidirectional() {
+		throw new UnsupportedOperationException();
 		// @formatter:off
-		return this.entityTarget.getRelationships().stream()
-				.filter(association -> association.getTargetEntity().isPresent())
-				.anyMatch(association -> association.getTargetEntity().get().getName().equals(this.entitySource.getName()));
+//		return this.entityTarget.getRelationships().stream()
+//				.filter(association -> association.getTargetEntity().isPresent())
+//				.anyMatch(association -> association.getTargetEntity().get().getName().equals(this.entitySource.getName()));
 		// @formatter:on
 	}
 
@@ -130,8 +131,8 @@ public class EJpaRelationshipImpl implements EJpaRelationship {
 	}
 
 	@Override
-	public Optional<EJpaEntity> getTargetEntity() {
-		return Optional.ofNullable(this.entityTarget);
+	public EJpaEntity getTargetEntity() {
+		return this.entityTarget;
 	}
 
 }

@@ -1,9 +1,9 @@
 package br.xtool.core.representation.impl;
 
+import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.jboss.forge.roaster.model.Type;
 import org.jboss.forge.roaster.model.source.FieldSource;
@@ -48,7 +48,7 @@ public class EJavaFieldImpl implements EJavaField {
 	 */
 	@Override
 	public boolean isCollection() {
-		return Stream.of("List", "Set", "Collection").peek(type -> this.getType().getName()).anyMatch(type -> type.equals(this.getType().getName()));
+		return this.fieldSource.getType().isType(List.class);
 	}
 
 	/**

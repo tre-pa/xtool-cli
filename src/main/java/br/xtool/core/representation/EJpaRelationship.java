@@ -32,5 +32,5 @@ public interface EJpaRelationship {
 
 	EJpaEntity getSourceEntity();
 
-	Optional<EJpaEntity> getTargetEntity();
+	EJpaEntity getTargetEntity();
 }

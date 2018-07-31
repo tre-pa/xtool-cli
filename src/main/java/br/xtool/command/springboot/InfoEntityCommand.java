@@ -2,15 +2,14 @@ package br.xtool.command.springboot;
 
 import java.util.Comparator;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 
 import br.xtool.XtoolCliApplication;
-import br.xtool.core.ConsoleLog;
 import br.xtool.core.aware.SpringBootAware;
 import br.xtool.core.representation.EBootProject;
+import br.xtool.core.representation.EJpaAttribute;
 import br.xtool.core.representation.EJpaEntity;
 import br.xtool.core.service.WorkspaceService;
 
@@ -33,8 +32,16 @@ public class InfoEntityCommand extends SpringBootAware {
 				.map(String::length)
 				.max(Comparator.naturalOrder())
 				.orElse(10);
-		bootProject.getEntities().stream()
-			.forEach(entity -> ConsoleLog.print(ConsoleLog.cyan(StringUtils.rightPad(entity.getName(), maxLenghtEntityName)), " - ", ConsoleLog.gray(entity.getPackage().getName())));
+//		bootProject.getEntities().stream()
+//			.forEach(entity -> ConsoleLog.print(ConsoleLog.cyan(StringUtils.rightPad(entity.getName(), maxLenghtEntityName)), " - ", ConsoleLog.gray(entity.getPackage().getName())));
+		for(EJpaEntity entity : bootProject.getEntities()) {
+			System.out.println(entity.getName());
+			for(EJpaAttribute attribute: entity.getAttributes()) {
+				System.out.print(String.format("\t%s: %s ", attribute.getName(), attribute.getType().getName()));
+				attribute.getRelationship().ifPresent(relationship -> System.out.println(" Target: "+relationship.getTargetEntity().getName()));
+				System.out.println();
+			}
+		}
 		
 //		this.getProject().getAssociatedAngularProject().ifPresent(a -> System.out.println(a.getName()));
 		// @formatter:on

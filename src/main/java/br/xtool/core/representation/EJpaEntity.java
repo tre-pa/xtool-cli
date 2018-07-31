@@ -1,7 +1,6 @@
 package br.xtool.core.representation;
 
-import java.util.Set;
-import java.util.SortedSet;
+import java.util.Collection;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -20,14 +19,15 @@ public interface EJpaEntity extends EJavaClass {
 	 * 
 	 * @return
 	 */
-	SortedSet<EJpaAttribute> getAttributes();
+	Collection<EJpaAttribute> getAttributes();
 
-	/**
-	 * Retorna os relacionamentos da entidade.
-	 * 
-	 * @return
-	 */
-	Set<EJpaRelationship> getRelationships();
+	//	/**
+	//	 * Retorna os relacionamentos da entidade.
+	//	 * 
+	//	 * @return
+	//	 */
+	//	@Deprecated
+	//	Set<EJpaRelationship> getRelationships();
 
 	/**
 	 * Retorna um nome válido de uma tabela do banco de dados com no máximo 30

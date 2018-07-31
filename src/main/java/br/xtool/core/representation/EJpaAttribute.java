@@ -10,12 +10,27 @@ import java.util.Optional;
  */
 public interface EJpaAttribute extends EJavaField {
 
-	boolean isAssociation();
-
+	/**
+	 * Retorna se o atributo é do tipo JPA transient.
+	 * 
+	 * @return
+	 */
 	boolean isJpaTransient();
 
+	/**
+	 * Retorna se o atributo é do tipo Lob.
+	 * 
+	 * @return
+	 */
 	boolean isLob();
 
+	//	Optional<EJpaEntity> getGenericType();
+
+	/**
+	 * Retorna o relacionamento JPA.
+	 * 
+	 * @return
+	 */
 	Optional<EJpaRelationship> getRelationship();
 
 }
