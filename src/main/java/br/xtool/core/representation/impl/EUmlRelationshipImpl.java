@@ -23,22 +23,9 @@ public class EUmlRelationshipImpl implements EUmlRelationship {
 		this.classes = classes;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see br.xtool.core.representation.EUmlRelationship#isBidirectional()
-	 */
 	@Override
-	public boolean isBidirectional() {
-		return this.link.getType().getDecor1().equals(LinkDecor.ARROW) && this.link.getType().getDecor2().equals(LinkDecor.ARROW);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see br.xtool.core.representation.EUmlRelationship#isUnidirectional()
-	 */
-	@Override
-	public boolean isUnidirectional() {
-		return this.link.getType().getDecor1().equals(LinkDecor.ARROW) ^ this.link.getType().getDecor2().equals(LinkDecor.ARROW);
+	public EUmlNavigability getNavigability() {
+		return new EUmlNavigabilityImpl(this.link);
 	}
 
 	/*

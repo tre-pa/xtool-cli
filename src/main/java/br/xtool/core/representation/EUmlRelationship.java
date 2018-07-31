@@ -1,5 +1,7 @@
 package br.xtool.core.representation;
 
+import br.xtool.core.representation.impl.EUmlNavigability;
+
 /**
  * Representação de um relacionamento no diagrama de classe UML.
  * 
@@ -8,19 +10,7 @@ package br.xtool.core.representation;
  */
 public interface EUmlRelationship {
 
-	/**
-	 * Retorna se o relacionamento é bidirecional
-	 * 
-	 * @return
-	 */
-	boolean isBidirectional();
-
-	/**
-	 * Retorna se o relacionamento é unidirecional.
-	 * 
-	 * @return
-	 */
-	boolean isUnidirectional();
+	EUmlNavigability getNavigability();
 
 	/**
 	 * Retorna se o relacionamento é uma associação.

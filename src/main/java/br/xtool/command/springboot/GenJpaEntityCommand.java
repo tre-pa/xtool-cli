@@ -60,6 +60,8 @@ public class GenJpaEntityCommand extends SpringBootAware {
 				System.out.println("\tTarget: " + umlRelationship.getTargetMultiplicity().getMutiplicityType());
 				//				umlRelationship.getSourceMultiplicity().ifPresent(m -> System.out.println("\tSource: " + m.getMutiplicityType()));
 				//				umlRelationship.getTargetMultiplicity().ifPresent(m -> System.out.println("\tTarget: " + m.getMutiplicityType()));
+				System.out.println("\tBidirectional: " + umlRelationship.getNavigability().isBidirectional());
+				System.out.println("\tUnidirectional: " + umlRelationship.getNavigability().isUnidirectional());
 			});
 			System.out.println("ENUMS");
 			classDiagram.getEnums().stream().flatMap(eUmlEnums -> eUmlEnums.getValues().stream()).forEach(System.out::println);
