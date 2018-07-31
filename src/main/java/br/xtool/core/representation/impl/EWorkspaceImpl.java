@@ -6,6 +6,7 @@ import java.util.Objects;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.ENgProject;
@@ -58,10 +59,7 @@ public class EWorkspaceImpl implements EWorkspace {
 
 	@Override
 	public SortedSet<EProject> getProjects() {
-		SortedSet<EProject> projects = new TreeSet<>();
-		projects.addAll(this.getSpringBootProjects());
-		projects.addAll(this.getAngularProjections());
-		return projects;
+		return Stream.concat(this.getSpringBootProjects().stream(), this.getAngularProjections().stream()).collect(Collectors.toCollection(TreeSet::new));
 	}
 
 	@Override

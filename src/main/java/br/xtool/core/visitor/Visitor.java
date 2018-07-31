@@ -99,4 +99,5 @@ public interface Visitor {
 	void visitTransientProperty(EUmlFieldProperty umlFieldProperty);
 
 	void visit(EUmlRelationship umlRelationship);
+
 }

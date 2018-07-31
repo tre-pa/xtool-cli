@@ -100,7 +100,7 @@ public class EUmlRelationshipImpl implements EUmlRelationship {
 	 */
 	@Override
 	public boolean isAssociation() {
-		return false;
+		return !isComposition() && (this.link.getType().getDecor1().equals(LinkDecor.ARROW) || this.link.getType().getDecor2().equals(LinkDecor.ARROW));
 	}
 
 	/*

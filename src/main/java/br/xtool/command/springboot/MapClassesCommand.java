@@ -1,5 +1,12 @@
 package br.xtool.command.springboot;
 
+import static br.xtool.core.ConsoleLog.bold;
+import static br.xtool.core.ConsoleLog.cyan;
+import static br.xtool.core.ConsoleLog.print;
+
+import java.util.ArrayList;
+import java.util.Collection;
+
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
@@ -34,14 +41,32 @@ public class MapClassesCommand extends SpringBootAware {
 			@ShellOption(help = "Desabilita o mapeamento Lombok da classe", defaultValue = "false", arity = 0) Boolean noLombok,
 			@ShellOption(help = "Desabilita o mapeamento Jackson da classe", defaultValue = "false", arity = 0) Boolean noJackson) {
 	// @formatter:on
-		String diagramNotFoundError = "O projeto não possui o diagram de classe em docs/diagrams/domain-class.md";
 		EBootProject bootProject = this.workspaceService.getWorkingProject(EBootProject.class);
-		EUmlClassDiagram umlClassDiagram = bootProject.getDomainClassDiagram().orElseThrow(() -> new IllegalArgumentException(diagramNotFoundError));
+		EUmlClassDiagram umlClassDiagram = getDomainClassDiagram(bootProject);
+
+		Collection<JavaClassSource> javaClassSources = new ArrayList<>();
+
 		for (EUmlClass umlClass : umlClassDiagram.getClasses()) {
 			JavaClassSource javaClassSource = umlClass.convertToJavaClassSource(bootProject);
 			if (!noJpa) this.jpaVisitor(umlClassDiagram, umlClass, javaClassSource);
-			this.bootService.save(bootProject.getMainSourceFolder(), new EJavaClassImpl(bootProject, javaClassSource));
+			javaClassSources.add(javaClassSource);
 		}
+
+		saveJavaClasses(bootProject, javaClassSources);
+	}
+
+	private EUmlClassDiagram getDomainClassDiagram(EBootProject bootProject) {
+		String diagramNotFoundError = "O projeto não possui o diagram de classe em docs/diagrams/domain-class.md";
+		return bootProject.getDomainClassDiagram().orElseThrow(() -> new IllegalArgumentException(diagramNotFoundError));
+	}
+
+	private void saveJavaClasses(EBootProject bootProject, Collection<JavaClassSource> javaClassSources) {
+		// @formatter:off
+		javaClassSources.stream()
+			.map(javaClassSource -> new EJavaClassImpl(bootProject, javaClassSource))
+			.forEach(javaClass -> this.bootService.save(bootProject.getMainSourceFolder(), javaClass));
+		// @formatter:on
+		print(bold(cyan(String.valueOf(javaClassSources.size()))), " classes mapeadas.");
 	}
 
 	private void jpaVisitor(EUmlClassDiagram classDiagram, EUmlClass umlClass, JavaClassSource javaClassSource) {
