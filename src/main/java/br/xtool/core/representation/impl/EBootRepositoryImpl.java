@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import org.jboss.forge.roaster.model.source.JavaInterfaceSource;
 
-import br.xtool.core.representation.EJavaEntity;
+import br.xtool.core.representation.EJpaEntity;
 import br.xtool.core.representation.EJavaPackage;
 import br.xtool.core.representation.EBootRepository;
 import br.xtool.core.representation.EBootProject;
@@ -15,13 +15,13 @@ import br.xtool.core.representation.EBootProject;
  * @author jcruz
  *
  */
-public class EJavaRepositoryImpl implements EBootRepository {
+public class EBootRepositoryImpl implements EBootRepository {
 
 	private EBootProject springBootProject;
 
 	private JavaInterfaceSource javaInterfaceSource;
 
-	public EJavaRepositoryImpl(EBootProject springBootProject, JavaInterfaceSource javaInterfaceSource) {
+	public EBootRepositoryImpl(EBootProject springBootProject, JavaInterfaceSource javaInterfaceSource) {
 		super();
 		this.springBootProject = springBootProject;
 		this.javaInterfaceSource = javaInterfaceSource;
@@ -53,7 +53,7 @@ public class EJavaRepositoryImpl implements EBootRepository {
 	 * @return
 	 */
 	@Override
-	public Optional<EJavaEntity> getTargetEntity() {
+	public Optional<EJpaEntity> getTargetEntity() {
 		// @formatter:off
 		return this.springBootProject.getEntities().stream()
 				.filter(e -> e.getName().concat("Repository").equals(this.getName()))

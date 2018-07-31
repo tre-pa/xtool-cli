@@ -2,19 +2,19 @@ package br.xtool.core.representation.impl;
 
 import java.util.Optional;
 
-import br.xtool.core.representation.EJavaRelationship;
-import br.xtool.core.representation.EJavaAttribute;
-import br.xtool.core.representation.EJavaEntity;
+import br.xtool.core.representation.EJpaRelationship;
+import br.xtool.core.representation.EJpaAttribute;
+import br.xtool.core.representation.EJpaEntity;
 
-public class EJavaRelationshipImpl implements EJavaRelationship {
+public class EJpaRelationshipImpl implements EJpaRelationship {
 
-	private EJavaEntity entitySource;
+	private EJpaEntity entitySource;
 
-	private EJavaEntity entityTarget;
+	private EJpaEntity entityTarget;
 
-	private EJavaAttribute attributeSource;
+	private EJpaAttribute attributeSource;
 
-	public EJavaRelationshipImpl(EJavaEntity source, EJavaEntity target, EJavaAttribute attributeSource) {
+	public EJpaRelationshipImpl(EJpaEntity source, EJpaEntity target, EJpaAttribute attributeSource) {
 		super();
 		this.entitySource = source;
 		this.entityTarget = target;
@@ -106,7 +106,7 @@ public class EJavaRelationshipImpl implements EJavaRelationship {
 	}
 
 	@Override
-	public Optional<EJavaAttribute> getTargetAttribute() {
+	public Optional<EJpaAttribute> getTargetAttribute() {
 		// @formatter:off
 		return this.entityTarget.getAttributes().stream()
 				.filter(attrTarget -> attrTarget.getType().getName().equals(this.entityTarget.getName()))
@@ -115,17 +115,17 @@ public class EJavaRelationshipImpl implements EJavaRelationship {
 	}
 
 	@Override
-	public EJavaAttribute getSourceAttribute() {
+	public EJpaAttribute getSourceAttribute() {
 		return this.attributeSource;
 	}
 
 	@Override
-	public EJavaEntity getSourceEntity() {
+	public EJpaEntity getSourceEntity() {
 		return this.entitySource;
 	}
 
 	@Override
-	public Optional<EJavaEntity> getTargetEntity() {
+	public Optional<EJpaEntity> getTargetEntity() {
 		return Optional.ofNullable(this.entityTarget);
 	}
 

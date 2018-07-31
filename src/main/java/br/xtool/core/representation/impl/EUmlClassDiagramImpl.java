@@ -47,6 +47,7 @@ public class EUmlClassDiagramImpl implements EUmlClassDiagram {
 	}
 
 	@Override
+	@Deprecated
 	public Set<EUmlRelationship> getRelationships() {
 		// @formatter:off
 		return this.classDiagram.getEntityFactory().getLinks().stream()

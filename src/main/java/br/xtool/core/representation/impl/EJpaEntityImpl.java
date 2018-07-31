@@ -8,9 +8,9 @@ import java.util.stream.Collectors;
 
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 
-import br.xtool.core.representation.EJavaRelationship;
-import br.xtool.core.representation.EJavaAttribute;
-import br.xtool.core.representation.EJavaEntity;
+import br.xtool.core.representation.EJpaRelationship;
+import br.xtool.core.representation.EJpaAttribute;
+import br.xtool.core.representation.EJpaEntity;
 import br.xtool.core.representation.EBootProject;
 
 /**
@@ -19,11 +19,11 @@ import br.xtool.core.representation.EBootProject;
  * @author jcruz
  *
  */
-public class EJavaEntityImpl extends EJavaClassImpl implements EJavaEntity {
+public class EJpaEntityImpl extends EJavaClassImpl implements EJpaEntity {
 
 	private EBootProject springBootProject;
 
-	public EJavaEntityImpl(EBootProject springBootProject, JavaClassSource javaClassSource) {
+	public EJpaEntityImpl(EBootProject springBootProject, JavaClassSource javaClassSource) {
 		super(springBootProject, javaClassSource);
 		this.springBootProject = springBootProject;
 		this.javaClassSource = javaClassSource;
@@ -35,10 +35,10 @@ public class EJavaEntityImpl extends EJavaClassImpl implements EJavaEntity {
 	 * @return
 	 */
 	@Override
-	public SortedSet<EJavaAttribute> getAttributes() {
+	public SortedSet<EJpaAttribute> getAttributes() {
 		// @formatter:off
 		return this.javaClassSource.getFields().stream()
-			.map(f -> new EJavaAttributeImpl(this.springBootProject,this, f))
+			.map(f -> new EJpaAttributeImpl(this.springBootProject,this, f))
 			.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
 	}
@@ -49,12 +49,12 @@ public class EJavaEntityImpl extends EJavaClassImpl implements EJavaEntity {
 	 * @return
 	 */
 	@Override
-	public Set<EJavaRelationship> getRelationships() {
-		Set<EJavaRelationship> associations = new HashSet<>();
+	public Set<EJpaRelationship> getRelationships() {
+		Set<EJpaRelationship> associations = new HashSet<>();
 		// @formatter:off
 		this.getAttributes().stream()
-			.filter(EJavaAttribute::isAssociation)
-			.map(EJavaAttribute::getRelationship)
+			.filter(EJpaAttribute::isAssociation)
+			.map(EJpaAttribute::getRelationship)
 			.forEach(association -> associations.add(association.get()));
 		// @formatter:on
 		return associations;

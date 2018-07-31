@@ -8,7 +8,7 @@ import java.util.Optional;
  * @author jcruz
  *
  */
-public interface EJavaRelationship {
+public interface EJpaRelationship {
 
 	boolean isBidirectional();
 
@@ -26,11 +26,11 @@ public interface EJavaRelationship {
 
 	boolean isManyToMany();
 
-	EJavaAttribute getSourceAttribute();
+	EJpaAttribute getSourceAttribute();
 
-	Optional<EJavaAttribute> getTargetAttribute();
+	Optional<EJpaAttribute> getTargetAttribute();
 
-	EJavaEntity getSourceEntity();
+	EJpaEntity getSourceEntity();
 
-	Optional<EJavaEntity> getTargetEntity();
+	Optional<EJpaEntity> getTargetEntity();
 }

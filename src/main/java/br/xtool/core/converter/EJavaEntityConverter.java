@@ -5,18 +5,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
-import br.xtool.core.representation.EJavaEntity;
+import br.xtool.core.representation.EJpaEntity;
 import br.xtool.core.representation.EBootProject;
 import br.xtool.core.service.WorkspaceService;
 
 @Component
-public class EJavaEntityConverter implements Converter<String, EJavaEntity> {
+public class EJavaEntityConverter implements Converter<String, EJpaEntity> {
 
 	@Autowired
 	private WorkspaceService workspaceService;
 
 	@Override
-	public EJavaEntity convert(String source) {
+	public EJpaEntity convert(String source) {
 		if (StringUtils.isNotEmpty(source)) {
 			if (this.workspaceService.getWorkingProject() instanceof EBootProject) {
 				EBootProject project = EBootProject.class.cast(this.workspaceService.getWorkingProject());

@@ -11,7 +11,7 @@ import br.xtool.XtoolCliApplication;
 import br.xtool.core.ConsoleLog;
 import br.xtool.core.aware.SpringBootAware;
 import br.xtool.core.representation.EBootProject;
-import br.xtool.core.representation.EJavaEntity;
+import br.xtool.core.representation.EJpaEntity;
 import br.xtool.core.service.WorkspaceService;
 
 @ShellComponent
@@ -29,7 +29,7 @@ public class InfoEntityCommand extends SpringBootAware {
 	private void infoAllEntities(EBootProject bootProject) {
 		//// @formatter:off
 		int maxLenghtEntityName = bootProject.getEntities().stream()
-				.map(EJavaEntity::getName)
+				.map(EJpaEntity::getName)
 				.map(String::length)
 				.max(Comparator.naturalOrder())
 				.orElse(10);

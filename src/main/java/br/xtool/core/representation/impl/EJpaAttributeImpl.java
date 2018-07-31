@@ -5,8 +5,8 @@ import java.util.Optional;
 import org.jboss.forge.roaster.model.source.FieldSource;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 
-import br.xtool.core.representation.EJavaAttribute;
-import br.xtool.core.representation.EJavaRelationship;
+import br.xtool.core.representation.EJpaAttribute;
+import br.xtool.core.representation.EJpaRelationship;
 import br.xtool.core.representation.EBootProject;
 
 /**
@@ -15,13 +15,13 @@ import br.xtool.core.representation.EBootProject;
  * @author jcruz
  *
  */
-public class EJavaAttributeImpl extends EJavaFieldImpl implements EJavaAttribute {
+public class EJpaAttributeImpl extends EJavaFieldImpl implements EJpaAttribute {
 
 	private EBootProject springBootProject;
 
-	private EJavaEntityImpl entitySource;
+	private EJpaEntityImpl entitySource;
 
-	public EJavaAttributeImpl(EBootProject springBootProject, EJavaEntityImpl entitySource, FieldSource<JavaClassSource> fieldSource) {
+	public EJpaAttributeImpl(EBootProject springBootProject, EJpaEntityImpl entitySource, FieldSource<JavaClassSource> fieldSource) {
 		super(fieldSource);
 		this.springBootProject = springBootProject;
 		this.entitySource = entitySource;
@@ -44,32 +44,32 @@ public class EJavaAttributeImpl extends EJavaFieldImpl implements EJavaAttribute
 	}
 
 	@Override
-	public boolean isJpaTransient() {
+	public boolean isTransient() {
 		return this.hasAnnotation("Transient");
 	}
 
 	@Override
-	public boolean isJpaLob() {
+	public boolean isLob() {
 		return this.hasAnnotation("Lob");
 	}
 
 	@Override
-	public Optional<EJavaRelationship> getRelationship() {
+	public Optional<EJpaRelationship> getRelationship() {
 		if (this.isAssociation()) {
 			if (this.isCollection()) {
 				// @formatter:off
 				return this.springBootProject.getEntities().stream()
 						.filter(entity -> this.getType().getTypeArguments().stream().anyMatch(type -> type.getName().equals(entity.getName())))
-						.map(entityTarget -> new EJavaRelationshipImpl(this.entitySource, entityTarget, this))
-						.map(EJavaRelationship.class::cast)
+						.map(entityTarget -> new EJpaRelationshipImpl(this.entitySource, entityTarget, this))
+						.map(EJpaRelationship.class::cast)
 						.findFirst();
 				// @formatter:on
 			}
 			// @formatter:off
 			return this.springBootProject.getEntities().stream()
 					.filter(entity -> entity.getName().equals(this.getType().getName()))
-					.map(entityTarget -> new EJavaRelationshipImpl(this.entitySource, entityTarget, this))
-					.map(EJavaRelationship.class::cast)
+					.map(entityTarget -> new EJpaRelationshipImpl(this.entitySource, entityTarget, this))
+					.map(EJpaRelationship.class::cast)
 					.findFirst();
 			// @formatter:on
 		}

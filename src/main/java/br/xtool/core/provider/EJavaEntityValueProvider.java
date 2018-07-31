@@ -11,7 +11,7 @@ import org.springframework.shell.CompletionProposal;
 import org.springframework.shell.standard.ValueProviderSupport;
 import org.springframework.stereotype.Component;
 
-import br.xtool.core.representation.EJavaEntity;
+import br.xtool.core.representation.EJpaEntity;
 import br.xtool.core.representation.EBootProject;
 import br.xtool.core.service.WorkspaceService;
 
@@ -27,7 +27,7 @@ public class EJavaEntityValueProvider extends ValueProviderSupport {
 		if(this.workspaceService.getWorkingProject() instanceof EBootProject) {
 			EBootProject project = EBootProject.class.cast(this.workspaceService.getWorkingProject());
 			return project.getEntities().stream()
-					.map(EJavaEntity::getName)
+					.map(EJpaEntity::getName)
 					.map(CompletionProposal::new)
 					.collect(Collectors.toList());
 		}

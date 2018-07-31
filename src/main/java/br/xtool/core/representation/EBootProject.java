@@ -75,7 +75,7 @@ public interface EBootProject extends EProject {
 	 * 
 	 * @return
 	 */
-	SortedSet<EJavaEntity> getEntities();
+	SortedSet<EJpaEntity> getEntities();
 
 	/**
 	 * Retorna a lista de repositórios.

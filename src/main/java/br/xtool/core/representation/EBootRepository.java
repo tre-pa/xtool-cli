@@ -29,6 +29,6 @@ public interface EBootRepository extends Comparable<EBootRepository> {
 	 * 
 	 * @return
 	 */
-	Optional<EJavaEntity> getTargetEntity();
+	Optional<EJpaEntity> getTargetEntity();
 
 }

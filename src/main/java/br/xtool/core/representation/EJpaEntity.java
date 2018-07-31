@@ -13,21 +13,21 @@ import strman.Strman;
  * @author jcruz
  *
  */
-public interface EJavaEntity extends EJavaClass {
+public interface EJpaEntity extends EJavaClass {
 
 	/**
 	 * Retorna os atributos JPA da entidade.
 	 * 
 	 * @return
 	 */
-	SortedSet<EJavaAttribute> getAttributes();
+	SortedSet<EJpaAttribute> getAttributes();
 
 	/**
 	 * Retorna os relacionamentos da entidade.
 	 * 
 	 * @return
 	 */
-	Set<EJavaRelationship> getRelationships();
+	Set<EJpaRelationship> getRelationships();
 
 	/**
 	 * Retorna um nome válido de uma tabela do banco de dados com no máximo 30

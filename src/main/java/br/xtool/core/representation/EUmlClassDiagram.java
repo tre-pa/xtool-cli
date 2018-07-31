@@ -29,5 +29,6 @@ public interface EUmlClassDiagram {
 	 * 
 	 * @return
 	 */
+	@Deprecated
 	Set<EUmlRelationship> getRelationships();
 }

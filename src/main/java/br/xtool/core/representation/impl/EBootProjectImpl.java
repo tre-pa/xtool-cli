@@ -23,7 +23,7 @@ import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.EBootRepository;
 import br.xtool.core.representation.EBootRest;
 import br.xtool.core.representation.EJavaClass;
-import br.xtool.core.representation.EJavaEntity;
+import br.xtool.core.representation.EJpaEntity;
 import br.xtool.core.representation.EJavaPackage;
 import br.xtool.core.representation.EJavaSourceFolder;
 import br.xtool.core.representation.ENgProject;
@@ -137,14 +137,14 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 	 * @see br.xtool.core.representation.EBootProject#getEntities()
 	 */
 	@Override
-	public SortedSet<EJavaEntity> getEntities() {
+	public SortedSet<EJpaEntity> getEntities() {
 		// @formatter:off
 		return this.getJavaUnits()
 			.parallelStream()
 			.filter(javaUnit -> javaUnit.getGoverningType().isClass())
 			.map(javaUnit -> javaUnit.<JavaClassSource>getGoverningType())
 			.filter(j -> j.getAnnotations().stream().anyMatch(ann -> ann.getName().equals("Entity")))
-			.map(j -> new EJavaEntityImpl(this, j))
+			.map(j -> new EJpaEntityImpl(this, j))
 			.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
 	}
@@ -161,7 +161,7 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 			.filter(javaUnit -> javaUnit.getGoverningType().isInterface())
 			.map(javaUnit -> javaUnit.<JavaInterfaceSource>getGoverningType())
 			.filter(j -> j.getAnnotations().stream().anyMatch(ann -> ann.getName().equals("Repository")))
-			.map(j -> new EJavaRepositoryImpl(this, j))
+			.map(j -> new EBootRepositoryImpl(this, j))
 			.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
 	}

@@ -16,7 +16,7 @@ import org.jboss.forge.roaster.model.source.AnnotationSource;
 import org.jboss.forge.roaster.model.source.FieldSource;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 
-import br.xtool.core.representation.EJavaEntity;
+import br.xtool.core.representation.EJpaEntity;
 import br.xtool.core.representation.EUmlClass;
 import br.xtool.core.representation.EUmlField;
 import br.xtool.core.representation.EUmlFieldProperty;
@@ -42,7 +42,7 @@ public class JpaVisitor implements Visitor {
 			.addAnnotation(DynamicInsert.class)
 				.getOrigin()
 			.addAnnotation(Table.class)
-				.setStringValue("name", EJavaEntity.genDBTableName(umlClass.getName()));
+				.setStringValue("name", EJpaEntity.genDBTableName(umlClass.getName()));
 		// @formatter:on
 	}
 
@@ -55,14 +55,14 @@ public class JpaVisitor implements Visitor {
 			.getField(umlField.getName())
 				.addAnnotation(GeneratedValue.class)
 				.setEnumValue("strategy", GenerationType.SEQUENCE)
-				.setStringValue("generator", EJavaEntity.genDBSequenceName(this.javaClassSource.getName()))
+				.setStringValue("generator", EJpaEntity.genDBSequenceName(this.javaClassSource.getName()))
 					.getOrigin()
 			.getField(umlField.getName())
 				.addAnnotation(SequenceGenerator.class)
 				.setLiteralValue("initialValue", "1")
 				.setLiteralValue("allocationSize", "1")
-				.setStringValue("name", EJavaEntity.genDBSequenceName(this.javaClassSource.getName()))
-				.setStringValue("sequenceName", EJavaEntity.genDBSequenceName(this.javaClassSource.getName()));
+				.setStringValue("name", EJpaEntity.genDBSequenceName(this.javaClassSource.getName()))
+				.setStringValue("sequenceName", EJpaEntity.genDBSequenceName(this.javaClassSource.getName()));
 		// @formatter:on
 	}
 
