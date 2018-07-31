@@ -2,9 +2,14 @@ package br.xtool.core.representation.impl;
 
 import java.util.Optional;
 
-import br.xtool.core.representation.EJpaRelationship;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+
 import br.xtool.core.representation.EJpaAttribute;
 import br.xtool.core.representation.EJpaEntity;
+import br.xtool.core.representation.EJpaRelationship;
 
 public class EJpaRelationshipImpl implements EJpaRelationship {
 
@@ -72,7 +77,7 @@ public class EJpaRelationshipImpl implements EJpaRelationship {
 	 */
 	@Override
 	public boolean isOneToOne() {
-		return this.attributeSource.hasAnnotation("OneToOne");
+		return this.attributeSource.getRoasterFieldSource().hasAnnotation(OneToOne.class);
 	}
 
 	/**
@@ -82,7 +87,7 @@ public class EJpaRelationshipImpl implements EJpaRelationship {
 	 */
 	@Override
 	public boolean isOneToMany() {
-		return this.attributeSource.hasAnnotation("OneToMany");
+		return this.attributeSource.getRoasterFieldSource().hasAnnotation(OneToMany.class);
 	}
 
 	/**
@@ -92,7 +97,7 @@ public class EJpaRelationshipImpl implements EJpaRelationship {
 	 */
 	@Override
 	public boolean isManyToOne() {
-		return this.attributeSource.hasAnnotation("ManyToOne");
+		return this.attributeSource.getRoasterFieldSource().hasAnnotation(ManyToOne.class);
 	}
 
 	/**
@@ -102,7 +107,7 @@ public class EJpaRelationshipImpl implements EJpaRelationship {
 	 */
 	@Override
 	public boolean isManyToMany() {
-		return this.attributeSource.hasAnnotation("ManyToMany");
+		return this.attributeSource.getRoasterFieldSource().hasAnnotation(ManyToMany.class);
 	}
 
 	@Override

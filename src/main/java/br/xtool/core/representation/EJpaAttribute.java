@@ -12,8 +12,7 @@ public interface EJpaAttribute extends EJavaField {
 
 	boolean isAssociation();
 
-	@Override
-	boolean isTransient();
+	boolean isJpaTransient();
 
 	boolean isLob();
 

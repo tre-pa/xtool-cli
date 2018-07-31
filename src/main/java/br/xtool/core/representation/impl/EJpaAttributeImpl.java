@@ -2,12 +2,15 @@ package br.xtool.core.representation.impl;
 
 import java.util.Optional;
 
+import javax.persistence.Lob;
+import javax.persistence.Transient;
+
 import org.jboss.forge.roaster.model.source.FieldSource;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 
+import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.EJpaAttribute;
 import br.xtool.core.representation.EJpaRelationship;
-import br.xtool.core.representation.EBootProject;
 
 /**
  * Classe que representa um atributo JPA de uma entidade.
@@ -44,13 +47,13 @@ public class EJpaAttributeImpl extends EJavaFieldImpl implements EJpaAttribute {
 	}
 
 	@Override
-	public boolean isTransient() {
-		return this.hasAnnotation("Transient");
+	public boolean isJpaTransient() {
+		return this.getRoasterFieldSource().hasAnnotation(Transient.class);
 	}
 
 	@Override
 	public boolean isLob() {
-		return this.hasAnnotation("Lob");
+		return this.getRoasterFieldSource().hasAnnotation(Lob.class);
 	}
 
 	@Override
