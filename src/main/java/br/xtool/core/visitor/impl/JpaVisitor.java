@@ -81,8 +81,7 @@ public class JpaVisitor implements Visitor {
 	@Override
 	public void visitStringField(EUmlField umlField) {
 		FieldSource<JavaClassSource> stringField = this.javaClassSource.getField(umlField.getName());
-		AnnotationSource<JavaClassSource> columnAnnotation = stringField.addAnnotation(Column.class);
-		umlField.getMaxArrayLength().ifPresent(max -> columnAnnotation.setLiteralValue("length", String.valueOf(max)));
+		stringField.addAnnotation(Column.class).setLiteralValue("length", String.valueOf(umlField.getMaxArrayLength().orElse(255)));
 		if (umlField.getMinArrayLength().isPresent() || umlField.getMaxArrayLength().isPresent()) {
 			AnnotationSource<JavaClassSource> sizeAnnotation = stringField.addAnnotation(Size.class);
 			umlField.getMinArrayLength().ifPresent(min -> sizeAnnotation.setLiteralValue("min", String.valueOf(min)));
