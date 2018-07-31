@@ -60,15 +60,6 @@ public class MapClassesCommand extends SpringBootAware {
 		return bootProject.getDomainClassDiagram().orElseThrow(() -> new IllegalArgumentException(diagramNotFoundError));
 	}
 
-	private void saveJavaClasses(EBootProject bootProject, Collection<JavaClassSource> javaClassSources) {
-		// @formatter:off
-		javaClassSources.stream()
-			.map(javaClassSource -> new EJavaClassImpl(bootProject, javaClassSource))
-			.forEach(javaClass -> this.bootService.save(bootProject.getMainSourceFolder(), javaClass));
-		// @formatter:on
-		print(bold(cyan(String.valueOf(javaClassSources.size()))), " classes mapeadas.");
-	}
-
 	private void jpaVisitor(EUmlClassDiagram classDiagram, EUmlClass umlClass, JavaClassSource javaClassSource) {
 		JpaVisitor jpaVisitor = new JpaVisitor(javaClassSource);
 		jpaVisitor.visitClass(umlClass);
@@ -88,5 +79,14 @@ public class MapClassesCommand extends SpringBootAware {
 				if (umlFieldProperty.isTransient()) jpaVisitor.visitTransientProperty(umlFieldProperty);
 			}
 		}
+	}
+
+	private void saveJavaClasses(EBootProject bootProject, Collection<JavaClassSource> javaClassSources) {
+		// @formatter:off
+		javaClassSources.stream()
+			.map(javaClassSource -> new EJavaClassImpl(bootProject, javaClassSource))
+			.forEach(javaClass -> this.bootService.save(bootProject.getMainSourceFolder(), javaClass));
+		// @formatter:on
+		print(bold(cyan(String.valueOf(javaClassSources.size()))), " classes mapeadas.");
 	}
 }
