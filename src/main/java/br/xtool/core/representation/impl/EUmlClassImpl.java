@@ -123,10 +123,11 @@ public class EUmlClassImpl implements EUmlClass {
 		Predicate<Link> p1 = (link) -> link.getType().getDecor1().equals(LinkDecor.ARROW);
 		Predicate<Link> p2 = (link) -> link.getType().getDecor1().equals(LinkDecor.NONE) && link.getType().getDecor2().equals(LinkDecor.NONE);
 		Predicate<Link> p3 = (link) -> link.getType().getDecor2().equals(LinkDecor.COMPOSITION);
+		Predicate<Link> p4 = (link) -> link.getType().getDecor1().equals(LinkDecor.COMPOSITION) && link.getType().getDecor2().equals(LinkDecor.ARROW);
 		// @formatter:off
 		return this.classDiagram.getEntityFactory().getLinks().stream()
 			.filter(link -> link.getEntity1().getDisplay().asStringWithHiddenNewLine().equals(this.getName()))
-			.filter(p1.or(p2).or(p3))
+			.filter(p1.or(p2).or(p3).or(p4))
 			.map(link -> Pair.of(link, link.getEntity2().getDisplay().asStringWithHiddenNewLine()))
 			.collect(Collectors.toSet());
 		// @formatter:on
@@ -136,10 +137,11 @@ public class EUmlClassImpl implements EUmlClass {
 		Predicate<Link> p1 = (link) -> link.getType().getDecor2().equals(LinkDecor.ARROW);
 		Predicate<Link> p2 = (link) -> link.getType().getDecor1().equals(LinkDecor.NONE) && link.getType().getDecor2().equals(LinkDecor.NONE);
 		Predicate<Link> p3 = (link) -> link.getType().getDecor1().equals(LinkDecor.COMPOSITION);
+		Predicate<Link> p4 = (link) -> link.getType().getDecor2().equals(LinkDecor.COMPOSITION) && link.getType().getDecor1().equals(LinkDecor.ARROW);
 		// @formatter:off
 		return this.classDiagram.getEntityFactory().getLinks().stream()
 			.filter(link -> link.getEntity2().getDisplay().asStringWithHiddenNewLine().equals(this.getName()))
-			.filter(p1.or(p2).or(p3))
+			.filter(p1.or(p2).or(p3).or(p4))
 			.map(link -> Pair.of(link, link.getEntity1().getDisplay().asStringWithHiddenNewLine()))
 			.collect(Collectors.toSet());
 		// @formatter:on

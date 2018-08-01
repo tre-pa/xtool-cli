@@ -16,7 +16,6 @@ public class EUmlRelationshipImpl implements EUmlRelationship {
 	private EUmlClass sourceClass;
 
 	private EUmlClass targetClass;
-	//	private Set<EUmlClass> classes;
 
 	public EUmlRelationshipImpl(EUmlClass sourceClass, EUmlClass targetClass, Link link) {
 		super();
@@ -109,7 +108,7 @@ public class EUmlRelationshipImpl implements EUmlRelationship {
 	 */
 	@Override
 	public boolean isComposition() {
-		return this.link.getType().getDecor1().equals(LinkDecor.COMPOSITION) || this.link.getType().getDecor2().equals(LinkDecor.COMPOSITION);
+		return this.link.getType().getDecor1().equals(LinkDecor.COMPOSITION) ^ this.link.getType().getDecor2().equals(LinkDecor.COMPOSITION);
 	}
 
 	private String getSourceQualifier() {
