@@ -9,7 +9,6 @@ import java.util.stream.Collectors;
 import br.xtool.core.representation.EUmlClass;
 import br.xtool.core.representation.EUmlClassDiagram;
 import br.xtool.core.representation.EUmlEnum;
-import br.xtool.core.representation.EUmlRelationship;
 import net.sourceforge.plantuml.BlockUml;
 import net.sourceforge.plantuml.SourceStringReader;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
@@ -24,17 +23,25 @@ public class EUmlClassDiagramImpl implements EUmlClassDiagram {
 		this.classDiagram = classDiagram;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EUmlClassDiagram#getClasses()
+	 */
 	@Override
 	public Set<EUmlClass> getClasses() {
 		// @formatter:off
 		return this.classDiagram.getGroups(false).stream()
 			 .flatMap(groups -> groups.getLeafsDirect().stream())
 			 .filter(leaf -> leaf.getEntityType().equals(LeafType.CLASS))
-			 .map(EUmlClassImpl::new)
+			 .map(leaf -> new EUmlClassImpl(this.classDiagram, leaf))
 			 .collect(Collectors.toSet());
 		// @formatter:on
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EUmlClassDiagram#getEnums()
+	 */
 	@Override
 	public Set<EUmlEnum> getEnums() {
 		// @formatter:off
@@ -46,15 +53,16 @@ public class EUmlClassDiagramImpl implements EUmlClassDiagram {
 		// @formatter:on
 	}
 
-	@Override
-	@Deprecated
-	public Set<EUmlRelationship> getRelationships() {
-		// @formatter:off
-		return this.classDiagram.getEntityFactory().getLinks().stream()
-				.map(link -> new EUmlRelationshipImpl(getClasses(), link))
-				.collect(Collectors.toSet());
-		// @formatter:on
-	}
+	//	@Override
+	//	@Deprecated
+	//	public Set<EUmlRelationship> getRelationships() {
+	////		EUmlClass sourceClass = this.getClasses().stream().filter(umlClass -> )
+//		// @formatter:off
+//		return this.classDiagram.getEntityFactory().getLinks().stream()
+//				.map(link -> new EUmlRelationshipImpl(getClasses(), link))
+//				.collect(Collectors.toSet());
+//		// @formatter:on
+	//	}
 
 	public static EUmlClassDiagram of(Path path) throws IOException {
 		//		String diagram = FileUtils.readFileToString(new File(path), "UTF-8");

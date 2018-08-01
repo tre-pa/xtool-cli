@@ -10,6 +10,11 @@ import br.xtool.core.representation.impl.EUmlNavigability;
  */
 public interface EUmlRelationship {
 
+	/**
+	 * Retorna a navegabilidade do relacionamento.
+	 * 
+	 * @return
+	 */
 	EUmlNavigability getNavigability();
 
 	/**

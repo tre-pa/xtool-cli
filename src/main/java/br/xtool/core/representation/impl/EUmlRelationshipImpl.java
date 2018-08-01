@@ -1,7 +1,5 @@
 package br.xtool.core.representation.impl;
 
-import java.util.Set;
-
 import org.apache.commons.lang3.StringUtils;
 
 import br.xtool.core.representation.EUmlClass;
@@ -15,14 +13,23 @@ public class EUmlRelationshipImpl implements EUmlRelationship {
 
 	private Link link;
 
-	private Set<EUmlClass> classes;
+	private EUmlClass sourceClass;
 
-	public EUmlRelationshipImpl(Set<EUmlClass> classes, Link link) {
+	private EUmlClass targetClass;
+	//	private Set<EUmlClass> classes;
+
+	public EUmlRelationshipImpl(EUmlClass sourceClass, EUmlClass targetClass, Link link) {
 		super();
+		this.sourceClass = sourceClass;
+		this.targetClass = targetClass;
 		this.link = link;
-		this.classes = classes;
+
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EUmlRelationship#getNavigability()
+	 */
 	@Override
 	public EUmlNavigability getNavigability() {
 		return new EUmlNavigabilityImpl(this.link);
@@ -34,15 +41,20 @@ public class EUmlRelationshipImpl implements EUmlRelationship {
 	 */
 	@Override
 	public EUmlClass getSourceClass() {
-		String error = "Classe '%s' não definida no pacote. Insira a definção da classe e os atributos correspondentes no pacote.";
-		// @formatter:off
-		return this.classes.stream()
-				.filter(umlClass -> umlClass.getName().equals(this.link.getEntity1().getDisplay().asStringWithHiddenNewLine()))
-				.findFirst()
-				.orElseThrow(() -> new IllegalArgumentException(String.format(error, this.link.getEntity1().getDisplay().asStringWithHiddenNewLine())));
-		// @formatter:on
+		//		String error = "Classe '%s' não definida no pacote. Insira a definção da classe e os atributos correspondentes no pacote.";
+//		// @formatter:off
+//		return this.classes.stream()
+//				.filter(umlClass -> umlClass.getName().equals(this.link.getEntity1().getDisplay().asStringWithHiddenNewLine()))
+//				.findFirst()
+//				.orElseThrow(() -> new IllegalArgumentException(String.format(error, this.link.getEntity1().getDisplay().asStringWithHiddenNewLine())));
+//		// @formatter:on
+		return this.sourceClass;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EUmlRelationship#isSourceClassOwner()
+	 */
 	@Override
 	public boolean isSourceClassOwner() {
 		return this.link.getLinkArrow().equals(LinkArrow.DIRECT_NORMAL) || this.link.getLinkArrow().equals(LinkArrow.NONE);
@@ -54,13 +66,14 @@ public class EUmlRelationshipImpl implements EUmlRelationship {
 	 */
 	@Override
 	public EUmlClass getTargetClass() {
-		String error = "Classe '%s' não definida no pacote. Insira a definção da classe e os atributos correspondentes no pacote.";
-		// @formatter:off
-		return this.classes.stream()
-				.filter(umlClass -> umlClass.getName().equals(this.link.getEntity2().getDisplay().asStringWithHiddenNewLine()))
-				.findFirst()
-				.orElseThrow(() -> new IllegalArgumentException(String.format(error, this.link.getEntity1().getDisplay().asStringWithHiddenNewLine())));
-		// @formatter:on
+		//		String error = "Classe '%s' não definida no pacote. Insira a definção da classe e os atributos correspondentes no pacote.";
+//		// @formatter:off
+//		return this.classes.stream()
+//				.filter(umlClass -> umlClass.getName().equals(this.link.getEntity2().getDisplay().asStringWithHiddenNewLine()))
+//				.findFirst()
+//				.orElseThrow(() -> new IllegalArgumentException(String.format(error, this.link.getEntity1().getDisplay().asStringWithHiddenNewLine())));
+//		// @formatter:on
+		return this.targetClass;
 	}
 
 	/*
@@ -87,7 +100,7 @@ public class EUmlRelationshipImpl implements EUmlRelationship {
 	 */
 	@Override
 	public boolean isAssociation() {
-		return !isComposition() && (this.link.getType().getDecor1().equals(LinkDecor.ARROW) || this.link.getType().getDecor2().equals(LinkDecor.ARROW));
+		return !isComposition();
 	}
 
 	/*

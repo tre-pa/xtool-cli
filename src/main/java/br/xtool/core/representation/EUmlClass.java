@@ -44,6 +44,12 @@ public interface EUmlClass extends Visitable {
 	Set<EUmlStereotype> getStereotypes();
 
 	/**
+	 * 
+	 * @return
+	 */
+	Set<EUmlRelationship> getRelationships();
+
+	/**
 	 * Converte de UmlClass para JavaClassSource.
 	 * 
 	 * @param bootProject

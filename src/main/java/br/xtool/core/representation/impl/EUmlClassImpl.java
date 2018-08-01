@@ -4,28 +4,40 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.tuple.Pair;
 import org.jboss.forge.roaster.model.source.FieldSource;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
+
+import com.google.common.collect.ImmutableSet;
 
 import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.EUmlClass;
 import br.xtool.core.representation.EUmlField;
 import br.xtool.core.representation.EUmlPackage;
+import br.xtool.core.representation.EUmlRelationship;
 import br.xtool.core.representation.EUmlStereotype;
 import br.xtool.core.util.RoasterUtil;
 import br.xtool.core.visitor.Visitor;
+import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
+import net.sourceforge.plantuml.cucadiagram.LeafType;
+import net.sourceforge.plantuml.cucadiagram.Link;
+import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 import strman.Strman;
 
 public class EUmlClassImpl implements EUmlClass {
 
+	private ClassDiagram classDiagram;
+
 	private ILeaf leaf;
 
-	public EUmlClassImpl(ILeaf leaf) {
+	public EUmlClassImpl(ClassDiagram classDiagram, ILeaf leaf) {
 		super();
+		this.classDiagram = classDiagram;
 		this.leaf = leaf;
 	}
 
@@ -79,6 +91,64 @@ public class EUmlClassImpl implements EUmlClass {
 		return new HashSet<>();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EUmlClass#getRelationships()
+	 */
+	@Override
+	public Set<EUmlRelationship> getRelationships() {
+		Set<Pair<Link, String>> links = ImmutableSet.<Pair<Link, String>>builder().addAll(iterateOverEntity1()).addAll(iterateOverEntity2()).build();
+		// @formatter:off
+		return links.stream()
+				.map(pair -> new EUmlRelationshipImpl(this, findClass(pair.getRight()), pair.getLeft()))
+				.collect(Collectors.toSet());
+		// @formatter:on
+	}
+
+	protected EUmlClass findClass(String className) {
+		String error = "Classe '%s' não definida no pacote. Insira a definção da classe com os atributos correspondentes no pacote.";
+		// @formatter:off
+		return this.classDiagram.getGroups(false).stream()
+			 .flatMap(groups -> groups.getLeafsDirect().stream())
+			 .filter(_leaf -> _leaf.getEntityType().equals(LeafType.CLASS))
+			 .filter(_leaf -> !_leaf.getDisplay().asStringWithHiddenNewLine().equals(this.getName()))
+			 .filter(_leaf -> _leaf.getDisplay().asStringWithHiddenNewLine().equals(className))
+			 .map(_leaf -> new EUmlClassImpl(this.classDiagram, _leaf))
+			 .findAny()
+			 .orElseThrow(() -> new IllegalArgumentException(String.format(error, className)));
+		 // @formatter:on
+	}
+
+	private Set<Pair<Link, String>> iterateOverEntity1() {
+		Predicate<Link> p1 = (link) -> link.getType().getDecor1().equals(LinkDecor.ARROW);
+		Predicate<Link> p2 = (link) -> link.getType().getDecor1().equals(LinkDecor.NONE) && link.getType().getDecor2().equals(LinkDecor.NONE);
+		Predicate<Link> p3 = (link) -> link.getType().getDecor2().equals(LinkDecor.COMPOSITION);
+		// @formatter:off
+		return this.classDiagram.getEntityFactory().getLinks().stream()
+			.filter(link -> link.getEntity1().getDisplay().asStringWithHiddenNewLine().equals(this.getName()))
+			.filter(p1.or(p2).or(p3))
+			.map(link -> Pair.of(link, link.getEntity2().getDisplay().asStringWithHiddenNewLine()))
+			.collect(Collectors.toSet());
+		// @formatter:on
+	}
+
+	private Set<Pair<Link, String>> iterateOverEntity2() {
+		Predicate<Link> p1 = (link) -> link.getType().getDecor2().equals(LinkDecor.ARROW);
+		Predicate<Link> p2 = (link) -> link.getType().getDecor1().equals(LinkDecor.NONE) && link.getType().getDecor2().equals(LinkDecor.NONE);
+		Predicate<Link> p3 = (link) -> link.getType().getDecor1().equals(LinkDecor.COMPOSITION);
+		// @formatter:off
+		return this.classDiagram.getEntityFactory().getLinks().stream()
+			.filter(link -> link.getEntity2().getDisplay().asStringWithHiddenNewLine().equals(this.getName()))
+			.filter(p1.or(p2).or(p3))
+			.map(link -> Pair.of(link, link.getEntity1().getDisplay().asStringWithHiddenNewLine()))
+			.collect(Collectors.toSet());
+		// @formatter:on
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EUmlClass#convertToJavaClassSource(br.xtool.core.representation.EBootProject)
+	 */
 	@Override
 	public JavaClassSource convertToJavaClassSource(EBootProject bootProject) {
 		// @formatter:off

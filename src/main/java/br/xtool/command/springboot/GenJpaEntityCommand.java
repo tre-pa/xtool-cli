@@ -52,17 +52,21 @@ public class GenJpaEntityCommand extends SpringBootAware {
 						System.out.println();
 					}
 				});
+				System.out.println("\nRELACIONAMENTOS");
+				umlClass.getRelationships().stream().forEach(rel -> {
+					System.out.println("Source: " + rel.getSourceClass().getName() + " Target: " + rel.getTargetClass().getName());
+				});
+				System.out.println("\n===========================\n");
 			});
-			System.out.println("===============");
-			classDiagram.getRelationships().forEach(umlRelationship -> {
-				System.out.println(String.format("Source: %s , Target: %s", umlRelationship.getSourceClass().getName(), umlRelationship.getTargetClass().getName()));
-				System.out.println("\tSource: " + umlRelationship.getSourceMultiplicity().getMutiplicityType());
-				System.out.println("\tTarget: " + umlRelationship.getTargetMultiplicity().getMutiplicityType());
-				//				umlRelationship.getSourceMultiplicity().ifPresent(m -> System.out.println("\tSource: " + m.getMutiplicityType()));
-				//				umlRelationship.getTargetMultiplicity().ifPresent(m -> System.out.println("\tTarget: " + m.getMutiplicityType()));
-				System.out.println("\tBidirectional: " + umlRelationship.getNavigability().isBidirectional());
-				System.out.println("\tUnidirectional: " + umlRelationship.getNavigability().isUnidirectional());
-			});
+			//			classDiagram.getRelationships().forEach(umlRelationship -> {
+			//				System.out.println(String.format("Source: %s , Target: %s", umlRelationship.getSourceClass().getName(), umlRelationship.getTargetClass().getName()));
+			//				System.out.println("\tSource: " + umlRelationship.getSourceMultiplicity().getMutiplicityType());
+			//				System.out.println("\tTarget: " + umlRelationship.getTargetMultiplicity().getMutiplicityType());
+			//				//				umlRelationship.getSourceMultiplicity().ifPresent(m -> System.out.println("\tSource: " + m.getMutiplicityType()));
+			//				//				umlRelationship.getTargetMultiplicity().ifPresent(m -> System.out.println("\tTarget: " + m.getMutiplicityType()));
+			//				System.out.println("\tBidirectional: " + umlRelationship.getNavigability().isBidirectional());
+			//				System.out.println("\tUnidirectional: " + umlRelationship.getNavigability().isUnidirectional());
+			//			});
 			System.out.println("ENUMS");
 			classDiagram.getEnums().stream().flatMap(eUmlEnums -> eUmlEnums.getValues().stream()).forEach(System.out::println);
 		});

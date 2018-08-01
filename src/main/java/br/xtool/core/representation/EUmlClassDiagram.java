@@ -24,11 +24,11 @@ public interface EUmlClassDiagram {
 	 */
 	Set<EUmlEnum> getEnums();
 
-	/**
-	 * Retorna os relacionamento UML.
-	 * 
-	 * @return
-	 */
-	@Deprecated
-	Set<EUmlRelationship> getRelationships();
+	//	/**
+	//	 * Retorna os relacionamento UML.
+	//	 * 
+	//	 * @return
+	//	 */
+	//	@Deprecated
+	//	Set<EUmlRelationship> getRelationships();
 }
