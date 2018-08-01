@@ -50,6 +50,7 @@ public class EUmlRelationshipImpl implements EUmlRelationship {
 	@Override
 	@Deprecated
 	public boolean isSourceClassOwner() {
+		//link.getEntity1().getDisplay().asStringWithHiddenNewLine()
 		return this.link.getLinkArrow().equals(LinkArrow.DIRECT_NORMAL) || this.link.getLinkArrow().equals(LinkArrow.NONE);
 	}
 
