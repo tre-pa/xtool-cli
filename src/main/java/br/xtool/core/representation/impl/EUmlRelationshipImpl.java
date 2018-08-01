@@ -40,13 +40,6 @@ public class EUmlRelationshipImpl implements EUmlRelationship {
 	 */
 	@Override
 	public EUmlClass getSourceClass() {
-		//		String error = "Classe '%s' não definida no pacote. Insira a definção da classe e os atributos correspondentes no pacote.";
-//		// @formatter:off
-//		return this.classes.stream()
-//				.filter(umlClass -> umlClass.getName().equals(this.link.getEntity1().getDisplay().asStringWithHiddenNewLine()))
-//				.findFirst()
-//				.orElseThrow(() -> new IllegalArgumentException(String.format(error, this.link.getEntity1().getDisplay().asStringWithHiddenNewLine())));
-//		// @formatter:on
 		return this.sourceClass;
 	}
 
@@ -55,6 +48,7 @@ public class EUmlRelationshipImpl implements EUmlRelationship {
 	 * @see br.xtool.core.representation.EUmlRelationship#isSourceClassOwner()
 	 */
 	@Override
+	@Deprecated
 	public boolean isSourceClassOwner() {
 		return this.link.getLinkArrow().equals(LinkArrow.DIRECT_NORMAL) || this.link.getLinkArrow().equals(LinkArrow.NONE);
 	}
@@ -65,13 +59,6 @@ public class EUmlRelationshipImpl implements EUmlRelationship {
 	 */
 	@Override
 	public EUmlClass getTargetClass() {
-		//		String error = "Classe '%s' não definida no pacote. Insira a definção da classe e os atributos correspondentes no pacote.";
-//		// @formatter:off
-//		return this.classes.stream()
-//				.filter(umlClass -> umlClass.getName().equals(this.link.getEntity2().getDisplay().asStringWithHiddenNewLine()))
-//				.findFirst()
-//				.orElseThrow(() -> new IllegalArgumentException(String.format(error, this.link.getEntity1().getDisplay().asStringWithHiddenNewLine())));
-//		// @formatter:on
 		return this.targetClass;
 	}
 
