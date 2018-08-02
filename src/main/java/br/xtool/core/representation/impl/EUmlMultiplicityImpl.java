@@ -9,15 +9,15 @@ import br.xtool.core.representation.EUmlMultiplicity;
 
 public class EUmlMultiplicityImpl implements EUmlMultiplicity {
 
-	private String multiplicity;
+	private String sourceQualifier;
 
 	private EUmlClass sourceClass;
 
 	private EUmlClass targetClass;
 
-	public EUmlMultiplicityImpl(EUmlClass sourceClass, EUmlClass targetClass, String multiplicity) {
+	public EUmlMultiplicityImpl(EUmlClass sourceClass, EUmlClass targetClass, String sourceQualifier) {
 		super();
-		this.multiplicity = multiplicity;
+		this.sourceQualifier = sourceQualifier;
 		this.sourceClass = sourceClass;
 		this.targetClass = targetClass;
 	}
@@ -27,12 +27,12 @@ public class EUmlMultiplicityImpl implements EUmlMultiplicity {
 		String invalidMultiplicity = "Multiplicidade '%s' inválida entre %s e %s. Os tipos válidos são: %s";
 		String blankMultiplicity = "É necessário definir a multiplicidade entre %s e %s";
 		String multiplicities = StringUtils.join(MultiplicityType.values(), ", ");
-		if (StringUtils.isBlank(this.multiplicity)) throw new IllegalArgumentException(String.format(blankMultiplicity, this.sourceClass.getName(), this.targetClass.getName()));
+		if (StringUtils.isBlank(this.sourceQualifier)) throw new IllegalArgumentException(String.format(blankMultiplicity, this.sourceClass.getName(), this.targetClass.getName()));
 		// @formatter:off
 		return Stream.of(MultiplicityType.values())
-				.filter(multiplicityType -> multiplicityType.getPattern().equals(this.multiplicity))
+				.filter(multiplicityType -> multiplicityType.getPattern().equals(this.sourceQualifier))
 				.findAny()
-				.orElseThrow(() -> new IllegalArgumentException(String.format(invalidMultiplicity, this.multiplicity, this.sourceClass.getName(), this.targetClass.getName(), multiplicities)));
+				.orElseThrow(() -> new IllegalArgumentException(String.format(invalidMultiplicity, this.sourceQualifier, this.sourceClass.getName(), this.targetClass.getName(), multiplicities)));
 		// @formatter:on
 	}
 

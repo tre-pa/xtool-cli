@@ -96,12 +96,7 @@ public class EUmlClassImpl implements EUmlClass {
 	 */
 	@Override
 	public Set<EUmlRelationship> getRelationships() {
-		return ImmutableSet.<EUmlRelationship>builder().addAll(iterateOverEntity1()).addAll(iterateOverEntity2()).build();
-//		// @formatter:off
-//		return links.stream()
-//				.map(pair -> new EUmlRelationshipImpl(this, findClass(pair.getRight()), pair.getLeft()))
-//				.collect(Collectors.toSet());
-//		// @formatter:on
+		return ImmutableSet.<EUmlRelationship>builder().addAll(iterateOverEntities1()).addAll(iterateOverEntities2()).build();
 	}
 
 	protected EUmlClass findClass(String className) {
@@ -109,16 +104,16 @@ public class EUmlClassImpl implements EUmlClass {
 		// @formatter:off
 		return this.classDiagram.getGroups(false).stream()
 			 .flatMap(groups -> groups.getLeafsDirect().stream())
-			 .filter(_leaf -> _leaf.getEntityType().equals(LeafType.CLASS))
-			 .filter(_leaf -> !_leaf.getDisplay().asStringWithHiddenNewLine().equals(this.getName()))
-			 .filter(_leaf -> _leaf.getDisplay().asStringWithHiddenNewLine().equals(className))
+			 .filter(leaf1 -> leaf1.getEntityType().equals(LeafType.CLASS))
+			 .filter(leaf1 -> !leaf1.getDisplay().asStringWithHiddenNewLine().equals(this.getName()))
+			 .filter(leaf1 -> leaf1.getDisplay().asStringWithHiddenNewLine().equals(className))
 			 .map(_leaf -> new EUmlClassImpl(this.classDiagram, _leaf))
 			 .findAny()
 			 .orElseThrow(() -> new IllegalArgumentException(String.format(error, className)));
 		 // @formatter:on
 	}
 
-	private Set<EUmlRelationship> iterateOverEntity1() {
+	private Set<EUmlRelationship> iterateOverEntities1() {
 		Predicate<Link> p1 = (link) -> link.getType().getDecor1().equals(LinkDecor.ARROW);
 		Predicate<Link> p2 = (link) -> link.getType().getDecor1().equals(LinkDecor.NONE) && link.getType().getDecor2().equals(LinkDecor.NONE);
 		Predicate<Link> p3 = (link) -> link.getType().getDecor2().equals(LinkDecor.COMPOSITION);
@@ -127,12 +122,20 @@ public class EUmlClassImpl implements EUmlClass {
 		return this.classDiagram.getEntityFactory().getLinks().stream()
 			.filter(link -> link.getEntity1().getDisplay().asStringWithHiddenNewLine().equals(this.getName()))
 			.filter(p1.or(p2).or(p3).or(p4))
-			.map(link -> new EUmlRelationshipImpl(this, findClass(link.getEntity2().getDisplay().asStringWithHiddenNewLine()), link))
+			.map(link -> new EUmlRelationshipImpl(this, findClass(link.getEntity2().getDisplay().asStringWithHiddenNewLine()), link, getEntity2Qualifier(link), getEntity1Qualifier(link)))
 			.collect(Collectors.toSet());
 		// @formatter:on
 	}
 
-	private Set<EUmlRelationship> iterateOverEntity2() {
+	private String getEntity1Qualifier(Link link) {
+		return StringUtils.trim(link.getQualifier1());
+	}
+
+	private String getEntity2Qualifier(Link link) {
+		return StringUtils.trim(link.getQualifier2());
+	}
+
+	private Set<EUmlRelationship> iterateOverEntities2() {
 		Predicate<Link> p1 = (link) -> link.getType().getDecor2().equals(LinkDecor.ARROW);
 		Predicate<Link> p2 = (link) -> link.getType().getDecor1().equals(LinkDecor.NONE) && link.getType().getDecor2().equals(LinkDecor.NONE);
 		Predicate<Link> p3 = (link) -> link.getType().getDecor1().equals(LinkDecor.COMPOSITION);
@@ -142,7 +145,7 @@ public class EUmlClassImpl implements EUmlClass {
 			.filter(link -> link.getEntity2().getDisplay().asStringWithHiddenNewLine().equals(this.getName()))
 			.filter(p1.or(p2).or(p3).or(p4))
 //			.map(link -> Pair.of(link, link.getEntity1().getDisplay().asStringWithHiddenNewLine()))
-			.map(link -> new EUmlRelationshipImpl(this, findClass(link.getEntity1().getDisplay().asStringWithHiddenNewLine()), link))
+			.map(link -> new EUmlRelationshipImpl(this, findClass(link.getEntity1().getDisplay().asStringWithHiddenNewLine()), link, getEntity1Qualifier(link), getEntity2Qualifier(link)))
 			.collect(Collectors.toSet());
 		// @formatter:on
 	}

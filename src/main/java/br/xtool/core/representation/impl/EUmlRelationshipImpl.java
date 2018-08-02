@@ -1,7 +1,5 @@
 package br.xtool.core.representation.impl;
 
-import org.apache.commons.lang3.StringUtils;
-
 import br.xtool.core.representation.EUmlClass;
 import br.xtool.core.representation.EUmlMultiplicity;
 import br.xtool.core.representation.EUmlRelationship;
@@ -15,12 +13,18 @@ public class EUmlRelationshipImpl implements EUmlRelationship {
 
 	private EUmlClass sourceClass;
 
+	private String sourceQualifier;
+
 	private EUmlClass targetClass;
 
-	public EUmlRelationshipImpl(EUmlClass sourceClass, EUmlClass targetClass, Link link) {
+	private String targetQualifier;
+
+	public EUmlRelationshipImpl(EUmlClass sourceClass, EUmlClass targetClass, Link link, String sourceQualifer, String targetQualifier) {
 		super();
 		this.sourceClass = sourceClass;
+		this.sourceQualifier = sourceQualifer;
 		this.targetClass = targetClass;
+		this.targetQualifier = targetQualifier;
 		this.link = link;
 
 	}
@@ -69,7 +73,7 @@ public class EUmlRelationshipImpl implements EUmlRelationship {
 	 */
 	@Override
 	public EUmlMultiplicity getSourceMultiplicity() {
-		return new EUmlMultiplicityImpl(this.getSourceClass(), this.getTargetClass(), getSourceQualifier());
+		return new EUmlMultiplicityImpl(this.getSourceClass(), this.getTargetClass(), this.sourceQualifier);
 	}
 
 	/*
@@ -78,7 +82,7 @@ public class EUmlRelationshipImpl implements EUmlRelationship {
 	 */
 	@Override
 	public EUmlMultiplicity getTargetMultiplicity() {
-		return new EUmlMultiplicityImpl(this.getSourceClass(), this.getTargetClass(), getTargetQualifier());
+		return new EUmlMultiplicityImpl(this.getSourceClass(), this.getTargetClass(), this.targetQualifier);
 	}
 
 	/*
@@ -99,12 +103,12 @@ public class EUmlRelationshipImpl implements EUmlRelationship {
 		return this.link.getType().getDecor1().equals(LinkDecor.COMPOSITION) ^ this.link.getType().getDecor2().equals(LinkDecor.COMPOSITION);
 	}
 
-	private String getSourceQualifier() {
-		return StringUtils.trim(this.link.getQualifier1());
-	}
-
-	private String getTargetQualifier() {
-		return StringUtils.trim(this.link.getQualifier2());
-	}
+	//	private String getSourceQualifier() {
+	//		return StringUtils.trim(this.link.getQualifier1());
+	//	}
+	//
+	//	private String getTargetQualifier() {
+	//		return StringUtils.trim(this.link.getQualifier2());
+	//	}
 
 }

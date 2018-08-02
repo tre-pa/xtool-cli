@@ -54,7 +54,8 @@ public class GenJpaEntityCommand extends SpringBootAware {
 				});
 				System.out.println("\nRELACIONAMENTOS");
 				umlClass.getRelationships().stream().forEach(rel -> {
-					System.out.print("Source: " + rel.getSourceClass().getName() + " Target: " + rel.getTargetClass().getName());
+					System.out.print("Source: " + rel.getSourceClass().getName() + " " + rel.getSourceMultiplicity().getMutiplicityType() + " Target: " + rel.getTargetClass().getName() + " "
+							+ rel.getTargetMultiplicity().getMutiplicityType());
 					System.out.println(" Association? " + rel.isAssociation() + " Composition: " + rel.isComposition());
 				});
 				System.out.println("\n===========================\n");
