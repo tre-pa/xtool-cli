@@ -162,7 +162,7 @@ public class EUmlClassImpl implements EUmlClass {
 			.findFirst()
 			.orElseGet(() -> RoasterUtil.createJavaClassSource(this.getPackage().getName(),this.getName()));
 		// @formatter:on
-		this.getFields().stream().forEach(umlField -> umlField.convertToFieldClassSource(javaClassSource, umlField));
+		this.getFields().stream().forEach(umlField -> umlField.convertToFieldSource(javaClassSource));
 		return javaClassSource;
 	}
 

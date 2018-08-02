@@ -135,7 +135,7 @@ public interface EUmlField {
 	 */
 	boolean hasProperty(FieldPropertyType propertyType);
 
-	FieldSource<JavaClassSource> convertToFieldClassSource(JavaClassSource javaClassSource, EUmlField umlField);
+	FieldSource<JavaClassSource> convertToFieldSource(JavaClassSource javaClassSource);
 
 	@AllArgsConstructor
 	@Getter

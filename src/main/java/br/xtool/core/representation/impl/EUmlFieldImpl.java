@@ -192,14 +192,14 @@ public class EUmlFieldImpl implements EUmlField {
 	}
 
 	@Override
-	public FieldSource<JavaClassSource> convertToFieldClassSource(JavaClassSource javaClassSource, EUmlField umlField) {
+	public FieldSource<JavaClassSource> convertToFieldSource(JavaClassSource javaClassSource) {
 		FieldSource<JavaClassSource> fieldSource = javaClassSource.addField();
-		RoasterUtil.addImport(javaClassSource, umlField.getType().getClassName());
+		RoasterUtil.addImport(javaClassSource, this.getType().getClassName());
 		// @formatter:off
 		return fieldSource
-			.setName(umlField.getName())
+			.setName(this.getName())
 			.setPrivate()
-			.setType(umlField.getType().getJavaName());
+			.setType(this.getType().getJavaName());
 		// @formatter:on
 	}
 
