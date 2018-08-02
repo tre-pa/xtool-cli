@@ -10,12 +10,15 @@ import java.util.stream.Stream;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
+import org.jboss.forge.roaster.model.source.FieldSource;
+import org.jboss.forge.roaster.model.source.JavaClassSource;
 
 import com.google.common.collect.Sets;
 
 import br.xtool.core.representation.EUmlField;
 import br.xtool.core.representation.EUmlFieldProperty;
 import br.xtool.core.representation.EUmlFieldProperty.FieldPropertyType;
+import br.xtool.core.util.RoasterUtil;
 import net.sourceforge.plantuml.cucadiagram.Member;
 import strman.Strman;
 
@@ -186,6 +189,18 @@ public class EUmlFieldImpl implements EUmlField {
 			return Sets.newHashSet(new EUmlFieldPropertyImpl(this, propertiesBlock[0]));
 		}
 		return new HashSet<>();
+	}
+
+	@Override
+	public FieldSource<JavaClassSource> convertToFieldClassSource(JavaClassSource javaClassSource, EUmlField umlField) {
+		FieldSource<JavaClassSource> fieldSource = javaClassSource.addField();
+		RoasterUtil.addImport(javaClassSource, umlField.getType().getClassName());
+		// @formatter:off
+		return fieldSource
+			.setName(umlField.getName())
+			.setPrivate()
+			.setType(umlField.getType().getJavaName());
+		// @formatter:on
 	}
 
 	private String memberName() {

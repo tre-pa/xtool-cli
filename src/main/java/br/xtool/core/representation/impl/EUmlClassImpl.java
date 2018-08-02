@@ -8,7 +8,6 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
-import org.jboss.forge.roaster.model.source.FieldSource;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 
 import com.google.common.collect.ImmutableSet;
@@ -161,22 +160,21 @@ public class EUmlClassImpl implements EUmlClass {
 			.filter(javaUnit -> javaUnit.getGoverningType().getName().equals(this.getName()))
 			.map(javaUnit -> javaUnit.<JavaClassSource>getGoverningType())
 			.findFirst()
-			.orElseGet(() -> RoasterUtil.createJavaClassSource(this.getName()));
+			.orElseGet(() -> RoasterUtil.createJavaClassSource(this.getPackage().getName(),this.getName()));
 		// @formatter:on
-		javaClassSource.setPackage(this.getPackage().getName());
-		this.getFields().stream().forEach(umlField -> this.createOrUpdateFieldSource(javaClassSource, umlField));
+		this.getFields().stream().forEach(umlField -> umlField.convertToFieldClassSource(javaClassSource, umlField));
 		return javaClassSource;
 	}
 
-	private void createOrUpdateFieldSource(JavaClassSource javaClassSource, EUmlField umlField) {
-		FieldSource<JavaClassSource> fieldSource = javaClassSource.addField();
-		RoasterUtil.addImport(javaClassSource, umlField.getType().getClassName());
-		// @formatter:off
-		fieldSource
-			.setName(umlField.getName())
-			.setPrivate()
-			.setType(umlField.getType().getJavaName());
-		// @formatter:on
-	}
+	//	private void createOrUpdateFieldSource(JavaClassSource javaClassSource, EUmlField umlField) {
+	//		FieldSource<JavaClassSource> fieldSource = javaClassSource.addField();
+	//		RoasterUtil.addImport(javaClassSource, umlField.getType().getClassName());
+//		// @formatter:off
+//		fieldSource
+//			.setName(umlField.getName())
+//			.setPrivate()
+//			.setType(umlField.getType().getJavaName());
+//		// @formatter:on
+	//	}
 
 }

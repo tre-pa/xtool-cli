@@ -33,6 +33,13 @@ public class RoasterUtil {
 		return javaClassSource;
 	}
 
+	public static JavaClassSource createJavaClassSource(String packageName, String name) {
+		JavaClassSource javaClassSource = Roaster.create(JavaClassSource.class);
+		javaClassSource.setPackage(packageName);
+		javaClassSource.setName(name);
+		return javaClassSource;
+	}
+
 	public static void addImport(JavaClassSource javaClassSource, String className) {
 		if (StringUtils.isNotBlank(className)) {
 			if (!javaClassSource.hasImport(className)) {
