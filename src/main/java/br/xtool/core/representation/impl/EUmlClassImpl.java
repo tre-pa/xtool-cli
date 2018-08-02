@@ -49,6 +49,15 @@ public class EUmlClassImpl implements EUmlClass {
 
 	/*
 	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EUmlClass#getQualifiedName()
+	 */
+	@Override
+	public String getQualifiedName() {
+		return this.getPackage().getName().concat(".").concat(getName());
+	}
+
+	/*
+	 * (non-Javadoc)
 	 * @see br.xtool.core.representation.EUmlClass#getPackage()
 	 */
 	@Override
@@ -163,6 +172,7 @@ public class EUmlClassImpl implements EUmlClass {
 			.orElseGet(() -> RoasterUtil.createJavaClassSource(this.getPackage().getName(),this.getName()));
 		// @formatter:on
 		this.getFields().stream().forEach(umlField -> umlField.convertToFieldSource(javaClassSource));
+		this.getRelationships().stream().forEach(relationship -> relationship.convertToFieldSource(javaClassSource));
 		return javaClassSource;
 	}
 

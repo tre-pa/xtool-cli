@@ -21,6 +21,13 @@ public interface EUmlClass {
 	String getName();
 
 	/**
+	 * Retorna o nome qualificado.
+	 * 
+	 * @return
+	 */
+	String getQualifiedName();;
+
+	/**
 	 * Retorna o pacote UML da classe.
 	 * 
 	 * @return

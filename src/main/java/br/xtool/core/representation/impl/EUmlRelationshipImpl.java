@@ -1,8 +1,17 @@
 package br.xtool.core.representation.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Stream;
+
+import org.apache.commons.lang3.StringUtils;
+import org.jboss.forge.roaster.model.source.FieldSource;
+import org.jboss.forge.roaster.model.source.JavaClassSource;
+
 import br.xtool.core.representation.EUmlClass;
 import br.xtool.core.representation.EUmlMultiplicity;
 import br.xtool.core.representation.EUmlRelationship;
+import br.xtool.core.util.Inflector;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkArrow;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
@@ -103,12 +112,28 @@ public class EUmlRelationshipImpl implements EUmlRelationship {
 		return this.link.getType().getDecor1().equals(LinkDecor.COMPOSITION) ^ this.link.getType().getDecor2().equals(LinkDecor.COMPOSITION);
 	}
 
-	//	private String getSourceQualifier() {
-	//		return StringUtils.trim(this.link.getQualifier1());
-	//	}
-	//
-	//	private String getTargetQualifier() {
-	//		return StringUtils.trim(this.link.getQualifier2());
-	//	}
+	@Override
+	public FieldSource<JavaClassSource> convertToFieldSource(JavaClassSource javaClassSource) {
+		FieldSource<JavaClassSource> fieldSource = javaClassSource.addField();
+		if (Stream.of(EUmlMultiplicity.MultiplicityType.ZERO_TO_MANY, EUmlMultiplicity.MultiplicityType.ONE_TO_MANY, EUmlMultiplicity.MultiplicityType.MANY)
+				.anyMatch(multiplicity -> this.getSourceMultiplicity().getMutiplicityType() == multiplicity)) {
+			// @formatter:off
+			javaClassSource.addImport(List.class);
+			javaClassSource.addImport(ArrayList.class);
+			return fieldSource
+					.setPrivate()
+					.setName(Inflector.getInstance().pluralize(StringUtils.uncapitalize(this.getTargetClass().getName())))
+					.setType(String.format("List<%s>", this.getTargetClass().getName()))
+					.setLiteralInitializer("new ArrayList<>()");
+			// @formatter:on
+		}
+		javaClassSource.addImport(this.getTargetClass().getQualifiedName());
+		// @formatter:off
+		return fieldSource
+				.setPrivate()
+				.setName(StringUtils.uncapitalize(this.getTargetClass().getName()))
+				.setType(this.getTargetClass().getName());
+		// @formatter:on
+	}
 
 }
