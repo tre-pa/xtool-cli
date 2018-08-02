@@ -20,7 +20,6 @@ import br.xtool.core.representation.EUmlPackage;
 import br.xtool.core.representation.EUmlRelationship;
 import br.xtool.core.representation.EUmlStereotype;
 import br.xtool.core.util.RoasterUtil;
-import br.xtool.core.visitor.Visitor;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
@@ -178,11 +177,6 @@ public class EUmlClassImpl implements EUmlClass {
 			.setPrivate()
 			.setType(umlField.getType().getJavaName());
 		// @formatter:on
-	}
-
-	@Override
-	public void accept(Visitor visitor) {
-		visitor.visitClass(this);
 	}
 
 }

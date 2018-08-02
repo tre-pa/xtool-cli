@@ -5,15 +5,13 @@ import java.util.Set;
 
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 
-import br.xtool.core.visitor.Visitable;
-
 /**
  * Representação de uma classe no diagrama de classe UML.
  * 
  * @author jcruz
  *
  */
-public interface EUmlClass extends Visitable {
+public interface EUmlClass {
 
 	/**
 	 * Retorna o nome da classe UML.
