@@ -5,6 +5,7 @@ import br.xtool.core.representation.EUmlField;
 import br.xtool.core.representation.EUmlFieldProperty;
 import br.xtool.core.representation.EUmlRelationship;
 
+@Deprecated
 public interface Visitor {
 
 	/**

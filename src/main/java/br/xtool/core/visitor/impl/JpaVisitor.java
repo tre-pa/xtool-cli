@@ -23,6 +23,7 @@ import br.xtool.core.representation.EUmlFieldProperty;
 import br.xtool.core.representation.EUmlRelationship;
 import br.xtool.core.visitor.Visitor;
 
+@Deprecated
 public class JpaVisitor implements Visitor {
 
 	private JavaClassSource javaClassSource;
