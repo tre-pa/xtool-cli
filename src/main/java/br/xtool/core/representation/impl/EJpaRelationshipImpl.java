@@ -74,7 +74,7 @@ public class EJpaRelationshipImpl implements EJpaRelationship {
 	 */
 	@Override
 	public boolean isOneToOne() {
-		return this.attributeSource.getRoasterFieldSource().hasAnnotation(OneToOne.class);
+		return this.attributeSource.getRoasterField().hasAnnotation(OneToOne.class);
 	}
 
 	/**
@@ -84,7 +84,7 @@ public class EJpaRelationshipImpl implements EJpaRelationship {
 	 */
 	@Override
 	public boolean isOneToMany() {
-		return this.attributeSource.getRoasterFieldSource().hasAnnotation(OneToMany.class);
+		return this.attributeSource.getRoasterField().hasAnnotation(OneToMany.class);
 	}
 
 	/**
@@ -94,7 +94,7 @@ public class EJpaRelationshipImpl implements EJpaRelationship {
 	 */
 	@Override
 	public boolean isManyToOne() {
-		return this.attributeSource.getRoasterFieldSource().hasAnnotation(ManyToOne.class);
+		return this.attributeSource.getRoasterField().hasAnnotation(ManyToOne.class);
 	}
 
 	/**
@@ -104,7 +104,7 @@ public class EJpaRelationshipImpl implements EJpaRelationship {
 	 */
 	@Override
 	public boolean isManyToMany() {
-		return this.attributeSource.getRoasterFieldSource().hasAnnotation(ManyToMany.class);
+		return this.attributeSource.getRoasterField().hasAnnotation(ManyToMany.class);
 	}
 
 	/*

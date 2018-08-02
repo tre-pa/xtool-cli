@@ -89,6 +89,16 @@ public class EJavaClassImpl implements EJavaClass {
 	}
 
 	@Override
+	public EJavaField getField(String name) {
+		// @formatter:off
+		return this.getFields().stream()
+				.filter(javaField -> javaField.getName().equals(name))
+				.findAny()
+				.orElseGet(() -> new EJavaFieldImpl(this.javaClassSource.addField()));
+		// @formatter:on
+	}
+
+	@Override
 	public SortedSet<EJavaAnnotation> getAnnotations() {
 		// @formatter:off
 		return this.javaClassSource.getAnnotations()

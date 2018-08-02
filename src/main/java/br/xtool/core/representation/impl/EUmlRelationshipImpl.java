@@ -5,9 +5,9 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import org.apache.commons.lang3.StringUtils;
-import org.jboss.forge.roaster.model.source.FieldSource;
-import org.jboss.forge.roaster.model.source.JavaClassSource;
 
+import br.xtool.core.representation.EJavaClass;
+import br.xtool.core.representation.EJavaField;
 import br.xtool.core.representation.EUmlClass;
 import br.xtool.core.representation.EUmlMultiplicity;
 import br.xtool.core.representation.EUmlRelationship;
@@ -113,27 +113,30 @@ public class EUmlRelationshipImpl implements EUmlRelationship {
 	}
 
 	@Override
-	public FieldSource<JavaClassSource> convertToFieldSource(JavaClassSource javaClassSource) {
-		FieldSource<JavaClassSource> fieldSource = javaClassSource.addField();
+	public EJavaField convertToFieldSource(EJavaClass javaClass) {
+		String fieldName = Inflector.getInstance().pluralize(StringUtils.uncapitalize(this.getTargetClass().getName()));
+		EJavaField javaField = javaClass.getField(fieldName);
 		if (Stream.of(EUmlMultiplicity.MultiplicityType.ZERO_TO_MANY, EUmlMultiplicity.MultiplicityType.ONE_TO_MANY, EUmlMultiplicity.MultiplicityType.MANY)
 				.anyMatch(multiplicity -> this.getSourceMultiplicity().getMutiplicityType() == multiplicity)) {
 			// @formatter:off
-			javaClassSource.addImport(List.class);
-			javaClassSource.addImport(ArrayList.class);
-			return fieldSource
+			javaField.getRoasterField().getOrigin().addImport(List.class);
+			javaField.getRoasterField().getOrigin().addImport(ArrayList.class);
+			javaField.getRoasterField()
 					.setPrivate()
-					.setName(Inflector.getInstance().pluralize(StringUtils.uncapitalize(this.getTargetClass().getName())))
+					.setName(fieldName)
 					.setType(String.format("List<%s>", this.getTargetClass().getName()))
 					.setLiteralInitializer("new ArrayList<>()");
+			return javaField;
 			// @formatter:on
 		}
-		javaClassSource.addImport(this.getTargetClass().getQualifiedName());
+		javaField.getRoasterField().getOrigin().addImport(this.getTargetClass().getQualifiedName());
 		// @formatter:off
-		return fieldSource
+		javaField.getRoasterField()
 				.setPrivate()
 				.setName(StringUtils.uncapitalize(this.getTargetClass().getName()))
 				.setType(this.getTargetClass().getName());
 		// @formatter:on
+		return javaField;
 	}
 
 }

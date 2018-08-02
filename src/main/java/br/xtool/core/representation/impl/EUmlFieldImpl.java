@@ -10,11 +10,11 @@ import java.util.stream.Stream;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
-import org.jboss.forge.roaster.model.source.FieldSource;
-import org.jboss.forge.roaster.model.source.JavaClassSource;
 
 import com.google.common.collect.Sets;
 
+import br.xtool.core.representation.EJavaClass;
+import br.xtool.core.representation.EJavaField;
 import br.xtool.core.representation.EUmlField;
 import br.xtool.core.representation.EUmlFieldProperty;
 import br.xtool.core.representation.EUmlFieldProperty.FieldPropertyType;
@@ -192,15 +192,16 @@ public class EUmlFieldImpl implements EUmlField {
 	}
 
 	@Override
-	public FieldSource<JavaClassSource> convertToFieldSource(JavaClassSource javaClassSource) {
-		FieldSource<JavaClassSource> fieldSource = javaClassSource.addField();
-		RoasterUtil.addImport(javaClassSource, this.getType().getClassName());
+	public EJavaField convertToFieldSource(EJavaClass javaClass) {
+		EJavaField javaField = javaClass.getField(getName());
+		RoasterUtil.addImport(javaField.getRoasterField().getOrigin(), this.getType().getClassName());
 		// @formatter:off
-		return fieldSource
+		javaField.getRoasterField()
 			.setName(this.getName())
 			.setPrivate()
 			.setType(this.getType().getJavaName());
 		// @formatter:on
+		return javaField;
 	}
 
 	private String memberName() {

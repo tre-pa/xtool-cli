@@ -3,9 +3,6 @@ package br.xtool.core.representation;
 import java.util.Optional;
 import java.util.Set;
 
-import org.jboss.forge.roaster.model.source.FieldSource;
-import org.jboss.forge.roaster.model.source.JavaClassSource;
-
 import br.xtool.core.representation.EUmlFieldProperty.FieldPropertyType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -135,7 +132,7 @@ public interface EUmlField {
 	 */
 	boolean hasProperty(FieldPropertyType propertyType);
 
-	FieldSource<JavaClassSource> convertToFieldSource(JavaClassSource javaClassSource);
+	EJavaField convertToFieldSource(EJavaClass javaClass);
 
 	@AllArgsConstructor
 	@Getter

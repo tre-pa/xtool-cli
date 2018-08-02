@@ -1,8 +1,5 @@
 package br.xtool.core.representation;
 
-import org.jboss.forge.roaster.model.source.FieldSource;
-import org.jboss.forge.roaster.model.source.JavaClassSource;
-
 import br.xtool.core.representation.impl.EUmlNavigability;
 
 /**
@@ -75,6 +72,6 @@ public interface EUmlRelationship {
 	 * @param javaClassSource
 	 * @return
 	 */
-	FieldSource<JavaClassSource> convertToFieldSource(JavaClassSource javaClassSource);
+	EJavaField convertToFieldSource(EJavaClass javaClass);
 
 }

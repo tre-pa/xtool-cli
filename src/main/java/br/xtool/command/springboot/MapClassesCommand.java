@@ -16,11 +16,11 @@ import org.springframework.shell.standard.ShellOption;
 import br.xtool.XtoolCliApplication;
 import br.xtool.core.aware.SpringBootAware;
 import br.xtool.core.representation.EBootProject;
+import br.xtool.core.representation.EJavaClass;
 import br.xtool.core.representation.EUmlClass;
 import br.xtool.core.representation.EUmlClassDiagram;
 import br.xtool.core.representation.EUmlField;
 import br.xtool.core.representation.EUmlFieldProperty;
-import br.xtool.core.representation.impl.EJavaClassImpl;
 import br.xtool.core.service.BootService;
 import br.xtool.core.service.WorkspaceService;
 import br.xtool.core.visitor.impl.JpaVisitor;
@@ -44,15 +44,15 @@ public class MapClassesCommand extends SpringBootAware {
 		EBootProject bootProject = this.workspaceService.getWorkingProject(EBootProject.class);
 		EUmlClassDiagram umlClassDiagram = getDomainClassDiagram(bootProject);
 
-		Collection<JavaClassSource> javaClassSources = new ArrayList<>();
+		Collection<EJavaClass> javaClasses = new ArrayList<>();
 
 		for (EUmlClass umlClass : umlClassDiagram.getClasses()) {
-			JavaClassSource javaClassSource = umlClass.convertToJavaClassSource(bootProject);
-			if (!noJpa) this.jpaVisitor(umlClassDiagram, umlClass, javaClassSource);
-			javaClassSources.add(javaClassSource);
+			EJavaClass javaClass = umlClass.convertToJavaClass(bootProject);
+			//if (!noJpa) this.jpaVisitor(umlClassDiagram, umlClass, javaClassSource);
+			javaClasses.add(javaClass);
 		}
 
-		saveJavaClasses(bootProject, javaClassSources);
+		saveJavaClasses(bootProject, javaClasses);
 	}
 
 	private EUmlClassDiagram getDomainClassDiagram(EBootProject bootProject) {
@@ -81,12 +81,8 @@ public class MapClassesCommand extends SpringBootAware {
 		}
 	}
 
-	private void saveJavaClasses(EBootProject bootProject, Collection<JavaClassSource> javaClassSources) {
-		// @formatter:off
-		javaClassSources.stream()
-			.map(javaClassSource -> new EJavaClassImpl(bootProject, javaClassSource))
-			.forEach(javaClass -> this.bootService.save(bootProject.getMainSourceFolder(), javaClass));
-		// @formatter:on
-		print(bold(cyan(String.valueOf(javaClassSources.size()))), " classes mapeadas.");
+	private void saveJavaClasses(EBootProject bootProject, Collection<EJavaClass> javaClasses) {
+		javaClasses.stream().forEach(javaClass -> this.bootService.save(bootProject.getMainSourceFolder(), javaClass));
+		print(bold(cyan(String.valueOf(javaClasses.size()))), " classes mapeadas.");
 	}
 }

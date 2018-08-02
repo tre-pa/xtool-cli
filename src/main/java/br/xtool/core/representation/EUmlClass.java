@@ -3,8 +3,6 @@ package br.xtool.core.representation;
 import java.util.Collection;
 import java.util.Set;
 
-import org.jboss.forge.roaster.model.source.JavaClassSource;
-
 /**
  * Representação de uma classe no diagrama de classe UML.
  * 
@@ -60,5 +58,5 @@ public interface EUmlClass {
 	 * @param bootProject
 	 * @return
 	 */
-	JavaClassSource convertToJavaClassSource(EBootProject bootProject);
+	EJavaClass convertToJavaClass(EBootProject bootProject);
 }

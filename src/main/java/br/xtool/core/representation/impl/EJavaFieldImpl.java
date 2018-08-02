@@ -117,7 +117,7 @@ public class EJavaFieldImpl implements EJavaField {
 	}
 
 	@Override
-	public FieldSource<JavaClassSource> getRoasterFieldSource() {
+	public FieldSource<JavaClassSource> getRoasterField() {
 		return this.fieldSource;
 	}
 

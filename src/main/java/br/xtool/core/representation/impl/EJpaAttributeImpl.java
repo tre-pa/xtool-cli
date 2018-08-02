@@ -38,7 +38,7 @@ public class EJpaAttributeImpl extends EJavaFieldImpl implements EJpaAttribute {
 	 */
 	@Override
 	public boolean isJpaTransient() {
-		return this.getRoasterFieldSource().hasAnnotation(Transient.class);
+		return this.getRoasterField().hasAnnotation(Transient.class);
 	}
 
 	/*
@@ -47,7 +47,7 @@ public class EJpaAttributeImpl extends EJavaFieldImpl implements EJpaAttribute {
 	 */
 	@Override
 	public boolean isLob() {
-		return this.getRoasterFieldSource().hasAnnotation(Lob.class);
+		return this.getRoasterField().hasAnnotation(Lob.class);
 	}
 
 	//	@Override

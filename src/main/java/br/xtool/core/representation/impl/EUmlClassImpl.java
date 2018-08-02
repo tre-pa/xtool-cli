@@ -13,6 +13,7 @@ import org.jboss.forge.roaster.model.source.JavaClassSource;
 import com.google.common.collect.ImmutableSet;
 
 import br.xtool.core.representation.EBootProject;
+import br.xtool.core.representation.EJavaClass;
 import br.xtool.core.representation.EUmlClass;
 import br.xtool.core.representation.EUmlField;
 import br.xtool.core.representation.EUmlPackage;
@@ -162,18 +163,19 @@ public class EUmlClassImpl implements EUmlClass {
 	 * @see br.xtool.core.representation.EUmlClass#convertToJavaClassSource(br.xtool.core.representation.EBootProject)
 	 */
 	@Override
-	public JavaClassSource convertToJavaClassSource(EBootProject bootProject) {
+	public EJavaClass convertToJavaClass(EBootProject bootProject) {
 		// @formatter:off
-		JavaClassSource javaClassSource = bootProject.getRoasterJavaUnits().stream()
+		EJavaClass javaClass = bootProject.getRoasterJavaUnits().stream()
 			.filter(javaUnit -> javaUnit.getGoverningType().isClass())
 			.filter(javaUnit -> javaUnit.getGoverningType().getName().equals(this.getName()))
 			.map(javaUnit -> javaUnit.<JavaClassSource>getGoverningType())
+			.map(javaClassSource -> new EJavaClassImpl(bootProject, javaClassSource))
 			.findFirst()
-			.orElseGet(() -> RoasterUtil.createJavaClassSource(this.getPackage().getName(),this.getName()));
+			.orElseGet(() -> new EJavaClassImpl(bootProject,RoasterUtil.createJavaClassSource(this.getPackage().getName(),this.getName())));
 		// @formatter:on
-		this.getFields().stream().forEach(umlField -> umlField.convertToFieldSource(javaClassSource));
-		this.getRelationships().stream().forEach(relationship -> relationship.convertToFieldSource(javaClassSource));
-		return javaClassSource;
+		this.getFields().stream().forEach(umlField -> umlField.convertToFieldSource(javaClass));
+		this.getRelationships().stream().forEach(relationship -> relationship.convertToFieldSource(javaClass));
+		return javaClass;
 	}
 
 	//	private void createOrUpdateFieldSource(JavaClassSource javaClassSource, EUmlField umlField) {

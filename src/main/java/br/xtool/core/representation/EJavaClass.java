@@ -55,6 +55,8 @@ public interface EJavaClass extends Comparable<EJavaClass> {
 	 */
 	SortedSet<EJavaField> getFields();
 
+	EJavaField getField(String name);
+
 	/**
 	 * Retorna as annotations da classe.
 	 * 

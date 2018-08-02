@@ -42,6 +42,6 @@ public interface EJavaField extends Comparable<EJavaField> {
 
 	int getLineNumber();
 
-	FieldSource<JavaClassSource> getRoasterFieldSource();
+	FieldSource<JavaClassSource> getRoasterField();
 
 }
