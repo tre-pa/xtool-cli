@@ -1,5 +1,6 @@
 package br.xtool.core.representation;
 
+import java.lang.annotation.Annotation;
 import java.util.SortedSet;
 
 import org.jboss.forge.roaster.model.Type;
@@ -22,7 +23,11 @@ public interface EJavaField extends Comparable<EJavaField> {
 
 	boolean isStatic();
 
+	EJavaClass getJavaClass();
+
 	SortedSet<EJavaAnnotation> getAnnotations();
+
+	EJavaAnnotation addAnnotation(Class<? extends Annotation> type);
 
 	boolean isFinal();
 

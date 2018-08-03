@@ -41,6 +41,11 @@ public class EJavaAnnotationImpl implements EJavaAnnotation {
 		return this.annotation.isSingleValue();
 	}
 
+	@Override
+	public AnnotationSource<JavaClassSource> getRoasterAnnotation() {
+		return this.annotation;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * @see br.xtool.core.representation.EJavaAnnotation#getAnnotationValue()

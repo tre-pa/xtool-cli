@@ -7,7 +7,6 @@ import static br.xtool.core.ConsoleLog.print;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
@@ -19,11 +18,9 @@ import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.EJavaClass;
 import br.xtool.core.representation.EUmlClass;
 import br.xtool.core.representation.EUmlClassDiagram;
-import br.xtool.core.representation.EUmlField;
-import br.xtool.core.representation.EUmlFieldProperty;
 import br.xtool.core.service.BootService;
 import br.xtool.core.service.WorkspaceService;
-import br.xtool.core.visitor.impl.JpaVisitor;
+import br.xtool.core.visitor.jpa.impl.JpaClassVisitor;
 
 @ShellComponent
 public class MapClassesCommand extends SpringBootAware {
@@ -33,6 +30,9 @@ public class MapClassesCommand extends SpringBootAware {
 
 	@Autowired
 	private BootService bootService;
+
+	@Autowired
+	private JpaClassVisitor jpaClassVisitor;
 
 	@ShellMethod(key = "map:classes", value = "Mapeia uma classe do diagrama de classe UML.", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
 	// @formatter:off
@@ -48,7 +48,7 @@ public class MapClassesCommand extends SpringBootAware {
 
 		for (EUmlClass umlClass : umlClassDiagram.getClasses()) {
 			EJavaClass javaClass = umlClass.convertToJavaClass(bootProject);
-			//if (!noJpa) this.jpaVisitor(umlClassDiagram, umlClass, javaClassSource);
+			if (!noJpa) this.jpaVisitor(umlClassDiagram, umlClass, javaClass);
 			javaClasses.add(javaClass);
 		}
 
@@ -60,25 +60,36 @@ public class MapClassesCommand extends SpringBootAware {
 		return bootProject.getDomainClassDiagram().orElseThrow(() -> new IllegalArgumentException(diagramNotFoundError));
 	}
 
-	private void jpaVisitor(EUmlClassDiagram classDiagram, EUmlClass umlClass, JavaClassSource javaClassSource) {
-		JpaVisitor jpaVisitor = new JpaVisitor(javaClassSource);
-		jpaVisitor.visitClass(umlClass);
-		for (EUmlField umlField : umlClass.getFields()) {
-			if (umlField.isId()) jpaVisitor.visitIdField(umlField);
-			if (umlField.isLong()) jpaVisitor.visitLongField(umlField);
-			if (umlField.isByteArray()) jpaVisitor.visitByteArrayField(umlField);
-			if (umlField.isBoolean()) jpaVisitor.visitBooleanField(umlField);
-			if (umlField.isInteger()) jpaVisitor.visitIntegerField(umlField);
-			if (umlField.isLocalDate()) jpaVisitor.visitLocalDateField(umlField);
-			if (umlField.isLocalDateTime()) jpaVisitor.visitLocalDateTimeField(umlField);
-			if (umlField.isBigDecimal()) jpaVisitor.visitBigDecimalField(umlField);
-			if (umlField.isString()) jpaVisitor.visitStringField(umlField);
-			for (EUmlFieldProperty umlFieldProperty : umlField.getProperties()) {
-				if (umlFieldProperty.isNotNull()) jpaVisitor.visitNotNullProperty(umlFieldProperty);
-				if (umlFieldProperty.isUnique()) jpaVisitor.visitUniqueProperty(umlFieldProperty);
-				if (umlFieldProperty.isTransient()) jpaVisitor.visitTransientProperty(umlFieldProperty);
-			}
-		}
+	private void jpaVisitor(EUmlClassDiagram classDiagram, EUmlClass umlClass, EJavaClass javaClass) {
+		this.jpaClassVisitor.accept(javaClass, umlClass);
+
+		//		for (EUmlField umlField : umlClass.getFields()) {
+		//			for (EJavaField javaField : javaClass.getFields()) {
+//				// @formatter:off
+//				this.jpaFieldVisitors.stream()
+//					.filter(visitor -> visitor.test(umlField))
+//					.forEach(visitor -> visitor.accept(javaField, umlField));
+//				// @formatter:on
+		//			}
+		//		}
+		//		JpaVisitor jpaVisitor = new JpaVisitor(javaClassSource);
+		//		jpaVisitor.visitClass(umlClass);
+		//		for (EUmlField umlField : umlClass.getFields()) {
+		//			if (umlField.isId()) jpaVisitor.visitIdField(umlField);
+		//			if (umlField.isLong()) jpaVisitor.visitLongField(umlField);
+		//			if (umlField.isByteArray()) jpaVisitor.visitByteArrayField(umlField);
+		//			if (umlField.isBoolean()) jpaVisitor.visitBooleanField(umlField);
+		//			if (umlField.isInteger()) jpaVisitor.visitIntegerField(umlField);
+		//			if (umlField.isLocalDate()) jpaVisitor.visitLocalDateField(umlField);
+		//			if (umlField.isLocalDateTime()) jpaVisitor.visitLocalDateTimeField(umlField);
+		//			if (umlField.isBigDecimal()) jpaVisitor.visitBigDecimalField(umlField);
+		//			if (umlField.isString()) jpaVisitor.visitStringField(umlField);
+		//			for (EUmlFieldProperty umlFieldProperty : umlField.getProperties()) {
+		//				if (umlFieldProperty.isNotNull()) jpaVisitor.visitNotNullProperty(umlFieldProperty);
+		//				if (umlFieldProperty.isUnique()) jpaVisitor.visitUniqueProperty(umlFieldProperty);
+		//				if (umlFieldProperty.isTransient()) jpaVisitor.visitTransientProperty(umlFieldProperty);
+		//			}
+		//		}
 	}
 
 	private void saveJavaClasses(EBootProject bootProject, Collection<EJavaClass> javaClasses) {

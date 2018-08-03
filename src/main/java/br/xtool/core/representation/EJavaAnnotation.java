@@ -26,6 +26,8 @@ public interface EJavaAnnotation extends Comparable<EJavaAnnotation> {
 
 	boolean isNormal();
 
+	AnnotationSource<JavaClassSource> getRoasterAnnotation();
+
 	AnnotationSource<JavaClassSource> getAnnotationValue();
 
 	AnnotationSource<JavaClassSource> getAnnotationValue(String name);

@@ -1,5 +1,6 @@
 package br.xtool.core.representation;
 
+import java.lang.annotation.Annotation;
 import java.nio.file.Path;
 import java.util.SortedSet;
 
@@ -55,7 +56,13 @@ public interface EJavaClass extends Comparable<EJavaClass> {
 	 */
 	SortedSet<EJavaField> getFields();
 
-	EJavaField getField(String name);
+	/**
+	 * Retorna um atributo da classe. Caso não encontre cria um novo atributo.
+	 * 
+	 * @param name
+	 * @return
+	 */
+	EJavaField addField(String name);
 
 	/**
 	 * Retorna as annotations da classe.
@@ -63,6 +70,8 @@ public interface EJavaClass extends Comparable<EJavaClass> {
 	 * @return
 	 */
 	SortedSet<EJavaAnnotation> getAnnotations();
+
+	EJavaAnnotation addAnnotation(Class<? extends Annotation> type);
 
 	/**
 	 * Retorna os métodos da classe.
@@ -78,5 +87,4 @@ public interface EJavaClass extends Comparable<EJavaClass> {
 	 */
 	JavaClassSource getRoasterJavaClass();
 
-	//	void save();
 }

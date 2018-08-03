@@ -1,8 +1,14 @@
 package br.xtool.core.visitor.jpa.impl;
 
-import org.jboss.forge.roaster.model.source.JavaClassSource;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.stereotype.Component;
 
+import br.xtool.core.representation.EJavaClass;
+import br.xtool.core.representation.EJpaEntity;
 import br.xtool.core.representation.EUmlClass;
 import br.xtool.core.visitor.ClassVisitor;
 
@@ -10,13 +16,11 @@ import br.xtool.core.visitor.ClassVisitor;
 public class JpaClassVisitor implements ClassVisitor {
 
 	@Override
-	public boolean test(EUmlClass umlClass) {
-		return false;
-	}
-
-	@Override
-	public void accept(JavaClassSource roasterClass, EUmlClass umlClass) {
-
+	public void accept(EJavaClass javaClass, EUmlClass umlClass) {
+		javaClass.addAnnotation(Entity.class);
+		javaClass.addAnnotation(DynamicUpdate.class);
+		javaClass.addAnnotation(DynamicInsert.class);
+		javaClass.addAnnotation(Table.class).setStringValue("name", EJpaEntity.genDBTableName(umlClass.getName()));
 	}
 
 }

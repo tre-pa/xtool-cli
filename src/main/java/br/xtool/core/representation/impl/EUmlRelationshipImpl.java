@@ -115,7 +115,7 @@ public class EUmlRelationshipImpl implements EUmlRelationship {
 	@Override
 	public EJavaField convertToFieldSource(EJavaClass javaClass) {
 		String fieldName = Inflector.getInstance().pluralize(StringUtils.uncapitalize(this.getTargetClass().getName()));
-		EJavaField javaField = javaClass.getField(fieldName);
+		EJavaField javaField = javaClass.addField(fieldName);
 		if (Stream.of(EUmlMultiplicity.MultiplicityType.ZERO_TO_MANY, EUmlMultiplicity.MultiplicityType.ONE_TO_MANY, EUmlMultiplicity.MultiplicityType.MANY)
 				.anyMatch(multiplicity -> this.getSourceMultiplicity().getMutiplicityType() == multiplicity)) {
 			// @formatter:off

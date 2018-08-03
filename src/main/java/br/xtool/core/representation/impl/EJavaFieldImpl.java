@@ -1,5 +1,6 @@
 package br.xtool.core.representation.impl;
 
+import java.lang.annotation.Annotation;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -10,14 +11,18 @@ import org.jboss.forge.roaster.model.source.FieldSource;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 
 import br.xtool.core.representation.EJavaAnnotation;
+import br.xtool.core.representation.EJavaClass;
 import br.xtool.core.representation.EJavaField;
 
 public class EJavaFieldImpl implements EJavaField {
 
+	private EJavaClass javaClass;
+
 	protected FieldSource<JavaClassSource> fieldSource;
 
-	public EJavaFieldImpl(FieldSource<JavaClassSource> fieldSource) {
+	public EJavaFieldImpl(EJavaClass javaClass, FieldSource<JavaClassSource> fieldSource) {
 		super();
+		this.javaClass = javaClass;
 		this.fieldSource = fieldSource;
 	}
 
@@ -29,6 +34,11 @@ public class EJavaFieldImpl implements EJavaField {
 	@Override
 	public String getName() {
 		return this.fieldSource.getName();
+	}
+
+	@Override
+	public EJavaClass getJavaClass() {
+		return this.javaClass;
 	}
 
 	/**
@@ -68,6 +78,16 @@ public class EJavaFieldImpl implements EJavaField {
 				.stream()
 				.map(EJavaAnnotationImpl::new)
 				.collect(Collectors.toCollection(TreeSet::new));
+		// @formatter:on
+	}
+
+	@Override
+	public EJavaAnnotation addAnnotation(Class<? extends Annotation> type) {
+		// @formatter:off
+		return this.getAnnotations().stream()
+				.filter(javaAnn -> javaAnn.getName().equals(type.getSimpleName()))
+				.findAny()
+				.orElseGet(() -> new EJavaAnnotationImpl(this.fieldSource.addAnnotation(type)));
 		// @formatter:on
 	}
 

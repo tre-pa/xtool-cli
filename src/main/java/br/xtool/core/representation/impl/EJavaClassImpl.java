@@ -1,5 +1,6 @@
 package br.xtool.core.representation.impl;
 
+import java.lang.annotation.Annotation;
 import java.nio.file.Path;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -83,18 +84,18 @@ public class EJavaClassImpl implements EJavaClass {
 		// @formatter:off
 		return this.javaClassSource.getFields()
 				.stream()
-				.map(EJavaFieldImpl::new)
+				.map(fieldSource -> new EJavaFieldImpl(this, fieldSource))
 				.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
 	}
 
 	@Override
-	public EJavaField getField(String name) {
+	public EJavaField addField(String name) {
 		// @formatter:off
 		return this.getFields().stream()
 				.filter(javaField -> javaField.getName().equals(name))
 				.findAny()
-				.orElseGet(() -> new EJavaFieldImpl(this.javaClassSource.addField()));
+				.orElseGet(() -> new EJavaFieldImpl(this,this.javaClassSource.addField()));
 		// @formatter:on
 	}
 
@@ -105,6 +106,16 @@ public class EJavaClassImpl implements EJavaClass {
 				.stream()
 				.map(EJavaAnnotationImpl::new)
 				.collect(Collectors.toCollection(TreeSet::new));
+		// @formatter:on
+	}
+
+	@Override
+	public EJavaAnnotation addAnnotation(Class<? extends Annotation> type) {
+		// @formatter:off
+		return this.getAnnotations().stream()
+				.filter(javaAnn -> javaAnn.getName().equals(type.getSimpleName()))
+				.findAny()
+				.orElseGet(() -> new EJavaAnnotationImpl(this.javaClassSource.addAnnotation(type)));
 		// @formatter:on
 	}
 
@@ -122,18 +133,6 @@ public class EJavaClassImpl implements EJavaClass {
 	public JavaClassSource getRoasterJavaClass() {
 		return this.javaClassSource;
 	}
-
-	/**
-	 * Salva as alteração realizadas no model.
-	 */
-	//	@Override
-	//	public void save() {
-	//		try {
-	//			FileUtils.writeStringToFile(new File(this.getPath()), this.javaClassSource.toUnformattedString(), "UTF-8");
-	//		} catch (IOException e) {
-	//			e.printStackTrace();
-	//		}
-	//	}
 
 	@Override
 	public int compareTo(EJavaClass o) {

@@ -27,7 +27,7 @@ public class EJpaAttributeImpl extends EJavaFieldImpl implements EJpaAttribute {
 	private EJpaEntity entitySource;
 
 	public EJpaAttributeImpl(EBootProject springBootProject, EJpaEntity entitySource, FieldSource<JavaClassSource> fieldSource) {
-		super(fieldSource);
+		super(entitySource, fieldSource);
 		this.springBootProject = springBootProject;
 		this.entitySource = entitySource;
 	}
