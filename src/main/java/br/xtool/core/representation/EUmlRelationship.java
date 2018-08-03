@@ -72,6 +72,6 @@ public interface EUmlRelationship {
 	 * @param javaClassSource
 	 * @return
 	 */
-	EJavaField convertToFieldSource(EJavaClass javaClass);
+	EJavaField convertToJavaField(EJavaClass javaClass);
 
 }

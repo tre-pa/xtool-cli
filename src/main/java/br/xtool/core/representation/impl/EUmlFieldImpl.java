@@ -192,7 +192,7 @@ public class EUmlFieldImpl implements EUmlField {
 	}
 
 	@Override
-	public EJavaField convertToFieldSource(EJavaClass javaClass) {
+	public EJavaField convertToJavaField(EJavaClass javaClass) {
 		EJavaField javaField = javaClass.addField(getName());
 		RoasterUtil.addImport(javaField.getRoasterField().getOrigin(), this.getType().getClassName());
 		// @formatter:off

@@ -173,8 +173,8 @@ public class EUmlClassImpl implements EUmlClass {
 			.findFirst()
 			.orElseGet(() -> new EJavaClassImpl(bootProject,RoasterUtil.createJavaClassSource(this.getPackage().getName(),this.getName())));
 		// @formatter:on
-		this.getFields().stream().forEach(umlField -> umlField.convertToFieldSource(javaClass));
-		this.getRelationships().stream().forEach(relationship -> relationship.convertToFieldSource(javaClass));
+		this.getFields().stream().forEach(umlField -> umlField.convertToJavaField(javaClass));
+		this.getRelationships().stream().forEach(relationship -> relationship.convertToJavaField(javaClass));
 		return javaClass;
 	}
 

@@ -132,7 +132,7 @@ public interface EUmlField {
 	 */
 	boolean hasProperty(FieldPropertyType propertyType);
 
-	EJavaField convertToFieldSource(EJavaClass javaClass);
+	EJavaField convertToJavaField(EJavaClass javaClass);
 
 	@AllArgsConstructor
 	@Getter
