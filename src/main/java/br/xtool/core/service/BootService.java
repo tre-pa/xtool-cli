@@ -43,7 +43,7 @@ public interface BootService {
 	 * @param umlClass
 	 * @return
 	 */
-	void convertUmlClassDiagramToJavaClass(EBootProject bootProject);
+	void convertUmlClassDiagramToJavaClasses(EBootProject bootProject);
 
 	//EJavaClass convertUmlClassToJavaClass(EBootProject bootProject, EUmlClass umlClass);
 }

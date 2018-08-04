@@ -69,7 +69,7 @@ public class BootServiceImpl implements BootService {
 	}
 
 	@Override
-	public void convertUmlClassDiagramToJavaClass(EBootProject bootProject) {
+	public void convertUmlClassDiagramToJavaClasses(EBootProject bootProject) {
 		// @formatter:off
 		Collection<EJavaClass> javaClasses = bootProject.getDomainClassDiagram().getClasses().stream()
 				.map(umlClass -> convertUmlClassToJavaClass(bootProject, umlClass))

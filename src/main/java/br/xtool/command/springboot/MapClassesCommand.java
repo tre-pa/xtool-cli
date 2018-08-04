@@ -43,7 +43,7 @@ public class MapClassesCommand extends SpringBootAware {
 		EBootProject bootProject = this.workspaceService.getWorkingProject(EBootProject.class);
 		//EUmlClassDiagram umlClassDiagram = getDomainClassDiagram(bootProject);
 
-		this.bootService.convertUmlClassDiagramToJavaClass(bootProject);
+		this.bootService.convertUmlClassDiagramToJavaClasses(bootProject);
 		//		Collection<EJavaClass> javaClasses = new ArrayList<>();
 
 		//
