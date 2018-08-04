@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.apache.commons.lang3.StringUtils;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
@@ -26,7 +25,6 @@ import br.xtool.core.representation.EJavaField;
 import br.xtool.core.representation.EJavaSourceFolder;
 import br.xtool.core.representation.EUmlClass;
 import br.xtool.core.representation.EUmlField;
-import br.xtool.core.representation.EUmlMultiplicity;
 import br.xtool.core.representation.EUmlRelationship;
 import br.xtool.core.representation.impl.EJavaClassImpl;
 import br.xtool.core.service.BootService;
@@ -112,8 +110,7 @@ public class BootServiceImpl implements BootService {
 	private void convertUmlRelationshipToJavaField(EJavaClass javaClass, EUmlRelationship umlRelationship) {
 		String fieldName = Inflector.getInstance().pluralize(StringUtils.uncapitalize(umlRelationship.getTargetClass().getName()));
 		EJavaField javaField = javaClass.addField(fieldName);
-		if (Stream.of(EUmlMultiplicity.MultiplicityType.ZERO_TO_MANY, EUmlMultiplicity.MultiplicityType.ONE_TO_MANY, EUmlMultiplicity.MultiplicityType.MANY)
-				.anyMatch(multiplicity -> umlRelationship.getSourceMultiplicity().getMutiplicityType() == multiplicity)) {
+		if (umlRelationship.getSourceMultiplicity().isToMany()) {
 			// @formatter:off
 			javaField.getRoasterField().getOrigin().addImport(List.class);
 			javaField.getRoasterField().getOrigin().addImport(ArrayList.class);

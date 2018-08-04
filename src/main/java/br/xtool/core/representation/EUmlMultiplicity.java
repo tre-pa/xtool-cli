@@ -31,4 +31,18 @@ public interface EUmlMultiplicity {
 	 */
 	MultiplicityType getMutiplicityType();
 
+	/**
+	 * Retorna se a multiplicidade é: ZERO_TO_MANY, ONE_TO_MANY ou MANY
+	 * 
+	 * @return
+	 */
+	boolean isToMany();
+
+	/**
+	 * Retorna se a multiplicidade é: ZERO_TO_ONE ou ONE.
+	 * 
+	 * @return
+	 */
+	boolean isToOne();
+
 }

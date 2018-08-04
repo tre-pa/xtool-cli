@@ -22,6 +22,10 @@ public class EUmlMultiplicityImpl implements EUmlMultiplicity {
 		this.targetClass = targetClass;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EUmlMultiplicity#getMutiplicityType()
+	 */
 	@Override
 	public MultiplicityType getMutiplicityType() {
 		String invalidMultiplicity = "Multiplicidade '%s' inválida entre %s e %s. Os tipos válidos são: %s";
@@ -34,6 +38,24 @@ public class EUmlMultiplicityImpl implements EUmlMultiplicity {
 				.findAny()
 				.orElseThrow(() -> new IllegalArgumentException(String.format(invalidMultiplicity, this.sourceQualifier, this.sourceClass.getName(), this.targetClass.getName(), multiplicities)));
 		// @formatter:on
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EUmlMultiplicity#isToMany()
+	 */
+	@Override
+	public boolean isToMany() {
+		return Stream.of(MultiplicityType.ZERO_TO_MANY, MultiplicityType.ONE_TO_MANY, MultiplicityType.MANY).anyMatch(m -> m.equals(this.getMutiplicityType()));
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EUmlMultiplicity#isToOne()
+	 */
+	@Override
+	public boolean isToOne() {
+		return getMutiplicityType().equals(MultiplicityType.ZERO_TO_ONE) || getMutiplicityType().equals(MultiplicityType.ONE);
 	}
 
 }
