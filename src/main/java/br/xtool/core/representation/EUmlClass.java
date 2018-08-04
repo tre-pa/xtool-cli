@@ -52,11 +52,12 @@ public interface EUmlClass {
 	 */
 	Set<EUmlRelationship> getRelationships();
 
-	/**
-	 * Converte de UmlClass para JavaClassSource.
-	 * 
-	 * @param bootProject
-	 * @return
-	 */
-	EJavaClass convertToJavaClass(EBootProject bootProject);
+	//	/**
+	//	 * Converte de UmlClass para JavaClassSource.
+	//	 * 
+	//	 * @param bootProject
+	//	 * @return
+	//	 */
+	//	@Deprecated
+	//	EJavaClass convertToJavaClass(EBootProject bootProject);
 }

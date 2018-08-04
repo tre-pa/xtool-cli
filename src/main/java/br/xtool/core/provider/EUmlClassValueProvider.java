@@ -26,12 +26,10 @@ public class EUmlClassValueProvider extends ValueProviderSupport {
 		// @formatter:off
 		if(this.workspaceService.getWorkingProject() instanceof EBootProject) {
 			EBootProject project = EBootProject.class.cast(this.workspaceService.getWorkingProject());
-			if(project.getDomainClassDiagram().isPresent()) {
-				return project.getDomainClassDiagram().get().getClasses().stream()
+			return project.getDomainClassDiagram().getClasses().stream()
 					.map(EUmlClass::getName)
 					.map(CompletionProposal::new)
 					.collect(Collectors.toList());
-			}
 		}
 		return new ArrayList<>();
 		// @formatter:on

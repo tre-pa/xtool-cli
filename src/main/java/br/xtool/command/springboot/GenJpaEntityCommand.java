@@ -11,6 +11,7 @@ import org.springframework.shell.standard.ShellOption;
 import br.xtool.XtoolCliApplication;
 import br.xtool.core.aware.SpringBootAware;
 import br.xtool.core.representation.EBootProject;
+import br.xtool.core.representation.EUmlClassDiagram;
 import br.xtool.core.service.FileService;
 import br.xtool.core.service.WorkspaceService;
 
@@ -37,41 +38,40 @@ public class GenJpaEntityCommand extends SpringBootAware {
 
 		EBootProject bootProject = this.workspaceService.getWorkingProject(EBootProject.class);
 
-		bootProject.getDomainClassDiagram().ifPresent(classDiagram -> {
-			classDiagram.getClasses().forEach(umlClass -> {
-				System.out.println("Classe: " + umlClass.getName());
-				umlClass.getStereotypes().forEach(s -> System.out.println("Stereotype: " + s.getStereotypeType()));
-				umlClass.getFields().stream().forEach(umlField -> {
-					System.out.print("\tField: " + umlField.getName() + " : " + umlField.getType() + " ");
-					umlField.getProperties().forEach(p -> System.out.print(p.getFieldProperty()));
-					//					System.out.println("\tField: " + umlField.getName() + umlField.getProperties().str);
+		EUmlClassDiagram classDiagram = bootProject.getDomainClassDiagram();
+		classDiagram.getClasses().forEach(umlClass -> {
+			System.out.println("Classe: " + umlClass.getName());
+			umlClass.getStereotypes().forEach(s -> System.out.println("Stereotype: " + s.getStereotypeType()));
+			umlClass.getFields().stream().forEach(umlField -> {
+				System.out.print("\tField: " + umlField.getName() + " : " + umlField.getType() + " ");
+				umlField.getProperties().forEach(p -> System.out.print(p.getFieldProperty()));
+				//					System.out.println("\tField: " + umlField.getName() + umlField.getProperties().str);
+				System.out.println();
+				if (umlField.isArray()) {
+					umlField.getMinArrayLength().ifPresent(v -> System.out.print("\t\tMin: " + v));
+					umlField.getMaxArrayLength().ifPresent(v -> System.out.print("\t\tMan: " + v));
 					System.out.println();
-					if (umlField.isArray()) {
-						umlField.getMinArrayLength().ifPresent(v -> System.out.print("\t\tMin: " + v));
-						umlField.getMaxArrayLength().ifPresent(v -> System.out.print("\t\tMan: " + v));
-						System.out.println();
-					}
-				});
-				System.out.println("\nRELACIONAMENTOS");
-				umlClass.getRelationships().stream().forEach(rel -> {
-					System.out.print("Source: " + rel.getSourceClass().getName() + " " + rel.getSourceMultiplicity().getMutiplicityType() + " Target: " + rel.getTargetClass().getName() + " "
-							+ rel.getTargetMultiplicity().getMutiplicityType());
-					System.out.println(" Association? " + rel.isAssociation() + " Composition: " + rel.isComposition());
-				});
-				System.out.println("\n===========================\n");
+				}
 			});
-			//			classDiagram.getRelationships().forEach(umlRelationship -> {
-			//				System.out.println(String.format("Source: %s , Target: %s", umlRelationship.getSourceClass().getName(), umlRelationship.getTargetClass().getName()));
-			//				System.out.println("\tSource: " + umlRelationship.getSourceMultiplicity().getMutiplicityType());
-			//				System.out.println("\tTarget: " + umlRelationship.getTargetMultiplicity().getMutiplicityType());
-			//				//				umlRelationship.getSourceMultiplicity().ifPresent(m -> System.out.println("\tSource: " + m.getMutiplicityType()));
-			//				//				umlRelationship.getTargetMultiplicity().ifPresent(m -> System.out.println("\tTarget: " + m.getMutiplicityType()));
-			//				System.out.println("\tBidirectional: " + umlRelationship.getNavigability().isBidirectional());
-			//				System.out.println("\tUnidirectional: " + umlRelationship.getNavigability().isUnidirectional());
-			//			});
-			System.out.println("ENUMS");
-			classDiagram.getEnums().stream().flatMap(eUmlEnums -> eUmlEnums.getValues().stream()).forEach(System.out::println);
+			System.out.println("\nRELACIONAMENTOS");
+			umlClass.getRelationships().stream().forEach(rel -> {
+				System.out.print("Source: " + rel.getSourceClass().getName() + " " + rel.getSourceMultiplicity().getMutiplicityType() + " Target: " + rel.getTargetClass().getName() + " "
+						+ rel.getTargetMultiplicity().getMutiplicityType());
+				System.out.println(" Association? " + rel.isAssociation() + " Composition: " + rel.isComposition());
+			});
+			System.out.println("\n===========================\n");
 		});
+		//			classDiagram.getRelationships().forEach(umlRelationship -> {
+		//				System.out.println(String.format("Source: %s , Target: %s", umlRelationship.getSourceClass().getName(), umlRelationship.getTargetClass().getName()));
+		//				System.out.println("\tSource: " + umlRelationship.getSourceMultiplicity().getMutiplicityType());
+		//				System.out.println("\tTarget: " + umlRelationship.getTargetMultiplicity().getMutiplicityType());
+		//				//				umlRelationship.getSourceMultiplicity().ifPresent(m -> System.out.println("\tSource: " + m.getMutiplicityType()));
+		//				//				umlRelationship.getTargetMultiplicity().ifPresent(m -> System.out.println("\tTarget: " + m.getMutiplicityType()));
+		//				System.out.println("\tBidirectional: " + umlRelationship.getNavigability().isBidirectional());
+		//				System.out.println("\tUnidirectional: " + umlRelationship.getNavigability().isUnidirectional());
+		//			});
+		System.out.println("ENUMS");
+		classDiagram.getEnums().stream().flatMap(eUmlEnums -> eUmlEnums.getValues().stream()).forEach(System.out::println);
 
 		//this.getProject().get
 		//this.diagramReader.parse(FileUtils.readFileToString(new File("/home/jcruz/git/sb1-service/docs/diagrams/class.md"), "UTF-8"));

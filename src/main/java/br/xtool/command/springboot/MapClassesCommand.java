@@ -4,7 +4,6 @@ import static br.xtool.core.ConsoleLog.bold;
 import static br.xtool.core.ConsoleLog.cyan;
 import static br.xtool.core.ConsoleLog.print;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,23 +41,25 @@ public class MapClassesCommand extends SpringBootAware {
 			@ShellOption(help = "Desabilita o mapeamento Jackson da classe", defaultValue = "false", arity = 0) Boolean noJackson) {
 	// @formatter:on
 		EBootProject bootProject = this.workspaceService.getWorkingProject(EBootProject.class);
-		EUmlClassDiagram umlClassDiagram = getDomainClassDiagram(bootProject);
+		//EUmlClassDiagram umlClassDiagram = getDomainClassDiagram(bootProject);
 
-		Collection<EJavaClass> javaClasses = new ArrayList<>();
+		this.bootService.convertUmlClassDiagramToJavaClass(bootProject);
+		//		Collection<EJavaClass> javaClasses = new ArrayList<>();
 
-		for (EUmlClass umlClass : umlClassDiagram.getClasses()) {
-			EJavaClass javaClass = umlClass.convertToJavaClass(bootProject);
-			if (!noJpa) this.jpaVisitor(umlClassDiagram, umlClass, javaClass);
-			javaClasses.add(javaClass);
-		}
+		//
+		//		for (EUmlClass umlClass : umlClassDiagram.getClasses()) {
+		//			EJavaClass javaClass = umlClass.convertToJavaClass(bootProject);
+		//			if (!noJpa) this.jpaVisitor(umlClassDiagram, umlClass, javaClass);
+		//			javaClasses.add(javaClass);
+		//		}
 
-		saveJavaClasses(bootProject, javaClasses);
+		//		saveJavaClasses(bootProject, javaClasses);
 	}
 
-	private EUmlClassDiagram getDomainClassDiagram(EBootProject bootProject) {
-		String diagramNotFoundError = "O projeto não possui o diagram de classe em docs/diagrams/domain-class.md";
-		return bootProject.getDomainClassDiagram().orElseThrow(() -> new IllegalArgumentException(diagramNotFoundError));
-	}
+	//	private EUmlClassDiagram getDomainClassDiagram(EBootProject bootProject) {
+	//		String diagramNotFoundError = "O projeto não possui o diagram de classe em docs/diagrams/domain-class.md";
+	//		return bootProject.getDomainClassDiagram().orElseThrow(() -> new IllegalArgumentException(diagramNotFoundError));
+	//	}
 
 	private void jpaVisitor(EUmlClassDiagram classDiagram, EUmlClass umlClass, EJavaClass javaClass) {
 		this.jpaClassVisitor.accept(javaClass, umlClass);

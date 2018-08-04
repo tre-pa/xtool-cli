@@ -1,6 +1,5 @@
 package br.xtool.core.representation.impl;
 
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -23,9 +22,9 @@ import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.EBootRepository;
 import br.xtool.core.representation.EBootRest;
 import br.xtool.core.representation.EJavaClass;
-import br.xtool.core.representation.EJpaEntity;
 import br.xtool.core.representation.EJavaPackage;
 import br.xtool.core.representation.EJavaSourceFolder;
+import br.xtool.core.representation.EJpaEntity;
 import br.xtool.core.representation.ENgProject;
 import br.xtool.core.representation.EProject;
 import br.xtool.core.representation.EUmlClassDiagram;
@@ -225,14 +224,8 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 	 * @see br.xtool.core.representation.EBootProject#getDomainClassDiagram()
 	 */
 	@Override
-	public Optional<EUmlClassDiagram> getDomainClassDiagram() {
-		try {
-			EUmlClassDiagram classDiagram = EUmlClassDiagramImpl.of(this.getPath().resolve("docs/diagrams/domain-class.md"));
-			return Optional.of(classDiagram);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return Optional.empty();
+	public EUmlClassDiagram getDomainClassDiagram() {
+		return EUmlClassDiagramImpl.of(this.getPath().resolve("docs/diagrams/domain-class.md"));
 	}
 
 	/*

@@ -36,12 +36,14 @@ public interface BootService {
 	 */
 	void save(EJavaSourceFolder sourceFolder, EJavaClass javaClass);
 
-	//	/**
-	//	 * Busca uma classe pelo nome. Caso não encontra retorna um EJavaClass novo.
-	//	 * 
-	//	 * @param name
-	//	 * @return
-	//	 */
-	//	EJavaClass findJavaClassByName(EBootProject bootProject, String name);
+	/**
+	 * Converte o diagrama de classe UML para as classes correspondentes.
+	 * 
+	 * @param bootProject
+	 * @param umlClass
+	 * @return
+	 */
+	void convertUmlClassDiagramToJavaClass(EBootProject bootProject);
 
+	//EJavaClass convertUmlClassToJavaClass(EBootProject bootProject, EUmlClass umlClass);
 }

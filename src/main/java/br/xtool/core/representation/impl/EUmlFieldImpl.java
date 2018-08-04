@@ -13,12 +13,9 @@ import org.apache.commons.lang3.math.NumberUtils;
 
 import com.google.common.collect.Sets;
 
-import br.xtool.core.representation.EJavaClass;
-import br.xtool.core.representation.EJavaField;
 import br.xtool.core.representation.EUmlField;
 import br.xtool.core.representation.EUmlFieldProperty;
 import br.xtool.core.representation.EUmlFieldProperty.FieldPropertyType;
-import br.xtool.core.util.RoasterUtil;
 import net.sourceforge.plantuml.cucadiagram.Member;
 import strman.Strman;
 
@@ -191,18 +188,19 @@ public class EUmlFieldImpl implements EUmlField {
 		return new HashSet<>();
 	}
 
-	@Override
-	public EJavaField convertToJavaField(EJavaClass javaClass) {
-		EJavaField javaField = javaClass.addField(getName());
-		RoasterUtil.addImport(javaField.getRoasterField().getOrigin(), this.getType().getClassName());
-		// @formatter:off
-		javaField.getRoasterField()
-			.setName(this.getName())
-			.setPrivate()
-			.setType(this.getType().getJavaName());
-		// @formatter:on
-		return javaField;
-	}
+	//	@Override
+	//	@Deprecated
+	//	public EJavaField convertToJavaField(EJavaClass javaClass) {
+	//		EJavaField javaField = javaClass.addField(getName());
+	//		RoasterUtil.addImport(javaField.getRoasterField().getOrigin(), this.getType().getClassName());
+//		// @formatter:off
+//		javaField.getRoasterField()
+//			.setName(this.getName())
+//			.setPrivate()
+//			.setType(this.getType().getJavaName());
+//		// @formatter:on
+	//		return javaField;
+	//	}
 
 	private String memberName() {
 		return StringUtils.trim(StringUtils.split(this.member.getDisplay(false), ":")[0]);

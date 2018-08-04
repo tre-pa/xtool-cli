@@ -132,7 +132,8 @@ public interface EUmlField {
 	 */
 	boolean hasProperty(FieldPropertyType propertyType);
 
-	EJavaField convertToJavaField(EJavaClass javaClass);
+	//	@Deprecated
+	//	EJavaField convertToJavaField(EJavaClass javaClass);
 
 	@AllArgsConstructor
 	@Getter

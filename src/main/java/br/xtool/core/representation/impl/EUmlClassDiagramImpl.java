@@ -1,6 +1,5 @@
 package br.xtool.core.representation.impl;
 
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Set;
@@ -9,6 +8,7 @@ import java.util.stream.Collectors;
 import br.xtool.core.representation.EUmlClass;
 import br.xtool.core.representation.EUmlClassDiagram;
 import br.xtool.core.representation.EUmlEnum;
+import lombok.SneakyThrows;
 import net.sourceforge.plantuml.BlockUml;
 import net.sourceforge.plantuml.SourceStringReader;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
@@ -64,7 +64,9 @@ public class EUmlClassDiagramImpl implements EUmlClassDiagram {
 //		// @formatter:on
 	//	}
 
-	public static EUmlClassDiagram of(Path path) throws IOException {
+	@SneakyThrows
+	public static EUmlClassDiagram of(Path path) {
+		if (Files.notExists(path)) throw new IllegalArgumentException("Diagrama de classe não encontrado");
 		//		String diagram = FileUtils.readFileToString(new File(path), "UTF-8");
 		String diagram = new String(Files.readAllBytes(path));
 		SourceStringReader reader = new SourceStringReader(diagram.replace("```plantuml", "@startuml").replace("```", "@enduml"));
@@ -74,7 +76,7 @@ public class EUmlClassDiagramImpl implements EUmlClassDiagram {
 				.filter(ClassDiagram.class::isInstance)
 				.map(ClassDiagram.class::cast)
 				.findAny()
-				.orElseThrow(() -> new IllegalArgumentException("Diagrama de classe não encontrado ou com erros."));
+				.orElseThrow(() -> new IllegalArgumentException("Diagrama de classe com erros."));
 		// @formatter:on
 		return new EUmlClassDiagramImpl(classDiagram);
 	}

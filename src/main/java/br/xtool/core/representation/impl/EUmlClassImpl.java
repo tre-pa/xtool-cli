@@ -8,18 +8,14 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
-import org.jboss.forge.roaster.model.source.JavaClassSource;
 
 import com.google.common.collect.ImmutableSet;
 
-import br.xtool.core.representation.EBootProject;
-import br.xtool.core.representation.EJavaClass;
 import br.xtool.core.representation.EUmlClass;
 import br.xtool.core.representation.EUmlField;
 import br.xtool.core.representation.EUmlPackage;
 import br.xtool.core.representation.EUmlRelationship;
 import br.xtool.core.representation.EUmlStereotype;
-import br.xtool.core.util.RoasterUtil;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
@@ -158,25 +154,25 @@ public class EUmlClassImpl implements EUmlClass {
 		// @formatter:on
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see br.xtool.core.representation.EUmlClass#convertToJavaClassSource(br.xtool.core.representation.EBootProject)
-	 */
-	@Override
-	public EJavaClass convertToJavaClass(EBootProject bootProject) {
-		// @formatter:off
-		EJavaClass javaClass = bootProject.getRoasterJavaUnits().stream()
-			.filter(javaUnit -> javaUnit.getGoverningType().isClass())
-			.filter(javaUnit -> javaUnit.getGoverningType().getName().equals(this.getName()))
-			.map(javaUnit -> javaUnit.<JavaClassSource>getGoverningType())
-			.map(javaClassSource -> new EJavaClassImpl(bootProject, javaClassSource))
-			.findFirst()
-			.orElseGet(() -> new EJavaClassImpl(bootProject,RoasterUtil.createJavaClassSource(this.getPackage().getName(),this.getName())));
-		// @formatter:on
-		this.getFields().stream().forEach(umlField -> umlField.convertToJavaField(javaClass));
-		this.getRelationships().stream().forEach(relationship -> relationship.convertToJavaField(javaClass));
-		return javaClass;
-	}
+	//	/*
+	//	 * (non-Javadoc)
+	//	 * @see br.xtool.core.representation.EUmlClass#convertToJavaClassSource(br.xtool.core.representation.EBootProject)
+	//	 */
+	//	@Override
+	//	public EJavaClass convertToJavaClass(EBootProject bootProject) {
+//		// @formatter:off
+//		EJavaClass javaClass = bootProject.getRoasterJavaUnits().stream()
+//			.filter(javaUnit -> javaUnit.getGoverningType().isClass())
+//			.filter(javaUnit -> javaUnit.getGoverningType().getName().equals(this.getName()))
+//			.map(javaUnit -> javaUnit.<JavaClassSource>getGoverningType())
+//			.map(javaClassSource -> new EJavaClassImpl(bootProject, javaClassSource))
+//			.findFirst()
+//			.orElseGet(() -> new EJavaClassImpl(bootProject,RoasterUtil.createJavaClassSource(this.getPackage().getName(),this.getName())));
+//		// @formatter:on
+	//		this.getFields().stream().forEach(umlField -> umlField.convertToJavaField(javaClass));
+	//		this.getRelationships().stream().forEach(relationship -> relationship.convertToJavaField(javaClass));
+	//		return javaClass;
+	//	}
 
 	//	private void createOrUpdateFieldSource(JavaClassSource javaClassSource, EUmlField umlField) {
 	//		FieldSource<JavaClassSource> fieldSource = javaClassSource.addField();

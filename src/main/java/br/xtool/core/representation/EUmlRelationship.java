@@ -67,11 +67,11 @@ public interface EUmlRelationship {
 	 */
 	EUmlMultiplicity getTargetMultiplicity();
 
-	/**
-	 * 
-	 * @param javaClassSource
-	 * @return
-	 */
-	EJavaField convertToJavaField(EJavaClass javaClass);
+	//	/**
+	//	 * 
+	//	 * @param javaClassSource
+	//	 * @return
+	//	 */
+	//	EJavaField convertToJavaField(EJavaClass javaClass);
 
 }
