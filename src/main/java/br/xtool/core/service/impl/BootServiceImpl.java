@@ -10,6 +10,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
@@ -30,7 +31,7 @@ import br.xtool.core.representation.impl.EJavaClassImpl;
 import br.xtool.core.service.BootService;
 import br.xtool.core.util.Inflector;
 import br.xtool.core.util.RoasterUtil;
-import br.xtool.core.visitor.impl.JavaxValidationVisitor;
+import br.xtool.core.visitor.Visitor;
 import lombok.SneakyThrows;
 
 @Service
@@ -39,8 +40,8 @@ public class BootServiceImpl implements BootService {
 	@Autowired
 	private ApplicationContext applicationContext;
 
-	@Autowired
-	private JavaxValidationVisitor javaxValidationVisitor;
+	//	@Autowired
+	//	private JavaxValidationVisitor javaxValidationVisitor;
 
 	/*
 	 * (non-Javadoc)
@@ -77,10 +78,10 @@ public class BootServiceImpl implements BootService {
 	 * @see br.xtool.core.service.BootService#convertUmlClassDiagramToJavaClasses(br.xtool.core.representation.EBootProject)
 	 */
 	@Override
-	public void convertUmlClassDiagramToJavaClasses(EBootProject bootProject) {
+	public void convertUmlClassDiagramToJavaClasses(EBootProject bootProject, Set<Visitor> vistors) {
 		// @formatter:off
 		Collection<EJavaClass> javaClasses = bootProject.getDomainClassDiagram().getClasses().stream()
-				.map(umlClass -> convertUmlClassToJavaClass(bootProject, umlClass))
+				.map(umlClass -> convertUmlClassToJavaClass(bootProject, umlClass, vistors))
 				.collect(Collectors.toList());
 		// @formatter:on
 		javaClasses.stream().forEach(javaClass -> this.save(bootProject.getMainSourceFolder(), javaClass));
@@ -88,7 +89,7 @@ public class BootServiceImpl implements BootService {
 	}
 
 	// Converte uma classe UML para um objeto EJavaClass.
-	private EJavaClass convertUmlClassToJavaClass(EBootProject bootProject, EUmlClass umlClass) {
+	private EJavaClass convertUmlClassToJavaClass(EBootProject bootProject, EUmlClass umlClass, Set<? extends Visitor> vistors) {
 
 		// @formatter:off
 		EJavaClass javaClass = bootProject.getRoasterJavaUnits().stream()
@@ -99,13 +100,14 @@ public class BootServiceImpl implements BootService {
 			.findFirst()
 			.orElseGet(() -> new EJavaClassImpl(bootProject,RoasterUtil.createJavaClassSource(umlClass.getPackage().getName(),umlClass.getName())));
 		// @formatter:on
-		umlClass.getFields().stream().forEach(umlField -> convertUmlFieldToJavaField(javaClass, umlField));
-		umlClass.getRelationships().stream().forEach(umlRelationship -> convertUmlRelationshipToJavaField(javaClass, umlRelationship));
+
+		umlClass.getFields().stream().forEach(umlField -> convertUmlFieldToJavaField(javaClass, umlField, vistors));
+		umlClass.getRelationships().stream().forEach(umlRelationship -> convertUmlRelationshipToJavaField(javaClass, umlRelationship, vistors));
 		return javaClass;
 	}
 
 	// Converte um atributo da classe UML para um objeto EJavaField.
-	private void convertUmlFieldToJavaField(EJavaClass javaClass, EUmlField umlField) {
+	private void convertUmlFieldToJavaField(EJavaClass javaClass, EUmlField umlField, Set<? extends Visitor> vistors) {
 		EJavaField javaField = javaClass.addField(umlField.getName());
 		RoasterUtil.addImport(javaField.getRoasterField().getOrigin(), umlField.getType().getClassName());
 		// @formatter:off
@@ -114,11 +116,11 @@ public class BootServiceImpl implements BootService {
 			.setPrivate()
 			.setType(umlField.getType().getJavaName());
 		// @formatter:on
-		this.javaxValidationVisitor.visit(javaField, umlField);
+		vistors.forEach(visitor -> visitor.visit(javaField, umlField));
 	}
 
 	// Converte um relacionamento UML para um objeto EJavaField.
-	private void convertUmlRelationshipToJavaField(EJavaClass javaClass, EUmlRelationship umlRelationship) {
+	private void convertUmlRelationshipToJavaField(EJavaClass javaClass, EUmlRelationship umlRelationship, Set<? extends Visitor> vistors) {
 		String fieldName = Inflector.getInstance().pluralize(StringUtils.uncapitalize(umlRelationship.getTargetClass().getName()));
 		EJavaField javaField = javaClass.addField(fieldName);
 		if (umlRelationship.getSourceMultiplicity().isToMany()) {

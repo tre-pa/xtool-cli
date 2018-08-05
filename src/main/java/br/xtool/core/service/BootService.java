@@ -1,9 +1,12 @@
 package br.xtool.core.service;
 
+import java.util.Set;
+
 import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.EBootProject.BootSupport;
 import br.xtool.core.representation.EJavaClass;
 import br.xtool.core.representation.EJavaSourceFolder;
+import br.xtool.core.visitor.Visitor;
 
 /**
  * 
@@ -43,7 +46,7 @@ public interface BootService {
 	 * @param umlClass
 	 * @return
 	 */
-	void convertUmlClassDiagramToJavaClasses(EBootProject bootProject);
+	void convertUmlClassDiagramToJavaClasses(EBootProject bootProject, Set<Visitor> vistors);
 
 	//EJavaClass convertUmlClassToJavaClass(EBootProject bootProject, EUmlClass umlClass);
 }

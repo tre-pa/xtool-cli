@@ -5,8 +5,11 @@ import static br.xtool.core.ConsoleLog.cyan;
 import static br.xtool.core.ConsoleLog.print;
 
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
@@ -19,6 +22,8 @@ import br.xtool.core.representation.EUmlClass;
 import br.xtool.core.representation.EUmlClassDiagram;
 import br.xtool.core.service.BootService;
 import br.xtool.core.service.WorkspaceService;
+import br.xtool.core.visitor.Visitor;
+import br.xtool.core.visitor.impl.JavaxValidationVisitor;
 
 @ShellComponent
 public class MapClassesCommand extends SpringBootAware {
@@ -28,6 +33,9 @@ public class MapClassesCommand extends SpringBootAware {
 
 	@Autowired
 	private BootService bootService;
+
+	@Autowired
+	private ApplicationContext applicationContext;
 	//
 	//	@Autowired
 	//	private JpaClassVisitor jpaClassVisitor;
@@ -42,7 +50,10 @@ public class MapClassesCommand extends SpringBootAware {
 		EBootProject bootProject = this.workspaceService.getWorkingProject(EBootProject.class);
 		//EUmlClassDiagram umlClassDiagram = getDomainClassDiagram(bootProject);
 
-		this.bootService.convertUmlClassDiagramToJavaClasses(bootProject);
+		Set<Visitor> visitors = new HashSet<>();
+		visitors.add(this.applicationContext.getBean(JavaxValidationVisitor.class));
+
+		this.bootService.convertUmlClassDiagramToJavaClasses(bootProject, visitors);
 		//		Collection<EJavaClass> javaClasses = new ArrayList<>();
 
 		//
