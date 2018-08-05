@@ -30,11 +30,9 @@ public class JavaxValidationVisitor implements Visitor {
 	public void visit(EJavaField javaField, EUmlField umlField) {
 		switch (umlField.getType()) {
 		case STRING:
-			if (umlField.getMaxArrayLength().isPresent() || umlField.getMinArrayLength().isPresent()) {
-				val ann = javaField.addAnnotation(Size.class);
-				umlField.getMinArrayLength().ifPresent(min -> ann.setLiteralValue("min", String.valueOf(min)));
-				umlField.getMaxArrayLength().ifPresent(max -> ann.setLiteralValue("max", String.valueOf(max)));
-			}
+			val ann = javaField.addAnnotation(Size.class);
+			ann.setLiteralValue("max", String.valueOf(umlField.getMaxArrayLength().orElse(255)));
+			umlField.getMinArrayLength().ifPresent(min -> ann.setLiteralValue("min", String.valueOf(min)));
 			break;
 
 		default:
