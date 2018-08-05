@@ -19,7 +19,6 @@ import br.xtool.core.representation.EUmlClass;
 import br.xtool.core.representation.EUmlClassDiagram;
 import br.xtool.core.service.BootService;
 import br.xtool.core.service.WorkspaceService;
-import br.xtool.core.visitor.jpa.impl.JpaClassVisitor;
 
 @ShellComponent
 public class MapClassesCommand extends SpringBootAware {
@@ -29,9 +28,9 @@ public class MapClassesCommand extends SpringBootAware {
 
 	@Autowired
 	private BootService bootService;
-
-	@Autowired
-	private JpaClassVisitor jpaClassVisitor;
+	//
+	//	@Autowired
+	//	private JpaClassVisitor jpaClassVisitor;
 
 	@ShellMethod(key = "map:classes", value = "Mapeia uma classe do diagrama de classe UML.", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
 	// @formatter:off
@@ -62,7 +61,7 @@ public class MapClassesCommand extends SpringBootAware {
 	//	}
 
 	private void jpaVisitor(EUmlClassDiagram classDiagram, EUmlClass umlClass, EJavaClass javaClass) {
-		this.jpaClassVisitor.accept(javaClass, umlClass);
+		//		this.jpaClassVisitor.accept(javaClass, umlClass);
 
 		//		for (EUmlField umlField : umlClass.getFields()) {
 		//			for (EJavaField javaField : javaClass.getFields()) {

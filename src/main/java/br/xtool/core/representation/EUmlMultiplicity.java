@@ -45,4 +45,11 @@ public interface EUmlMultiplicity {
 	 */
 	boolean isToOne();
 
+	/**
+	 * Retorna se a multiplicidade é opcional (ZERO_TO_ONE, ZERO_TO_MANY ou MANY)
+	 * 
+	 * @return
+	 */
+	boolean isOptional();
+
 }

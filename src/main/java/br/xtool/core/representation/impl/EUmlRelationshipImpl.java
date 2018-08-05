@@ -52,10 +52,11 @@ public class EUmlRelationshipImpl implements EUmlRelationship {
 	 * @see br.xtool.core.representation.EUmlRelationship#isSourceClassOwner()
 	 */
 	@Override
-	@Deprecated
 	public boolean isSourceClassOwner() {
-		//link.getEntity1().getDisplay().asStringWithHiddenNewLine()
-		return this.link.getLinkArrow().equals(LinkArrow.DIRECT_NORMAL) || this.link.getLinkArrow().equals(LinkArrow.NONE);
+		if (this.sourceClass.getName().equals(this.link.getEntity1().getDisplay().asStringWithHiddenNewLine())) {
+			return this.link.getLinkArrow().equals(LinkArrow.DIRECT_NORMAL) || this.link.getLinkArrow().equals(LinkArrow.NONE);
+		}
+		return false;
 	}
 
 	/*
@@ -102,32 +103,4 @@ public class EUmlRelationshipImpl implements EUmlRelationship {
 	public boolean isComposition() {
 		return this.link.getType().getDecor1().equals(LinkDecor.COMPOSITION) ^ this.link.getType().getDecor2().equals(LinkDecor.COMPOSITION);
 	}
-	//
-	//	@Override
-	//	public EJavaField convertToJavaField(EJavaClass javaClass) {
-	//		String fieldName = Inflector.getInstance().pluralize(StringUtils.uncapitalize(this.getTargetClass().getName()));
-	//		EJavaField javaField = javaClass.addField(fieldName);
-	//		if (Stream.of(EUmlMultiplicity.MultiplicityType.ZERO_TO_MANY, EUmlMultiplicity.MultiplicityType.ONE_TO_MANY, EUmlMultiplicity.MultiplicityType.MANY)
-	//				.anyMatch(multiplicity -> this.getSourceMultiplicity().getMutiplicityType() == multiplicity)) {
-//			// @formatter:off
-//			javaField.getRoasterField().getOrigin().addImport(List.class);
-//			javaField.getRoasterField().getOrigin().addImport(ArrayList.class);
-//			javaField.getRoasterField()
-//					.setPrivate()
-//					.setName(fieldName)
-//					.setType(String.format("List<%s>", this.getTargetClass().getName()))
-//					.setLiteralInitializer("new ArrayList<>()");
-//			return javaField;
-//			// @formatter:on
-	//		}
-	//		javaField.getRoasterField().getOrigin().addImport(this.getTargetClass().getQualifiedName());
-//		// @formatter:off
-//		javaField.getRoasterField()
-//				.setPrivate()
-//				.setName(StringUtils.uncapitalize(this.getTargetClass().getName()))
-//				.setType(this.getTargetClass().getName());
-//		// @formatter:on
-	//		return javaField;
-	//	}
-
 }

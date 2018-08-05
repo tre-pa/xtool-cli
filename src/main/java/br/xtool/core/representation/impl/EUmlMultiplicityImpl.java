@@ -58,4 +58,13 @@ public class EUmlMultiplicityImpl implements EUmlMultiplicity {
 		return getMutiplicityType().equals(MultiplicityType.ZERO_TO_ONE) || getMutiplicityType().equals(MultiplicityType.ONE);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EUmlMultiplicity#isOptional()
+	 */
+	@Override
+	public boolean isOptional() {
+		return Stream.of(MultiplicityType.ZERO_TO_ONE, MultiplicityType.ZERO_TO_MANY, MultiplicityType.MANY).anyMatch(m -> m.equals(this.getMutiplicityType()));
+	}
+
 }

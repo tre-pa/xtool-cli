@@ -3,13 +3,15 @@ package br.xtool.core.representation;
 import java.util.Collection;
 import java.util.Set;
 
+import br.xtool.core.visitor.Visitable;
+
 /**
  * Representação de uma classe no diagrama de classe UML.
  * 
  * @author jcruz
  *
  */
-public interface EUmlClass {
+public interface EUmlClass extends Visitable {
 
 	/**
 	 * Retorna o nome da classe UML.
@@ -52,12 +54,4 @@ public interface EUmlClass {
 	 */
 	Set<EUmlRelationship> getRelationships();
 
-	//	/**
-	//	 * Converte de UmlClass para JavaClassSource.
-	//	 * 
-	//	 * @param bootProject
-	//	 * @return
-	//	 */
-	//	@Deprecated
-	//	EJavaClass convertToJavaClass(EBootProject bootProject);
 }

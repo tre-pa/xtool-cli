@@ -30,6 +30,7 @@ import br.xtool.core.representation.impl.EJavaClassImpl;
 import br.xtool.core.service.BootService;
 import br.xtool.core.util.Inflector;
 import br.xtool.core.util.RoasterUtil;
+import br.xtool.core.visitor.impl.JavaxValidationVisitor;
 import lombok.SneakyThrows;
 
 @Service
@@ -37,6 +38,9 @@ public class BootServiceImpl implements BootService {
 
 	@Autowired
 	private ApplicationContext applicationContext;
+
+	@Autowired
+	private JavaxValidationVisitor javaxValidationVisitor;
 
 	/*
 	 * (non-Javadoc)
@@ -68,6 +72,10 @@ public class BootServiceImpl implements BootService {
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.service.BootService#convertUmlClassDiagramToJavaClasses(br.xtool.core.representation.EBootProject)
+	 */
 	@Override
 	public void convertUmlClassDiagramToJavaClasses(EBootProject bootProject) {
 		// @formatter:off
@@ -79,7 +87,9 @@ public class BootServiceImpl implements BootService {
 		print(bold(cyan(String.valueOf(javaClasses.size()))), " classes mapeadas.");
 	}
 
+	// Converte uma classe UML para um objeto EJavaClass.
 	private EJavaClass convertUmlClassToJavaClass(EBootProject bootProject, EUmlClass umlClass) {
+
 		// @formatter:off
 		EJavaClass javaClass = bootProject.getRoasterJavaUnits().stream()
 			.filter(javaUnit -> javaUnit.getGoverningType().isClass())
@@ -104,6 +114,7 @@ public class BootServiceImpl implements BootService {
 			.setPrivate()
 			.setType(umlField.getType().getJavaName());
 		// @formatter:on
+		this.javaxValidationVisitor.visit(javaField, umlField);
 	}
 
 	// Converte um relacionamento UML para um objeto EJavaField.

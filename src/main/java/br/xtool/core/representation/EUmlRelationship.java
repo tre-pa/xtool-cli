@@ -43,7 +43,6 @@ public interface EUmlRelationship {
 	 * 
 	 * @return
 	 */
-	@Deprecated
 	boolean isSourceClassOwner();
 
 	/**
@@ -66,12 +65,5 @@ public interface EUmlRelationship {
 	 * @return
 	 */
 	EUmlMultiplicity getTargetMultiplicity();
-
-	//	/**
-	//	 * 
-	//	 * @param javaClassSource
-	//	 * @return
-	//	 */
-	//	EJavaField convertToJavaField(EJavaClass javaClass);
 
 }
