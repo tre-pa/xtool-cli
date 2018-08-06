@@ -81,6 +81,18 @@ public class EUmlRelationshipImpl implements EUmlRelationship {
 
 	/*
 	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EUmlRelationship#getTargetRole()
+	 */
+	@Override
+	public String getTargetRole() {
+		if (this.getTargetMultiplicity().isToMany()) {
+			return Inflector.getInstance().pluralize(StringUtils.uncapitalize(this.getSourceClass().getName()));
+		}
+		return StringUtils.uncapitalize(this.getSourceClass().getName());
+	}
+
+	/*
+	 * (non-Javadoc)
 	 * @see br.xtool.core.representation.EUmlRelationship#getSourceMutiplicity()
 	 */
 	@Override

@@ -14,8 +14,11 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.stereotype.Component;
 
 import br.xtool.core.representation.EJavaClass;
@@ -27,6 +30,7 @@ import br.xtool.core.representation.EUmlFieldProperty;
 import br.xtool.core.representation.EUmlRelationship;
 import br.xtool.core.representation.EUmlStereotype;
 import br.xtool.core.visitor.Visitor;
+import lombok.val;
 
 @Component
 public class JpaVisitor implements Visitor {
@@ -111,16 +115,28 @@ public class JpaVisitor implements Visitor {
 	public void visit(EJavaField javaField, EUmlRelationship umlRelationship) {
 		if (umlRelationship.getSourceMultiplicity().isToMany()) {
 			if (umlRelationship.getTargetMultiplicity().isToMany()) {
-				javaField.addAnnotation(ManyToMany.class);
+				javaField.addAnnotation(BatchSize.class).setLiteralValue("size", "10");
+				javaField.addAnnotation(LazyCollection.class).setEnumValue(LazyCollectionOption.EXTRA);
+				val annMany = javaField.addAnnotation(ManyToMany.class);
+				if (!umlRelationship.isSourceClassOwner() && umlRelationship.getNavigability().isBidirectional()) {
+					annMany.setStringValue("mappedBy", umlRelationship.getTargetRole());
+				}
 				return;
 			}
-			javaField.addAnnotation(OneToMany.class);
+			javaField.addAnnotation(BatchSize.class).setLiteralValue("size", "10");
+			javaField.addAnnotation(LazyCollection.class).setEnumValue(LazyCollectionOption.EXTRA);
+			val annMany = javaField.addAnnotation(OneToMany.class);
+			if (umlRelationship.getNavigability().isBidirectional()) {
+				annMany.setStringValue("mappedBy", umlRelationship.getTargetRole());
+			}
 		} else {
 			if (umlRelationship.getTargetMultiplicity().isToMany()) {
-				javaField.addAnnotation(ManyToOne.class);
+				val ann = javaField.addAnnotation(ManyToOne.class);
+				if (!umlRelationship.getSourceMultiplicity().isOptional()) ann.setLiteralValue("optional", "false");
 				return;
 			}
-			javaField.addAnnotation(OneToOne.class);
+			val ann = javaField.addAnnotation(OneToOne.class);
+			if (!umlRelationship.getSourceMultiplicity().isOptional()) ann.setLiteralValue("optional", "false");
 		}
 	}
 

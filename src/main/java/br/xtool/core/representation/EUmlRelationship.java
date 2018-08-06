@@ -60,6 +60,12 @@ public interface EUmlRelationship {
 	EUmlClass getTargetClass();
 
 	/**
+	 * 
+	 * @return
+	 */
+	String getTargetRole();
+
+	/**
 	 * Retorna a multiplicidade do source do relacionamento.
 	 * 
 	 * @return

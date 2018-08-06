@@ -12,6 +12,7 @@ import org.jboss.forge.roaster.model.util.Types;
 import br.xtool.core.representation.EJpaAttribute;
 import br.xtool.core.representation.EJpaEntity;
 import br.xtool.core.representation.EJpaRelationship;
+import lombok.val;
 
 public class EJpaRelationshipImpl extends EJavaRelationshipImpl implements EJpaRelationship {
 
@@ -63,7 +64,14 @@ public class EJpaRelationshipImpl extends EJavaRelationshipImpl implements EJpaR
 	 */
 	@Override
 	public boolean isComposition() {
-		throw new UnsupportedOperationException();
+		if (isOneToOne()) {
+			val ann = this.getSourceField().getRoasterField().getAnnotation(OneToOne.class);
+			return Boolean.valueOf(ann.getLiteralValue("orphanRemoval"));
+		} else if (isOneToMany()) {
+			val ann = this.getSourceField().getRoasterField().getAnnotation(OneToMany.class);
+			return Boolean.valueOf(ann.getLiteralValue("orphanRemoval"));
+		}
+		return false;
 	}
 
 	/**
