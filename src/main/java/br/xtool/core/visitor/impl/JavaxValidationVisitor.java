@@ -48,7 +48,9 @@ public class JavaxValidationVisitor implements Visitor {
 
 	@Override
 	public void visit(EJavaField javaField, EUmlRelationship umlRelationship) {
-
+		if (umlRelationship.getSourceMultiplicity().isToMany() && !umlRelationship.getSourceMultiplicity().isOptional()) {
+			javaField.addAnnotation(Size.class).setLiteralValue("min", "1");
+		}
 	}
 
 }
