@@ -31,6 +31,6 @@ public interface EJpaAttribute extends EJavaField {
 	 * 
 	 * @return
 	 */
-	Optional<EJpaRelationship> getRelationship();
+	Optional<EJpaRelationship> getJpaRelationship();
 
 }

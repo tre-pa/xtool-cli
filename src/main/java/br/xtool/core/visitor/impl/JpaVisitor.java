@@ -6,6 +6,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -105,6 +109,19 @@ public class JpaVisitor implements Visitor {
 
 	@Override
 	public void visit(EJavaField javaField, EUmlRelationship umlRelationship) {
+		if (umlRelationship.getSourceMultiplicity().isToMany()) {
+			if (umlRelationship.getTargetMultiplicity().isToMany()) {
+				javaField.addAnnotation(ManyToMany.class);
+				return;
+			}
+			javaField.addAnnotation(OneToMany.class);
+		} else {
+			if (umlRelationship.getTargetMultiplicity().isToMany()) {
+				javaField.addAnnotation(ManyToOne.class);
+				return;
+			}
+			javaField.addAnnotation(OneToOne.class);
+		}
 	}
 
 }

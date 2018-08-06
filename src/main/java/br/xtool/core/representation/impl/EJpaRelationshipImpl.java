@@ -13,19 +13,19 @@ import br.xtool.core.representation.EJpaAttribute;
 import br.xtool.core.representation.EJpaEntity;
 import br.xtool.core.representation.EJpaRelationship;
 
-public class EJpaRelationshipImpl implements EJpaRelationship {
+public class EJpaRelationshipImpl extends EJavaRelationshipImpl implements EJpaRelationship {
 
-	private EJpaEntity entitySource;
+	private EJpaEntity sourceEntity;
 
-	private EJpaEntity entityTarget;
+	private EJpaEntity targetEntity;
 
-	private EJpaAttribute attributeSource;
+	private EJpaAttribute sourceAttribute;
 
-	public EJpaRelationshipImpl(EJpaEntity source, EJpaEntity target, EJpaAttribute attributeSource) {
-		super();
-		this.entitySource = source;
-		this.entityTarget = target;
-		this.attributeSource = attributeSource;
+	public EJpaRelationshipImpl(EJpaEntity sourceEntity, EJpaEntity targetEntity, EJpaAttribute sourceAttribute) {
+		super(sourceEntity, targetEntity, sourceAttribute);
+		this.sourceEntity = sourceEntity;
+		this.targetEntity = targetEntity;
+		this.sourceAttribute = sourceAttribute;
 	}
 
 	/**
@@ -63,8 +63,7 @@ public class EJpaRelationshipImpl implements EJpaRelationship {
 	 */
 	@Override
 	public boolean isComposition() {
-		//		if(this.getSourceAttribute().getRoasterFieldSource().hasAnnotation(type))
-		return false;
+		throw new UnsupportedOperationException();
 	}
 
 	/**
@@ -74,7 +73,7 @@ public class EJpaRelationshipImpl implements EJpaRelationship {
 	 */
 	@Override
 	public boolean isOneToOne() {
-		return this.attributeSource.getRoasterField().hasAnnotation(OneToOne.class);
+		return this.sourceAttribute.getRoasterField().hasAnnotation(OneToOne.class);
 	}
 
 	/**
@@ -84,7 +83,7 @@ public class EJpaRelationshipImpl implements EJpaRelationship {
 	 */
 	@Override
 	public boolean isOneToMany() {
-		return this.attributeSource.getRoasterField().hasAnnotation(OneToMany.class);
+		return this.sourceAttribute.getRoasterField().hasAnnotation(OneToMany.class);
 	}
 
 	/**
@@ -94,7 +93,7 @@ public class EJpaRelationshipImpl implements EJpaRelationship {
 	 */
 	@Override
 	public boolean isManyToOne() {
-		return this.attributeSource.getRoasterField().hasAnnotation(ManyToOne.class);
+		return this.sourceAttribute.getRoasterField().hasAnnotation(ManyToOne.class);
 	}
 
 	/**
@@ -104,7 +103,7 @@ public class EJpaRelationshipImpl implements EJpaRelationship {
 	 */
 	@Override
 	public boolean isManyToMany() {
-		return this.attributeSource.getRoasterField().hasAnnotation(ManyToMany.class);
+		return this.sourceAttribute.getRoasterField().hasAnnotation(ManyToMany.class);
 	}
 
 	/*
@@ -115,14 +114,14 @@ public class EJpaRelationshipImpl implements EJpaRelationship {
 	public Optional<EJpaAttribute> getTargetAttribute() {
 		if (this.isManyToMany() || this.isManyToOne()) {
 			// @formatter:off
-			return this.entityTarget.getAttributes().stream()
-					.filter(attrTarget -> Types.getGenericsTypeParameter(attrTarget.getType().getQualifiedNameWithGenerics()).equals(this.entitySource.getName()))
+			return this.targetEntity.getAttributes().stream()
+					.filter(attrTarget -> Types.getGenericsTypeParameter(attrTarget.getType().getQualifiedNameWithGenerics()).equals(this.sourceEntity.getName()))
 					.findFirst();
 			// @formatter:on
 		}
 		// @formatter:off
-		return this.entityTarget.getAttributes().stream()
-				.filter(attrTarget -> attrTarget.getType().getName().equals(this.entitySource.getName()))
+		return this.targetEntity.getAttributes().stream()
+				.filter(attrTarget -> attrTarget.getType().getName().equals(this.sourceEntity.getName()))
 				.findFirst();
 		// @formatter:on
 	}
@@ -133,7 +132,7 @@ public class EJpaRelationshipImpl implements EJpaRelationship {
 	 */
 	@Override
 	public EJpaAttribute getSourceAttribute() {
-		return this.attributeSource;
+		return this.sourceAttribute;
 	}
 
 	/*
@@ -142,7 +141,7 @@ public class EJpaRelationshipImpl implements EJpaRelationship {
 	 */
 	@Override
 	public EJpaEntity getSourceEntity() {
-		return this.entitySource;
+		return this.sourceEntity;
 	}
 
 	/*
@@ -151,7 +150,7 @@ public class EJpaRelationshipImpl implements EJpaRelationship {
 	 */
 	@Override
 	public EJpaEntity getTargetEntity() {
-		return this.entityTarget;
+		return this.targetEntity;
 	}
 
 }

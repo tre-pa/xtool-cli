@@ -1,6 +1,7 @@
 package br.xtool.core.representation;
 
 import java.lang.annotation.Annotation;
+import java.util.Optional;
 import java.util.SortedSet;
 
 import org.jboss.forge.roaster.model.Type;
@@ -46,6 +47,13 @@ public interface EJavaField extends Comparable<EJavaField> {
 	boolean isVolatile();
 
 	int getLineNumber();
+
+	/**
+	 * Retorna o relacionamento JPA.
+	 * 
+	 * @return
+	 */
+	Optional<EJavaRelationship> getRelationship();
 
 	FieldSource<JavaClassSource> getRoasterField();
 

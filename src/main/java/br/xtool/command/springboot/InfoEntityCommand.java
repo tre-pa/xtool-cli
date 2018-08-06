@@ -39,7 +39,7 @@ public class InfoEntityCommand extends SpringBootAware {
 			System.out.println(entity.getName());
 			for (EJpaAttribute attribute : entity.getAttributes()) {
 				System.out.print(String.format("\t%s: %s ", attribute.getName(), attribute.getType().getName()));
-				attribute.getRelationship().ifPresent(relationship -> System.out.println(" Target: " + relationship.getTargetEntity().getName() + " Bidirectional: " + relationship.isBidirectional()));
+				attribute.getJpaRelationship().ifPresent(relationship -> System.out.println(" Target: " + relationship.getTargetEntity().getName() + " Bidirectional: " + relationship.isBidirectional()));
 				System.out.println();
 			}
 		}

@@ -27,7 +27,7 @@ public class EJpaAttributeImpl extends EJavaFieldImpl implements EJpaAttribute {
 	private EJpaEntity entitySource;
 
 	public EJpaAttributeImpl(EBootProject springBootProject, EJpaEntity entitySource, FieldSource<JavaClassSource> fieldSource) {
-		super(entitySource, fieldSource);
+		super(springBootProject, entitySource, fieldSource);
 		this.springBootProject = springBootProject;
 		this.entitySource = entitySource;
 	}
@@ -50,22 +50,12 @@ public class EJpaAttributeImpl extends EJavaFieldImpl implements EJpaAttribute {
 		return this.getRoasterField().hasAnnotation(Lob.class);
 	}
 
-	//	@Override
-	//	public Optional<EJpaEntity> getGenericType() {
-	//		String genericName = this.isCollection() ? Types.getGenericsTypeParameter(this.getType().getQualifiedNameWithGenerics()) : this.getType().getName();
-//		// @formatter:off
-//		return this.springBootProject.getEntities().stream()
-//				.filter(entity -> entity.getName().equals(genericName))
-//				.findFirst();
-//		// @formatter:on
-	//	}
-
 	/*
 	 * (non-Javadoc)
 	 * @see br.xtool.core.representation.EJpaAttribute#getRelationship()
 	 */
 	@Override
-	public Optional<EJpaRelationship> getRelationship() {
+	public Optional<EJpaRelationship> getJpaRelationship() {
 		if (this.isCollection()) {
 			String entityName = Types.getGenericsTypeParameter(this.getType().getQualifiedNameWithGenerics());
 			// @formatter:off

@@ -2,6 +2,7 @@ package br.xtool.core.representation.impl;
 
 import java.lang.annotation.Annotation;
 import java.util.List;
+import java.util.Optional;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
@@ -9,10 +10,13 @@ import java.util.stream.Collectors;
 import org.jboss.forge.roaster.model.Type;
 import org.jboss.forge.roaster.model.source.FieldSource;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
+import org.jboss.forge.roaster.model.util.Types;
 
+import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.EJavaAnnotation;
 import br.xtool.core.representation.EJavaClass;
 import br.xtool.core.representation.EJavaField;
+import br.xtool.core.representation.EJavaRelationship;
 
 public class EJavaFieldImpl implements EJavaField {
 
@@ -20,8 +24,11 @@ public class EJavaFieldImpl implements EJavaField {
 
 	protected FieldSource<JavaClassSource> fieldSource;
 
-	public EJavaFieldImpl(EJavaClass javaClass, FieldSource<JavaClassSource> fieldSource) {
+	private EBootProject bootProject;
+
+	public EJavaFieldImpl(EBootProject bootProject, EJavaClass javaClass, FieldSource<JavaClassSource> fieldSource) {
 		super();
+		this.bootProject = bootProject;
 		this.javaClass = javaClass;
 		this.fieldSource = fieldSource;
 	}
@@ -139,6 +146,28 @@ public class EJavaFieldImpl implements EJavaField {
 	@Override
 	public FieldSource<JavaClassSource> getRoasterField() {
 		return this.fieldSource;
+	}
+
+	@Override
+	public Optional<EJavaRelationship> getRelationship() {
+		if (this.isCollection()) {
+			String entityName = Types.getGenericsTypeParameter(this.getType().getQualifiedNameWithGenerics());
+			// @formatter:off
+			return this.bootProject.getEntities().stream()
+					.filter(entity -> entity.getName().equals(entityName))
+					.map(entityTarget -> new EJavaRelationshipImpl(this.javaClass, entityTarget, this))
+					.map(EJavaRelationship.class::cast)
+					.findFirst();
+			// @formatter:on
+		}
+		// @formatter:off
+		String entityName = this.getType().getName();
+		return this.bootProject.getEntities().stream()
+				.filter(entity -> entity.getName().equals(entityName))
+				.map(entityTarget -> new EJavaRelationshipImpl(this.javaClass, entityTarget, this))
+				.map(EJavaRelationship.class::cast)
+				.findFirst();
+		// @formatter:on
 	}
 
 	@Override

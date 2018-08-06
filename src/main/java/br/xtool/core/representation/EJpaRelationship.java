@@ -8,21 +8,7 @@ import java.util.Optional;
  * @author jcruz
  *
  */
-public interface EJpaRelationship {
-
-	/**
-	 * Verifica se o relacionamento é bidirecional.
-	 * 
-	 * @return
-	 */
-	boolean isBidirectional();
-
-	/**
-	 * Verifica se o relacionamento é unidirecional.
-	 * 
-	 * @return
-	 */
-	boolean isUnidirectional();
+public interface EJpaRelationship extends EJavaRelationship {
 
 	/**
 	 * Verifica se o relacionamento é uma associação.

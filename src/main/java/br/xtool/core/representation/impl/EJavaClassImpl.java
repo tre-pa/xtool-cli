@@ -84,7 +84,7 @@ public class EJavaClassImpl implements EJavaClass {
 		// @formatter:off
 		return this.javaClassSource.getFields()
 				.stream()
-				.map(fieldSource -> new EJavaFieldImpl(this, fieldSource))
+				.map(fieldSource -> new EJavaFieldImpl(this.project ,this, fieldSource))
 				.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
 	}
@@ -95,7 +95,7 @@ public class EJavaClassImpl implements EJavaClass {
 		return this.getFields().stream()
 				.filter(javaField -> javaField.getName().equals(name))
 				.findAny()
-				.orElseGet(() -> new EJavaFieldImpl(this,this.javaClassSource.addField()));
+				.orElseGet(() -> new EJavaFieldImpl(this.project ,this,this.javaClassSource.addField()));
 		// @formatter:on
 	}
 
