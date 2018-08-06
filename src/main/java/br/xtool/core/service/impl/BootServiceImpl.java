@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.apache.commons.lang3.StringUtils;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -29,7 +28,6 @@ import br.xtool.core.representation.EUmlField;
 import br.xtool.core.representation.EUmlRelationship;
 import br.xtool.core.representation.impl.EJavaClassImpl;
 import br.xtool.core.service.BootService;
-import br.xtool.core.util.Inflector;
 import br.xtool.core.util.RoasterUtil;
 import br.xtool.core.visitor.Visitor;
 import lombok.SneakyThrows;
@@ -121,15 +119,15 @@ public class BootServiceImpl implements BootService {
 
 	// Converte um relacionamento UML para um objeto EJavaField.
 	private void convertUmlRelationshipToJavaField(EJavaClass javaClass, EUmlRelationship umlRelationship, Set<? extends Visitor> vistors) {
-		String fieldName = Inflector.getInstance().pluralize(StringUtils.uncapitalize(umlRelationship.getTargetClass().getName()));
-		EJavaField javaField = javaClass.addField(fieldName);
+		//		String fieldName = Inflector.getInstance().pluralize(StringUtils.uncapitalize(umlRelationship.getTargetClass().getName()));
+		EJavaField javaField = javaClass.addField(umlRelationship.getSourceRole());
 		if (umlRelationship.getSourceMultiplicity().isToMany()) {
 			// @formatter:off
 			javaField.getRoasterField().getOrigin().addImport(List.class);
 			javaField.getRoasterField().getOrigin().addImport(ArrayList.class);
 			javaField.getRoasterField()
 					.setPrivate()
-					.setName(fieldName)
+					.setName(umlRelationship.getSourceRole())
 					.setType(String.format("List<%s>", umlRelationship.getTargetClass().getName()))
 					.setLiteralInitializer("new ArrayList<>()");
 			// @formatter:on
@@ -140,7 +138,7 @@ public class BootServiceImpl implements BootService {
 		// @formatter:off
 		javaField.getRoasterField()
 				.setPrivate()
-				.setName(StringUtils.uncapitalize(umlRelationship.getTargetClass().getName()))
+				.setName(umlRelationship.getSourceRole())
 				.setType(umlRelationship.getTargetClass().getName());
 		// @formatter:on
 		vistors.forEach(visitor -> visitor.visit(javaField, umlRelationship));

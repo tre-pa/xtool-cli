@@ -39,6 +39,13 @@ public interface EUmlRelationship {
 	EUmlClass getSourceClass();
 
 	/**
+	 * Retorna a role relativa ao source.
+	 * 
+	 * @return
+	 */
+	String getSourceRole();
+
+	/**
 	 * Verifica se a classe source é proprietária da relação
 	 * 
 	 * @return

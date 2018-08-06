@@ -5,8 +5,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -58,6 +60,27 @@ public class JpaVisitor implements Visitor {
 			}
 			javaField.addAnnotation(Column.class);
 			break;
+		case STRING:
+			javaField.addAnnotation(Column.class).setLiteralValue("length", String.valueOf(umlField.getMaxArrayLength().orElse(255)));
+			break;
+		case BIGDECIMAL:
+			javaField.addAnnotation(Column.class);
+			break;
+		case INTEGER:
+			javaField.addAnnotation(Column.class);
+			break;
+		case BOOLEAN:
+			javaField.addAnnotation(Column.class);
+			break;
+		case BYTE:
+			javaField.addAnnotation(Lob.class);
+			break;
+		case LOCALDATE:
+			javaField.addAnnotation(Column.class);
+			break;
+		case LOCALDATETIME:
+			javaField.addAnnotation(Column.class);
+			break;
 		default:
 			break;
 		}
@@ -65,12 +88,23 @@ public class JpaVisitor implements Visitor {
 
 	@Override
 	public void visit(EJavaField javaField, EUmlFieldProperty umlFieldProperty) {
-
+		switch (umlFieldProperty.getFieldProperty()) {
+		case NOTNULL:
+			javaField.addAnnotation(Column.class).setLiteralValue("nullable", "false");
+			break;
+		case TRANSIENT:
+			javaField.addAnnotation(Transient.class);
+			break;
+		case UNIQUE:
+			javaField.addAnnotation(Column.class).setLiteralValue("unique", "true");
+			break;
+		default:
+			break;
+		}
 	}
 
 	@Override
 	public void visit(EJavaField javaField, EUmlRelationship umlRelationship) {
-
 	}
 
 }

@@ -1,8 +1,11 @@
 package br.xtool.core.representation.impl;
 
+import org.apache.commons.lang3.StringUtils;
+
 import br.xtool.core.representation.EUmlClass;
 import br.xtool.core.representation.EUmlMultiplicity;
 import br.xtool.core.representation.EUmlRelationship;
+import br.xtool.core.util.Inflector;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkArrow;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
@@ -45,6 +48,14 @@ public class EUmlRelationshipImpl implements EUmlRelationship {
 	@Override
 	public EUmlClass getSourceClass() {
 		return this.sourceClass;
+	}
+
+	@Override
+	public String getSourceRole() {
+		if (this.getSourceMultiplicity().isToMany()) {
+			return Inflector.getInstance().pluralize(StringUtils.uncapitalize(this.getTargetClass().getName()));
+		}
+		return StringUtils.uncapitalize(this.getTargetClass().getName());
 	}
 
 	/*
