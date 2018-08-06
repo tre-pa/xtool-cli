@@ -114,29 +114,39 @@ public class JpaVisitor implements Visitor {
 	@Override
 	public void visit(EJavaField javaField, EUmlRelationship umlRelationship) {
 		if (umlRelationship.getSourceMultiplicity().isToMany()) {
+			/*
+			 * Relacionamento @ManyToMany
+			 */
 			if (umlRelationship.getTargetMultiplicity().isToMany()) {
 				javaField.addAnnotation(BatchSize.class).setLiteralValue("size", "10");
 				javaField.addAnnotation(LazyCollection.class).setEnumValue(LazyCollectionOption.EXTRA);
 				val annMany = javaField.addAnnotation(ManyToMany.class);
-				if (!umlRelationship.isSourceClassOwner() && umlRelationship.getNavigability().isBidirectional()) {
-					annMany.setStringValue("mappedBy", umlRelationship.getTargetRole());
-				}
+				if (!umlRelationship.isSourceClassOwner() && umlRelationship.getNavigability().isBidirectional()) annMany.setStringValue("mappedBy", umlRelationship.getTargetRole());
 				return;
 			}
+			/*
+			 * Relacionamento @OneToMany
+			 */
 			javaField.addAnnotation(BatchSize.class).setLiteralValue("size", "10");
 			javaField.addAnnotation(LazyCollection.class).setEnumValue(LazyCollectionOption.EXTRA);
 			val annMany = javaField.addAnnotation(OneToMany.class);
-			if (umlRelationship.getNavigability().isBidirectional()) {
-				annMany.setStringValue("mappedBy", umlRelationship.getTargetRole());
-			}
+			if (umlRelationship.getNavigability().isBidirectional()) annMany.setStringValue("mappedBy", umlRelationship.getTargetRole());
 		} else {
+			/*
+			 * Relacionamento @ManyToOne
+			 */
 			if (umlRelationship.getTargetMultiplicity().isToMany()) {
 				val ann = javaField.addAnnotation(ManyToOne.class);
 				if (!umlRelationship.getSourceMultiplicity().isOptional()) ann.setLiteralValue("optional", "false");
 				return;
 			}
+			/*
+			 * Relacionamento @OneToOne
+			 */
 			val ann = javaField.addAnnotation(OneToOne.class);
 			if (!umlRelationship.getSourceMultiplicity().isOptional()) ann.setLiteralValue("optional", "false");
+			if (!umlRelationship.isSourceClassOwner() && umlRelationship.getNavigability().isBidirectional()) ann.setStringValue("mappedBy", umlRelationship.getTargetRole());
+
 		}
 	}
 
