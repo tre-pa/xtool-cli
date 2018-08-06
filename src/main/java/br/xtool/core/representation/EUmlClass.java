@@ -3,15 +3,13 @@ package br.xtool.core.representation;
 import java.util.Collection;
 import java.util.Set;
 
-import br.xtool.core.visitor.Visitable;
-
 /**
  * Representação de uma classe no diagrama de classe UML.
  * 
  * @author jcruz
  *
  */
-public interface EUmlClass extends Visitable {
+public interface EUmlClass {
 
 	/**
 	 * Retorna o nome da classe UML.

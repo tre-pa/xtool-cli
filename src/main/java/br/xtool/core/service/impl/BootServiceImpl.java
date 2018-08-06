@@ -100,7 +100,7 @@ public class BootServiceImpl implements BootService {
 			.findFirst()
 			.orElseGet(() -> new EJavaClassImpl(bootProject,RoasterUtil.createJavaClassSource(umlClass.getPackage().getName(),umlClass.getName())));
 		// @formatter:on
-
+		vistors.forEach(visitor -> visitor.visit(javaClass, umlClass));
 		umlClass.getFields().stream().forEach(umlField -> convertUmlFieldToJavaField(javaClass, umlField, vistors));
 		umlClass.getRelationships().stream().forEach(umlRelationship -> convertUmlRelationshipToJavaField(javaClass, umlRelationship, vistors));
 		return javaClass;
@@ -133,6 +133,7 @@ public class BootServiceImpl implements BootService {
 					.setType(String.format("List<%s>", umlRelationship.getTargetClass().getName()))
 					.setLiteralInitializer("new ArrayList<>()");
 			// @formatter:on
+			vistors.forEach(visitor -> visitor.visit(javaField, umlRelationship));
 			return;
 		}
 		javaField.getRoasterField().getOrigin().addImport(umlRelationship.getTargetClass().getQualifiedName());
@@ -142,5 +143,6 @@ public class BootServiceImpl implements BootService {
 				.setName(StringUtils.uncapitalize(umlRelationship.getTargetClass().getName()))
 				.setType(umlRelationship.getTargetClass().getName());
 		// @formatter:on
+		vistors.forEach(visitor -> visitor.visit(javaField, umlRelationship));
 	}
 }

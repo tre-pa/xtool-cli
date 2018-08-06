@@ -16,7 +16,6 @@ import br.xtool.core.representation.EUmlField;
 import br.xtool.core.representation.EUmlPackage;
 import br.xtool.core.representation.EUmlRelationship;
 import br.xtool.core.representation.EUmlStereotype;
-import br.xtool.core.visitor.Visitor;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
@@ -153,11 +152,6 @@ public class EUmlClassImpl implements EUmlClass {
 			.map(link -> new EUmlRelationshipImpl(this, findClass(link.getEntity1().getDisplay().asStringWithHiddenNewLine()), link, getEntity1Qualifier(link), getEntity2Qualifier(link)))
 			.collect(Collectors.toSet());
 		// @formatter:on
-	}
-
-	@Override
-	public void accept(Visitor visitor) {
-		visitor.visit(this);
 	}
 
 }

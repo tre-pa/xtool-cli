@@ -24,6 +24,7 @@ import br.xtool.core.service.BootService;
 import br.xtool.core.service.WorkspaceService;
 import br.xtool.core.visitor.Visitor;
 import br.xtool.core.visitor.impl.JavaxValidationVisitor;
+import br.xtool.core.visitor.impl.LombokVisitor;
 
 @ShellComponent
 public class MapClassesCommand extends SpringBootAware {
@@ -52,6 +53,7 @@ public class MapClassesCommand extends SpringBootAware {
 
 		Set<Visitor> visitors = new HashSet<>();
 		visitors.add(this.applicationContext.getBean(JavaxValidationVisitor.class));
+		if (!noLombok) visitors.add(this.applicationContext.getBean(LombokVisitor.class));
 
 		this.bootService.convertUmlClassDiagramToJavaClasses(bootProject, visitors);
 		//		Collection<EJavaClass> javaClasses = new ArrayList<>();

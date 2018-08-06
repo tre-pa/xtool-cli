@@ -1,5 +1,6 @@
 package br.xtool.core.visitor;
 
+import br.xtool.core.representation.EJavaClass;
 import br.xtool.core.representation.EJavaField;
 import br.xtool.core.representation.EUmlClass;
 import br.xtool.core.representation.EUmlField;
@@ -18,13 +19,13 @@ public interface Visitor {
 	 * 
 	 * @param umlClass
 	 */
-	void visit(EUmlClass umlClass);
+	void visit(EJavaClass javaClass, EUmlClass umlClass);
 
 	/**
 	 * 
 	 * @param umlStereotype
 	 */
-	void visit(EUmlStereotype umlStereotype);
+	void visit(EJavaClass javaClass, EUmlStereotype umlStereotype);
 
 	/**
 	 * 
@@ -36,12 +37,12 @@ public interface Visitor {
 	 * 
 	 * @param umlFieldProperty
 	 */
-	void visit(EUmlFieldProperty umlFieldProperty);
+	void visit(EJavaField javaField, EUmlFieldProperty umlFieldProperty);
 
 	/**
 	 * 
 	 * @param umlRelationship
 	 */
-	void visit(EUmlRelationship umlRelationship);
+	void visit(EJavaField javaField, EUmlRelationship umlRelationship);
 
 }
