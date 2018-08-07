@@ -11,7 +11,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.hibernate.annotations.DynamicInsert;
@@ -42,7 +41,7 @@ public class JpaVisitor implements Visitor {
 		javaClass.addAnnotation(Entity.class);
 		javaClass.addAnnotation(DynamicInsert.class);
 		javaClass.addAnnotation(DynamicUpdate.class);
-		javaClass.addAnnotation(Table.class).setStringValue("name", EJpaEntity.genDBTableName(javaClass.getName()));
+		javaClass.addTableAnnotation();
 	}
 
 	/*
@@ -64,8 +63,8 @@ public class JpaVisitor implements Visitor {
 		case LONG:
 			if (umlField.isId()) {
 				javaField.addAnnotation(Id.class);
-				javaField.addGeneratedValue(GenerationType.SEQUENCE);
-				javaField.addSequenceGenerator();
+				javaField.addGeneratedValueAnnotation(GenerationType.SEQUENCE);
+				javaField.addSequenceGeneratorAnnotation();
 				return;
 			}
 			javaField.addAnnotation(Column.class);
@@ -134,8 +133,8 @@ public class JpaVisitor implements Visitor {
 	 */
 	private void visitManyToMany(EJavaField javaField, EUmlRelationship umlRelationship) {
 		if (umlRelationship.getSourceMultiplicity().isToMany() && umlRelationship.getTargetMultiplicity().isToMany()) {
-			javaField.addBatchSize(10);
-			javaField.addLazyCollection(LazyCollectionOption.EXTRA);
+			javaField.addBatchSizeAnnotation(10);
+			javaField.addLazyCollectionAnnotation(LazyCollectionOption.EXTRA);
 			val annMany = javaField.addAnnotation(ManyToMany.class);
 			// Bidirecional
 			if (!umlRelationship.isSourceClassOwner() && umlRelationship.getNavigability().isBidirectional()) {
@@ -149,8 +148,8 @@ public class JpaVisitor implements Visitor {
 	 */
 	private void visitOneToMany(EJavaField javaField, EUmlRelationship umlRelationship) {
 		if (umlRelationship.getSourceMultiplicity().isToMany() && umlRelationship.getTargetMultiplicity().isToOne()) {
-			javaField.addBatchSize(10);
-			javaField.addLazyCollection(LazyCollectionOption.EXTRA);
+			javaField.addBatchSizeAnnotation(10);
+			javaField.addLazyCollectionAnnotation(LazyCollectionOption.EXTRA);
 			val annOneToMany = javaField.addAnnotation(OneToMany.class);
 			// Bidirecional
 			if (umlRelationship.getNavigability().isBidirectional()) {

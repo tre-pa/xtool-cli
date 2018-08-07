@@ -22,8 +22,8 @@ public class LombokVisitor implements Visitor {
 		javaClass.addAnnotation(Getter.class);
 		javaClass.addAnnotation(Setter.class);
 		javaClass.addAnnotation(NoArgsConstructor.class);
-		javaClass.addEqualsAndHashCode("id");
-		javaClass.addToString("id");
+		javaClass.addEqualsAndHashCodeAnnotation("id");
+		javaClass.addToStringAnnotation("id");
 	}
 
 	@Override

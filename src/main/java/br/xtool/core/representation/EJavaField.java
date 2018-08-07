@@ -60,13 +60,13 @@ public interface EJavaField extends Comparable<EJavaField> {
 
 	FieldSource<JavaClassSource> getRoasterField();
 
-	EJavaAnnotation addSize(Integer min, Integer max);
+	EJavaAnnotation addSizeAnnotation(Integer min, Integer max);
 
-	EJavaAnnotation addBatchSize(Integer size);
+	EJavaAnnotation addBatchSizeAnnotation(Integer size);
 
-	EJavaAnnotation addLazyCollection(LazyCollectionOption lazyCollectionOption);
+	EJavaAnnotation addLazyCollectionAnnotation(LazyCollectionOption lazyCollectionOption);
 
-	EJavaAnnotation addGeneratedValue(GenerationType generationType);
+	EJavaAnnotation addGeneratedValueAnnotation(GenerationType generationType);
 
-	EJavaAnnotation addSequenceGenerator();
+	EJavaAnnotation addSequenceGeneratorAnnotation();
 }

@@ -28,7 +28,7 @@ public class JavaxValidationVisitor implements Visitor {
 	public void visit(EJavaField javaField, EUmlField umlField) {
 		switch (umlField.getType()) {
 		case STRING:
-			javaField.addSize(umlField.getMinArrayLength().orElse(null), umlField.getMaxArrayLength().orElse(255));
+			javaField.addSizeAnnotation(umlField.getMinArrayLength().orElse(null), umlField.getMaxArrayLength().orElse(255));
 			break;
 
 		default:
@@ -44,7 +44,7 @@ public class JavaxValidationVisitor implements Visitor {
 	@Override
 	public void visit(EJavaField javaField, EUmlRelationship umlRelationship) {
 		if (umlRelationship.getSourceMultiplicity().isToMany() && !umlRelationship.getSourceMultiplicity().isOptional()) {
-			javaField.addSize(1, null);
+			javaField.addSizeAnnotation(1, null);
 		}
 	}
 

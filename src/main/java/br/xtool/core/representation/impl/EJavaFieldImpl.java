@@ -181,7 +181,7 @@ public class EJavaFieldImpl implements EJavaField {
 	}
 
 	@Override
-	public EJavaAnnotation addSize(Integer min, Integer max) {
+	public EJavaAnnotation addSizeAnnotation(Integer min, Integer max) {
 		EJavaAnnotation ann = this.addAnnotation(Size.class);
 		if (Objects.nonNull(min)) ann.setLiteralValue("min", String.valueOf(min));
 		if (Objects.nonNull(max)) ann.setLiteralValue("max", String.valueOf(max));
@@ -189,28 +189,28 @@ public class EJavaFieldImpl implements EJavaField {
 	}
 
 	@Override
-	public EJavaAnnotation addBatchSize(Integer size) {
+	public EJavaAnnotation addBatchSizeAnnotation(Integer size) {
 		EJavaAnnotation ann = this.addAnnotation(BatchSize.class);
 		ann.setLiteralValue("size", String.valueOf(size));
 		return ann;
 	}
 
 	@Override
-	public EJavaAnnotation addLazyCollection(LazyCollectionOption lazyCollectionOption) {
+	public EJavaAnnotation addLazyCollectionAnnotation(LazyCollectionOption lazyCollectionOption) {
 		EJavaAnnotation ann = this.addAnnotation(LazyCollection.class);
 		ann.setEnumValue(lazyCollectionOption);
 		return ann;
 	}
 
 	@Override
-	public EJavaAnnotation addGeneratedValue(GenerationType generationType) {
+	public EJavaAnnotation addGeneratedValueAnnotation(GenerationType generationType) {
 		EJavaAnnotation ann = this.addAnnotation(GeneratedValue.class);
 		ann.setEnumValue("strategy", GenerationType.SEQUENCE).setStringValue("generator", EJpaEntity.genDBSequenceName(this.getJavaClass().getName()));
 		return ann;
 	}
 
 	@Override
-	public EJavaAnnotation addSequenceGenerator() {
+	public EJavaAnnotation addSequenceGeneratorAnnotation() {
 		EJavaAnnotation ann = this.addAnnotation(SequenceGenerator.class);
 		// @formatter:off
 		ann.setLiteralValue("initialValue", "1")

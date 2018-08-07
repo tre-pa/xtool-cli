@@ -6,6 +6,8 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
+import javax.persistence.Table;
+
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 
 import br.xtool.core.representation.EBootProject;
@@ -14,6 +16,7 @@ import br.xtool.core.representation.EJavaClass;
 import br.xtool.core.representation.EJavaField;
 import br.xtool.core.representation.EJavaMethod;
 import br.xtool.core.representation.EJavaPackage;
+import br.xtool.core.representation.EJpaEntity;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
@@ -146,12 +149,19 @@ public class EJavaClassImpl implements EJavaClass {
 		return this.javaClassSource;
 	}
 
+	@Override
+	public EJavaAnnotation addTableAnnotation() {
+		EJavaAnnotation ann = this.addAnnotation(Table.class);
+		ann.setStringValue("name", EJpaEntity.genDBTableName(this.getName()));
+		return ann;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * @see br.xtool.core.representation.EJavaClass#addToString(java.lang.String[])
 	 */
 	@Override
-	public EJavaAnnotation addToString(String... attributes) {
+	public EJavaAnnotation addToStringAnnotation(String... attributes) {
 		EJavaAnnotation javaAnnotation = this.addAnnotation(ToString.class);
 		javaAnnotation.setStringArrayValue("of", attributes);
 		return javaAnnotation;
@@ -162,7 +172,7 @@ public class EJavaClassImpl implements EJavaClass {
 	 * @see br.xtool.core.representation.EJavaClass#addEqualsAndHashCode(java.lang.String[])
 	 */
 	@Override
-	public EJavaAnnotation addEqualsAndHashCode(String... attributes) {
+	public EJavaAnnotation addEqualsAndHashCodeAnnotation(String... attributes) {
 		EJavaAnnotation javaAnnotation = this.addAnnotation(EqualsAndHashCode.class);
 		javaAnnotation.setStringArrayValue("of", attributes);
 		return javaAnnotation;
