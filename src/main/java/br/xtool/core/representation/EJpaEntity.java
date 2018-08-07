@@ -57,4 +57,17 @@ public interface EJpaEntity extends EJavaClass {
 				"SEQ_" + Strman.toSnakeCase(name)), "", 30);
 		// @formatter:on
 	}
+
+	/**
+	 * 
+	 * @param name
+	 * @return
+	 */
+	public static String genFKName(String name) {
+		// @formatter:off
+		return StringUtils.abbreviate(
+				StringUtils.upperCase(
+				Strman.toSnakeCase(name)), "", 30) + "_ID";
+		// @formatter:on
+	}
 }

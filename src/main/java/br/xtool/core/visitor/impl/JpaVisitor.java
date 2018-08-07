@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
@@ -35,6 +36,10 @@ import lombok.val;
 @Component
 public class JpaVisitor implements Visitor {
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaClass, br.xtool.core.representation.EUmlClass)
+	 */
 	@Override
 	public void visit(EJavaClass javaClass, EUmlClass umlClass) {
 		javaClass.addAnnotation(Entity.class);
@@ -43,11 +48,19 @@ public class JpaVisitor implements Visitor {
 		javaClass.addAnnotation(Table.class).setStringValue("name", EJpaEntity.genDBTableName(javaClass.getName()));
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaClass, br.xtool.core.representation.EUmlStereotype)
+	 */
 	@Override
 	public void visit(EJavaClass javaClass, EUmlStereotype umlStereotype) {
 
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField, br.xtool.core.representation.EUmlField)
+	 */
 	@Override
 	public void visit(EJavaField javaField, EUmlField umlField) {
 		switch (umlField.getType()) {
@@ -94,6 +107,10 @@ public class JpaVisitor implements Visitor {
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField, br.xtool.core.representation.EUmlFieldProperty)
+	 */
 	@Override
 	public void visit(EJavaField javaField, EUmlFieldProperty umlFieldProperty) {
 		switch (umlFieldProperty.getFieldProperty()) {
@@ -111,43 +128,62 @@ public class JpaVisitor implements Visitor {
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField, br.xtool.core.representation.EUmlRelationship)
+	 */
 	@Override
 	public void visit(EJavaField javaField, EUmlRelationship umlRelationship) {
-		if (umlRelationship.getSourceMultiplicity().isToMany()) {
-			/*
-			 * Relacionamento @ManyToMany
-			 */
-			if (umlRelationship.getTargetMultiplicity().isToMany()) {
-				javaField.addAnnotation(BatchSize.class).setLiteralValue("size", "10");
-				javaField.addAnnotation(LazyCollection.class).setEnumValue(LazyCollectionOption.EXTRA);
-				val annMany = javaField.addAnnotation(ManyToMany.class);
-				if (!umlRelationship.isSourceClassOwner() && umlRelationship.getNavigability().isBidirectional()) annMany.setStringValue("mappedBy", umlRelationship.getTargetRole());
-				return;
-			}
-			/*
-			 * Relacionamento @OneToMany
-			 */
+		visitManyToMany(javaField, umlRelationship);
+		visitManyToOne(javaField, umlRelationship);
+		visitOneToMany(javaField, umlRelationship);
+		visitOneToOne(javaField, umlRelationship);
+	}
+
+	private void visitManyToMany(EJavaField javaField, EUmlRelationship umlRelationship) {
+		if (umlRelationship.getSourceMultiplicity().isToMany() && umlRelationship.getTargetMultiplicity().isToMany()) {
 			javaField.addAnnotation(BatchSize.class).setLiteralValue("size", "10");
 			javaField.addAnnotation(LazyCollection.class).setEnumValue(LazyCollectionOption.EXTRA);
-			val annMany = javaField.addAnnotation(OneToMany.class);
-			if (umlRelationship.getNavigability().isBidirectional()) annMany.setStringValue("mappedBy", umlRelationship.getTargetRole());
-		} else {
-			/*
-			 * Relacionamento @ManyToOne
-			 */
-			if (umlRelationship.getTargetMultiplicity().isToMany()) {
-				val ann = javaField.addAnnotation(ManyToOne.class);
-				if (!umlRelationship.getSourceMultiplicity().isOptional()) ann.setLiteralValue("optional", "false");
-				return;
+			val annMany = javaField.addAnnotation(ManyToMany.class);
+			// Bidirecional
+			if (!umlRelationship.isSourceClassOwner() && umlRelationship.getNavigability().isBidirectional()) {
+				annMany.setStringValue("mappedBy", umlRelationship.getTargetRole());
 			}
-			/*
-			 * Relacionamento @OneToOne
-			 */
-			val ann = javaField.addAnnotation(OneToOne.class);
-			if (!umlRelationship.getSourceMultiplicity().isOptional()) ann.setLiteralValue("optional", "false");
-			if (!umlRelationship.isSourceClassOwner() && umlRelationship.getNavigability().isBidirectional()) ann.setStringValue("mappedBy", umlRelationship.getTargetRole());
-
 		}
 	}
 
+	private void visitOneToMany(EJavaField javaField, EUmlRelationship umlRelationship) {
+		if (umlRelationship.getSourceMultiplicity().isToMany() && umlRelationship.getTargetMultiplicity().isToOne()) {
+			javaField.addAnnotation(BatchSize.class).setLiteralValue("size", "10");
+			javaField.addAnnotation(LazyCollection.class).setEnumValue(LazyCollectionOption.EXTRA);
+			val annMany = javaField.addAnnotation(OneToMany.class);
+			// Bidirecional
+			if (umlRelationship.getNavigability().isBidirectional()) {
+				annMany.setStringValue("mappedBy", umlRelationship.getTargetRole());
+			} else {
+				val annJoinColumn = javaField.addAnnotation(JoinColumn.class);
+				annJoinColumn.setStringValue("name", EJpaEntity.genFKName(umlRelationship.getTargetClass().getName()));
+			}
+		}
+	}
+
+	private void visitManyToOne(EJavaField javaField, EUmlRelationship umlRelationship) {
+		if (umlRelationship.getSourceMultiplicity().isToOne() && umlRelationship.getTargetMultiplicity().isToMany()) {
+			val ann = javaField.addAnnotation(ManyToOne.class);
+			if (!umlRelationship.getSourceMultiplicity().isOptional()) ann.setLiteralValue("optional", "false");
+		}
+	}
+
+	private void visitOneToOne(EJavaField javaField, EUmlRelationship umlRelationship) {
+		if (umlRelationship.getSourceMultiplicity().isToOne() && umlRelationship.getTargetMultiplicity().isToOne()) {
+			val ann = javaField.addAnnotation(OneToOne.class);
+			if (!umlRelationship.getSourceMultiplicity().isOptional()) ann.setLiteralValue("optional", "false");
+			// Bidirecional
+			if (!umlRelationship.isSourceClassOwner() && umlRelationship.getNavigability().isBidirectional()) {
+				ann.setStringValue("mappedBy", umlRelationship.getTargetRole());
+			} else {
+
+			}
+		}
+	}
 }
