@@ -8,8 +8,14 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.BatchSize;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.jboss.forge.roaster.model.Type;
 import org.jboss.forge.roaster.model.source.FieldSource;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
@@ -20,6 +26,7 @@ import br.xtool.core.representation.EJavaAnnotation;
 import br.xtool.core.representation.EJavaClass;
 import br.xtool.core.representation.EJavaField;
 import br.xtool.core.representation.EJavaRelationship;
+import br.xtool.core.representation.EJpaEntity;
 
 public class EJavaFieldImpl implements EJavaField {
 
@@ -178,6 +185,39 @@ public class EJavaFieldImpl implements EJavaField {
 		EJavaAnnotation ann = this.addAnnotation(Size.class);
 		if (Objects.nonNull(min)) ann.setLiteralValue("min", String.valueOf(min));
 		if (Objects.nonNull(max)) ann.setLiteralValue("max", String.valueOf(max));
+		return ann;
+	}
+
+	@Override
+	public EJavaAnnotation addBatchSize(Integer size) {
+		EJavaAnnotation ann = this.addAnnotation(BatchSize.class);
+		ann.setLiteralValue("size", String.valueOf(size));
+		return ann;
+	}
+
+	@Override
+	public EJavaAnnotation addLazyCollection(LazyCollectionOption lazyCollectionOption) {
+		EJavaAnnotation ann = this.addAnnotation(LazyCollection.class);
+		ann.setEnumValue(lazyCollectionOption);
+		return ann;
+	}
+
+	@Override
+	public EJavaAnnotation addGeneratedValue(GenerationType generationType) {
+		EJavaAnnotation ann = this.addAnnotation(GeneratedValue.class);
+		ann.setEnumValue("strategy", GenerationType.SEQUENCE).setStringValue("generator", EJpaEntity.genDBSequenceName(this.getJavaClass().getName()));
+		return ann;
+	}
+
+	@Override
+	public EJavaAnnotation addSequenceGenerator() {
+		EJavaAnnotation ann = this.addAnnotation(SequenceGenerator.class);
+		// @formatter:off
+		ann.setLiteralValue("initialValue", "1")
+			.setLiteralValue("allocationSize", "1")
+			.setStringValue("name", EJpaEntity.genDBSequenceName(this.getJavaClass().getName()))
+			.setStringValue("sequenceName", EJpaEntity.genDBSequenceName(this.getJavaClass().getName()));
+		// @formatter:on
 		return ann;
 	}
 

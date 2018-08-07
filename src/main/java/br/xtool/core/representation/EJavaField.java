@@ -4,6 +4,9 @@ import java.lang.annotation.Annotation;
 import java.util.Optional;
 import java.util.SortedSet;
 
+import javax.persistence.GenerationType;
+
+import org.hibernate.annotations.LazyCollectionOption;
 import org.jboss.forge.roaster.model.Type;
 import org.jboss.forge.roaster.model.source.FieldSource;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
@@ -59,4 +62,11 @@ public interface EJavaField extends Comparable<EJavaField> {
 
 	EJavaAnnotation addSize(Integer min, Integer max);
 
+	EJavaAnnotation addBatchSize(Integer size);
+
+	EJavaAnnotation addLazyCollection(LazyCollectionOption lazyCollectionOption);
+
+	EJavaAnnotation addGeneratedValue(GenerationType generationType);
+
+	EJavaAnnotation addSequenceGenerator();
 }

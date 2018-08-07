@@ -3,7 +3,6 @@ package br.xtool.core.visitor.impl;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -12,14 +11,11 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.stereotype.Component;
 
@@ -68,16 +64,8 @@ public class JpaVisitor implements Visitor {
 		case LONG:
 			if (umlField.isId()) {
 				javaField.addAnnotation(Id.class);
-				// @formatter:off
-				javaField.addAnnotation(GeneratedValue.class)
-					.setEnumValue("strategy", GenerationType.SEQUENCE)
-					.setStringValue("generator", EJpaEntity.genDBSequenceName(javaField.getJavaClass().getName()));
-				javaField.addAnnotation(SequenceGenerator.class)
-					.setLiteralValue("initialValue", "1")
-					.setLiteralValue("allocationSize", "1")
-					.setStringValue("name", EJpaEntity.genDBSequenceName(javaField.getJavaClass().getName()))
-					.setStringValue("sequenceName", EJpaEntity.genDBSequenceName(javaField.getJavaClass().getName()));
-				// @formatter:on
+				javaField.addGeneratedValue(GenerationType.SEQUENCE);
+				javaField.addSequenceGenerator();
 				return;
 			}
 			javaField.addAnnotation(Column.class);
@@ -146,8 +134,8 @@ public class JpaVisitor implements Visitor {
 	 */
 	private void visitManyToMany(EJavaField javaField, EUmlRelationship umlRelationship) {
 		if (umlRelationship.getSourceMultiplicity().isToMany() && umlRelationship.getTargetMultiplicity().isToMany()) {
-			javaField.addAnnotation(BatchSize.class).setLiteralValue("size", "10");
-			javaField.addAnnotation(LazyCollection.class).setEnumValue(LazyCollectionOption.EXTRA);
+			javaField.addBatchSize(10);
+			javaField.addLazyCollection(LazyCollectionOption.EXTRA);
 			val annMany = javaField.addAnnotation(ManyToMany.class);
 			// Bidirecional
 			if (!umlRelationship.isSourceClassOwner() && umlRelationship.getNavigability().isBidirectional()) {
@@ -161,8 +149,8 @@ public class JpaVisitor implements Visitor {
 	 */
 	private void visitOneToMany(EJavaField javaField, EUmlRelationship umlRelationship) {
 		if (umlRelationship.getSourceMultiplicity().isToMany() && umlRelationship.getTargetMultiplicity().isToOne()) {
-			javaField.addAnnotation(BatchSize.class).setLiteralValue("size", "10");
-			javaField.addAnnotation(LazyCollection.class).setEnumValue(LazyCollectionOption.EXTRA);
+			javaField.addBatchSize(10);
+			javaField.addLazyCollection(LazyCollectionOption.EXTRA);
 			val annOneToMany = javaField.addAnnotation(OneToMany.class);
 			// Bidirecional
 			if (umlRelationship.getNavigability().isBidirectional()) {
