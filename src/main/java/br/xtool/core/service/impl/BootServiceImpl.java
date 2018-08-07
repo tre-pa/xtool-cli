@@ -10,9 +10,14 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Properties;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.eclipse.jdt.core.JavaCore;
+import org.eclipse.jdt.core.formatter.DefaultCodeFormatterConstants;
+import org.eclipse.jdt.internal.compiler.impl.CompilerOptions;
+import org.jboss.forge.roaster.Roaster;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -64,8 +69,17 @@ public class BootServiceImpl implements BootService {
 	public void save(EJavaSourceFolder sourceFolder, EJavaClass javaClass) {
 		Path javaPath = sourceFolder.getPath().resolve(javaClass.getPackage().getDir()).resolve(String.format("%s.java", javaClass.getName()));
 		if (Files.notExists(javaPath.getParent())) Files.createDirectories(javaPath);
+		Properties prefs = new Properties();
+		prefs.setProperty(JavaCore.COMPILER_SOURCE, CompilerOptions.VERSION_1_8);
+		prefs.setProperty(JavaCore.COMPILER_COMPLIANCE, CompilerOptions.VERSION_1_8);
+		prefs.setProperty(JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM, CompilerOptions.VERSION_1_8);
+		prefs.setProperty(DefaultCodeFormatterConstants.FORMATTER_LINE_SPLIT, "120");
+		prefs.setProperty(DefaultCodeFormatterConstants.FORMATTER_BLANK_LINES_BEFORE_FIELD, "1");
+		//		prefs.setProperty(DefaultCodeFormatterConstants., "TRUE");
 		try (BufferedWriter write = Files.newBufferedWriter(javaPath)) {
-			write.write(javaClass.getRoasterJavaClass().toString());
+			String formatedJavaClassSource = Roaster.format(prefs, javaClass.getRoasterJavaClass().toUnformattedString());
+			System.out.println(formatedJavaClassSource);
+			write.write(formatedJavaClassSource);
 			write.flush();
 			sourceFolder.getBootProject().refresh();
 		}
