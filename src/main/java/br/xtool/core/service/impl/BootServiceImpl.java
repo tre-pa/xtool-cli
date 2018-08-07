@@ -75,10 +75,11 @@ public class BootServiceImpl implements BootService {
 		prefs.setProperty(JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM, CompilerOptions.VERSION_1_8);
 		prefs.setProperty(DefaultCodeFormatterConstants.FORMATTER_LINE_SPLIT, "120");
 		prefs.setProperty(DefaultCodeFormatterConstants.FORMATTER_BLANK_LINES_BEFORE_FIELD, "1");
+		prefs.setProperty(DefaultCodeFormatterConstants.FORMATTER_BLANK_LINES_AFTER_IMPORTS, "1");
+
 		//		prefs.setProperty(DefaultCodeFormatterConstants., "TRUE");
 		try (BufferedWriter write = Files.newBufferedWriter(javaPath)) {
 			String formatedJavaClassSource = Roaster.format(prefs, javaClass.getRoasterJavaClass().toUnformattedString());
-			System.out.println(formatedJavaClassSource);
 			write.write(formatedJavaClassSource);
 			write.flush();
 			sourceFolder.getBootProject().refresh();
@@ -129,6 +130,11 @@ public class BootServiceImpl implements BootService {
 			.setType(umlField.getType().getJavaName());
 		// @formatter:on
 		vistors.forEach(visitor -> visitor.visit(javaField, umlField));
+		vistors.forEach(visitor -> iterateOverFieldProperties(visitor, javaField, umlField));
+	}
+
+	private <T extends Visitor> void iterateOverFieldProperties(T visitor, EJavaField javaField, EUmlField umlField) {
+		umlField.getProperties().forEach(property -> visitor.visit(javaField, property));
 	}
 
 	// Converte um relacionamento UML para um objeto EJavaField.
