@@ -1,5 +1,6 @@
 package br.xtool.core.visitor.impl;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -162,13 +163,17 @@ public class JpaVisitor implements Visitor {
 		if (umlRelationship.getSourceMultiplicity().isToMany() && umlRelationship.getTargetMultiplicity().isToOne()) {
 			javaField.addAnnotation(BatchSize.class).setLiteralValue("size", "10");
 			javaField.addAnnotation(LazyCollection.class).setEnumValue(LazyCollectionOption.EXTRA);
-			val annMany = javaField.addAnnotation(OneToMany.class);
+			val annOneToMany = javaField.addAnnotation(OneToMany.class);
 			// Bidirecional
 			if (umlRelationship.getNavigability().isBidirectional()) {
-				annMany.setStringValue("mappedBy", umlRelationship.getTargetRole());
+				annOneToMany.setStringValue("mappedBy", umlRelationship.getTargetRole());
 			} else {
 				val annJoinColumn = javaField.addAnnotation(JoinColumn.class);
 				annJoinColumn.setStringValue("name", EJpaEntity.genFKName(umlRelationship.getTargetClass().getName()));
+			}
+			if (umlRelationship.isComposition()) {
+				annOneToMany.setEnumValue("cascade", CascadeType.ALL);
+				annOneToMany.setLiteralValue("orphanRemoval", "true");
 			}
 		}
 	}
@@ -188,13 +193,17 @@ public class JpaVisitor implements Visitor {
 	 */
 	private void visitOneToOne(EJavaField javaField, EUmlRelationship umlRelationship) {
 		if (umlRelationship.getSourceMultiplicity().isToOne() && umlRelationship.getTargetMultiplicity().isToOne()) {
-			val ann = javaField.addAnnotation(OneToOne.class);
-			if (!umlRelationship.getSourceMultiplicity().isOptional()) ann.setLiteralValue("optional", "false");
+			val annOneToOne = javaField.addAnnotation(OneToOne.class);
+			if (!umlRelationship.getSourceMultiplicity().isOptional()) annOneToOne.setLiteralValue("optional", "false");
 			// Bidirecional
 			if (!umlRelationship.isSourceClassOwner() && umlRelationship.getNavigability().isBidirectional()) {
-				ann.setStringValue("mappedBy", umlRelationship.getTargetRole());
+				annOneToOne.setStringValue("mappedBy", umlRelationship.getTargetRole());
 			} else {
 
+			}
+			if (umlRelationship.isComposition()) {
+				annOneToOne.setEnumValue("cascade", CascadeType.ALL);
+				annOneToOne.setLiteralValue("orphanRemoval", "true");
 			}
 		}
 	}
