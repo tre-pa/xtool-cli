@@ -14,13 +14,19 @@ $ git clone git@git.tre-pa.jus.br:sds/support/xtool-cli.git
 $ cd xtool-cli
 ```
 
-**2.** Rodar o projeto com comando `run.sh` indicando o diretório de workspace (*na maioria dos casos ~/git/*):
+**2.** Para rodar o projeto se faz necessária a instalação de uma JDK, utulizando o comando abaixo:
+
+```sh
+$ sudo dnf install java-1.8.0-openjdk.x86_64
+```
+
+**3.** Rodar o projeto com comando `run.sh` indicando o diretório de workspace (*na maioria dos casos ~/git/*):
 
 ```sh
 $ ./run.sh ~/git/
 ```
 
-**3.** Após rodar a aplicação o prompt da ferramenta será exibido.
+**4.** Após rodar a aplicação o prompt da ferramenta será exibido.
 
 ```sh
 xtool ~
