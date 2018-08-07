@@ -140,6 +140,9 @@ public class JpaVisitor implements Visitor {
 		visitOneToOne(javaField, umlRelationship);
 	}
 
+	/*
+	 * Visitor ManyToMany
+	 */
 	private void visitManyToMany(EJavaField javaField, EUmlRelationship umlRelationship) {
 		if (umlRelationship.getSourceMultiplicity().isToMany() && umlRelationship.getTargetMultiplicity().isToMany()) {
 			javaField.addAnnotation(BatchSize.class).setLiteralValue("size", "10");
@@ -152,6 +155,9 @@ public class JpaVisitor implements Visitor {
 		}
 	}
 
+	/*
+	 * Visitor OneToMany
+	 */
 	private void visitOneToMany(EJavaField javaField, EUmlRelationship umlRelationship) {
 		if (umlRelationship.getSourceMultiplicity().isToMany() && umlRelationship.getTargetMultiplicity().isToOne()) {
 			javaField.addAnnotation(BatchSize.class).setLiteralValue("size", "10");
@@ -167,6 +173,9 @@ public class JpaVisitor implements Visitor {
 		}
 	}
 
+	/*
+	 * Visitor ManyToOne
+	 */
 	private void visitManyToOne(EJavaField javaField, EUmlRelationship umlRelationship) {
 		if (umlRelationship.getSourceMultiplicity().isToOne() && umlRelationship.getTargetMultiplicity().isToMany()) {
 			val ann = javaField.addAnnotation(ManyToOne.class);
@@ -174,6 +183,9 @@ public class JpaVisitor implements Visitor {
 		}
 	}
 
+	/*
+	 * Visitor OneToOne
+	 */
 	private void visitOneToOne(EJavaField javaField, EUmlRelationship umlRelationship) {
 		if (umlRelationship.getSourceMultiplicity().isToOne() && umlRelationship.getTargetMultiplicity().isToOne()) {
 			val ann = javaField.addAnnotation(OneToOne.class);
