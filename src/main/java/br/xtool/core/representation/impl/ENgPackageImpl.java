@@ -3,6 +3,7 @@ package br.xtool.core.representation.impl;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -32,9 +33,9 @@ public class ENgPackageImpl implements ENgPackage {
 
 	private String version;
 
-	private Map<String, String> dependencies;
+	private Map<String, String> dependencies = new HashMap<>();
 
-	private Map<String, String> devDependencies;
+	private Map<String, String> devDependencies = new HashMap<>();
 
 	private ENgPackageImpl() {
 		super();
