@@ -14,6 +14,8 @@ import br.xtool.core.representation.EJavaClass;
 import br.xtool.core.representation.EJavaField;
 import br.xtool.core.representation.EJavaMethod;
 import br.xtool.core.representation.EJavaPackage;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 public class EJavaClassImpl implements EJavaClass {
 
@@ -142,6 +144,28 @@ public class EJavaClassImpl implements EJavaClass {
 	@Override
 	public JavaClassSource getRoasterJavaClass() {
 		return this.javaClassSource;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EJavaClass#addToString(java.lang.String[])
+	 */
+	@Override
+	public EJavaAnnotation addToString(String... attributes) {
+		EJavaAnnotation javaAnnotation = this.addAnnotation(ToString.class);
+		javaAnnotation.setStringArrayValue("of", attributes);
+		return javaAnnotation;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EJavaClass#addEqualsAndHashCode(java.lang.String[])
+	 */
+	@Override
+	public EJavaAnnotation addEqualsAndHashCode(String... attributes) {
+		EJavaAnnotation javaAnnotation = this.addAnnotation(EqualsAndHashCode.class);
+		javaAnnotation.setStringArrayValue("of", attributes);
+		return javaAnnotation;
 	}
 
 	@Override

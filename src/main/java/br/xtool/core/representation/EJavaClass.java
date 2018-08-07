@@ -94,4 +94,8 @@ public interface EJavaClass extends Comparable<EJavaClass> {
 	 */
 	JavaClassSource getRoasterJavaClass();
 
+	EJavaAnnotation addToString(String... attributes);
+
+	EJavaAnnotation addEqualsAndHashCode(String... attibutes);
+
 }

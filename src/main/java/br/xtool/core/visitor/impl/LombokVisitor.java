@@ -10,11 +10,9 @@ import br.xtool.core.representation.EUmlFieldProperty;
 import br.xtool.core.representation.EUmlRelationship;
 import br.xtool.core.representation.EUmlStereotype;
 import br.xtool.core.visitor.Visitor;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @Component
 public class LombokVisitor implements Visitor {
@@ -24,8 +22,8 @@ public class LombokVisitor implements Visitor {
 		javaClass.addAnnotation(Getter.class);
 		javaClass.addAnnotation(Setter.class);
 		javaClass.addAnnotation(NoArgsConstructor.class);
-		javaClass.addAnnotation(EqualsAndHashCode.class).setStringArrayValue("of", new String[] { "id" });
-		javaClass.addAnnotation(ToString.class).setStringArrayValue("of", new String[] { "id" });
+		javaClass.addEqualsAndHashCode("id");
+		javaClass.addToString("id");
 	}
 
 	@Override

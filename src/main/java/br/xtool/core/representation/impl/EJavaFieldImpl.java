@@ -2,10 +2,13 @@ package br.xtool.core.representation.impl;
 
 import java.lang.annotation.Annotation;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
+
+import javax.validation.constraints.Size;
 
 import org.jboss.forge.roaster.model.Type;
 import org.jboss.forge.roaster.model.source.FieldSource;
@@ -168,6 +171,14 @@ public class EJavaFieldImpl implements EJavaField {
 				.map(EJavaRelationship.class::cast)
 				.findFirst();
 		// @formatter:on
+	}
+
+	@Override
+	public EJavaAnnotation addSize(Integer min, Integer max) {
+		EJavaAnnotation ann = this.addAnnotation(Size.class);
+		if (Objects.nonNull(min)) ann.setLiteralValue("min", String.valueOf(min));
+		if (Objects.nonNull(max)) ann.setLiteralValue("max", String.valueOf(max));
+		return ann;
 	}
 
 	@Override

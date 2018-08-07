@@ -57,4 +57,6 @@ public interface EJavaField extends Comparable<EJavaField> {
 
 	FieldSource<JavaClassSource> getRoasterField();
 
+	EJavaAnnotation addSize(Integer min, Integer max);
+
 }
