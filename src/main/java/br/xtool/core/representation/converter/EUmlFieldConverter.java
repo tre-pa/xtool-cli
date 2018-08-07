@@ -7,6 +7,12 @@ import br.xtool.core.representation.EJavaField;
 import br.xtool.core.representation.EUmlField;
 import br.xtool.core.util.RoasterUtil;
 
+/**
+ * Converter um atributo UML do diagrama de classe em um EJavaField.
+ * 
+ * @author jcruz
+ *
+ */
 public class EUmlFieldConverter implements BiFunction<EJavaClass, EUmlField, EJavaField> {
 
 	@Override

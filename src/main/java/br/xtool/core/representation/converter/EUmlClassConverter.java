@@ -11,6 +11,7 @@ import br.xtool.core.representation.impl.EJavaClassImpl;
 import br.xtool.core.util.RoasterUtil;
 
 /**
+ * Converte uma classe UML em um EJavaClass.
  * 
  * @author jcruz
  *

@@ -8,6 +8,12 @@ import br.xtool.core.representation.EJavaClass;
 import br.xtool.core.representation.EJavaField;
 import br.xtool.core.representation.EUmlRelationship;
 
+/**
+ * Converte um relacionamento UML em um EJavaField.
+ * 
+ * @author jcruz
+ *
+ */
 public class EUmlRelationshipConverter implements BiFunction<EJavaClass, EUmlRelationship, EJavaField> {
 
 	@Override
