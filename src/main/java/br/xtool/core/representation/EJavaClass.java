@@ -65,6 +65,13 @@ public interface EJavaClass extends Comparable<EJavaClass> {
 	EJavaField addField(String name);
 
 	/**
+	 * 
+	 * @param name
+	 * @return
+	 */
+	EJavaMethod addMethod(String name);
+
+	/**
 	 * Retorna as annotations da classe.
 	 * 
 	 * @return

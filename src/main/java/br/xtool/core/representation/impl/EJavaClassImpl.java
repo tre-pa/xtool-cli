@@ -100,6 +100,16 @@ public class EJavaClassImpl implements EJavaClass {
 	}
 
 	@Override
+	public EJavaMethod addMethod(String name) {
+		// @formatter:off
+		return this.getMethods().stream()
+				.filter(javaMethod -> javaMethod.getName().equals(name))
+				.findAny()
+				.orElseGet(() -> new EJavaMethodImpl(this.project, this, this.javaClassSource.addMethod().setName(name)));
+		// @formatter:on
+	}
+
+	@Override
 	public SortedSet<EJavaAnnotation> getAnnotations() {
 		// @formatter:off
 		return this.javaClassSource.getAnnotations()
@@ -124,7 +134,7 @@ public class EJavaClassImpl implements EJavaClass {
 		// @formatter:off
 		return this.javaClassSource.getMethods()
 				.stream()
-				.map(EJavaMethodImpl::new)
+				.map(methodSource -> new EJavaMethodImpl(this.project, this, methodSource))
 				.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
 	}

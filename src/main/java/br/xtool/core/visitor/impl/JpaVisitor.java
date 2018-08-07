@@ -167,6 +167,28 @@ public class JpaVisitor implements Visitor {
 			// Bidirecional
 			if (umlRelationship.getNavigability().isBidirectional()) {
 				annOneToMany.setStringValue("mappedBy", umlRelationship.getTargetRole());
+				// @formatter:off
+				// add
+				javaField.getJavaClass().addMethod(String.format("add%s", umlRelationship.getTargetClass().getName()))
+					.getRoasterMethod()
+						.setReturnTypeVoid()
+						.setBody(String.format("this.%s.add(%s); %s.set%s(this);", 
+								umlRelationship.getSourceRole(), 
+								umlRelationship.getTargetClass().getInstanceName(), 
+								umlRelationship.getTargetClass().getInstanceName(),
+								umlRelationship.getSourceClass().getName()))
+						.addParameter(umlRelationship.getTargetClass().getName(), umlRelationship.getTargetClass().getInstanceName());
+				// remove
+				javaField.getJavaClass().addMethod(String.format("remove%s", umlRelationship.getTargetClass().getName()))
+				.getRoasterMethod()
+					.setReturnTypeVoid()
+					.setBody(String.format("this.%s.remove(%s); %s.set%s(null);", 
+							umlRelationship.getSourceRole(), 
+							umlRelationship.getTargetClass().getInstanceName(), 
+							umlRelationship.getTargetClass().getInstanceName(),
+							umlRelationship.getSourceClass().getName()))
+					.addParameter(umlRelationship.getTargetClass().getName(), umlRelationship.getTargetClass().getInstanceName());
+			// @formatter:on
 			} else {
 				val annJoinColumn = javaField.addAnnotation(JoinColumn.class);
 				annJoinColumn.setStringValue("name", EJpaEntity.genFKName(umlRelationship.getTargetClass().getName()));

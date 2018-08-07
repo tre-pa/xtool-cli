@@ -44,6 +44,11 @@ public class EUmlClassImpl implements EUmlClass {
 		return this.leaf.getDisplay().asStringWithHiddenNewLine();
 	}
 
+	@Override
+	public String getInstanceName() {
+		return StringUtils.uncapitalize(this.getName());
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * @see br.xtool.core.representation.EUmlClass#getQualifiedName()

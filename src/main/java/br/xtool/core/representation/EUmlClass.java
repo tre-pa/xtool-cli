@@ -19,6 +19,12 @@ public interface EUmlClass {
 	String getName();
 
 	/**
+	 * 
+	 * @return
+	 */
+	String getInstanceName();
+
+	/**
 	 * Retorna o nome qualificado.
 	 * 
 	 * @return

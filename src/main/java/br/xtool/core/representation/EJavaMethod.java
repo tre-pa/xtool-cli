@@ -5,6 +5,7 @@ import java.util.SortedSet;
 
 import org.jboss.forge.roaster.model.Type;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
+import org.jboss.forge.roaster.model.source.MethodSource;
 import org.jboss.forge.roaster.model.source.ParameterSource;
 
 /**
@@ -32,4 +33,6 @@ public interface EJavaMethod extends Comparable<EJavaMethod> {
 	List<ParameterSource<JavaClassSource>> getParameters();
 
 	SortedSet<EJavaAnnotation> getAnnotations();
+
+	MethodSource<JavaClassSource> getRoasterMethod();
 }

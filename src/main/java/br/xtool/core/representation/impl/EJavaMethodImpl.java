@@ -10,16 +10,24 @@ import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.jboss.forge.roaster.model.source.MethodSource;
 import org.jboss.forge.roaster.model.source.ParameterSource;
 
+import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.EJavaAnnotation;
+import br.xtool.core.representation.EJavaClass;
 import br.xtool.core.representation.EJavaMethod;
 
 public class EJavaMethodImpl implements EJavaMethod {
 
 	private MethodSource<JavaClassSource> methodSource;
 
-	public EJavaMethodImpl(MethodSource<JavaClassSource> methodSource) {
+	private EJavaClass javaClass;
+
+	private EBootProject bootProject;
+
+	public EJavaMethodImpl(EBootProject bootProject, EJavaClass javaClass, MethodSource<JavaClassSource> methodSource) {
 		super();
 		this.methodSource = methodSource;
+		this.bootProject = bootProject;
+		this.javaClass = javaClass;
 	}
 
 	/**
@@ -65,6 +73,11 @@ public class EJavaMethodImpl implements EJavaMethod {
 	@Override
 	public List<ParameterSource<JavaClassSource>> getParameters() {
 		return this.methodSource.getParameters();
+	}
+
+	@Override
+	public MethodSource<JavaClassSource> getRoasterMethod() {
+		return this.methodSource;
 	}
 
 	@Override
