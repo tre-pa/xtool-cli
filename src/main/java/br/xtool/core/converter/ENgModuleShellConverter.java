@@ -4,26 +4,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
-import br.xtool.core.representation.ENgLayout;
+import br.xtool.core.representation.ENgModule;
 import br.xtool.core.representation.ENgProject;
 import br.xtool.core.service.WorkspaceService;
 
 @Component
-public class ENgLayoutConverter implements Converter<String, ENgLayout> {
+public class ENgModuleShellConverter implements Converter<String, ENgModule> {
 
 	@Autowired
 	private WorkspaceService workspaceService;
 
 	@Override
-	public ENgLayout convert(String source) {
+	public ENgModule convert(String source) {
 		if (this.workspaceService.getWorkingProject() instanceof ENgProject) {
 			ENgProject project = ENgProject.class.cast(this.workspaceService.getWorkingProject());
 			// @formatter:off
-			return project.getNgLayouts()
+			return project.getNgModules()
 				.stream()
 				.filter(e -> e.getName().equals(source))
 				.findFirst()
-				.orElseThrow(() -> new RuntimeException("Erro ao converter Layout."));
+				.orElseThrow(() -> new RuntimeException("Erro ao converter Modulo."));
 			// @formatter:on
 		}
 		return null;

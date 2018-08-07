@@ -1,29 +1,28 @@
 package br.xtool.core.converter;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
-import br.xtool.core.representation.ENgPage;
-import br.xtool.core.representation.ENgProject;
+import br.xtool.core.representation.EProject;
 import br.xtool.core.service.WorkspaceService;
 
 @Component
-public class ENgPageConverter implements Converter<String, ENgPage> {
+public class EProjectShellConverter implements Converter<String, EProject> {
 
 	@Autowired
 	private WorkspaceService workspaceService;
 
 	@Override
-	public ENgPage convert(String source) {
-		if (this.workspaceService.getWorkingProject() instanceof ENgProject) {
-			ENgProject project = ENgProject.class.cast(this.workspaceService.getWorkingProject());
+	public EProject convert(String source) {
+		if (StringUtils.isNotEmpty(source)) {
 			// @formatter:off
-			return project.getNgPages()
+			return this.workspaceService.getWorkspace().getProjects()
 				.stream()
 				.filter(e -> e.getName().equals(source))
 				.findFirst()
-				.orElseThrow(() -> new RuntimeException("Erro ao converter Page."));
+				.orElseThrow(() -> new RuntimeException("Erro ao converer projeto"));
 			// @formatter:on
 		}
 		return null;

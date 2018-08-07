@@ -10,7 +10,7 @@ import br.xtool.core.representation.EBootProject;
 import br.xtool.core.service.WorkspaceService;
 
 @Component
-public class EJavaEntityConverter implements Converter<String, EJpaEntity> {
+public class EJavaEntityShellConverter implements Converter<String, EJpaEntity> {
 
 	@Autowired
 	private WorkspaceService workspaceService;
