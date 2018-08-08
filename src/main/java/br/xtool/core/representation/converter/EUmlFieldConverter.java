@@ -51,6 +51,9 @@ public class EUmlFieldConverter implements BiFunction<EJavaClass, EUmlField, EJa
 		return javaField;
 	}
 
+	/*
+	 * Visita os atributos da classe e as respectivas propridades.
+	 */
 	private void visit(EJavaField javaField, EUmlField umlField) {
 		this.visitors.forEach(visitor -> {
 			visitor.visit(javaField, umlField);
