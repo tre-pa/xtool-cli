@@ -10,6 +10,7 @@ import java.util.function.BiFunction;
 import br.xtool.core.representation.EJavaClass;
 import br.xtool.core.representation.EJavaField;
 import br.xtool.core.representation.EUmlField;
+import br.xtool.core.representation.EUmlFieldProperty.FieldPropertyType;
 import br.xtool.core.representation.impl.EJavaFieldImpl.EBigDecimalFieldImpl;
 import br.xtool.core.representation.impl.EJavaFieldImpl.EBooleanFieldImpl;
 import br.xtool.core.representation.impl.EJavaFieldImpl.EByteFieldImpl;
@@ -17,7 +18,10 @@ import br.xtool.core.representation.impl.EJavaFieldImpl.EIntegerFieldImpl;
 import br.xtool.core.representation.impl.EJavaFieldImpl.ELocalDateFieldImpl;
 import br.xtool.core.representation.impl.EJavaFieldImpl.ELocalDateTimeFieldImpl;
 import br.xtool.core.representation.impl.EJavaFieldImpl.ELongFieldImpl;
+import br.xtool.core.representation.impl.EJavaFieldImpl.ENotNullFieldImpl;
 import br.xtool.core.representation.impl.EJavaFieldImpl.EStringFieldImpl;
+import br.xtool.core.representation.impl.EJavaFieldImpl.ETransientFieldImpl;
+import br.xtool.core.representation.impl.EJavaFieldImpl.EUniqueFieldImpl;
 import br.xtool.core.util.RoasterUtil;
 import br.xtool.core.visitor.Visitor;
 import lombok.AllArgsConstructor;
@@ -59,7 +63,12 @@ public class EUmlFieldConverter implements BiFunction<EJavaClass, EUmlField, EJa
 			if (javaField.getType().isType(LocalDate.class)) visitor.visit(new ELocalDateFieldImpl(javaField), umlField);
 			if (javaField.getType().isType(LocalDateTime.class)) visitor.visit(new ELocalDateTimeFieldImpl(javaField), umlField);
 		});
-		this.visitors.forEach(visitor -> umlField.getProperties().forEach(property -> visitor.visit(javaField, property)));
+		this.visitors.forEach(visitor -> umlField.getProperties().forEach(property -> {
+			visitor.visit(javaField, property);
+			if (property.getFieldProperty().equals(FieldPropertyType.NOTNULL)) visitor.visit(new ENotNullFieldImpl(javaField), property);
+			if (property.getFieldProperty().equals(FieldPropertyType.UNIQUE)) visitor.visit(new EUniqueFieldImpl(javaField), property);
+			if (property.getFieldProperty().equals(FieldPropertyType.TRANSIENT)) visitor.visit(new ETransientFieldImpl(javaField), property);
+		}));
 	}
 
 }

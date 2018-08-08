@@ -143,26 +143,46 @@ public class EJavaFieldImpl implements EJavaField {
 		return this.fieldSource.hasJavaDoc();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EJavaField#isTransient()
+	 */
 	@Override
 	public boolean isTransient() {
 		return this.fieldSource.isTransient();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EJavaField#isVolatile()
+	 */
 	@Override
 	public boolean isVolatile() {
 		return this.fieldSource.isVolatile();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EJavaField#getLineNumber()
+	 */
 	@Override
 	public int getLineNumber() {
 		return this.fieldSource.getLineNumber();
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EJavaField#getRoasterField()
+	 */
 	@Override
 	public FieldSource<JavaClassSource> getRoasterField() {
 		return this.fieldSource;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EJavaField#getRelationship()
+	 */
 	@Override
 	public Optional<EJavaRelationship> getRelationship() {
 		if (this.isCollection()) {
@@ -185,6 +205,10 @@ public class EJavaFieldImpl implements EJavaField {
 		// @formatter:on
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EJavaField#addSizeAnnotation(java.lang.Integer, java.lang.Integer)
+	 */
 	@Override
 	public EJavaAnnotation addSizeAnnotation(Integer min, Integer max) {
 		EJavaAnnotation ann = this.addAnnotation(Size.class);
@@ -193,6 +217,10 @@ public class EJavaFieldImpl implements EJavaField {
 		return ann;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EJavaField#addBatchSizeAnnotation(java.lang.Integer)
+	 */
 	@Override
 	public EJavaAnnotation addBatchSizeAnnotation(Integer size) {
 		EJavaAnnotation ann = this.addAnnotation(BatchSize.class);
@@ -200,6 +228,10 @@ public class EJavaFieldImpl implements EJavaField {
 		return ann;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EJavaField#addLazyCollectionAnnotation(org.hibernate.annotations.LazyCollectionOption)
+	 */
 	@Override
 	public EJavaAnnotation addLazyCollectionAnnotation(LazyCollectionOption lazyCollectionOption) {
 		EJavaAnnotation ann = this.addAnnotation(LazyCollection.class);
@@ -207,6 +239,10 @@ public class EJavaFieldImpl implements EJavaField {
 		return ann;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EJavaField#addGeneratedValueAnnotation(javax.persistence.GenerationType)
+	 */
 	@Override
 	public EJavaAnnotation addGeneratedValueAnnotation(GenerationType generationType) {
 		EJavaAnnotation ann = this.addAnnotation(GeneratedValue.class);
@@ -214,6 +250,10 @@ public class EJavaFieldImpl implements EJavaField {
 		return ann;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EJavaField#addSequenceGeneratorAnnotation()
+	 */
 	@Override
 	public EJavaAnnotation addSequenceGeneratorAnnotation() {
 		EJavaAnnotation ann = this.addAnnotation(SequenceGenerator.class);
@@ -226,6 +266,10 @@ public class EJavaFieldImpl implements EJavaField {
 		return ann;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Comparable#compareTo(java.lang.Object)
+	 */
 	@Override
 	public int compareTo(EJavaField o) {
 		return this.getName().compareTo(o.getName());
@@ -288,6 +332,30 @@ public class EJavaFieldImpl implements EJavaField {
 	public static class ELocalDateTimeFieldImpl extends EJavaFieldImpl implements ELocalDateTimeField {
 
 		public ELocalDateTimeFieldImpl(EJavaField javaField) {
+			super(javaField.getProject(), javaField.getJavaClass(), javaField.getRoasterField());
+		}
+
+	}
+
+	public static class ENotNullFieldImpl extends EJavaFieldImpl implements ENotNullField {
+
+		public ENotNullFieldImpl(EJavaField javaField) {
+			super(javaField.getProject(), javaField.getJavaClass(), javaField.getRoasterField());
+		}
+
+	}
+
+	public static class ETransientFieldImpl extends EJavaFieldImpl implements ETransientField {
+
+		public ETransientFieldImpl(EJavaField javaField) {
+			super(javaField.getProject(), javaField.getJavaClass(), javaField.getRoasterField());
+		}
+
+	}
+
+	public static class EUniqueFieldImpl extends EJavaFieldImpl implements EUniqueField {
+
+		public EUniqueFieldImpl(EJavaField javaField) {
 			super(javaField.getProject(), javaField.getJavaClass(), javaField.getRoasterField());
 		}
 

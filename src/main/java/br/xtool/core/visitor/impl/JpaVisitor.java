@@ -27,7 +27,10 @@ import br.xtool.core.representation.EJavaField.EIntegerField;
 import br.xtool.core.representation.EJavaField.ELocalDateField;
 import br.xtool.core.representation.EJavaField.ELocalDateTimeField;
 import br.xtool.core.representation.EJavaField.ELongField;
+import br.xtool.core.representation.EJavaField.ENotNullField;
 import br.xtool.core.representation.EJavaField.EStringField;
+import br.xtool.core.representation.EJavaField.ETransientField;
+import br.xtool.core.representation.EJavaField.EUniqueField;
 import br.xtool.core.representation.EJpaEntity;
 import br.xtool.core.representation.EUmlField;
 import br.xtool.core.representation.EUmlFieldProperty;
@@ -68,16 +71,28 @@ public class JpaVisitor implements Visitor {
 	public void visit(EJavaField javaField, EUmlField umlField) {
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField.EStringField, br.xtool.core.representation.EUmlField)
+	 */
 	@Override
 	public void visit(EStringField stringField, EUmlField umlField) {
 		stringField.addAnnotation(Column.class).setLiteralValue("length", String.valueOf(umlField.getMaxArrayLength().orElse(255)));
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField.EBooleanField, br.xtool.core.representation.EUmlField)
+	 */
 	@Override
 	public void visit(EBooleanField booleanField, EUmlField umlField) {
 		booleanField.addAnnotation(Column.class);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField.ELongField, br.xtool.core.representation.EUmlField)
+	 */
 	@Override
 	public void visit(ELongField longField, EUmlField umlField) {
 		if (umlField.isId()) {
@@ -89,26 +104,46 @@ public class JpaVisitor implements Visitor {
 		longField.addAnnotation(Column.class);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField.EIntegerField, br.xtool.core.representation.EUmlField)
+	 */
 	@Override
 	public void visit(EIntegerField integerField, EUmlField umlField) {
 		integerField.addAnnotation(Column.class);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField.EByteField, br.xtool.core.representation.EUmlField)
+	 */
 	@Override
 	public void visit(EByteField byteField, EUmlField umlField) {
 		byteField.addAnnotation(Lob.class);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField.EBigDecimalField, br.xtool.core.representation.EUmlField)
+	 */
 	@Override
 	public void visit(EBigDecimalField bigDecimalField, EUmlField umlField) {
 		bigDecimalField.addAnnotation(Column.class);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField.ELocalDateField, br.xtool.core.representation.EUmlField)
+	 */
 	@Override
 	public void visit(ELocalDateField localDateField, EUmlField umlField) {
 		localDateField.addAnnotation(Column.class);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField.ELocalDateTimeField, br.xtool.core.representation.EUmlField)
+	 */
 	@Override
 	public void visit(ELocalDateTimeField localDateTimeField, EUmlField umlField) {
 		localDateTimeField.addAnnotation(Column.class);
@@ -120,19 +155,35 @@ public class JpaVisitor implements Visitor {
 	 */
 	@Override
 	public void visit(EJavaField javaField, EUmlFieldProperty umlFieldProperty) {
-		switch (umlFieldProperty.getFieldProperty()) {
-		case NOTNULL:
-			javaField.addAnnotation(Column.class).setLiteralValue("nullable", "false");
-			break;
-		case TRANSIENT:
-			javaField.addAnnotation(Transient.class);
-			break;
-		case UNIQUE:
-			javaField.addAnnotation(Column.class).setLiteralValue("unique", "true");
-			break;
-		default:
-			break;
-		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField.ENotNullField, br.xtool.core.representation.EUmlFieldProperty)
+	 */
+	@Override
+	public void visit(ENotNullField notNullField, EUmlFieldProperty property) {
+		notNullField.addAnnotation(Column.class).setLiteralValue("nullable", "false");
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField.ETransientField, br.xtool.core.representation.EUmlFieldProperty)
+	 */
+	@Override
+	public void visit(ETransientField transientField, EUmlFieldProperty property) {
+		transientField.addAnnotation(Transient.class);
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField.EUniqueField, br.xtool.core.representation.EUmlFieldProperty)
+	 */
+	@Override
+	public void visit(EUniqueField uniqueField, EUmlFieldProperty property) {
+		uniqueField.addAnnotation(Column.class).setLiteralValue("unique", "true");
 	}
 
 	/*

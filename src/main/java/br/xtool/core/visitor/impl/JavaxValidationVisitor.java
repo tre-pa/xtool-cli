@@ -11,7 +11,10 @@ import br.xtool.core.representation.EJavaField.EIntegerField;
 import br.xtool.core.representation.EJavaField.ELocalDateField;
 import br.xtool.core.representation.EJavaField.ELocalDateTimeField;
 import br.xtool.core.representation.EJavaField.ELongField;
+import br.xtool.core.representation.EJavaField.ENotNullField;
 import br.xtool.core.representation.EJavaField.EStringField;
+import br.xtool.core.representation.EJavaField.ETransientField;
+import br.xtool.core.representation.EJavaField.EUniqueField;
 import br.xtool.core.representation.EUmlField;
 import br.xtool.core.representation.EUmlFieldProperty;
 import br.xtool.core.representation.EUmlRelationship;
@@ -81,6 +84,24 @@ public class JavaxValidationVisitor implements Visitor {
 
 	@Override
 	public void visit(EJavaField javaField, EUmlFieldProperty umlFieldProperty) {
+
+	}
+
+	@Override
+	public void visit(ENotNullField notNullField, EUmlFieldProperty property) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void visit(ETransientField notNullField, EUmlFieldProperty property) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void visit(EUniqueField notNullField, EUmlFieldProperty property) {
+		// TODO Auto-generated method stub
 
 	}
 

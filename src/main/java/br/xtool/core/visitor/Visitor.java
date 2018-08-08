@@ -9,7 +9,10 @@ import br.xtool.core.representation.EJavaField.EIntegerField;
 import br.xtool.core.representation.EJavaField.ELocalDateField;
 import br.xtool.core.representation.EJavaField.ELocalDateTimeField;
 import br.xtool.core.representation.EJavaField.ELongField;
+import br.xtool.core.representation.EJavaField.ENotNullField;
 import br.xtool.core.representation.EJavaField.EStringField;
+import br.xtool.core.representation.EJavaField.ETransientField;
+import br.xtool.core.representation.EJavaField.EUniqueField;
 import br.xtool.core.representation.EUmlField;
 import br.xtool.core.representation.EUmlFieldProperty;
 import br.xtool.core.representation.EUmlRelationship;
@@ -47,19 +50,75 @@ public interface Visitor {
 	 */
 	void visit(EStringField stringField, EUmlField umlField);
 
+	/**
+	 * 
+	 * @param booleanField
+	 * @param umlField
+	 */
 	void visit(EBooleanField booleanField, EUmlField umlField);
 
+	/**
+	 * 
+	 * @param longField
+	 * @param umlField
+	 */
 	void visit(ELongField longField, EUmlField umlField);
 
+	/**
+	 * 
+	 * @param integerField
+	 * @param umlField
+	 */
 	void visit(EIntegerField integerField, EUmlField umlField);
 
+	/**
+	 * 
+	 * @param byteField
+	 * @param umlField
+	 */
 	void visit(EByteField byteField, EUmlField umlField);
 
+	/**
+	 * 
+	 * @param bigDecimalField
+	 * @param umlField
+	 */
 	void visit(EBigDecimalField bigDecimalField, EUmlField umlField);
 
+	/**
+	 * 
+	 * @param localDateField
+	 * @param umlField
+	 */
 	void visit(ELocalDateField localDateField, EUmlField umlField);
 
+	/**
+	 * 
+	 * @param localDateTimeField
+	 * @param umlField
+	 */
 	void visit(ELocalDateTimeField localDateTimeField, EUmlField umlField);
+
+	/**
+	 * 
+	 * @param notNullField
+	 * @param property
+	 */
+	void visit(ENotNullField notNullField, EUmlFieldProperty property);
+
+	/**
+	 * 
+	 * @param transientField
+	 * @param property
+	 */
+	void visit(ETransientField transientField, EUmlFieldProperty property);
+
+	/**
+	 * 
+	 * @param uniqueField
+	 * @param property
+	 */
+	void visit(EUniqueField uniqueField, EUmlFieldProperty property);
 
 	/**
 	 * 

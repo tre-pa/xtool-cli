@@ -88,4 +88,10 @@ public interface EJavaField extends Comparable<EJavaField> {
 
 	interface ELocalDateTimeField extends EJavaField {}
 
+	interface ENotNullField extends EJavaField {}
+
+	interface ETransientField extends EJavaField {}
+
+	interface EUniqueField extends EJavaField {}
+
 }
