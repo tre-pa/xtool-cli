@@ -27,7 +27,11 @@ import br.xtool.core.representation.EJavaField.EIntegerField;
 import br.xtool.core.representation.EJavaField.ELocalDateField;
 import br.xtool.core.representation.EJavaField.ELocalDateTimeField;
 import br.xtool.core.representation.EJavaField.ELongField;
+import br.xtool.core.representation.EJavaField.EManyToManyField;
+import br.xtool.core.representation.EJavaField.EManyToOneField;
 import br.xtool.core.representation.EJavaField.ENotNullField;
+import br.xtool.core.representation.EJavaField.EOneToManyField;
+import br.xtool.core.representation.EJavaField.EOneToOneField;
 import br.xtool.core.representation.EJavaField.EStringField;
 import br.xtool.core.representation.EJavaField.ETransientField;
 import br.xtool.core.representation.EJavaField.EUniqueField;
@@ -192,26 +196,20 @@ public class JpaVisitor implements Visitor {
 	 */
 	@Override
 	public void visit(EJavaField javaField, EUmlRelationship umlRelationship) {
-		visitManyToMany(javaField, umlRelationship);
-		visitManyToOne(javaField, umlRelationship);
+		//		visitManyToMany(javaField, umlRelationship);
+		//		visitManyToOne(javaField, umlRelationship);
 		visitOneToMany(javaField, umlRelationship);
-		visitOneToOne(javaField, umlRelationship);
+		//		visitOneToOne(javaField, umlRelationship);
 	}
 
-	/*
-	 * Visitor ManyToMany
-	 */
-	private void visitManyToMany(EJavaField javaField, EUmlRelationship umlRelationship) {
-		if (umlRelationship.getSourceMultiplicity().isToMany() && umlRelationship.getTargetMultiplicity().isToMany()) {
-			javaField.addBatchSizeAnnotation(10);
-			javaField.addLazyCollectionAnnotation(LazyCollectionOption.EXTRA);
-			val annMany = javaField.addAnnotation(ManyToMany.class);
-			// Bidirecional
-			if (!umlRelationship.isSourceClassOwner() && umlRelationship.getNavigability().isBidirectional()) {
-				annMany.setStringValue("mappedBy", umlRelationship.getTargetRole());
-			}
-		}
-	}
+	//	/*
+	//	 * Visitor ManyToMany
+	//	 */
+	//	private void visitManyToMany(EJavaField javaField, EUmlRelationship umlRelationship) {
+	//		if (umlRelationship.getSourceMultiplicity().isToMany() && umlRelationship.getTargetMultiplicity().isToMany()) {
+	//
+	//		}
+	//	}
 
 	/*
 	 * Visitor OneToMany
@@ -257,33 +255,60 @@ public class JpaVisitor implements Visitor {
 		}
 	}
 
-	/*
-	 * Visitor ManyToOne
-	 */
-	private void visitManyToOne(EJavaField javaField, EUmlRelationship umlRelationship) {
-		if (umlRelationship.getSourceMultiplicity().isToOne() && umlRelationship.getTargetMultiplicity().isToMany()) {
-			val ann = javaField.addAnnotation(ManyToOne.class);
-			if (!umlRelationship.getSourceMultiplicity().isOptional()) ann.setLiteralValue("optional", "false");
+	//	/*
+	//	 * Visitor ManyToOne
+	//	 */
+	//	private void visitManyToOne(EJavaField javaField, EUmlRelationship umlRelationship) {
+	//		if (umlRelationship.getSourceMultiplicity().isToOne() && umlRelationship.getTargetMultiplicity().isToMany()) {
+	//
+	//		}
+	//	}
+
+	//	/*
+	//	 * Visitor OneToOne
+	//	 */
+	//	private void visitOneToOne(EJavaField javaField, EUmlRelationship umlRelationship) {
+	//		if (umlRelationship.getSourceMultiplicity().isToOne() && umlRelationship.getTargetMultiplicity().isToOne()) {
+	//
+	//		}
+	//	}
+
+	@Override
+	public void visit(EOneToOneField oneToOneField, EUmlRelationship umlRelationship) {
+		val annOneToOne = oneToOneField.addAnnotation(OneToOne.class);
+		if (!umlRelationship.getSourceMultiplicity().isOptional()) annOneToOne.setLiteralValue("optional", "false");
+		// Bidirecional
+		if (!umlRelationship.isSourceClassOwner() && umlRelationship.getNavigability().isBidirectional()) {
+			annOneToOne.setStringValue("mappedBy", umlRelationship.getTargetRole());
+		} else {
+
+		}
+		if (umlRelationship.isComposition()) {
+			annOneToOne.setEnumValue("cascade", CascadeType.ALL);
+			annOneToOne.setLiteralValue("orphanRemoval", "true");
 		}
 	}
 
-	/*
-	 * Visitor OneToOne
-	 */
-	private void visitOneToOne(EJavaField javaField, EUmlRelationship umlRelationship) {
-		if (umlRelationship.getSourceMultiplicity().isToOne() && umlRelationship.getTargetMultiplicity().isToOne()) {
-			val annOneToOne = javaField.addAnnotation(OneToOne.class);
-			if (!umlRelationship.getSourceMultiplicity().isOptional()) annOneToOne.setLiteralValue("optional", "false");
-			// Bidirecional
-			if (!umlRelationship.isSourceClassOwner() && umlRelationship.getNavigability().isBidirectional()) {
-				annOneToOne.setStringValue("mappedBy", umlRelationship.getTargetRole());
-			} else {
+	@Override
+	public void visit(EOneToManyField oneToManyField, EUmlRelationship umlRelationship) {
 
-			}
-			if (umlRelationship.isComposition()) {
-				annOneToOne.setEnumValue("cascade", CascadeType.ALL);
-				annOneToOne.setLiteralValue("orphanRemoval", "true");
-			}
+	}
+
+	@Override
+	public void visit(EManyToOneField manyToOneField, EUmlRelationship umlRelationship) {
+		val ann = manyToOneField.addAnnotation(ManyToOne.class);
+		if (!umlRelationship.getSourceMultiplicity().isOptional()) ann.setLiteralValue("optional", "false");
+	}
+
+	@Override
+	public void visit(EManyToManyField manyToManyField, EUmlRelationship umlRelationship) {
+		manyToManyField.addBatchSizeAnnotation(10);
+		manyToManyField.addLazyCollectionAnnotation(LazyCollectionOption.EXTRA);
+		val annMany = manyToManyField.addAnnotation(ManyToMany.class);
+		// Bidirecional
+		if (!umlRelationship.isSourceClassOwner() && umlRelationship.getNavigability().isBidirectional()) {
+			annMany.setStringValue("mappedBy", umlRelationship.getTargetRole());
 		}
 	}
+
 }

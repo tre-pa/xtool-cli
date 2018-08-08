@@ -282,7 +282,6 @@ public class EJavaFieldImpl implements EJavaField {
 	}
 
 	public static class EBooleanFieldImpl extends EJavaFieldImpl implements EBooleanField {
-
 		public EBooleanFieldImpl(EJavaField javaField) {
 			super(javaField.getProject(), javaField.getJavaClass(), javaField.getRoasterField());
 		}
@@ -290,7 +289,6 @@ public class EJavaFieldImpl implements EJavaField {
 	}
 
 	public static class ELongFieldImpl extends EJavaFieldImpl implements ELongField {
-
 		public ELongFieldImpl(EJavaField javaField) {
 			super(javaField.getProject(), javaField.getJavaClass(), javaField.getRoasterField());
 		}
@@ -298,7 +296,6 @@ public class EJavaFieldImpl implements EJavaField {
 	}
 
 	public static class EIntegerFieldImpl extends EJavaFieldImpl implements EIntegerField {
-
 		public EIntegerFieldImpl(EJavaField javaField) {
 			super(javaField.getProject(), javaField.getJavaClass(), javaField.getRoasterField());
 		}
@@ -306,7 +303,6 @@ public class EJavaFieldImpl implements EJavaField {
 	}
 
 	public static class EByteFieldImpl extends EJavaFieldImpl implements EJavaField {
-
 		public EByteFieldImpl(EJavaField javaField) {
 			super(javaField.getProject(), javaField.getJavaClass(), javaField.getRoasterField());
 		}
@@ -314,7 +310,6 @@ public class EJavaFieldImpl implements EJavaField {
 	}
 
 	public static class EBigDecimalFieldImpl extends EJavaFieldImpl implements EBigDecimalField {
-
 		public EBigDecimalFieldImpl(EJavaField javaField) {
 			super(javaField.getProject(), javaField.getJavaClass(), javaField.getRoasterField());
 		}
@@ -322,7 +317,6 @@ public class EJavaFieldImpl implements EJavaField {
 	}
 
 	public static class ELocalDateFieldImpl extends EJavaFieldImpl implements ELocalDateField {
-
 		public ELocalDateFieldImpl(EJavaField javaField) {
 			super(javaField.getProject(), javaField.getJavaClass(), javaField.getRoasterField());
 		}
@@ -330,7 +324,6 @@ public class EJavaFieldImpl implements EJavaField {
 	}
 
 	public static class ELocalDateTimeFieldImpl extends EJavaFieldImpl implements ELocalDateTimeField {
-
 		public ELocalDateTimeFieldImpl(EJavaField javaField) {
 			super(javaField.getProject(), javaField.getJavaClass(), javaField.getRoasterField());
 		}
@@ -338,7 +331,6 @@ public class EJavaFieldImpl implements EJavaField {
 	}
 
 	public static class ENotNullFieldImpl extends EJavaFieldImpl implements ENotNullField {
-
 		public ENotNullFieldImpl(EJavaField javaField) {
 			super(javaField.getProject(), javaField.getJavaClass(), javaField.getRoasterField());
 		}
@@ -346,7 +338,6 @@ public class EJavaFieldImpl implements EJavaField {
 	}
 
 	public static class ETransientFieldImpl extends EJavaFieldImpl implements ETransientField {
-
 		public ETransientFieldImpl(EJavaField javaField) {
 			super(javaField.getProject(), javaField.getJavaClass(), javaField.getRoasterField());
 		}
@@ -354,8 +345,35 @@ public class EJavaFieldImpl implements EJavaField {
 	}
 
 	public static class EUniqueFieldImpl extends EJavaFieldImpl implements EUniqueField {
-
 		public EUniqueFieldImpl(EJavaField javaField) {
+			super(javaField.getProject(), javaField.getJavaClass(), javaField.getRoasterField());
+		}
+
+	}
+
+	public static class EOneToOneFieldImpl extends EJavaFieldImpl implements EOneToOneField {
+		public EOneToOneFieldImpl(EJavaField javaField) {
+			super(javaField.getProject(), javaField.getJavaClass(), javaField.getRoasterField());
+		}
+
+	}
+
+	public static class EOneToManyFieldImpl extends EJavaFieldImpl implements EOneToManyField {
+		public EOneToManyFieldImpl(EJavaField javaField) {
+			super(javaField.getProject(), javaField.getJavaClass(), javaField.getRoasterField());
+		}
+
+	}
+
+	public static class EManyToOneFieldImpl extends EJavaFieldImpl implements EManyToOneField {
+		public EManyToOneFieldImpl(EJavaField javaField) {
+			super(javaField.getProject(), javaField.getJavaClass(), javaField.getRoasterField());
+		}
+
+	}
+
+	public static class EManyToManyFieldImpl extends EJavaFieldImpl implements EManyToManyField {
+		public EManyToManyFieldImpl(EJavaField javaField) {
 			super(javaField.getProject(), javaField.getJavaClass(), javaField.getRoasterField());
 		}
 

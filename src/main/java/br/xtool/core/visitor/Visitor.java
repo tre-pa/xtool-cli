@@ -9,7 +9,11 @@ import br.xtool.core.representation.EJavaField.EIntegerField;
 import br.xtool.core.representation.EJavaField.ELocalDateField;
 import br.xtool.core.representation.EJavaField.ELocalDateTimeField;
 import br.xtool.core.representation.EJavaField.ELongField;
+import br.xtool.core.representation.EJavaField.EManyToManyField;
+import br.xtool.core.representation.EJavaField.EManyToOneField;
 import br.xtool.core.representation.EJavaField.ENotNullField;
+import br.xtool.core.representation.EJavaField.EOneToManyField;
+import br.xtool.core.representation.EJavaField.EOneToOneField;
 import br.xtool.core.representation.EJavaField.EStringField;
 import br.xtool.core.representation.EJavaField.ETransientField;
 import br.xtool.core.representation.EJavaField.EUniqueField;
@@ -132,4 +136,11 @@ public interface Visitor {
 	 */
 	void visit(EJavaField javaField, EUmlRelationship umlRelationship);
 
+	void visit(EOneToOneField oneToOneField, EUmlRelationship umlRelationship);
+
+	void visit(EOneToManyField oneToManyField, EUmlRelationship umlRelationship);
+
+	void visit(EManyToOneField manyToOneField, EUmlRelationship umlRelationship);
+
+	void visit(EManyToManyField manyToManyField, EUmlRelationship umlRelationship);
 }

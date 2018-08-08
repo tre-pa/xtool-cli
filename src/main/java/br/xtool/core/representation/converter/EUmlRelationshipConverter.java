@@ -9,6 +9,10 @@ import java.util.function.BiFunction;
 import br.xtool.core.representation.EJavaClass;
 import br.xtool.core.representation.EJavaField;
 import br.xtool.core.representation.EUmlRelationship;
+import br.xtool.core.representation.impl.EJavaFieldImpl.EManyToManyFieldImpl;
+import br.xtool.core.representation.impl.EJavaFieldImpl.EManyToOneFieldImpl;
+import br.xtool.core.representation.impl.EJavaFieldImpl.EOneToManyFieldImpl;
+import br.xtool.core.representation.impl.EJavaFieldImpl.EOneToOneFieldImpl;
 import br.xtool.core.visitor.Visitor;
 import lombok.AllArgsConstructor;
 
@@ -36,7 +40,7 @@ public class EUmlRelationshipConverter implements BiFunction<EJavaClass, EUmlRel
 					.setType(String.format("List<%s>", umlRelationship.getTargetClass().getName()))
 					.setLiteralInitializer("new ArrayList<>()");
 			// @formatter:on
-			this.visitors.forEach(visitor -> visitor.visit(javaField, umlRelationship));
+			this.visit(javaField, umlRelationship);
 			return javaField;
 		}
 		javaField.getRoasterField().getOrigin().addImport(umlRelationship.getTargetClass().getQualifiedName());
@@ -45,9 +49,19 @@ public class EUmlRelationshipConverter implements BiFunction<EJavaClass, EUmlRel
 				.setPrivate()
 				.setName(umlRelationship.getSourceRole())
 				.setType(umlRelationship.getTargetClass().getName());
-		this.visitors.forEach(visitor -> visitor.visit(javaField, umlRelationship));
-		return javaField;
 		// @formatter:on
+		this.visit(javaField, umlRelationship);
+		return javaField;
+	}
+
+	private void visit(EJavaField javaField, EUmlRelationship umlRelationship) {
+		this.visitors.forEach(visitor -> {
+			visitor.visit(javaField, umlRelationship);
+			if (umlRelationship.getSourceMultiplicity().isToOne() && umlRelationship.getTargetMultiplicity().isToOne()) visitor.visit(new EOneToOneFieldImpl(javaField), umlRelationship);
+			if (umlRelationship.getSourceMultiplicity().isToMany() && umlRelationship.getTargetMultiplicity().isToOne()) visitor.visit(new EOneToManyFieldImpl(javaField), umlRelationship);
+			if (umlRelationship.getSourceMultiplicity().isToOne() && umlRelationship.getTargetMultiplicity().isToMany()) visitor.visit(new EManyToOneFieldImpl(javaField), umlRelationship);
+			if (umlRelationship.getSourceMultiplicity().isToMany() && umlRelationship.getTargetMultiplicity().isToMany()) visitor.visit(new EManyToManyFieldImpl(javaField), umlRelationship);
+		});
 	}
 
 }

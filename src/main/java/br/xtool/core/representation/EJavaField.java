@@ -94,4 +94,12 @@ public interface EJavaField extends Comparable<EJavaField> {
 
 	interface EUniqueField extends EJavaField {}
 
+	interface EOneToOneField extends EJavaField {}
+
+	interface EOneToManyField extends EJavaField {}
+
+	interface EManyToOneField extends EJavaField {}
+
+	interface EManyToManyField extends EJavaField {}
+
 }
