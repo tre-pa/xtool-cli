@@ -39,6 +39,8 @@ import br.xtool.core.representation.EJpaEntity;
 import br.xtool.core.representation.EUmlField;
 import br.xtool.core.representation.EUmlFieldProperty;
 import br.xtool.core.representation.EUmlRelationship;
+import br.xtool.core.representation.EUmlRelationship.EAssociation;
+import br.xtool.core.representation.EUmlRelationship.EComposition;
 import br.xtool.core.representation.EUmlStereotype;
 import br.xtool.core.visitor.Visitor;
 import lombok.val;
@@ -198,7 +200,7 @@ public class JpaVisitor implements Visitor {
 	public void visit(EJavaField javaField, EUmlRelationship umlRelationship) {
 		//		visitManyToMany(javaField, umlRelationship);
 		//		visitManyToOne(javaField, umlRelationship);
-		visitOneToMany(javaField, umlRelationship);
+		//		visitOneToMany(javaField, umlRelationship);
 		//		visitOneToOne(javaField, umlRelationship);
 	}
 
@@ -210,50 +212,50 @@ public class JpaVisitor implements Visitor {
 	//
 	//		}
 	//	}
-
-	/*
-	 * Visitor OneToMany
-	 */
-	private void visitOneToMany(EJavaField javaField, EUmlRelationship umlRelationship) {
-		if (umlRelationship.getSourceMultiplicity().isToMany() && umlRelationship.getTargetMultiplicity().isToOne()) {
-			javaField.addBatchSizeAnnotation(10);
-			javaField.addLazyCollectionAnnotation(LazyCollectionOption.EXTRA);
-			val annOneToMany = javaField.addAnnotation(OneToMany.class);
-			// Bidirecional
-			if (umlRelationship.getNavigability().isBidirectional()) {
-				annOneToMany.setStringValue("mappedBy", umlRelationship.getTargetRole());
-				// @formatter:off
-				// add
-				javaField.getJavaClass().addMethod(String.format("add%s", umlRelationship.getTargetClass().getName()))
-					.getRoasterMethod()
-						.setReturnTypeVoid()
-						.setBody(String.format("this.%s.add(%s); %s.set%s(this);", 
-								umlRelationship.getSourceRole(), 
-								umlRelationship.getTargetClass().getInstanceName(), 
-								umlRelationship.getTargetClass().getInstanceName(),
-								umlRelationship.getSourceClass().getName()))
-						.addParameter(umlRelationship.getTargetClass().getName(), umlRelationship.getTargetClass().getInstanceName());
-				// remove
-				javaField.getJavaClass().addMethod(String.format("remove%s", umlRelationship.getTargetClass().getName()))
-				.getRoasterMethod()
-					.setReturnTypeVoid()
-					.setBody(String.format("this.%s.remove(%s); %s.set%s(null);", 
-							umlRelationship.getSourceRole(), 
-							umlRelationship.getTargetClass().getInstanceName(), 
-							umlRelationship.getTargetClass().getInstanceName(),
-							umlRelationship.getSourceClass().getName()))
-					.addParameter(umlRelationship.getTargetClass().getName(), umlRelationship.getTargetClass().getInstanceName());
-			// @formatter:on
-			} else {
-				val annJoinColumn = javaField.addAnnotation(JoinColumn.class);
-				annJoinColumn.setStringValue("name", EJpaEntity.genFKName(umlRelationship.getTargetClass().getName()));
-			}
-			if (umlRelationship.isComposition()) {
-				annOneToMany.setEnumValue("cascade", CascadeType.ALL);
-				annOneToMany.setLiteralValue("orphanRemoval", "true");
-			}
-		}
-	}
+	//
+	//	/*
+	//	 * Visitor OneToMany
+	//	 */
+	//	private void visitOneToMany(EJavaField javaField, EUmlRelationship umlRelationship) {
+	//		if (umlRelationship.getSourceMultiplicity().isToMany() && umlRelationship.getTargetMultiplicity().isToOne()) {
+	//			javaField.addBatchSizeAnnotation(10);
+	//			javaField.addLazyCollectionAnnotation(LazyCollectionOption.EXTRA);
+	//			val annOneToMany = javaField.addAnnotation(OneToMany.class);
+	//			// Bidirecional
+	//			if (umlRelationship.getNavigability().isBidirectional()) {
+	//				annOneToMany.setStringValue("mappedBy", umlRelationship.getTargetRole());
+//				// @formatter:off
+//				// add
+//				javaField.getJavaClass().addMethod(String.format("add%s", umlRelationship.getTargetClass().getName()))
+//					.getRoasterMethod()
+//						.setReturnTypeVoid()
+//						.setBody(String.format("this.%s.add(%s); %s.set%s(this);", 
+//								umlRelationship.getSourceRole(), 
+//								umlRelationship.getTargetClass().getInstanceName(), 
+//								umlRelationship.getTargetClass().getInstanceName(),
+//								umlRelationship.getSourceClass().getName()))
+//						.addParameter(umlRelationship.getTargetClass().getName(), umlRelationship.getTargetClass().getInstanceName());
+//				// remove
+//				javaField.getJavaClass().addMethod(String.format("remove%s", umlRelationship.getTargetClass().getName()))
+//				.getRoasterMethod()
+//					.setReturnTypeVoid()
+//					.setBody(String.format("this.%s.remove(%s); %s.set%s(null);", 
+//							umlRelationship.getSourceRole(), 
+//							umlRelationship.getTargetClass().getInstanceName(), 
+//							umlRelationship.getTargetClass().getInstanceName(),
+//							umlRelationship.getSourceClass().getName()))
+//					.addParameter(umlRelationship.getTargetClass().getName(), umlRelationship.getTargetClass().getInstanceName());
+//			// @formatter:on
+	//			} else {
+	//				val annJoinColumn = javaField.addAnnotation(JoinColumn.class);
+	//				annJoinColumn.setStringValue("name", EJpaEntity.genFKName(umlRelationship.getTargetClass().getName()));
+	//			}
+	//			//			if (umlRelationship.isComposition()) {
+	//			//				//				annOneToMany.setEnumValue("cascade", CascadeType.ALL);
+	//			//				//				annOneToMany.setLiteralValue("orphanRemoval", "true");
+	//			//			}
+	//		}
+	//	}
 
 	//	/*
 	//	 * Visitor ManyToOne
@@ -274,41 +276,119 @@ public class JpaVisitor implements Visitor {
 	//	}
 
 	@Override
-	public void visit(EOneToOneField oneToOneField, EUmlRelationship umlRelationship) {
+	public void visit(EOneToOneField oneToOneField, EAssociation association) {
 		val annOneToOne = oneToOneField.addAnnotation(OneToOne.class);
-		if (!umlRelationship.getSourceMultiplicity().isOptional()) annOneToOne.setLiteralValue("optional", "false");
+		if (!association.getSourceMultiplicity().isOptional()) annOneToOne.setLiteralValue("optional", "false");
 		// Bidirecional
-		if (!umlRelationship.isSourceClassOwner() && umlRelationship.getNavigability().isBidirectional()) {
-			annOneToOne.setStringValue("mappedBy", umlRelationship.getTargetRole());
+		if (!association.isSourceClassOwner() && association.getNavigability().isBidirectional()) {
+			annOneToOne.setStringValue("mappedBy", association.getTargetRole());
 		} else {
 
 		}
-		if (umlRelationship.isComposition()) {
-			annOneToOne.setEnumValue("cascade", CascadeType.ALL);
-			annOneToOne.setLiteralValue("orphanRemoval", "true");
+	}
+
+	@Override
+	public void visit(EOneToManyField oneToManyField, EAssociation association) {
+		oneToManyField.addBatchSizeAnnotation(10);
+		oneToManyField.addLazyCollectionAnnotation(LazyCollectionOption.EXTRA);
+		val annOneToMany = oneToManyField.addAnnotation(OneToMany.class);
+		// Bidirecional
+		if (association.getNavigability().isBidirectional()) {
+			annOneToMany.setStringValue("mappedBy", association.getTargetRole());
+			// @formatter:off
+			// add
+			oneToManyField.getJavaClass().addMethod(String.format("add%s", association.getTargetClass().getName()))
+				.getRoasterMethod()
+					.setReturnTypeVoid()
+					.setBody(String.format("this.%s.add(%s); %s.set%s(this);", 
+							association.getSourceRole(), 
+							association.getTargetClass().getInstanceName(), 
+							association.getTargetClass().getInstanceName(),
+							association.getSourceClass().getName()))
+					.addParameter(association.getTargetClass().getName(), association.getTargetClass().getInstanceName());
+			// remove
+			oneToManyField.getJavaClass().addMethod(String.format("remove%s", association.getTargetClass().getName()))
+			.getRoasterMethod()
+				.setReturnTypeVoid()
+				.setBody(String.format("this.%s.remove(%s); %s.set%s(null);", 
+						association.getSourceRole(), 
+						association.getTargetClass().getInstanceName(), 
+						association.getTargetClass().getInstanceName(),
+						association.getSourceClass().getName()))
+				.addParameter(association.getTargetClass().getName(), association.getTargetClass().getInstanceName());
+		// @formatter:on
+		} else {
+			val annJoinColumn = oneToManyField.addAnnotation(JoinColumn.class);
+			annJoinColumn.setStringValue("name", EJpaEntity.genFKName(association.getTargetClass().getName()));
 		}
 	}
 
 	@Override
-	public void visit(EOneToManyField oneToManyField, EUmlRelationship umlRelationship) {
-
-	}
-
-	@Override
-	public void visit(EManyToOneField manyToOneField, EUmlRelationship umlRelationship) {
+	public void visit(EManyToOneField manyToOneField, EAssociation association) {
 		val ann = manyToOneField.addAnnotation(ManyToOne.class);
-		if (!umlRelationship.getSourceMultiplicity().isOptional()) ann.setLiteralValue("optional", "false");
+		if (!association.getSourceMultiplicity().isOptional()) ann.setLiteralValue("optional", "false");
 	}
 
 	@Override
-	public void visit(EManyToManyField manyToManyField, EUmlRelationship umlRelationship) {
+	public void visit(EManyToManyField manyToManyField, EAssociation association) {
+		val annMany = manyToManyField.addAnnotation(ManyToMany.class);
 		manyToManyField.addBatchSizeAnnotation(10);
 		manyToManyField.addLazyCollectionAnnotation(LazyCollectionOption.EXTRA);
-		val annMany = manyToManyField.addAnnotation(ManyToMany.class);
 		// Bidirecional
-		if (!umlRelationship.isSourceClassOwner() && umlRelationship.getNavigability().isBidirectional()) {
-			annMany.setStringValue("mappedBy", umlRelationship.getTargetRole());
+		if (!association.isSourceClassOwner() && association.getNavigability().isBidirectional()) {
+			annMany.setStringValue("mappedBy", association.getTargetRole());
 		}
+	}
+
+	@Override
+	public void visit(EOneToOneField oneToOneField, EComposition composition) {
+		val annOneToOne = oneToOneField.addAnnotation(OneToOne.class);
+		annOneToOne.setEnumValue("cascade", CascadeType.ALL);
+		annOneToOne.setLiteralValue("orphanRemoval", "true");
+	}
+
+	@Override
+	public void visit(EOneToManyField oneToManyField, EComposition composition) {
+		val annOneToMany = oneToManyField.addAnnotation(OneToMany.class);
+		oneToManyField.addBatchSizeAnnotation(10);
+		oneToManyField.addLazyCollectionAnnotation(LazyCollectionOption.EXTRA);
+		annOneToMany.setEnumValue("cascade", CascadeType.ALL);
+		annOneToMany.setLiteralValue("orphanRemoval", "true");
+		// Bidirecional
+		if (composition.getNavigability().isBidirectional()) {
+			annOneToMany.setStringValue("mappedBy", composition.getTargetRole());
+			// @formatter:off
+			// add
+			oneToManyField.getJavaClass().addMethod(String.format("add%s", composition.getTargetClass().getName()))
+				.getRoasterMethod()
+					.setReturnTypeVoid()
+					.setBody(String.format("this.%s.add(%s); %s.set%s(this);", 
+							composition.getSourceRole(), 
+							composition.getTargetClass().getInstanceName(), 
+							composition.getTargetClass().getInstanceName(),
+							composition.getSourceClass().getName()))
+					.addParameter(composition.getTargetClass().getName(), composition.getTargetClass().getInstanceName());
+			// remove
+			oneToManyField.getJavaClass().addMethod(String.format("remove%s", composition.getTargetClass().getName()))
+			.getRoasterMethod()
+				.setReturnTypeVoid()
+				.setBody(String.format("this.%s.remove(%s); %s.set%s(null);", 
+						composition.getSourceRole(), 
+						composition.getTargetClass().getInstanceName(), 
+						composition.getTargetClass().getInstanceName(),
+						composition.getSourceClass().getName()))
+				.addParameter(composition.getTargetClass().getName(), composition.getTargetClass().getInstanceName());
+		// @formatter:on
+		} else {
+			val annJoinColumn = oneToManyField.addAnnotation(JoinColumn.class);
+			annJoinColumn.setStringValue("name", EJpaEntity.genFKName(composition.getTargetClass().getName()));
+		}
+	}
+
+	@Override
+	public void visit(EManyToOneField manyToOneField, EComposition composition) {
+		val ann = manyToOneField.addAnnotation(ManyToOne.class);
+		if (!composition.getSourceMultiplicity().isOptional()) ann.setLiteralValue("optional", "false");
 	}
 
 }

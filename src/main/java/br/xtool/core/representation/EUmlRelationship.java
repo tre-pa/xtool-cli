@@ -1,6 +1,7 @@
 package br.xtool.core.representation;
 
 import br.xtool.core.representation.impl.EUmlNavigability;
+import net.sourceforge.plantuml.cucadiagram.Link;
 
 /**
  * Representação de um relacionamento no diagrama de classe UML.
@@ -9,6 +10,24 @@ import br.xtool.core.representation.impl.EUmlNavigability;
  *
  */
 public interface EUmlRelationship {
+
+	/**
+	 * 
+	 * @return
+	 */
+	Link getLink();
+
+	/**
+	 * 
+	 * @return
+	 */
+	String getSourceQualifier();
+
+	/**
+	 * 
+	 * @return
+	 */
+	String getTargetQualifier();
 
 	/**
 	 * Retorna a navegabilidade do relacionamento.
@@ -86,5 +105,9 @@ public interface EUmlRelationship {
 	boolean isManyToOne();
 
 	boolean isManyToMany();
+
+	interface EAssociation extends EUmlRelationship {}
+
+	interface EComposition extends EUmlRelationship {}
 
 }

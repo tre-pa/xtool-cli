@@ -20,6 +20,8 @@ import br.xtool.core.representation.EJavaField.EUniqueField;
 import br.xtool.core.representation.EUmlField;
 import br.xtool.core.representation.EUmlFieldProperty;
 import br.xtool.core.representation.EUmlRelationship;
+import br.xtool.core.representation.EUmlRelationship.EAssociation;
+import br.xtool.core.representation.EUmlRelationship.EComposition;
 import br.xtool.core.representation.EUmlStereotype;
 
 /**
@@ -136,11 +138,53 @@ public interface Visitor {
 	 */
 	void visit(EJavaField javaField, EUmlRelationship umlRelationship);
 
-	void visit(EOneToOneField oneToOneField, EUmlRelationship umlRelationship);
+	/**
+	 * 
+	 * @param oneToOneField
+	 * @param association
+	 */
+	void visit(EOneToOneField oneToOneField, EAssociation association);
 
-	void visit(EOneToManyField oneToManyField, EUmlRelationship umlRelationship);
+	/**
+	 * 
+	 * @param oneToManyField
+	 * @param association
+	 */
+	void visit(EOneToManyField oneToManyField, EAssociation association);
 
-	void visit(EManyToOneField manyToOneField, EUmlRelationship umlRelationship);
+	/**
+	 * 
+	 * @param manyToOneField
+	 * @param association
+	 */
+	void visit(EManyToOneField manyToOneField, EAssociation association);
 
-	void visit(EManyToManyField manyToManyField, EUmlRelationship umlRelationship);
+	/**
+	 * 
+	 * @param manyToManyField
+	 * @param association
+	 */
+	void visit(EManyToManyField manyToManyField, EAssociation association);
+
+	/**
+	 * 
+	 * @param oneToOneField
+	 * @param composition
+	 */
+	void visit(EOneToOneField oneToOneField, EComposition composition);
+
+	/**
+	 * 
+	 * @param oneToManyField
+	 * @param composition
+	 */
+	void visit(EOneToManyField oneToManyField, EComposition composition);
+
+	/**
+	 * 
+	 * @param manyToOneField
+	 * @param composition
+	 */
+	void visit(EManyToOneField manyToOneField, EComposition composition);
+
 }

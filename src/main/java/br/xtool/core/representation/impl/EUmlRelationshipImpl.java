@@ -34,6 +34,24 @@ public class EUmlRelationshipImpl implements EUmlRelationship {
 
 	/*
 	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EUmlRelationship#getSourceQualifier()
+	 */
+	@Override
+	public String getSourceQualifier() {
+		return this.sourceQualifier;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EUmlRelationship#getTargetQualifier()
+	 */
+	@Override
+	public String getTargetQualifier() {
+		return this.targetQualifier;
+	}
+
+	/*
+	 * (non-Javadoc)
 	 * @see br.xtool.core.representation.EUmlRelationship#getNavigability()
 	 */
 	@Override
@@ -118,6 +136,11 @@ public class EUmlRelationshipImpl implements EUmlRelationship {
 		return !isComposition();
 	}
 
+	@Override
+	public Link getLink() {
+		return this.link;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * @see br.xtool.core.representation.EUmlRelationship#isComposition()
@@ -145,6 +168,18 @@ public class EUmlRelationshipImpl implements EUmlRelationship {
 	@Override
 	public boolean isManyToMany() {
 		return this.getSourceMultiplicity().isToMany() && this.getTargetMultiplicity().isToMany();
+	}
+
+	public static class EAssociationImpl extends EUmlRelationshipImpl implements EAssociation {
+		public EAssociationImpl(EUmlRelationship umlRelationship) {
+			super(umlRelationship.getSourceClass(), umlRelationship.getTargetClass(), umlRelationship.getLink(), umlRelationship.getSourceQualifier(), umlRelationship.getTargetQualifier());
+		}
+	}
+
+	public static class ECompositionImpl extends EUmlRelationshipImpl implements EComposition {
+		public ECompositionImpl(EUmlRelationship umlRelationship) {
+			super(umlRelationship.getSourceClass(), umlRelationship.getTargetClass(), umlRelationship.getLink(), umlRelationship.getSourceQualifier(), umlRelationship.getTargetQualifier());
+		}
 	}
 
 }

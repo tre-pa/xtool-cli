@@ -22,6 +22,8 @@ import br.xtool.core.representation.EJavaField.EUniqueField;
 import br.xtool.core.representation.EUmlField;
 import br.xtool.core.representation.EUmlFieldProperty;
 import br.xtool.core.representation.EUmlRelationship;
+import br.xtool.core.representation.EUmlRelationship.EAssociation;
+import br.xtool.core.representation.EUmlRelationship.EComposition;
 import br.xtool.core.representation.EUmlStereotype;
 import br.xtool.core.visitor.Visitor;
 
@@ -114,22 +116,37 @@ public class JavaxValidationVisitor implements Visitor {
 	}
 
 	@Override
-	public void visit(EOneToOneField oneToOneField, EUmlRelationship umlRelationship) {
+	public void visit(EOneToOneField oneToOneField, EAssociation association) {
 
 	}
 
 	@Override
-	public void visit(EOneToManyField oneToManyField, EUmlRelationship umlRelationship) {
+	public void visit(EOneToManyField oneToManyField, EAssociation association) {
 
 	}
 
 	@Override
-	public void visit(EManyToOneField manyToOneField, EUmlRelationship umlRelationship) {
+	public void visit(EManyToOneField manyToOneField, EAssociation association) {
 
 	}
 
 	@Override
-	public void visit(EManyToManyField manyToManyField, EUmlRelationship umlRelationship) {
+	public void visit(EManyToManyField manyToManyField, EAssociation association) {
+
+	}
+
+	@Override
+	public void visit(EOneToOneField oneToOneField, EComposition composition) {
+
+	}
+
+	@Override
+	public void visit(EOneToManyField oneToManyField, EComposition composition) {
+
+	}
+
+	@Override
+	public void visit(EManyToOneField manyToOneField, EComposition composition) {
 
 	}
 
