@@ -30,11 +30,19 @@ import br.xtool.core.visitor.Visitor;
 @Component
 public class JavaxValidationVisitor implements Visitor {
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaClass)
+	 */
 	@Override
 	public void visit(EJavaClass javaClass) {
 
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaClass, br.xtool.core.representation.EUmlStereotype)
+	 */
 	@Override
 	public void visit(EJavaClass javaClass, EUmlStereotype umlStereotype) {
 

@@ -198,83 +198,12 @@ public class JpaVisitor implements Visitor {
 	 */
 	@Override
 	public void visit(EJavaField javaField, EUmlRelationship umlRelationship) {
-		//		visitManyToMany(javaField, umlRelationship);
-		//		visitManyToOne(javaField, umlRelationship);
-		//		visitOneToMany(javaField, umlRelationship);
-		//		visitOneToOne(javaField, umlRelationship);
 	}
 
-	//	/*
-	//	 * Visitor ManyToMany
-	//	 */
-	//	private void visitManyToMany(EJavaField javaField, EUmlRelationship umlRelationship) {
-	//		if (umlRelationship.getSourceMultiplicity().isToMany() && umlRelationship.getTargetMultiplicity().isToMany()) {
-	//
-	//		}
-	//	}
-	//
-	//	/*
-	//	 * Visitor OneToMany
-	//	 */
-	//	private void visitOneToMany(EJavaField javaField, EUmlRelationship umlRelationship) {
-	//		if (umlRelationship.getSourceMultiplicity().isToMany() && umlRelationship.getTargetMultiplicity().isToOne()) {
-	//			javaField.addBatchSizeAnnotation(10);
-	//			javaField.addLazyCollectionAnnotation(LazyCollectionOption.EXTRA);
-	//			val annOneToMany = javaField.addAnnotation(OneToMany.class);
-	//			// Bidirecional
-	//			if (umlRelationship.getNavigability().isBidirectional()) {
-	//				annOneToMany.setStringValue("mappedBy", umlRelationship.getTargetRole());
-//				// @formatter:off
-//				// add
-//				javaField.getJavaClass().addMethod(String.format("add%s", umlRelationship.getTargetClass().getName()))
-//					.getRoasterMethod()
-//						.setReturnTypeVoid()
-//						.setBody(String.format("this.%s.add(%s); %s.set%s(this);", 
-//								umlRelationship.getSourceRole(), 
-//								umlRelationship.getTargetClass().getInstanceName(), 
-//								umlRelationship.getTargetClass().getInstanceName(),
-//								umlRelationship.getSourceClass().getName()))
-//						.addParameter(umlRelationship.getTargetClass().getName(), umlRelationship.getTargetClass().getInstanceName());
-//				// remove
-//				javaField.getJavaClass().addMethod(String.format("remove%s", umlRelationship.getTargetClass().getName()))
-//				.getRoasterMethod()
-//					.setReturnTypeVoid()
-//					.setBody(String.format("this.%s.remove(%s); %s.set%s(null);", 
-//							umlRelationship.getSourceRole(), 
-//							umlRelationship.getTargetClass().getInstanceName(), 
-//							umlRelationship.getTargetClass().getInstanceName(),
-//							umlRelationship.getSourceClass().getName()))
-//					.addParameter(umlRelationship.getTargetClass().getName(), umlRelationship.getTargetClass().getInstanceName());
-//			// @formatter:on
-	//			} else {
-	//				val annJoinColumn = javaField.addAnnotation(JoinColumn.class);
-	//				annJoinColumn.setStringValue("name", EJpaEntity.genFKName(umlRelationship.getTargetClass().getName()));
-	//			}
-	//			//			if (umlRelationship.isComposition()) {
-	//			//				//				annOneToMany.setEnumValue("cascade", CascadeType.ALL);
-	//			//				//				annOneToMany.setLiteralValue("orphanRemoval", "true");
-	//			//			}
-	//		}
-	//	}
-
-	//	/*
-	//	 * Visitor ManyToOne
-	//	 */
-	//	private void visitManyToOne(EJavaField javaField, EUmlRelationship umlRelationship) {
-	//		if (umlRelationship.getSourceMultiplicity().isToOne() && umlRelationship.getTargetMultiplicity().isToMany()) {
-	//
-	//		}
-	//	}
-
-	//	/*
-	//	 * Visitor OneToOne
-	//	 */
-	//	private void visitOneToOne(EJavaField javaField, EUmlRelationship umlRelationship) {
-	//		if (umlRelationship.getSourceMultiplicity().isToOne() && umlRelationship.getTargetMultiplicity().isToOne()) {
-	//
-	//		}
-	//	}
-
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField.EOneToOneField, br.xtool.core.representation.EUmlRelationship.EAssociation)
+	 */
 	@Override
 	public void visit(EOneToOneField oneToOneField, EAssociation association) {
 		val annOneToOne = oneToOneField.addAnnotation(OneToOne.class);
@@ -287,6 +216,10 @@ public class JpaVisitor implements Visitor {
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField.EOneToManyField, br.xtool.core.representation.EUmlRelationship.EAssociation)
+	 */
 	@Override
 	public void visit(EOneToManyField oneToManyField, EAssociation association) {
 		oneToManyField.addBatchSizeAnnotation(10);
@@ -323,12 +256,20 @@ public class JpaVisitor implements Visitor {
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField.EManyToOneField, br.xtool.core.representation.EUmlRelationship.EAssociation)
+	 */
 	@Override
 	public void visit(EManyToOneField manyToOneField, EAssociation association) {
 		val ann = manyToOneField.addAnnotation(ManyToOne.class);
 		if (!association.getSourceMultiplicity().isOptional()) ann.setLiteralValue("optional", "false");
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField.EManyToManyField, br.xtool.core.representation.EUmlRelationship.EAssociation)
+	 */
 	@Override
 	public void visit(EManyToManyField manyToManyField, EAssociation association) {
 		val annMany = manyToManyField.addAnnotation(ManyToMany.class);
@@ -340,6 +281,10 @@ public class JpaVisitor implements Visitor {
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField.EOneToOneField, br.xtool.core.representation.EUmlRelationship.EComposition)
+	 */
 	@Override
 	public void visit(EOneToOneField oneToOneField, EComposition composition) {
 		val annOneToOne = oneToOneField.addAnnotation(OneToOne.class);
@@ -347,6 +292,10 @@ public class JpaVisitor implements Visitor {
 		annOneToOne.setLiteralValue("orphanRemoval", "true");
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField.EOneToManyField, br.xtool.core.representation.EUmlRelationship.EComposition)
+	 */
 	@Override
 	public void visit(EOneToManyField oneToManyField, EComposition composition) {
 		val annOneToMany = oneToManyField.addAnnotation(OneToMany.class);
@@ -385,6 +334,10 @@ public class JpaVisitor implements Visitor {
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField.EManyToOneField, br.xtool.core.representation.EUmlRelationship.EComposition)
+	 */
 	@Override
 	public void visit(EManyToOneField manyToOneField, EComposition composition) {
 		val ann = manyToOneField.addAnnotation(ManyToOne.class);
