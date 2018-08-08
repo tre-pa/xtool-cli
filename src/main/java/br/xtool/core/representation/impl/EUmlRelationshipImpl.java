@@ -126,4 +126,25 @@ public class EUmlRelationshipImpl implements EUmlRelationship {
 	public boolean isComposition() {
 		return this.link.getType().getDecor1().equals(LinkDecor.COMPOSITION) ^ this.link.getType().getDecor2().equals(LinkDecor.COMPOSITION);
 	}
+
+	@Override
+	public boolean isOneToOne() {
+		return this.getSourceMultiplicity().isToOne() && this.getTargetMultiplicity().isToOne();
+	}
+
+	@Override
+	public boolean isOneToMany() {
+		return this.getSourceMultiplicity().isToMany() && this.getTargetMultiplicity().isToOne();
+	}
+
+	@Override
+	public boolean isManyToOne() {
+		return this.getSourceMultiplicity().isToOne() && this.getTargetMultiplicity().isToMany();
+	}
+
+	@Override
+	public boolean isManyToMany() {
+		return this.getSourceMultiplicity().isToMany() && this.getTargetMultiplicity().isToMany();
+	}
+
 }

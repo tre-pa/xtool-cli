@@ -79,4 +79,12 @@ public interface EUmlRelationship {
 	 */
 	EUmlMultiplicity getTargetMultiplicity();
 
+	boolean isOneToOne();
+
+	boolean isOneToMany();
+
+	boolean isManyToOne();
+
+	boolean isManyToMany();
+
 }

@@ -57,10 +57,10 @@ public class EUmlRelationshipConverter implements BiFunction<EJavaClass, EUmlRel
 	private void visit(EJavaField javaField, EUmlRelationship umlRelationship) {
 		this.visitors.forEach(visitor -> {
 			visitor.visit(javaField, umlRelationship);
-			if (umlRelationship.getSourceMultiplicity().isToOne() && umlRelationship.getTargetMultiplicity().isToOne()) visitor.visit(new EOneToOneFieldImpl(javaField), umlRelationship);
-			if (umlRelationship.getSourceMultiplicity().isToMany() && umlRelationship.getTargetMultiplicity().isToOne()) visitor.visit(new EOneToManyFieldImpl(javaField), umlRelationship);
-			if (umlRelationship.getSourceMultiplicity().isToOne() && umlRelationship.getTargetMultiplicity().isToMany()) visitor.visit(new EManyToOneFieldImpl(javaField), umlRelationship);
-			if (umlRelationship.getSourceMultiplicity().isToMany() && umlRelationship.getTargetMultiplicity().isToMany()) visitor.visit(new EManyToManyFieldImpl(javaField), umlRelationship);
+			if (umlRelationship.isOneToOne()) visitor.visit(new EOneToOneFieldImpl(javaField), umlRelationship);
+			if (umlRelationship.isOneToMany()) visitor.visit(new EOneToManyFieldImpl(javaField), umlRelationship);
+			if (umlRelationship.isManyToOne()) visitor.visit(new EManyToOneFieldImpl(javaField), umlRelationship);
+			if (umlRelationship.isManyToMany()) visitor.visit(new EManyToManyFieldImpl(javaField), umlRelationship);
 		});
 	}
 
