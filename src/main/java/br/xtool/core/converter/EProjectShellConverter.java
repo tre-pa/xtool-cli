@@ -6,7 +6,7 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 import br.xtool.core.representation.EProject;
-import br.xtool.core.service.WorkspaceService;
+import br.xtool.service.WorkspaceService;
 
 @Component
 public class EProjectShellConverter implements Converter<String, EProject> {

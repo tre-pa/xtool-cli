@@ -11,8 +11,8 @@ import br.xtool.core.provider.ENgModuleValueProvider;
 import br.xtool.core.representation.ENgModule;
 import br.xtool.core.representation.ENgPage;
 import br.xtool.core.representation.ENgProject;
-import br.xtool.core.service.NgService;
-import br.xtool.core.service.WorkspaceService;
+import br.xtool.service.NgService;
+import br.xtool.service.WorkspaceService;
 
 @ShellComponent
 public class GenPageCommand extends AngularAware {

@@ -1,4 +1,4 @@
-package br.xtool.core.service;
+package br.xtool.service;
 
 import br.xtool.core.representation.ENgComponent;
 import br.xtool.core.representation.ENgDialog;

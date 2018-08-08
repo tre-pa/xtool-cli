@@ -28,8 +28,8 @@ import br.xtool.core.representation.EUmlClass;
 import br.xtool.core.representation.converter.EUmlClassConverter;
 import br.xtool.core.representation.converter.EUmlFieldConverter;
 import br.xtool.core.representation.converter.EUmlRelationshipConverter;
-import br.xtool.core.service.BootService;
 import br.xtool.core.visitor.Visitor;
+import br.xtool.service.BootService;
 import lombok.SneakyThrows;
 
 @Service

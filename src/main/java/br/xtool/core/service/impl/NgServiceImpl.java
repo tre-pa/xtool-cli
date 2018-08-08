@@ -18,9 +18,9 @@ import br.xtool.core.representation.ENgPage;
 import br.xtool.core.representation.ENgProject;
 import br.xtool.core.representation.ENgService;
 import br.xtool.core.representation.impl.ENgPageImpl;
-import br.xtool.core.service.FileService;
-import br.xtool.core.service.NgService;
-import br.xtool.core.service.ShellService;
+import br.xtool.service.FileService;
+import br.xtool.service.NgService;
+import br.xtool.service.ShellService;
 import lombok.NonNull;
 
 @Service

@@ -1,4 +1,4 @@
-package br.xtool.core.service;
+package br.xtool.service;
 
 import java.util.Set;
 

@@ -7,7 +7,7 @@ import org.springframework.shell.jline.PromptProvider;
 import org.springframework.stereotype.Component;
 
 import br.xtool.core.representation.EProject.Type;
-import br.xtool.core.service.WorkspaceService;
+import br.xtool.service.WorkspaceService;
 
 @Component
 public class XtoolPromptProvider implements PromptProvider {

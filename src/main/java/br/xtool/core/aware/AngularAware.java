@@ -7,7 +7,7 @@ import org.springframework.shell.Availability;
 import org.springframework.shell.standard.ShellMethodAvailability;
 
 import br.xtool.core.representation.EProject;
-import br.xtool.core.service.WorkspaceService;
+import br.xtool.service.WorkspaceService;
 
 public class AngularAware {
 

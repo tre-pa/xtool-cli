@@ -6,8 +6,8 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 import br.xtool.core.representation.EJpaEntity;
+import br.xtool.service.WorkspaceService;
 import br.xtool.core.representation.EBootProject;
-import br.xtool.core.service.WorkspaceService;
 
 @Component
 public class EJavaEntityShellConverter implements Converter<String, EJpaEntity> {

@@ -13,9 +13,9 @@ import br.xtool.XtoolCliApplication;
 import br.xtool.core.aware.RegularAware;
 import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.EProject;
-import br.xtool.core.service.BootService;
-import br.xtool.core.service.WorkspaceService;
 import br.xtool.core.support.BootProjectJpaSupport;
+import br.xtool.service.BootService;
+import br.xtool.service.WorkspaceService;
 
 /**
  * Shell Commando responsável por criar uma projeto Spring Boot 1.5.x

@@ -11,7 +11,7 @@ import org.springframework.shell.standard.ValueProviderSupport;
 import org.springframework.stereotype.Component;
 
 import br.xtool.core.representation.EProject;
-import br.xtool.core.service.WorkspaceService;
+import br.xtool.service.WorkspaceService;
 
 @Component
 public class EProjectValueProvider extends ValueProviderSupport {

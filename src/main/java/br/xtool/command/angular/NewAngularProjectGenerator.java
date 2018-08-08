@@ -14,8 +14,8 @@ import br.xtool.core.ConsoleLog;
 import br.xtool.core.aware.RegularAware;
 import br.xtool.core.representation.ENgProject;
 import br.xtool.core.representation.EProject;
-import br.xtool.core.service.ShellService;
-import br.xtool.core.service.WorkspaceService;
+import br.xtool.service.ShellService;
+import br.xtool.service.WorkspaceService;
 
 @ShellComponent
 public class NewAngularProjectGenerator extends RegularAware {

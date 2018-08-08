@@ -12,7 +12,7 @@ import br.xtool.core.ConsoleLog;
 import br.xtool.core.aware.SpringBootAware;
 import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.EBootRepository;
-import br.xtool.core.service.WorkspaceService;
+import br.xtool.service.WorkspaceService;
 
 @ShellComponent
 public class InfoRepositoryCommand extends SpringBootAware {

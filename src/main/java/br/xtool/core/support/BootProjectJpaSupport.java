@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.EBootProject.BootSupport;
-import br.xtool.core.service.FileService;
+import br.xtool.service.FileService;
 
 @Component
 public class BootProjectJpaSupport implements BootSupport {

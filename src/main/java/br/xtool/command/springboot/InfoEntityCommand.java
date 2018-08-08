@@ -11,7 +11,7 @@ import br.xtool.core.aware.SpringBootAware;
 import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.EJpaAttribute;
 import br.xtool.core.representation.EJpaEntity;
-import br.xtool.core.service.WorkspaceService;
+import br.xtool.service.WorkspaceService;
 
 @ShellComponent
 public class InfoEntityCommand extends SpringBootAware {

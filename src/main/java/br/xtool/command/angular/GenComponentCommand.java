@@ -14,8 +14,8 @@ import br.xtool.XtoolCliApplication;
 import br.xtool.core.aware.AngularAware;
 import br.xtool.core.provider.ENgModuleValueProvider;
 import br.xtool.core.representation.ENgModule;
-import br.xtool.core.service.FileService;
-import br.xtool.core.service.NgService;
+import br.xtool.service.FileService;
+import br.xtool.service.NgService;
 
 @ShellComponent
 public class GenComponentCommand extends AngularAware {

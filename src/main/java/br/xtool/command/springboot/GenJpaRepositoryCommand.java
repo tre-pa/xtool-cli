@@ -15,9 +15,9 @@ import br.xtool.core.aware.SpringBootAware;
 import br.xtool.core.provider.EJavaEntityValueProvider;
 import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.EJpaEntity;
-import br.xtool.core.service.FileService;
-import br.xtool.core.service.WorkspaceService;
 import br.xtool.core.util.Names;
+import br.xtool.service.FileService;
+import br.xtool.service.WorkspaceService;
 
 /**
  * Comando que gera um classe Repository no projeto Spring Boot

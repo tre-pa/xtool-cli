@@ -8,7 +8,7 @@ import org.springframework.shell.standard.ShellOption;
 import br.xtool.XtoolCliApplication;
 import br.xtool.core.provider.EProjectValueProvider;
 import br.xtool.core.representation.EProject;
-import br.xtool.core.service.WorkspaceService;
+import br.xtool.service.WorkspaceService;
 
 @ShellComponent
 public class UseCommand {
