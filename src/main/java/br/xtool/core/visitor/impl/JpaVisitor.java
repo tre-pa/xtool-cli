@@ -20,8 +20,15 @@ import org.springframework.stereotype.Component;
 
 import br.xtool.core.representation.EJavaClass;
 import br.xtool.core.representation.EJavaField;
+import br.xtool.core.representation.EJavaField.EBigDecimalField;
+import br.xtool.core.representation.EJavaField.EBooleanField;
+import br.xtool.core.representation.EJavaField.EByteField;
+import br.xtool.core.representation.EJavaField.EIntegerField;
+import br.xtool.core.representation.EJavaField.ELocalDateField;
+import br.xtool.core.representation.EJavaField.ELocalDateTimeField;
+import br.xtool.core.representation.EJavaField.ELongField;
+import br.xtool.core.representation.EJavaField.EStringField;
 import br.xtool.core.representation.EJpaEntity;
-import br.xtool.core.representation.EUmlClass;
 import br.xtool.core.representation.EUmlField;
 import br.xtool.core.representation.EUmlFieldProperty;
 import br.xtool.core.representation.EUmlRelationship;
@@ -37,7 +44,7 @@ public class JpaVisitor implements Visitor {
 	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaClass, br.xtool.core.representation.EUmlClass)
 	 */
 	@Override
-	public void visit(EJavaClass javaClass, EUmlClass umlClass) {
+	public void visit(EJavaClass javaClass) {
 		javaClass.addAnnotation(Entity.class);
 		javaClass.addAnnotation(DynamicInsert.class);
 		javaClass.addAnnotation(DynamicUpdate.class);
@@ -59,40 +66,52 @@ public class JpaVisitor implements Visitor {
 	 */
 	@Override
 	public void visit(EJavaField javaField, EUmlField umlField) {
-		switch (umlField.getType()) {
-		case LONG:
-			if (umlField.isId()) {
-				javaField.addAnnotation(Id.class);
-				javaField.addGeneratedValueAnnotation(GenerationType.SEQUENCE);
-				javaField.addSequenceGeneratorAnnotation();
-				return;
-			}
-			javaField.addAnnotation(Column.class);
-			break;
-		case STRING:
-			javaField.addAnnotation(Column.class).setLiteralValue("length", String.valueOf(umlField.getMaxArrayLength().orElse(255)));
-			break;
-		case BIGDECIMAL:
-			javaField.addAnnotation(Column.class);
-			break;
-		case INTEGER:
-			javaField.addAnnotation(Column.class);
-			break;
-		case BOOLEAN:
-			javaField.addAnnotation(Column.class);
-			break;
-		case BYTE:
-			javaField.addAnnotation(Lob.class);
-			break;
-		case LOCALDATE:
-			javaField.addAnnotation(Column.class);
-			break;
-		case LOCALDATETIME:
-			javaField.addAnnotation(Column.class);
-			break;
-		default:
-			break;
+	}
+
+	@Override
+	public void visit(EStringField stringField, EUmlField umlField) {
+		stringField.addAnnotation(Column.class).setLiteralValue("length", String.valueOf(umlField.getMaxArrayLength().orElse(255)));
+	}
+
+	@Override
+	public void visit(EBooleanField booleanField, EUmlField umlField) {
+		booleanField.addAnnotation(Column.class);
+	}
+
+	@Override
+	public void visit(ELongField longField, EUmlField umlField) {
+		if (umlField.isId()) {
+			longField.addAnnotation(Id.class);
+			longField.addGeneratedValueAnnotation(GenerationType.SEQUENCE);
+			longField.addSequenceGeneratorAnnotation();
+			return;
 		}
+		longField.addAnnotation(Column.class);
+	}
+
+	@Override
+	public void visit(EIntegerField integerField, EUmlField umlField) {
+		integerField.addAnnotation(Column.class);
+	}
+
+	@Override
+	public void visit(EByteField byteField, EUmlField umlField) {
+		byteField.addAnnotation(Lob.class);
+	}
+
+	@Override
+	public void visit(EBigDecimalField bigDecimalField, EUmlField umlField) {
+		bigDecimalField.addAnnotation(Column.class);
+	}
+
+	@Override
+	public void visit(ELocalDateField localDateField, EUmlField umlField) {
+		localDateField.addAnnotation(Column.class);
+	}
+
+	@Override
+	public void visit(ELocalDateTimeField localDateTimeField, EUmlField umlField) {
+		localDateTimeField.addAnnotation(Column.class);
 	}
 
 	/*

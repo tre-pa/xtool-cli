@@ -23,11 +23,8 @@ import org.springframework.stereotype.Service;
 import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.EBootProject.BootSupport;
 import br.xtool.core.representation.EJavaClass;
-import br.xtool.core.representation.EJavaField;
 import br.xtool.core.representation.EJavaSourceFolder;
 import br.xtool.core.representation.EUmlClass;
-import br.xtool.core.representation.EUmlField;
-import br.xtool.core.representation.EUmlRelationship;
 import br.xtool.core.representation.converter.EUmlClassConverter;
 import br.xtool.core.representation.converter.EUmlFieldConverter;
 import br.xtool.core.representation.converter.EUmlRelationshipConverter;
@@ -101,27 +98,10 @@ public class BootServiceImpl implements BootService {
 
 	// Converte uma classe UML para um objeto EJavaClass.
 	private EJavaClass convertUmlClassToJavaClass(EBootProject bootProject, EUmlClass umlClass, Set<? extends Visitor> vistors) {
-		EJavaClass javaClass = new EUmlClassConverter().apply(bootProject, umlClass);
-		vistors.forEach(visitor -> visitor.visit(javaClass, umlClass));
-		umlClass.getFields().stream().forEach(umlField -> convertUmlFieldToJavaField(javaClass, umlField, vistors));
-		umlClass.getRelationships().stream().forEach(umlRelationship -> convertUmlRelationshipToJavaField(javaClass, umlRelationship, vistors));
+		EJavaClass javaClass = new EUmlClassConverter(vistors).apply(bootProject, umlClass);
+		umlClass.getFields().stream().forEach(umlField -> new EUmlFieldConverter(vistors).apply(javaClass, umlField));
+		umlClass.getRelationships().stream().forEach(umlRelationship -> new EUmlRelationshipConverter(vistors).apply(javaClass, umlRelationship));
 		return javaClass;
 	}
 
-	// Converte um atributo da classe UML para um objeto EJavaField.
-	private void convertUmlFieldToJavaField(EJavaClass javaClass, EUmlField umlField, Set<? extends Visitor> vistors) {
-		EJavaField javaField = new EUmlFieldConverter().apply(javaClass, umlField);
-		vistors.forEach(visitor -> visitor.visit(javaField, umlField));
-		vistors.forEach(visitor -> iterateOverFieldProperties(visitor, javaField, umlField));
-	}
-
-	private <T extends Visitor> void iterateOverFieldProperties(T visitor, EJavaField javaField, EUmlField umlField) {
-		umlField.getProperties().forEach(property -> visitor.visit(javaField, property));
-	}
-
-	// Converte um relacionamento UML para um objeto EJavaField.
-	private void convertUmlRelationshipToJavaField(EJavaClass javaClass, EUmlRelationship umlRelationship, Set<? extends Visitor> vistors) {
-		EJavaField javaField = new EUmlRelationshipConverter().apply(javaClass, umlRelationship);
-		vistors.forEach(visitor -> visitor.visit(javaField, umlRelationship));
-	}
 }

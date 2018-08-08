@@ -1,11 +1,26 @@
 package br.xtool.core.representation.converter;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.function.BiFunction;
 
 import br.xtool.core.representation.EJavaClass;
 import br.xtool.core.representation.EJavaField;
 import br.xtool.core.representation.EUmlField;
+import br.xtool.core.representation.impl.EJavaFieldImpl.EBigDecimalFieldImpl;
+import br.xtool.core.representation.impl.EJavaFieldImpl.EBooleanFieldImpl;
+import br.xtool.core.representation.impl.EJavaFieldImpl.EByteFieldImpl;
+import br.xtool.core.representation.impl.EJavaFieldImpl.EIntegerFieldImpl;
+import br.xtool.core.representation.impl.EJavaFieldImpl.ELocalDateFieldImpl;
+import br.xtool.core.representation.impl.EJavaFieldImpl.ELocalDateTimeFieldImpl;
+import br.xtool.core.representation.impl.EJavaFieldImpl.ELongFieldImpl;
+import br.xtool.core.representation.impl.EJavaFieldImpl.EStringFieldImpl;
 import br.xtool.core.util.RoasterUtil;
+import br.xtool.core.visitor.Visitor;
+import lombok.AllArgsConstructor;
 
 /**
  * Converter um atributo UML do diagrama de classe em um EJavaField.
@@ -13,7 +28,10 @@ import br.xtool.core.util.RoasterUtil;
  * @author jcruz
  *
  */
+@AllArgsConstructor
 public class EUmlFieldConverter implements BiFunction<EJavaClass, EUmlField, EJavaField> {
+
+	private Set<? extends Visitor> visitors = new HashSet<>();
 
 	@Override
 	public EJavaField apply(EJavaClass javaClass, EUmlField umlField) {
@@ -25,7 +43,23 @@ public class EUmlFieldConverter implements BiFunction<EJavaClass, EUmlField, EJa
 			.setPrivate()
 			.setType(umlField.getType().getJavaName());
 		// @formatter:on
+		this.visit(javaField, umlField);
 		return javaField;
+	}
+
+	private void visit(EJavaField javaField, EUmlField umlField) {
+		this.visitors.forEach(visitor -> {
+			visitor.visit(javaField, umlField);
+			if (javaField.getType().isType(String.class)) visitor.visit(new EStringFieldImpl(javaField), umlField);
+			if (javaField.getType().isType(Boolean.class)) visitor.visit(new EBooleanFieldImpl(javaField), umlField);
+			if (javaField.getType().isType(Long.class)) visitor.visit(new ELongFieldImpl(javaField), umlField);
+			if (javaField.getType().isType(Integer.class)) visitor.visit(new EIntegerFieldImpl(javaField), umlField);
+			if (javaField.getType().isType(Byte.class)) visitor.visit(new EByteFieldImpl(javaField), umlField);
+			if (javaField.getType().isType(BigDecimal.class)) visitor.visit(new EBigDecimalFieldImpl(javaField), umlField);
+			if (javaField.getType().isType(LocalDate.class)) visitor.visit(new ELocalDateFieldImpl(javaField), umlField);
+			if (javaField.getType().isType(LocalDateTime.class)) visitor.visit(new ELocalDateTimeFieldImpl(javaField), umlField);
+		});
+		this.visitors.forEach(visitor -> umlField.getProperties().forEach(property -> visitor.visit(javaField, property)));
 	}
 
 }

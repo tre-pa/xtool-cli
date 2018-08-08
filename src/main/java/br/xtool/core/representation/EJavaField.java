@@ -19,6 +19,8 @@ import org.jboss.forge.roaster.model.source.JavaClassSource;
  */
 public interface EJavaField extends Comparable<EJavaField> {
 
+	EBootProject getProject();
+
 	String getName();
 
 	Type<JavaClassSource> getType();
@@ -69,4 +71,21 @@ public interface EJavaField extends Comparable<EJavaField> {
 	EJavaAnnotation addGeneratedValueAnnotation(GenerationType generationType);
 
 	EJavaAnnotation addSequenceGeneratorAnnotation();
+
+	interface EStringField extends EJavaField {}
+
+	interface EBooleanField extends EJavaField {}
+
+	interface ELongField extends EJavaField {}
+
+	interface EIntegerField extends EJavaField {}
+
+	interface EByteField extends EJavaField {}
+
+	interface EBigDecimalField extends EJavaField {}
+
+	interface ELocalDateField extends EJavaField {}
+
+	interface ELocalDateTimeField extends EJavaField {}
+
 }

@@ -43,6 +43,11 @@ public class EJavaFieldImpl implements EJavaField {
 		this.fieldSource = fieldSource;
 	}
 
+	@Override
+	public EBootProject getProject() {
+		return this.bootProject;
+	}
+
 	/**
 	 * Retorna o nome do attributo.
 	 * 
@@ -224,6 +229,68 @@ public class EJavaFieldImpl implements EJavaField {
 	@Override
 	public int compareTo(EJavaField o) {
 		return this.getName().compareTo(o.getName());
+	}
+
+	public static class EStringFieldImpl extends EJavaFieldImpl implements EStringField {
+		public EStringFieldImpl(EJavaField javaField) {
+			super(javaField.getProject(), javaField.getJavaClass(), javaField.getRoasterField());
+		}
+	}
+
+	public static class EBooleanFieldImpl extends EJavaFieldImpl implements EBooleanField {
+
+		public EBooleanFieldImpl(EJavaField javaField) {
+			super(javaField.getProject(), javaField.getJavaClass(), javaField.getRoasterField());
+		}
+
+	}
+
+	public static class ELongFieldImpl extends EJavaFieldImpl implements ELongField {
+
+		public ELongFieldImpl(EJavaField javaField) {
+			super(javaField.getProject(), javaField.getJavaClass(), javaField.getRoasterField());
+		}
+
+	}
+
+	public static class EIntegerFieldImpl extends EJavaFieldImpl implements EIntegerField {
+
+		public EIntegerFieldImpl(EJavaField javaField) {
+			super(javaField.getProject(), javaField.getJavaClass(), javaField.getRoasterField());
+		}
+
+	}
+
+	public static class EByteFieldImpl extends EJavaFieldImpl implements EJavaField {
+
+		public EByteFieldImpl(EJavaField javaField) {
+			super(javaField.getProject(), javaField.getJavaClass(), javaField.getRoasterField());
+		}
+
+	}
+
+	public static class EBigDecimalFieldImpl extends EJavaFieldImpl implements EBigDecimalField {
+
+		public EBigDecimalFieldImpl(EJavaField javaField) {
+			super(javaField.getProject(), javaField.getJavaClass(), javaField.getRoasterField());
+		}
+
+	}
+
+	public static class ELocalDateFieldImpl extends EJavaFieldImpl implements ELocalDateField {
+
+		public ELocalDateFieldImpl(EJavaField javaField) {
+			super(javaField.getProject(), javaField.getJavaClass(), javaField.getRoasterField());
+		}
+
+	}
+
+	public static class ELocalDateTimeFieldImpl extends EJavaFieldImpl implements ELocalDateTimeField {
+
+		public ELocalDateTimeFieldImpl(EJavaField javaField) {
+			super(javaField.getProject(), javaField.getJavaClass(), javaField.getRoasterField());
+		}
+
 	}
 
 }
