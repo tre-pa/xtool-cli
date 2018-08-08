@@ -9,6 +9,7 @@ import br.xtool.core.representation.EJavaSourceFolder;
 import br.xtool.core.visitor.Visitor;
 
 /**
+ * Serviços para projetos Spring Boot.
  * 
  * @author jcruz
  *

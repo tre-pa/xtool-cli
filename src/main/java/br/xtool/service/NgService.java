@@ -9,7 +9,7 @@ import br.xtool.core.representation.ENgService;
 import lombok.NonNull;
 
 /**
- * Classe de serviço para projetos Angular.
+ * Serviços para projetos Angular.
  * 
  * @author jcruz
  *

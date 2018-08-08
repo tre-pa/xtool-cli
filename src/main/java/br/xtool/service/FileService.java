@@ -6,7 +6,7 @@ import java.util.Map;
 import br.xtool.core.representation.EProject;
 
 /**
- * Classe que realiza operação no FileSystem.
+ * Serviços para operações em FileSystem.
  * 
  * @author jcruz
  *

@@ -7,7 +7,7 @@ import br.xtool.core.representation.EProject;
 import br.xtool.core.representation.EWorkspace;
 
 /**
- * Classe de serviço do workspace.
+ * Serviços do workspace.
  * 
  * @author jcruz
  *
