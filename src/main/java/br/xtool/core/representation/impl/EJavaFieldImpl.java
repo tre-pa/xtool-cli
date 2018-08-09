@@ -113,54 +113,6 @@ public class EJavaFieldImpl implements EJavaField {
 		// @formatter:on
 	}
 
-	@Override
-	public boolean isFinal() {
-		return this.fieldSource.isFinal();
-	}
-
-	@Override
-	public boolean isPackagePrivate() {
-		return this.fieldSource.isPackagePrivate();
-	}
-
-	@Override
-	public boolean isPublic() {
-		return this.fieldSource.isPublic();
-	}
-
-	@Override
-	public boolean isPrivate() {
-		return this.fieldSource.isPrivate();
-	}
-
-	@Override
-	public boolean isProtected() {
-		return this.fieldSource.isProtected();
-	}
-
-	@Override
-	public boolean hasJavaDoc() {
-		return this.fieldSource.hasJavaDoc();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see br.xtool.core.representation.EJavaField#isTransient()
-	 */
-	@Override
-	public boolean isTransient() {
-		return this.fieldSource.isTransient();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see br.xtool.core.representation.EJavaField#isVolatile()
-	 */
-	@Override
-	public boolean isVolatile() {
-		return this.fieldSource.isVolatile();
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * @see br.xtool.core.representation.EJavaField#getLineNumber()

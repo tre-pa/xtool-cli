@@ -35,22 +35,6 @@ public interface EJavaField extends Comparable<EJavaField> {
 
 	EJavaAnnotation addAnnotation(Class<? extends Annotation> type);
 
-	boolean isFinal();
-
-	boolean isPackagePrivate();
-
-	boolean isPublic();
-
-	boolean isPrivate();
-
-	boolean isProtected();
-
-	boolean hasJavaDoc();
-
-	boolean isTransient();
-
-	boolean isVolatile();
-
 	int getLineNumber();
 
 	/**
