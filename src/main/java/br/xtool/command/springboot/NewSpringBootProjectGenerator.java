@@ -10,7 +10,6 @@ import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 
 import br.xtool.XtoolCliApplication;
-import br.xtool.core.aware.RegularAware;
 import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.EProject;
 import br.xtool.core.support.BootProjectJpaSupport;
@@ -24,7 +23,7 @@ import br.xtool.service.WorkspaceService;
  *
  */
 @ShellComponent
-public class NewSpringBootProjectGenerator extends RegularAware {
+public class NewSpringBootProjectGenerator {
 
 	@Autowired
 	private WorkspaceService workspaceService;
@@ -48,8 +47,17 @@ public class NewSpringBootProjectGenerator extends RegularAware {
 				put("baseClassName", EBootProject.genBaseClassName(name));
 			}
 		};
-		EBootProject bootProject = this.workspaceService.createProject(EBootProject.class, EProject.Type.SPRINGBOOT, EBootProject.genProjectName(name), EProject.Version.V1, vars);
+		// @formatter:off
+		EBootProject bootProject = this.workspaceService.createProject(
+				EBootProject.class, 
+				EProject.Type.SPRINGBOOT, 
+				EBootProject.genProjectName(name), 
+				EProject.Version.V1, 
+				vars);
+		// @formatter:on
 		if (!noJpa) this.bootService.addSupport(bootProject, BootProjectJpaSupport.class);
+
+		this.workspaceService.setWorkingProject(bootProject);
 	}
 
 }

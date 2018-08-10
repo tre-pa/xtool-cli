@@ -11,14 +11,13 @@ import org.springframework.shell.standard.ShellOption;
 
 import br.xtool.XtoolCliApplication;
 import br.xtool.core.ConsoleLog;
-import br.xtool.core.aware.RegularAware;
 import br.xtool.core.representation.ENgProject;
 import br.xtool.core.representation.EProject;
 import br.xtool.service.ShellService;
 import br.xtool.service.WorkspaceService;
 
 @ShellComponent
-public class NewAngularProjectGenerator extends RegularAware {
+public class NewAngularProjectGenerator {
 
 	@Autowired
 	private ShellService shellService;
@@ -34,9 +33,18 @@ public class NewAngularProjectGenerator extends RegularAware {
 				put("projectName", name);
 			}
 		};
-		ENgProject project = this.workspaceService.createProject(ENgProject.class, EProject.Type.ANGULAR, name, EProject.Version.V5, vars);
+		// @formatter:off
+		ENgProject project = this.workspaceService.createProject(
+				ENgProject.class, 
+				EProject.Type.ANGULAR, 
+				name, 
+				EProject.Version.V5, 
+				vars);
+		// @formatter:on
 		ConsoleLog.print(ConsoleLog.cyan("\t-- npm install --"));
 		this.shellService.runCmd(project.getPath(), "npm i && code .", vars);
+
+		this.workspaceService.setWorkingProject(project);
 	}
 
 }
