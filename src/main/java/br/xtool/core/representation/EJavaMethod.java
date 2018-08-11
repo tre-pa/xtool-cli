@@ -16,19 +16,13 @@ import org.jboss.forge.roaster.model.source.ParameterSource;
  */
 public interface EJavaMethod extends Comparable<EJavaMethod> {
 
+	EBootProject getProject();
+
+	EJavaClass getJavaClass();
+
 	String getName();
 
-	boolean isStatic();
-
-	boolean isConstructor();
-
-	boolean hasAnnotation(String type);
-
 	Type<JavaClassSource> getReturnType();
-
-	int getLineNumber();
-
-	boolean isReturnTypeVoid();
 
 	List<ParameterSource<JavaClassSource>> getParameters();
 

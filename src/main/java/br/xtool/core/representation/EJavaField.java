@@ -35,8 +35,6 @@ public interface EJavaField extends Comparable<EJavaField> {
 
 	EJavaAnnotation addAnnotation(Class<? extends Annotation> type);
 
-	int getLineNumber();
-
 	/**
 	 * Retorna o relacionamento JPA.
 	 * 

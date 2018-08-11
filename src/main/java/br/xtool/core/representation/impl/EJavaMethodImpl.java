@@ -41,33 +41,18 @@ public class EJavaMethodImpl implements EJavaMethod {
 	}
 
 	@Override
-	public boolean isStatic() {
-		return this.methodSource.isStatic();
+	public EBootProject getProject() {
+		return this.bootProject;
 	}
 
 	@Override
-	public boolean isConstructor() {
-		return this.methodSource.isConstructor();
-	}
-
-	@Override
-	public boolean hasAnnotation(String type) {
-		return this.methodSource.hasAnnotation(type);
+	public EJavaClass getJavaClass() {
+		return this.javaClass;
 	}
 
 	@Override
 	public Type<JavaClassSource> getReturnType() {
 		return this.methodSource.getReturnType();
-	}
-
-	@Override
-	public int getLineNumber() {
-		return this.methodSource.getLineNumber();
-	}
-
-	@Override
-	public boolean isReturnTypeVoid() {
-		return this.methodSource.isReturnTypeVoid();
 	}
 
 	@Override

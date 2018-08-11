@@ -115,15 +115,6 @@ public class EJavaFieldImpl implements EJavaField {
 
 	/*
 	 * (non-Javadoc)
-	 * @see br.xtool.core.representation.EJavaField#getLineNumber()
-	 */
-	@Override
-	public int getLineNumber() {
-		return this.fieldSource.getLineNumber();
-	}
-
-	/*
-	 * (non-Javadoc)
 	 * @see br.xtool.core.representation.EJavaField#getRoasterField()
 	 */
 	@Override
