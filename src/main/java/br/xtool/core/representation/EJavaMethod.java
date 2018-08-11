@@ -29,11 +29,31 @@ public interface EJavaMethod extends Comparable<EJavaMethod> {
 	 */
 	String getName();
 
+	/**
+	 * Retorna o tipo de retorno do método.
+	 * 
+	 * @return
+	 */
 	Type<JavaClassSource> getReturnType();
 
+	/**
+	 * Retorna os parametros do método.
+	 * 
+	 * @return
+	 */
 	Collection<EJavaMethodParameter> getParameters();
 
+	/**
+	 * Retorna as annotations do método.
+	 * 
+	 * @return
+	 */
 	SortedSet<EJavaAnnotation> getAnnotations();
 
+	/**
+	 * Retorna o objeto MethodSource.
+	 * 
+	 * @return
+	 */
 	MethodSource<JavaClassSource> getRoasterMethod();
 }
