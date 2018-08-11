@@ -1,12 +1,11 @@
 package br.xtool.core.representation;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.SortedSet;
 
 import org.jboss.forge.roaster.model.Type;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.jboss.forge.roaster.model.source.MethodSource;
-import org.jboss.forge.roaster.model.source.ParameterSource;
 
 /**
  * Representação de um método java.
@@ -16,13 +15,23 @@ import org.jboss.forge.roaster.model.source.ParameterSource;
  */
 public interface EJavaMethod extends Comparable<EJavaMethod> {
 
+	/**
+	 * Retorna o objeto JavaClass do método
+	 * 
+	 * @return
+	 */
 	EJavaClass getJavaClass();
 
+	/**
+	 * Retorna o nome do método.
+	 * 
+	 * @return
+	 */
 	String getName();
 
 	Type<JavaClassSource> getReturnType();
 
-	List<ParameterSource<JavaClassSource>> getParameters();
+	Collection<EJavaMethodParameter> getParameters();
 
 	SortedSet<EJavaAnnotation> getAnnotations();
 
