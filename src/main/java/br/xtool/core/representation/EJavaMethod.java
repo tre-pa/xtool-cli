@@ -16,8 +16,6 @@ import org.jboss.forge.roaster.model.source.ParameterSource;
  */
 public interface EJavaMethod extends Comparable<EJavaMethod> {
 
-	EBootProject getProject();
-
 	EJavaClass getJavaClass();
 
 	String getName();

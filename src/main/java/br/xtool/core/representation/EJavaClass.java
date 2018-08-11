@@ -14,6 +14,8 @@ import org.jboss.forge.roaster.model.source.JavaClassSource;
  */
 public interface EJavaClass extends Comparable<EJavaClass> {
 
+	EBootProject getProject();
+
 	/**
 	 * Retorna o nome da classe.
 	 * 

@@ -17,11 +17,8 @@ import br.xtool.core.representation.EJpaEntity;
  */
 public class EJpaEntityImpl extends EJavaClassImpl implements EJpaEntity {
 
-	private EBootProject springBootProject;
-
 	public EJpaEntityImpl(EBootProject springBootProject, JavaClassSource javaClassSource) {
 		super(springBootProject, javaClassSource);
-		this.springBootProject = springBootProject;
 		this.javaClassSource = javaClassSource;
 	}
 
@@ -35,27 +32,9 @@ public class EJpaEntityImpl extends EJavaClassImpl implements EJpaEntity {
 		// @formatter:off
 		return this.javaClassSource.getFields().stream()
 			.filter(fieldSource -> !fieldSource.isStatic())
-			.map(f -> new EJpaAttributeImpl(this.springBootProject,this, f))
+			.map(fieldSource -> new EJpaAttributeImpl(this, fieldSource))
 			.collect(Collectors.toList());
 		// @formatter:on
 	}
-
-	//	/**
-	//	 * Retorna as associações da entidade.
-	//	 * 
-	//	 * @return
-	//	 */
-	//	@Override
-	//	@Deprecated
-	//	public Set<EJpaRelationship> getRelationships() {
-	//		Set<EJpaRelationship> associations = new HashSet<>();
-//		// @formatter:off
-//		this.getAttributes().stream()
-//			.filter(EJpaAttribute::isRelationship)
-//			.map(EJpaAttribute::getRelationship)
-//			.forEach(association -> associations.add(association.get()));
-//		// @formatter:on
-	//		return associations;
-	//	}
 
 }

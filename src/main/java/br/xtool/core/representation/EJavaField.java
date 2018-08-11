@@ -19,8 +19,6 @@ import org.jboss.forge.roaster.model.source.JavaClassSource;
  */
 public interface EJavaField extends Comparable<EJavaField> {
 
-	EBootProject getProject();
-
 	String getName();
 
 	Type<JavaClassSource> getType();

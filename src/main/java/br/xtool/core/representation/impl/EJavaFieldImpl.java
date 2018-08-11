@@ -21,7 +21,6 @@ import org.jboss.forge.roaster.model.source.FieldSource;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.jboss.forge.roaster.model.util.Types;
 
-import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.EJavaAnnotation;
 import br.xtool.core.representation.EJavaClass;
 import br.xtool.core.representation.EJavaField;
@@ -34,18 +33,10 @@ public class EJavaFieldImpl implements EJavaField {
 
 	protected FieldSource<JavaClassSource> fieldSource;
 
-	private EBootProject bootProject;
-
-	public EJavaFieldImpl(EBootProject bootProject, EJavaClass javaClass, FieldSource<JavaClassSource> fieldSource) {
+	public EJavaFieldImpl(EJavaClass javaClass, FieldSource<JavaClassSource> fieldSource) {
 		super();
-		this.bootProject = bootProject;
 		this.javaClass = javaClass;
 		this.fieldSource = fieldSource;
-	}
-
-	@Override
-	public EBootProject getProject() {
-		return this.bootProject;
 	}
 
 	/**
@@ -131,7 +122,7 @@ public class EJavaFieldImpl implements EJavaField {
 		if (this.isCollection()) {
 			String entityName = Types.getGenericsTypeParameter(this.getType().getQualifiedNameWithGenerics());
 			// @formatter:off
-			return this.bootProject.getEntities().stream()
+			return this.getJavaClass().getProject().getEntities().stream()
 					.filter(entity -> entity.getName().equals(entityName))
 					.map(entityTarget -> new EJavaRelationshipImpl(this.javaClass, entityTarget, this))
 					.map(EJavaRelationship.class::cast)
@@ -140,7 +131,7 @@ public class EJavaFieldImpl implements EJavaField {
 		}
 		// @formatter:off
 		String entityName = this.getType().getName();
-		return this.bootProject.getEntities().stream()
+		return this.getJavaClass().getProject().getEntities().stream()
 				.filter(entity -> entity.getName().equals(entityName))
 				.map(entityTarget -> new EJavaRelationshipImpl(this.javaClass, entityTarget, this))
 				.map(EJavaRelationship.class::cast)
@@ -220,104 +211,104 @@ public class EJavaFieldImpl implements EJavaField {
 
 	public static class EStringFieldImpl extends EJavaFieldImpl implements EStringField {
 		public EStringFieldImpl(EJavaField javaField) {
-			super(javaField.getProject(), javaField.getJavaClass(), javaField.getRoasterField());
+			super(javaField.getJavaClass(), javaField.getRoasterField());
 		}
 	}
 
 	public static class EBooleanFieldImpl extends EJavaFieldImpl implements EBooleanField {
 		public EBooleanFieldImpl(EJavaField javaField) {
-			super(javaField.getProject(), javaField.getJavaClass(), javaField.getRoasterField());
+			super(javaField.getJavaClass(), javaField.getRoasterField());
 		}
 
 	}
 
 	public static class ELongFieldImpl extends EJavaFieldImpl implements ELongField {
 		public ELongFieldImpl(EJavaField javaField) {
-			super(javaField.getProject(), javaField.getJavaClass(), javaField.getRoasterField());
+			super(javaField.getJavaClass(), javaField.getRoasterField());
 		}
 
 	}
 
 	public static class EIntegerFieldImpl extends EJavaFieldImpl implements EIntegerField {
 		public EIntegerFieldImpl(EJavaField javaField) {
-			super(javaField.getProject(), javaField.getJavaClass(), javaField.getRoasterField());
+			super(javaField.getJavaClass(), javaField.getRoasterField());
 		}
 
 	}
 
 	public static class EByteFieldImpl extends EJavaFieldImpl implements EJavaField {
 		public EByteFieldImpl(EJavaField javaField) {
-			super(javaField.getProject(), javaField.getJavaClass(), javaField.getRoasterField());
+			super(javaField.getJavaClass(), javaField.getRoasterField());
 		}
 
 	}
 
 	public static class EBigDecimalFieldImpl extends EJavaFieldImpl implements EBigDecimalField {
 		public EBigDecimalFieldImpl(EJavaField javaField) {
-			super(javaField.getProject(), javaField.getJavaClass(), javaField.getRoasterField());
+			super(javaField.getJavaClass(), javaField.getRoasterField());
 		}
 
 	}
 
 	public static class ELocalDateFieldImpl extends EJavaFieldImpl implements ELocalDateField {
 		public ELocalDateFieldImpl(EJavaField javaField) {
-			super(javaField.getProject(), javaField.getJavaClass(), javaField.getRoasterField());
+			super(javaField.getJavaClass(), javaField.getRoasterField());
 		}
 
 	}
 
 	public static class ELocalDateTimeFieldImpl extends EJavaFieldImpl implements ELocalDateTimeField {
 		public ELocalDateTimeFieldImpl(EJavaField javaField) {
-			super(javaField.getProject(), javaField.getJavaClass(), javaField.getRoasterField());
+			super(javaField.getJavaClass(), javaField.getRoasterField());
 		}
 
 	}
 
 	public static class ENotNullFieldImpl extends EJavaFieldImpl implements ENotNullField {
 		public ENotNullFieldImpl(EJavaField javaField) {
-			super(javaField.getProject(), javaField.getJavaClass(), javaField.getRoasterField());
+			super(javaField.getJavaClass(), javaField.getRoasterField());
 		}
 
 	}
 
 	public static class ETransientFieldImpl extends EJavaFieldImpl implements ETransientField {
 		public ETransientFieldImpl(EJavaField javaField) {
-			super(javaField.getProject(), javaField.getJavaClass(), javaField.getRoasterField());
+			super(javaField.getJavaClass(), javaField.getRoasterField());
 		}
 
 	}
 
 	public static class EUniqueFieldImpl extends EJavaFieldImpl implements EUniqueField {
 		public EUniqueFieldImpl(EJavaField javaField) {
-			super(javaField.getProject(), javaField.getJavaClass(), javaField.getRoasterField());
+			super(javaField.getJavaClass(), javaField.getRoasterField());
 		}
 
 	}
 
 	public static class EOneToOneFieldImpl extends EJavaFieldImpl implements EOneToOneField {
 		public EOneToOneFieldImpl(EJavaField javaField) {
-			super(javaField.getProject(), javaField.getJavaClass(), javaField.getRoasterField());
+			super(javaField.getJavaClass(), javaField.getRoasterField());
 		}
 
 	}
 
 	public static class EOneToManyFieldImpl extends EJavaFieldImpl implements EOneToManyField {
 		public EOneToManyFieldImpl(EJavaField javaField) {
-			super(javaField.getProject(), javaField.getJavaClass(), javaField.getRoasterField());
+			super(javaField.getJavaClass(), javaField.getRoasterField());
 		}
 
 	}
 
 	public static class EManyToOneFieldImpl extends EJavaFieldImpl implements EManyToOneField {
 		public EManyToOneFieldImpl(EJavaField javaField) {
-			super(javaField.getProject(), javaField.getJavaClass(), javaField.getRoasterField());
+			super(javaField.getJavaClass(), javaField.getRoasterField());
 		}
 
 	}
 
 	public static class EManyToManyFieldImpl extends EJavaFieldImpl implements EManyToManyField {
 		public EManyToManyFieldImpl(EJavaField javaField) {
-			super(javaField.getProject(), javaField.getJavaClass(), javaField.getRoasterField());
+			super(javaField.getJavaClass(), javaField.getRoasterField());
 		}
 
 	}

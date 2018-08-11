@@ -16,11 +16,8 @@ import br.xtool.core.representation.EJavaMethod;
 
 public class EJavaRestImpl extends EJavaClassImpl implements EBootRest {
 
-	private EBootProject bootProject;
-
 	public EJavaRestImpl(EBootProject bootProject, JavaClassSource javaClassSource) {
 		super(bootProject, javaClassSource);
-		this.bootProject = bootProject;
 	}
 
 	/*
@@ -77,7 +74,7 @@ public class EJavaRestImpl extends EJavaClassImpl implements EBootRest {
 		return this.javaClassSource.getMethods()
 			.stream()
 			.filter(hasHttpAnnotation.or(hasRequestMapping.and(hasRequestMappingMethod)))
-			.map(methodSource -> new EJavaMethodImpl(this.bootProject, this, methodSource))
+			.map(methodSource -> new EJavaMethodImpl(this, methodSource))
 			.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
 	}

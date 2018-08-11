@@ -32,6 +32,11 @@ public class EJavaClassImpl implements EJavaClass {
 		this.javaClassSource = javaClassSource;
 	}
 
+	@Override
+	public EBootProject getProject() {
+		return this.project;
+	}
+
 	/**
 	 * Nome da classe
 	 * 
@@ -89,7 +94,7 @@ public class EJavaClassImpl implements EJavaClass {
 		// @formatter:off
 		return this.javaClassSource.getFields()
 				.stream()
-				.map(fieldSource -> new EJavaFieldImpl(this.project ,this, fieldSource))
+				.map(fieldSource -> new EJavaFieldImpl(this, fieldSource))
 				.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
 	}
@@ -100,7 +105,7 @@ public class EJavaClassImpl implements EJavaClass {
 		return this.getFields().stream()
 				.filter(javaField -> javaField.getName().equals(name))
 				.findAny()
-				.orElseGet(() -> new EJavaFieldImpl(this.project ,this,this.javaClassSource.addField()));
+				.orElseGet(() -> new EJavaFieldImpl(this,this.javaClassSource.addField()));
 		// @formatter:on
 	}
 
@@ -110,7 +115,7 @@ public class EJavaClassImpl implements EJavaClass {
 		return this.getMethods().stream()
 				.filter(javaMethod -> javaMethod.getName().equals(name))
 				.findAny()
-				.orElseGet(() -> new EJavaMethodImpl(this.project, this, this.javaClassSource.addMethod().setName(name)));
+				.orElseGet(() -> new EJavaMethodImpl(this, this.javaClassSource.addMethod().setName(name)));
 		// @formatter:on
 	}
 
@@ -139,7 +144,7 @@ public class EJavaClassImpl implements EJavaClass {
 		// @formatter:off
 		return this.javaClassSource.getMethods()
 				.stream()
-				.map(methodSource -> new EJavaMethodImpl(this.project, this, methodSource))
+				.map(methodSource -> new EJavaMethodImpl(this, methodSource))
 				.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
 	}
