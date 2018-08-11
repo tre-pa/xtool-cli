@@ -80,6 +80,12 @@ public interface EJavaClass extends Comparable<EJavaClass> {
 	 */
 	SortedSet<EJavaAnnotation> getAnnotations();
 
+	/**
+	 * Adiciona uma annotation
+	 * 
+	 * @param type
+	 * @return
+	 */
 	EJavaAnnotation addAnnotation(Class<? extends Annotation> type);
 
 	/**
