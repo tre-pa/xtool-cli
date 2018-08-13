@@ -29,12 +29,10 @@ $ ./run.sh ~/git/
 **4.** Após rodar a aplicação o prompt da ferramenta será exibido.
 
 ```sh
-xtool ~
-
-## Help do Sistema
-
-Com o comando `help` é possível visualizar os comandos disponíveis:  
-
+Bem vindo a ferramenta xtool
+O diretório de trabalho atual é: /home/jcruz/git
+Digite help para ver as opções de comandos.
+xtool ~ 
 ```
 
 **1.** Para visualizar os comando disponéveis digitar no prompt o comando `help`:
