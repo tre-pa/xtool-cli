@@ -48,7 +48,7 @@ xtool ~ help NOME_COMANDO
 ```
 
 
-## Criando projeto Spring Boot
+## Criando projeto Spring Boot 1.5.x
 
 Para criar um novo projeto Spring Boot 1.5.x digitar o comando abaixo:
 
