@@ -66,4 +66,4 @@ xtool ~ new:springboot NOME_PROJETO
 xtool ~ new:angular NOME_PROJETO
 ```
 
-> O archetype do projeto angular v5 está localizado no diretório src/main/resources/templates/angular/v5/archetype do projeto `xtool-cli`.
+> O archetype do projeto angular v5 está localizado no diretório `src/main/resources/templates/angular/v5/archetype` do projeto `xtool-cli`.
