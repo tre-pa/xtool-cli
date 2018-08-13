@@ -58,10 +58,12 @@ Para criar um novo projeto Spring Boot 1.5.x digitar o comando abaixo:
 xtool ~ new:springboot NOME_PROJETO
 ```
 
-> O archetype do projeto spring boot está localizado no diretório `src/main/resources/templates/springboot/v1/archetype` do projeto `xtool-cli`
+> O archetype do projeto spring boot v1 está localizado no diretório `src/main/resources/templates/springboot/v1/archetype` do projeto `xtool-cli`.
 
 ## Criando projeto Angular 5.x
 
 ```sh
 xtool ~ new:angular NOME_PROJETO
 ```
+
+> O archetype do projeto angular v5 está localizado no diretório src/main/resources/templates/angular/v5/archetype do projeto `xtool-cli`.
