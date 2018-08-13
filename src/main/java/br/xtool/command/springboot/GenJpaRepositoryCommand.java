@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.jdom2.JDOMException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
@@ -25,6 +26,7 @@ import br.xtool.service.WorkspaceService;
  * @author jcruz
  *
  */
+@Profile("in-dev")
 @ShellComponent
 public class GenJpaRepositoryCommand extends SpringBootAware {
 

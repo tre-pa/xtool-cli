@@ -3,6 +3,7 @@ package br.xtool.command.springboot;
 import java.util.Comparator;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 
@@ -13,6 +14,7 @@ import br.xtool.core.representation.EJpaAttribute;
 import br.xtool.core.representation.EJpaEntity;
 import br.xtool.service.WorkspaceService;
 
+@Profile("in-dev")
 @ShellComponent
 public class InfoEntityCommand extends SpringBootAware {
 
@@ -39,7 +41,8 @@ public class InfoEntityCommand extends SpringBootAware {
 			System.out.println(entity.getName());
 			for (EJpaAttribute attribute : entity.getAttributes()) {
 				System.out.print(String.format("\t%s: %s ", attribute.getName(), attribute.getType().getName()));
-				attribute.getJpaRelationship().ifPresent(relationship -> System.out.println(" Target: " + relationship.getTargetEntity().getName() + " Bidirectional: " + relationship.isBidirectional()));
+				attribute.getJpaRelationship()
+						.ifPresent(relationship -> System.out.println(" Target: " + relationship.getTargetEntity().getName() + " Bidirectional: " + relationship.isBidirectional()));
 				System.out.println();
 			}
 		}

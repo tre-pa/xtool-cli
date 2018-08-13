@@ -4,6 +4,7 @@ import java.util.Comparator;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 
@@ -14,6 +15,7 @@ import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.EBootRest;
 import br.xtool.service.WorkspaceService;
 
+@Profile("in-dev")
 @ShellComponent
 public class InfoRestCommand extends SpringBootAware {
 

@@ -1,6 +1,7 @@
 package br.xtool.command.angular;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
@@ -14,6 +15,7 @@ import br.xtool.core.representation.ENgProject;
 import br.xtool.service.NgService;
 import br.xtool.service.WorkspaceService;
 
+@Profile("in-dev")
 @ShellComponent
 public class GenPageCommand extends AngularAware {
 
