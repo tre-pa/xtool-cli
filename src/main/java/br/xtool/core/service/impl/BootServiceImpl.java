@@ -62,7 +62,7 @@ public class BootServiceImpl implements BootService {
 	@Override
 	@SneakyThrows
 	public void save(EJavaSourceFolder sourceFolder, EJavaClass javaClass) {
-		Path javaPath = sourceFolder.getPath().resolve(javaClass.getPackage().getDir()).resolve(String.format("%s.java", javaClass.getName()));
+		Path javaPath = sourceFolder.getPath().resolve(javaClass.getJavaPackage().getDir()).resolve(String.format("%s.java", javaClass.getName()));
 		if (Files.notExists(javaPath.getParent())) Files.createDirectories(javaPath);
 		Properties prefs = new Properties();
 		prefs.setProperty(JavaCore.COMPILER_SOURCE, CompilerOptions.VERSION_1_8);

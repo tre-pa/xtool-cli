@@ -35,7 +35,7 @@ public interface EJavaClass extends Comparable<EJavaClass> {
 	 * 
 	 * @return
 	 */
-	EJavaPackage getPackage();
+	EJavaPackage getJavaPackage();
 
 	/**
 	 * Verifica se a classe possui a annotation.
