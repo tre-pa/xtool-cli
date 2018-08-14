@@ -6,6 +6,6 @@ package br.xtool.core.representation;
  * @author jcruz
  *
  */
-public interface EBootSpecification {
+public interface EBootSpecification extends EJavaClass {
 
 }
