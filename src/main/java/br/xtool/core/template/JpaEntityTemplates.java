@@ -5,7 +5,7 @@ import com.github.pwittchen.kirai.library.Kirai;
 import br.xtool.core.representation.EJavaClass;
 import br.xtool.core.representation.EUmlRelationship;
 
-public class JavaClassTemplates {
+public class JpaEntityTemplates {
 
 	/**
 	 * Adicionar o método auxiliar addX(X x);
