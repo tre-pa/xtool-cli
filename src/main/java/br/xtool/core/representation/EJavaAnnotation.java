@@ -34,17 +34,17 @@ public interface EJavaAnnotation<T extends JavaSource<T>> extends Comparable<EJa
 
 	String getQualifiedName();
 
-	<T extends Enum<T>> T getEnumValue(Class<T> type);
+	<K extends Enum<K>> K getEnumValue(Class<K> type);
 
 	List<AnnotationSource<T>> getAnnotationArrayValue();
 
-	<T extends Enum<T>> T getEnumValue(Class<T> type, String name);
+	<K extends Enum<K>> K getEnumValue(Class<K> type, String name);
 
 	List<AnnotationSource<T>> getAnnotationArrayValue(String name);
 
-	<T extends Enum<T>> List<T> getEnumArrayValue(Class<T> type);
+	<K extends Enum<K>> List<K> getEnumArrayValue(Class<K> type);
 
-	<T extends Enum<T>> List<T> getEnumArrayValue(Class<T> type, String name);
+	<K extends Enum<K>> List<K> getEnumArrayValue(Class<K> type, String name);
 
 	String getLiteralValue();
 
