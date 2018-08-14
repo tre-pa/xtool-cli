@@ -4,6 +4,7 @@ import java.lang.annotation.Annotation;
 import java.nio.file.Path;
 import java.util.SortedSet;
 
+import org.jboss.forge.roaster.model.JavaType;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 
 /**
@@ -12,7 +13,7 @@ import org.jboss.forge.roaster.model.source.JavaClassSource;
  * @author jcruz
  *
  */
-public interface EJavaClass extends Comparable<EJavaClass> {
+public interface EJavaClass extends Comparable<EJavaClass>, JavaType<JavaClassSource> {
 
 	EBootProject getProject();
 
@@ -21,6 +22,7 @@ public interface EJavaClass extends Comparable<EJavaClass> {
 	 * 
 	 * @return
 	 */
+	@Override
 	String getName();
 
 	/**
@@ -28,6 +30,7 @@ public interface EJavaClass extends Comparable<EJavaClass> {
 	 * 
 	 * @return
 	 */
+	@Override
 	String getQualifiedName();
 
 	/**
@@ -36,14 +39,6 @@ public interface EJavaClass extends Comparable<EJavaClass> {
 	 * @return
 	 */
 	EJavaPackage getJavaPackage();
-
-	/**
-	 * Verifica se a classe possui a annotation.
-	 * 
-	 * @param name
-	 * @return
-	 */
-	boolean hasAnnotation(String name);
 
 	/**
 	 * 
@@ -56,7 +51,30 @@ public interface EJavaClass extends Comparable<EJavaClass> {
 	 * 
 	 * @return
 	 */
-	SortedSet<EJavaField> getFields();
+	SortedSet<EJavaField> getJavaFields();
+
+	/**
+	 * Retorna os métodos da classe.
+	 * 
+	 * @return
+	 */
+	SortedSet<EJavaMethod> getJavaMethods();
+
+	/**
+	 * Retorna as annotations da classe.
+	 * 
+	 * @return
+	 */
+	SortedSet<EJavaAnnotation> getJavaAnnotations();
+
+	/**
+	 * Verifica se a classe possui a annotation.
+	 * 
+	 * @param name
+	 * @return
+	 */
+	@Override
+	boolean hasAnnotation(String name);
 
 	/**
 	 * Retorna um atributo da classe. Caso não encontre cria um novo atributo.
@@ -74,26 +92,12 @@ public interface EJavaClass extends Comparable<EJavaClass> {
 	EJavaMethod addMethod(String name);
 
 	/**
-	 * Retorna as annotations da classe.
-	 * 
-	 * @return
-	 */
-	SortedSet<EJavaAnnotation> getAnnotations();
-
-	/**
 	 * Adiciona uma annotation
 	 * 
 	 * @param type
 	 * @return
 	 */
 	EJavaAnnotation addAnnotation(Class<? extends Annotation> type);
-
-	/**
-	 * Retorna os métodos da classe.
-	 * 
-	 * @return
-	 */
-	SortedSet<EJavaMethod> getMethods();
 
 	/**
 	 * Retorna o objeto Roaster da classe.

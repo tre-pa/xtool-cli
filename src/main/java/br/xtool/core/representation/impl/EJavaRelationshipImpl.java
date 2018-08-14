@@ -52,7 +52,7 @@ public class EJavaRelationshipImpl implements EJavaRelationship {
 				&& Types.getGenericsTypeParameter(javaField.getType().getQualifiedNameWithGenerics()).equals(this.sourceClass.getName());
 		Predicate<EJavaField> nonListPredicate = javaField -> javaField.getType().getName().equals(this.sourceClass.getName());
 		// @formatter:off
-		return this.targetClass.getFields().stream()
+		return this.targetClass.getJavaFields().stream()
 				.filter(listPredicate.or(nonListPredicate))
 				.findFirst();
 		// @formatter:on

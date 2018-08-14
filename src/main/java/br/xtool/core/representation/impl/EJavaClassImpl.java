@@ -2,12 +2,17 @@ package br.xtool.core.representation.impl;
 
 import java.lang.annotation.Annotation;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 import javax.persistence.Table;
 
+import org.jboss.forge.roaster.model.JavaDoc;
+import org.jboss.forge.roaster.model.JavaType;
+import org.jboss.forge.roaster.model.SyntaxError;
+import org.jboss.forge.roaster.model.Visibility;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 
 import br.xtool.core.representation.EBootProject;
@@ -90,7 +95,7 @@ public class EJavaClassImpl implements EJavaClass {
 	}
 
 	@Override
-	public SortedSet<EJavaField> getFields() {
+	public SortedSet<EJavaField> getJavaFields() {
 		// @formatter:off
 		return this.javaClassSource.getFields()
 				.stream()
@@ -102,7 +107,7 @@ public class EJavaClassImpl implements EJavaClass {
 	@Override
 	public EJavaField addField(String name) {
 		// @formatter:off
-		return this.getFields().stream()
+		return this.getJavaFields().stream()
 				.filter(javaField -> javaField.getName().equals(name))
 				.findAny()
 				.orElseGet(() -> new EJavaFieldImpl(this,this.javaClassSource.addField()));
@@ -112,7 +117,7 @@ public class EJavaClassImpl implements EJavaClass {
 	@Override
 	public EJavaMethod addMethod(String name) {
 		// @formatter:off
-		return this.getMethods().stream()
+		return this.getJavaMethods().stream()
 				.filter(javaMethod -> javaMethod.getName().equals(name))
 				.findAny()
 				.orElseGet(() -> new EJavaMethodImpl(this, this.javaClassSource.addMethod().setName(name)));
@@ -120,7 +125,7 @@ public class EJavaClassImpl implements EJavaClass {
 	}
 
 	@Override
-	public SortedSet<EJavaAnnotation> getAnnotations() {
+	public SortedSet<EJavaAnnotation> getJavaAnnotations() {
 		// @formatter:off
 		return this.javaClassSource.getAnnotations()
 				.stream()
@@ -132,7 +137,7 @@ public class EJavaClassImpl implements EJavaClass {
 	@Override
 	public EJavaAnnotation addAnnotation(Class<? extends Annotation> type) {
 		// @formatter:off
-		return this.getAnnotations().stream()
+		return this.getJavaAnnotations().stream()
 				.filter(javaAnn -> javaAnn.getName().equals(type.getSimpleName()))
 				.findAny()
 				.orElseGet(() -> new EJavaAnnotationImpl(this.javaClassSource.addAnnotation(type)));
@@ -140,7 +145,7 @@ public class EJavaClassImpl implements EJavaClass {
 	}
 
 	@Override
-	public SortedSet<EJavaMethod> getMethods() {
+	public SortedSet<EJavaMethod> getJavaMethods() {
 		// @formatter:off
 		return this.javaClassSource.getMethods()
 				.stream()
@@ -186,6 +191,126 @@ public class EJavaClassImpl implements EJavaClass {
 	@Override
 	public int compareTo(EJavaClass o) {
 		return this.getName().compareTo(o.getName());
+	}
+
+	@Override
+	public String getCanonicalName() {
+		return this.getRoasterJavaClass().getCanonicalName();
+	}
+
+	@Override
+	public List<SyntaxError> getSyntaxErrors() {
+		return this.getRoasterJavaClass().getSyntaxErrors();
+	}
+
+	@Override
+	public boolean hasSyntaxErrors() {
+		return this.getRoasterJavaClass().hasSyntaxErrors();
+	}
+
+	@Override
+	public boolean isClass() {
+		return this.getRoasterJavaClass().isClass();
+	}
+
+	@Override
+	public boolean isEnum() {
+		return this.getRoasterJavaClass().isEnum();
+	}
+
+	@Override
+	public boolean isInterface() {
+		return this.getRoasterJavaClass().isInterface();
+	}
+
+	@Override
+	public boolean isAnnotation() {
+		return this.getRoasterJavaClass().isAnnotation();
+	}
+
+	@Override
+	public JavaType<?> getEnclosingType() {
+		return this.getRoasterJavaClass().getEnclosingType();
+	}
+
+	@Override
+	public String toUnformattedString() {
+		return this.getRoasterJavaClass().toUnformattedString();
+	}
+
+	@Override
+	public String getPackage() {
+		return this.getRoasterJavaClass().getPackage();
+	}
+
+	@Override
+	public boolean isDefaultPackage() {
+		return this.getRoasterJavaClass().isDefaultPackage();
+	}
+
+	@Override
+	public List<? extends org.jboss.forge.roaster.model.Annotation<JavaClassSource>> getAnnotations() {
+		return this.getRoasterJavaClass().getAnnotations();
+	}
+
+	@Override
+	public boolean hasAnnotation(Class<? extends Annotation> type) {
+		return this.getRoasterJavaClass().hasAnnotation(type);
+	}
+
+	@Override
+	public org.jboss.forge.roaster.model.Annotation<JavaClassSource> getAnnotation(Class<? extends Annotation> type) {
+		return this.getRoasterJavaClass().getAnnotation(type);
+	}
+
+	@Override
+	public org.jboss.forge.roaster.model.Annotation<JavaClassSource> getAnnotation(String type) {
+		return this.getRoasterJavaClass().getAnnotation(type);
+	}
+
+	@Override
+	public JavaClassSource getOrigin() {
+		return this.getRoasterJavaClass().getOrigin();
+	}
+
+	@Override
+	public Object getInternal() {
+		return this.getRoasterJavaClass().getInternal();
+	}
+
+	@Override
+	public JavaDoc<JavaClassSource> getJavaDoc() {
+		return this.getRoasterJavaClass().getJavaDoc();
+	}
+
+	@Override
+	public boolean hasJavaDoc() {
+		return this.getRoasterJavaClass().hasJavaDoc();
+	}
+
+	@Override
+	public boolean isPackagePrivate() {
+		return this.getRoasterJavaClass().isPackagePrivate();
+	}
+
+	@Override
+	public boolean isPublic() {
+		return this.getRoasterJavaClass().isPublic();
+	}
+
+	@Override
+	public boolean isPrivate() {
+		return this.getRoasterJavaClass().isPrivate();
+	}
+
+	@Override
+	public boolean isProtected() {
+		return this.getRoasterJavaClass().isProtected();
+	}
+
+	@Override
+	public Visibility getVisibility() {
+		return this.getRoasterJavaClass().getVisibility();
 	}
 
 }
