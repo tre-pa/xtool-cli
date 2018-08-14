@@ -120,7 +120,7 @@ public class EJavaClassImpl implements EJavaClass {
 		return this.getJavaMethods().stream()
 				.filter(javaMethod -> javaMethod.getName().equals(name))
 				.findAny()
-				.orElseGet(() -> new EJavaMethodImpl<JavaClassSource>(this, this.javaClassSource.addMethod().setName(name)));
+				.orElseGet(() -> new EJavaMethodImpl<JavaClassSource>(this.javaClassSource, this.javaClassSource.addMethod().setName(name)));
 		// @formatter:on
 	}
 
@@ -149,7 +149,7 @@ public class EJavaClassImpl implements EJavaClass {
 		// @formatter:off
 		return this.javaClassSource.getMethods()
 				.stream()
-				.map(methodSource -> new EJavaMethodImpl<JavaClassSource>(this, methodSource))
+				.map(methodSource -> new EJavaMethodImpl<JavaClassSource>(this.javaClassSource, methodSource))
 				.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
 	}

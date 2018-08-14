@@ -20,7 +20,7 @@ public interface EJavaMethod<T extends JavaSource<T>> extends Comparable<EJavaMe
 	 * 
 	 * @return
 	 */
-	EJavaClass getJavaClass();
+	JavaSource<T> getJavaSource();
 
 	/**
 	 * Retorna o nome do método.

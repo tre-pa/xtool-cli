@@ -74,7 +74,7 @@ public class EJavaRestImpl extends EJavaClassImpl implements EBootRest {
 		return this.javaClassSource.getMethods()
 			.stream()
 			.filter(hasHttpAnnotation.or(hasRequestMapping.and(hasRequestMappingMethod)))
-			.map(methodSource -> new EJavaMethodImpl<JavaClassSource>(this, methodSource))
+			.map(methodSource -> new EJavaMethodImpl<JavaClassSource>(this.getRoasterJavaClass(), methodSource))
 			.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
 	}

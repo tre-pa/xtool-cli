@@ -1,13 +1,11 @@
 package br.xtool.core.representation.impl;
 
-import java.util.Optional;
-
 import org.jboss.forge.roaster.model.source.JavaInterfaceSource;
 
-import br.xtool.core.representation.EJpaEntity;
-import br.xtool.core.representation.EJavaPackage;
-import br.xtool.core.representation.EBootRepository;
 import br.xtool.core.representation.EBootProject;
+import br.xtool.core.representation.EBootRepository;
+import br.xtool.core.representation.EJavaPackage;
+import br.xtool.core.representation.EJpaEntity;
 
 /**
  * Classe que representa uma inteface Repository
@@ -15,14 +13,14 @@ import br.xtool.core.representation.EBootProject;
  * @author jcruz
  *
  */
-public class EBootRepositoryImpl implements EBootRepository {
+public class EBootRepositoryImpl extends EJavaInterfaceImpl implements EBootRepository {
 
 	private EBootProject springBootProject;
 
 	private JavaInterfaceSource javaInterfaceSource;
 
 	public EBootRepositoryImpl(EBootProject springBootProject, JavaInterfaceSource javaInterfaceSource) {
-		super();
+		super(javaInterfaceSource);
 		this.springBootProject = springBootProject;
 		this.javaInterfaceSource = javaInterfaceSource;
 	}
@@ -43,7 +41,7 @@ public class EBootRepositoryImpl implements EBootRepository {
 	 * @return
 	 */
 	@Override
-	public EJavaPackage getPackage() {
+	public EJavaPackage getJavaPackage() {
 		return EJavaPackageImpl.of(this.javaInterfaceSource.getPackage());
 	}
 
@@ -53,11 +51,12 @@ public class EBootRepositoryImpl implements EBootRepository {
 	 * @return
 	 */
 	@Override
-	public Optional<EJpaEntity> getTargetEntity() {
+	public EJpaEntity getTargetEntity() {
 		// @formatter:off
 		return this.springBootProject.getEntities().stream()
 				.filter(e -> e.getName().concat("Repository").equals(this.getName()))
-				.findFirst();
+				.findFirst()
+				.orElseThrow(() -> new IllegalArgumentException(String.format("O repositório %s não possui entidade JPA associada.", this.getName())));
 		// @formatter:on
 	}
 

@@ -36,7 +36,7 @@ public class InfoRepositoryCommand extends SpringBootAware {
 				.max(Comparator.naturalOrder())
 				.orElse(10);
 		bootProject.getRepositories().stream()
-			.forEach(repository -> ConsoleLog.print(ConsoleLog.cyan(StringUtils.rightPad(repository.getName(), maxLenghtEntityName)), " - ", ConsoleLog.gray(repository.getPackage().getName())));
+			.forEach(repository -> ConsoleLog.print(ConsoleLog.cyan(StringUtils.rightPad(repository.getName(), maxLenghtEntityName)), " - ", ConsoleLog.gray(repository.getJavaPackage().getName())));
 		// @formatter:on
 	}
 }

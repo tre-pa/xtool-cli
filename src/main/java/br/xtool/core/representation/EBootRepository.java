@@ -1,34 +1,25 @@
 package br.xtool.core.representation;
 
-import java.util.Optional;
-
 /**
  * Representação de um Repository
  * 
  * @author jcruz
  *
  */
-public interface EBootRepository extends Comparable<EBootRepository> {
-
-	/**
-	 * Nome do Repository
-	 * 
-	 * @return
-	 */
-	String getName();
+public interface EBootRepository extends Comparable<EBootRepository>, EJavaInterface {
 
 	/**
 	 * Retorna o pacote da classe
 	 * 
 	 * @return
 	 */
-	EJavaPackage getPackage();
+	EJavaPackage getJavaPackage();
 
 	/**
 	 * Retorna a entidade alvo do repositório.
 	 * 
 	 * @return
 	 */
-	Optional<EJpaEntity> getTargetEntity();
+	EJpaEntity getTargetEntity();
 
 }

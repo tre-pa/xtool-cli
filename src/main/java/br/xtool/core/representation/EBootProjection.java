@@ -6,6 +6,6 @@ package br.xtool.core.representation;
  * @author jcruz
  *
  */
-public interface EBootProjection {
+public interface EBootProjection extends EJavaInterface {
 
 }

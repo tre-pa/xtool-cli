@@ -10,7 +10,6 @@ import org.jboss.forge.roaster.model.source.JavaSource;
 import org.jboss.forge.roaster.model.source.MethodSource;
 
 import br.xtool.core.representation.EJavaAnnotation;
-import br.xtool.core.representation.EJavaClass;
 import br.xtool.core.representation.EJavaMethod;
 import br.xtool.core.representation.EJavaMethodParameter;
 
@@ -18,12 +17,12 @@ public class EJavaMethodImpl<T extends JavaSource<T>> implements EJavaMethod<T> 
 
 	private MethodSource<T> methodSource;
 
-	private EJavaClass javaClass;
+	private T javaSource;
 
-	public EJavaMethodImpl(EJavaClass javaClass, MethodSource<T> methodSource) {
+	public EJavaMethodImpl(T javaSource, MethodSource<T> methodSource) {
 		super();
 		this.methodSource = methodSource;
-		this.javaClass = javaClass;
+		this.javaSource = javaSource;
 	}
 
 	/**
@@ -36,13 +35,9 @@ public class EJavaMethodImpl<T extends JavaSource<T>> implements EJavaMethod<T> 
 		return this.methodSource.getName();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see br.xtool.core.representation.EJavaMethod#getJavaClass()
-	 */
 	@Override
-	public EJavaClass getJavaClass() {
-		return this.javaClass;
+	public JavaSource<T> getJavaSource() {
+		return this.javaSource;
 	}
 
 	/*
