@@ -3,7 +3,7 @@ package br.xtool.core.representation;
 import java.util.SortedSet;
 
 import org.jboss.forge.roaster.model.Type;
-import org.jboss.forge.roaster.model.source.JavaClassSource;
+import org.jboss.forge.roaster.model.source.JavaSource;
 import org.jboss.forge.roaster.model.source.ParameterSource;
 
 /**
@@ -12,7 +12,7 @@ import org.jboss.forge.roaster.model.source.ParameterSource;
  * @author jcruz
  *
  */
-public interface EJavaMethodParameter {
+public interface EJavaMethodParameter<T extends JavaSource<T>> {
 
 	/**
 	 * Retorna o nome do parametro.
@@ -26,25 +26,25 @@ public interface EJavaMethodParameter {
 	 * 
 	 * @return
 	 */
-	EJavaMethod getJavaMethod();
+	EJavaMethod<T> getJavaMethod();
 
 	/**
 	 * 
 	 * @return
 	 */
-	Type<JavaClassSource> getType();
+	Type<T> getType();
 
 	/**
 	 * Retorna as annotation do parametro.
 	 * 
 	 * @return
 	 */
-	SortedSet<EJavaAnnotation> getAnnotations();
+	SortedSet<EJavaAnnotation<T>> getAnnotations();
 
 	/**
 	 * Retorna o objeto roaster do parametro.
 	 * 
 	 * @return
 	 */
-	ParameterSource<JavaClassSource> getRoasterParameter();
+	ParameterSource<T> getRoasterParameter();
 }

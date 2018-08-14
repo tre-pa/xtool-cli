@@ -34,7 +34,7 @@ public class EJavaRestImpl extends EJavaClassImpl implements EBootRest {
 	 * @see br.xtool.core.representation.ERest#getHttpGetMethods()
 	 */
 	@Override
-	public SortedSet<EJavaMethod> getHttpGETMethods() {
+	public SortedSet<EJavaMethod<JavaClassSource>> getHttpGETMethods() {
 		return this.getHttpMethods("GetMapping", "RequestMethod.GET");
 	}
 
@@ -43,7 +43,7 @@ public class EJavaRestImpl extends EJavaClassImpl implements EBootRest {
 	 * @see br.xtool.core.representation.ERest#getHttpPutMethods()
 	 */
 	@Override
-	public SortedSet<EJavaMethod> getHttpPUTMethods() {
+	public SortedSet<EJavaMethod<JavaClassSource>> getHttpPUTMethods() {
 		return this.getHttpMethods("PutMapping", "RequestMethod.PUT");
 	}
 
@@ -52,7 +52,7 @@ public class EJavaRestImpl extends EJavaClassImpl implements EBootRest {
 	 * @see br.xtool.core.representation.ERest#getHttpPostMethods()
 	 */
 	@Override
-	public SortedSet<EJavaMethod> getHttpPOSTMethods() {
+	public SortedSet<EJavaMethod<JavaClassSource>> getHttpPOSTMethods() {
 		return this.getHttpMethods("PostMapping", "RequestMethod.POST");
 	}
 
@@ -61,11 +61,11 @@ public class EJavaRestImpl extends EJavaClassImpl implements EBootRest {
 	 * @see br.xtool.core.representation.ERest#getHttpDeleteMethods()
 	 */
 	@Override
-	public SortedSet<EJavaMethod> getHttpDELETEMethods() {
+	public SortedSet<EJavaMethod<JavaClassSource>> getHttpDELETEMethods() {
 		return this.getHttpMethods("DeleteMapping", "RequestMethod.DELETE");
 	}
 
-	private SortedSet<EJavaMethod> getHttpMethods(String httpAnnotation, String requestMappingMethod) {
+	private SortedSet<EJavaMethod<JavaClassSource>> getHttpMethods(String httpAnnotation, String requestMappingMethod) {
 		Predicate<MethodSource<JavaClassSource>> hasHttpAnnotation = methodSource -> methodSource.hasAnnotation(httpAnnotation);
 		Predicate<MethodSource<JavaClassSource>> hasRequestMapping = methodSource -> methodSource.hasAnnotation("RequestMapping");
 		Predicate<MethodSource<JavaClassSource>> hasRequestMappingMethod = methodSource -> StringUtils.equals(methodSource.getAnnotation("RequestMapping").getStringValue("method"),
@@ -74,7 +74,7 @@ public class EJavaRestImpl extends EJavaClassImpl implements EBootRest {
 		return this.javaClassSource.getMethods()
 			.stream()
 			.filter(hasHttpAnnotation.or(hasRequestMapping.and(hasRequestMappingMethod)))
-			.map(methodSource -> new EJavaMethodImpl(this, methodSource))
+			.map(methodSource -> new EJavaMethodImpl<JavaClassSource>(this, methodSource))
 			.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
 	}

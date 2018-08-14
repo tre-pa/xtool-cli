@@ -25,6 +25,6 @@ public interface EJavaInterface extends JavaType<JavaInterfaceSource> {
 	 * 
 	 * @return
 	 */
-	Collection<EJavaMethod> getJavaMethods();
+	Collection<EJavaMethod<JavaInterfaceSource>> getJavaMethods();
 
 }

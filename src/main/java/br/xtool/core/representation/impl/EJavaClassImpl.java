@@ -115,17 +115,17 @@ public class EJavaClassImpl implements EJavaClass {
 	}
 
 	@Override
-	public EJavaMethod addMethod(String name) {
+	public EJavaMethod<JavaClassSource> addMethod(String name) {
 		// @formatter:off
 		return this.getJavaMethods().stream()
 				.filter(javaMethod -> javaMethod.getName().equals(name))
 				.findAny()
-				.orElseGet(() -> new EJavaMethodImpl(this, this.javaClassSource.addMethod().setName(name)));
+				.orElseGet(() -> new EJavaMethodImpl<JavaClassSource>(this, this.javaClassSource.addMethod().setName(name)));
 		// @formatter:on
 	}
 
 	@Override
-	public SortedSet<EJavaAnnotation> getJavaAnnotations() {
+	public SortedSet<EJavaAnnotation<JavaClassSource>> getJavaAnnotations() {
 		// @formatter:off
 		return this.javaClassSource.getAnnotations()
 				.stream()
@@ -135,21 +135,21 @@ public class EJavaClassImpl implements EJavaClass {
 	}
 
 	@Override
-	public EJavaAnnotation addAnnotation(Class<? extends Annotation> type) {
+	public EJavaAnnotation<JavaClassSource> addAnnotation(Class<? extends Annotation> type) {
 		// @formatter:off
 		return this.getJavaAnnotations().stream()
 				.filter(javaAnn -> javaAnn.getName().equals(type.getSimpleName()))
 				.findAny()
-				.orElseGet(() -> new EJavaAnnotationImpl(this.javaClassSource.addAnnotation(type)));
+				.orElseGet(() -> new EJavaAnnotationImpl<JavaClassSource>(this.javaClassSource.addAnnotation(type)));
 		// @formatter:on
 	}
 
 	@Override
-	public SortedSet<EJavaMethod> getJavaMethods() {
+	public SortedSet<EJavaMethod<JavaClassSource>> getJavaMethods() {
 		// @formatter:off
 		return this.javaClassSource.getMethods()
 				.stream()
-				.map(methodSource -> new EJavaMethodImpl(this, methodSource))
+				.map(methodSource -> new EJavaMethodImpl<JavaClassSource>(this, methodSource))
 				.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
 	}
@@ -160,8 +160,8 @@ public class EJavaClassImpl implements EJavaClass {
 	}
 
 	@Override
-	public EJavaAnnotation addTableAnnotation() {
-		EJavaAnnotation ann = this.addAnnotation(Table.class);
+	public EJavaAnnotation<JavaClassSource> addTableAnnotation() {
+		EJavaAnnotation<JavaClassSource> ann = this.addAnnotation(Table.class);
 		ann.setStringValue("name", EJpaEntity.genDBTableName(this.getName()));
 		return ann;
 	}
@@ -171,8 +171,8 @@ public class EJavaClassImpl implements EJavaClass {
 	 * @see br.xtool.core.representation.EJavaClass#addToString(java.lang.String[])
 	 */
 	@Override
-	public EJavaAnnotation addToStringAnnotation(String... attributes) {
-		EJavaAnnotation javaAnnotation = this.addAnnotation(ToString.class);
+	public EJavaAnnotation<JavaClassSource> addToStringAnnotation(String... attributes) {
+		EJavaAnnotation<JavaClassSource> javaAnnotation = this.addAnnotation(ToString.class);
 		javaAnnotation.setStringArrayValue("of", attributes);
 		return javaAnnotation;
 	}
@@ -182,8 +182,8 @@ public class EJavaClassImpl implements EJavaClass {
 	 * @see br.xtool.core.representation.EJavaClass#addEqualsAndHashCode(java.lang.String[])
 	 */
 	@Override
-	public EJavaAnnotation addEqualsAndHashCodeAnnotation(String... attributes) {
-		EJavaAnnotation javaAnnotation = this.addAnnotation(EqualsAndHashCode.class);
+	public EJavaAnnotation<JavaClassSource> addEqualsAndHashCodeAnnotation(String... attributes) {
+		EJavaAnnotation<JavaClassSource> javaAnnotation = this.addAnnotation(EqualsAndHashCode.class);
 		javaAnnotation.setStringArrayValue("of", attributes);
 		return javaAnnotation;
 	}

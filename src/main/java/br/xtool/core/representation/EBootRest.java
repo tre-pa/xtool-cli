@@ -3,6 +3,8 @@ package br.xtool.core.representation;
 import java.util.Optional;
 import java.util.SortedSet;
 
+import org.jboss.forge.roaster.model.source.JavaClassSource;
+
 /**
  * Representação de uma classe Rest.
  * 
@@ -23,27 +25,27 @@ public interface EBootRest extends EJavaClass {
 	 * 
 	 * @return
 	 */
-	SortedSet<EJavaMethod> getHttpGETMethods();
+	SortedSet<EJavaMethod<JavaClassSource>> getHttpGETMethods();
 
 	/**
 	 * Retorna todos os métodos HTTP Put
 	 * 
 	 * @return
 	 */
-	SortedSet<EJavaMethod> getHttpPUTMethods();
+	SortedSet<EJavaMethod<JavaClassSource>> getHttpPUTMethods();
 
 	/**
 	 * Retorna todos os métodos HTTP Post
 	 * 
 	 * @return
 	 */
-	SortedSet<EJavaMethod> getHttpPOSTMethods();
+	SortedSet<EJavaMethod<JavaClassSource>> getHttpPOSTMethods();
 
 	/**
 	 * Retorna todos os métodos HTTP Delete
 	 * 
 	 * @return
 	 */
-	public SortedSet<EJavaMethod> getHttpDELETEMethods();
+	public SortedSet<EJavaMethod<JavaClassSource>> getHttpDELETEMethods();
 
 }

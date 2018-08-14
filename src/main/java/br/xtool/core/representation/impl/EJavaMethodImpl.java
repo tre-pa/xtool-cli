@@ -6,7 +6,7 @@ import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 import org.jboss.forge.roaster.model.Type;
-import org.jboss.forge.roaster.model.source.JavaClassSource;
+import org.jboss.forge.roaster.model.source.JavaSource;
 import org.jboss.forge.roaster.model.source.MethodSource;
 
 import br.xtool.core.representation.EJavaAnnotation;
@@ -14,13 +14,13 @@ import br.xtool.core.representation.EJavaClass;
 import br.xtool.core.representation.EJavaMethod;
 import br.xtool.core.representation.EJavaMethodParameter;
 
-public class EJavaMethodImpl implements EJavaMethod {
+public class EJavaMethodImpl<T extends JavaSource<T>> implements EJavaMethod<T> {
 
-	private MethodSource<JavaClassSource> methodSource;
+	private MethodSource<T> methodSource;
 
 	private EJavaClass javaClass;
 
-	public EJavaMethodImpl(EJavaClass javaClass, MethodSource<JavaClassSource> methodSource) {
+	public EJavaMethodImpl(EJavaClass javaClass, MethodSource<T> methodSource) {
 		super();
 		this.methodSource = methodSource;
 		this.javaClass = javaClass;
@@ -50,7 +50,7 @@ public class EJavaMethodImpl implements EJavaMethod {
 	 * @see br.xtool.core.representation.EJavaMethod#getReturnType()
 	 */
 	@Override
-	public Type<JavaClassSource> getReturnType() {
+	public Type<T> getReturnType() {
 		return this.methodSource.getReturnType();
 	}
 
@@ -59,10 +59,10 @@ public class EJavaMethodImpl implements EJavaMethod {
 	 * @see br.xtool.core.representation.EJavaMethod#getParameters()
 	 */
 	@Override
-	public Collection<EJavaMethodParameter> getParameters() {
+	public Collection<EJavaMethodParameter<T>> getParameters() {
 		// @formatter:off
 		return this.methodSource.getParameters().stream()
-				.map(parameterSource -> new EJavaMethodParameterImpl(this, parameterSource))
+				.map(parameterSource -> new EJavaMethodParameterImpl<T>(this, parameterSource))
 				.collect(Collectors.toList());
 		// @formatter:on
 	}
@@ -72,7 +72,7 @@ public class EJavaMethodImpl implements EJavaMethod {
 	 * @see br.xtool.core.representation.EJavaMethod#getRoasterMethod()
 	 */
 	@Override
-	public MethodSource<JavaClassSource> getRoasterMethod() {
+	public MethodSource<T> getRoasterMethod() {
 		return this.methodSource;
 	}
 
@@ -81,7 +81,7 @@ public class EJavaMethodImpl implements EJavaMethod {
 	 * @see br.xtool.core.representation.EJavaMethod#getAnnotations()
 	 */
 	@Override
-	public SortedSet<EJavaAnnotation> getAnnotations() {
+	public SortedSet<EJavaAnnotation<T>> getAnnotations() {
 		// @formatter:off
 		return this.methodSource.getAnnotations()
 				.stream()
@@ -95,7 +95,7 @@ public class EJavaMethodImpl implements EJavaMethod {
 	 * @see java.lang.Comparable#compareTo(java.lang.Object)
 	 */
 	@Override
-	public int compareTo(EJavaMethod o) {
+	public int compareTo(EJavaMethod<T> o) {
 		return this.getName().compareTo(o.getName());
 	}
 

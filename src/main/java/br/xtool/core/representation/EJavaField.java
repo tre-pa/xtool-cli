@@ -29,9 +29,9 @@ public interface EJavaField extends Comparable<EJavaField> {
 
 	EJavaClass getJavaClass();
 
-	SortedSet<EJavaAnnotation> getAnnotations();
+	SortedSet<EJavaAnnotation<JavaClassSource>> getAnnotations();
 
-	EJavaAnnotation addAnnotation(Class<? extends Annotation> type);
+	EJavaAnnotation<JavaClassSource> addAnnotation(Class<? extends Annotation> type);
 
 	/**
 	 * Retorna o relacionamento JPA.
@@ -42,15 +42,15 @@ public interface EJavaField extends Comparable<EJavaField> {
 
 	FieldSource<JavaClassSource> getRoasterField();
 
-	EJavaAnnotation addSizeAnnotation(Integer min, Integer max);
+	EJavaAnnotation<JavaClassSource> addSizeAnnotation(Integer min, Integer max);
 
-	EJavaAnnotation addBatchSizeAnnotation(Integer size);
+	EJavaAnnotation<JavaClassSource> addBatchSizeAnnotation(Integer size);
 
-	EJavaAnnotation addLazyCollectionAnnotation(LazyCollectionOption lazyCollectionOption);
+	EJavaAnnotation<JavaClassSource> addLazyCollectionAnnotation(LazyCollectionOption lazyCollectionOption);
 
-	EJavaAnnotation addGeneratedValueAnnotation(GenerationType generationType);
+	EJavaAnnotation<JavaClassSource> addGeneratedValueAnnotation(GenerationType generationType);
 
-	EJavaAnnotation addSequenceGeneratorAnnotation();
+	EJavaAnnotation<JavaClassSource> addSequenceGeneratorAnnotation();
 
 	interface EStringField extends EJavaField {}
 

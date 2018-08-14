@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.jboss.forge.roaster.model.source.AnnotationSource;
-import org.jboss.forge.roaster.model.source.JavaClassSource;
+import org.jboss.forge.roaster.model.source.JavaSource;
 
 import br.xtool.core.representation.EJavaAnnotation;
 
@@ -14,11 +14,11 @@ import br.xtool.core.representation.EJavaAnnotation;
  * @author jcruz
  *
  */
-public class EJavaAnnotationImpl implements EJavaAnnotation {
+public class EJavaAnnotationImpl<T extends JavaSource<T>> implements EJavaAnnotation<T> {
 
-	private AnnotationSource<JavaClassSource> annotation;
+	private AnnotationSource<T> annotation;
 
-	public EJavaAnnotationImpl(AnnotationSource<JavaClassSource> annotation) {
+	public EJavaAnnotationImpl(AnnotationSource<T> annotation) {
 		super();
 		this.annotation = annotation;
 	}
@@ -42,7 +42,7 @@ public class EJavaAnnotationImpl implements EJavaAnnotation {
 	}
 
 	@Override
-	public AnnotationSource<JavaClassSource> getRoasterAnnotation() {
+	public AnnotationSource<T> getRoasterAnnotation() {
 		return this.annotation;
 	}
 
@@ -51,7 +51,7 @@ public class EJavaAnnotationImpl implements EJavaAnnotation {
 	 * @see br.xtool.core.representation.EJavaAnnotation#getAnnotationValue()
 	 */
 	@Override
-	public AnnotationSource<JavaClassSource> getAnnotationValue() {
+	public AnnotationSource<T> getAnnotationValue() {
 		return this.annotation.getAnnotationValue();
 	}
 
@@ -74,7 +74,7 @@ public class EJavaAnnotationImpl implements EJavaAnnotation {
 	}
 
 	@Override
-	public AnnotationSource<JavaClassSource> getAnnotationValue(String name) {
+	public AnnotationSource<T> getAnnotationValue(String name) {
 		return this.annotation.getAnnotationValue(name);
 	}
 
@@ -84,32 +84,32 @@ public class EJavaAnnotationImpl implements EJavaAnnotation {
 	}
 
 	@Override
-	public <T extends Enum<T>> T getEnumValue(Class<T> type) {
+	public <K extends Enum<K>> K getEnumValue(Class<K> type) {
 		return this.annotation.getEnumValue(type);
 	}
 
 	@Override
-	public List<AnnotationSource<JavaClassSource>> getAnnotationArrayValue() {
+	public List<AnnotationSource<T>> getAnnotationArrayValue() {
 		return Arrays.asList(this.annotation.getAnnotationArrayValue());
 	}
 
 	@Override
-	public <T extends Enum<T>> T getEnumValue(Class<T> type, String name) {
+	public <K extends Enum<K>> K getEnumValue(Class<K> type, String name) {
 		return this.annotation.getEnumValue(type, name);
 	}
 
 	@Override
-	public List<AnnotationSource<JavaClassSource>> getAnnotationArrayValue(String name) {
+	public List<AnnotationSource<T>> getAnnotationArrayValue(String name) {
 		return Arrays.asList(this.annotation.getAnnotationArrayValue(name));
 	}
 
 	@Override
-	public <T extends Enum<T>> List<T> getEnumArrayValue(Class<T> type) {
+	public <K extends Enum<K>> List<K> getEnumArrayValue(Class<K> type) {
 		return Arrays.asList(this.annotation.getEnumArrayValue(type));
 	}
 
 	@Override
-	public <T extends Enum<T>> List<T> getEnumArrayValue(Class<T> type, String name) {
+	public <K extends Enum<K>> List<K> getEnumArrayValue(Class<K> type, String name) {
 		return Arrays.asList(this.annotation.getEnumArrayValue(type, name));
 	}
 
@@ -164,87 +164,87 @@ public class EJavaAnnotationImpl implements EJavaAnnotation {
 	}
 
 	@Override
-	public AnnotationSource<JavaClassSource> setEnumValue(String name, Enum<?> value) {
+	public AnnotationSource<T> setEnumValue(String name, Enum<?> value) {
 		return this.annotation.setEnumValue(name, value);
 	}
 
 	@Override
-	public AnnotationSource<JavaClassSource> setEnumValue(Enum<?>... value) {
+	public AnnotationSource<T> setEnumValue(Enum<?>... value) {
 		return this.annotation.setEnumValue(value);
 	}
 
 	@Override
-	public AnnotationSource<JavaClassSource> setEnumArrayValue(String name, Enum<?>... values) {
+	public AnnotationSource<T> setEnumArrayValue(String name, Enum<?>... values) {
 		return this.annotation.setEnumArrayValue(name, values);
 	}
 
 	@Override
-	public AnnotationSource<JavaClassSource> setEnumArrayValue(Enum<?>... values) {
+	public AnnotationSource<T> setEnumArrayValue(Enum<?>... values) {
 		return this.annotation.setEnumArrayValue(values);
 	}
 
 	@Override
-	public AnnotationSource<JavaClassSource> setLiteralValue(String value) {
+	public AnnotationSource<T> setLiteralValue(String value) {
 		return this.annotation.setLiteralValue(value);
 	}
 
 	@Override
-	public AnnotationSource<JavaClassSource> setLiteralValue(String name, String value) {
+	public AnnotationSource<T> setLiteralValue(String name, String value) {
 		return this.annotation.setLiteralValue(name, value);
 	}
 
 	@Override
-	public AnnotationSource<JavaClassSource> setStringValue(String value) {
+	public AnnotationSource<T> setStringValue(String value) {
 		return this.annotation.setStringValue(value);
 	}
 
 	@Override
-	public AnnotationSource<JavaClassSource> setStringValue(String name, String value) {
+	public AnnotationSource<T> setStringValue(String name, String value) {
 		return this.annotation.setStringValue(name, value);
 	}
 
 	@Override
-	public AnnotationSource<JavaClassSource> setAnnotationValue() {
+	public AnnotationSource<T> setAnnotationValue() {
 		return this.annotation.setAnnotationValue();
 	}
 
 	@Override
-	public AnnotationSource<JavaClassSource> setAnnotationValue(String name) {
+	public AnnotationSource<T> setAnnotationValue(String name) {
 		return this.annotation.setAnnotationValue(name);
 	}
 
 	@Override
-	public AnnotationSource<JavaClassSource> setClassValue(String name, Class<?> value) {
+	public AnnotationSource<T> setClassValue(String name, Class<?> value) {
 		return this.annotation.setClassValue(name, value);
 	}
 
 	@Override
-	public AnnotationSource<JavaClassSource> setClassValue(Class<?> value) {
+	public AnnotationSource<T> setClassValue(Class<?> value) {
 		return this.annotation.setClassValue(value);
 	}
 
 	@Override
-	public AnnotationSource<JavaClassSource> setClassArrayValue(String name, Class<?>... values) {
+	public AnnotationSource<T> setClassArrayValue(String name, Class<?>... values) {
 		return this.annotation.setClassArrayValue(name, values);
 	}
 
 	@Override
-	public AnnotationSource<JavaClassSource> setClassArrayValue(Class<?>... values) {
+	public AnnotationSource<T> setClassArrayValue(Class<?>... values) {
 		return this.annotation.setClassArrayValue(values);
 	}
 
 	@Override
-	public AnnotationSource<JavaClassSource> setStringArrayValue(String name, String[] values) {
+	public AnnotationSource<T> setStringArrayValue(String name, String[] values) {
 		return this.annotation.setStringArrayValue(name, values);
 	}
 
 	@Override
-	public AnnotationSource<JavaClassSource> setStringArrayValue(String[] values) {
+	public AnnotationSource<T> setStringArrayValue(String[] values) {
 		return this.annotation.setStringArrayValue(values);
 	}
 
 	@Override
-	public int compareTo(EJavaAnnotation o) {
+	public int compareTo(EJavaAnnotation<T> o) {
 		return this.getName().compareTo(o.getName());
 	}
 

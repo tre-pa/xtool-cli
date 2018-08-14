@@ -58,14 +58,14 @@ public interface EJavaClass extends Comparable<EJavaClass>, JavaType<JavaClassSo
 	 * 
 	 * @return
 	 */
-	SortedSet<EJavaMethod> getJavaMethods();
+	SortedSet<EJavaMethod<JavaClassSource>> getJavaMethods();
 
 	/**
 	 * Retorna as annotations da classe.
 	 * 
 	 * @return
 	 */
-	SortedSet<EJavaAnnotation> getJavaAnnotations();
+	SortedSet<EJavaAnnotation<JavaClassSource>> getJavaAnnotations();
 
 	/**
 	 * Verifica se a classe possui a annotation.
@@ -89,7 +89,7 @@ public interface EJavaClass extends Comparable<EJavaClass>, JavaType<JavaClassSo
 	 * @param name
 	 * @return
 	 */
-	EJavaMethod addMethod(String name);
+	EJavaMethod<JavaClassSource> addMethod(String name);
 
 	/**
 	 * Adiciona uma annotation
@@ -97,7 +97,7 @@ public interface EJavaClass extends Comparable<EJavaClass>, JavaType<JavaClassSo
 	 * @param type
 	 * @return
 	 */
-	EJavaAnnotation addAnnotation(Class<? extends Annotation> type);
+	EJavaAnnotation<JavaClassSource> addAnnotation(Class<? extends Annotation> type);
 
 	/**
 	 * Retorna o objeto Roaster da classe.
@@ -106,10 +106,10 @@ public interface EJavaClass extends Comparable<EJavaClass>, JavaType<JavaClassSo
 	 */
 	JavaClassSource getRoasterJavaClass();
 
-	EJavaAnnotation addTableAnnotation();
+	EJavaAnnotation<JavaClassSource> addTableAnnotation();
 
-	EJavaAnnotation addToStringAnnotation(String... attributes);
+	EJavaAnnotation<JavaClassSource> addToStringAnnotation(String... attributes);
 
-	EJavaAnnotation addEqualsAndHashCodeAnnotation(String... attibutes);
+	EJavaAnnotation<JavaClassSource> addEqualsAndHashCodeAnnotation(String... attibutes);
 
 }

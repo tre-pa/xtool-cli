@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.SortedSet;
 
 import org.jboss.forge.roaster.model.Type;
-import org.jboss.forge.roaster.model.source.JavaClassSource;
+import org.jboss.forge.roaster.model.source.JavaSource;
 import org.jboss.forge.roaster.model.source.MethodSource;
 
 /**
@@ -13,7 +13,7 @@ import org.jboss.forge.roaster.model.source.MethodSource;
  * @author jcruz
  *
  */
-public interface EJavaMethod extends Comparable<EJavaMethod> {
+public interface EJavaMethod<T extends JavaSource<T>> extends Comparable<EJavaMethod<T>> {
 
 	/**
 	 * Retorna o objeto JavaClass do método
@@ -34,26 +34,26 @@ public interface EJavaMethod extends Comparable<EJavaMethod> {
 	 * 
 	 * @return
 	 */
-	Type<JavaClassSource> getReturnType();
+	Type<T> getReturnType();
 
 	/**
 	 * Retorna os parametros do método.
 	 * 
 	 * @return
 	 */
-	Collection<EJavaMethodParameter> getParameters();
+	Collection<EJavaMethodParameter<T>> getParameters();
 
 	/**
 	 * Retorna as annotations do método.
 	 * 
 	 * @return
 	 */
-	SortedSet<EJavaAnnotation> getAnnotations();
+	SortedSet<EJavaAnnotation<T>> getAnnotations();
 
 	/**
 	 * Retorna o objeto MethodSource.
 	 * 
 	 * @return
 	 */
-	MethodSource<JavaClassSource> getRoasterMethod();
+	MethodSource<T> getRoasterMethod();
 }

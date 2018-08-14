@@ -85,7 +85,7 @@ public class EJavaFieldImpl implements EJavaField {
 	}
 
 	@Override
-	public SortedSet<EJavaAnnotation> getAnnotations() {
+	public SortedSet<EJavaAnnotation<JavaClassSource>> getAnnotations() {
 		// @formatter:off
 		return this.fieldSource.getAnnotations()
 				.stream()
@@ -95,12 +95,12 @@ public class EJavaFieldImpl implements EJavaField {
 	}
 
 	@Override
-	public EJavaAnnotation addAnnotation(Class<? extends Annotation> type) {
+	public EJavaAnnotation<JavaClassSource> addAnnotation(Class<? extends Annotation> type) {
 		// @formatter:off
 		return this.getAnnotations().stream()
 				.filter(javaAnn -> javaAnn.getName().equals(type.getSimpleName()))
 				.findAny()
-				.orElseGet(() -> new EJavaAnnotationImpl(this.fieldSource.addAnnotation(type)));
+				.orElseGet(() -> new EJavaAnnotationImpl<JavaClassSource>(this.fieldSource.addAnnotation(type)));
 		// @formatter:on
 	}
 
@@ -144,8 +144,8 @@ public class EJavaFieldImpl implements EJavaField {
 	 * @see br.xtool.core.representation.EJavaField#addSizeAnnotation(java.lang.Integer, java.lang.Integer)
 	 */
 	@Override
-	public EJavaAnnotation addSizeAnnotation(Integer min, Integer max) {
-		EJavaAnnotation ann = this.addAnnotation(Size.class);
+	public EJavaAnnotation<JavaClassSource> addSizeAnnotation(Integer min, Integer max) {
+		EJavaAnnotation<JavaClassSource> ann = this.addAnnotation(Size.class);
 		if (Objects.nonNull(min)) ann.setLiteralValue("min", String.valueOf(min));
 		if (Objects.nonNull(max)) ann.setLiteralValue("max", String.valueOf(max));
 		return ann;
@@ -156,8 +156,8 @@ public class EJavaFieldImpl implements EJavaField {
 	 * @see br.xtool.core.representation.EJavaField#addBatchSizeAnnotation(java.lang.Integer)
 	 */
 	@Override
-	public EJavaAnnotation addBatchSizeAnnotation(Integer size) {
-		EJavaAnnotation ann = this.addAnnotation(BatchSize.class);
+	public EJavaAnnotation<JavaClassSource> addBatchSizeAnnotation(Integer size) {
+		EJavaAnnotation<JavaClassSource> ann = this.addAnnotation(BatchSize.class);
 		ann.setLiteralValue("size", String.valueOf(size));
 		return ann;
 	}
@@ -167,8 +167,8 @@ public class EJavaFieldImpl implements EJavaField {
 	 * @see br.xtool.core.representation.EJavaField#addLazyCollectionAnnotation(org.hibernate.annotations.LazyCollectionOption)
 	 */
 	@Override
-	public EJavaAnnotation addLazyCollectionAnnotation(LazyCollectionOption lazyCollectionOption) {
-		EJavaAnnotation ann = this.addAnnotation(LazyCollection.class);
+	public EJavaAnnotation<JavaClassSource> addLazyCollectionAnnotation(LazyCollectionOption lazyCollectionOption) {
+		EJavaAnnotation<JavaClassSource> ann = this.addAnnotation(LazyCollection.class);
 		ann.setEnumValue(lazyCollectionOption);
 		return ann;
 	}
@@ -178,8 +178,8 @@ public class EJavaFieldImpl implements EJavaField {
 	 * @see br.xtool.core.representation.EJavaField#addGeneratedValueAnnotation(javax.persistence.GenerationType)
 	 */
 	@Override
-	public EJavaAnnotation addGeneratedValueAnnotation(GenerationType generationType) {
-		EJavaAnnotation ann = this.addAnnotation(GeneratedValue.class);
+	public EJavaAnnotation<JavaClassSource> addGeneratedValueAnnotation(GenerationType generationType) {
+		EJavaAnnotation<JavaClassSource> ann = this.addAnnotation(GeneratedValue.class);
 		ann.setEnumValue("strategy", GenerationType.SEQUENCE).setStringValue("generator", EJpaEntity.genDBSequenceName(this.getJavaClass().getName()));
 		return ann;
 	}
@@ -189,8 +189,8 @@ public class EJavaFieldImpl implements EJavaField {
 	 * @see br.xtool.core.representation.EJavaField#addSequenceGeneratorAnnotation()
 	 */
 	@Override
-	public EJavaAnnotation addSequenceGeneratorAnnotation() {
-		EJavaAnnotation ann = this.addAnnotation(SequenceGenerator.class);
+	public EJavaAnnotation<JavaClassSource> addSequenceGeneratorAnnotation() {
+		EJavaAnnotation<JavaClassSource> ann = this.addAnnotation(SequenceGenerator.class);
 		// @formatter:off
 		ann.setLiteralValue("initialValue", "1")
 			.setLiteralValue("allocationSize", "1")

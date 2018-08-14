@@ -3,7 +3,7 @@ package br.xtool.core.representation;
 import java.util.List;
 
 import org.jboss.forge.roaster.model.source.AnnotationSource;
-import org.jboss.forge.roaster.model.source.JavaClassSource;
+import org.jboss.forge.roaster.model.source.JavaSource;
 
 /**
  * Representação de uma annotation java.
@@ -11,7 +11,7 @@ import org.jboss.forge.roaster.model.source.JavaClassSource;
  * @author jcruz
  *
  */
-public interface EJavaAnnotation extends Comparable<EJavaAnnotation> {
+public interface EJavaAnnotation<T extends JavaSource<T>> extends Comparable<EJavaAnnotation<T>> {
 
 	/**
 	 * Retorna o nome da annotation.
@@ -26,21 +26,21 @@ public interface EJavaAnnotation extends Comparable<EJavaAnnotation> {
 
 	boolean isNormal();
 
-	AnnotationSource<JavaClassSource> getRoasterAnnotation();
+	AnnotationSource<T> getRoasterAnnotation();
 
-	AnnotationSource<JavaClassSource> getAnnotationValue();
+	AnnotationSource<T> getAnnotationValue();
 
-	AnnotationSource<JavaClassSource> getAnnotationValue(String name);
+	AnnotationSource<T> getAnnotationValue(String name);
 
 	String getQualifiedName();
 
 	<T extends Enum<T>> T getEnumValue(Class<T> type);
 
-	List<AnnotationSource<JavaClassSource>> getAnnotationArrayValue();
+	List<AnnotationSource<T>> getAnnotationArrayValue();
 
 	<T extends Enum<T>> T getEnumValue(Class<T> type, String name);
 
-	List<AnnotationSource<JavaClassSource>> getAnnotationArrayValue(String name);
+	List<AnnotationSource<T>> getAnnotationArrayValue(String name);
 
 	<T extends Enum<T>> List<T> getEnumArrayValue(Class<T> type);
 
@@ -66,35 +66,35 @@ public interface EJavaAnnotation extends Comparable<EJavaAnnotation> {
 
 	List<Class<?>> getClassArrayValue(String name);
 
-	AnnotationSource<JavaClassSource> setEnumValue(String name, Enum<?> value);
+	AnnotationSource<T> setEnumValue(String name, Enum<?> value);
 
-	AnnotationSource<JavaClassSource> setEnumValue(Enum<?>... value);
+	AnnotationSource<T> setEnumValue(Enum<?>... value);
 
-	AnnotationSource<JavaClassSource> setEnumArrayValue(String name, Enum<?>... values);
+	AnnotationSource<T> setEnumArrayValue(String name, Enum<?>... values);
 
-	public AnnotationSource<JavaClassSource> setEnumArrayValue(Enum<?>... values);
+	public AnnotationSource<T> setEnumArrayValue(Enum<?>... values);
 
-	AnnotationSource<JavaClassSource> setLiteralValue(String value);
+	AnnotationSource<T> setLiteralValue(String value);
 
-	AnnotationSource<JavaClassSource> setLiteralValue(String name, String value);
+	AnnotationSource<T> setLiteralValue(String name, String value);
 
-	AnnotationSource<JavaClassSource> setStringValue(String value);
+	AnnotationSource<T> setStringValue(String value);
 
-	AnnotationSource<JavaClassSource> setStringValue(String name, String value);
+	AnnotationSource<T> setStringValue(String name, String value);
 
-	AnnotationSource<JavaClassSource> setAnnotationValue();
+	AnnotationSource<T> setAnnotationValue();
 
-	AnnotationSource<JavaClassSource> setAnnotationValue(String name);
+	AnnotationSource<T> setAnnotationValue(String name);
 
-	AnnotationSource<JavaClassSource> setClassValue(String name, Class<?> value);
+	AnnotationSource<T> setClassValue(String name, Class<?> value);
 
-	AnnotationSource<JavaClassSource> setClassValue(Class<?> value);
+	AnnotationSource<T> setClassValue(Class<?> value);
 
-	AnnotationSource<JavaClassSource> setClassArrayValue(String name, Class<?>... values);
+	AnnotationSource<T> setClassArrayValue(String name, Class<?>... values);
 
-	AnnotationSource<JavaClassSource> setClassArrayValue(Class<?>... values);
+	AnnotationSource<T> setClassArrayValue(Class<?>... values);
 
-	AnnotationSource<JavaClassSource> setStringArrayValue(String name, String[] values);
+	AnnotationSource<T> setStringArrayValue(String name, String[] values);
 
-	AnnotationSource<JavaClassSource> setStringArrayValue(String[] values);
+	AnnotationSource<T> setStringArrayValue(String[] values);
 }
