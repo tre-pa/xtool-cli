@@ -36,6 +36,7 @@ public class EUmlRelationshipConverter implements BiFunction<EJavaClass, EUmlRel
 			// @formatter:off
 			javaField.getRoasterField().getOrigin().addImport(List.class);
 			javaField.getRoasterField().getOrigin().addImport(ArrayList.class);
+			javaField.getRoasterField().getOrigin().addImport(umlRelationship.getTargetClass().getQualifiedName());
 			javaField.getRoasterField()
 					.setPrivate()
 					.setName(umlRelationship.getSourceRole())

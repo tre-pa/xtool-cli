@@ -149,7 +149,7 @@ public class EUmlClassImpl implements EUmlClass {
 	 */
 	@Override
 	public boolean isClass() {
-		return true;
+		return false;
 	}
 
 	/*

@@ -42,6 +42,7 @@ import br.xtool.core.representation.EUmlRelationship;
 import br.xtool.core.representation.EUmlRelationship.EAssociation;
 import br.xtool.core.representation.EUmlRelationship.EComposition;
 import br.xtool.core.representation.EUmlStereotype;
+import br.xtool.core.template.JavaClassTemplates;
 import br.xtool.core.visitor.Visitor;
 import lombok.val;
 
@@ -228,27 +229,29 @@ public class JpaVisitor implements Visitor {
 		// Bidirecional
 		if (association.getNavigability().isBidirectional()) {
 			annOneToMany.setStringValue("mappedBy", association.getTargetRole());
+			JavaClassTemplates.genAddListMethodRelationship(oneToManyField.getJavaClass(), association);
 			// @formatter:off
 			// add
-			oneToManyField.getJavaClass().addMethod(String.format("add%s", association.getTargetClass().getName()))
-				.getRoasterMethod()
-					.setReturnTypeVoid()
-					.setBody(String.format("this.%s.add(%s); %s.set%s(this);", 
-							association.getSourceRole(), 
-							association.getTargetClass().getInstanceName(), 
-							association.getTargetClass().getInstanceName(),
-							association.getSourceClass().getName()))
-					.addParameter(association.getTargetClass().getName(), association.getTargetClass().getInstanceName());
+//			oneToManyField.getJavaClass().addMethod(String.format("add%s", association.getTargetClass().getName()))
+//				.getRoasterMethod()
+//					.setReturnTypeVoid()
+//					.setBody(String.format("this.%s.add(%s); %s.set%s(this);", 
+//							association.getSourceRole(), 
+//							association.getTargetClass().getInstanceName(), 
+//							association.getTargetClass().getInstanceName(),
+//							association.getSourceClass().getName()))
+//					.addParameter(association.getTargetClass().getName(), association.getTargetClass().getInstanceName());
 			// remove
-			oneToManyField.getJavaClass().addMethod(String.format("remove%s", association.getTargetClass().getName()))
-			.getRoasterMethod()
-				.setReturnTypeVoid()
-				.setBody(String.format("this.%s.remove(%s); %s.set%s(null);", 
-						association.getSourceRole(), 
-						association.getTargetClass().getInstanceName(), 
-						association.getTargetClass().getInstanceName(),
-						association.getSourceClass().getName()))
-				.addParameter(association.getTargetClass().getName(), association.getTargetClass().getInstanceName());
+			JavaClassTemplates.genRemoveListMethodRelationship(oneToManyField.getJavaClass(), association);
+//			oneToManyField.getJavaClass().addMethod(String.format("remove%s", association.getTargetClass().getName()))
+//			.getRoasterMethod()
+//				.setReturnTypeVoid()
+//				.setBody(String.format("this.%s.remove(%s); %s.set%s(null);", 
+//						association.getSourceRole(), 
+//						association.getTargetClass().getInstanceName(), 
+//						association.getTargetClass().getInstanceName(),
+//						association.getSourceClass().getName()))
+//				.addParameter(association.getTargetClass().getName(), association.getTargetClass().getInstanceName());
 		// @formatter:on
 		} else {
 			val annJoinColumn = oneToManyField.addAnnotation(JoinColumn.class);
@@ -308,25 +311,27 @@ public class JpaVisitor implements Visitor {
 			annOneToMany.setStringValue("mappedBy", composition.getTargetRole());
 			// @formatter:off
 			// add
-			oneToManyField.getJavaClass().addMethod(String.format("add%s", composition.getTargetClass().getName()))
-				.getRoasterMethod()
-					.setReturnTypeVoid()
-					.setBody(String.format("this.%s.add(%s); %s.set%s(this);", 
-							composition.getSourceRole(), 
-							composition.getTargetClass().getInstanceName(), 
-							composition.getTargetClass().getInstanceName(),
-							composition.getSourceClass().getName()))
-					.addParameter(composition.getTargetClass().getName(), composition.getTargetClass().getInstanceName());
+			JavaClassTemplates.genAddListMethodRelationship(oneToManyField.getJavaClass(), composition);
+//			oneToManyField.getJavaClass().addMethod(String.format("add%s", composition.getTargetClass().getName()))
+//				.getRoasterMethod()
+//					.setReturnTypeVoid()
+//					.setBody(String.format("this.%s.add(%s); %s.set%s(this);", 
+//							composition.getSourceRole(), 
+//							composition.getTargetClass().getInstanceName(), 
+//							composition.getTargetClass().getInstanceName(),
+//							composition.getSourceClass().getName()))
+//					.addParameter(composition.getTargetClass().getName(), composition.getTargetClass().getInstanceName());
 			// remove
-			oneToManyField.getJavaClass().addMethod(String.format("remove%s", composition.getTargetClass().getName()))
-			.getRoasterMethod()
-				.setReturnTypeVoid()
-				.setBody(String.format("this.%s.remove(%s); %s.set%s(null);", 
-						composition.getSourceRole(), 
-						composition.getTargetClass().getInstanceName(), 
-						composition.getTargetClass().getInstanceName(),
-						composition.getSourceClass().getName()))
-				.addParameter(composition.getTargetClass().getName(), composition.getTargetClass().getInstanceName());
+			JavaClassTemplates.genRemoveListMethodRelationship(oneToManyField.getJavaClass(), composition);
+//			oneToManyField.getJavaClass().addMethod(String.format("remove%s", composition.getTargetClass().getName()))
+//			.getRoasterMethod()
+//				.setReturnTypeVoid()
+//				.setBody(String.format("this.%s.remove(%s); %s.set%s(null);", 
+//						composition.getSourceRole(), 
+//						composition.getTargetClass().getInstanceName(), 
+//						composition.getTargetClass().getInstanceName(),
+//						composition.getSourceClass().getName()))
+//				.addParameter(composition.getTargetClass().getName(), composition.getTargetClass().getInstanceName());
 		// @formatter:on
 		} else {
 			val annJoinColumn = oneToManyField.addAnnotation(JoinColumn.class);
