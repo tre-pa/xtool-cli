@@ -34,7 +34,7 @@ public class EUmlClassConverter implements BiFunction<EBootProject, EUmlClass, E
 				.map(javaUnit -> javaUnit.<JavaClassSource>getGoverningType())
 				.map(javaClassSource -> new EJavaClassImpl(bootProject, javaClassSource))
 				.findFirst()
-				.orElseGet(() -> new EJavaClassImpl(bootProject,RoasterUtil.createJavaClassSource(umlClass.getPackage().getName(),umlClass.getName())));
+				.orElseGet(() -> new EJavaClassImpl(bootProject,RoasterUtil.createJavaClassSource(umlClass.getUmlPackage().getName(),umlClass.getName())));
 		// @formatter:on
 		this.visitors.forEach(visitor -> visitor.visit(javaClass));
 		return javaClass;

@@ -1,13 +1,21 @@
 package br.xtool.core.representation.impl;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
+import org.jboss.forge.roaster.model.Annotation;
+import org.jboss.forge.roaster.model.JavaDoc;
+import org.jboss.forge.roaster.model.JavaType;
+import org.jboss.forge.roaster.model.SyntaxError;
+import org.jboss.forge.roaster.model.Visibility;
+import org.jboss.forge.roaster.model.source.JavaClassSource;
 
 import com.google.common.collect.ImmutableSet;
 
@@ -55,7 +63,7 @@ public class EUmlClassImpl implements EUmlClass {
 	 */
 	@Override
 	public String getQualifiedName() {
-		return this.getPackage().getName().concat(".").concat(getName());
+		return this.getUmlPackage().getName().concat(".").concat(getName());
 	}
 
 	/*
@@ -63,7 +71,7 @@ public class EUmlClassImpl implements EUmlClass {
 	 * @see br.xtool.core.representation.EUmlClass#getPackage()
 	 */
 	@Override
-	public EUmlPackage getPackage() {
+	public EUmlPackage getUmlPackage() {
 		return new EUmlPackageImpl(this.leaf.getParentContainer());
 	}
 
@@ -106,6 +114,157 @@ public class EUmlClassImpl implements EUmlClass {
 	@Override
 	public Set<EUmlRelationship> getRelationships() {
 		return ImmutableSet.<EUmlRelationship>builder().addAll(iterateOverEntities1()).addAll(iterateOverEntities2()).build();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.jboss.forge.roaster.model.JavaType#getCanonicalName()
+	 */
+	@Override
+	public String getCanonicalName() {
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.jboss.forge.roaster.model.JavaType#getSyntaxErrors()
+	 */
+	@Override
+	public List<SyntaxError> getSyntaxErrors() {
+		return null;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.jboss.forge.roaster.model.JavaType#hasSyntaxErrors()
+	 */
+	@Override
+	public boolean hasSyntaxErrors() {
+		return false;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.jboss.forge.roaster.model.JavaType#isClass()
+	 */
+	@Override
+	public boolean isClass() {
+		return true;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.jboss.forge.roaster.model.JavaType#isEnum()
+	 */
+	@Override
+	public boolean isEnum() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isInterface() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isAnnotation() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public JavaType<?> getEnclosingType() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String toUnformattedString() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getPackage() {
+		return this.getUmlPackage().getName();
+	}
+
+	@Override
+	public boolean isDefaultPackage() {
+		return false;
+	}
+
+	@Override
+	public List<? extends Annotation<JavaClassSource>> getAnnotations() {
+		return new ArrayList<>();
+	}
+
+	@Override
+	public boolean hasAnnotation(Class<? extends java.lang.annotation.Annotation> type) {
+		return false;
+	}
+
+	@Override
+	public boolean hasAnnotation(String type) {
+		return false;
+	}
+
+	@Override
+	public Annotation<JavaClassSource> getAnnotation(Class<? extends java.lang.annotation.Annotation> type) {
+		return null;
+	}
+
+	@Override
+	public Annotation<JavaClassSource> getAnnotation(String type) {
+		return null;
+	}
+
+	@Override
+	public JavaClassSource getOrigin() {
+		return null;
+	}
+
+	@Override
+	public Object getInternal() {
+		return null;
+	}
+
+	@Override
+	public JavaDoc<JavaClassSource> getJavaDoc() {
+		return null;
+	}
+
+	@Override
+	public boolean hasJavaDoc() {
+		return false;
+	}
+
+	@Override
+	public boolean isPackagePrivate() {
+		return false;
+	}
+
+	@Override
+	public boolean isPublic() {
+		return true;
+	}
+
+	@Override
+	public boolean isPrivate() {
+		return false;
+	}
+
+	@Override
+	public boolean isProtected() {
+		return false;
+	}
+
+	@Override
+	public Visibility getVisibility() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	protected EUmlClass findClass(String className) {
