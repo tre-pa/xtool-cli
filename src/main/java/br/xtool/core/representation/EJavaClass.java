@@ -2,6 +2,7 @@ package br.xtool.core.representation;
 
 import java.lang.annotation.Annotation;
 import java.nio.file.Path;
+import java.util.Collection;
 import java.util.SortedSet;
 
 import org.jboss.forge.roaster.model.JavaType;
@@ -51,7 +52,7 @@ public interface EJavaClass extends Comparable<EJavaClass>, JavaType<JavaClassSo
 	 * 
 	 * @return
 	 */
-	SortedSet<EJavaField> getJavaFields();
+	Collection<EJavaField> getJavaFields();
 
 	/**
 	 * Retorna os métodos da classe.

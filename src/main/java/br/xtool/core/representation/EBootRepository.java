@@ -6,13 +6,14 @@ package br.xtool.core.representation;
  * @author jcruz
  *
  */
-public interface EBootRepository extends Comparable<EBootRepository>, EJavaInterface {
+public interface EBootRepository extends EJavaInterface {
 
 	/**
 	 * Retorna o pacote da classe
 	 * 
 	 * @return
 	 */
+	@Override
 	EJavaPackage getJavaPackage();
 
 	/**

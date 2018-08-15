@@ -19,6 +19,7 @@ import org.jboss.forge.roaster.model.source.JavaInterfaceSource;
 import br.xtool.core.representation.EBootAppProperties;
 import br.xtool.core.representation.EBootPom;
 import br.xtool.core.representation.EBootProject;
+import br.xtool.core.representation.EBootProjection;
 import br.xtool.core.representation.EBootRepository;
 import br.xtool.core.representation.EBootRest;
 import br.xtool.core.representation.EJavaClass;
@@ -145,6 +146,23 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 			.filter(j -> j.getAnnotations().stream().anyMatch(ann -> ann.getName().equals("Entity")))
 			.map(j -> new EJpaEntityImpl(this, j))
 			.collect(Collectors.toCollection(TreeSet::new));
+		// @formatter:on
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EBootProject#getProjections()
+	 */
+	@Override
+	public SortedSet<EBootProjection> getProjections() {
+		// @formatter:off
+		return this.getJavaUnits()
+				.parallelStream()
+				.filter(javaUnit -> javaUnit.getGoverningType().isInterface())
+				.map(javaUnit -> javaUnit.<JavaInterfaceSource>getGoverningType())
+				.filter(j -> j.getName().endsWith("Projection"))
+				.map(j -> new EBootProjectionImpl(this,j))
+				.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
 	}
 

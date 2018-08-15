@@ -20,7 +20,7 @@ public class EBootRepositoryImpl extends EJavaInterfaceImpl implements EBootRepo
 	private JavaInterfaceSource javaInterfaceSource;
 
 	public EBootRepositoryImpl(EBootProject springBootProject, JavaInterfaceSource javaInterfaceSource) {
-		super(javaInterfaceSource);
+		super(springBootProject, javaInterfaceSource);
 		this.springBootProject = springBootProject;
 		this.javaInterfaceSource = javaInterfaceSource;
 	}
@@ -58,10 +58,5 @@ public class EBootRepositoryImpl extends EJavaInterfaceImpl implements EBootRepo
 				.findFirst()
 				.orElseThrow(() -> new IllegalArgumentException(String.format("O repositório %s não possui entidade JPA associada.", this.getName())));
 		// @formatter:on
-	}
-
-	@Override
-	public int compareTo(EBootRepository o) {
-		return this.getName().compareTo(o.getName());
 	}
 }

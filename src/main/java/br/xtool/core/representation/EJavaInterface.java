@@ -11,7 +11,9 @@ import org.jboss.forge.roaster.model.source.JavaInterfaceSource;
  * @author jcruz
  *
  */
-public interface EJavaInterface extends JavaType<JavaInterfaceSource> {
+public interface EJavaInterface extends JavaType<JavaInterfaceSource>, Comparable<EJavaInterface> {
+
+	EBootProject getProject();
 
 	/**
 	 * Retorna a interface roaster.

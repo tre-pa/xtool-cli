@@ -11,17 +11,26 @@ import org.jboss.forge.roaster.model.SyntaxError;
 import org.jboss.forge.roaster.model.Visibility;
 import org.jboss.forge.roaster.model.source.JavaInterfaceSource;
 
+import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.EJavaInterface;
 import br.xtool.core.representation.EJavaMethod;
 import br.xtool.core.representation.EJavaPackage;
 
 public class EJavaInterfaceImpl implements EJavaInterface {
 
+	private EBootProject bootProject;
+
 	private JavaInterfaceSource javaInterfaceSource;
 
-	public EJavaInterfaceImpl(JavaInterfaceSource javaInterfaceSource) {
+	public EJavaInterfaceImpl(EBootProject bootProject, JavaInterfaceSource javaInterfaceSource) {
 		super();
+		this.bootProject = bootProject;
 		this.javaInterfaceSource = javaInterfaceSource;
+	}
+
+	@Override
+	public EBootProject getProject() {
+		return this.bootProject;
 	}
 
 	/**
@@ -181,6 +190,11 @@ public class EJavaInterfaceImpl implements EJavaInterface {
 				.map(methodSource -> new EJavaMethodImpl<>(this.javaInterfaceSource, methodSource))
 				.collect(Collectors.toList());
 		// @formatter:on
+	}
+
+	@Override
+	public int compareTo(EJavaInterface o) {
+		return this.getName().compareTo(o.getName());
 	}
 
 }

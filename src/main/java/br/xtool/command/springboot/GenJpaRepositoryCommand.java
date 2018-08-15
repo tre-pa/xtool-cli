@@ -12,6 +12,7 @@ import br.xtool.XtoolCliApplication;
 import br.xtool.core.aware.SpringBootAware;
 import br.xtool.core.provider.EJavaEntityValueProvider;
 import br.xtool.core.representation.EBootProject;
+import br.xtool.core.representation.EBootProjection;
 import br.xtool.core.representation.EBootRepository;
 import br.xtool.core.representation.EJpaEntity;
 import br.xtool.service.BootService;
@@ -39,6 +40,9 @@ public class GenJpaRepositoryCommand extends SpringBootAware {
 		EBootProject bootProject = this.workspaceService.getWorkingProject(EBootProject.class);
 		EBootRepository bootRepository = this.bootService.createRepository(bootProject, entity);
 		this.bootService.save(bootProject.getMainSourceFolder(), bootRepository);
+
+		EBootProjection bootProjection = this.bootService.createProjection(bootProject, entity);
+		this.bootService.save(bootProject.getMainSourceFolder(), bootProjection);
 		//		this.fs.copy("springboot/1.5.x/repository/repository.java.vm", "src/main/java/${groupId.dir}/repository/${repositoryName}.java", vars);
 	}
 }

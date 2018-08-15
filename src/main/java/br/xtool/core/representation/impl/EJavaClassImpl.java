@@ -2,6 +2,7 @@ package br.xtool.core.representation.impl;
 
 import java.lang.annotation.Annotation;
 import java.nio.file.Path;
+import java.util.Collection;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -95,12 +96,12 @@ public class EJavaClassImpl implements EJavaClass {
 	}
 
 	@Override
-	public SortedSet<EJavaField> getJavaFields() {
+	public Collection<EJavaField> getJavaFields() {
 		// @formatter:off
 		return this.javaClassSource.getFields()
 				.stream()
 				.map(fieldSource -> new EJavaFieldImpl(this, fieldSource))
-				.collect(Collectors.toCollection(TreeSet::new));
+				.collect(Collectors.toList());
 		// @formatter:on
 	}
 

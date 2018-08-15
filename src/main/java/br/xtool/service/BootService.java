@@ -4,6 +4,7 @@ import java.util.Set;
 
 import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.EBootProject.BootSupport;
+import br.xtool.core.representation.EBootProjection;
 import br.xtool.core.representation.EBootRepository;
 import br.xtool.core.representation.EJavaClass;
 import br.xtool.core.representation.EJavaInterface;
@@ -66,6 +67,15 @@ public interface BootService {
 	 * @return
 	 */
 	EBootRepository createRepository(EBootProject bootProject, EJpaEntity entity);
+
+	/**
+	 * Cria a interface de repositório no projeto.
+	 * 
+	 * @param bootProject
+	 * @param entity
+	 * @return
+	 */
+	EBootProjection createProjection(EBootProject bootProject, EJpaEntity entity);
 
 	//EJavaClass convertUmlClassToJavaClass(EBootProject bootProject, EUmlClass umlClass);
 }

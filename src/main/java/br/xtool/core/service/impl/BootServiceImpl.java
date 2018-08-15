@@ -12,6 +12,7 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.StringUtils;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.formatter.DefaultCodeFormatterConstants;
 import org.eclipse.jdt.internal.compiler.impl.CompilerOptions;
@@ -24,6 +25,7 @@ import org.springframework.stereotype.Service;
 
 import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.EBootProject.BootSupport;
+import br.xtool.core.representation.EBootProjection;
 import br.xtool.core.representation.EBootRepository;
 import br.xtool.core.representation.EJavaClass;
 import br.xtool.core.representation.EJavaInterface;
@@ -33,6 +35,7 @@ import br.xtool.core.representation.EUmlClass;
 import br.xtool.core.representation.converter.EUmlClassConverter;
 import br.xtool.core.representation.converter.EUmlFieldConverter;
 import br.xtool.core.representation.converter.EUmlRelationshipConverter;
+import br.xtool.core.representation.impl.EBootProjectionImpl;
 import br.xtool.core.representation.impl.EBootRepositoryImpl;
 import br.xtool.core.util.RoasterUtil;
 import br.xtool.core.visitor.Visitor;
@@ -66,6 +69,10 @@ public class BootServiceImpl implements BootService {
 		return this.applicationContext.getBean(supportClass).has(bootProject);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.service.BootService#save(br.xtool.core.representation.EJavaSourceFolder, br.xtool.core.representation.EJavaClass)
+	 */
 	@Override
 	@SneakyThrows
 	public void save(EJavaSourceFolder sourceFolder, EJavaClass javaClass) {
@@ -88,6 +95,10 @@ public class BootServiceImpl implements BootService {
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.service.BootService#save(br.xtool.core.representation.EJavaSourceFolder, br.xtool.core.representation.EJavaInterface)
+	 */
 	@Override
 	@SneakyThrows
 	public void save(EJavaSourceFolder sourceFolder, EJavaInterface javaInterface) {
@@ -133,25 +144,61 @@ public class BootServiceImpl implements BootService {
 		return javaClass;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.service.BootService#createRepository(br.xtool.core.representation.EBootProject, br.xtool.core.representation.EJpaEntity)
+	 */
 	@Override
 	public EBootRepository createRepository(EBootProject bootProject, EJpaEntity entity) {
-		String repositoryInterfaceName = entity.getName().concat("Repository");
+		String repositoryName = entity.getName().concat("Repository");
 		// @formatter:off
 		return bootProject.getRepositories().stream()
-				.filter(repository -> repository.getName().equals(repositoryInterfaceName))
+				.filter(repository -> repository.getName().equals(repositoryName))
 				.findFirst()
-				.orElseGet(() -> this.newRepository(bootProject, repositoryInterfaceName, entity));
+				.orElseGet(() -> this.newRepository(bootProject, repositoryName, entity));
 		// @formatter:on
 	}
 
-	private EBootRepository newRepository(EBootProject bootProject, String repositoryInterfaceName, EJpaEntity entity) {
-		EBootRepository repository = new EBootRepositoryImpl(bootProject, RoasterUtil.createJavaInterface(repositoryInterfaceName));
+	private EBootRepository newRepository(EBootProject bootProject, String repositoryName, EJpaEntity entity) {
+		EBootRepository repository = new EBootRepositoryImpl(bootProject, RoasterUtil.createJavaInterface(repositoryName));
 		repository.getRoasterInterface().setPackage(bootProject.getRootPackage().getName().concat(".").concat("repository"));
 		repository.getRoasterInterface().addImport(JpaRepository.class);
 		repository.getRoasterInterface().addImport(entity.getQualifiedName());
 		repository.getRoasterInterface().addInterface(JpaRepository.class.getSimpleName().concat("<").concat(entity.getName()).concat(",").concat("Long").concat(">"));
 		repository.getRoasterInterface().addAnnotation(Repository.class);
 		return repository;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.service.BootService#createProjection(br.xtool.core.representation.EBootProject, br.xtool.core.representation.EJpaEntity)
+	 */
+	@Override
+	public EBootProjection createProjection(EBootProject bootProject, EJpaEntity entity) {
+		String projectionName = entity.getName().concat("Projection");
+		// @formatter:off
+		return bootProject.getProjections().stream()
+				.filter(projection -> projection.getName().equals(projectionName))
+				.findFirst()
+				.orElseGet(() -> this.newProjection(bootProject, projectionName, entity));
+		// @formatter:on
+	}
+
+	private EBootProjection newProjection(EBootProject bootProject, String projectionName, EJpaEntity entity) {
+		EBootProjection projection = new EBootProjectionImpl(bootProject, RoasterUtil.createJavaInterface(projectionName));
+		projection.getRoasterInterface().setPackage(bootProject.getRootPackage().getName().concat(".").concat("repository").concat(".").concat("projection"));
+		// @formatter:off
+		entity.getJavaFields().stream()
+			.filter(javaField -> !javaField.getRoasterField().isStatic())
+			.filter(javaField -> !javaField.getRelationship().isPresent())
+			.filter(javaField -> !javaField.isCollection())
+			.forEach(javaField -> {
+				projection.getRoasterInterface().addMethod()
+					.setReturnType(javaField.getType())
+					.setName(String.format("get%s", StringUtils.capitalize(javaField.getName())));
+			});
+		// @formatter:on
+		return projection;
 	}
 
 }
