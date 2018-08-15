@@ -10,6 +10,7 @@ import org.jboss.forge.roaster.ParserException;
 import org.jboss.forge.roaster.Roaster;
 import org.jboss.forge.roaster.model.JavaUnit;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
+import org.jboss.forge.roaster.model.source.JavaInterfaceSource;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -38,6 +39,19 @@ public class RoasterUtil {
 		javaClassSource.setPackage(packageName);
 		javaClassSource.setName(name);
 		return javaClassSource;
+	}
+
+	public static JavaInterfaceSource createJavaInterface(String name) {
+		JavaInterfaceSource javaInterfaceSource = Roaster.create(JavaInterfaceSource.class);
+		javaInterfaceSource.setName(name);
+		return javaInterfaceSource;
+	}
+
+	public static JavaInterfaceSource createJavaInterface(String packageName, String name) {
+		JavaInterfaceSource javaInterfaceSource = Roaster.create(JavaInterfaceSource.class);
+		javaInterfaceSource.setPackage(packageName);
+		javaInterfaceSource.setName(name);
+		return javaInterfaceSource;
 	}
 
 	public static void addImport(JavaClassSource javaClassSource, String className) {

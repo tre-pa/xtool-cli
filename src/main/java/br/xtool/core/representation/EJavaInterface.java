@@ -21,6 +21,13 @@ public interface EJavaInterface extends JavaType<JavaInterfaceSource> {
 	JavaInterfaceSource getRoasterInterface();
 
 	/**
+	 * Retorna o package da classe.
+	 * 
+	 * @return
+	 */
+	EJavaPackage getJavaPackage();
+
+	/**
 	 * Retorna os métodos da interface.
 	 * 
 	 * @return

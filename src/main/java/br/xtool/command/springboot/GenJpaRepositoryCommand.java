@@ -1,12 +1,9 @@
 package br.xtool.command.springboot;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.jdom2.JDOMException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
@@ -15,9 +12,9 @@ import br.xtool.XtoolCliApplication;
 import br.xtool.core.aware.SpringBootAware;
 import br.xtool.core.provider.EJavaEntityValueProvider;
 import br.xtool.core.representation.EBootProject;
+import br.xtool.core.representation.EBootRepository;
 import br.xtool.core.representation.EJpaEntity;
-import br.xtool.core.util.Names;
-import br.xtool.service.FileService;
+import br.xtool.service.BootService;
 import br.xtool.service.WorkspaceService;
 
 /**
@@ -26,31 +23,22 @@ import br.xtool.service.WorkspaceService;
  * @author jcruz
  *
  */
-@Profile("in-dev")
+//@Profile("in-dev")
 @ShellComponent
 public class GenJpaRepositoryCommand extends SpringBootAware {
 
 	@Autowired
-	private FileService fs;
+	private WorkspaceService workspaceService;
 
 	@Autowired
-	private WorkspaceService workspaceService;
+	private BootService bootService;
 
 	@ShellMethod(key = "gen:repository", value = "Gera uma classe de Repository (JpaRepository) para entidade JPA em um projeto Spring Boot", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
 	public void run(@ShellOption(help = "Entidade JPA", valueProvider = EJavaEntityValueProvider.class) EJpaEntity entity) throws IOException, JDOMException {
 
 		EBootProject bootProject = this.workspaceService.getWorkingProject(EBootProject.class);
-
-		/*
-		 * Cria o mapa com as variáveis do gerador.
-		 */
-		//// @formatter:off
-		Map<String, Object> vars = new HashMap<>();
-		vars.put("groupId", bootProject.getPom().getGroupId());
-		vars.put("repositoryName", Names.asRepositoryClass(entity.getName()));
-		vars.put("entity", entity);
-		// @formatter:on
-
+		EBootRepository bootRepository = this.bootService.createRepository(bootProject, entity);
+		this.bootService.save(bootProject.getMainSourceFolder(), bootRepository);
 		//		this.fs.copy("springboot/1.5.x/repository/repository.java.vm", "src/main/java/${groupId.dir}/repository/${repositoryName}.java", vars);
 	}
 }

@@ -4,8 +4,11 @@ import java.util.Set;
 
 import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.EBootProject.BootSupport;
+import br.xtool.core.representation.EBootRepository;
 import br.xtool.core.representation.EJavaClass;
+import br.xtool.core.representation.EJavaInterface;
 import br.xtool.core.representation.EJavaSourceFolder;
+import br.xtool.core.representation.EJpaEntity;
 import br.xtool.core.visitor.Visitor;
 
 /**
@@ -41,6 +44,13 @@ public interface BootService {
 	void save(EJavaSourceFolder sourceFolder, EJavaClass javaClass);
 
 	/**
+	 * 
+	 * @param sourceFolder
+	 * @param javaInterface
+	 */
+	void save(EJavaSourceFolder sourceFolder, EJavaInterface javaInterface);
+
+	/**
 	 * Converte o diagrama de classe UML para as classes correspondentes.
 	 * 
 	 * @param bootProject
@@ -48,6 +58,14 @@ public interface BootService {
 	 * @return
 	 */
 	void convertUmlClassDiagramToJavaClasses(EBootProject bootProject, Set<Visitor> vistors);
+
+	/**
+	 * Cria a interface de repositório no projeto.
+	 * 
+	 * @param entity
+	 * @return
+	 */
+	EBootRepository createRepository(EBootProject bootProject, EJpaEntity entity);
 
 	//EJavaClass convertUmlClassToJavaClass(EBootProject bootProject, EUmlClass umlClass);
 }

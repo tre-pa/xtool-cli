@@ -13,6 +13,7 @@ import org.jboss.forge.roaster.model.source.JavaInterfaceSource;
 
 import br.xtool.core.representation.EJavaInterface;
 import br.xtool.core.representation.EJavaMethod;
+import br.xtool.core.representation.EJavaPackage;
 
 public class EJavaInterfaceImpl implements EJavaInterface {
 
@@ -21,6 +22,16 @@ public class EJavaInterfaceImpl implements EJavaInterface {
 	public EJavaInterfaceImpl(JavaInterfaceSource javaInterfaceSource) {
 		super();
 		this.javaInterfaceSource = javaInterfaceSource;
+	}
+
+	/**
+	 * Retorna o pacote da classe
+	 * 
+	 * @return
+	 */
+	@Override
+	public EJavaPackage getJavaPackage() {
+		return EJavaPackageImpl.of(this.javaInterfaceSource.getPackage());
 	}
 
 	@Override
