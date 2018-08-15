@@ -32,12 +32,14 @@ import br.xtool.core.representation.EJavaSourceFolder;
 import br.xtool.core.representation.EJpaEntity;
 import br.xtool.core.representation.EJpaProjection;
 import br.xtool.core.representation.EJpaRepository;
+import br.xtool.core.representation.EJpaSpecification;
 import br.xtool.core.representation.EUmlClass;
 import br.xtool.core.representation.converter.EUmlClassConverter;
 import br.xtool.core.representation.converter.EUmlFieldConverter;
 import br.xtool.core.representation.converter.EUmlRelationshipConverter;
 import br.xtool.core.representation.impl.EJpaProjectionImpl;
 import br.xtool.core.representation.impl.EJpaRepositoryImpl;
+import br.xtool.core.representation.impl.EJpaSpecificationImpl;
 import br.xtool.core.util.RoasterUtil;
 import br.xtool.core.visitor.Visitor;
 import br.xtool.service.BootService;
@@ -86,6 +88,7 @@ public class BootServiceImpl implements BootService {
 		prefs.setProperty(DefaultCodeFormatterConstants.FORMATTER_LINE_SPLIT, "120");
 		prefs.setProperty(DefaultCodeFormatterConstants.FORMATTER_BLANK_LINES_BEFORE_FIELD, "1");
 		prefs.setProperty(DefaultCodeFormatterConstants.FORMATTER_BLANK_LINES_AFTER_IMPORTS, "1");
+		prefs.setProperty(DefaultCodeFormatterConstants.FORMATTER_BLANK_LINES_AFTER_PACKAGE, "1");
 
 		//		prefs.setProperty(DefaultCodeFormatterConstants., "TRUE");
 		try (BufferedWriter write = Files.newBufferedWriter(javaPath)) {
@@ -112,6 +115,7 @@ public class BootServiceImpl implements BootService {
 		prefs.setProperty(DefaultCodeFormatterConstants.FORMATTER_LINE_SPLIT, "120");
 		prefs.setProperty(DefaultCodeFormatterConstants.FORMATTER_BLANK_LINES_BEFORE_FIELD, "1");
 		prefs.setProperty(DefaultCodeFormatterConstants.FORMATTER_BLANK_LINES_AFTER_IMPORTS, "1");
+		prefs.setProperty(DefaultCodeFormatterConstants.FORMATTER_BLANK_LINES_AFTER_PACKAGE, "1");
 
 		//		prefs.setProperty(DefaultCodeFormatterConstants., "TRUE");
 		try (BufferedWriter write = Files.newBufferedWriter(javaPath)) {
@@ -160,11 +164,8 @@ public class BootServiceImpl implements BootService {
 		// @formatter:on
 	}
 
-	@SneakyThrows
 	private EJpaRepository newRepository(EBootProject bootProject, String repositoryName, EJpaEntity entity) {
 		EJpaRepository repository = new EJpaRepositoryImpl(bootProject, RoasterUtil.createJavaInterface(repositoryName));
-		//		Path repositoryPath = Paths.get(bootProject.getRootPackage().getDir().concat("/repository"));
-		//		if (Files.notExists(repositoryPath)) Files.createDirectories(repositoryPath);
 		repository.getRoasterInterface().setPackage(bootProject.getRootPackage().getName().concat(".repository"));
 		repository.getRoasterInterface().addImport(JpaRepository.class);
 		repository.getRoasterInterface().addImport(JpaSpecificationExecutor.class);
@@ -190,11 +191,8 @@ public class BootServiceImpl implements BootService {
 		// @formatter:on
 	}
 
-	@SneakyThrows
 	private EJpaProjection newProjection(EBootProject bootProject, String projectionName, EJpaEntity entity) {
 		EJpaProjection projection = new EJpaProjectionImpl(bootProject, RoasterUtil.createJavaInterface(projectionName));
-		//		Path projectionPath = Paths.get(bootProject.getRootPackage().getDir().concat("/repository").concat("/projection"));
-		//		if (Files.notExists(projectionPath)) Files.createDirectories(projectionPath);
 		projection.getRoasterInterface().setPackage(bootProject.getRootPackage().getName().concat(".repository").concat(".projection"));
 		// @formatter:off
 		entity.getJavaFields().stream()
@@ -208,6 +206,27 @@ public class BootServiceImpl implements BootService {
 			});
 		// @formatter:on
 		return projection;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.service.BootService#createSpecification(br.xtool.core.representation.EBootProject, br.xtool.core.representation.EJpaEntity)
+	 */
+	@Override
+	public EJpaSpecification createSpecification(EBootProject bootProject, EJpaEntity entity) {
+		String specificationName = entity.getName().concat("Specification");
+		// @formatter:off
+		return bootProject.getSpecifications().stream()
+				.filter(specification -> specification.getName().equals(specificationName))
+				.findFirst()
+				.orElseGet(() -> this.newSpecification(bootProject, specificationName, entity));
+		// @formatter:on
+	}
+
+	private EJpaSpecification newSpecification(EBootProject bootProject, String specificationName, EJpaEntity entity) {
+		EJpaSpecification specification = new EJpaSpecificationImpl(bootProject, RoasterUtil.createJavaClassSource(specificationName));
+		specification.getRoasterJavaClass().setPackage(bootProject.getRootPackage().getName().concat(".repository").concat(".specification"));
+		return specification;
 	}
 
 }

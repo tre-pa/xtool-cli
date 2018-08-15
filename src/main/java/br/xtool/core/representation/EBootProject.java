@@ -85,6 +85,13 @@ public interface EBootProject extends EProject {
 	SortedSet<EJpaProjection> getProjections();
 
 	/**
+	 * Retorna a lista de specifications do projeto.
+	 * 
+	 * @return
+	 */
+	SortedSet<EJpaSpecification> getSpecifications();
+
+	/**
 	 * Retorna a lista de repositórios.
 	 * 
 	 * @return

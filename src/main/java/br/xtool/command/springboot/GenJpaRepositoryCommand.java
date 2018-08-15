@@ -12,9 +12,10 @@ import br.xtool.XtoolCliApplication;
 import br.xtool.core.aware.SpringBootAware;
 import br.xtool.core.provider.EJavaEntityValueProvider;
 import br.xtool.core.representation.EBootProject;
+import br.xtool.core.representation.EJpaEntity;
 import br.xtool.core.representation.EJpaProjection;
 import br.xtool.core.representation.EJpaRepository;
-import br.xtool.core.representation.EJpaEntity;
+import br.xtool.core.representation.EJpaSpecification;
 import br.xtool.service.BootService;
 import br.xtool.service.WorkspaceService;
 
@@ -38,11 +39,14 @@ public class GenJpaRepositoryCommand extends SpringBootAware {
 	public void run(@ShellOption(help = "Entidade JPA", valueProvider = EJavaEntityValueProvider.class) EJpaEntity entity) throws IOException, JDOMException {
 
 		EBootProject bootProject = this.workspaceService.getWorkingProject(EBootProject.class);
-		EJpaRepository bootRepository = this.bootService.createRepository(bootProject, entity);
-		this.bootService.save(bootProject.getMainSourceFolder(), bootRepository);
+		EJpaRepository repository = this.bootService.createRepository(bootProject, entity);
+		this.bootService.save(bootProject.getMainSourceFolder(), repository);
 
-		EJpaProjection bootProjection = this.bootService.createProjection(bootProject, entity);
-		this.bootService.save(bootProject.getMainSourceFolder(), bootProjection);
-		//		this.fs.copy("springboot/1.5.x/repository/repository.java.vm", "src/main/java/${groupId.dir}/repository/${repositoryName}.java", vars);
+		EJpaProjection projection = this.bootService.createProjection(bootProject, entity);
+		this.bootService.save(bootProject.getMainSourceFolder(), projection);
+
+		EJpaSpecification specification = this.bootService.createSpecification(bootProject, entity);
+		this.bootService.save(bootProject.getMainSourceFolder(), specification);
+
 	}
 }

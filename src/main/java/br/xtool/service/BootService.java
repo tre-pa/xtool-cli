@@ -4,12 +4,13 @@ import java.util.Set;
 
 import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.EBootProject.BootSupport;
-import br.xtool.core.representation.EJpaProjection;
-import br.xtool.core.representation.EJpaRepository;
 import br.xtool.core.representation.EJavaClass;
 import br.xtool.core.representation.EJavaInterface;
 import br.xtool.core.representation.EJavaSourceFolder;
 import br.xtool.core.representation.EJpaEntity;
+import br.xtool.core.representation.EJpaProjection;
+import br.xtool.core.representation.EJpaRepository;
+import br.xtool.core.representation.EJpaSpecification;
 import br.xtool.core.visitor.Visitor;
 
 /**
@@ -77,5 +78,12 @@ public interface BootService {
 	 */
 	EJpaProjection createProjection(EBootProject bootProject, EJpaEntity entity);
 
-	//EJavaClass convertUmlClassToJavaClass(EBootProject bootProject, EUmlClass umlClass);
+	/**
+	 * 
+	 * @param bootProject
+	 * @param entity
+	 * @return
+	 */
+	EJpaSpecification createSpecification(EBootProject bootProject, EJpaEntity entity);
+
 }

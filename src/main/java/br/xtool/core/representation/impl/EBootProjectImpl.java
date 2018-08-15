@@ -19,13 +19,14 @@ import org.jboss.forge.roaster.model.source.JavaInterfaceSource;
 import br.xtool.core.representation.EBootAppProperties;
 import br.xtool.core.representation.EBootPom;
 import br.xtool.core.representation.EBootProject;
-import br.xtool.core.representation.EJpaProjection;
-import br.xtool.core.representation.EJpaRepository;
 import br.xtool.core.representation.EBootRest;
 import br.xtool.core.representation.EJavaClass;
 import br.xtool.core.representation.EJavaPackage;
 import br.xtool.core.representation.EJavaSourceFolder;
 import br.xtool.core.representation.EJpaEntity;
+import br.xtool.core.representation.EJpaProjection;
+import br.xtool.core.representation.EJpaRepository;
+import br.xtool.core.representation.EJpaSpecification;
 import br.xtool.core.representation.ENgProject;
 import br.xtool.core.representation.EProject;
 import br.xtool.core.representation.EUmlClassDiagram;
@@ -162,6 +163,19 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 				.map(javaUnit -> javaUnit.<JavaInterfaceSource>getGoverningType())
 				.filter(j -> j.getName().endsWith("Projection"))
 				.map(j -> new EJpaProjectionImpl(this,j))
+				.collect(Collectors.toCollection(TreeSet::new));
+		// @formatter:on
+	}
+
+	@Override
+	public SortedSet<EJpaSpecification> getSpecifications() {
+		// @formatter:off
+		return this.getJavaUnits()
+				.parallelStream()
+				.filter(javaUnit -> javaUnit.getGoverningType().isClass())
+				.map(javaUnit -> javaUnit.<JavaClassSource>getGoverningType())
+				.filter(j -> j.getName().endsWith("Specification"))
+				.map(j -> new EJpaSpecificationImpl(this, j))
 				.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
 	}
