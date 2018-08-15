@@ -4,8 +4,8 @@ import java.util.Set;
 
 import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.EBootProject.BootSupport;
-import br.xtool.core.representation.EBootProjection;
-import br.xtool.core.representation.EBootRepository;
+import br.xtool.core.representation.EJpaProjection;
+import br.xtool.core.representation.EJpaRepository;
 import br.xtool.core.representation.EJavaClass;
 import br.xtool.core.representation.EJavaInterface;
 import br.xtool.core.representation.EJavaSourceFolder;
@@ -66,7 +66,7 @@ public interface BootService {
 	 * @param entity
 	 * @return
 	 */
-	EBootRepository createRepository(EBootProject bootProject, EJpaEntity entity);
+	EJpaRepository createRepository(EBootProject bootProject, EJpaEntity entity);
 
 	/**
 	 * Cria a interface de repositório no projeto.
@@ -75,7 +75,7 @@ public interface BootService {
 	 * @param entity
 	 * @return
 	 */
-	EBootProjection createProjection(EBootProject bootProject, EJpaEntity entity);
+	EJpaProjection createProjection(EBootProject bootProject, EJpaEntity entity);
 
 	//EJavaClass convertUmlClassToJavaClass(EBootProject bootProject, EUmlClass umlClass);
 }

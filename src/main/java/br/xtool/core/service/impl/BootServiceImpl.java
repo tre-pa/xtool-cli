@@ -25,8 +25,8 @@ import org.springframework.stereotype.Service;
 
 import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.EBootProject.BootSupport;
-import br.xtool.core.representation.EBootProjection;
-import br.xtool.core.representation.EBootRepository;
+import br.xtool.core.representation.EJpaProjection;
+import br.xtool.core.representation.EJpaRepository;
 import br.xtool.core.representation.EJavaClass;
 import br.xtool.core.representation.EJavaInterface;
 import br.xtool.core.representation.EJavaSourceFolder;
@@ -35,8 +35,8 @@ import br.xtool.core.representation.EUmlClass;
 import br.xtool.core.representation.converter.EUmlClassConverter;
 import br.xtool.core.representation.converter.EUmlFieldConverter;
 import br.xtool.core.representation.converter.EUmlRelationshipConverter;
-import br.xtool.core.representation.impl.EBootProjectionImpl;
-import br.xtool.core.representation.impl.EBootRepositoryImpl;
+import br.xtool.core.representation.impl.EJpaProjectionImpl;
+import br.xtool.core.representation.impl.EJpaRepositoryImpl;
 import br.xtool.core.util.RoasterUtil;
 import br.xtool.core.visitor.Visitor;
 import br.xtool.service.BootService;
@@ -149,7 +149,7 @@ public class BootServiceImpl implements BootService {
 	 * @see br.xtool.service.BootService#createRepository(br.xtool.core.representation.EBootProject, br.xtool.core.representation.EJpaEntity)
 	 */
 	@Override
-	public EBootRepository createRepository(EBootProject bootProject, EJpaEntity entity) {
+	public EJpaRepository createRepository(EBootProject bootProject, EJpaEntity entity) {
 		String repositoryName = entity.getName().concat("Repository");
 		// @formatter:off
 		return bootProject.getRepositories().stream()
@@ -159,8 +159,8 @@ public class BootServiceImpl implements BootService {
 		// @formatter:on
 	}
 
-	private EBootRepository newRepository(EBootProject bootProject, String repositoryName, EJpaEntity entity) {
-		EBootRepository repository = new EBootRepositoryImpl(bootProject, RoasterUtil.createJavaInterface(repositoryName));
+	private EJpaRepository newRepository(EBootProject bootProject, String repositoryName, EJpaEntity entity) {
+		EJpaRepository repository = new EJpaRepositoryImpl(bootProject, RoasterUtil.createJavaInterface(repositoryName));
 		repository.getRoasterInterface().setPackage(bootProject.getRootPackage().getName().concat(".").concat("repository"));
 		repository.getRoasterInterface().addImport(JpaRepository.class);
 		repository.getRoasterInterface().addImport(entity.getQualifiedName());
@@ -174,7 +174,7 @@ public class BootServiceImpl implements BootService {
 	 * @see br.xtool.service.BootService#createProjection(br.xtool.core.representation.EBootProject, br.xtool.core.representation.EJpaEntity)
 	 */
 	@Override
-	public EBootProjection createProjection(EBootProject bootProject, EJpaEntity entity) {
+	public EJpaProjection createProjection(EBootProject bootProject, EJpaEntity entity) {
 		String projectionName = entity.getName().concat("Projection");
 		// @formatter:off
 		return bootProject.getProjections().stream()
@@ -184,8 +184,8 @@ public class BootServiceImpl implements BootService {
 		// @formatter:on
 	}
 
-	private EBootProjection newProjection(EBootProject bootProject, String projectionName, EJpaEntity entity) {
-		EBootProjection projection = new EBootProjectionImpl(bootProject, RoasterUtil.createJavaInterface(projectionName));
+	private EJpaProjection newProjection(EBootProject bootProject, String projectionName, EJpaEntity entity) {
+		EJpaProjection projection = new EJpaProjectionImpl(bootProject, RoasterUtil.createJavaInterface(projectionName));
 		projection.getRoasterInterface().setPackage(bootProject.getRootPackage().getName().concat(".").concat("repository").concat(".").concat("projection"));
 		// @formatter:off
 		entity.getJavaFields().stream()

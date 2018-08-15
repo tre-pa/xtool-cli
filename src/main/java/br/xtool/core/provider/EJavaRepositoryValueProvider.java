@@ -11,7 +11,7 @@ import org.springframework.shell.CompletionProposal;
 import org.springframework.shell.standard.ValueProviderSupport;
 import org.springframework.stereotype.Component;
 
-import br.xtool.core.representation.EBootRepository;
+import br.xtool.core.representation.EJpaRepository;
 import br.xtool.service.WorkspaceService;
 import br.xtool.core.representation.EBootProject;
 
@@ -27,7 +27,7 @@ public class EJavaRepositoryValueProvider extends ValueProviderSupport {
 			EBootProject project = EBootProject.class.cast(this.workspaceService.getWorkingProject());
 			// @formatter:off
 			return project.getRepositories()
-				.stream().map(EBootRepository::getName)
+				.stream().map(EJpaRepository::getName)
 				.map(CompletionProposal::new)
 				.collect(Collectors.toList());
 			// @formatter:on

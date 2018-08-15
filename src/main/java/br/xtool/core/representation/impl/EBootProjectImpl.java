@@ -19,8 +19,8 @@ import org.jboss.forge.roaster.model.source.JavaInterfaceSource;
 import br.xtool.core.representation.EBootAppProperties;
 import br.xtool.core.representation.EBootPom;
 import br.xtool.core.representation.EBootProject;
-import br.xtool.core.representation.EBootProjection;
-import br.xtool.core.representation.EBootRepository;
+import br.xtool.core.representation.EJpaProjection;
+import br.xtool.core.representation.EJpaRepository;
 import br.xtool.core.representation.EBootRest;
 import br.xtool.core.representation.EJavaClass;
 import br.xtool.core.representation.EJavaPackage;
@@ -154,14 +154,14 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 	 * @see br.xtool.core.representation.EBootProject#getProjections()
 	 */
 	@Override
-	public SortedSet<EBootProjection> getProjections() {
+	public SortedSet<EJpaProjection> getProjections() {
 		// @formatter:off
 		return this.getJavaUnits()
 				.parallelStream()
 				.filter(javaUnit -> javaUnit.getGoverningType().isInterface())
 				.map(javaUnit -> javaUnit.<JavaInterfaceSource>getGoverningType())
 				.filter(j -> j.getName().endsWith("Projection"))
-				.map(j -> new EBootProjectionImpl(this,j))
+				.map(j -> new EJpaProjectionImpl(this,j))
 				.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
 	}
@@ -171,14 +171,14 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 	 * @see br.xtool.core.representation.EBootProject#getRepositories()
 	 */
 	@Override
-	public SortedSet<EBootRepository> getRepositories() {
+	public SortedSet<EJpaRepository> getRepositories() {
 		// @formatter:off
 		return this.getJavaUnits()
 			.parallelStream()
 			.filter(javaUnit -> javaUnit.getGoverningType().isInterface())
 			.map(javaUnit -> javaUnit.<JavaInterfaceSource>getGoverningType())
 			.filter(j -> j.getAnnotations().stream().anyMatch(ann -> ann.getName().equals("Repository")))
-			.map(j -> new EBootRepositoryImpl(this, j))
+			.map(j -> new EJpaRepositoryImpl(this, j))
 			.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
 	}

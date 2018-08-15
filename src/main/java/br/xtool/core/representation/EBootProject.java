@@ -82,14 +82,14 @@ public interface EBootProject extends EProject {
 	 * 
 	 * @return
 	 */
-	SortedSet<EBootProjection> getProjections();
+	SortedSet<EJpaProjection> getProjections();
 
 	/**
 	 * Retorna a lista de repositórios.
 	 * 
 	 * @return
 	 */
-	SortedSet<EBootRepository> getRepositories();
+	SortedSet<EJpaRepository> getRepositories();
 
 	/**
 	 * Retorna a lsta de classes rests.

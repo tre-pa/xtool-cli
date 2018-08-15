@@ -12,7 +12,7 @@ import br.xtool.XtoolCliApplication;
 import br.xtool.core.ConsoleLog;
 import br.xtool.core.aware.SpringBootAware;
 import br.xtool.core.representation.EBootProject;
-import br.xtool.core.representation.EBootRepository;
+import br.xtool.core.representation.EJpaRepository;
 import br.xtool.service.WorkspaceService;
 
 @Profile("in-dev")
@@ -31,7 +31,7 @@ public class InfoRepositoryCommand extends SpringBootAware {
 	private void infoAllRepositories(EBootProject bootProject) {
 		//// @formatter:off
 		int maxLenghtEntityName = bootProject.getRepositories().stream()
-				.map(EBootRepository::getName)
+				.map(EJpaRepository::getName)
 				.map(String::length)
 				.max(Comparator.naturalOrder())
 				.orElse(10);

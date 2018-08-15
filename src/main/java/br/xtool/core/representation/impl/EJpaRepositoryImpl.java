@@ -3,7 +3,7 @@ package br.xtool.core.representation.impl;
 import org.jboss.forge.roaster.model.source.JavaInterfaceSource;
 
 import br.xtool.core.representation.EBootProject;
-import br.xtool.core.representation.EBootRepository;
+import br.xtool.core.representation.EJpaRepository;
 import br.xtool.core.representation.EJavaPackage;
 import br.xtool.core.representation.EJpaEntity;
 
@@ -13,13 +13,13 @@ import br.xtool.core.representation.EJpaEntity;
  * @author jcruz
  *
  */
-public class EBootRepositoryImpl extends EJavaInterfaceImpl implements EBootRepository {
+public class EJpaRepositoryImpl extends EJavaInterfaceImpl implements EJpaRepository {
 
 	private EBootProject springBootProject;
 
 	private JavaInterfaceSource javaInterfaceSource;
 
-	public EBootRepositoryImpl(EBootProject springBootProject, JavaInterfaceSource javaInterfaceSource) {
+	public EJpaRepositoryImpl(EBootProject springBootProject, JavaInterfaceSource javaInterfaceSource) {
 		super(springBootProject, javaInterfaceSource);
 		this.springBootProject = springBootProject;
 		this.javaInterfaceSource = javaInterfaceSource;

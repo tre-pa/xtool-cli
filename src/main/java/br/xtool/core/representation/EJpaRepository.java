@@ -6,7 +6,7 @@ package br.xtool.core.representation;
  * @author jcruz
  *
  */
-public interface EBootRepository extends EJavaInterface {
+public interface EJpaRepository extends EJavaInterface {
 
 	/**
 	 * Retorna o pacote da classe
