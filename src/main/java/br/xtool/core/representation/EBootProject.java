@@ -99,6 +99,13 @@ public interface EBootProject extends EProject {
 	SortedSet<EJpaRepository> getRepositories();
 
 	/**
+	 * Restorna a lista de services.
+	 * 
+	 * @return
+	 */
+	SortedSet<EBootService> getServices();
+
+	/**
 	 * Retorna a lsta de classes rests.
 	 * 
 	 * @return

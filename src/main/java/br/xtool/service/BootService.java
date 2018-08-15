@@ -5,6 +5,7 @@ import java.util.Set;
 import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.EBootProject.BootSupport;
 import br.xtool.core.representation.EBootRest;
+import br.xtool.core.representation.EBootService;
 import br.xtool.core.representation.EJavaClass;
 import br.xtool.core.representation.EJavaInterface;
 import br.xtool.core.representation.EJavaSourceFolder;
@@ -86,6 +87,15 @@ public interface BootService {
 	 * @return
 	 */
 	EJpaSpecification createSpecification(EBootProject bootProject, EJpaEntity entity);
+
+	/**
+	 * Cria uma classe de serviço no projeto.
+	 * 
+	 * @param bootProject
+	 * @param jpaRepository
+	 * @return
+	 */
+	EBootService createService(EBootProject bootProject, EJpaRepository jpaRepository);
 
 	/**
 	 * Cria classe rest no projeto.

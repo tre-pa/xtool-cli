@@ -20,6 +20,7 @@ import br.xtool.core.representation.EBootAppProperties;
 import br.xtool.core.representation.EBootPom;
 import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.EBootRest;
+import br.xtool.core.representation.EBootService;
 import br.xtool.core.representation.EJavaClass;
 import br.xtool.core.representation.EJavaPackage;
 import br.xtool.core.representation.EJavaSourceFolder;
@@ -167,6 +168,10 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 		// @formatter:on
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EBootProject#getSpecifications()
+	 */
 	@Override
 	public SortedSet<EJpaSpecification> getSpecifications() {
 		// @formatter:off
@@ -176,6 +181,23 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 				.map(javaUnit -> javaUnit.<JavaClassSource>getGoverningType())
 				.filter(j -> j.getName().endsWith("Specification"))
 				.map(j -> new EJpaSpecificationImpl(this, j))
+				.collect(Collectors.toCollection(TreeSet::new));
+		// @formatter:on
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EBootProject#getServices()
+	 */
+	@Override
+	public SortedSet<EBootService> getServices() {
+		// @formatter:off
+		return this.getJavaUnits()
+				.parallelStream()
+				.filter(javaUnit -> javaUnit.getGoverningType().isClass())
+				.map(javaUnit -> javaUnit.<JavaClassSource>getGoverningType())
+				.filter(j -> j.getName().endsWith("Service"))
+				.map(j -> new EBootServiceImpl(this, j))
 				.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
 	}

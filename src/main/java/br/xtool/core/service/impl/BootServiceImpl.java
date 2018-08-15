@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.EBootProject.BootSupport;
 import br.xtool.core.representation.EBootRest;
+import br.xtool.core.representation.EBootService;
 import br.xtool.core.representation.EJavaClass;
 import br.xtool.core.representation.EJavaInterface;
 import br.xtool.core.representation.EJavaSourceFolder;
@@ -41,6 +42,7 @@ import br.xtool.core.representation.converter.EUmlClassConverter;
 import br.xtool.core.representation.converter.EUmlFieldConverter;
 import br.xtool.core.representation.converter.EUmlRelationshipConverter;
 import br.xtool.core.representation.impl.EBootRestImpl;
+import br.xtool.core.representation.impl.EBootServiceImpl;
 import br.xtool.core.representation.impl.EJpaProjectionImpl;
 import br.xtool.core.representation.impl.EJpaRepositoryImpl;
 import br.xtool.core.representation.impl.EJpaSpecificationImpl;
@@ -233,6 +235,33 @@ public class BootServiceImpl implements BootService {
 		EJpaSpecification specification = new EJpaSpecificationImpl(bootProject, RoasterUtil.createJavaClassSource(specificationName));
 		specification.getRoasterJavaClass().setPackage(bootProject.getRootPackage().getName().concat(".repository").concat(".specification"));
 		return specification;
+	}
+
+	@Override
+	public EBootService createService(EBootProject bootProject, EJpaRepository jpaRepository) {
+		String serviceName = jpaRepository.getTargetEntity().getName().concat("Service");
+		// @formatter:off
+		return bootProject.getServices().stream()
+				.filter(service -> service.getName().equals(serviceName))
+				.findFirst()
+				.orElseGet(() -> this.newService(bootProject, serviceName, jpaRepository));
+		// @formatter:on
+	}
+
+	private EBootService newService(EBootProject bootProject, String serviceName, EJpaRepository repository) {
+		EBootService service = new EBootServiceImpl(bootProject, RoasterUtil.createJavaClassSource(serviceName));
+		service.getRoasterJavaClass().setPackage(bootProject.getRootPackage().getName().concat(".service"));
+		service.getRoasterJavaClass().addImport(Autowired.class);
+		service.getRoasterJavaClass().addImport(repository.getQualifiedName());
+		service.getRoasterJavaClass().addAnnotation(Service.class);
+		// @formatter:off
+		service.getRoasterJavaClass().addField()
+			.setPrivate()
+			.setName(repository.getInstanceName())
+			.setType(repository)
+			.addAnnotation(Autowired.class);
+		// @formatter:on
+		return service;
 	}
 
 	@Override
