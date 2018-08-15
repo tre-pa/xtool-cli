@@ -25,12 +25,12 @@ import org.springframework.stereotype.Service;
 
 import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.EBootProject.BootSupport;
-import br.xtool.core.representation.EJpaProjection;
-import br.xtool.core.representation.EJpaRepository;
 import br.xtool.core.representation.EJavaClass;
 import br.xtool.core.representation.EJavaInterface;
 import br.xtool.core.representation.EJavaSourceFolder;
 import br.xtool.core.representation.EJpaEntity;
+import br.xtool.core.representation.EJpaProjection;
+import br.xtool.core.representation.EJpaRepository;
 import br.xtool.core.representation.EUmlClass;
 import br.xtool.core.representation.converter.EUmlClassConverter;
 import br.xtool.core.representation.converter.EUmlFieldConverter;
@@ -77,7 +77,7 @@ public class BootServiceImpl implements BootService {
 	@SneakyThrows
 	public void save(EJavaSourceFolder sourceFolder, EJavaClass javaClass) {
 		Path javaPath = sourceFolder.getPath().resolve(javaClass.getJavaPackage().getDir()).resolve(String.format("%s.java", javaClass.getName()));
-		if (Files.notExists(javaPath.getParent())) Files.createDirectories(javaPath);
+		if (Files.notExists(javaPath.getParent())) Files.createDirectories(javaPath.getParent());
 		Properties prefs = new Properties();
 		prefs.setProperty(JavaCore.COMPILER_SOURCE, CompilerOptions.VERSION_1_8);
 		prefs.setProperty(JavaCore.COMPILER_COMPLIANCE, CompilerOptions.VERSION_1_8);
@@ -103,7 +103,7 @@ public class BootServiceImpl implements BootService {
 	@SneakyThrows
 	public void save(EJavaSourceFolder sourceFolder, EJavaInterface javaInterface) {
 		Path javaPath = sourceFolder.getPath().resolve(javaInterface.getJavaPackage().getDir()).resolve(String.format("%s.java", javaInterface.getName()));
-		if (Files.notExists(javaPath.getParent())) Files.createDirectories(javaPath);
+		if (Files.notExists(javaPath.getParent())) Files.createDirectories(javaPath.getParent());
 		Properties prefs = new Properties();
 		prefs.setProperty(JavaCore.COMPILER_SOURCE, CompilerOptions.VERSION_1_8);
 		prefs.setProperty(JavaCore.COMPILER_COMPLIANCE, CompilerOptions.VERSION_1_8);
@@ -159,9 +159,12 @@ public class BootServiceImpl implements BootService {
 		// @formatter:on
 	}
 
+	@SneakyThrows
 	private EJpaRepository newRepository(EBootProject bootProject, String repositoryName, EJpaEntity entity) {
 		EJpaRepository repository = new EJpaRepositoryImpl(bootProject, RoasterUtil.createJavaInterface(repositoryName));
-		repository.getRoasterInterface().setPackage(bootProject.getRootPackage().getName().concat(".").concat("repository"));
+		//		Path repositoryPath = Paths.get(bootProject.getRootPackage().getDir().concat("/repository"));
+		//		if (Files.notExists(repositoryPath)) Files.createDirectories(repositoryPath);
+		repository.getRoasterInterface().setPackage(bootProject.getRootPackage().getName().concat(".repository"));
 		repository.getRoasterInterface().addImport(JpaRepository.class);
 		repository.getRoasterInterface().addImport(entity.getQualifiedName());
 		repository.getRoasterInterface().addInterface(JpaRepository.class.getSimpleName().concat("<").concat(entity.getName()).concat(",").concat("Long").concat(">"));
@@ -184,9 +187,12 @@ public class BootServiceImpl implements BootService {
 		// @formatter:on
 	}
 
+	@SneakyThrows
 	private EJpaProjection newProjection(EBootProject bootProject, String projectionName, EJpaEntity entity) {
 		EJpaProjection projection = new EJpaProjectionImpl(bootProject, RoasterUtil.createJavaInterface(projectionName));
-		projection.getRoasterInterface().setPackage(bootProject.getRootPackage().getName().concat(".").concat("repository").concat(".").concat("projection"));
+		//		Path projectionPath = Paths.get(bootProject.getRootPackage().getDir().concat("/repository").concat("/projection"));
+		//		if (Files.notExists(projectionPath)) Files.createDirectories(projectionPath);
+		projection.getRoasterInterface().setPackage(bootProject.getRootPackage().getName().concat(".repository").concat(".projection"));
 		// @formatter:off
 		entity.getJavaFields().stream()
 			.filter(javaField -> !javaField.getRoasterField().isStatic())
