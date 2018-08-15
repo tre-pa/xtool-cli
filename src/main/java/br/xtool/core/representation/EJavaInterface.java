@@ -13,6 +13,16 @@ import org.jboss.forge.roaster.model.source.JavaInterfaceSource;
  */
 public interface EJavaInterface extends JavaType<JavaInterfaceSource>, Comparable<EJavaInterface> {
 
+	/**
+	 * 
+	 * @return
+	 */
+	String getInstanceName();
+
+	/**
+	 * 
+	 * @return
+	 */
 	EBootProject getProject();
 
 	/**

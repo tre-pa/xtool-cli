@@ -4,6 +4,7 @@ import java.util.Set;
 
 import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.EBootProject.BootSupport;
+import br.xtool.core.representation.EBootRest;
 import br.xtool.core.representation.EJavaClass;
 import br.xtool.core.representation.EJavaInterface;
 import br.xtool.core.representation.EJavaSourceFolder;
@@ -85,5 +86,14 @@ public interface BootService {
 	 * @return
 	 */
 	EJpaSpecification createSpecification(EBootProject bootProject, EJpaEntity entity);
+
+	/**
+	 * Cria classe rest no projeto.
+	 * 
+	 * @param bootProject
+	 * @param jpaRepository
+	 * @return
+	 */
+	EBootRest createRest(EBootProject bootProject, EJpaRepository jpaRepository);
 
 }

@@ -16,7 +16,7 @@ import br.xtool.service.WorkspaceService;
 import br.xtool.core.representation.EBootProject;
 
 @Component
-public class EJavaEntityValueProvider extends ValueProviderSupport {
+public class EJpaEntityValueProvider extends ValueProviderSupport {
 
 	@Autowired
 	private WorkspaceService workspaceService;

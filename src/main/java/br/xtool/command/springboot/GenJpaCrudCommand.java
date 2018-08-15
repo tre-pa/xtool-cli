@@ -11,7 +11,7 @@ import org.springframework.shell.standard.ShellOption;
 
 import br.xtool.XtoolCliApplication;
 import br.xtool.core.aware.SpringBootAware;
-import br.xtool.core.provider.EJavaEntityValueProvider;
+import br.xtool.core.provider.EJpaEntityValueProvider;
 import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.impl.EJpaEntityImpl;
 import br.xtool.core.util.Names;
@@ -36,7 +36,7 @@ public class GenJpaCrudCommand extends SpringBootAware {
 	private WorkspaceService workspaceService;
 
 	@ShellMethod(key = "gen:crud", value = "Gera as classes de CRUD (Repository, Service e Rest) para entidade JPA", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
-	public void run(@ShellOption(help = "Entidade JPA", valueProvider = EJavaEntityValueProvider.class) EJpaEntityImpl entity) {
+	public void run(@ShellOption(help = "Entidade JPA", valueProvider = EJpaEntityValueProvider.class) EJpaEntityImpl entity) {
 
 		EBootProject bootProject = this.workspaceService.getWorkingProject(EBootProject.class);
 

@@ -209,7 +209,7 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 			.filter(javaUnit -> javaUnit.getGoverningType().isClass())
 			.map(javaUnit -> javaUnit.<JavaClassSource>getGoverningType())
 			.filter(j -> j.getAnnotations().stream().anyMatch(ann -> ann.getName().equals("RestController")))
-			.map(j -> new EJavaRestImpl(this, j))
+			.map(j -> new EBootRestImpl(this, j))
 			.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
 	}

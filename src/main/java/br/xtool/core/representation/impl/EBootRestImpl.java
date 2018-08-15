@@ -14,9 +14,9 @@ import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.EBootRest;
 import br.xtool.core.representation.EJavaMethod;
 
-public class EJavaRestImpl extends EJavaClassImpl implements EBootRest {
+public class EBootRestImpl extends EJavaClassImpl implements EBootRest {
 
-	public EJavaRestImpl(EBootProject bootProject, JavaClassSource javaClassSource) {
+	public EBootRestImpl(EBootProject bootProject, JavaClassSource javaClassSource) {
 		super(bootProject, javaClassSource);
 	}
 

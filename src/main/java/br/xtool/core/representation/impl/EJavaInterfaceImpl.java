@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.StringUtils;
 import org.jboss.forge.roaster.model.Annotation;
 import org.jboss.forge.roaster.model.JavaDoc;
 import org.jboss.forge.roaster.model.JavaType;
@@ -28,6 +29,19 @@ public class EJavaInterfaceImpl implements EJavaInterface {
 		this.javaInterfaceSource = javaInterfaceSource;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EJavaInterface#getInstanceName()
+	 */
+	@Override
+	public String getInstanceName() {
+		return StringUtils.uncapitalize(this.getName());
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EJavaInterface#getProject()
+	 */
 	@Override
 	public EBootProject getProject() {
 		return this.bootProject;

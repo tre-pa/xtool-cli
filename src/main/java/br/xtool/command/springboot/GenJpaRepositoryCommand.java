@@ -10,7 +10,7 @@ import org.springframework.shell.standard.ShellOption;
 
 import br.xtool.XtoolCliApplication;
 import br.xtool.core.aware.SpringBootAware;
-import br.xtool.core.provider.EJavaEntityValueProvider;
+import br.xtool.core.provider.EJpaEntityValueProvider;
 import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.EJpaEntity;
 import br.xtool.core.representation.EJpaProjection;
@@ -36,7 +36,7 @@ public class GenJpaRepositoryCommand extends SpringBootAware {
 	private BootService bootService;
 
 	@ShellMethod(key = "gen:repository", value = "Gera uma classe de Repository (JpaRepository) para entidade JPA em um projeto Spring Boot", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
-	public void run(@ShellOption(help = "Entidade JPA", valueProvider = EJavaEntityValueProvider.class) EJpaEntity entity) throws IOException, JDOMException {
+	public void run(@ShellOption(help = "Entidade JPA", valueProvider = EJpaEntityValueProvider.class) EJpaEntity entity) throws IOException, JDOMException {
 
 		EBootProject bootProject = this.workspaceService.getWorkingProject(EBootProject.class);
 		EJpaRepository repository = this.bootService.createRepository(bootProject, entity);

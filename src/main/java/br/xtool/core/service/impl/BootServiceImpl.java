@@ -23,9 +23,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.EBootProject.BootSupport;
+import br.xtool.core.representation.EBootRest;
 import br.xtool.core.representation.EJavaClass;
 import br.xtool.core.representation.EJavaInterface;
 import br.xtool.core.representation.EJavaSourceFolder;
@@ -37,13 +40,16 @@ import br.xtool.core.representation.EUmlClass;
 import br.xtool.core.representation.converter.EUmlClassConverter;
 import br.xtool.core.representation.converter.EUmlFieldConverter;
 import br.xtool.core.representation.converter.EUmlRelationshipConverter;
+import br.xtool.core.representation.impl.EBootRestImpl;
 import br.xtool.core.representation.impl.EJpaProjectionImpl;
 import br.xtool.core.representation.impl.EJpaRepositoryImpl;
 import br.xtool.core.representation.impl.EJpaSpecificationImpl;
+import br.xtool.core.util.Inflector;
 import br.xtool.core.util.RoasterUtil;
 import br.xtool.core.visitor.Visitor;
 import br.xtool.service.BootService;
 import lombok.SneakyThrows;
+import strman.Strman;
 
 @Service
 public class BootServiceImpl implements BootService {
@@ -227,6 +233,35 @@ public class BootServiceImpl implements BootService {
 		EJpaSpecification specification = new EJpaSpecificationImpl(bootProject, RoasterUtil.createJavaClassSource(specificationName));
 		specification.getRoasterJavaClass().setPackage(bootProject.getRootPackage().getName().concat(".repository").concat(".specification"));
 		return specification;
+	}
+
+	@Override
+	public EBootRest createRest(EBootProject bootProject, EJpaRepository jpaRepository) {
+		String restName = jpaRepository.getTargetEntity().getName().concat("Rest");
+		// @formatter:off
+		return bootProject.getRests().stream()
+				.filter(rest -> rest.getName().equals(restName))
+				.findFirst()
+				.orElseGet(() -> this.newRest(bootProject, restName, jpaRepository));
+		// @formatter:on
+	}
+
+	private EBootRest newRest(EBootProject bootProject, String restName, EJpaRepository repository) {
+		EBootRest rest = new EBootRestImpl(bootProject, RoasterUtil.createJavaClassSource(restName));
+		rest.getRoasterJavaClass().setPackage(bootProject.getRootPackage().getName().concat(".rest"));
+		rest.getRoasterJavaClass().addImport(Autowired.class);
+		rest.getRoasterJavaClass().addImport(repository.getQualifiedName());
+		rest.getRoasterJavaClass().addAnnotation(RestController.class);
+		// @formatter:off
+		rest.getRoasterJavaClass().addAnnotation(RequestMapping.class)
+			.setStringValue(String.format("api/%s",Inflector.getInstance().pluralize(Strman.toKebabCase(repository.getTargetEntity().getName()))));
+		rest.getRoasterJavaClass().addField()
+			.setPrivate()
+			.setName(repository.getInstanceName())
+			.setType(repository)
+			.addAnnotation(Autowired.class);
+		// @formatter:on
+		return rest;
 	}
 
 }
