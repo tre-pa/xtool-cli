@@ -20,6 +20,7 @@ import org.jboss.forge.roaster.Roaster;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
@@ -166,8 +167,10 @@ public class BootServiceImpl implements BootService {
 		//		if (Files.notExists(repositoryPath)) Files.createDirectories(repositoryPath);
 		repository.getRoasterInterface().setPackage(bootProject.getRootPackage().getName().concat(".repository"));
 		repository.getRoasterInterface().addImport(JpaRepository.class);
+		repository.getRoasterInterface().addImport(JpaSpecificationExecutor.class);
 		repository.getRoasterInterface().addImport(entity.getQualifiedName());
 		repository.getRoasterInterface().addInterface(JpaRepository.class.getSimpleName().concat("<").concat(entity.getName()).concat(",").concat("Long").concat(">"));
+		repository.getRoasterInterface().addInterface(JpaSpecificationExecutor.class.getSimpleName().concat("<").concat(entity.getName()).concat(">"));
 		repository.getRoasterInterface().addAnnotation(Repository.class);
 		return repository;
 	}
