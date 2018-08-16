@@ -10,7 +10,9 @@ import java.nio.file.Path;
 import java.util.Collection;
 import java.util.Properties;
 import java.util.Set;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.apache.commons.lang3.StringUtils;
 import org.eclipse.jdt.core.JavaCore;
@@ -152,6 +154,10 @@ public class BootProjectServiceImpl implements BootProjectService {
 	//		this.save(javaInterface.getProject().getMainSourceFolder(), javaInterface);
 	//	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.service.BootProjectService#save(br.xtool.core.representation.EJavaType)
+	 */
 	@SneakyThrows
 	@Override
 	public void save(EJavaType<?> javaType) {
@@ -171,6 +177,15 @@ public class BootProjectServiceImpl implements BootProjectService {
 			write.flush();
 			javaType.getProject().refresh();
 		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.service.BootProjectService#save(br.xtool.core.representation.EJavaType[])
+	 */
+	@Override
+	public void save(EJavaType<?>... javaTypes) {
+		Stream.of(javaTypes).forEach(this::save);
 	}
 
 	/*
@@ -209,6 +224,16 @@ public class BootProjectServiceImpl implements BootProjectService {
 				.findFirst()
 				.orElseGet(() -> this.newRepository(bootProject, repositoryName, entity));
 		// @formatter:on
+	}
+
+	/**
+	 * 
+	 */
+	@Override
+	public void createRepository(EBootProject bootProject, EJpaEntity entity, Consumer<EJpaRepository> consumer) {
+		EJpaRepository repository = this.createRepository(bootProject, entity);
+		consumer.accept(repository);
+		this.save(repository);
 	}
 
 	private EJpaRepository newRepository(EBootProject bootProject, String repositoryName, EJpaEntity entity) {

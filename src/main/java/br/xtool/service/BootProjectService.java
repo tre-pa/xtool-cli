@@ -1,6 +1,7 @@
 package br.xtool.service;
 
 import java.util.Set;
+import java.util.function.Consumer;
 
 import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.EBootProject.BootSupport;
@@ -66,6 +67,12 @@ public interface BootProjectService {
 	void save(EJavaType<?> javaType);
 
 	/**
+	 * 
+	 * @param javaTypes
+	 */
+	void save(EJavaType<?>... javaTypes);
+
+	/**
 	 * Converte o diagrama de classe UML para as classes correspondentes.
 	 * 
 	 * @param bootProject
@@ -81,6 +88,14 @@ public interface BootProjectService {
 	 * @return
 	 */
 	EJpaRepository createRepository(EBootProject bootProject, EJpaEntity entity);
+
+	/**
+	 * 
+	 * @param bootProject
+	 * @param entity
+	 * @param consumer
+	 */
+	void createRepository(EBootProject bootProject, EJpaEntity entity, Consumer<EJpaRepository> consumer);
 
 	/**
 	 * Cria a interface de repositório no projeto.
