@@ -31,8 +31,8 @@ import br.xtool.core.representation.EBootProject.BootSupport;
 import br.xtool.core.representation.EBootRest;
 import br.xtool.core.representation.EBootService;
 import br.xtool.core.representation.EJavaClass;
-import br.xtool.core.representation.EJavaInterface;
 import br.xtool.core.representation.EJavaSourceFolder;
+import br.xtool.core.representation.EJavaType;
 import br.xtool.core.representation.EJpaEntity;
 import br.xtool.core.representation.EJpaProjection;
 import br.xtool.core.representation.EJpaRepository;
@@ -80,11 +80,11 @@ public class BootProjectServiceImpl implements BootProjectService {
 		return this.applicationContext.getBean(supportClass).has(bootProject);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see br.xtool.service.BootService#save(br.xtool.core.representation.EJavaSourceFolder, br.xtool.core.representation.EJavaClass)
-	 */
-	@Override
+	//	/*
+	//	 * (non-Javadoc)
+	//	 * @see br.xtool.service.BootService#save(br.xtool.core.representation.EJavaSourceFolder, br.xtool.core.representation.EJavaClass)
+	//	 */
+	//	//	@Override
 	@SneakyThrows
 	public void save(EJavaSourceFolder sourceFolder, EJavaClass javaClass) {
 		Path javaPath = sourceFolder.getPath().resolve(javaClass.getJavaPackage().getDir()).resolve(String.format("%s.java", javaClass.getName()));
@@ -106,15 +106,56 @@ public class BootProjectServiceImpl implements BootProjectService {
 			sourceFolder.getBootProject().refresh();
 		}
 	}
+	//
+	//	/*
+	//	 * (non-Javadoc)
+	//	 * @see br.xtool.service.BootProjectService#save(br.xtool.core.representation.EJavaClass)
+	//	 */
+	//	//	@Override
+	//	public void save(EJavaClass javaClass) {
+	//		this.save(javaClass.getProject().getMainSourceFolder(), javaClass);
+	//	}
+	//
+	//	/*
+	//	 * (non-Javadoc)
+	//	 * @see br.xtool.service.BootService#save(br.xtool.core.representation.EJavaSourceFolder, br.xtool.core.representation.EJavaInterface)
+	//	 */
+	//	//	@Override
+	//	@SneakyThrows
+	//	public void save(EJavaSourceFolder sourceFolder, EJavaInterface javaInterface) {
+	//		Path javaPath = sourceFolder.getPath().resolve(javaInterface.getJavaPackage().getDir()).resolve(String.format("%s.java", javaInterface.getName()));
+	//		if (Files.notExists(javaPath.getParent())) Files.createDirectories(javaPath.getParent());
+	//		Properties prefs = new Properties();
+	//		prefs.setProperty(JavaCore.COMPILER_SOURCE, CompilerOptions.VERSION_1_8);
+	//		prefs.setProperty(JavaCore.COMPILER_COMPLIANCE, CompilerOptions.VERSION_1_8);
+	//		prefs.setProperty(JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM, CompilerOptions.VERSION_1_8);
+	//		prefs.setProperty(DefaultCodeFormatterConstants.FORMATTER_LINE_SPLIT, "120");
+	//		prefs.setProperty(DefaultCodeFormatterConstants.FORMATTER_BLANK_LINES_BEFORE_FIELD, "1");
+	//		prefs.setProperty(DefaultCodeFormatterConstants.FORMATTER_BLANK_LINES_AFTER_IMPORTS, "1");
+	//		prefs.setProperty(DefaultCodeFormatterConstants.FORMATTER_BLANK_LINES_AFTER_PACKAGE, "1");
+	//
+	//		//		prefs.setProperty(DefaultCodeFormatterConstants., "TRUE");
+	//		try (BufferedWriter write = Files.newBufferedWriter(javaPath)) {
+	//			String formatedJavaClassSource = Roaster.format(prefs, javaInterface.getRoasterInterface().toUnformattedString());
+	//			write.write(formatedJavaClassSource);
+	//			write.flush();
+	//			sourceFolder.getBootProject().refresh();
+	//		}
+	//	}
+	//
+	//	/*
+	//	 * (non-Javadoc)
+	//	 * @see br.xtool.service.BootProjectService#save(br.xtool.core.representation.EJavaInterface)
+	//	 */
+	//	//	@Override
+	//	public void save(EJavaInterface javaInterface) {
+	//		this.save(javaInterface.getProject().getMainSourceFolder(), javaInterface);
+	//	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see br.xtool.service.BootService#save(br.xtool.core.representation.EJavaSourceFolder, br.xtool.core.representation.EJavaInterface)
-	 */
-	@Override
 	@SneakyThrows
-	public void save(EJavaSourceFolder sourceFolder, EJavaInterface javaInterface) {
-		Path javaPath = sourceFolder.getPath().resolve(javaInterface.getJavaPackage().getDir()).resolve(String.format("%s.java", javaInterface.getName()));
+	@Override
+	public void save(EJavaType<?> javaType) {
+		Path javaPath = javaType.getProject().getMainSourceFolder().getPath().resolve(javaType.getJavaPackage().getDir()).resolve(String.format("%s.java", javaType.getName()));
 		if (Files.notExists(javaPath.getParent())) Files.createDirectories(javaPath.getParent());
 		Properties prefs = new Properties();
 		prefs.setProperty(JavaCore.COMPILER_SOURCE, CompilerOptions.VERSION_1_8);
@@ -124,13 +165,11 @@ public class BootProjectServiceImpl implements BootProjectService {
 		prefs.setProperty(DefaultCodeFormatterConstants.FORMATTER_BLANK_LINES_BEFORE_FIELD, "1");
 		prefs.setProperty(DefaultCodeFormatterConstants.FORMATTER_BLANK_LINES_AFTER_IMPORTS, "1");
 		prefs.setProperty(DefaultCodeFormatterConstants.FORMATTER_BLANK_LINES_AFTER_PACKAGE, "1");
-
-		//		prefs.setProperty(DefaultCodeFormatterConstants., "TRUE");
 		try (BufferedWriter write = Files.newBufferedWriter(javaPath)) {
-			String formatedJavaClassSource = Roaster.format(prefs, javaInterface.getRoasterInterface().toUnformattedString());
+			String formatedJavaClassSource = Roaster.format(prefs, javaType.toUnformattedString());
 			write.write(formatedJavaClassSource);
 			write.flush();
-			sourceFolder.getBootProject().refresh();
+			javaType.getProject().refresh();
 		}
 	}
 

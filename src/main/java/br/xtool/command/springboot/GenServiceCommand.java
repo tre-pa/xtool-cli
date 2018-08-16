@@ -32,7 +32,7 @@ public class GenServiceCommand extends SpringBootAware {
 		EBootProject bootProject = this.workspaceService.getWorkingProject(EBootProject.class);
 
 		EBootService service = this.bootProjectService.createService(bootProject, repository);
-		this.bootProjectService.save(bootProject.getMainSourceFolder(), service);
+		this.bootProjectService.save(service);
 
 	}
 

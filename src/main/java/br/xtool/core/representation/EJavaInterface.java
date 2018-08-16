@@ -2,7 +2,6 @@ package br.xtool.core.representation;
 
 import java.util.Collection;
 
-import org.jboss.forge.roaster.model.JavaType;
 import org.jboss.forge.roaster.model.source.JavaInterfaceSource;
 
 /**
@@ -11,7 +10,7 @@ import org.jboss.forge.roaster.model.source.JavaInterfaceSource;
  * @author jcruz
  *
  */
-public interface EJavaInterface extends JavaType<JavaInterfaceSource>, Comparable<EJavaInterface> {
+public interface EJavaInterface extends EJavaType<JavaInterfaceSource>, Comparable<EJavaInterface> {
 
 	/**
 	 * 
@@ -20,24 +19,11 @@ public interface EJavaInterface extends JavaType<JavaInterfaceSource>, Comparabl
 	String getInstanceName();
 
 	/**
-	 * 
-	 * @return
-	 */
-	EBootProject getProject();
-
-	/**
 	 * Retorna a interface roaster.
 	 * 
 	 * @return
 	 */
 	JavaInterfaceSource getRoasterInterface();
-
-	/**
-	 * Retorna o package da classe.
-	 * 
-	 * @return
-	 */
-	EJavaPackage getJavaPackage();
 
 	/**
 	 * Retorna os métodos da interface.

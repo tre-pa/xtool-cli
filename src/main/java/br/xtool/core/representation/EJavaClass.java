@@ -5,7 +5,6 @@ import java.nio.file.Path;
 import java.util.Collection;
 import java.util.SortedSet;
 
-import org.jboss.forge.roaster.model.JavaType;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 
 /**
@@ -14,9 +13,7 @@ import org.jboss.forge.roaster.model.source.JavaClassSource;
  * @author jcruz
  *
  */
-public interface EJavaClass extends Comparable<EJavaClass>, JavaType<JavaClassSource> {
-
-	EBootProject getProject();
+public interface EJavaClass extends Comparable<EJavaClass>, EJavaType<JavaClassSource> {
 
 	/**
 	 * Retorna o nome da classe.
@@ -33,13 +30,6 @@ public interface EJavaClass extends Comparable<EJavaClass>, JavaType<JavaClassSo
 	 */
 	@Override
 	String getQualifiedName();
-
-	/**
-	 * Retorna o package da classe.
-	 * 
-	 * @return
-	 */
-	EJavaPackage getJavaPackage();
 
 	/**
 	 * 

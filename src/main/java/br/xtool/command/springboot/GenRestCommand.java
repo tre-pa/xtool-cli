@@ -33,7 +33,7 @@ public class GenRestCommand extends SpringBootAware {
 		EBootProject bootProject = this.workspaceService.getWorkingProject(EBootProject.class);
 
 		EBootRest rest = this.bootProjectService.createRest(bootProject, repository);
-		this.bootProjectService.save(bootProject.getMainSourceFolder(), rest);
+		this.bootProjectService.save(rest);
 
 	}
 }

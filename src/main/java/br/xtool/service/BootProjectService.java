@@ -6,9 +6,7 @@ import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.EBootProject.BootSupport;
 import br.xtool.core.representation.EBootRest;
 import br.xtool.core.representation.EBootService;
-import br.xtool.core.representation.EJavaClass;
-import br.xtool.core.representation.EJavaInterface;
-import br.xtool.core.representation.EJavaSourceFolder;
+import br.xtool.core.representation.EJavaType;
 import br.xtool.core.representation.EJpaEntity;
 import br.xtool.core.representation.EJpaProjection;
 import br.xtool.core.representation.EJpaRepository;
@@ -40,19 +38,32 @@ public interface BootProjectService {
 	 */
 	<T extends BootSupport> boolean hasSupport(EBootProject bootProject, Class<T> supportClass);
 
-	/**
-	 * 
-	 * @param sourceFolder
-	 * @param javaClass
-	 */
-	void save(EJavaSourceFolder sourceFolder, EJavaClass javaClass);
-
-	/**
-	 * 
-	 * @param sourceFolder
-	 * @param javaInterface
-	 */
-	void save(EJavaSourceFolder sourceFolder, EJavaInterface javaInterface);
+	//	/**
+	//	 * 
+	//	 * @param sourceFolder
+	//	 * @param javaClass
+	//	 */
+	//	void save(EJavaSourceFolder sourceFolder, EJavaClass javaClass);
+	//
+	//	/**
+	//	 * 
+	//	 * @param javaClass
+	//	 */
+	//	void save(EJavaClass javaClass);
+	//
+	//	/**
+	//	 * 
+	//	 * @param sourceFolder
+	//	 * @param javaInterface
+	//	 */
+	//	void save(EJavaSourceFolder sourceFolder, EJavaInterface javaInterface);
+	//
+	//	/**
+	//	 * 
+	//	 * @param javaInterface
+	//	 */
+	//	void save(EJavaInterface javaInterface);
+	void save(EJavaType<?> javaType);
 
 	/**
 	 * Converte o diagrama de classe UML para as classes correspondentes.

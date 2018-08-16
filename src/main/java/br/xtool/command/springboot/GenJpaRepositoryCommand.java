@@ -40,13 +40,13 @@ public class GenJpaRepositoryCommand extends SpringBootAware {
 
 		EBootProject bootProject = this.workspaceService.getWorkingProject(EBootProject.class);
 		EJpaRepository repository = this.bootProjectService.createRepository(bootProject, entity);
-		this.bootProjectService.save(bootProject.getMainSourceFolder(), repository);
+		this.bootProjectService.save(repository);
 
 		EJpaProjection projection = this.bootProjectService.createProjection(bootProject, entity);
-		this.bootProjectService.save(bootProject.getMainSourceFolder(), projection);
+		this.bootProjectService.save(projection);
 
 		EJpaSpecification specification = this.bootProjectService.createSpecification(bootProject, entity);
-		this.bootProjectService.save(bootProject.getMainSourceFolder(), specification);
+		this.bootProjectService.save(specification);
 
 	}
 }
