@@ -110,9 +110,25 @@ public interface BootProjectService {
 	 * 
 	 * @param bootProject
 	 * @param entity
+	 * @param consumer
+	 */
+	void createProjection(EBootProject bootProject, EJpaEntity entity, Consumer<EJpaProjection> consumer);
+
+	/**
+	 * 
+	 * @param bootProject
+	 * @param entity
 	 * @return
 	 */
 	EJpaSpecification createSpecification(EBootProject bootProject, EJpaEntity entity);
+
+	/**
+	 * 
+	 * @param bootProject
+	 * @param entity
+	 * @param consumer
+	 */
+	void createSpecification(EBootProject bootProject, EJpaEntity entity, Consumer<EJpaSpecification> consumer);
 
 	/**
 	 * Cria uma classe de serviço no projeto.
@@ -124,6 +140,14 @@ public interface BootProjectService {
 	EBootService createService(EBootProject bootProject, EJpaRepository jpaRepository);
 
 	/**
+	 * 
+	 * @param bootProject
+	 * @param jpaRepository
+	 * @param consumer
+	 */
+	void createService(EBootProject bootProject, EJpaRepository jpaRepository, Consumer<EBootService> consumer);
+
+	/**
 	 * Cria classe rest no projeto.
 	 * 
 	 * @param bootProject
@@ -131,5 +155,13 @@ public interface BootProjectService {
 	 * @return
 	 */
 	EBootRest createRest(EBootProject bootProject, EJpaRepository jpaRepository);
+
+	/**
+	 * 
+	 * @param bootProject
+	 * @param jpaRepository
+	 * @param consumer
+	 */
+	void createRest(EBootProject bootProject, EJpaRepository jpaRepository, Consumer<EBootRest> consumer);
 
 }

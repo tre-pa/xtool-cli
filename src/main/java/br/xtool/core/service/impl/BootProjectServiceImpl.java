@@ -263,6 +263,17 @@ public class BootProjectServiceImpl implements BootProjectService {
 		// @formatter:on
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.service.BootProjectService#createProjection(br.xtool.core.representation.EBootProject, br.xtool.core.representation.EJpaEntity, java.util.function.Consumer)
+	 */
+	@Override
+	public void createProjection(EBootProject bootProject, EJpaEntity entity, Consumer<EJpaProjection> consumer) {
+		EJpaProjection projection = this.createProjection(bootProject, entity);
+		consumer.accept(projection);
+		this.save(projection);
+	}
+
 	private EJpaProjection newProjection(EBootProject bootProject, String projectionName, EJpaEntity entity) {
 		EJpaProjection projection = new EJpaProjectionImpl(bootProject, RoasterUtil.createJavaInterface(projectionName));
 		projection.getRoasterInterface().setPackage(bootProject.getRootPackage().getName().concat(".repository").concat(".projection"));
@@ -295,12 +306,27 @@ public class BootProjectServiceImpl implements BootProjectService {
 		// @formatter:on
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.service.BootProjectService#createSpecification(br.xtool.core.representation.EBootProject, br.xtool.core.representation.EJpaEntity, java.util.function.Consumer)
+	 */
+	@Override
+	public void createSpecification(EBootProject bootProject, EJpaEntity entity, Consumer<EJpaSpecification> consumer) {
+		EJpaSpecification specification = this.createSpecification(bootProject, entity);
+		consumer.accept(specification);
+		this.save(specification);
+	}
+
 	private EJpaSpecification newSpecification(EBootProject bootProject, String specificationName, EJpaEntity entity) {
 		EJpaSpecification specification = new EJpaSpecificationImpl(bootProject, RoasterUtil.createJavaClassSource(specificationName));
 		specification.getRoasterJavaClass().setPackage(bootProject.getRootPackage().getName().concat(".repository").concat(".specification"));
 		return specification;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.service.BootProjectService#createService(br.xtool.core.representation.EBootProject, br.xtool.core.representation.EJpaRepository)
+	 */
 	@Override
 	public EBootService createService(EBootProject bootProject, EJpaRepository jpaRepository) {
 		String serviceName = jpaRepository.getTargetEntity().getName().concat("Service");
@@ -310,6 +336,17 @@ public class BootProjectServiceImpl implements BootProjectService {
 				.findFirst()
 				.orElseGet(() -> this.newService(bootProject, serviceName, jpaRepository));
 		// @formatter:on
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.service.BootProjectService#createService(br.xtool.core.representation.EBootProject, br.xtool.core.representation.EJpaRepository, java.util.function.Consumer)
+	 */
+	@Override
+	public void createService(EBootProject bootProject, EJpaRepository jpaRepository, Consumer<EBootService> consumer) {
+		EBootService service = this.createService(bootProject, jpaRepository);
+		consumer.accept(service);
+		this.save(service);
 	}
 
 	private EBootService newService(EBootProject bootProject, String serviceName, EJpaRepository repository) {
@@ -328,6 +365,10 @@ public class BootProjectServiceImpl implements BootProjectService {
 		return service;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.service.BootProjectService#createRest(br.xtool.core.representation.EBootProject, br.xtool.core.representation.EJpaRepository)
+	 */
 	@Override
 	public EBootRest createRest(EBootProject bootProject, EJpaRepository jpaRepository) {
 		String restName = jpaRepository.getTargetEntity().getName().concat("Rest");
@@ -337,6 +378,17 @@ public class BootProjectServiceImpl implements BootProjectService {
 				.findFirst()
 				.orElseGet(() -> this.newRest(bootProject, restName, jpaRepository));
 		// @formatter:on
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.service.BootProjectService#createRest(br.xtool.core.representation.EBootProject, br.xtool.core.representation.EJpaRepository, java.util.function.Consumer)
+	 */
+	@Override
+	public void createRest(EBootProject bootProject, EJpaRepository jpaRepository, Consumer<EBootRest> consumer) {
+		EBootRest rest = this.createRest(bootProject, jpaRepository);
+		consumer.accept(rest);
+		this.save(rest);
 	}
 
 	private EBootRest newRest(EBootProject bootProject, String restName, EJpaRepository repository) {
