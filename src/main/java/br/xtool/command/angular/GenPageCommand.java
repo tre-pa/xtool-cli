@@ -12,7 +12,7 @@ import br.xtool.core.provider.ENgModuleValueProvider;
 import br.xtool.core.representation.ENgModule;
 import br.xtool.core.representation.ENgPage;
 import br.xtool.core.representation.ENgProject;
-import br.xtool.service.NgService;
+import br.xtool.service.NgProjectService;
 import br.xtool.service.WorkspaceService;
 
 @Profile("in-dev")
@@ -20,7 +20,7 @@ import br.xtool.service.WorkspaceService;
 public class GenPageCommand extends AngularAware {
 
 	@Autowired
-	private NgService ngService;
+	private NgProjectService ngService;
 
 	@Autowired
 	private WorkspaceService workspaceService;

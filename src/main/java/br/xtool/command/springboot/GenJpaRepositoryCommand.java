@@ -16,7 +16,7 @@ import br.xtool.core.representation.EJpaEntity;
 import br.xtool.core.representation.EJpaProjection;
 import br.xtool.core.representation.EJpaRepository;
 import br.xtool.core.representation.EJpaSpecification;
-import br.xtool.service.BootService;
+import br.xtool.service.BootProjectService;
 import br.xtool.service.WorkspaceService;
 
 /**
@@ -33,20 +33,20 @@ public class GenJpaRepositoryCommand extends SpringBootAware {
 	private WorkspaceService workspaceService;
 
 	@Autowired
-	private BootService bootService;
+	private BootProjectService bootProjectService;
 
 	@ShellMethod(key = "gen:repository", value = "Gera uma classe de Repository (JpaRepository) para entidade JPA em um projeto Spring Boot", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
 	public void run(@ShellOption(help = "Entidade JPA", valueProvider = EJpaEntityValueProvider.class) EJpaEntity entity) throws IOException, JDOMException {
 
 		EBootProject bootProject = this.workspaceService.getWorkingProject(EBootProject.class);
-		EJpaRepository repository = this.bootService.createRepository(bootProject, entity);
-		this.bootService.save(bootProject.getMainSourceFolder(), repository);
+		EJpaRepository repository = this.bootProjectService.createRepository(bootProject, entity);
+		this.bootProjectService.save(bootProject.getMainSourceFolder(), repository);
 
-		EJpaProjection projection = this.bootService.createProjection(bootProject, entity);
-		this.bootService.save(bootProject.getMainSourceFolder(), projection);
+		EJpaProjection projection = this.bootProjectService.createProjection(bootProject, entity);
+		this.bootProjectService.save(bootProject.getMainSourceFolder(), projection);
 
-		EJpaSpecification specification = this.bootService.createSpecification(bootProject, entity);
-		this.bootService.save(bootProject.getMainSourceFolder(), specification);
+		EJpaSpecification specification = this.bootProjectService.createSpecification(bootProject, entity);
+		this.bootProjectService.save(bootProject.getMainSourceFolder(), specification);
 
 	}
 }

@@ -14,7 +14,7 @@ import lombok.NonNull;
  * @author jcruz
  *
  */
-public interface NgService {
+public interface NgProjectService {
 
 	/**
 	 * 

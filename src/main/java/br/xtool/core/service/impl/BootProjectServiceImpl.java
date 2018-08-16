@@ -49,12 +49,12 @@ import br.xtool.core.representation.impl.EJpaSpecificationImpl;
 import br.xtool.core.util.Inflector;
 import br.xtool.core.util.RoasterUtil;
 import br.xtool.core.visitor.Visitor;
-import br.xtool.service.BootService;
+import br.xtool.service.BootProjectService;
 import lombok.SneakyThrows;
 import strman.Strman;
 
 @Service
-public class BootServiceImpl implements BootService {
+public class BootProjectServiceImpl implements BootProjectService {
 
 	@Autowired
 	private ApplicationContext applicationContext;

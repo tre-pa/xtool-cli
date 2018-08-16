@@ -16,7 +16,7 @@ import br.xtool.core.aware.AngularAware;
 import br.xtool.core.provider.ENgModuleValueProvider;
 import br.xtool.core.representation.ENgModule;
 import br.xtool.service.FileService;
-import br.xtool.service.NgService;
+import br.xtool.service.NgProjectService;
 
 @Profile("in-dev")
 @ShellComponent
@@ -26,7 +26,7 @@ public class GenComponentCommand extends AngularAware {
 	private FileService fs;
 
 	@Autowired
-	private NgService ngService;
+	private NgProjectService ngService;
 
 	@ShellMethod(key = "gen:ng-component", value = "Gera uma classe component em um projeto Angular", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
 	// @formatter:off

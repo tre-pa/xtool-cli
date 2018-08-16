@@ -19,12 +19,12 @@ import br.xtool.core.representation.ENgProject;
 import br.xtool.core.representation.ENgService;
 import br.xtool.core.representation.impl.ENgPageImpl;
 import br.xtool.service.FileService;
-import br.xtool.service.NgService;
+import br.xtool.service.NgProjectService;
 import br.xtool.service.ShellService;
 import lombok.NonNull;
 
 @Service
-public class NgServiceImpl implements NgService {
+public class NgProjectServiceImpl implements NgProjectService {
 
 	@Autowired
 	private ShellService shellService;

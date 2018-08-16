@@ -17,7 +17,7 @@ import br.xtool.core.visitor.impl.JacksonVisitor;
 import br.xtool.core.visitor.impl.JavaxValidationVisitor;
 import br.xtool.core.visitor.impl.JpaVisitor;
 import br.xtool.core.visitor.impl.LombokVisitor;
-import br.xtool.service.BootService;
+import br.xtool.service.BootProjectService;
 import br.xtool.service.WorkspaceService;
 
 @ShellComponent
@@ -27,7 +27,7 @@ public class MapClassesCommand extends SpringBootAware {
 	private WorkspaceService workspaceService;
 
 	@Autowired
-	private BootService bootService;
+	private BootProjectService bootProjectService;
 
 	@Autowired
 	private ApplicationContext applicationContext;
@@ -51,7 +51,7 @@ public class MapClassesCommand extends SpringBootAware {
 		if (!noJpa) visitors.add(this.applicationContext.getBean(JpaVisitor.class));
 		if (!noJackson) visitors.add(this.applicationContext.getBean(JacksonVisitor.class));
 
-		this.bootService.convertUmlClassDiagramToJavaClasses(bootProject, visitors);
+		this.bootProjectService.convertUmlClassDiagramToJavaClasses(bootProject, visitors);
 	}
 
 }

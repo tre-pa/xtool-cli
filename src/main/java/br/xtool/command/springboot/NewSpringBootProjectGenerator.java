@@ -13,7 +13,7 @@ import br.xtool.XtoolCliApplication;
 import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.EProject;
 import br.xtool.core.support.BootProjectJpaSupport;
-import br.xtool.service.BootService;
+import br.xtool.service.BootProjectService;
 import br.xtool.service.WorkspaceService;
 
 /**
@@ -29,7 +29,7 @@ public class NewSpringBootProjectGenerator {
 	private WorkspaceService workspaceService;
 
 	@Autowired
-	private BootService bootService;
+	private BootProjectService bootProjectService;
 
 	@ShellMethod(key = "new:springboot", value = "Novo projeto Spring Boot 1.5.x", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
 	// @formatter:off
@@ -55,7 +55,7 @@ public class NewSpringBootProjectGenerator {
 				EProject.Version.V1, 
 				vars);
 		// @formatter:on
-		if (!noJpa) this.bootService.addSupport(bootProject, BootProjectJpaSupport.class);
+		if (!noJpa) this.bootProjectService.addSupport(bootProject, BootProjectJpaSupport.class);
 
 		this.workspaceService.setWorkingProject(bootProject);
 	}

@@ -21,7 +21,7 @@ import br.xtool.core.visitor.Visitor;
  * @author jcruz
  *
  */
-public interface BootService {
+public interface BootProjectService {
 
 	/**
 	 * Adicionar um suporte ao projeto.
