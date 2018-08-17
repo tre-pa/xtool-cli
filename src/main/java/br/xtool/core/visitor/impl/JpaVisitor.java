@@ -147,6 +147,11 @@ public class JpaVisitor implements Visitor {
 			longField.addAnnotation(Id.class);
 			longField.addGeneratedValueAnnotation(GenerationType.SEQUENCE);
 			longField.addSequenceGeneratorAnnotation();
+			// @formatter:off
+			longField.addAnnotation(Column.class)
+				.setLiteralValue("updatable", "false")
+				.setLiteralValue("nullable", "false");
+			// @formatter:on
 			return;
 		}
 		longField.addAnnotation(Column.class);
