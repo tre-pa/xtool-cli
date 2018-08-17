@@ -115,11 +115,19 @@ public class JpaVisitor implements Visitor {
 		viewClass.addAnnotation(Immutable.class);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaClass.EReadOnlyJavaClass, br.xtool.core.representation.EUmlStereotype)
+	 */
 	@Override
 	public void visit(EReadOnlyJavaClass readOnlyClass, EUmlStereotype umlStereotype) {
-
+		readOnlyClass.addAnnotation(Immutable.class);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaClass.EVersionableJavaClass, br.xtool.core.representation.EUmlStereotype)
+	 */
 	@Override
 	public void visit(EVersionableJavaClass versionableClass, EUmlStereotype umlStereotype) {
 		EJavaField javaField = versionableClass.addField("version");
