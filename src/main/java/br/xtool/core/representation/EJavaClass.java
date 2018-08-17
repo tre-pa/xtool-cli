@@ -103,4 +103,14 @@ public interface EJavaClass extends Comparable<EJavaClass>, EJavaType<JavaClassS
 
 	EJavaAnnotation<JavaClassSource> addEqualsAndHashCodeAnnotation(String... attibutes);
 
+	interface EAuditableJavaClass extends EJavaClass {}
+
+	interface ECacheableJavaClass extends EJavaClass {}
+
+	interface EIndexedJavaClass extends EJavaClass {}
+
+	interface EViewJavaClass extends EJavaClass {}
+
+	interface EReadOnlyJavaClass extends EJavaClass {}
+
 }

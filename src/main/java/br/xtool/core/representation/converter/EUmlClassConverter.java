@@ -9,7 +9,14 @@ import org.jboss.forge.roaster.model.source.JavaClassSource;
 import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.EJavaClass;
 import br.xtool.core.representation.EUmlClass;
+import br.xtool.core.representation.EUmlStereotype;
+import br.xtool.core.representation.EUmlStereotype.StereotypeType;
 import br.xtool.core.representation.impl.EJavaClassImpl;
+import br.xtool.core.representation.impl.EJavaClassImpl.EAuditableJavaClassImpl;
+import br.xtool.core.representation.impl.EJavaClassImpl.ECacheableJavaClassImpl;
+import br.xtool.core.representation.impl.EJavaClassImpl.EIndexedJavaClassImpl;
+import br.xtool.core.representation.impl.EJavaClassImpl.EReadOnlyJavaClassImpl;
+import br.xtool.core.representation.impl.EJavaClassImpl.EViewJavaClassImpl;
 import br.xtool.core.util.RoasterUtil;
 import br.xtool.core.visitor.Visitor;
 import lombok.AllArgsConstructor;
@@ -37,7 +44,19 @@ public class EUmlClassConverter implements BiFunction<EBootProject, EUmlClass, E
 				.orElseGet(() -> new EJavaClassImpl(bootProject,RoasterUtil.createJavaClassSource(umlClass.getUmlPackage().getName(),umlClass.getName())));
 		// @formatter:on
 		this.visitors.forEach(visitor -> visitor.visit(javaClass));
+		umlClass.getStereotypes().stream().forEach(stereotype -> this.visit(javaClass, stereotype));
+		//		this.visit(javaClass, umlClass.);
 		return javaClass;
+	}
+
+	private void visit(EJavaClass javaClass, EUmlStereotype stereotype) {
+		this.visitors.forEach(visitor -> {
+			if (stereotype.getStereotypeType().equals(StereotypeType.AUDITABLE)) visitor.visit(new EAuditableJavaClassImpl(javaClass), stereotype);
+			if (stereotype.getStereotypeType().equals(StereotypeType.CACHEABLE)) visitor.visit(new ECacheableJavaClassImpl(javaClass), stereotype);
+			if (stereotype.getStereotypeType().equals(StereotypeType.INDEXED)) visitor.visit(new EIndexedJavaClassImpl(javaClass), stereotype);
+			if (stereotype.getStereotypeType().equals(StereotypeType.VIEW)) visitor.visit(new EViewJavaClassImpl(javaClass), stereotype);
+			if (stereotype.getStereotypeType().equals(StereotypeType.READ_ONLY)) visitor.visit(new EReadOnlyJavaClassImpl(javaClass), stereotype);
+		});
 	}
 
 }

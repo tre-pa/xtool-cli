@@ -15,10 +15,15 @@ import javax.persistence.Transient;
 
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.Immutable;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.stereotype.Component;
 
 import br.xtool.core.representation.EJavaClass;
+import br.xtool.core.representation.EJavaClass.EAuditableJavaClass;
+import br.xtool.core.representation.EJavaClass.ECacheableJavaClass;
+import br.xtool.core.representation.EJavaClass.EIndexedJavaClass;
+import br.xtool.core.representation.EJavaClass.EViewJavaClass;
 import br.xtool.core.representation.EJavaField;
 import br.xtool.core.representation.EJavaField.EBigDecimalField;
 import br.xtool.core.representation.EJavaField.EBooleanField;
@@ -68,6 +73,42 @@ public class JpaVisitor implements Visitor {
 	@Override
 	public void visit(EJavaClass javaClass, EUmlStereotype umlStereotype) {
 
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaClass.EAuditableJavaClass, br.xtool.core.representation.EUmlStereotype)
+	 */
+	@Override
+	public void visit(EAuditableJavaClass auditableClass, EUmlStereotype umlStereotype) {
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaClass.ECacheableJavaClass, br.xtool.core.representation.EUmlStereotype)
+	 */
+	@Override
+	public void visit(ECacheableJavaClass cacheableClass, EUmlStereotype umlStereotype) {
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaClass.EIndexedJavaClass, br.xtool.core.representation.EUmlStereotype)
+	 */
+	@Override
+	public void visit(EIndexedJavaClass indexedClass, EUmlStereotype umlStereotype) {
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaClass.EViewJavaClass, br.xtool.core.representation.EUmlStereotype)
+	 */
+	@Override
+	public void visit(EViewJavaClass viewClass, EUmlStereotype umlStereotype) {
+		viewClass.addAnnotation(Immutable.class);
 	}
 
 	/*

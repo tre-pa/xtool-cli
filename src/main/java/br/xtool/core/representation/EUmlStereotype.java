@@ -11,7 +11,9 @@ public interface EUmlStereotype {
 		// @formatter:off
 		AUDITABLE("Auditable"),
 		CACHEABLE("Cacheable"),
-		INDEXED("Indexable");
+		INDEXED("Indexed"),
+		VIEW("View"),
+		READ_ONLY("ReadOnly");
 		// @formatter:on
 		String type;
 	}

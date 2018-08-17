@@ -314,4 +314,34 @@ public class EJavaClassImpl implements EJavaClass {
 		return this.getRoasterJavaClass().getVisibility();
 	}
 
+	public static class EAuditableJavaClassImpl extends EJavaClassImpl implements EAuditableJavaClass {
+		public EAuditableJavaClassImpl(EJavaClass javaClass) {
+			super(javaClass.getProject(), javaClass.getRoasterJavaClass());
+		}
+	}
+
+	public static class ECacheableJavaClassImpl extends EJavaClassImpl implements ECacheableJavaClass {
+		public ECacheableJavaClassImpl(EJavaClass javaClass) {
+			super(javaClass.getProject(), javaClass.getRoasterJavaClass());
+		}
+	}
+
+	public static class EIndexedJavaClassImpl extends EJavaClassImpl implements EIndexedJavaClass {
+		public EIndexedJavaClassImpl(EJavaClass javaClass) {
+			super(javaClass.getProject(), javaClass.getRoasterJavaClass());
+		}
+	}
+
+	public static class EViewJavaClassImpl extends EJavaClassImpl implements EViewJavaClass {
+		public EViewJavaClassImpl(EJavaClass javaClass) {
+			super(javaClass.getProject(), javaClass.getRoasterJavaClass());
+		}
+	}
+
+	public static class EReadOnlyJavaClassImpl extends EJavaClassImpl implements EReadOnlyJavaClass {
+		public EReadOnlyJavaClassImpl(EJavaClass javaClass) {
+			super(javaClass.getProject(), javaClass.getRoasterJavaClass());
+		}
+	}
+
 }

@@ -3,6 +3,10 @@ package br.xtool.core.visitor.impl;
 import org.springframework.stereotype.Component;
 
 import br.xtool.core.representation.EJavaClass;
+import br.xtool.core.representation.EJavaClass.EAuditableJavaClass;
+import br.xtool.core.representation.EJavaClass.ECacheableJavaClass;
+import br.xtool.core.representation.EJavaClass.EIndexedJavaClass;
+import br.xtool.core.representation.EJavaClass.EViewJavaClass;
 import br.xtool.core.representation.EJavaField;
 import br.xtool.core.representation.EJavaField.EBigDecimalField;
 import br.xtool.core.representation.EJavaField.EBooleanField;
@@ -48,6 +52,46 @@ public class JavaxValidationVisitor implements Visitor {
 
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaClass.EAuditableJavaClass, br.xtool.core.representation.EUmlStereotype)
+	 */
+	@Override
+	public void visit(EAuditableJavaClass auditableClass, EUmlStereotype umlStereotype) {
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaClass.ECacheableJavaClass, br.xtool.core.representation.EUmlStereotype)
+	 */
+	@Override
+	public void visit(ECacheableJavaClass cacheableClass, EUmlStereotype umlStereotype) {
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaClass.EIndexedJavaClass, br.xtool.core.representation.EUmlStereotype)
+	 */
+	@Override
+	public void visit(EIndexedJavaClass indexedClass, EUmlStereotype umlStereotype) {
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaClass.EViewJavaClass, br.xtool.core.representation.EUmlStereotype)
+	 */
+	@Override
+	public void visit(EViewJavaClass viewClass, EUmlStereotype umlStereotype) {
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField, br.xtool.core.representation.EUmlField)
+	 */
 	@Override
 	public void visit(EJavaField javaField, EUmlField umlField) {
 	}

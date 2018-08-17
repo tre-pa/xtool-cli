@@ -3,6 +3,10 @@ package br.xtool.core.visitor.impl;
 import org.springframework.stereotype.Component;
 
 import br.xtool.core.representation.EJavaClass;
+import br.xtool.core.representation.EJavaClass.EAuditableJavaClass;
+import br.xtool.core.representation.EJavaClass.ECacheableJavaClass;
+import br.xtool.core.representation.EJavaClass.EIndexedJavaClass;
+import br.xtool.core.representation.EJavaClass.EViewJavaClass;
 import br.xtool.core.representation.EJavaField;
 import br.xtool.core.representation.EJavaField.EBigDecimalField;
 import br.xtool.core.representation.EJavaField.EBooleanField;
@@ -44,6 +48,26 @@ public class LombokVisitor implements Visitor {
 
 	@Override
 	public void visit(EJavaClass javaClass, EUmlStereotype umlStereotype) {
+
+	}
+
+	@Override
+	public void visit(EAuditableJavaClass auditableClass, EUmlStereotype umlStereotype) {
+
+	}
+
+	@Override
+	public void visit(ECacheableJavaClass cacheableClass, EUmlStereotype umlStereotype) {
+
+	}
+
+	@Override
+	public void visit(EIndexedJavaClass indexedClass, EUmlStereotype umlStereotype) {
+
+	}
+
+	@Override
+	public void visit(EViewJavaClass viewClass, EUmlStereotype umlStereotype) {
 
 	}
 

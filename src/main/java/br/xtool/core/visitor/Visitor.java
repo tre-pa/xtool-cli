@@ -1,6 +1,10 @@
 package br.xtool.core.visitor;
 
 import br.xtool.core.representation.EJavaClass;
+import br.xtool.core.representation.EJavaClass.EAuditableJavaClass;
+import br.xtool.core.representation.EJavaClass.ECacheableJavaClass;
+import br.xtool.core.representation.EJavaClass.EIndexedJavaClass;
+import br.xtool.core.representation.EJavaClass.EViewJavaClass;
 import br.xtool.core.representation.EJavaField;
 import br.xtool.core.representation.EJavaField.EBigDecimalField;
 import br.xtool.core.representation.EJavaField.EBooleanField;
@@ -42,6 +46,30 @@ public interface Visitor {
 	 * @param umlStereotype
 	 */
 	void visit(EJavaClass javaClass, EUmlStereotype umlStereotype);
+
+	/**
+	 * 
+	 * @param umlStereotype
+	 */
+	void visit(EAuditableJavaClass auditableClass, EUmlStereotype umlStereotype);
+
+	/**
+	 * 
+	 * @param umlStereotype
+	 */
+	void visit(ECacheableJavaClass cacheableClass, EUmlStereotype umlStereotype);
+
+	/**
+	 * 
+	 * @param umlStereotype
+	 */
+	void visit(EIndexedJavaClass indexedClass, EUmlStereotype umlStereotype);
+
+	/**
+	 * 
+	 * @param umlStereotype
+	 */
+	void visit(EViewJavaClass viewClass, EUmlStereotype umlStereotype);
 
 	/**
 	 * 
