@@ -13,7 +13,8 @@ public interface EUmlStereotype {
 		CACHEABLE("Cacheable"),
 		INDEXED("Indexed"),
 		VIEW("View"),
-		READ_ONLY("ReadOnly");
+		READ_ONLY("ReadOnly"),
+		VERSIONABLE("Versionable");
 		// @formatter:on
 		String type;
 	}

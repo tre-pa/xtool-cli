@@ -13,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
+import javax.persistence.Version;
 
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -24,6 +25,8 @@ import br.xtool.core.representation.EJavaClass;
 import br.xtool.core.representation.EJavaClass.EAuditableJavaClass;
 import br.xtool.core.representation.EJavaClass.ECacheableJavaClass;
 import br.xtool.core.representation.EJavaClass.EIndexedJavaClass;
+import br.xtool.core.representation.EJavaClass.EReadOnlyJavaClass;
+import br.xtool.core.representation.EJavaClass.EVersionableJavaClass;
 import br.xtool.core.representation.EJavaClass.EViewJavaClass;
 import br.xtool.core.representation.EJavaField;
 import br.xtool.core.representation.EJavaField.EBigDecimalField;
@@ -110,6 +113,19 @@ public class JpaVisitor implements Visitor {
 	@Override
 	public void visit(EViewJavaClass viewClass, EUmlStereotype umlStereotype) {
 		viewClass.addAnnotation(Immutable.class);
+	}
+
+	@Override
+	public void visit(EReadOnlyJavaClass readOnlyClass, EUmlStereotype umlStereotype) {
+
+	}
+
+	@Override
+	public void visit(EVersionableJavaClass versionableClass, EUmlStereotype umlStereotype) {
+		EJavaField javaField = versionableClass.addField("version");
+		javaField.getRoasterField().setPrivate();
+		javaField.getRoasterField().setType(Long.class);
+		javaField.addAnnotation(Version.class);
 	}
 
 	/*

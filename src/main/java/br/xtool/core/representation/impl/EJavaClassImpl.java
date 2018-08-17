@@ -111,7 +111,7 @@ public class EJavaClassImpl implements EJavaClass {
 		return this.getJavaFields().stream()
 				.filter(javaField -> javaField.getName().equals(name))
 				.findAny()
-				.orElseGet(() -> new EJavaFieldImpl(this,this.javaClassSource.addField()));
+				.orElseGet(() -> new EJavaFieldImpl(this,this.javaClassSource.addField().setName(name)));
 		// @formatter:on
 	}
 
@@ -340,6 +340,12 @@ public class EJavaClassImpl implements EJavaClass {
 
 	public static class EReadOnlyJavaClassImpl extends EJavaClassImpl implements EReadOnlyJavaClass {
 		public EReadOnlyJavaClassImpl(EJavaClass javaClass) {
+			super(javaClass.getProject(), javaClass.getRoasterJavaClass());
+		}
+	}
+
+	public static class EVersionableJavaClassImpl extends EJavaClassImpl implements EVersionableJavaClass {
+		public EVersionableJavaClassImpl(EJavaClass javaClass) {
 			super(javaClass.getProject(), javaClass.getRoasterJavaClass());
 		}
 	}

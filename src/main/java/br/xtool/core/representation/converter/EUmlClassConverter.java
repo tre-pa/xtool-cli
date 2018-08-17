@@ -16,6 +16,7 @@ import br.xtool.core.representation.impl.EJavaClassImpl.EAuditableJavaClassImpl;
 import br.xtool.core.representation.impl.EJavaClassImpl.ECacheableJavaClassImpl;
 import br.xtool.core.representation.impl.EJavaClassImpl.EIndexedJavaClassImpl;
 import br.xtool.core.representation.impl.EJavaClassImpl.EReadOnlyJavaClassImpl;
+import br.xtool.core.representation.impl.EJavaClassImpl.EVersionableJavaClassImpl;
 import br.xtool.core.representation.impl.EJavaClassImpl.EViewJavaClassImpl;
 import br.xtool.core.util.RoasterUtil;
 import br.xtool.core.visitor.Visitor;
@@ -56,6 +57,7 @@ public class EUmlClassConverter implements BiFunction<EBootProject, EUmlClass, E
 			if (stereotype.getStereotypeType().equals(StereotypeType.INDEXED)) visitor.visit(new EIndexedJavaClassImpl(javaClass), stereotype);
 			if (stereotype.getStereotypeType().equals(StereotypeType.VIEW)) visitor.visit(new EViewJavaClassImpl(javaClass), stereotype);
 			if (stereotype.getStereotypeType().equals(StereotypeType.READ_ONLY)) visitor.visit(new EReadOnlyJavaClassImpl(javaClass), stereotype);
+			if (stereotype.getStereotypeType().equals(StereotypeType.VERSIONABLE)) visitor.visit(new EVersionableJavaClassImpl(javaClass), stereotype);
 		});
 	}
 

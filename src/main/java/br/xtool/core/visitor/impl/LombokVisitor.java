@@ -6,6 +6,8 @@ import br.xtool.core.representation.EJavaClass;
 import br.xtool.core.representation.EJavaClass.EAuditableJavaClass;
 import br.xtool.core.representation.EJavaClass.ECacheableJavaClass;
 import br.xtool.core.representation.EJavaClass.EIndexedJavaClass;
+import br.xtool.core.representation.EJavaClass.EReadOnlyJavaClass;
+import br.xtool.core.representation.EJavaClass.EVersionableJavaClass;
 import br.xtool.core.representation.EJavaClass.EViewJavaClass;
 import br.xtool.core.representation.EJavaField;
 import br.xtool.core.representation.EJavaField.EBigDecimalField;
@@ -69,6 +71,15 @@ public class LombokVisitor implements Visitor {
 	@Override
 	public void visit(EViewJavaClass viewClass, EUmlStereotype umlStereotype) {
 
+	}
+
+	@Override
+	public void visit(EReadOnlyJavaClass readOnlyClass, EUmlStereotype umlStereotype) {
+
+	}
+
+	@Override
+	public void visit(EVersionableJavaClass versionableClass, EUmlStereotype umlStereotype) {
 	}
 
 	@Override

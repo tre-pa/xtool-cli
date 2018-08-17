@@ -113,4 +113,6 @@ public interface EJavaClass extends Comparable<EJavaClass>, EJavaType<JavaClassS
 
 	interface EReadOnlyJavaClass extends EJavaClass {}
 
+	interface EVersionableJavaClass extends EJavaClass {}
+
 }
