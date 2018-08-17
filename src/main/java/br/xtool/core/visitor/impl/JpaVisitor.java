@@ -3,6 +3,7 @@ package br.xtool.core.visitor.impl;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -254,6 +255,7 @@ public class JpaVisitor implements Visitor {
 	@Override
 	public void visit(EOneToOneField oneToOneField, EAssociation association) {
 		val annOneToOne = oneToOneField.addAnnotation(OneToOne.class);
+		annOneToOne.setEnumValue("fetch", FetchType.LAZY);
 		if (!association.getSourceMultiplicity().isOptional()) annOneToOne.setLiteralValue("optional", "false");
 		// Bidirecional
 		if (!association.isSourceClassOwner() && association.getNavigability().isBidirectional()) {
@@ -312,6 +314,7 @@ public class JpaVisitor implements Visitor {
 	@Override
 	public void visit(EManyToOneField manyToOneField, EAssociation association) {
 		val ann = manyToOneField.addAnnotation(ManyToOne.class);
+		ann.setEnumValue("fetch", FetchType.LAZY);
 		if (!association.getSourceMultiplicity().isOptional()) ann.setLiteralValue("optional", "false");
 	}
 
@@ -337,6 +340,7 @@ public class JpaVisitor implements Visitor {
 	@Override
 	public void visit(EOneToOneField oneToOneField, EComposition composition) {
 		val annOneToOne = oneToOneField.addAnnotation(OneToOne.class);
+		annOneToOne.setEnumValue("fetch", FetchType.LAZY);
 		annOneToOne.setEnumValue("cascade", CascadeType.ALL);
 		annOneToOne.setLiteralValue("orphanRemoval", "true");
 	}
