@@ -13,6 +13,7 @@ import org.apache.commons.configuration2.ex.ConfigurationException;
 
 import br.xtool.core.ConsoleLog;
 import br.xtool.core.representation.EBootAppProperties;
+import br.xtool.core.representation.EBootProject;
 import lombok.SneakyThrows;
 import strman.Strman;
 
@@ -26,9 +27,12 @@ public class EBootAppPropertiesImpl implements EBootAppProperties {
 
 	private FileBasedConfiguration configuration;
 
-	private EBootAppPropertiesImpl(Path path) throws ConfigurationException {
+	private EBootProject bootProject;
+
+	private EBootAppPropertiesImpl(EBootProject bootProject, Path path) throws ConfigurationException {
 		super();
 		this.path = path;
+		this.bootProject = bootProject;
 		this.layout.setGlobalSeparator("=");
 		Parameters params = new Parameters();
 		this.builder = new FileBasedConfigurationBuilder<FileBasedConfiguration>(PropertiesConfiguration.class);
@@ -40,6 +44,11 @@ public class EBootAppPropertiesImpl implements EBootAppProperties {
 		this.configuration = this.builder.getConfiguration();
 		//		configuration.
 
+	}
+
+	@Override
+	public EBootProject getProject() {
+		return this.bootProject;
 	}
 
 	@Override
@@ -79,10 +88,10 @@ public class EBootAppPropertiesImpl implements EBootAppProperties {
 		this.builder.save();
 	}
 
-	public static EBootAppProperties of(Path path) {
+	public static EBootAppProperties of(EBootProject bootProject, Path path) {
 		if (Files.exists(path)) {
 			try {
-				EBootAppPropertiesImpl representation = new EBootAppPropertiesImpl(path);
+				EBootAppPropertiesImpl representation = new EBootAppPropertiesImpl(bootProject, path);
 				return representation;
 			} catch (ConfigurationException e) {
 				e.printStackTrace();

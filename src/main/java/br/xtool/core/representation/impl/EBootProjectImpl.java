@@ -119,7 +119,7 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 	@Override
 	public EBootPom getPom() {
 		if (Objects.isNull(this.pom)) {
-			this.pom = EBootPomImpl.of(this.getPath().resolve("pom.xml"));
+			this.pom = EBootPomImpl.of(this, this.getPath().resolve("pom.xml"));
 		}
 		return this.pom;
 	}
@@ -131,7 +131,7 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 	@Override
 	public EBootAppProperties getApplicationProperties() {
 		if (Objects.isNull(this.applicationProperties)) {
-			this.applicationProperties = EBootAppPropertiesImpl.of(this.getPath().resolve("src/main/resources/application.properties"));
+			this.applicationProperties = EBootAppPropertiesImpl.of(this, this.getPath().resolve("src/main/resources/application.properties"));
 		}
 		return this.applicationProperties;
 	}

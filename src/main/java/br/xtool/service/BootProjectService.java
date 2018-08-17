@@ -4,7 +4,7 @@ import java.util.Set;
 import java.util.function.Consumer;
 
 import br.xtool.core.representation.EBootProject;
-import br.xtool.core.representation.EBootProject.BootSupport;
+import br.xtool.core.representation.EBootProject.BootProjectSupport;
 import br.xtool.core.representation.EBootRest;
 import br.xtool.core.representation.EBootService;
 import br.xtool.core.representation.EJavaType;
@@ -28,7 +28,7 @@ public interface BootProjectService {
 	 * @param bootProject
 	 * @param supportClass
 	 */
-	<T extends BootSupport> void addSupport(EBootProject bootProject, Class<T> supportClass);
+	<T extends BootProjectSupport> void addSupport(EBootProject bootProject, Class<T> supportClass);
 
 	/**
 	 * Verifica se o projeto possui suporte.
@@ -37,7 +37,7 @@ public interface BootProjectService {
 	 * @param supportClass
 	 * @return
 	 */
-	<T extends BootSupport> boolean hasSupport(EBootProject bootProject, Class<T> supportClass);
+	<T extends BootProjectSupport> boolean hasSupport(EBootProject bootProject, Class<T> supportClass);
 
 	//	/**
 	//	 * 

@@ -190,7 +190,7 @@ public interface EBootProject extends EProject {
 	static boolean isValid(Path path) {
 		Path pomFile = path.resolve("pom.xml");
 		if (Files.exists(pomFile)) {
-			EBootPom ePom = EBootPomImpl.of(pomFile);
+			EBootPom ePom = EBootPomImpl.of(null, pomFile);
 			if (ePom.getParentVersion().isPresent()) {
 				return ePom.getParentGroupId().get().equals("org.springframework.boot");
 			}
@@ -198,8 +198,10 @@ public interface EBootProject extends EProject {
 		return false;
 	}
 
-	interface BootSupport extends Support<EBootProject> {
+	interface BootProjectSupport extends Support<EBootProject> {
+		void apply(EBootAppProperties appProperties);
 
+		void apply(EBootPom pom);
 	}
 
 }

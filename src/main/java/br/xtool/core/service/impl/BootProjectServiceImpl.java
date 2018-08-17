@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.xtool.core.representation.EBootProject;
-import br.xtool.core.representation.EBootProject.BootSupport;
+import br.xtool.core.representation.EBootProject.BootProjectSupport;
 import br.xtool.core.representation.EBootRest;
 import br.xtool.core.representation.EBootService;
 import br.xtool.core.representation.EJavaClass;
@@ -72,8 +72,11 @@ public class BootProjectServiceImpl implements BootProjectService {
 	 * @see br.xtool.core.service.BootService#addSupport(br.xtool.core.representation.EBootProject, java.lang.Class)
 	 */
 	@Override
-	public <T extends BootSupport> void addSupport(EBootProject bootProject, Class<T> supportClass) {
-		this.applicationContext.getBean(supportClass).apply(bootProject);
+	public <T extends BootProjectSupport> void addSupport(EBootProject bootProject, Class<T> supportClass) {
+		BootProjectSupport support = this.applicationContext.getBean(supportClass);
+		support.apply(bootProject);
+		support.apply(bootProject.getApplicationProperties());
+		support.apply(bootProject.getPom());
 	}
 
 	/*
@@ -81,7 +84,7 @@ public class BootProjectServiceImpl implements BootProjectService {
 	 * @see br.xtool.core.service.BootService#hasSupport(br.xtool.core.representation.EBootProject, java.lang.Class)
 	 */
 	@Override
-	public <T extends BootSupport> boolean hasSupport(EBootProject bootProject, Class<T> supportClass) {
+	public <T extends BootProjectSupport> boolean hasSupport(EBootProject bootProject, Class<T> supportClass) {
 		return this.applicationContext.getBean(supportClass).has(bootProject);
 	}
 

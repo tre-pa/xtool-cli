@@ -8,12 +8,14 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import br.xtool.core.representation.EBootAppProperties;
+import br.xtool.core.representation.EBootPom;
 import br.xtool.core.representation.EBootProject;
-import br.xtool.core.representation.EBootProject.BootSupport;
+import br.xtool.core.representation.EBootProject.BootProjectSupport;
 import br.xtool.service.FileService;
 
 @Component
-public class BootProjectJpaSupport implements BootSupport {
+public class JpaSupport implements BootProjectSupport {
 
 	@Autowired
 	private FileService fs;
@@ -38,10 +40,29 @@ public class BootProjectJpaSupport implements BootSupport {
 			.addDependency("org.hibernate", "hibernate-java8")
 			.addDependency("com.oracle", "ojdbc6", "11.2.0.3.0")
 		.save();
-		project.getApplicationProperties()
+//		project.getApplicationProperties()
+//			.set("spring.h2.console.enabled", "true")
+//			.set("spring.h2.console.path", "/h2")
+//			.set("spring.datasource.url", "jdbc:h2:./target/db/%s;DB_CLOSE_ON_EXIT=FALSE", project.getName())
+//			.set("spring.datasource.driver-class-name", "org.h2.Driver")
+//			.set("spring.datasource.username", "sa")
+//			.set("spring.datasource.password", "")
+//			.set("spring.datasource.sqlScriptEncoding", "UTF-8")
+//			.set("logging.level.org.hibernate.SQL", "DEBUG")
+//			.set("spring.jpa.properties.hibernate.format_sql", "true")
+//			.set("spring.jpa.hibernate.ddl-auto", "update")
+//			.set("spring.jpa.hibernate.use-new-id-generator-mappings", "true")
+//		.save();
+//		// @formatter:on
+	}
+
+	@Override
+	public void apply(EBootAppProperties appProperties) {
+		// @formatter:off
+		appProperties
 			.set("spring.h2.console.enabled", "true")
 			.set("spring.h2.console.path", "/h2")
-			.set("spring.datasource.url", "jdbc:h2:./target/db/%s;DB_CLOSE_ON_EXIT=FALSE", project.getName())
+			.set("spring.datasource.url", "jdbc:h2:./target/db/%s;DB_CLOSE_ON_EXIT=FALSE", appProperties.getProject().getName())
 			.set("spring.datasource.driver-class-name", "org.h2.Driver")
 			.set("spring.datasource.username", "sa")
 			.set("spring.datasource.password", "")
@@ -51,7 +72,13 @@ public class BootProjectJpaSupport implements BootSupport {
 			.set("spring.jpa.hibernate.ddl-auto", "update")
 			.set("spring.jpa.hibernate.use-new-id-generator-mappings", "true")
 		.save();
-		// @formatter:on
+	// @formatter:on
+	}
+
+	@Override
+	public void apply(EBootPom pom) {
+		// TODO Auto-generated method stub
+
 	}
 
 	@Override

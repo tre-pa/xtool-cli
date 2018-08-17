@@ -10,6 +10,8 @@ import java.util.Optional;
  */
 public interface EBootAppProperties {
 
+	EBootProject getProject();
+
 	Optional<String> get(String key);
 
 	EBootAppProperties set(String key, String value);

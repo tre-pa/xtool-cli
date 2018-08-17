@@ -12,7 +12,7 @@ import org.springframework.shell.standard.ShellOption;
 import br.xtool.XtoolCliApplication;
 import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.EProject;
-import br.xtool.core.support.BootProjectJpaSupport;
+import br.xtool.core.support.JpaSupport;
 import br.xtool.service.BootProjectService;
 import br.xtool.service.WorkspaceService;
 
@@ -55,7 +55,7 @@ public class NewSpringBootProjectGenerator {
 				EProject.Version.V1, 
 				vars);
 		// @formatter:on
-		if (!noJpa) this.bootProjectService.addSupport(bootProject, BootProjectJpaSupport.class);
+		if (!noJpa) this.bootProjectService.addSupport(bootProject, JpaSupport.class);
 
 		this.workspaceService.setWorkingProject(bootProject);
 	}

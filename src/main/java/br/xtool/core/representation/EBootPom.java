@@ -15,6 +15,8 @@ public interface EBootPom {
 
 	public static final Namespace NAMESPACE = Namespace.getNamespace("http://maven.apache.org/POM/4.0.0");
 
+	EBootProject getProject();
+
 	/**
 	 * Retorna o groupId da aplicação.
 	 * 

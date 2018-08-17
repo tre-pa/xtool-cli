@@ -20,6 +20,7 @@ import org.jdom2.output.XMLOutputter;
 import br.xtool.core.ConsoleLog;
 import br.xtool.core.representation.EBootPom;
 import br.xtool.core.representation.EBootPomDependency;
+import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.EJavaPackage;
 
 public class EBootPomImpl implements EBootPom {
@@ -30,11 +31,19 @@ public class EBootPomImpl implements EBootPom {
 
 	private Document pomDoc;
 
+	private EBootProject bootProject;
+
 	//	private File file;
 
-	private EBootPomImpl(Path path) {
+	private EBootPomImpl(EBootProject bootProject, Path path) {
 		super();
+		this.bootProject = bootProject;
 		this.path = path;
+	}
+
+	@Override
+	public EBootProject getProject() {
+		return null;
 	}
 
 	/*
@@ -136,10 +145,10 @@ public class EBootPomImpl implements EBootPom {
 		return this;
 	}
 
-	public static EBootPomImpl of(Path path) {
+	public static EBootPomImpl of(EBootProject bootProject, Path path) {
 		if (Files.exists(path)) {
 			try {
-				EBootPomImpl pomRepresentation = new EBootPomImpl(path);
+				EBootPomImpl pomRepresentation = new EBootPomImpl(bootProject, path);
 				SAXBuilder saxBuilder = new SAXBuilder();
 				pomRepresentation.pomDoc = saxBuilder.build(Files.newBufferedReader(path));
 				return pomRepresentation;
