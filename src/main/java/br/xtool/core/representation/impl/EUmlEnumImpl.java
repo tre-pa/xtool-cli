@@ -1,6 +1,6 @@
 package br.xtool.core.representation.impl;
 
-import java.util.Set;
+import java.util.Collection;
 import java.util.stream.Collectors;
 
 import org.springframework.util.StringUtils;
@@ -24,17 +24,17 @@ public class EUmlEnumImpl implements EUmlEnum {
 	}
 
 	@Override
-	public EUmlPackage getPackage() {
+	public EUmlPackage getUmlPackage() {
 		return new EUmlPackageImpl(this.leaf.getParentContainer());
 	}
 
 	@Override
-	public Set<String> getValues() {
+	public Collection<String> getValues() {
 		// @formatter:off
 		return this.leaf.getBodier().getFieldsToDisplay().stream()
 				.filter(member -> !StringUtils.isEmpty(member.getDisplay(false)))
 				.map(member -> member.getDisplay(false))
-				.collect(Collectors.toSet());
+				.collect(Collectors.toList());
 		// @formatter:on
 	}
 

@@ -1,6 +1,6 @@
 package br.xtool.core.representation;
 
-import java.util.Set;
+import java.util.Collection;
 
 /**
  * Representa um Enum no diagrama de classe UML.
@@ -17,12 +17,12 @@ public interface EUmlEnum {
 	 * 
 	 * @return
 	 */
-	EUmlPackage getPackage();
+	EUmlPackage getUmlPackage();
 
 	/**
 	 * Retorna a lista de valores do Enum UML.
 	 * 
 	 * @return
 	 */
-	Set<String> getValues();
+	Collection<String> getValues();
 }

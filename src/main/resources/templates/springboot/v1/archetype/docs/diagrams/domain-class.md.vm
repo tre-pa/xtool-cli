@@ -4,4 +4,8 @@ package "${rootPackage.name}.domain" {
 
 }
 
+package "${rootPackage.name}.domain.enums" {
+
+}
+
 ```

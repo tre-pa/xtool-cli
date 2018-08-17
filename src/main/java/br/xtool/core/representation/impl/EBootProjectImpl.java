@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 import org.apache.commons.lang3.StringUtils;
 import org.jboss.forge.roaster.model.JavaUnit;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
+import org.jboss.forge.roaster.model.source.JavaEnumSource;
 import org.jboss.forge.roaster.model.source.JavaInterfaceSource;
 
 import br.xtool.core.representation.EBootAppProperties;
@@ -22,6 +23,7 @@ import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.EBootRest;
 import br.xtool.core.representation.EBootService;
 import br.xtool.core.representation.EJavaClass;
+import br.xtool.core.representation.EJavaEnum;
 import br.xtool.core.representation.EJavaPackage;
 import br.xtool.core.representation.EJavaSourceFolder;
 import br.xtool.core.representation.EJpaEntity;
@@ -132,6 +134,22 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 			this.applicationProperties = EBootAppPropertiesImpl.of(this.getPath().resolve("src/main/resources/application.properties"));
 		}
 		return this.applicationProperties;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EBootProject#getEnums()
+	 */
+	@Override
+	public Collection<EJavaEnum> getEnums() {
+		// @formatter:off
+		return this.getJavaUnits()
+			.parallelStream()
+			.filter(javaUnit -> javaUnit.getGoverningType().isEnum())
+			.map(javaUnit -> javaUnit.<JavaEnumSource>getGoverningType())
+			.map(j -> new EJavaEnumImpl(this, j))
+			.collect(Collectors.toList());
+		// @formatter:on
 	}
 
 	/*

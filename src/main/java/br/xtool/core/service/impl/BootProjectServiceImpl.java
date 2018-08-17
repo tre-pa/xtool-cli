@@ -33,6 +33,7 @@ import br.xtool.core.representation.EBootProject.BootSupport;
 import br.xtool.core.representation.EBootRest;
 import br.xtool.core.representation.EBootService;
 import br.xtool.core.representation.EJavaClass;
+import br.xtool.core.representation.EJavaEnum;
 import br.xtool.core.representation.EJavaSourceFolder;
 import br.xtool.core.representation.EJavaType;
 import br.xtool.core.representation.EJpaEntity;
@@ -40,7 +41,9 @@ import br.xtool.core.representation.EJpaProjection;
 import br.xtool.core.representation.EJpaRepository;
 import br.xtool.core.representation.EJpaSpecification;
 import br.xtool.core.representation.EUmlClass;
+import br.xtool.core.representation.EUmlEnum;
 import br.xtool.core.representation.converter.EUmlClassConverter;
+import br.xtool.core.representation.converter.EUmlEnumConverter;
 import br.xtool.core.representation.converter.EUmlFieldConverter;
 import br.xtool.core.representation.converter.EUmlRelationshipConverter;
 import br.xtool.core.representation.impl.EBootRestImpl;
@@ -200,7 +203,16 @@ public class BootProjectServiceImpl implements BootProjectService {
 				.collect(Collectors.toList());
 		// @formatter:on
 		javaClasses.stream().forEach(javaClass -> this.save(bootProject.getMainSourceFolder(), javaClass));
+
+		// @formatter:off
+		Collection<EJavaEnum> javaEnums = bootProject.getDomainClassDiagram().getEnums().stream()
+				.map(umlEnum -> this.convertUmlEnumToJavaEnum(bootProject, umlEnum))
+				.collect(Collectors.toList());
+		// @formatter:on
+		javaEnums.stream().forEach(javaEnum -> this.save(javaEnum));
+
 		print(bold(cyan(String.valueOf(javaClasses.size()))), " classes mapeadas.");
+		print(bold(cyan(String.valueOf(javaEnums.size()))), " enums mapeadas.");
 	}
 
 	// Converte uma classe UML para um objeto EJavaClass.
@@ -209,6 +221,10 @@ public class BootProjectServiceImpl implements BootProjectService {
 		umlClass.getFields().stream().forEach(umlField -> new EUmlFieldConverter(vistors).apply(javaClass, umlField));
 		umlClass.getRelationships().stream().forEach(umlRelationship -> new EUmlRelationshipConverter(vistors).apply(javaClass, umlRelationship));
 		return javaClass;
+	}
+
+	private EJavaEnum convertUmlEnumToJavaEnum(EBootProject bootProject, EUmlEnum umlEnum) {
+		return new EUmlEnumConverter().apply(bootProject, umlEnum);
 	}
 
 	/*
@@ -226,8 +242,9 @@ public class BootProjectServiceImpl implements BootProjectService {
 		// @formatter:on
 	}
 
-	/**
-	 * 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.service.BootProjectService#createRepository(br.xtool.core.representation.EBootProject, br.xtool.core.representation.EJpaEntity, java.util.function.Consumer)
 	 */
 	@Override
 	public void createRepository(EBootProject bootProject, EJpaEntity entity, Consumer<EJpaRepository> consumer) {

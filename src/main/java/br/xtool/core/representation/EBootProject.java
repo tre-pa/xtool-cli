@@ -71,6 +71,12 @@ public interface EBootProject extends EProject {
 	EBootAppProperties getApplicationProperties();
 
 	/**
+	 * 
+	 * @return
+	 */
+	Collection<EJavaEnum> getEnums();
+
+	/**
 	 * Retorna a lista das entidades JPA do projeto
 	 * 
 	 * @return
