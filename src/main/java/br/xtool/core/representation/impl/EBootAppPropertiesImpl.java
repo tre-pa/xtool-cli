@@ -58,6 +58,11 @@ public class EBootAppPropertiesImpl implements EBootAppProperties {
 	}
 
 	@Override
+	public EBootAppProperties set(String key, String value, Object... params) {
+		return this.set(key, String.format(value, params));
+	}
+
+	@Override
 	public EBootAppProperties comment(String key, String value) {
 		this.layout.setComment(key, value);
 		return this;

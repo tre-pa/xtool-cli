@@ -41,7 +41,7 @@ public class BootProjectJpaSupport implements BootSupport {
 		project.getApplicationProperties()
 			.set("spring.h2.console.enabled", "true")
 			.set("spring.h2.console.path", "/h2")
-			.set("spring.datasource.url", String.format("jdbc:h2:./target/db/%s;DB_CLOSE_ON_EXIT=FALSE", project.getName()))
+			.set("spring.datasource.url", "jdbc:h2:./target/db/%s;DB_CLOSE_ON_EXIT=FALSE", project.getName())
 			.set("spring.datasource.driver-class-name", "org.h2.Driver")
 			.set("spring.datasource.username", "sa")
 			.set("spring.datasource.password", "")

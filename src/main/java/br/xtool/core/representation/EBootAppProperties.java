@@ -14,6 +14,8 @@ public interface EBootAppProperties {
 
 	EBootAppProperties set(String key, String value);
 
+	EBootAppProperties set(String key, String value, Object... params);
+
 	EBootAppProperties comment(String key, String value);
 
 	boolean hasProperty(String key);
