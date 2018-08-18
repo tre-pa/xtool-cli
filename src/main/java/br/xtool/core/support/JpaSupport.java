@@ -33,27 +33,6 @@ public class JpaSupport implements BootProjectSupport {
 		};
 		Path templatesPath = Paths.get("springboot").resolve(project.getProjectVersion().getName()).resolve("support/jpa");
 		this.fs.copy(templatesPath, vars, project);
-		// @formatter:off
-		project.getPom()
-			.addDependency("org.springframework.boot", "spring-boot-starter-data-jpa")
-			.addDependency("com.h2database", "h2")
-			.addDependency("org.hibernate", "hibernate-java8")
-			.addDependency("com.oracle", "ojdbc6", "11.2.0.3.0")
-		.save();
-//		project.getApplicationProperties()
-//			.set("spring.h2.console.enabled", "true")
-//			.set("spring.h2.console.path", "/h2")
-//			.set("spring.datasource.url", "jdbc:h2:./target/db/%s;DB_CLOSE_ON_EXIT=FALSE", project.getName())
-//			.set("spring.datasource.driver-class-name", "org.h2.Driver")
-//			.set("spring.datasource.username", "sa")
-//			.set("spring.datasource.password", "")
-//			.set("spring.datasource.sqlScriptEncoding", "UTF-8")
-//			.set("logging.level.org.hibernate.SQL", "DEBUG")
-//			.set("spring.jpa.properties.hibernate.format_sql", "true")
-//			.set("spring.jpa.hibernate.ddl-auto", "update")
-//			.set("spring.jpa.hibernate.use-new-id-generator-mappings", "true")
-//		.save();
-//		// @formatter:on
 	}
 
 	@Override
@@ -77,8 +56,14 @@ public class JpaSupport implements BootProjectSupport {
 
 	@Override
 	public void apply(EBootPom pom) {
-		// TODO Auto-generated method stub
-
+		// @formatter:off
+		pom
+		  .addDependency("org.springframework.boot", "spring-boot-starter-data-jpa")
+		  .addDependency("com.h2database", "h2")
+		  .addDependency("org.hibernate", "hibernate-java8")
+		  .addDependency("com.oracle", "ojdbc6", "11.2.0.3.0")
+		.save();
+		// @formatter:on
 	}
 
 	@Override
