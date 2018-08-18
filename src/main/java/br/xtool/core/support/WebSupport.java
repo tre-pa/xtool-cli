@@ -1,18 +1,27 @@
 package br.xtool.core.support;
 
+import java.nio.file.Path;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import br.xtool.core.representation.EBootAppProperties;
 import br.xtool.core.representation.EBootPom;
 import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.EBootProject.BootProjectSupport;
+import br.xtool.service.BootProjectService;
 import strman.Strman;
 
 @Component
 public class WebSupport implements BootProjectSupport {
 
+	@Autowired
+	private BootProjectService bootProjectService;
+
 	@Override
 	public void apply(EBootProject project) {
+		Path rootPackage = project.getMainSourceFolder().getPath().resolve(project.getRootPackage().getPath());
+		this.bootProjectService.createDirectory(project, rootPackage.resolve("rest"));
 	}
 
 	@Override
