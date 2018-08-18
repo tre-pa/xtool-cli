@@ -1,5 +1,7 @@
 package br.xtool.core.support;
 
+import java.nio.file.Path;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,9 +21,10 @@ public class JpaSupport implements BootProjectSupport {
 
 	@Override
 	public void apply(EBootProject project) {
-		this.bootProjectService.createDirectory(project, project.getMainSourceFolder().getPath().resolve(project.getRootPackage().getPath().resolve("domain/enums")));
-		this.bootProjectService.createDirectory(project, project.getMainSourceFolder().getPath().resolve(project.getRootPackage().getPath().resolve("repository/specification")));
-		this.bootProjectService.createDirectory(project, project.getMainSourceFolder().getPath().resolve(project.getRootPackage().getPath().resolve("repository/projection")));
+		Path rootPackage = project.getMainSourceFolder().getPath().resolve(project.getRootPackage().getPath());
+		this.bootProjectService.createDirectory(project, rootPackage.resolve("domain/enums"));
+		this.bootProjectService.createDirectory(project, rootPackage.resolve("repository/specification"));
+		this.bootProjectService.createDirectory(project, rootPackage.resolve("repository/projection"));
 		//		Map<String, Object> vars = new HashMap<String, Object>() {
 		//			private static final long serialVersionUID = 1L;
 		//			{
