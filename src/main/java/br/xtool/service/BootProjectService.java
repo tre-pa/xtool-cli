@@ -1,5 +1,6 @@
 package br.xtool.service;
 
+import java.nio.file.Path;
 import java.util.Set;
 import java.util.function.Consumer;
 
@@ -21,6 +22,14 @@ import br.xtool.core.visitor.Visitor;
  *
  */
 public interface BootProjectService {
+
+	/**
+	 * Cria um diretório no projeto.
+	 * 
+	 * @param bootProject
+	 * @param path
+	 */
+	void createDirectory(EBootProject bootProject, Path path);
 
 	/**
 	 * Adicionar um suporte ao projeto.

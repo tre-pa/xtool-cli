@@ -1,10 +1,5 @@
 package br.xtool.core.support;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -12,27 +7,32 @@ import br.xtool.core.representation.EBootAppProperties;
 import br.xtool.core.representation.EBootPom;
 import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.EBootProject.BootProjectSupport;
-import br.xtool.service.FileService;
+import br.xtool.service.BootProjectService;
 
 @Component
 public class JpaSupport implements BootProjectSupport {
 
+	//	@Autowired
+	//	private FileService fs;
 	@Autowired
-	private FileService fs;
+	private BootProjectService bootProjectService;
 
 	@Override
 	public void apply(EBootProject project) {
-		Map<String, Object> vars = new HashMap<String, Object>() {
-			private static final long serialVersionUID = 1L;
-			{
-				put("projectName", project.getName());
-				put("projectVersion", project.getPom().getParentVersion());
-				put("rootPackage", project.getRootPackage());
-				put("baseClassName", project.getBaseClassName());
-			}
-		};
-		Path templatesPath = Paths.get("springboot").resolve(project.getProjectVersion().getName()).resolve("support/jpa");
-		this.fs.copy(templatesPath, vars, project);
+		this.bootProjectService.createDirectory(project, project.getMainSourceFolder().getPath().resolve(project.getRootPackage().getPath().resolve("domain/enums")));
+		this.bootProjectService.createDirectory(project, project.getMainSourceFolder().getPath().resolve(project.getRootPackage().getPath().resolve("repository/specification")));
+		this.bootProjectService.createDirectory(project, project.getMainSourceFolder().getPath().resolve(project.getRootPackage().getPath().resolve("repository/projection")));
+		//		Map<String, Object> vars = new HashMap<String, Object>() {
+		//			private static final long serialVersionUID = 1L;
+		//			{
+		//				put("projectName", project.getName());
+		//				put("projectVersion", project.getPom().getParentVersion());
+		//				put("rootPackage", project.getRootPackage());
+		//				put("baseClassName", project.getBaseClassName());
+		//			}
+		//		};
+		//		Path templatesPath = Paths.get("springboot").resolve(project.getProjectVersion().getName()).resolve("support/jpa");
+		//		this.fs.copy(templatesPath, vars, project);
 	}
 
 	@Override

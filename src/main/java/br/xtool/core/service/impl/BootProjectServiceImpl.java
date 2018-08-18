@@ -67,6 +67,16 @@ public class BootProjectServiceImpl implements BootProjectService {
 	//	@Autowired
 	//	private JavaxValidationVisitor javaxValidationVisitor;
 
+	@Override
+	@SneakyThrows
+	public void createDirectory(EBootProject bootProject, Path path) {
+		Path finalPath = bootProject.getPath().resolve(path);
+		if (Files.notExists(finalPath)) {
+			Files.createDirectories(finalPath);
+			Files.createFile(finalPath.resolve(".gitkeep"));
+		}
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * @see br.xtool.core.service.BootService#addSupport(br.xtool.core.representation.EBootProject, java.lang.Class)

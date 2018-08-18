@@ -1,5 +1,8 @@
 package br.xtool.core.representation.impl;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import org.apache.commons.lang3.StringUtils;
 
 import br.xtool.core.representation.EJavaPackage;
@@ -42,6 +45,11 @@ public class EJavaPackageImpl implements EJavaPackage {
 	@Override
 	public String getDir() {
 		return this.dir;
+	}
+
+	@Override
+	public Path getPath() {
+		return Paths.get(this.dir);
 	}
 
 	@Override
