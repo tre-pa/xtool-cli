@@ -1,5 +1,12 @@
 package br.xtool.core.representation.impl;
 
+import static br.xtool.core.ConsoleLog.bold;
+import static br.xtool.core.ConsoleLog.gray;
+import static br.xtool.core.ConsoleLog.print;
+import static br.xtool.core.ConsoleLog.purple;
+import static br.xtool.core.ConsoleLog.white;
+import static br.xtool.core.ConsoleLog.yellow;
+
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Optional;
@@ -11,7 +18,6 @@ import org.apache.commons.configuration2.builder.FileBasedConfigurationBuilder;
 import org.apache.commons.configuration2.builder.fluent.Parameters;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 
-import br.xtool.core.ConsoleLog;
 import br.xtool.core.representation.EBootAppProperties;
 import br.xtool.core.representation.EBootProject;
 import lombok.SneakyThrows;
@@ -60,8 +66,7 @@ public class EBootAppPropertiesImpl implements EBootAppProperties {
 	public EBootAppProperties set(String key, String value) {
 		if (!this.configuration.containsKey(key)) {
 			this.configuration.setProperty(key, value);
-			ConsoleLog.print(ConsoleLog.bold(ConsoleLog.yellow("\t[~] ")), ConsoleLog.purple("Item: "), ConsoleLog.white("application.properties"), ConsoleLog.gray(" -- "),
-					ConsoleLog.gray(Strman.surround(key, "Key [", "]")));
+			print(bold(yellow("\t[~] ")), purple("Item: "), white("application.properties"), gray(" -- "), gray(Strman.surround(key, "Key [", "]")));
 		}
 		return this;
 	}
