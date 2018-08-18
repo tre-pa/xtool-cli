@@ -1,10 +1,18 @@
 package br.xtool.core.template;
 
+import java.util.concurrent.TimeUnit;
+
 import javax.persistence.EntityNotFoundException;
 
 import org.hibernate.annotations.Immutable;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.CacheControl;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -72,7 +80,7 @@ public class RestTemplates {
 				method.getRoasterMethod().setReturnType(repository.getTargetEntity().getName());
 				// @formatter:off
 				method.getRoasterMethod()
-					.addParameter(Long.class, "id")
+					.addParameter(Long.class.getSimpleName(), "id")
 					.addAnnotation(PathVariable.class);
 				method.getRoasterMethod()
 					.addParameter(
@@ -98,4 +106,115 @@ public class RestTemplates {
 			}
 		}
 	}
+
+	/**
+	 * 
+	 * Gera o método delete da classe Rest.
+	 * 
+	 * @param rest
+	 * @param repository
+	 */
+	public static void genDeleteMethod(EBootRest rest, EJpaRepository repository) {
+		if (!repository.getTargetEntity().hasAnnotation(Immutable.class)) {
+			if (!rest.getRoasterJavaClass().hasMethodSignature("delete", Long.class.getSimpleName())) {
+				rest.getRoasterJavaClass().addImport(repository.getTargetEntity().getQualifiedName());
+
+				EJavaMethod<JavaClassSource> method = rest.addMethod("delete");
+				method.getRoasterMethod().setPublic();
+				// @formatter:off
+				method.getRoasterMethod().addAnnotation(DeleteMapping.class)
+					.setStringValue("path", "/{id}");
+				method.getRoasterMethod().addAnnotation(ResponseStatus.class)
+					.setEnumValue(HttpStatus.NO_CONTENT);
+				method.getRoasterMethod().setReturnTypeVoid();
+				method.getRoasterMethod()
+					.addParameter(Long.class.getSimpleName(), "id")
+					.addAnnotation(PathVariable.class);
+
+			// @formatter:off
+			rest.getRoasterJavaClass().addImport(EntityNotFoundException.class);
+			method.getRoasterMethod().setBody(
+					JavaTemplate.from(""
+							+ "	if ({{repository_instance_name}}.exists(id)) {"
+							+ " 	{{repository_instance_name}}.delete(id);"
+							+ " }"
+							+ " throw new EntityNotFoundException(\"Entidade {{target_name}} não encontrada.\");"
+							+ "")
+						.put("repository_instance_name", repository.getInstanceName())
+						.put("target_instance_name", repository.getTargetEntity().getInstanceName())
+						.put("target_name", repository.getTargetEntity().getName())
+					.build());
+			// @formatter:on
+			}
+		}
+	}
+
+	/**
+	 * 
+	 * @param rest
+	 * @param repository
+	 */
+	public static void genFindOne(EBootRest rest, EJpaRepository repository) {
+		if (!rest.getRoasterJavaClass().hasMethodSignature("findOne", Long.class.getSimpleName(), repository.getTargetEntity().getName())) {
+			rest.getRoasterJavaClass().addImport(repository.getTargetEntity().getQualifiedName());
+
+			EJavaMethod<JavaClassSource> method = rest.addMethod("findOne");
+			method.getRoasterMethod().setPublic();
+			// @formatter:off
+			method.getRoasterMethod()
+				.addAnnotation(GetMapping.class)
+					.setStringValue("path", "/{id}");
+			method.getRoasterMethod()
+				.setReturnType(repository.getTargetEntity().getName());
+			method.getRoasterMethod()
+				.addParameter(Long.class.getSimpleName(), "id")
+				.addAnnotation(PathVariable.class);
+			method.getRoasterMethod().setBody(
+					JavaTemplate.from(""
+							+ "	if ({{repository_instance_name}}.exists(id)) {"
+							+ " 	{{repository_instance_name}}.findOne(id);"
+							+ " }"
+							+ " throw new EntityNotFoundException(\"Entidade {{target_name}} não encontrada.\");"
+							+ "")
+						.put("repository_instance_name", repository.getInstanceName())
+						.put("target_instance_name", repository.getTargetEntity().getInstanceName())
+						.put("target_name", repository.getTargetEntity().getName())
+					.build());
+			// @formatter:on
+		}
+	}
+
+	public static void genFindAll(EBootRest rest, EJpaRepository repository) {
+		if (!rest.getRoasterJavaClass().hasMethodSignature("findAll", Pageable.class)) {
+			rest.getRoasterJavaClass().addImport(repository.getTargetEntity().getQualifiedName());
+			rest.getRoasterJavaClass().addImport(Pageable.class);
+			rest.getRoasterJavaClass().addImport(ResponseEntity.class);
+			rest.getRoasterJavaClass().addImport(CacheControl.class);
+			rest.getRoasterJavaClass().addImport(TimeUnit.class);
+			rest.getRoasterJavaClass().addImport(Page.class);
+
+			EJavaMethod<JavaClassSource> method = rest.addMethod("findAll");
+			method.getRoasterMethod().setPublic();
+			// @formatter:off
+			method.getRoasterMethod()
+				.addAnnotation(GetMapping.class);
+			method.getRoasterMethod()
+				.setReturnType(String.format("ResponseEntity<Page<%s>>", repository.getTargetEntity().getName()));
+			method.getRoasterMethod()
+				.addParameter(Pageable.class.getSimpleName(), "pageable");
+			method.getRoasterMethod().setBody(
+					JavaTemplate.from(""
+							+ "	return ResponseEntity"
+							+ "			.ok()"
+							+ "			.cacheControl(CacheControl.maxAge(10, TimeUnit.SECONDS))"
+							+ "			.body({{repository_instance_name}}.findAll(pageable)); "
+							+ "")
+						.put("repository_instance_name", repository.getInstanceName())
+						.put("target_instance_name", repository.getTargetEntity().getInstanceName())
+						.put("target_name", repository.getTargetEntity().getName())
+					.build());
+			// @formatter:on
+		}
+	}
+
 }
