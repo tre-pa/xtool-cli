@@ -12,8 +12,8 @@ import br.xtool.XtoolCliApplication;
 import br.xtool.core.aware.SpringBootAware;
 import br.xtool.core.provider.EJpaRepositoryValueProvider;
 import br.xtool.core.representation.EBootProject;
-import br.xtool.core.representation.EBootRest;
 import br.xtool.core.representation.EJpaRepository;
+import br.xtool.core.template.RestTemplates;
 import br.xtool.service.BootProjectService;
 import br.xtool.service.WorkspaceService;
 
@@ -32,8 +32,11 @@ public class GenRestCommand extends SpringBootAware {
 
 		EBootProject bootProject = this.workspaceService.getWorkingProject(EBootProject.class);
 
-		EBootRest rest = this.bootProjectService.createRest(bootProject, repository);
-		this.bootProjectService.save(rest);
+		this.bootProjectService.createRest(bootProject, repository, rest -> {
+			RestTemplates.genInsertMethod(rest, repository);
+			RestTemplates.genUpdateMethod(rest, repository);
+		});
+		//		this.bootProjectService.save(rest);
 
 	}
 }

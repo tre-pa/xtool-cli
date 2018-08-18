@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 
 import javax.persistence.Table;
 
+import org.apache.commons.lang3.StringUtils;
 import org.jboss.forge.roaster.model.JavaDoc;
 import org.jboss.forge.roaster.model.JavaType;
 import org.jboss.forge.roaster.model.SyntaxError;
@@ -41,6 +42,11 @@ public class EJavaClassImpl implements EJavaClass {
 	@Override
 	public EBootProject getProject() {
 		return this.project;
+	}
+
+	@Override
+	public String getInstanceName() {
+		return StringUtils.uncapitalize(this.getName());
 	}
 
 	/**

@@ -141,11 +141,11 @@
 			<artifactId>org.eclipse.jdt.core</artifactId>
 			<version>3.14.0</version>
 		</dependency>
-		<dependency>
+	<!-- 	<dependency>
 			<groupId>com.github.pwittchen.kirai</groupId>
 			<artifactId>library</artifactId>
 			<version>1.4.1</version>
-		</dependency>
+		</dependency> -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
@@ -160,6 +160,13 @@
 			<groupId>commons-beanutils</groupId>
 			<artifactId>commons-beanutils</artifactId>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.jtwig</groupId>
+			<artifactId>jtwig-core</artifactId>
+			<version>5.87.0.RELEASE</version>
+		</dependency>
+		
 	</dependencies>
 
 	<build>

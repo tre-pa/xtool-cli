@@ -15,6 +15,8 @@ import org.jboss.forge.roaster.model.source.JavaClassSource;
  */
 public interface EJavaClass extends Comparable<EJavaClass>, EJavaType<JavaClassSource> {
 
+	String getInstanceName();
+
 	/**
 	 * Retorna o nome da classe.
 	 * 

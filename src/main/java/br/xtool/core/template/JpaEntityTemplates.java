@@ -1,9 +1,8 @@
 package br.xtool.core.template;
 
-import com.github.pwittchen.kirai.library.Kirai;
-
 import br.xtool.core.representation.EJavaClass;
 import br.xtool.core.representation.EUmlRelationship;
+import br.xtool.core.template.base.JavaTemplate;
 
 public class JpaEntityTemplates {
 
@@ -17,13 +16,13 @@ public class JpaEntityTemplates {
 		String methodName = String.format("add%s", relationship.getTargetClass().getName());
 		if (!javaClass.getRoasterJavaClass().hasMethodSignature(methodName, relationship.getTargetClass().getName())) {
 			// @formatter:off
-			CharSequence methodBody = Kirai
-					.from("this.{source_role}.add({target_class_instance_name});"
-						+ "{target_class_instance_name}.set{source_class_name}(this);")
+			CharSequence methodBody = JavaTemplate
+					.from("this.{{source_role}}.add({{target_class_instance_name}});"
+						+ "{{target_class_instance_name}}.set{{source_class_name}}(this);")
 					.put("source_role", relationship.getSourceRole())
 					.put("target_class_instance_name", relationship.getTargetClass().getInstanceName())
 					.put("source_class_name", relationship.getSourceClass().getName())
-					.format();
+					.build();
 			// @formatter:on
 
 			// @formatter:off
@@ -45,13 +44,13 @@ public class JpaEntityTemplates {
 		String methodName = String.format("remove%s", relationship.getTargetClass().getName());
 		if (!javaClass.getRoasterJavaClass().hasMethodSignature(methodName, relationship.getTargetClass().getName())) {
 			// @formatter:off
-			CharSequence methodBody = Kirai
-					.from("this.{source_role}.remove({target_class_instance_name});"
-						+ "{target_class_instance_name}.set{source_class_name}(this);")
+			CharSequence methodBody = JavaTemplate
+					.from("this.{{source_role}}.remove({{target_class_instance_name}});"
+						+ "{{target_class_instance_name}}.set{{source_class_name}}(this);")
 					.put("source_role", relationship.getSourceRole())
 					.put("target_class_instance_name", relationship.getTargetClass().getInstanceName())
 					.put("source_class_name", relationship.getSourceClass().getName())
-					.format();
+					.build();
 			// @formatter:on
 
 			// @formatter:off
