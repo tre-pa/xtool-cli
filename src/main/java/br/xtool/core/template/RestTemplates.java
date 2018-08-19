@@ -58,9 +58,13 @@ public class RestTemplates {
 						.put("repository_instance_name", repository.getInstanceName())
 						.put("target_instance_name", repository.getTargetEntity().getInstanceName())
 					.build());
+				
+				/*
+				 * Adição do JavaDoc
+				 */
 				JavaDocSource<MethodSource<JavaClassSource>> javaDoc = method.getRoasterMethod().getJavaDoc();
 				javaDoc.setText(
-						JavaTemplate.from("Cria um novo(a) {{target_name}}")
+						JavaTemplate.from("Cria um(a) novo(a) {{target_name}}")
 						.put("target_name", repository.getTargetEntity().getName())
 						.build()); 
 				javaDoc.addTagValue("@param", repository.getTargetEntity().getInstanceName());
@@ -110,6 +114,17 @@ public class RestTemplates {
 						.put("target_instance_name", repository.getTargetEntity().getInstanceName())
 						.put("target_name", repository.getTargetEntity().getName())
 					.build());
+			
+			/*
+			 * Adição do JavaDoc
+			 */
+			JavaDocSource<MethodSource<JavaClassSource>> javaDoc = method.getRoasterMethod().getJavaDoc();
+			javaDoc.setText(
+					JavaTemplate.from("Atualiza um(a) {{target_name}}")
+					.put("target_name", repository.getTargetEntity().getName())
+					.build()); 
+			javaDoc.addTagValue("@param", repository.getTargetEntity().getInstanceName());
+			javaDoc.addTagValue("@return", "Entidade gerenciada.");
 			// @formatter:on
 			}
 		}
@@ -152,6 +167,15 @@ public class RestTemplates {
 						.put("target_instance_name", repository.getTargetEntity().getInstanceName())
 						.put("target_name", repository.getTargetEntity().getName())
 					.build());
+			/*
+			 * Adição do JavaDoc
+			 */
+			JavaDocSource<MethodSource<JavaClassSource>> javaDoc = method.getRoasterMethod().getJavaDoc();
+			javaDoc.setText(
+					JavaTemplate.from("Deleta um(a) {{target_name}}")
+					.put("target_name", repository.getTargetEntity().getName())
+					.build()); 
+			javaDoc.addTagValue("@param",  "id");
 			// @formatter:on
 			}
 		}
@@ -188,6 +212,16 @@ public class RestTemplates {
 						.put("target_instance_name", repository.getTargetEntity().getInstanceName())
 						.put("target_name", repository.getTargetEntity().getName())
 					.build());
+			/*
+			 * Adição do JavaDoc
+			 */
+			JavaDocSource<MethodSource<JavaClassSource>> javaDoc = method.getRoasterMethod().getJavaDoc();
+			javaDoc.setText(
+					JavaTemplate.from("Retorna um(a) {{target_name}}")
+					.put("target_name", repository.getTargetEntity().getName())
+					.build()); 
+			javaDoc.addTagValue("@param", "id");
+			javaDoc.addTagValue("@return", "Entidade gerenciada.");
 			// @formatter:on
 		}
 	}
@@ -223,6 +257,15 @@ public class RestTemplates {
 						.put("target_instance_name", repository.getTargetEntity().getInstanceName())
 						.put("target_name", repository.getTargetEntity().getName())
 					.build());
+			/*
+			 * Adição do JavaDoc
+			 */
+			JavaDocSource<MethodSource<JavaClassSource>> javaDoc = method.getRoasterMethod().getJavaDoc();
+			javaDoc.setText(
+					JavaTemplate.from("Retorna uma lista paginada de {{target_name}}")
+					.put("target_name", repository.getTargetEntity().getName())
+					.build()); 
+			javaDoc.addTagValue("@return", "Lista de entidades gerenciadas.");
 			// @formatter:on
 		}
 	}
