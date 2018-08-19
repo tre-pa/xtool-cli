@@ -193,29 +193,31 @@ public class RestTemplates {
 	}
 
 	public static void genFindAll(EBootRest rest, EJpaRepository repository) {
-		if (!rest.getRoasterJavaClass().hasMethodSignature("findAll", Pageable.class)) {
-			rest.getRoasterJavaClass().addImport(repository.getTargetEntity().getQualifiedName());
+		if (!rest.getRoasterJavaClass().hasMethodSignature("findAllEntities", Pageable.class)) {
+			rest.getRoasterJavaClass().addImport(repository.getTargetProjection().getQualifiedName());
 			rest.getRoasterJavaClass().addImport(Pageable.class);
 			rest.getRoasterJavaClass().addImport(ResponseEntity.class);
 			rest.getRoasterJavaClass().addImport(CacheControl.class);
 			rest.getRoasterJavaClass().addImport(TimeUnit.class);
 			rest.getRoasterJavaClass().addImport(Page.class);
 
-			EJavaMethod<JavaClassSource> method = rest.addMethod("findAll");
+			EJavaMethod<JavaClassSource> method = rest.addMethod("findAllEntities");
 			method.getRoasterMethod().setPublic();
 			// @formatter:off
 			method.getRoasterMethod()
 				.addAnnotation(GetMapping.class);
 			method.getRoasterMethod()
-				.setReturnType(String.format("ResponseEntity<Page<%s>>", repository.getTargetEntity().getName()));
+				.setReturnType(String.format("ResponseEntity<Page<%s>>", repository.getTargetProjection().getName()));
 			method.getRoasterMethod()
 				.addParameter(Pageable.class.getSimpleName(), "pageable");
 			method.getRoasterMethod().setBody(
 					JavaTemplate.from(""
-							+ "	return ResponseEntity"
-							+ "			.ok()"
-							+ "			.cacheControl(CacheControl.maxAge(10, TimeUnit.SECONDS))"
-							+ "			.body({{repository_instance_name}}.findAll(pageable)); "
+							+ "	// @formatter:off\n"
+							+ "	return ResponseEntity\n"
+							+ "			.ok()\n"
+							+ "			.cacheControl(CacheControl.maxAge(10, TimeUnit.SECONDS))\n"
+							+ "			.body({{repository_instance_name}}.findAllEntities(pageable));\n"
+							+ "	// @formatter:on "
 							+ "")
 						.put("repository_instance_name", repository.getInstanceName())
 						.put("target_instance_name", repository.getTargetEntity().getInstanceName())
