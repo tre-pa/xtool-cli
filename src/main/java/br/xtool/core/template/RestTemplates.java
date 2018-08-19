@@ -105,10 +105,10 @@ public class RestTemplates {
 			rest.getRoasterJavaClass().addImport(EntityNotFoundException.class);
 			method.getRoasterMethod().setBody(
 					JavaTemplate.from(""
-							+ "	if ({{repository_instance_name}}.exists(id)) {"
-							+ " 	  return {{repository_instance_name}}.save({{target_instance_name}});"
+							+ "	if (!{{repository_instance_name}}.exists(id)) {"
+							+ " 	throw new EntityNotFoundException(\"Entidade {{target_name}} não encontrada.\");"
 							+ " }"
-							+ " throw new EntityNotFoundException(\"Entidade {{target_name}} não encontrada.\");"
+							+ " return {{repository_instance_name}}.save({{target_instance_name}});"
 							+ "")
 						.put("repository_instance_name", repository.getInstanceName())
 						.put("target_instance_name", repository.getTargetEntity().getInstanceName())
@@ -158,10 +158,10 @@ public class RestTemplates {
 			rest.getRoasterJavaClass().addImport(EntityNotFoundException.class);
 			method.getRoasterMethod().setBody(
 					JavaTemplate.from(""
-							+ "	if ({{repository_instance_name}}.exists(id)) {"
-							+ " 	{{repository_instance_name}}.delete(id);"
+							+ "	if (!{{repository_instance_name}}.exists(id)) {"
+							+ " 	throw new EntityNotFoundException(\"Entidade {{target_name}} não encontrada.\");"
 							+ " }"
-							+ " throw new EntityNotFoundException(\"Entidade {{target_name}} não encontrada.\");"
+							+ " {{repository_instance_name}}.delete(id);"
 							+ "")
 						.put("repository_instance_name", repository.getInstanceName())
 						.put("target_instance_name", repository.getTargetEntity().getInstanceName())
@@ -203,10 +203,10 @@ public class RestTemplates {
 				.addAnnotation(PathVariable.class);
 			method.getRoasterMethod().setBody(
 					JavaTemplate.from(""
-							+ "	if ({{repository_instance_name}}.exists(id)) {"
-							+ " 	return {{repository_instance_name}}.findOne(id);"
+							+ "	if (!{{repository_instance_name}}.exists(id)) {"
+							+ " 	throw new EntityNotFoundException(\"Entidade {{target_name}} não encontrada.\");"
 							+ " }"
-							+ " throw new EntityNotFoundException(\"Entidade {{target_name}} não encontrada.\");"
+							+ " return {{repository_instance_name}}.findOne(id);"
 							+ "")
 						.put("repository_instance_name", repository.getInstanceName())
 						.put("target_instance_name", repository.getTargetEntity().getInstanceName())
