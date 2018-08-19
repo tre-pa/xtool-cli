@@ -6,6 +6,8 @@ import javax.persistence.EntityNotFoundException;
 
 import org.hibernate.annotations.Immutable;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
+import org.jboss.forge.roaster.model.source.JavaDocSource;
+import org.jboss.forge.roaster.model.source.MethodSource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.CacheControl;
@@ -49,15 +51,21 @@ public class RestTemplates {
 							repository.getTargetEntity().getName(), 
 							repository.getTargetEntity().getInstanceName())
 					.addAnnotation(RequestBody.class);
-				// @formatter:on
 
-			// @formatter:off
-			method.getRoasterMethod().setBody(
+				// @formatter:off
+				method.getRoasterMethod().setBody(
 					JavaTemplate.from("return {{repository_instance_name}}.save({{target_instance_name}});")
 						.put("repository_instance_name", repository.getInstanceName())
 						.put("target_instance_name", repository.getTargetEntity().getInstanceName())
 					.build());
-			// @formatter:on
+				JavaDocSource<MethodSource<JavaClassSource>> javaDoc = method.getRoasterMethod().getJavaDoc();
+				javaDoc.setText(
+						JavaTemplate.from("Cria um novo(a) {{target_name}}")
+						.put("target_name", repository.getTargetEntity().getName())
+						.build()); 
+				javaDoc.addTagValue("@param", repository.getTargetEntity().getInstanceName());
+				javaDoc.addTagValue("@return", "Entidade gerenciada.");
+				// @formatter:on
 			}
 		}
 	}
@@ -155,7 +163,7 @@ public class RestTemplates {
 	 * @param repository
 	 */
 	public static void genFindOne(EBootRest rest, EJpaRepository repository) {
-		if (!rest.getRoasterJavaClass().hasMethodSignature("findOne", Long.class.getSimpleName(), repository.getTargetEntity().getName())) {
+		if (!rest.getRoasterJavaClass().hasMethodSignature("findOne", Long.class.getSimpleName())) {
 			rest.getRoasterJavaClass().addImport(repository.getTargetEntity().getQualifiedName());
 
 			EJavaMethod<JavaClassSource> method = rest.addMethod("findOne");
@@ -172,7 +180,7 @@ public class RestTemplates {
 			method.getRoasterMethod().setBody(
 					JavaTemplate.from(""
 							+ "	if ({{repository_instance_name}}.exists(id)) {"
-							+ " 	{{repository_instance_name}}.findOne(id);"
+							+ " 	return {{repository_instance_name}}.findOne(id);"
 							+ " }"
 							+ " throw new EntityNotFoundException(\"Entidade {{target_name}} não encontrada.\");"
 							+ "")
@@ -212,6 +220,25 @@ public class RestTemplates {
 						.put("repository_instance_name", repository.getInstanceName())
 						.put("target_instance_name", repository.getTargetEntity().getInstanceName())
 						.put("target_name", repository.getTargetEntity().getName())
+					.build());
+			// @formatter:on
+		}
+	}
+
+	public static void genCount(EBootRest rest, EJpaRepository repository) {
+		if (!rest.getRoasterJavaClass().hasMethodSignature("count")) {
+			EJavaMethod<JavaClassSource> method = rest.addMethod("count");
+			method.getRoasterMethod().setPublic();
+			// @formatter:off
+			method.getRoasterMethod()
+				.addAnnotation(GetMapping.class)
+				.setStringValue("path", "/_count");
+			method.getRoasterMethod().setReturnType(long.class);
+			method.getRoasterMethod().setBody(
+					JavaTemplate.from(""
+							+ "	return {{repository_instance_name}}.count(); "
+							+ "")
+						.put("repository_instance_name", repository.getInstanceName())
 					.build());
 			// @formatter:on
 		}

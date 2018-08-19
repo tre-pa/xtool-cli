@@ -38,6 +38,7 @@ public class GenRestCommand extends SpringBootAware {
 			RestTemplates.genInsertMethod(rest, repository);
 			RestTemplates.genUpdateMethod(rest, repository);
 			RestTemplates.genDeleteMethod(rest, repository);
+			RestTemplates.genCount(rest, repository);
 		});
 		//		this.bootProjectService.save(rest);
 

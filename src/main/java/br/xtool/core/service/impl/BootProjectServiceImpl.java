@@ -56,6 +56,7 @@ import br.xtool.core.util.RoasterUtil;
 import br.xtool.core.visitor.Visitor;
 import br.xtool.service.BootProjectService;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import strman.Strman;
 
 @Service
@@ -424,6 +425,7 @@ public class BootProjectServiceImpl implements BootProjectService {
 	private EBootRest newRest(EBootProject bootProject, String restName, EJpaRepository repository) {
 		EBootRest rest = new EBootRestImpl(bootProject, RoasterUtil.createJavaClassSource(restName));
 		rest.getRoasterJavaClass().setPackage(bootProject.getRootPackage().getName().concat(".rest"));
+		rest.getRoasterJavaClass().addAnnotation(Slf4j.class);
 		rest.getRoasterJavaClass().addImport(Autowired.class);
 		rest.getRoasterJavaClass().addImport(repository.getQualifiedName());
 		rest.getRoasterJavaClass().addAnnotation(RestController.class);
