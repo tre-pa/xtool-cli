@@ -1,13 +1,10 @@
-import { UnidadeService } from './../service/unidade.service';
-import { Unidade } from './../domain/unidade';
-import { RoleReource } from './role-resource';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map'
 import 'rxjs/add/observable/fromPromise';
 import { Injectable } from "@angular/core";
 
-import { environment } from './../../environments/environment';
+import { environment } from './../../../environments/environment';
 import { CookieService } from 'ngx-cookie-service';
 
 declare var Keycloak: any;
@@ -41,19 +38,12 @@ export class KeycloakService {
                     setInterval(function () {
 
                       keycloak.updateToken(70).success(function (refreshed) {
-                        if (refreshed) {
-                          console.log('Token refreshed');
-                        } else {
-                          console.log('Token not refreshed, valid for '
-                            + Math.round(keycloak.tokenParsed.exp + keycloak.timeSkew - new Date().getTime() / 1000) + ' seconds');
-                        }
+                        //Sucesso
                       }).error(function () {
                         console.error('Failed to refresh token');
                       });
 
                     }, 60000);
-
-                    console.log("Loading...");
 
                     resolve();
                 })
@@ -66,12 +56,8 @@ export class KeycloakService {
     public initConfig(): void{
         //Evento disparado quando token é expirado.
         KeycloakService.auth.authz.onTokenExpired = () => {
-            console.info('auth token expired');
-
             KeycloakService.auth.authz.updateToken()
-                .success(() => {
-                    console.info('auth token updated');
-                })
+                .success(() => {  })
                 .error(() => {
                     throw new Error('failed to update token on expired');
                 });
@@ -82,7 +68,6 @@ export class KeycloakService {
      * Método de logout
      */
     logout() {
-        console.log('*** LOGOUT');
         KeycloakService.auth.loggedIn = false;
         KeycloakService.auth.authz = null;
 
@@ -121,19 +106,11 @@ export class KeycloakService {
     }
 
     /**
-     * Verifica se o usuário possui a regra informada.
-     * @param role Regra a pesquisar
-     */
-    static hasResourceRoleSboot(role: string): boolean {
-        return KeycloakService.auth.authz.hasResourceRole(role, environment.keycloak_clientId_sboot);
-    }
-
-    /**
      * Verifica se o usuário possui a regra informada para o angular
      * @param role 
      */
-    static hasResourceRoleAngular(role: string): boolean {
-        return KeycloakService.auth.authz.hasResourceRole(role, environment.keycloak_clientId_angular);
+    static hasResourceRole(role: string): boolean {
+        return KeycloakService.auth.authz.hasResourceRole(role, environment.keycloak_installation.clientId);
     }
 
     public isTokenExpired() {
