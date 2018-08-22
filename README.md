@@ -6,6 +6,12 @@ Ferramenta de Produtividade para Desenvolvimento de Aplicações Angular e Sprin
 
 A ferrament `xtool-cli` é um projeto Spring Boot utilizando a biblioteca Spring Shell. A ferramenta é baseada em linha de comando.
 
+# Pré-Requisito
+Ter o Maven instalado na máquina.
+Para Fedora
+```sh
+sudo dnf install maven
+```
 
 **1.** Clonar o projeto 
 
