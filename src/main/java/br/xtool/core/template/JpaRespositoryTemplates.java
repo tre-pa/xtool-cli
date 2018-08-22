@@ -11,7 +11,7 @@ import br.xtool.core.representation.EJpaRepository;
 public class JpaRespositoryTemplates {
 
 	public static void genFindAllEntities(EJpaRepository repository) {
-		if (!repository.getRoasterInterface().hasMethodSignature("findAllEntites", Pageable.class.getSimpleName())) {
+		if (!repository.getRoasterInterface().hasMethodSignature("findAllEntities", Pageable.class.getSimpleName())) {
 			repository.getRoasterInterface().addImport(Query.class);
 			repository.getRoasterInterface().addImport(repository.getTargetProjection().getQualifiedName());
 			repository.getRoasterInterface().addImport(Page.class);

@@ -41,14 +41,25 @@ public class FileServiceImpl implements FileService {
 		// @formatter:on
 	}
 
+	private EResource getResource(Path resourcePath, Map<String, Object> vars) {
+		Path realRootPath = EResource.ROOT_PATH.resolve(resourcePath);
+		VelocityContext velocityContext = new VelocityContext(vars);
+		return new EResourceImpl(realRootPath, resourcePath, this.velocityEngine, velocityContext);
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * @see br.xtool.core.service.FileService#copy(java.util.Collection, br.xtool.core.representation.EProject)
 	 */
 	@Override
 	public <T extends EProject> void copy(Path resourcePath, Map<String, Object> vars, T destProject) {
-		Collection<EResource> resources = this.getResources(resourcePath, vars);
-		resources.forEach(resource -> this.copy(resource, destProject.getPath()));
+		if (Files.isDirectory(EResource.ROOT_PATH.resolve(resourcePath))) {
+			Collection<EResource> resources = this.getResources(resourcePath, vars);
+			resources.forEach(resource -> this.copy(resource, destProject.getPath()));
+			return;
+		}
+		EResource resource = this.getResource(resourcePath, vars);
+		this.copy(resource, destProject.getPath());
 	}
 
 	/*
@@ -57,8 +68,14 @@ public class FileServiceImpl implements FileService {
 	 */
 	@Override
 	public void copy(Path resourcePath, Map<String, Object> vars, Path path) {
-		Collection<EResource> resources = this.getResources(resourcePath, vars);
-		resources.forEach(resource -> this.copy(resource, path));
+		if (Files.isDirectory(EResource.ROOT_PATH.resolve(resourcePath))) {
+			Collection<EResource> resources = this.getResources(resourcePath, vars);
+			resources.forEach(resource -> this.copy(resource, path));
+			return;
+		}
+		//		System.out.println("Resource: " + Files.isDirectory(EResource.ROOT_PATH.resolve(resourcePath)));
+		EResource resource = this.getResource(resourcePath, vars);
+		this.copy(resource, path);
 	}
 
 	@SneakyThrows
@@ -68,13 +85,13 @@ public class FileServiceImpl implements FileService {
 
 	@SneakyThrows
 	private void copy(EResource resource, Path path) {
-		Path finalPath = path.resolve(resource.getPath());
+		Path finalPath = path.resolve(resource.getRelativePath());
 		if (Files.notExists(finalPath.getParent())) Files.createDirectories(finalPath.getParent());
 		OutputStream os = Files.newOutputStream(finalPath);
 		os.write(resource.read());
 		os.flush();
 		os.close();
-		ConsoleLog.print("\t" + ConsoleLog.green("[+] "), resource.getPath().toString());
+		ConsoleLog.print("\t" + ConsoleLog.green("[+] "), resource.getRelativePath().toString());
 	}
 
 }

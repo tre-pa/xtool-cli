@@ -17,7 +17,7 @@ public class EResourceImpl implements EResource {
 
 	private Path rootPath;
 
-	private Path path;
+	private Path relativePath;
 
 	private VelocityEngine velocityEngine;
 
@@ -26,27 +26,35 @@ public class EResourceImpl implements EResource {
 	public EResourceImpl(Path rootPath, Path path, VelocityEngine velocityEngine, VelocityContext velocityContext) {
 		super();
 		this.rootPath = rootPath;
-		this.path = path;
+		this.relativePath = path;
 		this.velocityEngine = velocityEngine;
 		this.velocityContext = velocityContext;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EResource#getPath()
+	 */
 	@Override
-	public Path getPath() {
+	public Path getRelativePath() {
 		StringWriter stringWriter = new StringWriter();
-		this.velocityEngine.evaluate(this.velocityContext, stringWriter, new String(), StringUtils.removeEnd(this.path.toString(), ".vm"));
+		this.velocityEngine.evaluate(this.velocityContext, stringWriter, new String(), StringUtils.removeEnd(this.relativePath.toString(), ".vm"));
 		return Paths.get(stringWriter.toString());
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EResource#read()
+	 */
 	@Override
 	@SneakyThrows
 	public byte[] read() {
-		if (this.path.toString().endsWith(".vm")) {
+		if (this.relativePath.toString().endsWith(".vm")) {
 			StringWriter stringWriter = new StringWriter();
-			this.velocityEngine.evaluate(this.velocityContext, stringWriter, new String(), new String(Files.readAllBytes(this.rootPath.resolve(this.path))));
+			this.velocityEngine.evaluate(this.velocityContext, stringWriter, new String(), new String(Files.readAllBytes(this.rootPath.resolve(this.relativePath))));
 			return stringWriter.toString().getBytes(StandardCharsets.UTF_8);
 		}
-		return Files.readAllBytes(this.rootPath.resolve(this.path));
+		return Files.readAllBytes(this.rootPath.resolve(this.relativePath));
 	}
 
 }

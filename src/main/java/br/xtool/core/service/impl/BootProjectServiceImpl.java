@@ -210,23 +210,31 @@ public class BootProjectServiceImpl implements BootProjectService {
 	 * @see br.xtool.core.service.BootService#convertUmlClassDiagramToJavaClasses(br.xtool.core.representation.EBootProject)
 	 */
 	@Override
-	public void convertUmlClassDiagramToJavaClasses(EBootProject bootProject, Set<Visitor> vistors) {
+	public Collection<EJavaClass> umlClassesToJavaClasses(EBootProject bootProject, Set<Visitor> vistors) {
 		// @formatter:off
 		Collection<EJavaClass> javaClasses = bootProject.getDomainClassDiagram().getClasses().stream()
 				.map(umlClass -> convertUmlClassToJavaClass(bootProject, umlClass, vistors))
 				.collect(Collectors.toList());
 		// @formatter:on
 		javaClasses.stream().forEach(javaClass -> this.save(bootProject.getMainSourceFolder(), javaClass));
+		print(bold(cyan(String.valueOf(javaClasses.size()))), " classes mapeadas.");
+		return javaClasses;
+	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.service.BootProjectService#umlEnumsToJavaEnums(br.xtool.core.representation.EBootProject, java.util.Set)
+	 */
+	@Override
+	public Collection<EJavaEnum> umlEnumsToJavaEnums(EBootProject bootProject, Set<Visitor> vistors) {
 		// @formatter:off
 		Collection<EJavaEnum> javaEnums = bootProject.getDomainClassDiagram().getEnums().stream()
 				.map(umlEnum -> this.convertUmlEnumToJavaEnum(bootProject, umlEnum))
 				.collect(Collectors.toList());
 		// @formatter:on
 		javaEnums.stream().forEach(javaEnum -> this.save(javaEnum));
-
-		print(bold(cyan(String.valueOf(javaClasses.size()))), " classes mapeadas.");
 		print(bold(cyan(String.valueOf(javaEnums.size()))), " enums mapeadas.");
+		return javaEnums;
 	}
 
 	// Converte uma classe UML para um objeto EJavaClass.

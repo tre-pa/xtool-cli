@@ -21,7 +21,7 @@ public interface EResource {
 	 * 
 	 * @return
 	 */
-	Path getPath();
+	Path getRelativePath();
 
 	/**
 	 * Conteúdo em byte do recurso.

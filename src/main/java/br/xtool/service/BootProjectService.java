@@ -1,6 +1,7 @@
 package br.xtool.service;
 
 import java.nio.file.Path;
+import java.util.Collection;
 import java.util.Set;
 import java.util.function.Consumer;
 
@@ -8,6 +9,8 @@ import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.EBootProject.BootProjectSupport;
 import br.xtool.core.representation.EBootRest;
 import br.xtool.core.representation.EBootService;
+import br.xtool.core.representation.EJavaClass;
+import br.xtool.core.representation.EJavaEnum;
 import br.xtool.core.representation.EJavaType;
 import br.xtool.core.representation.EJpaEntity;
 import br.xtool.core.representation.EJpaProjection;
@@ -82,13 +85,22 @@ public interface BootProjectService {
 	void save(EJavaType<?>... javaTypes);
 
 	/**
-	 * Converte o diagrama de classe UML para as classes correspondentes.
+	 * Converte as classs UML para as classes Java correspondentes.
 	 * 
 	 * @param bootProject
 	 * @param umlClass
 	 * @return
 	 */
-	void convertUmlClassDiagramToJavaClasses(EBootProject bootProject, Set<Visitor> vistors);
+	Collection<EJavaClass> umlClassesToJavaClasses(EBootProject bootProject, Set<Visitor> vistors);
+
+	/**
+	 * Converte os enums UML para as classes Java correspondentes.
+	 * 
+	 * @param bootProject
+	 * @param vistors
+	 * @return
+	 */
+	Collection<EJavaEnum> umlEnumsToJavaEnums(EBootProject bootProject, Set<Visitor> vistors);
 
 	/**
 	 * Cria a interface de repositório no projeto.
