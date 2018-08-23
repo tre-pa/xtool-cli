@@ -189,6 +189,7 @@ public class RestTemplates {
 	public static void genFindOne(EBootRest rest, EJpaRepository repository) {
 		if (!rest.getRoasterJavaClass().hasMethodSignature("findOne", Long.class.getSimpleName())) {
 			rest.getRoasterJavaClass().addImport(repository.getTargetEntity().getQualifiedName());
+			rest.getRoasterJavaClass().addImport(EntityNotFoundException.class);
 
 			EJavaMethod<JavaClassSource> method = rest.addMethod("findOne");
 			method.getRoasterMethod().setPublic();

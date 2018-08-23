@@ -116,6 +116,7 @@ public class BootProjectServiceImpl implements BootProjectService {
 		prefs.setProperty(DefaultCodeFormatterConstants.FORMATTER_BLANK_LINES_BEFORE_FIELD, "1");
 		prefs.setProperty(DefaultCodeFormatterConstants.FORMATTER_BLANK_LINES_AFTER_IMPORTS, "1");
 		prefs.setProperty(DefaultCodeFormatterConstants.FORMATTER_BLANK_LINES_AFTER_PACKAGE, "1");
+		prefs.setProperty(DefaultCodeFormatterConstants.FORMATTER_USE_ON_OFF_TAGS, DefaultCodeFormatterConstants.TRUE);
 
 		//		prefs.setProperty(DefaultCodeFormatterConstants., "TRUE");
 		try (BufferedWriter write = Files.newBufferedWriter(javaPath)) {
@@ -188,6 +189,7 @@ public class BootProjectServiceImpl implements BootProjectService {
 		prefs.setProperty(DefaultCodeFormatterConstants.FORMATTER_BLANK_LINES_BEFORE_FIELD, "1");
 		prefs.setProperty(DefaultCodeFormatterConstants.FORMATTER_BLANK_LINES_AFTER_IMPORTS, "1");
 		prefs.setProperty(DefaultCodeFormatterConstants.FORMATTER_BLANK_LINES_AFTER_PACKAGE, "1");
+		prefs.setProperty(DefaultCodeFormatterConstants.FORMATTER_USE_ON_OFF_TAGS, DefaultCodeFormatterConstants.TRUE);
 		try (BufferedWriter write = Files.newBufferedWriter(javaPath)) {
 			String formatedJavaClassSource = Roaster.format(prefs, javaType.toUnformattedString());
 			write.write(formatedJavaClassSource);
