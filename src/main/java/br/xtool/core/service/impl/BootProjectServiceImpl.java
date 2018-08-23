@@ -315,7 +315,7 @@ public class BootProjectServiceImpl implements BootProjectService {
 
 	private EJpaProjection newProjection(EBootProject bootProject, String projectionName, EJpaEntity entity) {
 		EJpaProjection projection = new EJpaProjectionImpl(bootProject, RoasterUtil.createJavaInterface(projectionName));
-		projection.getRoasterInterface().setPackage(bootProject.getRootPackage().getName().concat(".repository").concat(".projection"));
+		projection.getRoasterInterface().setPackage(bootProject.getRootPackage().getName().concat(".domain").concat(".projection"));
 		// @formatter:off
 		entity.getJavaFields().stream()
 			.filter(javaField -> !javaField.getRoasterField().isStatic())
