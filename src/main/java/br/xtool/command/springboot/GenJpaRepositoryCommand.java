@@ -14,8 +14,8 @@ import br.xtool.core.provider.EJpaEntityValueProvider;
 import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.EJpaEntity;
 import br.xtool.core.representation.EJpaProjection;
-import br.xtool.core.representation.EJpaSpecification;
 import br.xtool.core.template.JpaRespositoryTemplates;
+import br.xtool.core.template.JpaSpecificationTemplates;
 import br.xtool.service.BootProjectService;
 import br.xtool.service.WorkspaceService;
 
@@ -40,8 +40,10 @@ public class GenJpaRepositoryCommand extends SpringBootAware {
 
 		EBootProject bootProject = this.workspaceService.getWorkingProject(EBootProject.class);
 		EJpaProjection projection = this.bootProjectService.createProjection(bootProject, entity);
-		EJpaSpecification specification = this.bootProjectService.createSpecification(bootProject, entity);
-		this.bootProjectService.save(projection, specification);
+		this.bootProjectService.createSpecification(bootProject, entity, specification -> {
+			JpaSpecificationTemplates.genDefaultSpecifications(specification, entity.getAttributes());
+		});
+		this.bootProjectService.save(projection);
 
 		this.bootProjectService.createRepository(bootProject, entity, repository -> {
 			JpaRespositoryTemplates.genFindAllEntities(repository);

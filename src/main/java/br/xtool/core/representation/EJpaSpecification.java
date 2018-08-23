@@ -8,4 +8,5 @@ package br.xtool.core.representation;
  */
 public interface EJpaSpecification extends EJavaClass {
 
+	EJpaEntity getTargetEntity();
 }
