@@ -1,21 +1,16 @@
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
-import { AppComponent } from './app.component';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { SharedModule } from './@core/shared.module';
 import { AppRoutingModule } from './app-routing.module';
-import { NavListLayoutComponent } from './@core/layout/nav-list-layout/nav-list-layout.component';
-import { NavViewLayoutComponent } from './@core/layout/nav-view-layout/nav-view-layout.component';
-import { NavLinkComponent } from './view/@common/nav-link/nav-link.component';
-import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { AppComponent } from './app.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavViewLayoutComponent,
-    NavListLayoutComponent,
-    NavLinkComponent
+    
   ],
   imports: [
     BrowserModule,
