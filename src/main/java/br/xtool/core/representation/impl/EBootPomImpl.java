@@ -22,6 +22,7 @@ import br.xtool.core.representation.EBootPom;
 import br.xtool.core.representation.EBootPomDependency;
 import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.EJavaPackage;
+import br.xtool.core.representation.impl.EBootPomDependencyImpl.ScopeType;
 
 public class EBootPomImpl implements EBootPom {
 
@@ -139,6 +140,15 @@ public class EBootPomImpl implements EBootPom {
 	@Override
 	public EBootPom addDependency(String groupId, String artifactId, String version) {
 		EBootPomDependencyImpl dependency = new EBootPomDependencyImpl(groupId, artifactId, version);
+		if (!hasArtifactId(dependency.getArtifactId())) {
+			this.pomDoc.getRootElement().getChild("dependencies", NAMESPACE).addContent(dependency.getAsDom());
+		}
+		return this;
+	}
+
+	@Override
+	public EBootPom addDependency(String groupId, String artifactId, ScopeType scopeType) {
+		EBootPomDependencyImpl dependency = new EBootPomDependencyImpl(groupId, artifactId, scopeType);
 		if (!hasArtifactId(dependency.getArtifactId())) {
 			this.pomDoc.getRootElement().getChild("dependencies", NAMESPACE).addContent(dependency.getAsDom());
 		}

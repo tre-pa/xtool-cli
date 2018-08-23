@@ -5,6 +5,8 @@ import java.util.Optional;
 
 import org.jdom2.Namespace;
 
+import br.xtool.core.representation.impl.EBootPomDependencyImpl.ScopeType;
+
 /**
  * Representação do arquivo pom.xml do projeto Spring Boot.
  * 
@@ -73,6 +75,15 @@ public interface EBootPom {
 	 * @param dependency
 	 */
 	EBootPom addDependency(String groupId, String artifactId, String version);
+
+	/**
+	 * 
+	 * @param groupId
+	 * @param artifactId
+	 * @param scopeType
+	 * @return
+	 */
+	EBootPom addDependency(String groupId, String artifactId, ScopeType scopeType);
 
 	void save();
 

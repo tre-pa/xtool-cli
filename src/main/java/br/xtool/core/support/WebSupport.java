@@ -9,6 +9,7 @@ import br.xtool.core.representation.EBootAppProperties;
 import br.xtool.core.representation.EBootPom;
 import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.EBootProject.BootProjectSupport;
+import br.xtool.core.representation.impl.EBootPomDependencyImpl.ScopeType;
 import br.xtool.service.BootProjectService;
 import strman.Strman;
 
@@ -40,6 +41,7 @@ public class WebSupport implements BootProjectSupport {
 		// @formatter:off
 		pom
 		  .addDependency("org.springframework.boot", "spring-boot-starter-web")
+		  .addDependency("org.springframework.restdocs", "spring-restdocs-mockmvc", ScopeType.TEST)
 		  .addDependency("com.fasterxml.jackson.datatype", "jackson-datatype-jsr310")
 		.save();
 		// @formatter:on

@@ -4,9 +4,11 @@ import java.util.Optional;
 
 import org.jdom2.Element;
 
-import br.xtool.core.representation.EBootPomDependency;
 import br.xtool.core.representation.EBootPom;
+import br.xtool.core.representation.EBootPomDependency;
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
 /**
  * Classe que representa uma depêndencia do pom.xml
@@ -21,6 +23,30 @@ public class EBootPomDependencyImpl implements EBootPomDependency {
 	private String artifactId;
 
 	private String version;
+
+	private ScopeType scope = ScopeType.COMPILE;
+
+	@AllArgsConstructor
+	@Getter
+	public enum ScopeType {
+		COMPILE(""), TEST("test"), IMPORT("import"), SYSTEM("system"), PROVIDED("provided"), RUNTIME("runtime");
+		private String scope;
+	}
+
+	public EBootPomDependencyImpl(String groupId, String artifactId, String version, ScopeType scope) {
+		super();
+		this.groupId = groupId;
+		this.artifactId = artifactId;
+		this.version = version;
+		this.scope = scope;
+	}
+
+	public EBootPomDependencyImpl(String groupId, String artifactId, ScopeType scope) {
+		super();
+		this.groupId = groupId;
+		this.artifactId = artifactId;
+		this.scope = scope;
+	}
 
 	public EBootPomDependencyImpl(String groupId, String artifactId, String version) {
 		super();
@@ -46,6 +72,7 @@ public class EBootPomDependencyImpl implements EBootPomDependency {
 		this.buildGroupId(dependency);
 		this.buildArtifiactId(dependency);
 		this.buildVersion(dependency);
+		this.buildScope(dependency);
 		return dependency;
 	}
 
@@ -69,6 +96,14 @@ public class EBootPomDependencyImpl implements EBootPomDependency {
 		}
 	}
 
+	private void buildScope(Element dependency) {
+		if (!this.getScope().equals(ScopeType.COMPILE)) {
+			Element scope = new Element("scope", EBootPom.NAMESPACE);
+			scope.setText(this.getScope().getScope());
+			dependency.addContent(scope);
+		}
+	}
+
 	@Override
 	public String getGroupId() {
 		return this.groupId;
@@ -84,9 +119,14 @@ public class EBootPomDependencyImpl implements EBootPomDependency {
 		return Optional.ofNullable(this.version);
 	}
 
+	public ScopeType getScope() {
+		return this.scope;
+	}
+
 	@Override
 	public String toString() {
 		return "Dependency [" + (this.groupId != null ? "groupId=" + this.groupId + ", " : "") + (this.artifactId != null ? "artifactId=" + this.artifactId : "")
 				+ (this.version != null ? ",version=" + this.version : "") + "]";
 	}
+
 }
