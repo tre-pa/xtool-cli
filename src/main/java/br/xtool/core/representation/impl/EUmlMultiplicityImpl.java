@@ -5,6 +5,7 @@ import java.util.stream.Stream;
 import org.apache.commons.lang3.StringUtils;
 
 import br.xtool.core.representation.EUmlClass;
+import br.xtool.core.representation.EUmlEntity;
 import br.xtool.core.representation.EUmlMultiplicity;
 
 public class EUmlMultiplicityImpl implements EUmlMultiplicity {
@@ -13,9 +14,9 @@ public class EUmlMultiplicityImpl implements EUmlMultiplicity {
 
 	private EUmlClass sourceClass;
 
-	private EUmlClass targetClass;
+	private EUmlEntity targetClass;
 
-	public EUmlMultiplicityImpl(EUmlClass sourceClass, EUmlClass targetClass, String sourceQualifier) {
+	public EUmlMultiplicityImpl(EUmlClass sourceClass, EUmlEntity targetClass, String sourceQualifier) {
 		super();
 		this.sourceQualifier = sourceQualifier;
 		this.sourceClass = sourceClass;

@@ -20,8 +20,8 @@ import org.jboss.forge.roaster.model.source.JavaClassSource;
 import com.google.common.collect.ImmutableSet;
 
 import br.xtool.core.representation.EUmlClass;
+import br.xtool.core.representation.EUmlEntity;
 import br.xtool.core.representation.EUmlField;
-import br.xtool.core.representation.EUmlPackage;
 import br.xtool.core.representation.EUmlRelationship;
 import br.xtool.core.representation.EUmlStereotype;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
@@ -31,48 +31,16 @@ import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 import strman.Strman;
 
-public class EUmlClassImpl implements EUmlClass {
+public class EUmlClassImpl extends EUmlEntityImpl implements EUmlClass {
 
 	private ClassDiagram classDiagram;
 
 	private ILeaf leaf;
 
 	public EUmlClassImpl(ClassDiagram classDiagram, ILeaf leaf) {
-		super();
+		super(leaf);
 		this.classDiagram = classDiagram;
 		this.leaf = leaf;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see br.xtool.core.representation.EUmlClass#getName()
-	 */
-	@Override
-	public String getName() {
-		return this.leaf.getDisplay().asStringWithHiddenNewLine();
-	}
-
-	@Override
-	public String getInstanceName() {
-		return StringUtils.uncapitalize(this.getName());
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see br.xtool.core.representation.EUmlClass#getQualifiedName()
-	 */
-	@Override
-	public String getQualifiedName() {
-		return this.getUmlPackage().getName().concat(".").concat(getName());
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see br.xtool.core.representation.EUmlClass#getPackage()
-	 */
-	@Override
-	public EUmlPackage getUmlPackage() {
-		return new EUmlPackageImpl(this.leaf.getParentContainer());
 	}
 
 	/*
@@ -267,15 +235,15 @@ public class EUmlClassImpl implements EUmlClass {
 		return null;
 	}
 
-	protected EUmlClass findClass(String className) {
+	protected EUmlEntity findUmlEntity(String className) {
 		String error = "Classe '%s' não definida no pacote. Insira a definção da classe com os atributos correspondentes no pacote.";
 		// @formatter:off
 		return this.classDiagram.getGroups(false).stream()
 			 .flatMap(groups -> groups.getLeafsDirect().stream())
-			 .filter(leaf1 -> leaf1.getEntityType().equals(LeafType.CLASS))
+			 .filter(leaf1 -> leaf1.getEntityType().equals(LeafType.CLASS) || leaf1.getEntityType().equals(LeafType.ENUM))
 			 .filter(leaf1 -> !leaf1.getDisplay().asStringWithHiddenNewLine().equals(this.getName()))
 			 .filter(leaf1 -> leaf1.getDisplay().asStringWithHiddenNewLine().equals(className))
-			 .map(_leaf -> new EUmlClassImpl(this.classDiagram, _leaf))
+			 .map(_leaf -> new EUmlEntityImpl(_leaf))
 			 .findAny()
 			 .orElseThrow(() -> new IllegalArgumentException(String.format(error, className)));
 		 // @formatter:on
@@ -290,7 +258,7 @@ public class EUmlClassImpl implements EUmlClass {
 		return this.classDiagram.getEntityFactory().getLinks().stream()
 			.filter(link -> link.getEntity1().getDisplay().asStringWithHiddenNewLine().equals(this.getName()))
 			.filter(p1.or(p2).or(p3).or(p4))
-			.map(link -> new EUmlRelationshipImpl(this, findClass(link.getEntity2().getDisplay().asStringWithHiddenNewLine()), link, getEntity2Qualifier(link), getEntity1Qualifier(link)))
+			.map(link -> new EUmlRelationshipImpl(this, findUmlEntity(link.getEntity2().getDisplay().asStringWithHiddenNewLine()), link, getEntity2Qualifier(link), getEntity1Qualifier(link)))
 			.collect(Collectors.toSet());
 		// @formatter:on
 	}
@@ -313,7 +281,7 @@ public class EUmlClassImpl implements EUmlClass {
 			.filter(link -> link.getEntity2().getDisplay().asStringWithHiddenNewLine().equals(this.getName()))
 			.filter(p1.or(p2).or(p3).or(p4))
 //			.map(link -> Pair.of(link, link.getEntity1().getDisplay().asStringWithHiddenNewLine()))
-			.map(link -> new EUmlRelationshipImpl(this, findClass(link.getEntity1().getDisplay().asStringWithHiddenNewLine()), link, getEntity1Qualifier(link), getEntity2Qualifier(link)))
+			.map(link -> new EUmlRelationshipImpl(this, findUmlEntity(link.getEntity1().getDisplay().asStringWithHiddenNewLine()), link, getEntity1Qualifier(link), getEntity2Qualifier(link)))
 			.collect(Collectors.toSet());
 		// @formatter:on
 	}

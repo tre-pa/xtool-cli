@@ -100,7 +100,7 @@ public interface BootProjectService {
 	 * @param vistors
 	 * @return
 	 */
-	Collection<EJavaEnum> umlEnumsToJavaEnums(EBootProject bootProject, Set<Visitor> vistors);
+	Collection<EJavaEnum> umlEnumsToJavaEnums(EBootProject bootProject);
 
 	/**
 	 * Cria a interface de repositório no projeto.

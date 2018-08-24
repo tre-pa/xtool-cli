@@ -48,6 +48,7 @@ public class GenClassesCommand extends SpringBootAware {
 		if (!noJpa) visitors.add(this.applicationContext.getBean(JpaVisitor.class));
 		if (!noJackson) visitors.add(this.applicationContext.getBean(JacksonVisitor.class));
 
+		this.bootProjectService.umlEnumsToJavaEnums(bootProject);
 		this.bootProjectService.umlClassesToJavaClasses(bootProject, visitors);
 	}
 

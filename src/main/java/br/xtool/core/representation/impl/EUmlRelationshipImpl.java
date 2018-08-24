@@ -3,6 +3,7 @@ package br.xtool.core.representation.impl;
 import org.apache.commons.lang3.StringUtils;
 
 import br.xtool.core.representation.EUmlClass;
+import br.xtool.core.representation.EUmlEntity;
 import br.xtool.core.representation.EUmlMultiplicity;
 import br.xtool.core.representation.EUmlRelationship;
 import br.xtool.core.util.Inflector;
@@ -18,11 +19,11 @@ public class EUmlRelationshipImpl implements EUmlRelationship {
 
 	private String sourceQualifier;
 
-	private EUmlClass targetClass;
+	private EUmlEntity targetClass;
 
 	private String targetQualifier;
 
-	public EUmlRelationshipImpl(EUmlClass sourceClass, EUmlClass targetClass, Link link, String sourceQualifer, String targetQualifier) {
+	public EUmlRelationshipImpl(EUmlClass sourceClass, EUmlEntity targetClass, Link link, String sourceQualifer, String targetQualifier) {
 		super();
 		this.sourceClass = sourceClass;
 		this.sourceQualifier = sourceQualifer;
@@ -93,7 +94,7 @@ public class EUmlRelationshipImpl implements EUmlRelationship {
 	 * @see br.xtool.core.representation.EUmlRelationship#getTargetClass()
 	 */
 	@Override
-	public EUmlClass getTargetClass() {
+	public EUmlEntity getTargetClass() {
 		return this.targetClass;
 	}
 

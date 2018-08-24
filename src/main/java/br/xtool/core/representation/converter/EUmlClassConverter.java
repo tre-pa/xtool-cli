@@ -46,7 +46,6 @@ public class EUmlClassConverter implements BiFunction<EBootProject, EUmlClass, E
 		// @formatter:on
 		this.visitors.forEach(visitor -> visitor.visit(javaClass));
 		umlClass.getStereotypes().stream().forEach(stereotype -> this.visit(javaClass, stereotype));
-		//		this.visit(javaClass, umlClass.);
 		return javaClass;
 	}
 

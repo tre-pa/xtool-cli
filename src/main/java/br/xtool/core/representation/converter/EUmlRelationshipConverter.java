@@ -60,14 +60,15 @@ public class EUmlRelationshipConverter implements BiFunction<EJavaClass, EUmlRel
 	private void visit(EJavaField javaField, EUmlRelationship umlRelationship) {
 		this.visitors.forEach(visitor -> {
 			visitor.visit(javaField, umlRelationship);
-			if (umlRelationship.isOneToOne() && umlRelationship.isAssociation()) visitor.visit(new EOneToOneFieldImpl(javaField), new EAssociationImpl(umlRelationship));
-			if (umlRelationship.isOneToMany() && umlRelationship.isAssociation()) visitor.visit(new EOneToManyFieldImpl(javaField), new EAssociationImpl(umlRelationship));
-			if (umlRelationship.isManyToOne() && umlRelationship.isAssociation()) visitor.visit(new EManyToOneFieldImpl(javaField), new EAssociationImpl(umlRelationship));
-			if (umlRelationship.isManyToMany() && umlRelationship.isAssociation()) visitor.visit(new EManyToManyFieldImpl(javaField), new EAssociationImpl(umlRelationship));
-			if (umlRelationship.isOneToOne() && umlRelationship.isComposition()) visitor.visit(new EOneToOneFieldImpl(javaField), new ECompositionImpl(umlRelationship));
-			if (umlRelationship.isOneToMany() && umlRelationship.isComposition()) visitor.visit(new EOneToManyFieldImpl(javaField), new ECompositionImpl(umlRelationship));
-			if (umlRelationship.isManyToOne() && umlRelationship.isComposition()) visitor.visit(new EManyToOneFieldImpl(javaField), new ECompositionImpl(umlRelationship));
-
+			if (!javaField.isEnum()) {
+				if (umlRelationship.isOneToOne() && umlRelationship.isAssociation()) visitor.visit(new EOneToOneFieldImpl(javaField), new EAssociationImpl(umlRelationship));
+				if (umlRelationship.isOneToMany() && umlRelationship.isAssociation()) visitor.visit(new EOneToManyFieldImpl(javaField), new EAssociationImpl(umlRelationship));
+				if (umlRelationship.isManyToOne() && umlRelationship.isAssociation()) visitor.visit(new EManyToOneFieldImpl(javaField), new EAssociationImpl(umlRelationship));
+				if (umlRelationship.isManyToMany() && umlRelationship.isAssociation()) visitor.visit(new EManyToManyFieldImpl(javaField), new EAssociationImpl(umlRelationship));
+				if (umlRelationship.isOneToOne() && umlRelationship.isComposition()) visitor.visit(new EOneToOneFieldImpl(javaField), new ECompositionImpl(umlRelationship));
+				if (umlRelationship.isOneToMany() && umlRelationship.isComposition()) visitor.visit(new EOneToManyFieldImpl(javaField), new ECompositionImpl(umlRelationship));
+				if (umlRelationship.isManyToOne() && umlRelationship.isComposition()) visitor.visit(new EManyToOneFieldImpl(javaField), new ECompositionImpl(umlRelationship));
+			}
 		});
 	}
 

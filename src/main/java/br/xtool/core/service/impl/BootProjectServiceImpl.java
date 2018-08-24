@@ -228,7 +228,7 @@ public class BootProjectServiceImpl implements BootProjectService {
 	 * @see br.xtool.service.BootProjectService#umlEnumsToJavaEnums(br.xtool.core.representation.EBootProject, java.util.Set)
 	 */
 	@Override
-	public Collection<EJavaEnum> umlEnumsToJavaEnums(EBootProject bootProject, Set<Visitor> vistors) {
+	public Collection<EJavaEnum> umlEnumsToJavaEnums(EBootProject bootProject) {
 		// @formatter:off
 		Collection<EJavaEnum> javaEnums = bootProject.getDomainClassDiagram().getEnums().stream()
 				.map(umlEnum -> this.convertUmlEnumToJavaEnum(bootProject, umlEnum))

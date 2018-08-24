@@ -6,26 +6,15 @@ import java.util.stream.Collectors;
 import org.springframework.util.StringUtils;
 
 import br.xtool.core.representation.EUmlEnum;
-import br.xtool.core.representation.EUmlPackage;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
 
-public class EUmlEnumImpl implements EUmlEnum {
+public class EUmlEnumImpl extends EUmlEntityImpl implements EUmlEnum {
 
 	private ILeaf leaf;
 
 	public EUmlEnumImpl(ILeaf leaf) {
-		super();
+		super(leaf);
 		this.leaf = leaf;
-	}
-
-	@Override
-	public String getName() {
-		return this.leaf.getDisplay().asStringWithHiddenNewLine();
-	}
-
-	@Override
-	public EUmlPackage getUmlPackage() {
-		return new EUmlPackageImpl(this.leaf.getParentContainer());
 	}
 
 	@Override

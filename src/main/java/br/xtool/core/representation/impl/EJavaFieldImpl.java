@@ -54,6 +54,11 @@ public class EJavaFieldImpl implements EJavaField {
 		return this.javaClass;
 	}
 
+	@Override
+	public boolean isEnum() {
+		return this.getJavaClass().getProject().getEnums().stream().anyMatch(javaEnum -> javaEnum.getName().equals(this.getType().getName()));
+	}
+
 	/**
 	 * Retorna o tipo do atributo.
 	 * 

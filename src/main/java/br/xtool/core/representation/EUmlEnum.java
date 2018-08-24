@@ -8,9 +8,7 @@ import java.util.Collection;
  * @author jcruz
  *
  */
-public interface EUmlEnum {
-
-	String getName();
+public interface EUmlEnum extends EUmlEntity {
 
 	/**
 	 * Retorna o pacote UML da classe.

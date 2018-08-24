@@ -27,6 +27,8 @@ public interface EJavaField extends Comparable<EJavaField> {
 
 	boolean isStatic();
 
+	boolean isEnum();
+
 	EJavaClass getJavaClass();
 
 	SortedSet<EJavaAnnotation<JavaClassSource>> getAnnotations();

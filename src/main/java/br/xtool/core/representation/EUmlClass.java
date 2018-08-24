@@ -12,36 +12,7 @@ import org.jboss.forge.roaster.model.source.JavaClassSource;
  * @author jcruz
  *
  */
-public interface EUmlClass extends JavaType<JavaClassSource> {
-
-	/**
-	 * Retorna o nome da classe UML.
-	 * 
-	 * @return
-	 */
-	@Override
-	String getName();
-
-	/**
-	 * 
-	 * @return
-	 */
-	String getInstanceName();
-
-	/**
-	 * Retorna o nome qualificado.
-	 * 
-	 * @return
-	 */
-	@Override
-	String getQualifiedName();;
-
-	/**
-	 * Retorna o pacote UML da classe.
-	 * 
-	 * @return
-	 */
-	EUmlPackage getUmlPackage();
+public interface EUmlClass extends EUmlEntity, JavaType<JavaClassSource> {
 
 	/**
 	 * Retorna os atributos da classe UML.

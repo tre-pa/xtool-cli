@@ -76,7 +76,7 @@ public interface EUmlRelationship {
 	 * 
 	 * @return
 	 */
-	EUmlClass getTargetClass();
+	EUmlEntity getTargetClass();
 
 	/**
 	 * 
