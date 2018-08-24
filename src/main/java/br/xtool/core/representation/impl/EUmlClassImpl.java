@@ -256,6 +256,7 @@ public class EUmlClassImpl extends EUmlEntityImpl implements EUmlClass {
 		Predicate<Link> p4 = (link) -> link.getType().getDecor1().equals(LinkDecor.COMPOSITION) && link.getType().getDecor2().equals(LinkDecor.ARROW);
 		// @formatter:off
 		return this.classDiagram.getEntityFactory().getLinks().stream()
+			.filter(link -> !link.getEntity1().getEntityType().equals(LeafType.NOTE))
 			.filter(link -> link.getEntity1().getDisplay().asStringWithHiddenNewLine().equals(this.getName()))
 			.filter(p1.or(p2).or(p3).or(p4))
 			.map(link -> new EUmlRelationshipImpl(this, findUmlEntity(link.getEntity2().getDisplay().asStringWithHiddenNewLine()), link, getEntity2Qualifier(link), getEntity1Qualifier(link)))
@@ -278,6 +279,7 @@ public class EUmlClassImpl extends EUmlEntityImpl implements EUmlClass {
 		Predicate<Link> p4 = (link) -> link.getType().getDecor2().equals(LinkDecor.COMPOSITION) && link.getType().getDecor1().equals(LinkDecor.ARROW);
 		// @formatter:off
 		return this.classDiagram.getEntityFactory().getLinks().stream()
+			.filter(link -> !link.getEntity1().getEntityType().equals(LeafType.NOTE))
 			.filter(link -> link.getEntity2().getDisplay().asStringWithHiddenNewLine().equals(this.getName()))
 			.filter(p1.or(p2).or(p3).or(p4))
 //			.map(link -> Pair.of(link, link.getEntity1().getDisplay().asStringWithHiddenNewLine()))
