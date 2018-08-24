@@ -99,7 +99,7 @@ public interface EJavaClass extends Comparable<EJavaClass>, EJavaType<JavaClassS
 	 */
 	JavaClassSource getRoasterJavaClass();
 
-	EJavaAnnotation<JavaClassSource> addTableAnnotation();
+	//	EJavaAnnotation<JavaClassSource> addTableAnnotation();
 
 	EJavaAnnotation<JavaClassSource> addToStringAnnotation(String... attributes);
 

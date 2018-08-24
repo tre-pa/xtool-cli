@@ -1,6 +1,8 @@
 package br.xtool.core.representation.impl;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -10,6 +12,7 @@ import java.util.stream.Stream;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
+import org.jtwig.util.HtmlUtils;
 
 import com.google.common.collect.Sets;
 
@@ -23,9 +26,12 @@ public class EUmlFieldImpl implements EUmlField {
 
 	private Member member;
 
-	public EUmlFieldImpl(Member member) {
+	private Map<String, String> taggedValues = new HashMap<>();
+
+	public EUmlFieldImpl(Member member, Map<String, String> taggedValues) {
 		super();
 		this.member = member;
+		this.taggedValues = taggedValues;
 	}
 
 	/*
@@ -188,19 +194,27 @@ public class EUmlFieldImpl implements EUmlField {
 		return new HashSet<>();
 	}
 
-	//	@Override
-	//	@Deprecated
-	//	public EJavaField convertToJavaField(EJavaClass javaClass) {
-	//		EJavaField javaField = javaClass.addField(getName());
-	//		RoasterUtil.addImport(javaField.getRoasterField().getOrigin(), this.getType().getClassName());
-//		// @formatter:off
-//		javaField.getRoasterField()
-//			.setName(this.getName())
-//			.setPrivate()
-//			.setType(this.getType().getJavaName());
-//		// @formatter:on
-	//		return javaField;
-	//	}
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EUmlField#getTaggedValues()
+	 */
+	@Override
+	public Map<String, String> getTaggedValues() {
+		// @formatter:off
+		return this.taggedValues.entrySet().stream()
+				.filter(map -> map.getKey().startsWith(this.getName()))
+				.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+		// @formatter:on
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EUmlField#getTaggedValue(java.lang.String)
+	 */
+	@Override
+	public Optional<String> getTaggedValue(String key) {
+		return Optional.ofNullable(this.getTaggedValues().get(String.format("%s.%s", this.getName(), HtmlUtils.stripTags(key))));
+	}
 
 	private String memberName() {
 		return StringUtils.trim(StringUtils.split(this.member.getDisplay(false), ":")[0]);

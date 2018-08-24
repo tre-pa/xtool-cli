@@ -8,8 +8,6 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
-import javax.persistence.Table;
-
 import org.apache.commons.lang3.StringUtils;
 import org.jboss.forge.roaster.model.JavaDoc;
 import org.jboss.forge.roaster.model.JavaType;
@@ -23,7 +21,6 @@ import br.xtool.core.representation.EJavaClass;
 import br.xtool.core.representation.EJavaField;
 import br.xtool.core.representation.EJavaMethod;
 import br.xtool.core.representation.EJavaPackage;
-import br.xtool.core.representation.EJpaEntity;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
@@ -166,12 +163,12 @@ public class EJavaClassImpl implements EJavaClass {
 		return this.javaClassSource;
 	}
 
-	@Override
-	public EJavaAnnotation<JavaClassSource> addTableAnnotation() {
-		EJavaAnnotation<JavaClassSource> ann = this.addAnnotation(Table.class);
-		ann.setStringValue("name", EJpaEntity.genDBTableName(this.getName()));
-		return ann;
-	}
+	//	@Override
+	//	public EJavaAnnotation<JavaClassSource> addTableAnnotation() {
+	//		EJavaAnnotation<JavaClassSource> ann = this.addAnnotation(Table.class);
+	//		ann.setStringValue("name", EJpaEntity.genDBTableName(this.getName()));
+	//		return ann;
+	//	}
 
 	/*
 	 * (non-Javadoc)

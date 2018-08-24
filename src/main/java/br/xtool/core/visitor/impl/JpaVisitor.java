@@ -14,6 +14,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.Version;
 
@@ -47,6 +48,7 @@ import br.xtool.core.representation.EJavaField.EStringField;
 import br.xtool.core.representation.EJavaField.ETransientField;
 import br.xtool.core.representation.EJavaField.EUniqueField;
 import br.xtool.core.representation.EJpaEntity;
+import br.xtool.core.representation.EUmlClass;
 import br.xtool.core.representation.EUmlField;
 import br.xtool.core.representation.EUmlFieldProperty;
 import br.xtool.core.representation.EUmlRelationship;
@@ -65,11 +67,13 @@ public class JpaVisitor implements Visitor {
 	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaClass, br.xtool.core.representation.EUmlClass)
 	 */
 	@Override
-	public void visit(EJavaClass javaClass) {
+	public void visit(EJavaClass javaClass, EUmlClass umlClass) {
 		javaClass.addAnnotation(Entity.class);
 		javaClass.addAnnotation(DynamicInsert.class);
 		javaClass.addAnnotation(DynamicUpdate.class);
-		javaClass.addTableAnnotation();
+		umlClass.getTaggedValue("table.name").ifPresent(tagValue -> javaClass.addAnnotation(Table.class).setStringValue("name", tagValue));
+		umlClass.getTaggedValue("table.schema").ifPresent(tagValue -> javaClass.addAnnotation(Table.class).setStringValue("schema", tagValue));
+
 	}
 
 	/*
@@ -152,7 +156,9 @@ public class JpaVisitor implements Visitor {
 	 */
 	@Override
 	public void visit(EStringField stringField, EUmlField umlField) {
-		stringField.addAnnotation(Column.class).setLiteralValue("length", String.valueOf(umlField.getMaxArrayLength().orElse(255)));
+		val annColumn = stringField.addAnnotation(Column.class);
+		annColumn.setLiteralValue("length", String.valueOf(umlField.getMaxArrayLength().orElse(255)));
+		umlField.getTaggedValue("column.name").ifPresent(tagValue -> annColumn.setStringValue("name", tagValue));
 	}
 
 	/*
@@ -161,7 +167,8 @@ public class JpaVisitor implements Visitor {
 	 */
 	@Override
 	public void visit(EBooleanField booleanField, EUmlField umlField) {
-		booleanField.addAnnotation(Column.class);
+		val annColumn = booleanField.addAnnotation(Column.class);
+		umlField.getTaggedValue("column.name").ifPresent(tagValue -> annColumn.setStringValue("name", tagValue));
 	}
 
 	/*
@@ -179,7 +186,9 @@ public class JpaVisitor implements Visitor {
 				.setLiteralValue("updatable", "false")
 				.setLiteralValue("nullable", "false");
 			// @formatter:on
+
 			return;
+
 		}
 		longField.addAnnotation(Column.class);
 	}
@@ -273,9 +282,8 @@ public class JpaVisitor implements Visitor {
 	@Override
 	public void visit(EJavaField javaField, EUmlRelationship umlRelationship) {
 		if (javaField.isEnum()) {
-			javaField.getRoasterField().addAnnotation(Enumerated.class).setEnumValue(EnumType.STRING);
+			javaField.addAnnotation(Enumerated.class).setEnumValue(EnumType.STRING);
 		}
-
 	}
 
 	/*

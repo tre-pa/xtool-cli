@@ -1,5 +1,6 @@
 package br.xtool.core.representation;
 
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
@@ -131,6 +132,15 @@ public interface EUmlField {
 	 * @return
 	 */
 	boolean hasProperty(FieldPropertyType propertyType);
+
+	Map<String, String> getTaggedValues();
+
+	/**
+	 * 
+	 * @param key
+	 * @return
+	 */
+	Optional<String> getTaggedValue(String key);
 
 	//	@Deprecated
 	//	EJavaField convertToJavaField(EJavaClass javaClass);

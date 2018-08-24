@@ -25,6 +25,7 @@ import br.xtool.core.representation.EJavaField.EOneToOneField;
 import br.xtool.core.representation.EJavaField.EStringField;
 import br.xtool.core.representation.EJavaField.ETransientField;
 import br.xtool.core.representation.EJavaField.EUniqueField;
+import br.xtool.core.representation.EUmlClass;
 import br.xtool.core.representation.EUmlField;
 import br.xtool.core.representation.EUmlFieldProperty;
 import br.xtool.core.representation.EUmlRelationship;
@@ -37,7 +38,7 @@ import br.xtool.core.visitor.Visitor;
 public class JacksonVisitor implements Visitor {
 
 	@Override
-	public void visit(EJavaClass javaClass) {
+	public void visit(EJavaClass javaClass, EUmlClass umlClass) {
 
 	}
 

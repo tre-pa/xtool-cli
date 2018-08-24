@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -17,6 +18,7 @@ import org.jboss.forge.roaster.model.JavaType;
 import org.jboss.forge.roaster.model.SyntaxError;
 import org.jboss.forge.roaster.model.Visibility;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
+import org.jtwig.util.HtmlUtils;
 
 import com.google.common.collect.ImmutableSet;
 
@@ -53,7 +55,7 @@ public class EUmlClassImpl extends EUmlEntityImpl implements EUmlClass {
 		// @formatter:off
 		return this.leaf.getBodier().getFieldsToDisplay().stream()
 				.filter(member -> StringUtils.isNotEmpty(member.getDisplay(false)))
-				.map(EUmlFieldImpl::new)
+				.map(member -> new EUmlFieldImpl(member, this.getTaggedValues()))
 				.collect(Collectors.toList());
 		// @formatter:on
 	}
@@ -243,8 +245,13 @@ public class EUmlClassImpl extends EUmlEntityImpl implements EUmlClass {
 			.filter(link -> link.getEntity2().getDisplay().asStringWithHiddenNewLine().equals(this.getName()))
 			.flatMap(link -> link.getEntity1().getDisplay().as2().stream())
 			.map(ch -> StringUtils.split(ch.toString(), ":"))
-			.collect(Collectors.toMap(tagValue -> StringUtils.trim(tagValue[0]) , tagValue -> StringUtils.trim(tagValue[1])));
+			.collect(Collectors.toMap(tagValue -> HtmlUtils.stripTags(StringUtils.trim(tagValue[0])) , tagValue -> StringUtils.trim(tagValue[1])));
 		// @formatter:on
+	}
+
+	@Override
+	public Optional<String> getTaggedValue(String key) {
+		return Optional.ofNullable(this.getTaggedValues().get(String.format("%s.%s", this.getName(), HtmlUtils.stripTags(key))));
 	}
 
 	protected EUmlEntity findUmlEntity(String className) {
