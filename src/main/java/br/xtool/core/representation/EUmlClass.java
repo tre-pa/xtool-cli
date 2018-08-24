@@ -1,6 +1,7 @@
 package br.xtool.core.representation;
 
 import java.util.Collection;
+import java.util.Map;
 import java.util.Set;
 
 import org.jboss.forge.roaster.model.JavaType;
@@ -33,5 +34,12 @@ public interface EUmlClass extends EUmlEntity, JavaType<JavaClassSource> {
 	 * @return
 	 */
 	Set<EUmlRelationship> getRelationships();
+
+	/**
+	 * Retorna os attributos chave/valor das notas associadas a classe.
+	 * 
+	 * @return
+	 */
+	Map<String, String> getTaggedValues();
 
 }

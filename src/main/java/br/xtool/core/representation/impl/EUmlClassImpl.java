@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.function.Predicate;
@@ -231,8 +232,19 @@ public class EUmlClassImpl extends EUmlEntityImpl implements EUmlClass {
 
 	@Override
 	public Visibility getVisibility() {
-		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public Map<String, String> getTaggedValues() {
+		// @formatter:off
+		return this.classDiagram.getEntityFactory().getLinks().stream()
+			.filter(link -> link.getEntity1().getEntityType().equals(LeafType.NOTE))
+			.filter(link -> link.getEntity2().getDisplay().asStringWithHiddenNewLine().equals(this.getName()))
+			.flatMap(link -> link.getEntity1().getDisplay().as2().stream())
+			.map(ch -> StringUtils.split(ch.toString(), ":"))
+			.collect(Collectors.toMap(tagValue -> StringUtils.trim(tagValue[0]) , tagValue -> StringUtils.trim(tagValue[1])));
+		// @formatter:on
 	}
 
 	protected EUmlEntity findUmlEntity(String className) {
