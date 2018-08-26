@@ -20,6 +20,7 @@ import org.jboss.forge.roaster.model.Visibility;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.jtwig.util.HtmlUtils;
 
+import com.google.common.base.Splitter;
 import com.google.common.collect.ImmutableSet;
 
 import br.xtool.core.representation.EUmlClass;
@@ -237,6 +238,10 @@ public class EUmlClassImpl extends EUmlEntityImpl implements EUmlClass {
 		return null;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EUmlClass#getTaggedValues()
+	 */
 	@Override
 	public Map<String, String> getTaggedValues() {
 		// @formatter:off
@@ -249,9 +254,38 @@ public class EUmlClassImpl extends EUmlEntityImpl implements EUmlClass {
 		// @formatter:on
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EUmlClass#getTaggedValue(java.lang.String)
+	 */
 	@Override
 	public Optional<String> getTaggedValue(String key) {
 		return Optional.ofNullable(this.getTaggedValues().get(String.format("%s.%s", this.getName(), HtmlUtils.stripTags(key))));
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EUmlClass#getTaggedValues(java.lang.String)
+	 */
+	@Override
+	public Optional<String[]> getTaggedValues(String key) {
+		String v = this.getTaggedValues().get(String.format("%s.%s", this.getName(), HtmlUtils.stripTags(key)));
+		if (StringUtils.isNotEmpty(v)) {
+			if (v.startsWith("[") && v.endsWith("]")) {
+				String v1 = Strman.between(v, "[", "]")[0];
+				if (StringUtils.isNotBlank(v1)) {
+					// @formatter:off
+					return Optional.of(
+						Splitter.on(",")
+							.trimResults()
+							.splitToList(v1)
+							.toArray(new String[]{})
+					);
+					// @formatter:on
+				}
+			}
+		}
+		return Optional.empty();
 	}
 
 	protected EUmlEntity findUmlEntity(String className) {

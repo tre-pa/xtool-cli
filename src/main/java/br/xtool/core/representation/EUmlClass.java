@@ -50,4 +50,6 @@ public interface EUmlClass extends EUmlEntity, JavaType<JavaClassSource> {
 	 */
 	Optional<String> getTaggedValue(String key);
 
+	Optional<String[]> getTaggedValues(String key);
+
 }
