@@ -14,6 +14,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.jtwig.util.HtmlUtils;
 
+import com.google.common.base.Splitter;
 import com.google.common.collect.Sets;
 
 import br.xtool.core.representation.EUmlField;
@@ -205,6 +206,31 @@ public class EUmlFieldImpl implements EUmlField {
 				.filter(map -> map.getKey().startsWith(this.getName()))
 				.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 		// @formatter:on
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EUmlField#getTaggedValues(java.lang.String)
+	 */
+	@Override
+	public Optional<String[]> getTaggedValues(String key) {
+		String v = this.getTaggedValues().get(String.format("%s.%s", this.getName(), HtmlUtils.stripTags(key)));
+		if (StringUtils.isNotEmpty(v)) {
+			if (v.startsWith("[") && v.endsWith("]")) {
+				String v1 = Strman.between(v, "[", "]")[0];
+				if (StringUtils.isNotBlank(v1)) {
+					// @formatter:off
+					return Optional.of(
+						Splitter.on(",")
+							.trimResults()
+							.splitToList(v1)
+							.toArray(new String[]{})
+					);
+					// @formatter:on
+				}
+			}
+		}
+		return Optional.empty();
 	}
 
 	/*

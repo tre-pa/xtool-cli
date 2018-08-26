@@ -142,6 +142,8 @@ public interface EUmlField {
 	 */
 	Optional<String> getTaggedValue(String key);
 
+	Optional<String[]> getTaggedValues(String key);
+
 	//	@Deprecated
 	//	EJavaField convertToJavaField(EJavaClass javaClass);
 
