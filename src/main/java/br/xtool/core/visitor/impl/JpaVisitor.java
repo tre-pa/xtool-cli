@@ -182,11 +182,11 @@ public class JpaVisitor implements Visitor {
 			longField.addGeneratedValueAnnotation(GenerationType.SEQUENCE);
 			longField.addSequenceGeneratorAnnotation();
 			// @formatter:off
-			longField.addAnnotation(Column.class)
+			val annColumn = longField.addAnnotation(Column.class)
 				.setLiteralValue("updatable", "false")
 				.setLiteralValue("nullable", "false");
 			// @formatter:on
-
+			umlField.getTaggedValue("column.name").ifPresent(tagValue -> annColumn.setStringValue("name", tagValue));
 			return;
 
 		}
@@ -199,7 +199,8 @@ public class JpaVisitor implements Visitor {
 	 */
 	@Override
 	public void visit(EIntegerField integerField, EUmlField umlField) {
-		integerField.addAnnotation(Column.class);
+		val annColumn = integerField.addAnnotation(Column.class);
+		umlField.getTaggedValue("column.name").ifPresent(tagValue -> annColumn.setStringValue("name", tagValue));
 	}
 
 	/*
@@ -208,7 +209,8 @@ public class JpaVisitor implements Visitor {
 	 */
 	@Override
 	public void visit(EByteField byteField, EUmlField umlField) {
-		byteField.addAnnotation(Lob.class);
+		val annColumn = byteField.addAnnotation(Lob.class);
+		umlField.getTaggedValue("column.name").ifPresent(tagValue -> annColumn.setStringValue("name", tagValue));
 	}
 
 	/*
@@ -217,7 +219,8 @@ public class JpaVisitor implements Visitor {
 	 */
 	@Override
 	public void visit(EBigDecimalField bigDecimalField, EUmlField umlField) {
-		bigDecimalField.addAnnotation(Column.class);
+		val annColumn = bigDecimalField.addAnnotation(Column.class);
+		umlField.getTaggedValue("column.name").ifPresent(tagValue -> annColumn.setStringValue("name", tagValue));
 	}
 
 	/*
@@ -226,7 +229,8 @@ public class JpaVisitor implements Visitor {
 	 */
 	@Override
 	public void visit(ELocalDateField localDateField, EUmlField umlField) {
-		localDateField.addAnnotation(Column.class);
+		val annColumn = localDateField.addAnnotation(Column.class);
+		umlField.getTaggedValue("column.name").ifPresent(tagValue -> annColumn.setStringValue("name", tagValue));
 	}
 
 	/*
@@ -235,7 +239,8 @@ public class JpaVisitor implements Visitor {
 	 */
 	@Override
 	public void visit(ELocalDateTimeField localDateTimeField, EUmlField umlField) {
-		localDateTimeField.addAnnotation(Column.class);
+		val annColumn = localDateTimeField.addAnnotation(Column.class);
+		umlField.getTaggedValue("column.name").ifPresent(tagValue -> annColumn.setStringValue("name", tagValue));
 	}
 
 	/*
