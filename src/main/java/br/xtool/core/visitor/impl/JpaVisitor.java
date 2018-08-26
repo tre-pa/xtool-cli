@@ -180,14 +180,16 @@ public class JpaVisitor implements Visitor {
 	public void visit(ELongField longField, EUmlField umlField) {
 		if (umlField.isId()) {
 			longField.addAnnotation(Id.class);
-			longField.addGeneratedValueAnnotation(GenerationType.SEQUENCE);
-			longField.addSequenceGeneratorAnnotation();
 			// @formatter:off
 			val annColumn = longField.addAnnotation(Column.class)
 				.setLiteralValue("updatable", "false")
 				.setLiteralValue("nullable", "false");
 			// @formatter:on
 			umlField.getTaggedValue("column.name").ifPresent(tagValue -> annColumn.setStringValue("name", tagValue));
+			if (!longField.getJavaClass().hasAnnotation(Immutable.class)) {
+				longField.addGeneratedValueAnnotation(GenerationType.SEQUENCE);
+				longField.addSequenceGeneratorAnnotation();
+			}
 			return;
 
 		}
