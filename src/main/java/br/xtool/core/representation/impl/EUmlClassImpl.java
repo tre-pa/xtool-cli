@@ -261,7 +261,7 @@ public class EUmlClassImpl extends EUmlEntityImpl implements EUmlClass {
 	 */
 	@Override
 	public Optional<String> getTaggedValue(String key) {
-		return Optional.ofNullable(this.getTaggedValues().get(String.format("%s.%s", this.getName(), HtmlUtils.stripTags(key))));
+		return Optional.ofNullable(this.getTaggedValues().get(String.format("@%s", HtmlUtils.stripTags(key))));
 	}
 
 	/*
@@ -270,7 +270,7 @@ public class EUmlClassImpl extends EUmlEntityImpl implements EUmlClass {
 	 */
 	@Override
 	public Optional<String[]> getTaggedValues(String key) {
-		String v = this.getTaggedValues().get(String.format("%s.%s", this.getName(), HtmlUtils.stripTags(key)));
+		String v = this.getTaggedValues().get(String.format("@%s", HtmlUtils.stripTags(key)));
 		if (StringUtils.isNotEmpty(v)) {
 			if (v.startsWith("[") && v.endsWith("]")) {
 				String v1 = Strman.between(v, "[", "]")[0];
