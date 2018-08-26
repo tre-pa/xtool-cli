@@ -1,5 +1,7 @@
 package br.xtool.core.template;
 
+import org.hibernate.annotations.Immutable;
+
 import br.xtool.core.representation.EJavaClass;
 import br.xtool.core.representation.EUmlRelationship;
 import br.xtool.core.template.base.JavaTemplate;
@@ -13,8 +15,9 @@ public class JpaEntityTemplates {
 	 * @param relationship
 	 */
 	public static <T extends EUmlRelationship> void genAddListMethodRelationship(EJavaClass javaClass, T relationship) {
-		String methodName = String.format("add%s", relationship.getTargetClass().getName());
-		if (!javaClass.getRoasterJavaClass().hasMethodSignature(methodName, relationship.getTargetClass().getName())) {
+		if (!javaClass.hasAnnotation(Immutable.class)) {
+			String methodName = String.format("add%s", relationship.getTargetClass().getName());
+			if (!javaClass.getRoasterJavaClass().hasMethodSignature(methodName, relationship.getTargetClass().getName())) {
 			// @formatter:off
 			CharSequence methodBody = JavaTemplate
 					.from("this.{{source_role}}.add({{target_class_instance_name}});"
@@ -32,6 +35,7 @@ public class JpaEntityTemplates {
 				.setBody(methodBody.toString())
 				.addParameter(relationship.getTargetClass().getName(), relationship.getTargetClass().getInstanceName());
 			// @formatter:on
+			}
 		}
 	}
 
@@ -41,8 +45,9 @@ public class JpaEntityTemplates {
 	 * @param relationship
 	 */
 	public static <T extends EUmlRelationship> void genRemoveListMethodRelationship(EJavaClass javaClass, T relationship) {
-		String methodName = String.format("remove%s", relationship.getTargetClass().getName());
-		if (!javaClass.getRoasterJavaClass().hasMethodSignature(methodName, relationship.getTargetClass().getName())) {
+		if (!javaClass.hasAnnotation(Immutable.class)) {
+			String methodName = String.format("remove%s", relationship.getTargetClass().getName());
+			if (!javaClass.getRoasterJavaClass().hasMethodSignature(methodName, relationship.getTargetClass().getName())) {
 			// @formatter:off
 			CharSequence methodBody = JavaTemplate
 					.from("this.{{source_role}}.remove({{target_class_instance_name}});"
@@ -60,6 +65,7 @@ public class JpaEntityTemplates {
 				.setBody(methodBody.toString())
 				.addParameter(relationship.getTargetClass().getName(), relationship.getTargetClass().getInstanceName());
 			// @formatter:on
+			}
 		}
 	}
 
