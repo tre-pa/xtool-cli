@@ -250,6 +250,7 @@ public class EUmlClassImpl extends EUmlEntityImpl implements EUmlClass {
 			.filter(link -> link.getEntity2().getDisplay().asStringWithHiddenNewLine().equals(this.getName()))
 			.flatMap(link -> link.getEntity1().getDisplay().as2().stream())
 			.map(ch -> StringUtils.split(ch.toString(), ":"))
+			.filter(ach -> ach.length > 1)
 			.collect(Collectors.toMap(tagValue -> HtmlUtils.stripTags(StringUtils.trim(tagValue[0])) , tagValue -> StringUtils.trim(tagValue[1])));
 		// @formatter:on
 	}
