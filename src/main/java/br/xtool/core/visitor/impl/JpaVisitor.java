@@ -74,7 +74,7 @@ public class JpaVisitor implements Visitor {
 		javaClass.addAnnotation(DynamicUpdate.class);
 		umlClass.getTaggedValue("table.name").ifPresent(tagValue -> javaClass.addAnnotation(Table.class).setStringValue("name", tagValue));
 		umlClass.getTaggedValue("table.schema").ifPresent(tagValue -> javaClass.addAnnotation(Table.class).setStringValue("schema", tagValue));
-		umlClass.getTaggedValues("equalsAndHashCode").ifPresent(tagValues -> javaClass.addAnnotation(EqualsAndHashCode.class).setStringArrayValue("of", tagValues));
+		umlClass.getTaggedValueAsArray("equalsAndHashCode").ifPresent(tagValues -> javaClass.addAnnotation(EqualsAndHashCode.class).setStringArrayValue("of", tagValues));
 	}
 
 	/*

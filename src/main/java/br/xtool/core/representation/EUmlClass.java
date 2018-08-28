@@ -50,6 +50,12 @@ public interface EUmlClass extends EUmlEntity, JavaType<JavaClassSource> {
 	 */
 	Optional<String> getTaggedValue(String key);
 
-	Optional<String[]> getTaggedValues(String key);
+	/**
+	 * Retorna o valor do tagged value como array.
+	 * 
+	 * @param key
+	 * @return
+	 */
+	Optional<String[]> getTaggedValueAsArray(String key);
 
 }

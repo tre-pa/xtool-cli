@@ -269,7 +269,7 @@ public class EUmlClassImpl extends EUmlEntityImpl implements EUmlClass {
 	 * @see br.xtool.core.representation.EUmlClass#getTaggedValues(java.lang.String)
 	 */
 	@Override
-	public Optional<String[]> getTaggedValues(String key) {
+	public Optional<String[]> getTaggedValueAsArray(String key) {
 		String v = this.getTaggedValues().get(String.format("@%s", HtmlUtils.stripTags(key)));
 		if (StringUtils.isNotEmpty(v)) {
 			if (v.startsWith("[") && v.endsWith("]")) {
@@ -289,6 +289,7 @@ public class EUmlClassImpl extends EUmlEntityImpl implements EUmlClass {
 		return Optional.empty();
 	}
 
+	@Deprecated
 	protected EUmlEntity findUmlEntity(String className) {
 		String error = "Classe '%s' não definida no pacote. Insira a definção da classe com os atributos correspondentes no pacote.";
 		// @formatter:off
@@ -303,6 +304,7 @@ public class EUmlClassImpl extends EUmlEntityImpl implements EUmlClass {
 		 // @formatter:on
 	}
 
+	@Deprecated
 	private Set<EUmlRelationship> iterateOverEntities1() {
 		Predicate<Link> p1 = (link) -> link.getType().getDecor1().equals(LinkDecor.ARROW);
 		Predicate<Link> p2 = (link) -> link.getType().getDecor1().equals(LinkDecor.NONE) && link.getType().getDecor2().equals(LinkDecor.NONE);
@@ -313,7 +315,9 @@ public class EUmlClassImpl extends EUmlEntityImpl implements EUmlClass {
 			.filter(link -> !link.getEntity2().getEntityType().equals(LeafType.NOTE))
 			.filter(link -> link.getEntity1().getDisplay().asStringWithHiddenNewLine().equals(this.getName()))
 			.filter(p1.or(p2).or(p3).or(p4))
+//			.peek(link -> System.out.println("iterateOverEntities1 "+link.getEntity1().getDisplay().asStringWithHiddenNewLine()+ " "+link.getEntity2().getDisplay().asStringWithHiddenNewLine()+ " "+link.getLinkArrow()))
 			.map(link -> new EUmlRelationshipImpl(this, findUmlEntity(link.getEntity2().getDisplay().asStringWithHiddenNewLine()), link, getEntity2Qualifier(link), getEntity1Qualifier(link)))
+		
 			.collect(Collectors.toSet());
 		// @formatter:on
 	}
@@ -326,6 +330,7 @@ public class EUmlClassImpl extends EUmlEntityImpl implements EUmlClass {
 		return StringUtils.trim(link.getQualifier2());
 	}
 
+	@Deprecated
 	private Set<EUmlRelationship> iterateOverEntities2() {
 		Predicate<Link> p1 = (link) -> link.getType().getDecor2().equals(LinkDecor.ARROW);
 		Predicate<Link> p2 = (link) -> link.getType().getDecor1().equals(LinkDecor.NONE) && link.getType().getDecor2().equals(LinkDecor.NONE);
@@ -336,6 +341,7 @@ public class EUmlClassImpl extends EUmlEntityImpl implements EUmlClass {
 			.filter(link -> !link.getEntity1().getEntityType().equals(LeafType.NOTE))
 			.filter(link -> link.getEntity2().getDisplay().asStringWithHiddenNewLine().equals(this.getName()))
 			.filter(p1.or(p2).or(p3).or(p4))
+//			.peek(link -> System.out.println("iterateOverEntities2 "+link.getEntity2().getDisplay().asStringWithHiddenNewLine()+ " "+link.getEntity1().getDisplay().asStringWithHiddenNewLine()+ " "+link.getLinkArrow()))
 //			.map(link -> Pair.of(link, link.getEntity1().getDisplay().asStringWithHiddenNewLine()))
 			.map(link -> new EUmlRelationshipImpl(this, findUmlEntity(link.getEntity1().getDisplay().asStringWithHiddenNewLine()), link, getEntity1Qualifier(link), getEntity2Qualifier(link)))
 			.collect(Collectors.toSet());
