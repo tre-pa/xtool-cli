@@ -11,10 +11,18 @@ import java.util.Collection;
 public interface EUmlEnum extends EUmlEntity {
 
 	/**
+	 * Retorna o diagrama de classe.
+	 * 
+	 * @return
+	 */
+	EUmlClassDiagram getClassDiagram();
+
+	/**
 	 * Retorna o pacote UML da classe.
 	 * 
 	 * @return
 	 */
+	@Override
 	EUmlPackage getUmlPackage();
 
 	/**

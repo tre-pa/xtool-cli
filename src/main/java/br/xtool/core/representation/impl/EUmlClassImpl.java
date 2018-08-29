@@ -24,6 +24,7 @@ import com.google.common.base.Splitter;
 import com.google.common.collect.ImmutableSet;
 
 import br.xtool.core.representation.EUmlClass;
+import br.xtool.core.representation.EUmlClassDiagram;
 import br.xtool.core.representation.EUmlEntity;
 import br.xtool.core.representation.EUmlField;
 import br.xtool.core.representation.EUmlRelationship;
@@ -37,14 +38,22 @@ import strman.Strman;
 
 public class EUmlClassImpl extends EUmlEntityImpl implements EUmlClass {
 
+	private EUmlClassDiagram umlClassDiagram;
+
 	private ClassDiagram classDiagram;
 
 	private ILeaf leaf;
 
-	public EUmlClassImpl(ClassDiagram classDiagram, ILeaf leaf) {
+	public EUmlClassImpl(EUmlClassDiagram umlClassDiagram, ClassDiagram classDiagram, ILeaf leaf) {
 		super(leaf);
+		this.umlClassDiagram = umlClassDiagram;
 		this.classDiagram = classDiagram;
 		this.leaf = leaf;
+	}
+
+	@Override
+	public EUmlClassDiagram getClassDiagram() {
+		return this.umlClassDiagram;
 	}
 
 	/*

@@ -33,7 +33,7 @@ public class EUmlClassDiagramImpl implements EUmlClassDiagram {
 		return this.classDiagram.getGroups(false).stream()
 			 .flatMap(groups -> groups.getLeafsDirect().stream())
 			 .filter(leaf -> leaf.getEntityType().equals(LeafType.CLASS))
-			 .map(leaf -> new EUmlClassImpl(this.classDiagram, leaf))
+			 .map(leaf -> new EUmlClassImpl(this,this.classDiagram, leaf))
 			 .collect(Collectors.toSet());
 		// @formatter:on
 	}
@@ -48,21 +48,10 @@ public class EUmlClassDiagramImpl implements EUmlClassDiagram {
 		return this.classDiagram.getGroups(false).stream()
 			 .flatMap(groups -> groups.getLeafsDirect().stream())
 			 .filter(leaf -> leaf.getEntityType().equals(LeafType.ENUM))
-			 .map(EUmlEnumImpl::new)
+			 .map(leaf -> new EUmlEnumImpl(this, leaf))
 			 .collect(Collectors.toSet());
 		// @formatter:on
 	}
-
-	//	@Override
-	//	@Deprecated
-	//	public Set<EUmlRelationship> getRelationships() {
-	////		EUmlClass sourceClass = this.getClasses().stream().filter(umlClass -> )
-//		// @formatter:off
-//		return this.classDiagram.getEntityFactory().getLinks().stream()
-//				.map(link -> new EUmlRelationshipImpl(getClasses(), link))
-//				.collect(Collectors.toSet());
-//		// @formatter:on
-	//	}
 
 	@SneakyThrows
 	public static EUmlClassDiagram of(Path path) {

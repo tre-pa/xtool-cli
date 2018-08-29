@@ -17,6 +17,13 @@ import org.jboss.forge.roaster.model.source.JavaClassSource;
 public interface EUmlClass extends EUmlEntity, JavaType<JavaClassSource> {
 
 	/**
+	 * Retorna o diagrama de classe.
+	 * 
+	 * @return
+	 */
+	EUmlClassDiagram getClassDiagram();
+
+	/**
 	 * Retorna os atributos da classe UML.
 	 * 
 	 * @return
