@@ -12,7 +12,6 @@ import java.util.stream.Stream;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
-import org.jtwig.util.HtmlUtils;
 
 import com.google.common.base.Splitter;
 import com.google.common.collect.Sets;
@@ -203,7 +202,7 @@ public class EUmlFieldImpl implements EUmlField {
 	public Map<String, String> getTaggedValues() {
 		// @formatter:off
 		return this.taggedValues.entrySet().stream()
-				.filter(map -> map.getKey().startsWith(this.getName()))
+				.filter(map -> map.getKey().startsWith(String.format("@%s",this.getName())))
 				.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 		// @formatter:on
 	}
@@ -214,7 +213,7 @@ public class EUmlFieldImpl implements EUmlField {
 	 */
 	@Override
 	public Optional<String[]> getTaggedValues(String key) {
-		String v = this.getTaggedValues().get(String.format("%s.%s", this.getName(), HtmlUtils.stripTags(key)));
+		String v = this.getTaggedValues().get(String.format("@%s.%s", this.getName(), key));
 		if (StringUtils.isNotEmpty(v)) {
 			if (v.startsWith("[") && v.endsWith("]")) {
 				String v1 = Strman.between(v, "[", "]")[0];
@@ -239,7 +238,7 @@ public class EUmlFieldImpl implements EUmlField {
 	 */
 	@Override
 	public Optional<String> getTaggedValue(String key) {
-		return Optional.ofNullable(this.getTaggedValues().get(String.format("%s.%s", this.getName(), HtmlUtils.stripTags(key))));
+		return Optional.ofNullable(this.getTaggedValues().get(String.format("@%s.%s", this.getName(), key)));
 	}
 
 	private String memberName() {

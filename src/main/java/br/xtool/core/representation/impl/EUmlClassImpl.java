@@ -43,6 +43,8 @@ public class EUmlClassImpl extends EUmlEntityImpl implements EUmlClass {
 
 	private ClassDiagram classDiagram;
 
+	private Map<String, String> taggedValues;
+
 	private ILeaf leaf;
 
 	public EUmlClassImpl(EUmlClassDiagram umlClassDiagram, ClassDiagram classDiagram, ILeaf leaf) {
@@ -89,6 +91,60 @@ public class EUmlClassImpl extends EUmlEntityImpl implements EUmlClass {
 		}
 		// @formatter:on
 		return new HashSet<>();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EUmlClass#getTaggedValues()
+	 */
+	@Override
+	public Map<String, String> getTaggedValues() {
+		if (Objects.isNull(this.taggedValues)) {
+			// @formatter:off
+			this.taggedValues = this.leaf.getBodier().getFieldsToDisplay().stream()
+					.filter(member -> StringUtils.isNotEmpty(member.getDisplay(false)))
+					.filter(member -> HtmlUtils.stripTags(StringUtils.trim(member.getDisplay(false))).startsWith("@"))
+					.map(member -> HtmlUtils.stripTags(StringUtils.trim(member.getDisplay(false))))
+					.map(rawTaggedValue -> StringUtils.split(rawTaggedValue, ":"))
+					.filter(ach -> ach.length > 1)
+					.collect(Collectors.toMap(tagValue -> HtmlUtils.stripTags(StringUtils.trim(tagValue[0])) , tagValue -> StringUtils.trim(tagValue[1])));
+			// @formatter:on
+		}
+		return this.taggedValues;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EUmlClass#getTaggedValue(java.lang.String)
+	 */
+	@Override
+	public Optional<String> getTaggedValue(String key) {
+		return Optional.ofNullable(this.getTaggedValues().get(String.format("@%s", key)));
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EUmlClass#getTaggedValues(java.lang.String)
+	 */
+	@Override
+	public Optional<String[]> getTaggedValueAsArray(String key) {
+		String v = this.getTaggedValues().get(String.format("@%s", key));
+		if (StringUtils.isNotEmpty(v)) {
+			if (v.startsWith("[") && v.endsWith("]")) {
+				String v1 = Strman.between(v, "[", "]")[0];
+				if (StringUtils.isNotBlank(v1)) {
+					// @formatter:off
+					return Optional.of(
+						Splitter.on(",")
+							.trimResults()
+							.splitToList(v1)
+							.toArray(new String[]{})
+					);
+					// @formatter:on
+				}
+			}
+		}
+		return Optional.empty();
 	}
 
 	/*
@@ -248,57 +304,6 @@ public class EUmlClassImpl extends EUmlEntityImpl implements EUmlClass {
 	@Override
 	public Visibility getVisibility() {
 		return null;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see br.xtool.core.representation.EUmlClass#getTaggedValues()
-	 */
-	@Override
-	public Map<String, String> getTaggedValues() {
-		// @formatter:off
-		return this.classDiagram.getEntityFactory().getLinks().stream()
-			.filter(link -> link.getEntity1().getEntityType().equals(LeafType.NOTE))
-			.filter(link -> link.getEntity2().getDisplay().asStringWithHiddenNewLine().equals(this.getName()))
-			.flatMap(link -> link.getEntity1().getDisplay().as2().stream())
-			.map(ch -> StringUtils.split(ch.toString(), ":"))
-			.filter(ach -> ach.length > 1)
-			.collect(Collectors.toMap(tagValue -> HtmlUtils.stripTags(StringUtils.trim(tagValue[0])) , tagValue -> StringUtils.trim(tagValue[1])));
-		// @formatter:on
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see br.xtool.core.representation.EUmlClass#getTaggedValue(java.lang.String)
-	 */
-	@Override
-	public Optional<String> getTaggedValue(String key) {
-		return Optional.ofNullable(this.getTaggedValues().get(String.format("@%s", HtmlUtils.stripTags(key))));
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see br.xtool.core.representation.EUmlClass#getTaggedValues(java.lang.String)
-	 */
-	@Override
-	public Optional<String[]> getTaggedValueAsArray(String key) {
-		String v = this.getTaggedValues().get(String.format("@%s", HtmlUtils.stripTags(key)));
-		if (StringUtils.isNotEmpty(v)) {
-			if (v.startsWith("[") && v.endsWith("]")) {
-				String v1 = Strman.between(v, "[", "]")[0];
-				if (StringUtils.isNotBlank(v1)) {
-					// @formatter:off
-					return Optional.of(
-						Splitter.on(",")
-							.trimResults()
-							.splitToList(v1)
-							.toArray(new String[]{})
-					);
-					// @formatter:on
-				}
-			}
-		}
-		return Optional.empty();
 	}
 
 	@Deprecated
