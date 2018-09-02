@@ -34,6 +34,7 @@ import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
+import net.sourceforge.plantuml.skin.VisibilityModifier;
 import strman.Strman;
 
 public class EUmlClassImpl extends EUmlEntityImpl implements EUmlClass {
@@ -65,6 +66,8 @@ public class EUmlClassImpl extends EUmlEntityImpl implements EUmlClass {
 		// @formatter:off
 		return this.leaf.getBodier().getFieldsToDisplay().stream()
 				.filter(member -> StringUtils.isNotEmpty(member.getDisplay(false)))
+				.filter(member -> Objects.nonNull(member.getVisibilityModifier()))
+				.filter(member -> member.getVisibilityModifier().equals(VisibilityModifier.PRIVATE_FIELD))
 				.map(member -> new EUmlFieldImpl(member, this.getTaggedValues()))
 				.collect(Collectors.toList());
 		// @formatter:on
