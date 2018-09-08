@@ -55,6 +55,7 @@ import br.xtool.core.representation.EUmlRelationship;
 import br.xtool.core.representation.EUmlRelationship.EAssociation;
 import br.xtool.core.representation.EUmlRelationship.EComposition;
 import br.xtool.core.representation.EUmlStereotype;
+import br.xtool.core.representation.EUmlStereotype.StereotypeType;
 import br.xtool.core.template.JpaEntityTemplates;
 import br.xtool.core.visitor.Visitor;
 import lombok.EqualsAndHashCode;
@@ -70,8 +71,10 @@ public class JpaVisitor implements Visitor {
 	@Override
 	public void visit(EJavaClass javaClass, EUmlClass umlClass) {
 		javaClass.addAnnotation(Entity.class);
-		javaClass.addAnnotation(DynamicInsert.class);
-		javaClass.addAnnotation(DynamicUpdate.class);
+		if (umlClass.getStereotypes().stream().noneMatch(st -> st.getStereotypeType().equals(StereotypeType.READ_ONLY) || st.getStereotypeType().equals(StereotypeType.VIEW))) {
+			javaClass.addAnnotation(DynamicInsert.class);
+			javaClass.addAnnotation(DynamicUpdate.class);
+		}
 		umlClass.getTaggedValue("table.name").ifPresent(tagValue -> javaClass.addAnnotation(Table.class).setStringValue("name", tagValue));
 		umlClass.getTaggedValue("table.schema").ifPresent(tagValue -> javaClass.addAnnotation(Table.class).setStringValue("schema", tagValue));
 		umlClass.getTaggedValueAsArray("equalsAndHashCode").ifPresent(tagValues -> javaClass.addAnnotation(EqualsAndHashCode.class).setStringArrayValue("of", tagValues));
