@@ -242,7 +242,7 @@ public class RestTemplates {
 			method.getRoasterMethod()
 				.addAnnotation(GetMapping.class);
 			method.getRoasterMethod()
-				.setReturnType(String.format("ResponseEntity<Page<%s>>", repository.getTargetProjection().getName()));
+				.setReturnType(String.format("ResponseEntity<Page<%s>>", repository.getTargetEntity().getName()));
 			method.getRoasterMethod()
 				.addParameter(Pageable.class.getSimpleName(), "pageable");
 			method.getRoasterMethod().setBody(
