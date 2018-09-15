@@ -229,14 +229,14 @@ public class RestTemplates {
 
 	public static void genFindAll(EBootRest rest, EJpaRepository repository) {
 		if (!rest.getRoasterJavaClass().hasMethodSignature("findAllEntities", Pageable.class)) {
-			rest.getRoasterJavaClass().addImport(repository.getTargetProjection().getQualifiedName());
+			rest.getRoasterJavaClass().addImport(repository.getTargetEntity().getQualifiedName());
 			rest.getRoasterJavaClass().addImport(Pageable.class);
 			rest.getRoasterJavaClass().addImport(ResponseEntity.class);
 			rest.getRoasterJavaClass().addImport(CacheControl.class);
 			rest.getRoasterJavaClass().addImport(TimeUnit.class);
 			rest.getRoasterJavaClass().addImport(Page.class);
 
-			EJavaMethod<JavaClassSource> method = rest.addMethod("findAllEntities");
+			EJavaMethod<JavaClassSource> method = rest.addMethod("findAll");
 			method.getRoasterMethod().setPublic();
 			// @formatter:off
 			method.getRoasterMethod()
@@ -251,7 +251,7 @@ public class RestTemplates {
 							+ "	return ResponseEntity\n"
 							+ "			.ok()\n"
 							+ "			.cacheControl(CacheControl.maxAge(10, TimeUnit.SECONDS))\n"
-							+ "			.body({{repository_instance_name}}.findAllEntities(pageable));\n"
+							+ "			.body({{repository_instance_name}}.findAll(pageable));\n"
 							+ "	// @formatter:on "
 							+ "")
 						.put("repository_instance_name", repository.getInstanceName())
