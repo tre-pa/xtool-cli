@@ -2,7 +2,6 @@ import { NgModule, } from '@angular/core';
 import { CommonModule, } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule, } from '@angular/forms';
-import { NgxChartsModule, } from '@swimlane/ngx-charts';
 import {
   CovalentDataTableModule, 
   CovalentMediaModule, 
@@ -73,17 +72,12 @@ const COVALENT_MODULES: any[] = [
   CovalentDialogsModule
 ];
 
-const CHART_MODULES: any[] = [
-  NgxChartsModule,
-];
-
 @NgModule({
   imports: [
     CommonModule,
     ANGULAR_MODULES,
     MATERIAL_MODULES,
-    COVALENT_MODULES,
-    CHART_MODULES
+    COVALENT_MODULES
   ],
   declarations: [
 
@@ -91,8 +85,7 @@ const CHART_MODULES: any[] = [
   exports: [
     ANGULAR_MODULES,
     MATERIAL_MODULES,
-    COVALENT_MODULES,
-    CHART_MODULES
+    COVALENT_MODULES
   ],
 })
 export class SharedModule { }
