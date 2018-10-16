@@ -12,7 +12,7 @@ import org.springframework.shell.standard.ShellOption;
 import br.xtool.XtoolCliApplication;
 import br.xtool.core.aware.SpringBootAware;
 import br.xtool.core.representation.EBootProject;
-import br.xtool.core.representation.EUmlClassDiagram;
+import br.xtool.core.representation.EPlantClassDiagram;
 import br.xtool.service.FileService;
 import br.xtool.service.WorkspaceService;
 
@@ -40,7 +40,7 @@ public class GenJpaEntityCommand extends SpringBootAware {
 
 		EBootProject bootProject = this.workspaceService.getWorkingProject(EBootProject.class);
 
-		EUmlClassDiagram classDiagram = bootProject.getDomainClassDiagram();
+		EPlantClassDiagram classDiagram = bootProject.getDomainClassDiagram();
 		classDiagram.getClasses().forEach(umlClass -> {
 			System.out.println("Classe: " + umlClass.getName());
 			umlClass.getStereotypes().forEach(s -> System.out.println("Stereotype: " + s.getStereotypeType()));

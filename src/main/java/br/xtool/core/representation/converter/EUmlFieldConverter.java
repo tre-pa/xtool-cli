@@ -9,8 +9,8 @@ import java.util.function.BiFunction;
 
 import br.xtool.core.representation.EJavaClass;
 import br.xtool.core.representation.EJavaField;
-import br.xtool.core.representation.EUmlField;
-import br.xtool.core.representation.EUmlFieldProperty.FieldPropertyType;
+import br.xtool.core.representation.EPlantField;
+import br.xtool.core.representation.EPlantFieldProperty.FieldPropertyType;
 import br.xtool.core.representation.impl.EJavaFieldImpl.EBigDecimalFieldImpl;
 import br.xtool.core.representation.impl.EJavaFieldImpl.EBooleanFieldImpl;
 import br.xtool.core.representation.impl.EJavaFieldImpl.EByteFieldImpl;
@@ -33,12 +33,12 @@ import lombok.AllArgsConstructor;
  *
  */
 @AllArgsConstructor
-public class EUmlFieldConverter implements BiFunction<EJavaClass, EUmlField, EJavaField> {
+public class EUmlFieldConverter implements BiFunction<EJavaClass, EPlantField, EJavaField> {
 
 	private Set<? extends Visitor> visitors = new HashSet<>();
 
 	@Override
-	public EJavaField apply(EJavaClass javaClass, EUmlField umlField) {
+	public EJavaField apply(EJavaClass javaClass, EPlantField umlField) {
 		EJavaField javaField = javaClass.addField(umlField.getName());
 		RoasterUtil.addImport(javaField.getRoasterField().getOrigin(), umlField.getType().getClassName());
 		// @formatter:off
@@ -54,7 +54,7 @@ public class EUmlFieldConverter implements BiFunction<EJavaClass, EUmlField, EJa
 	/*
 	 * Visita os atributos da classe e as respectivas propridades.
 	 */
-	private void visit(EJavaField javaField, EUmlField umlField) {
+	private void visit(EJavaField javaField, EPlantField umlField) {
 		this.visitors.forEach(visitor -> {
 			visitor.visit(javaField, umlField);
 			if (javaField.getType().isType(String.class)) visitor.visit(new EStringFieldImpl(javaField), umlField);

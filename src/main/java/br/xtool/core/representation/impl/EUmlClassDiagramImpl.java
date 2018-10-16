@@ -5,16 +5,16 @@ import java.nio.file.Path;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import br.xtool.core.representation.EUmlClass;
-import br.xtool.core.representation.EUmlClassDiagram;
-import br.xtool.core.representation.EUmlEnum;
+import br.xtool.core.representation.EPlantClass;
+import br.xtool.core.representation.EPlantClassDiagram;
+import br.xtool.core.representation.EPlantEnum;
 import lombok.SneakyThrows;
 import net.sourceforge.plantuml.BlockUml;
 import net.sourceforge.plantuml.SourceStringReader;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 
-public class EUmlClassDiagramImpl implements EUmlClassDiagram {
+public class EUmlClassDiagramImpl implements EPlantClassDiagram {
 
 	private ClassDiagram classDiagram;
 
@@ -28,7 +28,7 @@ public class EUmlClassDiagramImpl implements EUmlClassDiagram {
 	 * @see br.xtool.core.representation.EUmlClassDiagram#getClasses()
 	 */
 	@Override
-	public Set<EUmlClass> getClasses() {
+	public Set<EPlantClass> getClasses() {
 		// @formatter:off
 		return this.classDiagram.getGroups(false).stream()
 			 .flatMap(groups -> groups.getLeafsDirect().stream())
@@ -43,7 +43,7 @@ public class EUmlClassDiagramImpl implements EUmlClassDiagram {
 	 * @see br.xtool.core.representation.EUmlClassDiagram#getEnums()
 	 */
 	@Override
-	public Set<EUmlEnum> getEnums() {
+	public Set<EPlantEnum> getEnums() {
 		// @formatter:off
 		return this.classDiagram.getGroups(false).stream()
 			 .flatMap(groups -> groups.getLeafsDirect().stream())
@@ -54,7 +54,7 @@ public class EUmlClassDiagramImpl implements EUmlClassDiagram {
 	}
 
 	@SneakyThrows
-	public static EUmlClassDiagram of(Path path) {
+	public static EPlantClassDiagram of(Path path) {
 		if (Files.notExists(path)) throw new IllegalArgumentException("Diagrama de classe não encontrado");
 		//		String diagram = FileUtils.readFileToString(new File(path), "UTF-8");
 		String diagram = new String(Files.readAllBytes(path));

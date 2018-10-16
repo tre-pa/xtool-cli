@@ -16,13 +16,13 @@ import org.apache.commons.lang3.math.NumberUtils;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Sets;
 
-import br.xtool.core.representation.EUmlField;
-import br.xtool.core.representation.EUmlFieldProperty;
-import br.xtool.core.representation.EUmlFieldProperty.FieldPropertyType;
+import br.xtool.core.representation.EPlantField;
+import br.xtool.core.representation.EPlantFieldProperty;
+import br.xtool.core.representation.EPlantFieldProperty.FieldPropertyType;
 import net.sourceforge.plantuml.cucadiagram.Member;
 import strman.Strman;
 
-public class EUmlFieldImpl implements EUmlField {
+public class EUmlFieldImpl implements EPlantField {
 
 	private Member member;
 
@@ -178,7 +178,7 @@ public class EUmlFieldImpl implements EUmlField {
 	 * @see br.xtool.core.representation.EUmlField#getProperties()
 	 */
 	@Override
-	public Set<EUmlFieldProperty> getProperties() {
+	public Set<EPlantFieldProperty> getProperties() {
 		if (Strman.containsAll(memberType(), new String[] { "{", "}" })) {
 			String[] propertiesBlock = Strman.between(memberType(), "{", "}");
 			String[] propertiesItens = StringUtils.split(StringUtils.join(propertiesBlock), ",");

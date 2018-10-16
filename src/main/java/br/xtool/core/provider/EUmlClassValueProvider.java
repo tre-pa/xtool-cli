@@ -12,7 +12,7 @@ import org.springframework.shell.standard.ValueProviderSupport;
 import org.springframework.stereotype.Component;
 
 import br.xtool.core.representation.EBootProject;
-import br.xtool.core.representation.EUmlClass;
+import br.xtool.core.representation.EPlantClass;
 import br.xtool.service.WorkspaceService;
 
 @Component
@@ -27,7 +27,7 @@ public class EUmlClassValueProvider extends ValueProviderSupport {
 		if(this.workspaceService.getWorkingProject() instanceof EBootProject) {
 			EBootProject project = EBootProject.class.cast(this.workspaceService.getWorkingProject());
 			return project.getDomainClassDiagram().getClasses().stream()
-					.map(EUmlClass::getName)
+					.map(EPlantClass::getName)
 					.map(CompletionProposal::new)
 					.collect(Collectors.toList());
 		}

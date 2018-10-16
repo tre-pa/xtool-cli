@@ -3,16 +3,16 @@ package br.xtool.core.representation.impl;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import br.xtool.core.representation.EUmlClass;
-import br.xtool.core.representation.EUmlStereotype;
+import br.xtool.core.representation.EPlantClass;
+import br.xtool.core.representation.EPlantStereotype;
 
-public class EUmlStereotypeImpl implements EUmlStereotype {
+public class EUmlStereotypeImpl implements EPlantStereotype {
 
-	private EUmlClass umlClass;
+	private EPlantClass umlClass;
 
 	private String stereotype;
 
-	public EUmlStereotypeImpl(EUmlClass umlClass, String stereotype) {
+	public EUmlStereotypeImpl(EPlantClass umlClass, String stereotype) {
 		super();
 		this.umlClass = umlClass;
 		this.stereotype = stereotype;

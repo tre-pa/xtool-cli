@@ -7,7 +7,7 @@ package br.xtool.core.representation;
  * @author jcruz
  *
  */
-public interface EUmlEntity {
+public interface EPlantEntity {
 
 	/**
 	 * Retorna o nome da classe UML.
@@ -34,5 +34,5 @@ public interface EUmlEntity {
 	 * 
 	 * @return
 	 */
-	EUmlPackage getUmlPackage();
+	EPlantPackage getUmlPackage();
 }

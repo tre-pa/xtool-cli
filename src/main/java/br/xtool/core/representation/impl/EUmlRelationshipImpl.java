@@ -2,28 +2,28 @@ package br.xtool.core.representation.impl;
 
 import org.apache.commons.lang3.StringUtils;
 
-import br.xtool.core.representation.EUmlClass;
-import br.xtool.core.representation.EUmlEntity;
-import br.xtool.core.representation.EUmlMultiplicity;
-import br.xtool.core.representation.EUmlRelationship;
+import br.xtool.core.representation.EPlantClass;
+import br.xtool.core.representation.EPlantEntity;
+import br.xtool.core.representation.EPlantMultiplicity;
+import br.xtool.core.representation.EPlantRelationship;
 import br.xtool.core.util.Inflector;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkArrow;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 
-public class EUmlRelationshipImpl implements EUmlRelationship {
+public class EUmlRelationshipImpl implements EPlantRelationship {
 
 	private Link link;
 
-	private EUmlClass sourceClass;
+	private EPlantClass sourceClass;
 
 	private String sourceQualifier;
 
-	private EUmlEntity targetClass;
+	private EPlantEntity targetClass;
 
 	private String targetQualifier;
 
-	public EUmlRelationshipImpl(EUmlClass sourceClass, EUmlEntity targetClass, Link link, String sourceQualifer, String targetQualifier) {
+	public EUmlRelationshipImpl(EPlantClass sourceClass, EPlantEntity targetClass, Link link, String sourceQualifer, String targetQualifier) {
 		super();
 		this.sourceClass = sourceClass;
 		this.sourceQualifier = sourceQualifer;
@@ -65,7 +65,7 @@ public class EUmlRelationshipImpl implements EUmlRelationship {
 	 * @see br.xtool.core.representation.EUmlRelationship#getSourceClass()
 	 */
 	@Override
-	public EUmlClass getSourceClass() {
+	public EPlantClass getSourceClass() {
 		return this.sourceClass;
 	}
 
@@ -94,7 +94,7 @@ public class EUmlRelationshipImpl implements EUmlRelationship {
 	 * @see br.xtool.core.representation.EUmlRelationship#getTargetClass()
 	 */
 	@Override
-	public EUmlEntity getTargetClass() {
+	public EPlantEntity getTargetClass() {
 		return this.targetClass;
 	}
 
@@ -115,7 +115,7 @@ public class EUmlRelationshipImpl implements EUmlRelationship {
 	 * @see br.xtool.core.representation.EUmlRelationship#getSourceMutiplicity()
 	 */
 	@Override
-	public EUmlMultiplicity getSourceMultiplicity() {
+	public EPlantMultiplicity getSourceMultiplicity() {
 		return new EUmlMultiplicityImpl(this.getSourceClass(), this.getTargetClass(), this.sourceQualifier);
 	}
 
@@ -124,7 +124,7 @@ public class EUmlRelationshipImpl implements EUmlRelationship {
 	 * @see br.xtool.core.representation.EUmlRelationship#getTargetMultiplicity()
 	 */
 	@Override
-	public EUmlMultiplicity getTargetMultiplicity() {
+	public EPlantMultiplicity getTargetMultiplicity() {
 		return new EUmlMultiplicityImpl(this.getSourceClass(), this.getTargetClass(), this.targetQualifier);
 	}
 
@@ -172,13 +172,13 @@ public class EUmlRelationshipImpl implements EUmlRelationship {
 	}
 
 	public static class EAssociationImpl extends EUmlRelationshipImpl implements EAssociation {
-		public EAssociationImpl(EUmlRelationship umlRelationship) {
+		public EAssociationImpl(EPlantRelationship umlRelationship) {
 			super(umlRelationship.getSourceClass(), umlRelationship.getTargetClass(), umlRelationship.getLink(), umlRelationship.getSourceQualifier(), umlRelationship.getTargetQualifier());
 		}
 	}
 
 	public static class ECompositionImpl extends EUmlRelationshipImpl implements EComposition {
-		public ECompositionImpl(EUmlRelationship umlRelationship) {
+		public ECompositionImpl(EPlantRelationship umlRelationship) {
 			super(umlRelationship.getSourceClass(), umlRelationship.getTargetClass(), umlRelationship.getLink(), umlRelationship.getSourceQualifier(), umlRelationship.getTargetQualifier());
 		}
 	}

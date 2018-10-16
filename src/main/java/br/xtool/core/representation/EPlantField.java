@@ -4,7 +4,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
-import br.xtool.core.representation.EUmlFieldProperty.FieldPropertyType;
+import br.xtool.core.representation.EPlantFieldProperty.FieldPropertyType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -14,7 +14,7 @@ import lombok.Getter;
  * @author jcruz
  *
  */
-public interface EUmlField {
+public interface EPlantField {
 
 	/**
 	 * Retorna o nome do atributo.
@@ -124,7 +124,7 @@ public interface EUmlField {
 	 * 
 	 * @return
 	 */
-	Set<EUmlFieldProperty> getProperties();
+	Set<EPlantFieldProperty> getProperties();
 
 	/**
 	 * 

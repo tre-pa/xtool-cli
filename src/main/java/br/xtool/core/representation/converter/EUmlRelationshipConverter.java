@@ -8,7 +8,7 @@ import java.util.function.BiFunction;
 
 import br.xtool.core.representation.EJavaClass;
 import br.xtool.core.representation.EJavaField;
-import br.xtool.core.representation.EUmlRelationship;
+import br.xtool.core.representation.EPlantRelationship;
 import br.xtool.core.representation.impl.EJavaFieldImpl.EManyToManyFieldImpl;
 import br.xtool.core.representation.impl.EJavaFieldImpl.EManyToOneFieldImpl;
 import br.xtool.core.representation.impl.EJavaFieldImpl.EOneToManyFieldImpl;
@@ -25,12 +25,12 @@ import lombok.AllArgsConstructor;
  *
  */
 @AllArgsConstructor
-public class EUmlRelationshipConverter implements BiFunction<EJavaClass, EUmlRelationship, EJavaField> {
+public class EUmlRelationshipConverter implements BiFunction<EJavaClass, EPlantRelationship, EJavaField> {
 
 	private Set<? extends Visitor> visitors = new HashSet<>();
 
 	@Override
-	public EJavaField apply(EJavaClass javaClass, EUmlRelationship umlRelationship) {
+	public EJavaField apply(EJavaClass javaClass, EPlantRelationship umlRelationship) {
 		EJavaField javaField = javaClass.addField(umlRelationship.getSourceRole());
 		if (umlRelationship.getSourceMultiplicity().isToMany()) {
 			// @formatter:off
@@ -57,7 +57,7 @@ public class EUmlRelationshipConverter implements BiFunction<EJavaClass, EUmlRel
 		return javaField;
 	}
 
-	private void visit(EJavaField javaField, EUmlRelationship umlRelationship) {
+	private void visit(EJavaField javaField, EPlantRelationship umlRelationship) {
 		this.visitors.forEach(visitor -> {
 			visitor.visit(javaField, umlRelationship);
 			if (!javaField.isEnum()) {

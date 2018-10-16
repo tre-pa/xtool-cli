@@ -25,13 +25,13 @@ import br.xtool.core.representation.EJavaField.EOneToOneField;
 import br.xtool.core.representation.EJavaField.EStringField;
 import br.xtool.core.representation.EJavaField.ETransientField;
 import br.xtool.core.representation.EJavaField.EUniqueField;
-import br.xtool.core.representation.EUmlClass;
-import br.xtool.core.representation.EUmlField;
-import br.xtool.core.representation.EUmlFieldProperty;
-import br.xtool.core.representation.EUmlRelationship;
-import br.xtool.core.representation.EUmlRelationship.EAssociation;
-import br.xtool.core.representation.EUmlRelationship.EComposition;
-import br.xtool.core.representation.EUmlStereotype;
+import br.xtool.core.representation.EPlantClass;
+import br.xtool.core.representation.EPlantField;
+import br.xtool.core.representation.EPlantFieldProperty;
+import br.xtool.core.representation.EPlantRelationship;
+import br.xtool.core.representation.EPlantRelationship.EAssociation;
+import br.xtool.core.representation.EPlantRelationship.EComposition;
+import br.xtool.core.representation.EPlantStereotype;
 import br.xtool.core.visitor.Visitor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -41,7 +41,7 @@ import lombok.Setter;
 public class LombokVisitor implements Visitor {
 
 	@Override
-	public void visit(EJavaClass javaClass, EUmlClass umlClass) {
+	public void visit(EJavaClass javaClass, EPlantClass umlClass) {
 		javaClass.addAnnotation(Getter.class);
 		javaClass.addAnnotation(Setter.class);
 		javaClass.addAnnotation(NoArgsConstructor.class);
@@ -50,106 +50,106 @@ public class LombokVisitor implements Visitor {
 	}
 
 	@Override
-	public void visit(EJavaClass javaClass, EUmlStereotype umlStereotype) {
+	public void visit(EJavaClass javaClass, EPlantStereotype umlStereotype) {
 
 	}
 
 	@Override
-	public void visit(EAuditableJavaClass auditableClass, EUmlStereotype umlStereotype) {
+	public void visit(EAuditableJavaClass auditableClass, EPlantStereotype umlStereotype) {
 
 	}
 
 	@Override
-	public void visit(ECacheableJavaClass cacheableClass, EUmlStereotype umlStereotype) {
+	public void visit(ECacheableJavaClass cacheableClass, EPlantStereotype umlStereotype) {
 
 	}
 
 	@Override
-	public void visit(EIndexedJavaClass indexedClass, EUmlStereotype umlStereotype) {
+	public void visit(EIndexedJavaClass indexedClass, EPlantStereotype umlStereotype) {
 
 	}
 
 	@Override
-	public void visit(EViewJavaClass viewClass, EUmlStereotype umlStereotype) {
+	public void visit(EViewJavaClass viewClass, EPlantStereotype umlStereotype) {
 
 	}
 
 	@Override
-	public void visit(EReadOnlyJavaClass readOnlyClass, EUmlStereotype umlStereotype) {
+	public void visit(EReadOnlyJavaClass readOnlyClass, EPlantStereotype umlStereotype) {
 
 	}
 
 	@Override
-	public void visit(EVersionableJavaClass versionableClass, EUmlStereotype umlStereotype) {
+	public void visit(EVersionableJavaClass versionableClass, EPlantStereotype umlStereotype) {
 	}
 
 	@Override
-	public void visit(EJavaField javaField, EUmlField umlField) {
-
-	}
-
-	@Override
-	public void visit(EJavaField javaField, EUmlFieldProperty umlFieldProperty) {
+	public void visit(EJavaField javaField, EPlantField umlField) {
 
 	}
 
 	@Override
-	public void visit(EStringField stringField, EUmlField umlField) {
+	public void visit(EJavaField javaField, EPlantFieldProperty umlFieldProperty) {
 
 	}
 
 	@Override
-	public void visit(EBooleanField booleanField, EUmlField umlField) {
+	public void visit(EStringField stringField, EPlantField umlField) {
 
 	}
 
 	@Override
-	public void visit(ELongField longField, EUmlField umlField) {
+	public void visit(EBooleanField booleanField, EPlantField umlField) {
 
 	}
 
 	@Override
-	public void visit(EIntegerField integerField, EUmlField umlField) {
+	public void visit(ELongField longField, EPlantField umlField) {
 
 	}
 
 	@Override
-	public void visit(EByteField byteField, EUmlField umlField) {
+	public void visit(EIntegerField integerField, EPlantField umlField) {
 
 	}
 
 	@Override
-	public void visit(EBigDecimalField bigDecimalField, EUmlField umlField) {
+	public void visit(EByteField byteField, EPlantField umlField) {
 
 	}
 
 	@Override
-	public void visit(ELocalDateField localDateField, EUmlField umlField) {
+	public void visit(EBigDecimalField bigDecimalField, EPlantField umlField) {
 
 	}
 
 	@Override
-	public void visit(ELocalDateTimeField localDateTimeField, EUmlField umlField) {
+	public void visit(ELocalDateField localDateField, EPlantField umlField) {
 
 	}
 
 	@Override
-	public void visit(ENotNullField notNullField, EUmlFieldProperty property) {
+	public void visit(ELocalDateTimeField localDateTimeField, EPlantField umlField) {
 
 	}
 
 	@Override
-	public void visit(ETransientField notNullField, EUmlFieldProperty property) {
+	public void visit(ENotNullField notNullField, EPlantFieldProperty property) {
 
 	}
 
 	@Override
-	public void visit(EUniqueField notNullField, EUmlFieldProperty property) {
+	public void visit(ETransientField notNullField, EPlantFieldProperty property) {
 
 	}
 
 	@Override
-	public void visit(EJavaField javaField, EUmlRelationship umlRelationship) {
+	public void visit(EUniqueField notNullField, EPlantFieldProperty property) {
+
+	}
+
+	@Override
+	public void visit(EJavaField javaField, EPlantRelationship umlRelationship) {
 
 	}
 

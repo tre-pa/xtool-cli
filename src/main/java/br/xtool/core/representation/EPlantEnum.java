@@ -8,14 +8,14 @@ import java.util.Collection;
  * @author jcruz
  *
  */
-public interface EUmlEnum extends EUmlEntity {
+public interface EPlantEnum extends EPlantEntity {
 
 	/**
 	 * Retorna o diagrama de classe.
 	 * 
 	 * @return
 	 */
-	EUmlClassDiagram getClassDiagram();
+	EPlantClassDiagram getClassDiagram();
 
 	/**
 	 * Retorna o pacote UML da classe.
@@ -23,7 +23,7 @@ public interface EUmlEnum extends EUmlEntity {
 	 * @return
 	 */
 	@Override
-	EUmlPackage getUmlPackage();
+	EPlantPackage getUmlPackage();
 
 	/**
 	 * Retorna a lista de valores do Enum UML.

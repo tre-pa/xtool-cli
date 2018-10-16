@@ -3,16 +3,16 @@ package br.xtool.core.representation.impl;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import br.xtool.core.representation.EUmlField;
-import br.xtool.core.representation.EUmlFieldProperty;
+import br.xtool.core.representation.EPlantField;
+import br.xtool.core.representation.EPlantFieldProperty;
 
-public class EUmlFieldPropertyImpl implements EUmlFieldProperty {
+public class EUmlFieldPropertyImpl implements EPlantFieldProperty {
 
-	private EUmlField field;
+	private EPlantField field;
 
 	private String property;
 
-	public EUmlFieldPropertyImpl(EUmlField field, String property) {
+	public EUmlFieldPropertyImpl(EPlantField field, String property) {
 		super();
 		this.field = field;
 		this.property = property;
@@ -41,7 +41,7 @@ public class EUmlFieldPropertyImpl implements EUmlFieldProperty {
 	 * @see br.xtool.core.representation.EUmlFieldProperty#getField()
 	 */
 	@Override
-	public EUmlField getField() {
+	public EPlantField getField() {
 		return this.field;
 	}
 

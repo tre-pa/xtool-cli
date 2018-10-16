@@ -3,14 +3,14 @@ package br.xtool.core.representation.impl;
 import java.util.Map;
 import java.util.Set;
 
-import br.xtool.core.representation.EUmlClass;
-import br.xtool.core.representation.EUmlMultiplicity;
-import br.xtool.core.representation.EUmlRelationshipEntity;
+import br.xtool.core.representation.EPlantClass;
+import br.xtool.core.representation.EPlantMultiplicity;
+import br.xtool.core.representation.EPlantRelationshipEntity;
 import net.sourceforge.plantuml.cucadiagram.Link;
 
-public class EUmlRelationshipEntityImpl implements EUmlRelationshipEntity {
+public class EUmlRelationshipEntityImpl implements EPlantRelationshipEntity {
 
-	private Set<EUmlClass> classes;
+	private Set<EPlantClass> classes;
 
 	private Map<String, String> taggedValues;
 
@@ -18,7 +18,7 @@ public class EUmlRelationshipEntityImpl implements EUmlRelationshipEntity {
 
 	private boolean source;
 
-	public EUmlRelationshipEntityImpl(Set<EUmlClass> classes, Map<String, String> taggedValues, Link link, boolean source) {
+	public EUmlRelationshipEntityImpl(Set<EPlantClass> classes, Map<String, String> taggedValues, Link link, boolean source) {
 		super();
 		this.classes = classes;
 		this.taggedValues = taggedValues;
@@ -27,7 +27,7 @@ public class EUmlRelationshipEntityImpl implements EUmlRelationshipEntity {
 	}
 
 	@Override
-	public EUmlMultiplicity getMultiplicity() {
+	public EPlantMultiplicity getMultiplicity() {
 		return null;
 	}
 

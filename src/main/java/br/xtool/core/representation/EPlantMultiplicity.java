@@ -9,7 +9,7 @@ import lombok.Getter;
  * @author jcruz
  *
  */
-public interface EUmlMultiplicity {
+public interface EPlantMultiplicity {
 
 	@AllArgsConstructor
 	@Getter

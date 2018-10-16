@@ -7,14 +7,14 @@ package br.xtool.core.representation;
  * @author jcruz
  *
  */
-public interface EUmlRelationshipEntity {
+public interface EPlantRelationshipEntity {
 
 	/**
 	 * Retorna a multiplicidade de entidade no relacionamento.
 	 * 
 	 * @return
 	 */
-	EUmlMultiplicity getMultiplicity();
+	EPlantMultiplicity getMultiplicity();
 
 	/**
 	 * Retorna a role da entidade no relacionamento.

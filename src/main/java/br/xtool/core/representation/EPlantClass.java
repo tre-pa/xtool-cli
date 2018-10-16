@@ -14,34 +14,34 @@ import org.jboss.forge.roaster.model.source.JavaClassSource;
  * @author jcruz
  *
  */
-public interface EUmlClass extends EUmlEntity, JavaType<JavaClassSource> {
+public interface EPlantClass extends EPlantEntity, JavaType<JavaClassSource> {
 
 	/**
 	 * Retorna o diagrama de classe.
 	 * 
 	 * @return
 	 */
-	EUmlClassDiagram getClassDiagram();
+	EPlantClassDiagram getClassDiagram();
 
 	/**
 	 * Retorna os atributos da classe UML.
 	 * 
 	 * @return
 	 */
-	Collection<EUmlField> getFields();
+	Collection<EPlantField> getFields();
 
 	/**
 	 * Retorna os stereotipos da classe UML.
 	 * 
 	 * @return
 	 */
-	Set<EUmlStereotype> getStereotypes();
+	Set<EPlantStereotype> getStereotypes();
 
 	/**
 	 * 
 	 * @return
 	 */
-	Set<EUmlRelationship> getRelationships();
+	Set<EPlantRelationship> getRelationships();
 
 	/**
 	 * Retorna os attributos chave/valor das notas associadas a classe.

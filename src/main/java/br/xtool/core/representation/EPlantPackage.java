@@ -6,7 +6,7 @@ package br.xtool.core.representation;
  * @author jcruz
  *
  */
-public interface EUmlPackage {
+public interface EPlantPackage {
 
 	/**
 	 * Retorna o nome do pacote UML.

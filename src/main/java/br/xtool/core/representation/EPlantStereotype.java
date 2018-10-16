@@ -3,7 +3,7 @@ package br.xtool.core.representation;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-public interface EUmlStereotype {
+public interface EPlantStereotype {
 
 	@AllArgsConstructor
 	@Getter

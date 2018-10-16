@@ -9,7 +9,7 @@ import net.sourceforge.plantuml.cucadiagram.Link;
  * @author jcruz
  *
  */
-public interface EUmlRelationship {
+public interface EPlantRelationship {
 
 	/**
 	 * 
@@ -55,7 +55,7 @@ public interface EUmlRelationship {
 	 * 
 	 * @return
 	 */
-	EUmlClass getSourceClass();
+	EPlantClass getSourceClass();
 
 	/**
 	 * Retorna a role relativa ao source.
@@ -76,7 +76,7 @@ public interface EUmlRelationship {
 	 * 
 	 * @return
 	 */
-	EUmlEntity getTargetClass();
+	EPlantEntity getTargetClass();
 
 	/**
 	 * 
@@ -89,14 +89,14 @@ public interface EUmlRelationship {
 	 * 
 	 * @return
 	 */
-	EUmlMultiplicity getSourceMultiplicity();
+	EPlantMultiplicity getSourceMultiplicity();
 
 	/**
 	 * Retorna a multiplicidade target do relacionamento.
 	 * 
 	 * @return
 	 */
-	EUmlMultiplicity getTargetMultiplicity();
+	EPlantMultiplicity getTargetMultiplicity();
 
 	boolean isOneToOne();
 
@@ -106,8 +106,8 @@ public interface EUmlRelationship {
 
 	boolean isManyToMany();
 
-	interface EAssociation extends EUmlRelationship {}
+	interface EAssociation extends EPlantRelationship {}
 
-	interface EComposition extends EUmlRelationship {}
+	interface EComposition extends EPlantRelationship {}
 
 }

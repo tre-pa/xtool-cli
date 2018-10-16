@@ -2,11 +2,11 @@ package br.xtool.core.representation.impl;
 
 import org.apache.commons.lang3.StringUtils;
 
-import br.xtool.core.representation.EUmlEntity;
-import br.xtool.core.representation.EUmlPackage;
+import br.xtool.core.representation.EPlantEntity;
+import br.xtool.core.representation.EPlantPackage;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
 
-public class EUmlEntityImpl implements EUmlEntity {
+public class EUmlEntityImpl implements EPlantEntity {
 
 	private ILeaf leaf;
 
@@ -43,7 +43,7 @@ public class EUmlEntityImpl implements EUmlEntity {
 	 * @see br.xtool.core.representation.EUmlClass#getPackage()
 	 */
 	@Override
-	public EUmlPackage getUmlPackage() {
+	public EPlantPackage getUmlPackage() {
 		return new EUmlPackageImpl(this.leaf.getParentContainer());
 	}
 

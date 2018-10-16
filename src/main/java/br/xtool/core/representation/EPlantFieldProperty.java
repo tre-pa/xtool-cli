@@ -3,7 +3,7 @@ package br.xtool.core.representation;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-public interface EUmlFieldProperty {
+public interface EPlantFieldProperty {
 
 	@AllArgsConstructor
 	@Getter
@@ -24,7 +24,7 @@ public interface EUmlFieldProperty {
 	 * 
 	 * @return
 	 */
-	EUmlField getField();
+	EPlantField getField();
 
 	boolean isNotNull();
 

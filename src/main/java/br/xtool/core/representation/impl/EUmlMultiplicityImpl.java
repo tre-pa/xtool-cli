@@ -4,19 +4,19 @@ import java.util.stream.Stream;
 
 import org.apache.commons.lang3.StringUtils;
 
-import br.xtool.core.representation.EUmlClass;
-import br.xtool.core.representation.EUmlEntity;
-import br.xtool.core.representation.EUmlMultiplicity;
+import br.xtool.core.representation.EPlantClass;
+import br.xtool.core.representation.EPlantEntity;
+import br.xtool.core.representation.EPlantMultiplicity;
 
-public class EUmlMultiplicityImpl implements EUmlMultiplicity {
+public class EUmlMultiplicityImpl implements EPlantMultiplicity {
 
 	private String sourceQualifier;
 
-	private EUmlClass sourceClass;
+	private EPlantClass sourceClass;
 
-	private EUmlEntity targetClass;
+	private EPlantEntity targetClass;
 
-	public EUmlMultiplicityImpl(EUmlClass sourceClass, EUmlEntity targetClass, String sourceQualifier) {
+	public EUmlMultiplicityImpl(EPlantClass sourceClass, EPlantEntity targetClass, String sourceQualifier) {
 		super();
 		this.sourceQualifier = sourceQualifier;
 		this.sourceClass = sourceClass;

@@ -32,7 +32,7 @@ import br.xtool.core.representation.EJpaRepository;
 import br.xtool.core.representation.EJpaSpecification;
 import br.xtool.core.representation.ENgProject;
 import br.xtool.core.representation.EProject;
-import br.xtool.core.representation.EUmlClassDiagram;
+import br.xtool.core.representation.EPlantClassDiagram;
 import br.xtool.core.util.RoasterUtil;
 
 /**
@@ -296,7 +296,7 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 	 * @see br.xtool.core.representation.EBootProject#getDomainClassDiagram()
 	 */
 	@Override
-	public EUmlClassDiagram getDomainClassDiagram() {
+	public EPlantClassDiagram getDomainClassDiagram() {
 		return EUmlClassDiagramImpl.of(this.getPath().resolve("docs/diagrams/domain-class.md"));
 	}
 

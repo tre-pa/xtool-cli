@@ -138,7 +138,7 @@ public interface EBootProject extends EProject {
 	 * 
 	 * @return
 	 */
-	EUmlClassDiagram getDomainClassDiagram();
+	EPlantClassDiagram getDomainClassDiagram();
 
 	/**
 	 * 

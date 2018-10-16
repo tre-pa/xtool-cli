@@ -6,7 +6,7 @@ import org.jboss.forge.roaster.model.source.JavaEnumSource;
 
 import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.EJavaEnum;
-import br.xtool.core.representation.EUmlEnum;
+import br.xtool.core.representation.EPlantEnum;
 import br.xtool.core.representation.impl.EJavaEnumImpl;
 import br.xtool.core.util.RoasterUtil;
 import lombok.AllArgsConstructor;
@@ -18,10 +18,10 @@ import lombok.AllArgsConstructor;
  *
  */
 @AllArgsConstructor
-public class EUmlEnumConverter implements BiFunction<EBootProject, EUmlEnum, EJavaEnum> {
+public class EUmlEnumConverter implements BiFunction<EBootProject, EPlantEnum, EJavaEnum> {
 
 	@Override
-	public EJavaEnum apply(EBootProject bootProject, EUmlEnum umlEnum) {
+	public EJavaEnum apply(EBootProject bootProject, EPlantEnum umlEnum) {
 		// @formatter:off
 		EJavaEnum javaEnum = bootProject.getRoasterJavaUnits().stream()
 				.filter(javaUnit -> javaUnit.getGoverningType().isEnum())

@@ -23,12 +23,12 @@ import org.jtwig.util.HtmlUtils;
 import com.google.common.base.Splitter;
 import com.google.common.collect.ImmutableSet;
 
-import br.xtool.core.representation.EUmlClass;
-import br.xtool.core.representation.EUmlClassDiagram;
-import br.xtool.core.representation.EUmlEntity;
-import br.xtool.core.representation.EUmlField;
-import br.xtool.core.representation.EUmlRelationship;
-import br.xtool.core.representation.EUmlStereotype;
+import br.xtool.core.representation.EPlantClass;
+import br.xtool.core.representation.EPlantClassDiagram;
+import br.xtool.core.representation.EPlantEntity;
+import br.xtool.core.representation.EPlantField;
+import br.xtool.core.representation.EPlantRelationship;
+import br.xtool.core.representation.EPlantStereotype;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
@@ -37,9 +37,9 @@ import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
 import strman.Strman;
 
-public class EUmlClassImpl extends EUmlEntityImpl implements EUmlClass {
+public class EUmlClassImpl extends EUmlEntityImpl implements EPlantClass {
 
-	private EUmlClassDiagram umlClassDiagram;
+	private EPlantClassDiagram umlClassDiagram;
 
 	private ClassDiagram classDiagram;
 
@@ -47,7 +47,7 @@ public class EUmlClassImpl extends EUmlEntityImpl implements EUmlClass {
 
 	private ILeaf leaf;
 
-	public EUmlClassImpl(EUmlClassDiagram umlClassDiagram, ClassDiagram classDiagram, ILeaf leaf) {
+	public EUmlClassImpl(EPlantClassDiagram umlClassDiagram, ClassDiagram classDiagram, ILeaf leaf) {
 		super(leaf);
 		this.umlClassDiagram = umlClassDiagram;
 		this.classDiagram = classDiagram;
@@ -55,7 +55,7 @@ public class EUmlClassImpl extends EUmlEntityImpl implements EUmlClass {
 	}
 
 	@Override
-	public EUmlClassDiagram getClassDiagram() {
+	public EPlantClassDiagram getClassDiagram() {
 		return this.umlClassDiagram;
 	}
 
@@ -64,7 +64,7 @@ public class EUmlClassImpl extends EUmlEntityImpl implements EUmlClass {
 	 * @see br.xtool.core.representation.EUmlClass#getFields()
 	 */
 	@Override
-	public Collection<EUmlField> getFields() {
+	public Collection<EPlantField> getFields() {
 		// @formatter:off
 		return this.leaf.getBodier().getFieldsToDisplay().stream()
 				.filter(member -> StringUtils.isNotEmpty(member.getDisplay(false)))
@@ -80,7 +80,7 @@ public class EUmlClassImpl extends EUmlEntityImpl implements EUmlClass {
 	 * @see br.xtool.core.representation.EUmlClass#getStereotypes()
 	 */
 	@Override
-	public Set<EUmlStereotype> getStereotypes() {
+	public Set<EPlantStereotype> getStereotypes() {
 		// @formatter:off
 		if(Objects.nonNull(this.leaf.getStereotype())) {
 			return this.leaf.getStereotype().getLabels(false).stream()
@@ -152,8 +152,8 @@ public class EUmlClassImpl extends EUmlEntityImpl implements EUmlClass {
 	 * @see br.xtool.core.representation.EUmlClass#getRelationships()
 	 */
 	@Override
-	public Set<EUmlRelationship> getRelationships() {
-		return ImmutableSet.<EUmlRelationship>builder().addAll(iterateOverEntities1()).addAll(iterateOverEntities2()).build();
+	public Set<EPlantRelationship> getRelationships() {
+		return ImmutableSet.<EPlantRelationship>builder().addAll(iterateOverEntities1()).addAll(iterateOverEntities2()).build();
 	}
 
 	/*
@@ -307,7 +307,7 @@ public class EUmlClassImpl extends EUmlEntityImpl implements EUmlClass {
 	}
 
 	@Deprecated
-	protected EUmlEntity findUmlEntity(String className) {
+	protected EPlantEntity findUmlEntity(String className) {
 		String error = "Classe '%s' não definida no pacote. Insira a definção da classe com os atributos correspondentes no pacote.";
 		// @formatter:off
 		return this.classDiagram.getGroups(false).stream()
@@ -322,7 +322,7 @@ public class EUmlClassImpl extends EUmlEntityImpl implements EUmlClass {
 	}
 
 	@Deprecated
-	private Set<EUmlRelationship> iterateOverEntities1() {
+	private Set<EPlantRelationship> iterateOverEntities1() {
 		Predicate<Link> p1 = (link) -> link.getType().getDecor1().equals(LinkDecor.ARROW);
 		Predicate<Link> p2 = (link) -> link.getType().getDecor1().equals(LinkDecor.NONE) && link.getType().getDecor2().equals(LinkDecor.NONE);
 		Predicate<Link> p3 = (link) -> link.getType().getDecor2().equals(LinkDecor.COMPOSITION);
@@ -348,7 +348,7 @@ public class EUmlClassImpl extends EUmlEntityImpl implements EUmlClass {
 	}
 
 	@Deprecated
-	private Set<EUmlRelationship> iterateOverEntities2() {
+	private Set<EPlantRelationship> iterateOverEntities2() {
 		Predicate<Link> p1 = (link) -> link.getType().getDecor2().equals(LinkDecor.ARROW);
 		Predicate<Link> p2 = (link) -> link.getType().getDecor1().equals(LinkDecor.NONE) && link.getType().getDecor2().equals(LinkDecor.NONE);
 		Predicate<Link> p3 = (link) -> link.getType().getDecor1().equals(LinkDecor.COMPOSITION);

@@ -8,21 +8,21 @@ import java.util.Set;
  * @author jcruz
  *
  */
-public interface EUmlClassDiagram {
+public interface EPlantClassDiagram {
 
 	/**
 	 * Retorna as classes do diagrama de classe UML.
 	 * 
 	 * @return
 	 */
-	Set<EUmlClass> getClasses();
+	Set<EPlantClass> getClasses();
 
 	/**
 	 * Retorna a lista de enums do diagrama de classe UML.
 	 * 
 	 * @return
 	 */
-	Set<EUmlEnum> getEnums();
+	Set<EPlantEnum> getEnums();
 
 	//	/**
 	//	 * Retorna os relacionamento UML.

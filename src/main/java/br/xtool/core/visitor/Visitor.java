@@ -23,13 +23,13 @@ import br.xtool.core.representation.EJavaField.EOneToOneField;
 import br.xtool.core.representation.EJavaField.EStringField;
 import br.xtool.core.representation.EJavaField.ETransientField;
 import br.xtool.core.representation.EJavaField.EUniqueField;
-import br.xtool.core.representation.EUmlClass;
-import br.xtool.core.representation.EUmlField;
-import br.xtool.core.representation.EUmlFieldProperty;
-import br.xtool.core.representation.EUmlRelationship;
-import br.xtool.core.representation.EUmlRelationship.EAssociation;
-import br.xtool.core.representation.EUmlRelationship.EComposition;
-import br.xtool.core.representation.EUmlStereotype;
+import br.xtool.core.representation.EPlantClass;
+import br.xtool.core.representation.EPlantField;
+import br.xtool.core.representation.EPlantFieldProperty;
+import br.xtool.core.representation.EPlantRelationship;
+import br.xtool.core.representation.EPlantRelationship.EAssociation;
+import br.xtool.core.representation.EPlantRelationship.EComposition;
+import br.xtool.core.representation.EPlantStereotype;
 
 /**
  * 
@@ -42,144 +42,144 @@ public interface Visitor {
 	 * 
 	 * @param umlClass
 	 */
-	void visit(EJavaClass javaClass, EUmlClass umlClass);
+	void visit(EJavaClass javaClass, EPlantClass umlClass);
 
 	/**
 	 * 
 	 * @param umlStereotype
 	 */
-	void visit(EJavaClass javaClass, EUmlStereotype umlStereotype);
+	void visit(EJavaClass javaClass, EPlantStereotype umlStereotype);
 
 	/**
 	 * 
 	 * @param umlStereotype
 	 */
-	void visit(EAuditableJavaClass auditableClass, EUmlStereotype umlStereotype);
+	void visit(EAuditableJavaClass auditableClass, EPlantStereotype umlStereotype);
 
 	/**
 	 * 
 	 * @param umlStereotype
 	 */
-	void visit(ECacheableJavaClass cacheableClass, EUmlStereotype umlStereotype);
+	void visit(ECacheableJavaClass cacheableClass, EPlantStereotype umlStereotype);
 
 	/**
 	 * 
 	 * @param umlStereotype
 	 */
-	void visit(EIndexedJavaClass indexedClass, EUmlStereotype umlStereotype);
+	void visit(EIndexedJavaClass indexedClass, EPlantStereotype umlStereotype);
 
 	/**
 	 * 
 	 * @param umlStereotype
 	 */
-	void visit(EViewJavaClass viewClass, EUmlStereotype umlStereotype);
+	void visit(EViewJavaClass viewClass, EPlantStereotype umlStereotype);
 
 	/**
 	 * 
 	 * @param umlStereotype
 	 */
-	void visit(EReadOnlyJavaClass readOnlyClass, EUmlStereotype umlStereotype);
+	void visit(EReadOnlyJavaClass readOnlyClass, EPlantStereotype umlStereotype);
 
 	/**
 	 * 
 	 * @param umlStereotype
 	 */
-	void visit(EVersionableJavaClass versionableClass, EUmlStereotype umlStereotype);
+	void visit(EVersionableJavaClass versionableClass, EPlantStereotype umlStereotype);
 
 	/**
 	 * 
 	 * @param umlField
 	 */
-	void visit(EJavaField javaField, EUmlField umlField);
+	void visit(EJavaField javaField, EPlantField umlField);
 
 	/**
 	 * 
 	 * @param stringField
 	 * @param umlField
 	 */
-	void visit(EStringField stringField, EUmlField umlField);
+	void visit(EStringField stringField, EPlantField umlField);
 
 	/**
 	 * 
 	 * @param booleanField
 	 * @param umlField
 	 */
-	void visit(EBooleanField booleanField, EUmlField umlField);
+	void visit(EBooleanField booleanField, EPlantField umlField);
 
 	/**
 	 * 
 	 * @param longField
 	 * @param umlField
 	 */
-	void visit(ELongField longField, EUmlField umlField);
+	void visit(ELongField longField, EPlantField umlField);
 
 	/**
 	 * 
 	 * @param integerField
 	 * @param umlField
 	 */
-	void visit(EIntegerField integerField, EUmlField umlField);
+	void visit(EIntegerField integerField, EPlantField umlField);
 
 	/**
 	 * 
 	 * @param byteField
 	 * @param umlField
 	 */
-	void visit(EByteField byteField, EUmlField umlField);
+	void visit(EByteField byteField, EPlantField umlField);
 
 	/**
 	 * 
 	 * @param bigDecimalField
 	 * @param umlField
 	 */
-	void visit(EBigDecimalField bigDecimalField, EUmlField umlField);
+	void visit(EBigDecimalField bigDecimalField, EPlantField umlField);
 
 	/**
 	 * 
 	 * @param localDateField
 	 * @param umlField
 	 */
-	void visit(ELocalDateField localDateField, EUmlField umlField);
+	void visit(ELocalDateField localDateField, EPlantField umlField);
 
 	/**
 	 * 
 	 * @param localDateTimeField
 	 * @param umlField
 	 */
-	void visit(ELocalDateTimeField localDateTimeField, EUmlField umlField);
+	void visit(ELocalDateTimeField localDateTimeField, EPlantField umlField);
 
 	/**
 	 * 
 	 * @param notNullField
 	 * @param property
 	 */
-	void visit(ENotNullField notNullField, EUmlFieldProperty property);
+	void visit(ENotNullField notNullField, EPlantFieldProperty property);
 
 	/**
 	 * 
 	 * @param transientField
 	 * @param property
 	 */
-	void visit(ETransientField transientField, EUmlFieldProperty property);
+	void visit(ETransientField transientField, EPlantFieldProperty property);
 
 	/**
 	 * 
 	 * @param uniqueField
 	 * @param property
 	 */
-	void visit(EUniqueField uniqueField, EUmlFieldProperty property);
+	void visit(EUniqueField uniqueField, EPlantFieldProperty property);
 
 	/**
 	 * 
 	 * @param umlFieldProperty
 	 */
-	void visit(EJavaField javaField, EUmlFieldProperty umlFieldProperty);
+	void visit(EJavaField javaField, EPlantFieldProperty umlFieldProperty);
 
 	/**
 	 * 
 	 * @param umlRelationship
 	 */
-	void visit(EJavaField javaField, EUmlRelationship umlRelationship);
+	void visit(EJavaField javaField, EPlantRelationship umlRelationship);
 
 	/**
 	 * 

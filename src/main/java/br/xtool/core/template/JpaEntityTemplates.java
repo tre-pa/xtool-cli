@@ -3,7 +3,7 @@ package br.xtool.core.template;
 import org.hibernate.annotations.Immutable;
 
 import br.xtool.core.representation.EJavaClass;
-import br.xtool.core.representation.EUmlRelationship;
+import br.xtool.core.representation.EPlantRelationship;
 import br.xtool.core.template.base.JavaTemplate;
 
 public class JpaEntityTemplates {
@@ -14,7 +14,7 @@ public class JpaEntityTemplates {
 	 * @param javaClass
 	 * @param relationship
 	 */
-	public static <T extends EUmlRelationship> void genAddListMethodRelationship(EJavaClass javaClass, T relationship) {
+	public static <T extends EPlantRelationship> void genAddListMethodRelationship(EJavaClass javaClass, T relationship) {
 		if (!javaClass.hasAnnotation(Immutable.class)) {
 			String methodName = String.format("add%s", relationship.getTargetClass().getName());
 			if (!javaClass.getRoasterJavaClass().hasMethodSignature(methodName, relationship.getTargetClass().getName())) {
@@ -44,7 +44,7 @@ public class JpaEntityTemplates {
 	 * @param javaClass
 	 * @param relationship
 	 */
-	public static <T extends EUmlRelationship> void genRemoveListMethodRelationship(EJavaClass javaClass, T relationship) {
+	public static <T extends EPlantRelationship> void genRemoveListMethodRelationship(EJavaClass javaClass, T relationship) {
 		if (!javaClass.hasAnnotation(Immutable.class)) {
 			String methodName = String.format("remove%s", relationship.getTargetClass().getName());
 			if (!javaClass.getRoasterJavaClass().hasMethodSignature(methodName, relationship.getTargetClass().getName())) {
