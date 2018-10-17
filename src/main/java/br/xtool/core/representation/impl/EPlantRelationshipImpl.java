@@ -11,7 +11,7 @@ import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkArrow;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 
-public class EUmlRelationshipImpl implements EPlantRelationship {
+public class EPlantRelationshipImpl implements EPlantRelationship {
 
 	private Link link;
 
@@ -23,7 +23,7 @@ public class EUmlRelationshipImpl implements EPlantRelationship {
 
 	private String targetQualifier;
 
-	public EUmlRelationshipImpl(EPlantClass sourceClass, EPlantEntity targetClass, Link link, String sourceQualifer, String targetQualifier) {
+	public EPlantRelationshipImpl(EPlantClass sourceClass, EPlantEntity targetClass, Link link, String sourceQualifer, String targetQualifier) {
 		super();
 		this.sourceClass = sourceClass;
 		this.sourceQualifier = sourceQualifer;
@@ -56,8 +56,8 @@ public class EUmlRelationshipImpl implements EPlantRelationship {
 	 * @see br.xtool.core.representation.EUmlRelationship#getNavigability()
 	 */
 	@Override
-	public EUmlNavigability getNavigability() {
-		return new EUmlNavigabilityImpl(this.link);
+	public EPlantNavigability getNavigability() {
+		return new EPlantNavigabilityImpl(this.link);
 	}
 
 	/*
@@ -116,7 +116,7 @@ public class EUmlRelationshipImpl implements EPlantRelationship {
 	 */
 	@Override
 	public EPlantMultiplicity getSourceMultiplicity() {
-		return new EUmlMultiplicityImpl(this.getSourceClass(), this.getTargetClass(), this.sourceQualifier);
+		return new EPlantMultiplicityImpl(this.getSourceClass(), this.getTargetClass(), this.sourceQualifier);
 	}
 
 	/*
@@ -125,7 +125,7 @@ public class EUmlRelationshipImpl implements EPlantRelationship {
 	 */
 	@Override
 	public EPlantMultiplicity getTargetMultiplicity() {
-		return new EUmlMultiplicityImpl(this.getSourceClass(), this.getTargetClass(), this.targetQualifier);
+		return new EPlantMultiplicityImpl(this.getSourceClass(), this.getTargetClass(), this.targetQualifier);
 	}
 
 	/*
@@ -171,13 +171,13 @@ public class EUmlRelationshipImpl implements EPlantRelationship {
 		return this.getSourceMultiplicity().isToMany() && this.getTargetMultiplicity().isToMany();
 	}
 
-	public static class EAssociationImpl extends EUmlRelationshipImpl implements EAssociation {
+	public static class EAssociationImpl extends EPlantRelationshipImpl implements EAssociation {
 		public EAssociationImpl(EPlantRelationship umlRelationship) {
 			super(umlRelationship.getSourceClass(), umlRelationship.getTargetClass(), umlRelationship.getLink(), umlRelationship.getSourceQualifier(), umlRelationship.getTargetQualifier());
 		}
 	}
 
-	public static class ECompositionImpl extends EUmlRelationshipImpl implements EComposition {
+	public static class ECompositionImpl extends EPlantRelationshipImpl implements EComposition {
 		public ECompositionImpl(EPlantRelationship umlRelationship) {
 			super(umlRelationship.getSourceClass(), umlRelationship.getTargetClass(), umlRelationship.getLink(), umlRelationship.getSourceQualifier(), umlRelationship.getTargetQualifier());
 		}

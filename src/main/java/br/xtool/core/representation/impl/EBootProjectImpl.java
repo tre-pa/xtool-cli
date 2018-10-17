@@ -297,7 +297,7 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 	 */
 	@Override
 	public EPlantClassDiagram getDomainClassDiagram() {
-		return EUmlClassDiagramImpl.of(this.getPath().resolve("docs/diagrams/domain-class.md"));
+		return EPlantDiagramImpl.of(this.getPath().resolve("docs/diagrams/domain-class.md"));
 	}
 
 	/*

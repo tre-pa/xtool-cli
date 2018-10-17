@@ -6,11 +6,11 @@ import br.xtool.core.representation.EPlantEntity;
 import br.xtool.core.representation.EPlantPackage;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
 
-public class EUmlEntityImpl implements EPlantEntity {
+public class EPlantEntityImpl implements EPlantEntity {
 
 	private ILeaf leaf;
 
-	public EUmlEntityImpl(ILeaf leaf) {
+	public EPlantEntityImpl(ILeaf leaf) {
 		super();
 		this.leaf = leaf;
 	}
@@ -44,7 +44,7 @@ public class EUmlEntityImpl implements EPlantEntity {
 	 */
 	@Override
 	public EPlantPackage getUmlPackage() {
-		return new EUmlPackageImpl(this.leaf.getParentContainer());
+		return new EPlantPackageImpl(this.leaf.getParentContainer());
 	}
 
 }

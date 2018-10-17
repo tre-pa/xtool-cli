@@ -6,7 +6,7 @@ package br.xtool.core.representation.impl;
  * @author jcruz
  *
  */
-public interface EUmlNavigability {
+public interface EPlantNavigability {
 
 	/**
 	 * Verifica se a navegabilidade é bidirecional.

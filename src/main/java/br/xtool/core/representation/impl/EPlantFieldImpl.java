@@ -22,13 +22,13 @@ import br.xtool.core.representation.EPlantFieldProperty.FieldPropertyType;
 import net.sourceforge.plantuml.cucadiagram.Member;
 import strman.Strman;
 
-public class EUmlFieldImpl implements EPlantField {
+public class EPlantFieldImpl implements EPlantField {
 
 	private Member member;
 
 	private Map<String, String> taggedValues = new HashMap<>();
 
-	public EUmlFieldImpl(Member member, Map<String, String> taggedValues) {
+	public EPlantFieldImpl(Member member, Map<String, String> taggedValues) {
 		super();
 		this.member = member;
 		this.taggedValues = taggedValues;
@@ -185,11 +185,11 @@ public class EUmlFieldImpl implements EPlantField {
 			if (propertiesItens.length > 1) {
 				// @formatter:off
 				return Stream.of(propertiesItens)
-					.map(item -> new EUmlFieldPropertyImpl(this, item))
+					.map(item -> new EPlantFieldPropertyImpl(this, item))
 					.collect(Collectors.toSet());
 				// @formatter:on
 			}
-			return Sets.newHashSet(new EUmlFieldPropertyImpl(this, propertiesBlock[0]));
+			return Sets.newHashSet(new EPlantFieldPropertyImpl(this, propertiesBlock[0]));
 		}
 		return new HashSet<>();
 	}

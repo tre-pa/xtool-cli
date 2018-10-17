@@ -8,7 +8,7 @@ import br.xtool.core.representation.EPlantClass;
 import br.xtool.core.representation.EPlantEntity;
 import br.xtool.core.representation.EPlantMultiplicity;
 
-public class EUmlMultiplicityImpl implements EPlantMultiplicity {
+public class EPlantMultiplicityImpl implements EPlantMultiplicity {
 
 	private String sourceQualifier;
 
@@ -16,7 +16,7 @@ public class EUmlMultiplicityImpl implements EPlantMultiplicity {
 
 	private EPlantEntity targetClass;
 
-	public EUmlMultiplicityImpl(EPlantClass sourceClass, EPlantEntity targetClass, String sourceQualifier) {
+	public EPlantMultiplicityImpl(EPlantClass sourceClass, EPlantEntity targetClass, String sourceQualifier) {
 		super();
 		this.sourceQualifier = sourceQualifier;
 		this.sourceClass = sourceClass;

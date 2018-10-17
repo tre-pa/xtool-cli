@@ -6,13 +6,13 @@ import java.util.stream.Stream;
 import br.xtool.core.representation.EPlantClass;
 import br.xtool.core.representation.EPlantStereotype;
 
-public class EUmlStereotypeImpl implements EPlantStereotype {
+public class EPlantStereotypeImpl implements EPlantStereotype {
 
 	private EPlantClass umlClass;
 
 	private String stereotype;
 
-	public EUmlStereotypeImpl(EPlantClass umlClass, String stereotype) {
+	public EPlantStereotypeImpl(EPlantClass umlClass, String stereotype) {
 		super();
 		this.umlClass = umlClass;
 		this.stereotype = stereotype;

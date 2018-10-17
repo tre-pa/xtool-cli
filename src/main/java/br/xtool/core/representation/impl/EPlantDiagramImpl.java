@@ -14,11 +14,11 @@ import net.sourceforge.plantuml.SourceStringReader;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 
-public class EUmlClassDiagramImpl implements EPlantClassDiagram {
+public class EPlantDiagramImpl implements EPlantClassDiagram {
 
 	private ClassDiagram classDiagram;
 
-	private EUmlClassDiagramImpl(ClassDiagram classDiagram) {
+	private EPlantDiagramImpl(ClassDiagram classDiagram) {
 		super();
 		this.classDiagram = classDiagram;
 	}
@@ -33,7 +33,7 @@ public class EUmlClassDiagramImpl implements EPlantClassDiagram {
 		return this.classDiagram.getGroups(false).stream()
 			 .flatMap(groups -> groups.getLeafsDirect().stream())
 			 .filter(leaf -> leaf.getEntityType().equals(LeafType.CLASS))
-			 .map(leaf -> new EUmlClassImpl(this,this.classDiagram, leaf))
+			 .map(leaf -> new EPlantClassImpl(this,this.classDiagram, leaf))
 			 .collect(Collectors.toSet());
 		// @formatter:on
 	}
@@ -48,7 +48,7 @@ public class EUmlClassDiagramImpl implements EPlantClassDiagram {
 		return this.classDiagram.getGroups(false).stream()
 			 .flatMap(groups -> groups.getLeafsDirect().stream())
 			 .filter(leaf -> leaf.getEntityType().equals(LeafType.ENUM))
-			 .map(leaf -> new EUmlEnumImpl(this, leaf))
+			 .map(leaf -> new EPlantEnumImpl(this, leaf))
 			 .collect(Collectors.toSet());
 		// @formatter:on
 	}
@@ -67,7 +67,7 @@ public class EUmlClassDiagramImpl implements EPlantClassDiagram {
 				.findAny()
 				.orElseThrow(() -> new IllegalArgumentException("Diagrama de classe com erros."));
 		// @formatter:on
-		return new EUmlClassDiagramImpl(classDiagram);
+		return new EPlantDiagramImpl(classDiagram);
 	}
 
 }

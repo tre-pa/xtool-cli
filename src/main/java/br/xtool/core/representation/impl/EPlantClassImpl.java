@@ -37,7 +37,7 @@ import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
 import strman.Strman;
 
-public class EUmlClassImpl extends EUmlEntityImpl implements EPlantClass {
+public class EPlantClassImpl extends EPlantEntityImpl implements EPlantClass {
 
 	private EPlantClassDiagram umlClassDiagram;
 
@@ -47,7 +47,7 @@ public class EUmlClassImpl extends EUmlEntityImpl implements EPlantClass {
 
 	private ILeaf leaf;
 
-	public EUmlClassImpl(EPlantClassDiagram umlClassDiagram, ClassDiagram classDiagram, ILeaf leaf) {
+	public EPlantClassImpl(EPlantClassDiagram umlClassDiagram, ClassDiagram classDiagram, ILeaf leaf) {
 		super(leaf);
 		this.umlClassDiagram = umlClassDiagram;
 		this.classDiagram = classDiagram;
@@ -70,7 +70,7 @@ public class EUmlClassImpl extends EUmlEntityImpl implements EPlantClass {
 				.filter(member -> StringUtils.isNotEmpty(member.getDisplay(false)))
 				.filter(member -> Objects.nonNull(member.getVisibilityModifier()))
 				.filter(member -> member.getVisibilityModifier().equals(VisibilityModifier.PRIVATE_FIELD))
-				.map(member -> new EUmlFieldImpl(member, this.getTaggedValues()))
+				.map(member -> new EPlantFieldImpl(member, this.getTaggedValues()))
 				.collect(Collectors.toList());
 		// @formatter:on
 	}
@@ -86,7 +86,7 @@ public class EUmlClassImpl extends EUmlEntityImpl implements EPlantClass {
 			return this.leaf.getStereotype().getLabels(false).stream()
 					.map(value -> Strman.between(value, "<<", ">>"))
 					.map(StringUtils::join)
-					.map(value -> new EUmlStereotypeImpl(this, value))
+					.map(value -> new EPlantStereotypeImpl(this, value))
 					.collect(Collectors.toSet());
 		}
 		// @formatter:on
@@ -315,7 +315,7 @@ public class EUmlClassImpl extends EUmlEntityImpl implements EPlantClass {
 			 .filter(leaf1 -> leaf1.getEntityType().equals(LeafType.CLASS) || leaf1.getEntityType().equals(LeafType.ENUM))
 			 .filter(leaf1 -> !leaf1.getDisplay().asStringWithHiddenNewLine().equals(this.getName()))
 			 .filter(leaf1 -> leaf1.getDisplay().asStringWithHiddenNewLine().equals(className))
-			 .map(_leaf -> new EUmlEntityImpl(_leaf))
+			 .map(_leaf -> new EPlantEntityImpl(_leaf))
 			 .findAny()
 			 .orElseThrow(() -> new IllegalArgumentException(String.format(error, className)));
 		 // @formatter:on
@@ -333,7 +333,7 @@ public class EUmlClassImpl extends EUmlEntityImpl implements EPlantClass {
 			.filter(link -> link.getEntity1().getDisplay().asStringWithHiddenNewLine().equals(this.getName()))
 			.filter(p1.or(p2).or(p3).or(p4))
 //			.peek(link -> System.out.println("iterateOverEntities1 "+link.getEntity1().getDisplay().asStringWithHiddenNewLine()+ " "+link.getEntity2().getDisplay().asStringWithHiddenNewLine()+ " "+link.getLinkArrow()))
-			.map(link -> new EUmlRelationshipImpl(this, findUmlEntity(link.getEntity2().getDisplay().asStringWithHiddenNewLine()), link, getEntity2Qualifier(link), getEntity1Qualifier(link)))
+			.map(link -> new EPlantRelationshipImpl(this, findUmlEntity(link.getEntity2().getDisplay().asStringWithHiddenNewLine()), link, getEntity2Qualifier(link), getEntity1Qualifier(link)))
 		
 			.collect(Collectors.toSet());
 		// @formatter:on
@@ -360,7 +360,7 @@ public class EUmlClassImpl extends EUmlEntityImpl implements EPlantClass {
 			.filter(p1.or(p2).or(p3).or(p4))
 //			.peek(link -> System.out.println("iterateOverEntities2 "+link.getEntity2().getDisplay().asStringWithHiddenNewLine()+ " "+link.getEntity1().getDisplay().asStringWithHiddenNewLine()+ " "+link.getLinkArrow()))
 //			.map(link -> Pair.of(link, link.getEntity1().getDisplay().asStringWithHiddenNewLine()))
-			.map(link -> new EUmlRelationshipImpl(this, findUmlEntity(link.getEntity1().getDisplay().asStringWithHiddenNewLine()), link, getEntity1Qualifier(link), getEntity2Qualifier(link)))
+			.map(link -> new EPlantRelationshipImpl(this, findUmlEntity(link.getEntity1().getDisplay().asStringWithHiddenNewLine()), link, getEntity1Qualifier(link), getEntity2Qualifier(link)))
 			.collect(Collectors.toSet());
 		// @formatter:on
 	}

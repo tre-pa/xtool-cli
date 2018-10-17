@@ -3,11 +3,11 @@ package br.xtool.core.representation.impl;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 
-public class EUmlNavigabilityImpl implements EUmlNavigability {
+public class EPlantNavigabilityImpl implements EPlantNavigability {
 
 	private Link link;
 
-	public EUmlNavigabilityImpl(Link link) {
+	public EPlantNavigabilityImpl(Link link) {
 		super();
 		this.link = link;
 	}

@@ -13,8 +13,8 @@ import br.xtool.core.representation.impl.EJavaFieldImpl.EManyToManyFieldImpl;
 import br.xtool.core.representation.impl.EJavaFieldImpl.EManyToOneFieldImpl;
 import br.xtool.core.representation.impl.EJavaFieldImpl.EOneToManyFieldImpl;
 import br.xtool.core.representation.impl.EJavaFieldImpl.EOneToOneFieldImpl;
-import br.xtool.core.representation.impl.EUmlRelationshipImpl.EAssociationImpl;
-import br.xtool.core.representation.impl.EUmlRelationshipImpl.ECompositionImpl;
+import br.xtool.core.representation.impl.EPlantRelationshipImpl.EAssociationImpl;
+import br.xtool.core.representation.impl.EPlantRelationshipImpl.ECompositionImpl;
 import br.xtool.core.visitor.Visitor;
 import lombok.AllArgsConstructor;
 

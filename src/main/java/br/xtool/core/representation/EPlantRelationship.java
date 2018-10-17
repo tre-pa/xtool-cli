@@ -1,6 +1,6 @@
 package br.xtool.core.representation;
 
-import br.xtool.core.representation.impl.EUmlNavigability;
+import br.xtool.core.representation.impl.EPlantNavigability;
 import net.sourceforge.plantuml.cucadiagram.Link;
 
 /**
@@ -34,7 +34,7 @@ public interface EPlantRelationship {
 	 * 
 	 * @return
 	 */
-	EUmlNavigability getNavigability();
+	EPlantNavigability getNavigability();
 
 	/**
 	 * Retorna se o relacionamento é uma associação.

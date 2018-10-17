@@ -6,13 +6,13 @@ import java.util.stream.Stream;
 import br.xtool.core.representation.EPlantField;
 import br.xtool.core.representation.EPlantFieldProperty;
 
-public class EUmlFieldPropertyImpl implements EPlantFieldProperty {
+public class EPlantFieldPropertyImpl implements EPlantFieldProperty {
 
 	private EPlantField field;
 
 	private String property;
 
-	public EUmlFieldPropertyImpl(EPlantField field, String property) {
+	public EPlantFieldPropertyImpl(EPlantField field, String property) {
 		super();
 		this.field = field;
 		this.property = property;

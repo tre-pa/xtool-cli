@@ -9,13 +9,13 @@ import br.xtool.core.representation.EPlantClassDiagram;
 import br.xtool.core.representation.EPlantEnum;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
 
-public class EUmlEnumImpl extends EUmlEntityImpl implements EPlantEnum {
+public class EPlantEnumImpl extends EPlantEntityImpl implements EPlantEnum {
 
 	private EPlantClassDiagram umlClassDiagram;
 
 	private ILeaf leaf;
 
-	public EUmlEnumImpl(EPlantClassDiagram umlClassDiagram, ILeaf leaf) {
+	public EPlantEnumImpl(EPlantClassDiagram umlClassDiagram, ILeaf leaf) {
 		super(leaf);
 		this.umlClassDiagram = umlClassDiagram;
 		this.leaf = leaf;
