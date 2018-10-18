@@ -76,7 +76,7 @@ public interface EPlantRelationship {
 	 * 
 	 * @return
 	 */
-	EPlantEntity getTargetClass();
+	EPlantClass getTargetClass();
 
 	/**
 	 * 

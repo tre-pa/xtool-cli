@@ -7,16 +7,16 @@ import org.springframework.util.StringUtils;
 
 import br.xtool.core.representation.EPlantClassDiagram;
 import br.xtool.core.representation.EPlantEnum;
+import br.xtool.core.representation.EPlantPackage;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
 
-public class EPlantEnumImpl extends EPlantEntityImpl implements EPlantEnum {
+public class EPlantEnumImpl implements EPlantEnum {
 
 	private EPlantClassDiagram umlClassDiagram;
 
 	private ILeaf leaf;
 
 	public EPlantEnumImpl(EPlantClassDiagram umlClassDiagram, ILeaf leaf) {
-		super(leaf);
 		this.umlClassDiagram = umlClassDiagram;
 		this.leaf = leaf;
 	}
@@ -34,6 +34,41 @@ public class EPlantEnumImpl extends EPlantEntityImpl implements EPlantEnum {
 				.map(member -> member.getDisplay(false))
 				.collect(Collectors.toList());
 		// @formatter:on
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.xtool.core.representation.EUmlClass#getName()
+	 */
+	@Override
+	public String getName() {
+		return this.leaf.getDisplay().asStringWithHiddenNewLine();
+	}
+
+	@Override
+	public String getInstanceName() {
+		return StringUtils.uncapitalize(this.getName());
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.xtool.core.representation.EUmlClass#getQualifiedName()
+	 */
+	@Override
+	public String getQualifiedName() {
+		return this.getUmlPackage().getName().concat(".").concat(getName());
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.xtool.core.representation.EUmlClass#getPackage()
+	 */
+	@Override
+	public EPlantPackage getUmlPackage() {
+		return new EPlantPackageImpl(this.leaf.getParentContainer());
 	}
 
 }

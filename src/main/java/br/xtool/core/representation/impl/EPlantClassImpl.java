@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
@@ -25,19 +24,18 @@ import com.google.common.collect.ImmutableSet;
 
 import br.xtool.core.representation.EPlantClass;
 import br.xtool.core.representation.EPlantClassDiagram;
-import br.xtool.core.representation.EPlantEntity;
 import br.xtool.core.representation.EPlantField;
+import br.xtool.core.representation.EPlantPackage;
 import br.xtool.core.representation.EPlantRelationship;
 import br.xtool.core.representation.EPlantStereotype;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
-import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
 import strman.Strman;
 
-public class EPlantClassImpl extends EPlantEntityImpl implements EPlantClass {
+public class EPlantClassImpl implements EPlantClass {
 
 	private EPlantClassDiagram umlClassDiagram;
 
@@ -48,7 +46,6 @@ public class EPlantClassImpl extends EPlantEntityImpl implements EPlantClass {
 	private ILeaf leaf;
 
 	public EPlantClassImpl(EPlantClassDiagram umlClassDiagram, ClassDiagram classDiagram, ILeaf leaf) {
-		super(leaf);
 		this.umlClassDiagram = umlClassDiagram;
 		this.classDiagram = classDiagram;
 		this.leaf = leaf;
@@ -61,6 +58,42 @@ public class EPlantClassImpl extends EPlantEntityImpl implements EPlantClass {
 
 	/*
 	 * (non-Javadoc)
+	 * 
+	 * @see br.xtool.core.representation.EUmlClass#getName()
+	 */
+	@Override
+	public String getName() {
+		return this.leaf.getDisplay().asStringWithHiddenNewLine();
+	}
+
+	@Override
+	public String getInstanceName() {
+		return StringUtils.uncapitalize(this.getName());
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.xtool.core.representation.EUmlClass#getQualifiedName()
+	 */
+	@Override
+	public String getQualifiedName() {
+		return this.getUmlPackage().getName().concat(".").concat(getName());
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.xtool.core.representation.EUmlClass#getPackage()
+	 */
+	@Override
+	public EPlantPackage getUmlPackage() {
+		return new EPlantPackageImpl(this.leaf.getParentContainer());
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see br.xtool.core.representation.EUmlClass#getFields()
 	 */
 	@Override
@@ -72,11 +105,12 @@ public class EPlantClassImpl extends EPlantEntityImpl implements EPlantClass {
 				.filter(member -> member.getVisibilityModifier().equals(VisibilityModifier.PRIVATE_FIELD))
 				.map(member -> new EPlantFieldImpl(umlClassDiagram, member, this.getTaggedValues()))
 				.collect(Collectors.toList());
-		// @formatter:on
+		// @formatter:on 
 	}
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.xtool.core.representation.EUmlClass#getStereotypes()
 	 */
 	@Override
@@ -95,6 +129,7 @@ public class EPlantClassImpl extends EPlantEntityImpl implements EPlantClass {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.xtool.core.representation.EUmlClass#getTaggedValues()
 	 */
 	@Override
@@ -115,6 +150,7 @@ public class EPlantClassImpl extends EPlantEntityImpl implements EPlantClass {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.xtool.core.representation.EUmlClass#getTaggedValue(java.lang.String)
 	 */
 	@Override
@@ -124,6 +160,7 @@ public class EPlantClassImpl extends EPlantEntityImpl implements EPlantClass {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.xtool.core.representation.EUmlClass#getTaggedValues(java.lang.String)
 	 */
 	@Override
@@ -149,15 +186,52 @@ public class EPlantClassImpl extends EPlantEntityImpl implements EPlantClass {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.xtool.core.representation.EUmlClass#getRelationships()
 	 */
 	@Override
 	public Set<EPlantRelationship> getRelationships() {
-		return ImmutableSet.<EPlantRelationship>builder().addAll(iterateOverEntities1()).addAll(iterateOverEntities2()).build();
+
+		// @formatter:off
+		Set<EPlantRelationship> relationship1 = this.classDiagram.getEntityFactory().getLinks().stream()
+				.filter(link -> link.getEntity2().getEntityType().equals(LeafType.CLASS))
+				.filter(link -> link.getEntity1().getDisplay().asStringWithHiddenNewLine().equals(this.getName()))
+				.map(link -> new EPlantRelationshipImpl(this, findPlantClassByName(link.getEntity2().getDisplay().asStringWithHiddenNewLine()), link, getEntity2Qualifier(link), getEntity1Qualifier(link)))
+				.collect(Collectors.toSet());
+		// @formatter:on
+
+		// @formatter:off
+		Set<EPlantRelationship> relationship2 = this.classDiagram.getEntityFactory().getLinks().stream()
+				.filter(link -> link.getEntity1().getEntityType().equals(LeafType.CLASS))
+				.filter(link -> link.getEntity2().getDisplay().asStringWithHiddenNewLine().equals(this.getName()))
+				.map(link -> new EPlantRelationshipImpl(this, findPlantClassByName(link.getEntity1().getDisplay().asStringWithHiddenNewLine()), link, getEntity1Qualifier(link), getEntity2Qualifier(link)))
+				.collect(Collectors.toSet());
+		// @formatter:on
+
+		return ImmutableSet.<EPlantRelationship>builder().addAll(relationship1).addAll(relationship2).build();
+	}
+
+	private EPlantClass findPlantClassByName(String name) {
+		// @formatter:off
+		return this.umlClassDiagram.getClasses().stream()
+			.filter(pClass -> pClass.getName().equals(name))
+			.findFirst()
+			.orElseThrow(() -> new IllegalArgumentException(String.format("Classe %s não encontrada", name)));
+		// @formatter:on
+
+	}
+
+	private String getEntity1Qualifier(Link link) {
+		return StringUtils.trim(link.getQualifier1());
+	}
+
+	private String getEntity2Qualifier(Link link) {
+		return StringUtils.trim(link.getQualifier2());
 	}
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see org.jboss.forge.roaster.model.JavaType#getCanonicalName()
 	 */
 	@Override
@@ -167,6 +241,7 @@ public class EPlantClassImpl extends EPlantEntityImpl implements EPlantClass {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see org.jboss.forge.roaster.model.JavaType#getSyntaxErrors()
 	 */
 	@Override
@@ -176,6 +251,7 @@ public class EPlantClassImpl extends EPlantEntityImpl implements EPlantClass {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see org.jboss.forge.roaster.model.JavaType#hasSyntaxErrors()
 	 */
 	@Override
@@ -185,6 +261,7 @@ public class EPlantClassImpl extends EPlantEntityImpl implements EPlantClass {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see org.jboss.forge.roaster.model.JavaType#isClass()
 	 */
 	@Override
@@ -194,35 +271,31 @@ public class EPlantClassImpl extends EPlantEntityImpl implements EPlantClass {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see org.jboss.forge.roaster.model.JavaType#isEnum()
 	 */
 	@Override
 	public boolean isEnum() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean isInterface() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean isAnnotation() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public JavaType<?> getEnclosingType() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public String toUnformattedString() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -304,65 +377,6 @@ public class EPlantClassImpl extends EPlantEntityImpl implements EPlantClass {
 	@Override
 	public Visibility getVisibility() {
 		return null;
-	}
-
-	@Deprecated
-	protected EPlantEntity findUmlEntity(String className) {
-		String error = "Classe '%s' não definida no pacote. Insira a definção da classe com os atributos correspondentes no pacote.";
-		// @formatter:off
-		return this.classDiagram.getGroups(false).stream()
-			 .flatMap(groups -> groups.getLeafsDirect().stream())
-			 .filter(leaf1 -> leaf1.getEntityType().equals(LeafType.CLASS) || leaf1.getEntityType().equals(LeafType.ENUM))
-			 .filter(leaf1 -> !leaf1.getDisplay().asStringWithHiddenNewLine().equals(this.getName()))
-			 .filter(leaf1 -> leaf1.getDisplay().asStringWithHiddenNewLine().equals(className))
-			 .map(_leaf -> new EPlantEntityImpl(_leaf))
-			 .findAny()
-			 .orElseThrow(() -> new IllegalArgumentException(String.format(error, className)));
-		 // @formatter:on
-	}
-
-	@Deprecated
-	private Set<EPlantRelationship> iterateOverEntities1() {
-		Predicate<Link> p1 = (link) -> link.getType().getDecor1().equals(LinkDecor.ARROW);
-		Predicate<Link> p2 = (link) -> link.getType().getDecor1().equals(LinkDecor.NONE) && link.getType().getDecor2().equals(LinkDecor.NONE);
-		Predicate<Link> p3 = (link) -> link.getType().getDecor2().equals(LinkDecor.COMPOSITION);
-		Predicate<Link> p4 = (link) -> link.getType().getDecor1().equals(LinkDecor.COMPOSITION) && link.getType().getDecor2().equals(LinkDecor.ARROW);
-		// @formatter:off
-		return this.classDiagram.getEntityFactory().getLinks().stream()
-			.filter(link -> !link.getEntity2().getEntityType().equals(LeafType.NOTE))
-			.filter(link -> link.getEntity1().getDisplay().asStringWithHiddenNewLine().equals(this.getName()))
-			.filter(p1.or(p2).or(p3).or(p4))
-//			.peek(link -> System.out.println("iterateOverEntities1 "+link.getEntity1().getDisplay().asStringWithHiddenNewLine()+ " "+link.getEntity2().getDisplay().asStringWithHiddenNewLine()+ " "+link.getLinkArrow()))
-			.map(link -> new EPlantRelationshipImpl(this, findUmlEntity(link.getEntity2().getDisplay().asStringWithHiddenNewLine()), link, getEntity2Qualifier(link), getEntity1Qualifier(link)))
-		
-			.collect(Collectors.toSet());
-		// @formatter:on
-	}
-
-	private String getEntity1Qualifier(Link link) {
-		return StringUtils.trim(link.getQualifier1());
-	}
-
-	private String getEntity2Qualifier(Link link) {
-		return StringUtils.trim(link.getQualifier2());
-	}
-
-	@Deprecated
-	private Set<EPlantRelationship> iterateOverEntities2() {
-		Predicate<Link> p1 = (link) -> link.getType().getDecor2().equals(LinkDecor.ARROW);
-		Predicate<Link> p2 = (link) -> link.getType().getDecor1().equals(LinkDecor.NONE) && link.getType().getDecor2().equals(LinkDecor.NONE);
-		Predicate<Link> p3 = (link) -> link.getType().getDecor1().equals(LinkDecor.COMPOSITION);
-		Predicate<Link> p4 = (link) -> link.getType().getDecor2().equals(LinkDecor.COMPOSITION) && link.getType().getDecor1().equals(LinkDecor.ARROW);
-		// @formatter:off
-		return this.classDiagram.getEntityFactory().getLinks().stream()
-			.filter(link -> !link.getEntity1().getEntityType().equals(LeafType.NOTE))
-			.filter(link -> link.getEntity2().getDisplay().asStringWithHiddenNewLine().equals(this.getName()))
-			.filter(p1.or(p2).or(p3).or(p4))
-//			.peek(link -> System.out.println("iterateOverEntities2 "+link.getEntity2().getDisplay().asStringWithHiddenNewLine()+ " "+link.getEntity1().getDisplay().asStringWithHiddenNewLine()+ " "+link.getLinkArrow()))
-//			.map(link -> Pair.of(link, link.getEntity1().getDisplay().asStringWithHiddenNewLine()))
-			.map(link -> new EPlantRelationshipImpl(this, findUmlEntity(link.getEntity1().getDisplay().asStringWithHiddenNewLine()), link, getEntity1Qualifier(link), getEntity2Qualifier(link)))
-			.collect(Collectors.toSet());
-		// @formatter:on
 	}
 
 }

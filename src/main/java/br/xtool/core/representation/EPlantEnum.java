@@ -8,7 +8,7 @@ import java.util.Collection;
  * @author jcruz
  *
  */
-public interface EPlantEnum extends EPlantEntity {
+public interface EPlantEnum {
 
 	/**
 	 * Retorna o diagrama de classe.
@@ -18,11 +18,30 @@ public interface EPlantEnum extends EPlantEntity {
 	EPlantClassDiagram getClassDiagram();
 
 	/**
+	 * Retorna o nome da classe UML.
+	 * 
+	 * @return
+	 */
+	String getName();
+
+	/**
+	 * 
+	 * @return
+	 */
+	String getInstanceName();
+
+	/**
+	 * Retorna o nome qualificado. Pacote + Nome.
+	 * 
+	 * @return
+	 */
+	String getQualifiedName();
+
+	/**
 	 * Retorna o pacote UML da classe.
 	 * 
 	 * @return
 	 */
-	@Override
 	EPlantPackage getUmlPackage();
 
 	/**

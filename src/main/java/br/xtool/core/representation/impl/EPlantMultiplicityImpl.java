@@ -5,7 +5,6 @@ import java.util.stream.Stream;
 import org.apache.commons.lang3.StringUtils;
 
 import br.xtool.core.representation.EPlantClass;
-import br.xtool.core.representation.EPlantEntity;
 import br.xtool.core.representation.EPlantMultiplicity;
 
 public class EPlantMultiplicityImpl implements EPlantMultiplicity {
@@ -14,9 +13,9 @@ public class EPlantMultiplicityImpl implements EPlantMultiplicity {
 
 	private EPlantClass sourceClass;
 
-	private EPlantEntity targetClass;
+	private EPlantClass targetClass;
 
-	public EPlantMultiplicityImpl(EPlantClass sourceClass, EPlantEntity targetClass, String sourceQualifier) {
+	public EPlantMultiplicityImpl(EPlantClass sourceClass, EPlantClass targetClass, String sourceQualifier) {
 		super();
 		this.sourceQualifier = sourceQualifier;
 		this.sourceClass = sourceClass;

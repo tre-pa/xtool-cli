@@ -14,8 +14,36 @@ import org.jboss.forge.roaster.model.source.JavaClassSource;
  * @author jcruz
  *
  */
-public interface EPlantClass extends EPlantEntity, JavaType<JavaClassSource> {
+public interface EPlantClass extends  JavaType<JavaClassSource> {
 
+	/** 
+	 * Retorna o nome da classe UML.
+	 * 
+	 * @return
+	 */
+	@Override
+	String getName();
+
+	/**
+	 * 
+	 * @return
+	 */
+	String getInstanceName();
+
+	/**
+	 * Retorna o nome qualificado. Pacote + Nome.
+	 * 
+	 * @return
+	 */
+	@Override
+	String getQualifiedName();
+
+	/**
+	 * Retorna o pacote UML da classe.
+	 * 
+	 * @return
+	 */
+	EPlantPackage getUmlPackage();
 	/**
 	 * Retorna o diagrama de classe.
 	 * 

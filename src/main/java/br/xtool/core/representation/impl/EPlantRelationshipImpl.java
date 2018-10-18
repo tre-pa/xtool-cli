@@ -3,7 +3,6 @@ package br.xtool.core.representation.impl;
 import org.apache.commons.lang3.StringUtils;
 
 import br.xtool.core.representation.EPlantClass;
-import br.xtool.core.representation.EPlantEntity;
 import br.xtool.core.representation.EPlantMultiplicity;
 import br.xtool.core.representation.EPlantRelationship;
 import br.xtool.core.util.Inflector;
@@ -19,11 +18,11 @@ public class EPlantRelationshipImpl implements EPlantRelationship {
 
 	private String sourceQualifier;
 
-	private EPlantEntity targetClass;
+	private EPlantClass targetClass;
 
 	private String targetQualifier;
 
-	public EPlantRelationshipImpl(EPlantClass sourceClass, EPlantEntity targetClass, Link link, String sourceQualifer, String targetQualifier) {
+	public EPlantRelationshipImpl(EPlantClass sourceClass, EPlantClass targetClass, Link link, String sourceQualifer, String targetQualifier) {
 		super();
 		this.sourceClass = sourceClass;
 		this.sourceQualifier = sourceQualifer;
@@ -94,7 +93,7 @@ public class EPlantRelationshipImpl implements EPlantRelationship {
 	 * @see br.xtool.core.representation.EUmlRelationship#getTargetClass()
 	 */
 	@Override
-	public EPlantEntity getTargetClass() {
+	public EPlantClass getTargetClass() {
 		return this.targetClass;
 	}
 
