@@ -23,7 +23,7 @@ public interface EPlantEntity {
 	String getInstanceName();
 
 	/**
-	 * Retorna o nome qualificado.
+	 * Retorna o nome qualificado. Pacote + Nome.
 	 * 
 	 * @return
 	 */
