@@ -70,7 +70,7 @@ public class EPlantClassImpl extends EPlantEntityImpl implements EPlantClass {
 				.filter(member -> StringUtils.isNotEmpty(member.getDisplay(false)))
 				.filter(member -> Objects.nonNull(member.getVisibilityModifier()))
 				.filter(member -> member.getVisibilityModifier().equals(VisibilityModifier.PRIVATE_FIELD))
-				.map(member -> new EPlantFieldImpl(member, this.getTaggedValues()))
+				.map(member -> new EPlantFieldImpl(umlClassDiagram, member, this.getTaggedValues()))
 				.collect(Collectors.toList());
 		// @formatter:on
 	}

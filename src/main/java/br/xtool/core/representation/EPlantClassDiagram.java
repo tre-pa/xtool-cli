@@ -18,17 +18,19 @@ public interface EPlantClassDiagram {
 	Set<EPlantClass> getClasses();
 
 	/**
-	 * Retorna a lista de enums do diagrama de classe UML.
+	 * Retorna a lista de enums do diagrama de classe UML. Os enums não são
+	 * associados diretamente as classes estes serão definidos como atributos de
+	 * classe.
 	 * 
 	 * @return
 	 */
 	Set<EPlantEnum> getEnums();
 
-	//	/**
-	//	 * Retorna os relacionamento UML.
-	//	 * 
-	//	 * @return
-	//	 */
-	//	@Deprecated
-	//	Set<EUmlRelationship> getRelationships();
+	// /**
+	// * Retorna os relacionamento UML.
+	// *
+	// * @return
+	// */
+	// @Deprecated
+	// Set<EUmlRelationship> getRelationships();
 }

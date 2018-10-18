@@ -7,6 +7,7 @@ import java.util.Set;
 import br.xtool.core.representation.EPlantFieldProperty.FieldPropertyType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Representação de um campo de uma classe do diagrama de classe UML.
@@ -49,6 +50,7 @@ public interface EPlantField {
 	 * 
 	 * @return
 	 */
+	@Deprecated
 	boolean isByteArray();
 
 	/**
@@ -99,6 +101,8 @@ public interface EPlantField {
 	 * @return
 	 */
 	boolean isArray();
+	
+	boolean isEnum();
 
 	/**
 	 * Retorna o valor mínimo do attributo array.
@@ -159,10 +163,17 @@ public interface EPlantField {
 		BOOLEAN("Boolean", ""), 
 		LOCALDATE("LocalDate", "java.time.LocalDate"), 
 		LOCALDATETIME("LocalDateTime", "java.time.LocalDateTime"), 
-		DATE("Date", "java.util.Date");
+		DATE("Date", "java.util.Date"),
+		ENUM("", "");
 		private String javaName;
 		private String className;
 		// @formatter:on
+		public void setJavaName(String javaName) {
+			this.javaName = javaName;
+		}
+		public void setClassName(String className) {
+			this.className = className;
+		}
 	}
 
 }

@@ -11,6 +11,7 @@ import br.xtool.core.representation.EJavaField;
 import br.xtool.core.representation.EJavaField.EBigDecimalField;
 import br.xtool.core.representation.EJavaField.EBooleanField;
 import br.xtool.core.representation.EJavaField.EByteField;
+import br.xtool.core.representation.EJavaField.EEnumField;
 import br.xtool.core.representation.EJavaField.EIntegerField;
 import br.xtool.core.representation.EJavaField.ELocalDateField;
 import br.xtool.core.representation.EJavaField.ELocalDateTimeField;
@@ -147,6 +148,13 @@ public interface Visitor {
 	 * @param umlField
 	 */
 	void visit(ELocalDateTimeField localDateTimeField, EPlantField umlField);
+	
+	/**
+	 * 
+	 * @param enumField
+	 * @param umlField
+	 */
+	void visit(EEnumField enumField, EPlantField umlField);
 
 	/**
 	 * 

@@ -268,6 +268,13 @@ public class EJavaFieldImpl implements EJavaField {
 		}
 
 	}
+	
+	public static class EENumFieldImpl extends EJavaFieldImpl implements EEnumField {
+		public EENumFieldImpl(EJavaField javaField) {
+			super(javaField.getJavaClass(), javaField.getRoasterField());
+		}
+
+	}
 
 	public static class ENotNullFieldImpl extends EJavaFieldImpl implements ENotNullField {
 		public ENotNullFieldImpl(EJavaField javaField) {

@@ -13,6 +13,7 @@ import br.xtool.core.representation.EJavaField;
 import br.xtool.core.representation.EJavaField.EBigDecimalField;
 import br.xtool.core.representation.EJavaField.EBooleanField;
 import br.xtool.core.representation.EJavaField.EByteField;
+import br.xtool.core.representation.EJavaField.EEnumField;
 import br.xtool.core.representation.EJavaField.EIntegerField;
 import br.xtool.core.representation.EJavaField.ELocalDateField;
 import br.xtool.core.representation.EJavaField.ELocalDateTimeField;
@@ -39,7 +40,9 @@ public class JavaxValidationVisitor implements Visitor {
 
 	/*
 	 * (non-Javadoc)
-	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaClass)
+	 * 
+	 * @see
+	 * br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaClass)
 	 */
 	@Override
 	public void visit(EJavaClass javaClass, EPlantClass umlClass) {
@@ -48,7 +51,10 @@ public class JavaxValidationVisitor implements Visitor {
 
 	/*
 	 * (non-Javadoc)
-	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaClass, br.xtool.core.representation.EUmlStereotype)
+	 * 
+	 * @see
+	 * br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaClass,
+	 * br.xtool.core.representation.EUmlStereotype)
 	 */
 	@Override
 	public void visit(EJavaClass javaClass, EPlantStereotype umlStereotype) {
@@ -57,7 +63,10 @@ public class JavaxValidationVisitor implements Visitor {
 
 	/*
 	 * (non-Javadoc)
-	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaClass.EAuditableJavaClass, br.xtool.core.representation.EUmlStereotype)
+	 * 
+	 * @see
+	 * br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaClass.
+	 * EAuditableJavaClass, br.xtool.core.representation.EUmlStereotype)
 	 */
 	@Override
 	public void visit(EAuditableJavaClass auditableClass, EPlantStereotype umlStereotype) {
@@ -66,7 +75,10 @@ public class JavaxValidationVisitor implements Visitor {
 
 	/*
 	 * (non-Javadoc)
-	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaClass.ECacheableJavaClass, br.xtool.core.representation.EUmlStereotype)
+	 * 
+	 * @see
+	 * br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaClass.
+	 * ECacheableJavaClass, br.xtool.core.representation.EUmlStereotype)
 	 */
 	@Override
 	public void visit(ECacheableJavaClass cacheableClass, EPlantStereotype umlStereotype) {
@@ -75,7 +87,10 @@ public class JavaxValidationVisitor implements Visitor {
 
 	/*
 	 * (non-Javadoc)
-	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaClass.EIndexedJavaClass, br.xtool.core.representation.EUmlStereotype)
+	 * 
+	 * @see
+	 * br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaClass.
+	 * EIndexedJavaClass, br.xtool.core.representation.EUmlStereotype)
 	 */
 	@Override
 	public void visit(EIndexedJavaClass indexedClass, EPlantStereotype umlStereotype) {
@@ -84,7 +99,10 @@ public class JavaxValidationVisitor implements Visitor {
 
 	/*
 	 * (non-Javadoc)
-	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaClass.EViewJavaClass, br.xtool.core.representation.EUmlStereotype)
+	 * 
+	 * @see
+	 * br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaClass.
+	 * EViewJavaClass, br.xtool.core.representation.EUmlStereotype)
 	 */
 	@Override
 	public void visit(EViewJavaClass viewClass, EPlantStereotype umlStereotype) {
@@ -105,7 +123,10 @@ public class JavaxValidationVisitor implements Visitor {
 
 	/*
 	 * (non-Javadoc)
-	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField, br.xtool.core.representation.EUmlField)
+	 * 
+	 * @see
+	 * br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField,
+	 * br.xtool.core.representation.EUmlField)
 	 */
 	@Override
 	public void visit(EJavaField javaField, EPlantField umlField) {
@@ -156,6 +177,12 @@ public class JavaxValidationVisitor implements Visitor {
 	}
 
 	@Override
+	public void visit(EEnumField enumField, EPlantField umlField) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
 	public void visit(EJavaField javaField, EPlantFieldProperty umlFieldProperty) {
 
 	}
@@ -177,7 +204,8 @@ public class JavaxValidationVisitor implements Visitor {
 
 	@Override
 	public void visit(EJavaField javaField, EPlantRelationship umlRelationship) {
-		if (umlRelationship.getSourceMultiplicity().isToMany() && !umlRelationship.getSourceMultiplicity().isOptional()) {
+		if (umlRelationship.getSourceMultiplicity().isToMany()
+				&& !umlRelationship.getSourceMultiplicity().isOptional()) {
 			javaField.addSizeAnnotation(1, null);
 		}
 	}

@@ -13,6 +13,7 @@ import br.xtool.core.representation.EJavaField;
 import br.xtool.core.representation.EJavaField.EBigDecimalField;
 import br.xtool.core.representation.EJavaField.EBooleanField;
 import br.xtool.core.representation.EJavaField.EByteField;
+import br.xtool.core.representation.EJavaField.EEnumField;
 import br.xtool.core.representation.EJavaField.EIntegerField;
 import br.xtool.core.representation.EJavaField.ELocalDateField;
 import br.xtool.core.representation.EJavaField.ELocalDateTimeField;
@@ -130,6 +131,11 @@ public class LombokVisitor implements Visitor {
 
 	@Override
 	public void visit(ELocalDateTimeField localDateTimeField, EPlantField umlField) {
+
+	}
+	
+	@Override
+	public void visit(EEnumField enumField, EPlantField umlField) {
 
 	}
 

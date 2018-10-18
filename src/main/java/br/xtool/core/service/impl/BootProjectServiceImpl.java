@@ -42,9 +42,9 @@ import br.xtool.core.representation.EJpaRepository;
 import br.xtool.core.representation.EJpaSpecification;
 import br.xtool.core.representation.EPlantClass;
 import br.xtool.core.representation.EPlantEnum;
-import br.xtool.core.representation.converter.EUmlClassConverter;
-import br.xtool.core.representation.converter.EUmlEnumConverter;
-import br.xtool.core.representation.converter.EUmlFieldConverter;
+import br.xtool.core.representation.converter.PlantClassToJavaClassConverter;
+import br.xtool.core.representation.converter.PlantEnumToJavaEnumConverter;
+import br.xtool.core.representation.converter.PlantClassFieldToJavaClassConverter;
 import br.xtool.core.representation.converter.EUmlRelationshipConverter;
 import br.xtool.core.representation.impl.EBootRestImpl;
 import br.xtool.core.representation.impl.EBootServiceImpl;
@@ -241,14 +241,14 @@ public class BootProjectServiceImpl implements BootProjectService {
 
 	// Converte uma classe UML para um objeto EJavaClass.
 	private EJavaClass convertUmlClassToJavaClass(EBootProject bootProject, EPlantClass umlClass, Set<? extends Visitor> vistors) {
-		EJavaClass javaClass = new EUmlClassConverter(vistors).apply(bootProject, umlClass);
-		umlClass.getFields().stream().forEach(umlField -> new EUmlFieldConverter(vistors).apply(javaClass, umlField));
+		EJavaClass javaClass = new PlantClassToJavaClassConverter(vistors).apply(bootProject, umlClass);
+		umlClass.getFields().stream().forEach(umlField -> new PlantClassFieldToJavaClassConverter(vistors).apply(javaClass, umlField));
 		umlClass.getRelationships().stream().forEach(umlRelationship -> new EUmlRelationshipConverter(vistors).apply(javaClass, umlRelationship));
 		return javaClass;
 	}
 
 	private EJavaEnum convertUmlEnumToJavaEnum(EBootProject bootProject, EPlantEnum umlEnum) {
-		return new EUmlEnumConverter().apply(bootProject, umlEnum);
+		return new PlantEnumToJavaEnumConverter().apply(bootProject, umlEnum);
 	}
 
 	/*

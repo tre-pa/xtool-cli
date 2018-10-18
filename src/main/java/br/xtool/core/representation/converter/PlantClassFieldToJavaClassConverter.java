@@ -33,7 +33,7 @@ import lombok.AllArgsConstructor;
  *
  */
 @AllArgsConstructor
-public class EUmlFieldConverter implements BiFunction<EJavaClass, EPlantField, EJavaField> {
+public class PlantClassFieldToJavaClassConverter implements BiFunction<EJavaClass, EPlantField, EJavaField> {
 
 	private Set<? extends Visitor> visitors = new HashSet<>();
 

@@ -10,12 +10,16 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.apache.commons.lang3.EnumUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
+import com.google.common.base.Enums;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Sets;
 
+import br.xtool.core.representation.EPlantClassDiagram;
+import br.xtool.core.representation.EPlantEnum;
 import br.xtool.core.representation.EPlantField;
 import br.xtool.core.representation.EPlantFieldProperty;
 import br.xtool.core.representation.EPlantFieldProperty.FieldPropertyType;
@@ -24,18 +28,22 @@ import strman.Strman;
 
 public class EPlantFieldImpl implements EPlantField {
 
+	private EPlantClassDiagram classDiagram;
+
 	private Member member;
 
 	private Map<String, String> taggedValues = new HashMap<>();
 
-	public EPlantFieldImpl(Member member, Map<String, String> taggedValues) {
+	public EPlantFieldImpl(EPlantClassDiagram classDiagram, Member member, Map<String, String> taggedValues) {
 		super();
+		this.classDiagram = classDiagram;
 		this.member = member;
 		this.taggedValues = taggedValues;
 	}
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.xtool.core.representation.EUmlField#getName()
 	 */
 	@Override
@@ -45,16 +53,33 @@ public class EPlantFieldImpl implements EPlantField {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.xtool.core.representation.EUmlField#getType()
 	 */
 	@Override
 	public FieldType getType() {
+		System.out.println(this.getName() + "IsEnum: " + this.isEnum());
+		if (this.isEnum()) {
+			// @formatter:off
+			EPlantEnum plantEnum = this.classDiagram.getEnums()
+					.stream()
+					.filter(pEnum -> pEnum.getName().equals(this.memberType()))
+					.findFirst()
+					.get();
+			// @formatter:on
+			FieldType fieldType = FieldType.ENUM;
+			fieldType.setJavaName(plantEnum.getName());
+			fieldType.setClassName(plantEnum.getUmlPackage().getName().concat(".").concat(plantEnum.getName()));
+			return fieldType;
+		}
 		if (this.isArray()) {
-			String type = StringUtils.substring(this.memberType(), 0, StringUtils.indexOf(this.memberType(), "[")).trim();
+			String type = StringUtils.substring(this.memberType(), 0, StringUtils.indexOf(this.memberType(), "["))
+					.trim();
 			return FieldType.valueOf(StringUtils.upperCase(type));
 		}
 		if (this.hasProperties()) {
-			String type = StringUtils.substring(this.memberType(), 0, StringUtils.indexOf(this.memberType(), "{")).trim();
+			String type = StringUtils.substring(this.memberType(), 0, StringUtils.indexOf(this.memberType(), "{"))
+					.trim();
 			return FieldType.valueOf(StringUtils.upperCase(type));
 		}
 		return FieldType.valueOf(StringUtils.upperCase(this.memberType()));
@@ -62,6 +87,7 @@ public class EPlantFieldImpl implements EPlantField {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.xtool.core.representation.EUmlField#isId()
 	 */
 	@Override
@@ -75,6 +101,7 @@ public class EPlantFieldImpl implements EPlantField {
 	}
 
 	@Override
+	@Deprecated
 	public boolean isByteArray() {
 		return getType().equals(FieldType.BYTE) && this.isArray();
 	}
@@ -111,6 +138,7 @@ public class EPlantFieldImpl implements EPlantField {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.xtool.core.representation.EUmlField#isArray()
 	 */
 	@Override
@@ -120,6 +148,17 @@ public class EPlantFieldImpl implements EPlantField {
 
 	/*
 	 * (non-Javadoc)
+	 * 
+	 * @see br.xtool.core.representation.EPlantField#isEnum()
+	 */
+	@Override
+	public boolean isEnum() {
+		return this.classDiagram.getEnums().stream().anyMatch(plantEnum -> plantEnum.getName().equals(this.memberType()));
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see br.xtool.core.representation.EUmlField#getMinArrayLength()
 	 */
 	@Override
@@ -138,6 +177,7 @@ public class EPlantFieldImpl implements EPlantField {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.xtool.core.representation.EUmlField#getMaxArrayLength()
 	 */
 	@Override
@@ -145,7 +185,8 @@ public class EPlantFieldImpl implements EPlantField {
 		if (this.isArray()) {
 			String[] arrayMultiplicity = Strman.between(memberType(), "[", "]");
 			String multiplicityValue = StringUtils.join(arrayMultiplicity);
-			if (NumberUtils.isDigits(multiplicityValue)) return Optional.of(Integer.parseInt(multiplicityValue));
+			if (NumberUtils.isDigits(multiplicityValue))
+				return Optional.of(Integer.parseInt(multiplicityValue));
 			Matcher matcher = Pattern.compile("\\d*\\.\\.(\\d*)").matcher(multiplicityValue);
 			if (matcher.find()) {
 				Integer max = Integer.parseInt(matcher.group(1));
@@ -157,7 +198,9 @@ public class EPlantFieldImpl implements EPlantField {
 
 	/*
 	 * (non-Javadoc)
-	 * @see br.xtool.core.representation.EUmlField#hasProperty(br.xtool.core.representation.EUmlFieldProperty.FieldPropertyType)
+	 * 
+	 * @see br.xtool.core.representation.EUmlField#hasProperty(br.xtool.core.
+	 * representation.EUmlFieldProperty.FieldPropertyType)
 	 */
 	@Override
 	public boolean hasProperty(FieldPropertyType property) {
@@ -166,6 +209,7 @@ public class EPlantFieldImpl implements EPlantField {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.xtool.core.representation.EUmlField#hasProperties()
 	 */
 	@Override
@@ -175,6 +219,7 @@ public class EPlantFieldImpl implements EPlantField {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.xtool.core.representation.EUmlField#getProperties()
 	 */
 	@Override
@@ -196,6 +241,7 @@ public class EPlantFieldImpl implements EPlantField {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.xtool.core.representation.EUmlField#getTaggedValues()
 	 */
 	@Override
@@ -209,6 +255,7 @@ public class EPlantFieldImpl implements EPlantField {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.xtool.core.representation.EUmlField#getTaggedValues(java.lang.String)
 	 */
 	@Override
@@ -234,6 +281,7 @@ public class EPlantFieldImpl implements EPlantField {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.xtool.core.representation.EUmlField#getTaggedValue(java.lang.String)
 	 */
 	@Override

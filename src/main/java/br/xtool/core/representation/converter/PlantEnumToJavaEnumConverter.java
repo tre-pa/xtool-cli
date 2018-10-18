@@ -18,7 +18,7 @@ import lombok.AllArgsConstructor;
  *
  */
 @AllArgsConstructor
-public class EUmlEnumConverter implements BiFunction<EBootProject, EPlantEnum, EJavaEnum> {
+public class PlantEnumToJavaEnumConverter implements BiFunction<EBootProject, EPlantEnum, EJavaEnum> {
 
 	@Override
 	public EJavaEnum apply(EBootProject bootProject, EPlantEnum umlEnum) {

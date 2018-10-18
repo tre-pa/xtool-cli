@@ -35,6 +35,7 @@ import br.xtool.core.representation.EJavaField;
 import br.xtool.core.representation.EJavaField.EBigDecimalField;
 import br.xtool.core.representation.EJavaField.EBooleanField;
 import br.xtool.core.representation.EJavaField.EByteField;
+import br.xtool.core.representation.EJavaField.EEnumField;
 import br.xtool.core.representation.EJavaField.EIntegerField;
 import br.xtool.core.representation.EJavaField.ELocalDateField;
 import br.xtool.core.representation.EJavaField.ELocalDateTimeField;
@@ -247,6 +248,12 @@ public class JpaVisitor implements Visitor {
 	public void visit(ELocalDateTimeField localDateTimeField, EPlantField umlField) {
 		val annColumn = localDateTimeField.addAnnotation(Column.class);
 		umlField.getTaggedValue("column.name").ifPresent(tagValue -> annColumn.setStringValue("name", tagValue));
+	}
+	
+	@Override
+	public void visit(EEnumField enumField, EPlantField umlField) {
+		// TODO Auto-generated method stub
+
 	}
 
 	/*

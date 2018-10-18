@@ -13,6 +13,7 @@ import br.xtool.core.representation.EJavaField;
 import br.xtool.core.representation.EJavaField.EBigDecimalField;
 import br.xtool.core.representation.EJavaField.EBooleanField;
 import br.xtool.core.representation.EJavaField.EByteField;
+import br.xtool.core.representation.EJavaField.EEnumField;
 import br.xtool.core.representation.EJavaField.EIntegerField;
 import br.xtool.core.representation.EJavaField.ELocalDateField;
 import br.xtool.core.representation.EJavaField.ELocalDateTimeField;
@@ -130,6 +131,12 @@ public class JacksonVisitor implements Visitor {
 	}
 
 	@Override
+	public void visit(EEnumField enumField, EPlantField umlField) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
 	public void visit(ENotNullField notNullField, EPlantFieldProperty property) {
 		// TODO Auto-generated method stub
 
@@ -149,17 +156,17 @@ public class JacksonVisitor implements Visitor {
 
 	@Override
 	public void visit(EJavaField javaField, EPlantRelationship umlRelationship) {
-		//javaField.getRelationship().get().getTargetClass().getJavaFields()
+		// javaField.getRelationship().get().getTargetClass().getJavaFields()
 		// @formatter:off
 //		String[] relationships = umlRelationship.getTargetClass().getRelationships().stream()
 //				.map(_umlRelationship -> _umlRelationship.getSourceRole())
 //				.toArray(String[]::new);
 //		// @formatter:on
-		//		if (relationships.length > 0) {
-		//			val ann = javaField.addAnnotation(JsonIgnoreProperties.class);
-		//			ann.setLiteralValue("allowSetters", "true");
-		//			ann.setStringArrayValue("value", relationships);
-		//		}
+		// if (relationships.length > 0) {
+		// val ann = javaField.addAnnotation(JsonIgnoreProperties.class);
+		// ann.setLiteralValue("allowSetters", "true");
+		// ann.setStringArrayValue("value", relationships);
+		// }
 	}
 
 	@Override

@@ -69,7 +69,9 @@ public interface EJavaField extends Comparable<EJavaField> {
 	interface ELocalDateField extends EJavaField {}
 
 	interface ELocalDateTimeField extends EJavaField {}
-
+	
+	interface EEnumField extends EJavaField {}
+		
 	interface ENotNullField extends EJavaField {}
 
 	interface ETransientField extends EJavaField {}
@@ -83,5 +85,6 @@ public interface EJavaField extends Comparable<EJavaField> {
 	interface EManyToOneField extends EJavaField {}
 
 	interface EManyToManyField extends EJavaField {}
+	
 
 }
