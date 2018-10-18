@@ -58,7 +58,6 @@ public class EPlantFieldImpl implements EPlantField {
 	 */
 	@Override
 	public FieldType getType() {
-		System.out.println(this.getName() + "IsEnum: " + this.isEnum());
 		if (this.isEnum()) {
 			// @formatter:off
 			EPlantEnum plantEnum = this.classDiagram.getEnums()

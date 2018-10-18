@@ -252,8 +252,8 @@ public class JpaVisitor implements Visitor {
 	
 	@Override
 	public void visit(EEnumField enumField, EPlantField umlField) {
-		// TODO Auto-generated method stub
-
+		val annEnum = enumField.addAnnotation(Enumerated.class);
+		annEnum.setEnumValue(EnumType.STRING);
 	}
 
 	/*

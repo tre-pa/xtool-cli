@@ -22,6 +22,8 @@ import br.xtool.core.representation.impl.EJavaFieldImpl.ENotNullFieldImpl;
 import br.xtool.core.representation.impl.EJavaFieldImpl.EStringFieldImpl;
 import br.xtool.core.representation.impl.EJavaFieldImpl.ETransientFieldImpl;
 import br.xtool.core.representation.impl.EJavaFieldImpl.EUniqueFieldImpl;
+import br.xtool.core.representation.impl.EJavaFieldImpl.EENumFieldImpl;
+
 import br.xtool.core.util.RoasterUtil;
 import br.xtool.core.visitor.Visitor;
 import lombok.AllArgsConstructor;
@@ -65,6 +67,7 @@ public class PlantClassFieldToJavaClassConverter implements BiFunction<EJavaClas
 			if (javaField.getType().isType(BigDecimal.class)) visitor.visit(new EBigDecimalFieldImpl(javaField), umlField);
 			if (javaField.getType().isType(LocalDate.class)) visitor.visit(new ELocalDateFieldImpl(javaField), umlField);
 			if (javaField.getType().isType(LocalDateTime.class)) visitor.visit(new ELocalDateTimeFieldImpl(javaField), umlField);
+			if (umlField.isEnum()) visitor.visit(new EENumFieldImpl(javaField), umlField);
 		});
 		this.visitors.forEach(visitor -> umlField.getProperties().forEach(property -> {
 			visitor.visit(javaField, property);
