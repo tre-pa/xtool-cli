@@ -1,9 +1,5 @@
 package br.xtool.core.service.impl;
 
-import static br.xtool.core.ConsoleLog.bold;
-import static br.xtool.core.ConsoleLog.cyan;
-import static br.xtool.core.ConsoleLog.print;
-
 import java.io.BufferedWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -42,10 +38,10 @@ import br.xtool.core.representation.EJpaRepository;
 import br.xtool.core.representation.EJpaSpecification;
 import br.xtool.core.representation.EPlantClass;
 import br.xtool.core.representation.EPlantEnum;
+import br.xtool.core.representation.converter.EUmlRelationshipConverter;
+import br.xtool.core.representation.converter.PlantClassFieldToJavaClassConverter;
 import br.xtool.core.representation.converter.PlantClassToJavaClassConverter;
 import br.xtool.core.representation.converter.PlantEnumToJavaEnumConverter;
-import br.xtool.core.representation.converter.PlantClassFieldToJavaClassConverter;
-import br.xtool.core.representation.converter.EUmlRelationshipConverter;
 import br.xtool.core.representation.impl.EBootRestImpl;
 import br.xtool.core.representation.impl.EBootServiceImpl;
 import br.xtool.core.representation.impl.EJpaProjectionImpl;
@@ -219,7 +215,7 @@ public class BootProjectServiceImpl implements BootProjectService {
 				.collect(Collectors.toList());
 		// @formatter:on
 		javaClasses.stream().forEach(javaClass -> this.save(bootProject.getMainSourceFolder(), javaClass));
-		print(bold(cyan(String.valueOf(javaClasses.size()))), " classes mapeadas.");
+//		print(bold(cyan(String.valueOf(javaClasses.size()))), " classes mapeadas.");
 		return javaClasses;
 	}
 
@@ -235,7 +231,7 @@ public class BootProjectServiceImpl implements BootProjectService {
 				.collect(Collectors.toList());
 		// @formatter:on
 		javaEnums.stream().forEach(javaEnum -> this.save(javaEnum));
-		print(bold(cyan(String.valueOf(javaEnums.size()))), " enums mapeadas.");
+//		print(bold(cyan(String.valueOf(javaEnums.size()))), " enums mapeadas.");
 		return javaEnums;
 	}
 

@@ -10,6 +10,7 @@ import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 
 import br.xtool.XtoolCliApplication;
+import br.xtool.core.ConsoleLog;
 import br.xtool.core.aware.SpringBootAware;
 import br.xtool.core.representation.EBootProject;
 import br.xtool.core.visitor.Visitor;
@@ -48,8 +49,10 @@ public class GenClassesCommand extends SpringBootAware {
 		if (!noJpa) visitors.add(this.applicationContext.getBean(JpaVisitor.class));
 		if (!noJackson) visitors.add(this.applicationContext.getBean(JacksonVisitor.class));
 
-		this.bootProjectService.umlEnumsToJavaEnums(bootProject);
-		this.bootProjectService.umlClassesToJavaClasses(bootProject, visitors);
+		this.bootProjectService.umlEnumsToJavaEnums(bootProject).stream()
+			.forEach(_javaEnum -> ConsoleLog.print(ConsoleLog.cyan(" + "), ConsoleLog.white(_javaEnum.getQualifiedName())));
+		this.bootProjectService.umlClassesToJavaClasses(bootProject, visitors).stream()
+			.forEach(_javaClass -> ConsoleLog.print(ConsoleLog.cyan(" + "), ConsoleLog.white(_javaClass.getQualifiedName())));;
 	}
 
 }
