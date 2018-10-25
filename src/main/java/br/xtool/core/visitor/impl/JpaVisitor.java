@@ -67,12 +67,16 @@ public class JpaVisitor implements Visitor {
 
 	/*
 	 * (non-Javadoc)
-	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaClass, br.xtool.core.representation.EUmlClass)
+	 * 
+	 * @see
+	 * br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaClass,
+	 * br.xtool.core.representation.EUmlClass)
 	 */
 	@Override
 	public void visit(EJavaClass javaClass, EPlantClass umlClass) {
 		javaClass.addAnnotation(Entity.class);
-		if (umlClass.getStereotypes().stream().noneMatch(st -> st.getStereotypeType().equals(StereotypeType.READ_ONLY) || st.getStereotypeType().equals(StereotypeType.VIEW))) {
+		if (umlClass.getStereotypes().stream()
+				.noneMatch(st -> st.getStereotypeType().equals(StereotypeType.READ_ONLY) || st.getStereotypeType().equals(StereotypeType.VIEW))) {
 			javaClass.addAnnotation(DynamicInsert.class);
 			javaClass.addAnnotation(DynamicUpdate.class);
 		}
@@ -83,7 +87,10 @@ public class JpaVisitor implements Visitor {
 
 	/*
 	 * (non-Javadoc)
-	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaClass, br.xtool.core.representation.EUmlStereotype)
+	 * 
+	 * @see
+	 * br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaClass,
+	 * br.xtool.core.representation.EUmlStereotype)
 	 */
 	@Override
 	public void visit(EJavaClass javaClass, EPlantStereotype umlStereotype) {
@@ -92,7 +99,10 @@ public class JpaVisitor implements Visitor {
 
 	/*
 	 * (non-Javadoc)
-	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaClass.EAuditableJavaClass, br.xtool.core.representation.EUmlStereotype)
+	 * 
+	 * @see
+	 * br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaClass.
+	 * EAuditableJavaClass, br.xtool.core.representation.EUmlStereotype)
 	 */
 	@Override
 	public void visit(EAuditableJavaClass auditableClass, EPlantStereotype umlStereotype) {
@@ -101,7 +111,10 @@ public class JpaVisitor implements Visitor {
 
 	/*
 	 * (non-Javadoc)
-	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaClass.ECacheableJavaClass, br.xtool.core.representation.EUmlStereotype)
+	 * 
+	 * @see
+	 * br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaClass.
+	 * ECacheableJavaClass, br.xtool.core.representation.EUmlStereotype)
 	 */
 	@Override
 	public void visit(ECacheableJavaClass cacheableClass, EPlantStereotype umlStereotype) {
@@ -110,7 +123,10 @@ public class JpaVisitor implements Visitor {
 
 	/*
 	 * (non-Javadoc)
-	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaClass.EIndexedJavaClass, br.xtool.core.representation.EUmlStereotype)
+	 * 
+	 * @see
+	 * br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaClass.
+	 * EIndexedJavaClass, br.xtool.core.representation.EUmlStereotype)
 	 */
 	@Override
 	public void visit(EIndexedJavaClass indexedClass, EPlantStereotype umlStereotype) {
@@ -119,7 +135,10 @@ public class JpaVisitor implements Visitor {
 
 	/*
 	 * (non-Javadoc)
-	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaClass.EViewJavaClass, br.xtool.core.representation.EUmlStereotype)
+	 * 
+	 * @see
+	 * br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaClass.
+	 * EViewJavaClass, br.xtool.core.representation.EUmlStereotype)
 	 */
 	@Override
 	public void visit(EViewJavaClass viewClass, EPlantStereotype umlStereotype) {
@@ -128,7 +147,10 @@ public class JpaVisitor implements Visitor {
 
 	/*
 	 * (non-Javadoc)
-	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaClass.EReadOnlyJavaClass, br.xtool.core.representation.EUmlStereotype)
+	 * 
+	 * @see
+	 * br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaClass.
+	 * EReadOnlyJavaClass, br.xtool.core.representation.EUmlStereotype)
 	 */
 	@Override
 	public void visit(EReadOnlyJavaClass readOnlyClass, EPlantStereotype umlStereotype) {
@@ -137,7 +159,10 @@ public class JpaVisitor implements Visitor {
 
 	/*
 	 * (non-Javadoc)
-	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaClass.EVersionableJavaClass, br.xtool.core.representation.EUmlStereotype)
+	 * 
+	 * @see
+	 * br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaClass.
+	 * EVersionableJavaClass, br.xtool.core.representation.EUmlStereotype)
 	 */
 	@Override
 	public void visit(EVersionableJavaClass versionableClass, EPlantStereotype umlStereotype) {
@@ -149,7 +174,10 @@ public class JpaVisitor implements Visitor {
 
 	/*
 	 * (non-Javadoc)
-	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField, br.xtool.core.representation.EUmlField)
+	 * 
+	 * @see
+	 * br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField,
+	 * br.xtool.core.representation.EUmlField)
 	 */
 	@Override
 	public void visit(EJavaField javaField, EPlantField umlField) {
@@ -157,7 +185,10 @@ public class JpaVisitor implements Visitor {
 
 	/*
 	 * (non-Javadoc)
-	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField.EStringField, br.xtool.core.representation.EUmlField)
+	 * 
+	 * @see
+	 * br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField.
+	 * EStringField, br.xtool.core.representation.EUmlField)
 	 */
 	@Override
 	public void visit(EStringField stringField, EPlantField umlField) {
@@ -168,7 +199,10 @@ public class JpaVisitor implements Visitor {
 
 	/*
 	 * (non-Javadoc)
-	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField.EBooleanField, br.xtool.core.representation.EUmlField)
+	 * 
+	 * @see
+	 * br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField.
+	 * EBooleanField, br.xtool.core.representation.EUmlField)
 	 */
 	@Override
 	public void visit(EBooleanField booleanField, EPlantField umlField) {
@@ -178,7 +212,10 @@ public class JpaVisitor implements Visitor {
 
 	/*
 	 * (non-Javadoc)
-	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField.ELongField, br.xtool.core.representation.EUmlField)
+	 * 
+	 * @see
+	 * br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField.
+	 * ELongField, br.xtool.core.representation.EUmlField)
 	 */
 	@Override
 	public void visit(ELongField longField, EPlantField umlField) {
@@ -190,10 +227,8 @@ public class JpaVisitor implements Visitor {
 				.setLiteralValue("nullable", "false");
 			// @formatter:on
 			umlField.getTaggedValue("column.name").ifPresent(tagValue -> annColumn.setStringValue("name", tagValue));
-			if (!longField.getJavaClass().hasAnnotation(Immutable.class)) {
-				longField.addGeneratedValueAnnotation(GenerationType.SEQUENCE);
-				longField.addSequenceGeneratorAnnotation();
-			}
+			longField.addGeneratedValueAnnotation(GenerationType.SEQUENCE);
+			longField.addSequenceGeneratorAnnotation();
 			return;
 
 		}
@@ -202,7 +237,10 @@ public class JpaVisitor implements Visitor {
 
 	/*
 	 * (non-Javadoc)
-	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField.EIntegerField, br.xtool.core.representation.EUmlField)
+	 * 
+	 * @see
+	 * br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField.
+	 * EIntegerField, br.xtool.core.representation.EUmlField)
 	 */
 	@Override
 	public void visit(EIntegerField integerField, EPlantField umlField) {
@@ -212,7 +250,10 @@ public class JpaVisitor implements Visitor {
 
 	/*
 	 * (non-Javadoc)
-	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField.EByteField, br.xtool.core.representation.EUmlField)
+	 * 
+	 * @see
+	 * br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField.
+	 * EByteField, br.xtool.core.representation.EUmlField)
 	 */
 	@Override
 	public void visit(EByteField byteField, EPlantField umlField) {
@@ -222,7 +263,10 @@ public class JpaVisitor implements Visitor {
 
 	/*
 	 * (non-Javadoc)
-	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField.EBigDecimalField, br.xtool.core.representation.EUmlField)
+	 * 
+	 * @see
+	 * br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField.
+	 * EBigDecimalField, br.xtool.core.representation.EUmlField)
 	 */
 	@Override
 	public void visit(EBigDecimalField bigDecimalField, EPlantField umlField) {
@@ -232,7 +276,10 @@ public class JpaVisitor implements Visitor {
 
 	/*
 	 * (non-Javadoc)
-	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField.ELocalDateField, br.xtool.core.representation.EUmlField)
+	 * 
+	 * @see
+	 * br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField.
+	 * ELocalDateField, br.xtool.core.representation.EUmlField)
 	 */
 	@Override
 	public void visit(ELocalDateField localDateField, EPlantField umlField) {
@@ -242,14 +289,17 @@ public class JpaVisitor implements Visitor {
 
 	/*
 	 * (non-Javadoc)
-	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField.ELocalDateTimeField, br.xtool.core.representation.EUmlField)
+	 * 
+	 * @see
+	 * br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField.
+	 * ELocalDateTimeField, br.xtool.core.representation.EUmlField)
 	 */
 	@Override
 	public void visit(ELocalDateTimeField localDateTimeField, EPlantField umlField) {
 		val annColumn = localDateTimeField.addAnnotation(Column.class);
 		umlField.getTaggedValue("column.name").ifPresent(tagValue -> annColumn.setStringValue("name", tagValue));
 	}
-	
+
 	@Override
 	public void visit(EEnumField enumField, EPlantField umlField) {
 		val annEnum = enumField.addAnnotation(Enumerated.class);
@@ -258,7 +308,10 @@ public class JpaVisitor implements Visitor {
 
 	/*
 	 * (non-Javadoc)
-	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField, br.xtool.core.representation.EUmlFieldProperty)
+	 * 
+	 * @see
+	 * br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField,
+	 * br.xtool.core.representation.EUmlFieldProperty)
 	 */
 	@Override
 	public void visit(EJavaField javaField, EPlantFieldProperty umlFieldProperty) {
@@ -266,7 +319,10 @@ public class JpaVisitor implements Visitor {
 
 	/*
 	 * (non-Javadoc)
-	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField.ENotNullField, br.xtool.core.representation.EUmlFieldProperty)
+	 * 
+	 * @see
+	 * br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField.
+	 * ENotNullField, br.xtool.core.representation.EUmlFieldProperty)
 	 */
 	@Override
 	public void visit(ENotNullField notNullField, EPlantFieldProperty property) {
@@ -276,7 +332,10 @@ public class JpaVisitor implements Visitor {
 
 	/*
 	 * (non-Javadoc)
-	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField.ETransientField, br.xtool.core.representation.EUmlFieldProperty)
+	 * 
+	 * @see
+	 * br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField.
+	 * ETransientField, br.xtool.core.representation.EUmlFieldProperty)
 	 */
 	@Override
 	public void visit(ETransientField transientField, EPlantFieldProperty property) {
@@ -286,7 +345,10 @@ public class JpaVisitor implements Visitor {
 
 	/*
 	 * (non-Javadoc)
-	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField.EUniqueField, br.xtool.core.representation.EUmlFieldProperty)
+	 * 
+	 * @see
+	 * br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField.
+	 * EUniqueField, br.xtool.core.representation.EUmlFieldProperty)
 	 */
 	@Override
 	public void visit(EUniqueField uniqueField, EPlantFieldProperty property) {
@@ -295,7 +357,10 @@ public class JpaVisitor implements Visitor {
 
 	/*
 	 * (non-Javadoc)
-	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField, br.xtool.core.representation.EUmlRelationship)
+	 * 
+	 * @see
+	 * br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField,
+	 * br.xtool.core.representation.EUmlRelationship)
 	 */
 	@Override
 	public void visit(EJavaField javaField, EPlantRelationship umlRelationship) {
@@ -306,13 +371,17 @@ public class JpaVisitor implements Visitor {
 
 	/*
 	 * (non-Javadoc)
-	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField.EOneToOneField, br.xtool.core.representation.EUmlRelationship.EAssociation)
+	 * 
+	 * @see
+	 * br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField.
+	 * EOneToOneField, br.xtool.core.representation.EUmlRelationship.EAssociation)
 	 */
 	@Override
 	public void visit(EOneToOneField oneToOneField, EAssociation association) {
 		val annOneToOne = oneToOneField.addAnnotation(OneToOne.class);
 		annOneToOne.setEnumValue("fetch", FetchType.LAZY);
-		if (!association.getSourceMultiplicity().isOptional()) annOneToOne.setLiteralValue("optional", "false");
+		if (!association.getSourceMultiplicity().isOptional())
+			annOneToOne.setLiteralValue("optional", "false");
 		// Bidirecional
 		if (!association.isSourceClassOwner() && association.getNavigability().isBidirectional()) {
 			annOneToOne.setStringValue("mappedBy", association.getTargetRole());
@@ -323,7 +392,10 @@ public class JpaVisitor implements Visitor {
 
 	/*
 	 * (non-Javadoc)
-	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField.EOneToManyField, br.xtool.core.representation.EUmlRelationship.EAssociation)
+	 * 
+	 * @see
+	 * br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField.
+	 * EOneToManyField, br.xtool.core.representation.EUmlRelationship.EAssociation)
 	 */
 	@Override
 	public void visit(EOneToManyField oneToManyField, EAssociation association) {
@@ -365,18 +437,25 @@ public class JpaVisitor implements Visitor {
 
 	/*
 	 * (non-Javadoc)
-	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField.EManyToOneField, br.xtool.core.representation.EUmlRelationship.EAssociation)
+	 * 
+	 * @see
+	 * br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField.
+	 * EManyToOneField, br.xtool.core.representation.EUmlRelationship.EAssociation)
 	 */
 	@Override
 	public void visit(EManyToOneField manyToOneField, EAssociation association) {
 		val ann = manyToOneField.addAnnotation(ManyToOne.class);
 		ann.setEnumValue("fetch", FetchType.LAZY);
-		if (!association.getSourceMultiplicity().isOptional()) ann.setLiteralValue("optional", "false");
+		if (!association.getSourceMultiplicity().isOptional())
+			ann.setLiteralValue("optional", "false");
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField.EManyToManyField, br.xtool.core.representation.EUmlRelationship.EAssociation)
+	 * 
+	 * @see
+	 * br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField.
+	 * EManyToManyField, br.xtool.core.representation.EUmlRelationship.EAssociation)
 	 */
 	@Override
 	public void visit(EManyToManyField manyToManyField, EAssociation association) {
@@ -391,7 +470,10 @@ public class JpaVisitor implements Visitor {
 
 	/*
 	 * (non-Javadoc)
-	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField.EOneToOneField, br.xtool.core.representation.EUmlRelationship.EComposition)
+	 * 
+	 * @see
+	 * br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField.
+	 * EOneToOneField, br.xtool.core.representation.EUmlRelationship.EComposition)
 	 */
 	@Override
 	public void visit(EOneToOneField oneToOneField, EComposition composition) {
@@ -403,7 +485,10 @@ public class JpaVisitor implements Visitor {
 
 	/*
 	 * (non-Javadoc)
-	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField.EOneToManyField, br.xtool.core.representation.EUmlRelationship.EComposition)
+	 * 
+	 * @see
+	 * br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField.
+	 * EOneToManyField, br.xtool.core.representation.EUmlRelationship.EComposition)
 	 */
 	@Override
 	public void visit(EOneToManyField oneToManyField, EComposition composition) {
@@ -447,12 +532,16 @@ public class JpaVisitor implements Visitor {
 
 	/*
 	 * (non-Javadoc)
-	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField.EManyToOneField, br.xtool.core.representation.EUmlRelationship.EComposition)
+	 * 
+	 * @see
+	 * br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField.
+	 * EManyToOneField, br.xtool.core.representation.EUmlRelationship.EComposition)
 	 */
 	@Override
 	public void visit(EManyToOneField manyToOneField, EComposition composition) {
 		val ann = manyToOneField.addAnnotation(ManyToOne.class);
-		if (!composition.getSourceMultiplicity().isOptional()) ann.setLiteralValue("optional", "false");
+		if (!composition.getSourceMultiplicity().isOptional())
+			ann.setLiteralValue("optional", "false");
 	}
 
 }
