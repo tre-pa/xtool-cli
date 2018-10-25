@@ -38,13 +38,11 @@ public class GenRepositoryCommand extends SpringBootAware {
 	@ShellMethod(key = "gen:repository", value = "Gera uma classe de Repository (JpaRepository) para entidade JPA em um projeto Spring Boot", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
 	public void run(@ShellOption(help = "Entidade JPA", valueProvider = EJpaEntityValueProvider.class, defaultValue = "") EJpaEntity entity)
 			throws IOException, JDOMException {
+		EBootProject bootProject = this.workspaceService.getWorkingProject(EBootProject.class);
 		if(Objects.isNull(entity)) {
-			EBootProject bootProject = this.workspaceService.getWorkingProject(EBootProject.class);
 			bootProject.getEntities().stream().forEach(_entity -> this.createRepository(_entity, bootProject));
 			return;
-			
 		}
-		EBootProject bootProject = this.workspaceService.getWorkingProject(EBootProject.class);
 		createRepository(entity, bootProject);
 
 	}
