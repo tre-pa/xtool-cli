@@ -1,5 +1,8 @@
 package br.xtool.core.visitor.impl;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+
 import org.springframework.stereotype.Component;
 
 import br.xtool.core.representation.EJavaClass;
@@ -148,12 +151,14 @@ public class JavaxValidationVisitor implements Visitor {
 
 	@Override
 	public void visit(ELongField longField, EPlantField umlField) {
-
+		umlField.getMinArrayLength().ifPresent(minValue -> longField.addAnnotation(Min.class).setLiteralValue(String.valueOf(minValue)));
+		umlField.getMaxArrayLength().ifPresent(maxValue -> longField.addAnnotation(Max.class).setLiteralValue(String.valueOf(maxValue)));
 	}
 
 	@Override
 	public void visit(EIntegerField integerField, EPlantField umlField) {
-
+		umlField.getMinArrayLength().ifPresent(minValue -> integerField.addAnnotation(Min.class).setLiteralValue(String.valueOf(minValue)));
+		umlField.getMaxArrayLength().ifPresent(maxValue -> integerField.addAnnotation(Max.class).setLiteralValue(String.valueOf(maxValue)));
 	}
 
 	@Override
@@ -163,7 +168,8 @@ public class JavaxValidationVisitor implements Visitor {
 
 	@Override
 	public void visit(EBigDecimalField bigDecimalField, EPlantField umlField) {
-
+		umlField.getMinArrayLength().ifPresent(minValue -> bigDecimalField.addAnnotation(Min.class).setLiteralValue(String.valueOf(minValue)));
+		umlField.getMaxArrayLength().ifPresent(maxValue -> bigDecimalField.addAnnotation(Max.class).setLiteralValue(String.valueOf(maxValue)));
 	}
 
 	@Override
@@ -204,8 +210,7 @@ public class JavaxValidationVisitor implements Visitor {
 
 	@Override
 	public void visit(EJavaField javaField, EPlantRelationship umlRelationship) {
-		if (umlRelationship.getSourceMultiplicity().isToMany()
-				&& !umlRelationship.getSourceMultiplicity().isOptional()) {
+		if (umlRelationship.getSourceMultiplicity().isToMany() && !umlRelationship.getSourceMultiplicity().isOptional()) {
 			javaField.addSizeAnnotation(1, null);
 		}
 	}
