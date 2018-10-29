@@ -166,7 +166,11 @@
 			<artifactId>jtwig-core</artifactId>
 			<version>5.87.0.RELEASE</version>
 		</dependency>
-		
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.module</groupId>
+			<artifactId>jackson-module-jsonSchema</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
