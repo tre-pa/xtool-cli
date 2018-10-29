@@ -22,7 +22,7 @@ import br.xtool.service.BootProjectService;
 import br.xtool.service.WorkspaceService;
 
 @ShellComponent
-public class GenClassesCommand extends SpringBootAware {
+public class GenEntitiesCommand extends SpringBootAware {
 
 	@Autowired
 	private WorkspaceService workspaceService;
@@ -33,7 +33,7 @@ public class GenClassesCommand extends SpringBootAware {
 	@Autowired
 	private ApplicationContext applicationContext;
 
-	@ShellMethod(key = "gen:classes", value = "Gera as classes Java do diagrama de classe UML.", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
+	@ShellMethod(key = "gen:entities", value = "Gera as entidades Java do diagrama de classe UML.", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
 	// @formatter:off
 	public void run(
 			@ShellOption(help = "Desabilita o mapeamento JPA da classe", defaultValue = "false", arity = 0) Boolean noJpa,
