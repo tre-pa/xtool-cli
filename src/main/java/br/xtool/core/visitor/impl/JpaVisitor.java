@@ -20,6 +20,8 @@ import javax.persistence.Version;
 
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.Immutable;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.stereotype.Component;
@@ -380,6 +382,7 @@ public class JpaVisitor implements Visitor {
 	public void visit(EOneToOneField oneToOneField, EAssociation association) {
 		val annOneToOne = oneToOneField.addAnnotation(OneToOne.class);
 		annOneToOne.setEnumValue("fetch", FetchType.LAZY);
+		oneToOneField.addAnnotation(Fetch.class).setEnumValue(FetchMode.JOIN);
 		if (!association.getSourceMultiplicity().isOptional())
 			annOneToOne.setLiteralValue("optional", "false");
 		// Bidirecional
@@ -446,6 +449,7 @@ public class JpaVisitor implements Visitor {
 	public void visit(EManyToOneField manyToOneField, EAssociation association) {
 		val ann = manyToOneField.addAnnotation(ManyToOne.class);
 		ann.setEnumValue("fetch", FetchType.LAZY);
+		manyToOneField.addAnnotation(Fetch.class).setEnumValue(FetchMode.JOIN);
 		if (!association.getSourceMultiplicity().isOptional())
 			ann.setLiteralValue("optional", "false");
 	}
@@ -481,6 +485,7 @@ public class JpaVisitor implements Visitor {
 		annOneToOne.setEnumValue("fetch", FetchType.LAZY);
 		annOneToOne.setEnumValue("cascade", CascadeType.ALL);
 		annOneToOne.setLiteralValue("orphanRemoval", "true");
+		oneToOneField.addAnnotation(Fetch.class).setEnumValue(FetchMode.JOIN);
 	}
 
 	/*
@@ -539,6 +544,7 @@ public class JpaVisitor implements Visitor {
 	 */
 	@Override
 	public void visit(EManyToOneField manyToOneField, EComposition composition) {
+		manyToOneField.addAnnotation(Fetch.class).setEnumValue(FetchMode.JOIN);
 		val ann = manyToOneField.addAnnotation(ManyToOne.class);
 		if (!composition.getSourceMultiplicity().isOptional())
 			ann.setLiteralValue("optional", "false");
