@@ -10,7 +10,6 @@ import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 
 import br.xtool.XtoolCliApplication;
-import br.xtool.core.ConsoleLog;
 import br.xtool.core.aware.SpringBootAware;
 import br.xtool.core.provider.EJpaRepositoryValueProvider;
 import br.xtool.core.representation.EBootProject;
@@ -43,7 +42,6 @@ public class GenServiceCommand extends SpringBootAware {
 	private void createService(EJpaRepository repository, EBootProject bootProject) {
 		EBootService service = this.bootProjectService.createService(bootProject, repository);
 		this.bootProjectService.save(service);
-		ConsoleLog.print(ConsoleLog.cyan(" + "), ConsoleLog.white(service.getQualifiedName()));
 	}
 
 }

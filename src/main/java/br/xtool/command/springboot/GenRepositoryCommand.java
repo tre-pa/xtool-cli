@@ -10,7 +10,6 @@ import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 
 import br.xtool.XtoolCliApplication;
-import br.xtool.core.ConsoleLog;
 import br.xtool.core.aware.SpringBootAware;
 import br.xtool.core.provider.EJpaEntityValueProvider;
 import br.xtool.core.representation.EBootProject;
@@ -51,6 +50,5 @@ public class GenRepositoryCommand extends SpringBootAware {
 		EJpaSpecification jpaSpecification = this.bootProjectService.createSpecification(bootProject, entity);
 		EJpaRepository jpaRepository = this.bootProjectService.createRepository(bootProject, entity);
 		this.bootProjectService.save(jpaSpecification, jpaRepository);
-		ConsoleLog.print(ConsoleLog.cyan(" + "), ConsoleLog.white(jpaRepository.getQualifiedName()));
 	}
 }

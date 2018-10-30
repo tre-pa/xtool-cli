@@ -24,6 +24,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.xtool.core.ConsoleLog;
 import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.EBootProject.BootProjectSupport;
 import br.xtool.core.representation.EBootRest;
@@ -214,7 +215,10 @@ public class BootProjectServiceImpl implements BootProjectService {
 				.map(umlClass -> convertUmlClassToJavaClass(bootProject, umlClass, vistors))
 				.collect(Collectors.toList());
 		// @formatter:on
-		javaClasses.stream().forEach(javaClass -> this.save(bootProject.getMainSourceFolder(), javaClass));
+		javaClasses.stream().forEach(javaClass -> {
+			this.save(bootProject.getMainSourceFolder(), javaClass);
+			ConsoleLog.print(ConsoleLog.cyan(" + "), ConsoleLog.white(javaClass.getQualifiedName()));
+		});
 //		print(bold(cyan(String.valueOf(javaClasses.size()))), " classes mapeadas.");
 		return javaClasses;
 	}
@@ -230,7 +234,10 @@ public class BootProjectServiceImpl implements BootProjectService {
 				.map(umlEnum -> this.convertUmlEnumToJavaEnum(bootProject, umlEnum))
 				.collect(Collectors.toList());
 		// @formatter:on
-		javaEnums.stream().forEach(javaEnum -> this.save(javaEnum));
+		javaEnums.stream().forEach(javaEnum -> {
+			this.save(javaEnum);
+			ConsoleLog.print(ConsoleLog.cyan(" + "), ConsoleLog.white(javaEnum.getQualifiedName()));
+		});
 //		print(bold(cyan(String.valueOf(javaEnums.size()))), " enums mapeadas.");
 		return javaEnums;
 	}
