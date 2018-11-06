@@ -1,9 +1,24 @@
-<td-layout-nav toolbarTitle="demo" color="primary" navigationRoute="/">
-  <div td-toolbar-content layout="row" layout-align="left center" flex>
+<td-layout-nav color="primary"
+  navigationRoute="/">
+  <!-- TOP TOOLBAR -->
+  <div td-toolbar-content
+    layout="row"
+    layout-align="start center"
+    flex>
+    <button mat-icon-button
+      td-menu-button
+      tdLayoutToggle>
+      <mat-icon>menu</mat-icon>
+    </button>
+    <div layout="column">
+      <span [routerLink]="['/']"
+        style="cursor: pointer; text-transform: uppercase;">{{ title }}</span>
+      <h3 class="md-subhead text-upper">{{ subtitle }}</h3>
+    </div>
     <ng-content select="[top-toolbar-left]"></ng-content>
     <span flex></span>
     <ng-content select="[top-toolbar-right]"></ng-content>
   </div>
-  <!--MAIN CONTENT -->
+  <!-- MAIN CONTENT -->
   <ng-content select="[main-content]"></ng-content>
 </td-layout-nav>
