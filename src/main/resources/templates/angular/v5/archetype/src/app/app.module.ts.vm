@@ -4,13 +4,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { SharedModule } from './@core/shared.module';
 import { AppRoutingModule } from './app-routing.module';
+
+import { MainComponent } from './@core/layout/main-layout/main-layout.component';
 import { AppComponent } from './app.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    
+    MainComponent
   ],
   imports: [
     BrowserModule,
@@ -20,8 +22,9 @@ import { AppComponent } from './app.component';
     AppRoutingModule
   ],
   providers: [
+    { provide: LOCALE_ID, useValue: "pt-BR" }
   ],
   entryComponents: [ ],
   bootstrap: [ AppComponent ],
 })
-export class AppModule {}
+export class AppModule { }
