@@ -1,18 +1,17 @@
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { SharedModule } from './@core/shared.module';
 import { AppRoutingModule } from './app-routing.module';
 
-import { MainComponent } from './@core/layout/main-layout/main-layout.component';
+import { MainLayoutComponent } from './@core/layout/main-layout/main-layout.component';
 import { AppComponent } from './app.component';
-
 
 @NgModule({
   declarations: [
     AppComponent,
-    MainComponent
+    MainLayoutComponent
   ],
   imports: [
     BrowserModule,
