@@ -1,12 +1,16 @@
 import { NgModule, LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { registerLocaleData } from '@angular/common';
+import localePt from '@angular/common/locales/pt';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
-import { SharedModule } from './@core/shared.module';
-import { AppRoutingModule } from './app-routing.module';
 
 import { MainLayoutComponent } from './@core/layout/main-layout/main-layout.component';
+import { AppRoutingModule } from './app-routing.module';
+import { SharedModule } from './@core/shared.module';
 import { AppComponent } from './app.component';
+
+registerLocaleData(localePt, 'pt-BR');
 
 @NgModule({
   declarations: [
