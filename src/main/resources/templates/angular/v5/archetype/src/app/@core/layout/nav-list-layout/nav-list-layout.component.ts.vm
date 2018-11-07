@@ -14,10 +14,10 @@ import { TdMediaService } from '@covalent/core';
 export class NavListLayoutComponent implements OnInit, AfterViewInit {
 
   @Input()
-  title: string;
+  layoutTitle: string;
 
   @Input()
-  subtitle: string;
+  layoutSubtitle: string;
 
   constructor(
     public media: TdMediaService,

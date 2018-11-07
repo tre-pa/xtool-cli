@@ -11,10 +11,10 @@ import {
 export class NavViewLayoutComponent implements OnInit {
 
   @Input()
-  title: string;
+  layoutTitle: string;
 
   @Input()
-  subtitle: string;
+  layoutSubtitle: string;
 
   constructor() { }
 

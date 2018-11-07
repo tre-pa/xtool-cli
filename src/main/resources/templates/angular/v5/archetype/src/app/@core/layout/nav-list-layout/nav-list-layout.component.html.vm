@@ -20,8 +20,8 @@
     </button>
     <div layout="column">
       <span [routerLink]="['/']"
-        style="cursor: pointer; text-transform: uppercase;">{{ title }}</span>
-      <h3 class="md-subhead text-upper">{{ subtitle }}</h3>
+        style="cursor: pointer;">{{ layoutTitle }}</span>
+      <h3 class="md-subhead">{{ layoutSubtitle }}</h3>
     </div>
   </div>
   <mat-nav-list layout-fill 
