@@ -304,8 +304,9 @@ public class JpaVisitor implements Visitor {
 
 	@Override
 	public void visit(EEnumField enumField, EPlantField umlField) {
-		val annEnum = enumField.addAnnotation(Enumerated.class);
+		val annEnum = enumField.addAnnotation(Enumerated.class).setEnumValue(EnumType.STRING);
 		annEnum.setEnumValue(EnumType.STRING);
+		enumField.addAnnotation(Column.class).setLiteralValue("nullable", "false");
 	}
 
 	/*
