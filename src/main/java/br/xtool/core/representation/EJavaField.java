@@ -27,7 +27,7 @@ public interface EJavaField extends Comparable<EJavaField> {
 
 	boolean isStatic();
 
-	boolean isEnum();
+	Optional<EJavaEnum> getEnum();
 
 	EJavaClass getJavaClass();
 
@@ -54,37 +54,52 @@ public interface EJavaField extends Comparable<EJavaField> {
 
 	EJavaAnnotation<JavaClassSource> addSequenceGeneratorAnnotation();
 
-	interface EStringField extends EJavaField {}
+	interface EStringField extends EJavaField {
+	}
 
-	interface EBooleanField extends EJavaField {}
+	interface EBooleanField extends EJavaField {
+	}
 
-	interface ELongField extends EJavaField {}
+	interface ELongField extends EJavaField {
+	}
 
-	interface EIntegerField extends EJavaField {}
+	interface EIntegerField extends EJavaField {
+	}
 
-	interface EByteField extends EJavaField {}
+	interface EByteField extends EJavaField {
+	}
 
-	interface EBigDecimalField extends EJavaField {}
+	interface EBigDecimalField extends EJavaField {
+	}
 
-	interface ELocalDateField extends EJavaField {}
+	interface ELocalDateField extends EJavaField {
+	}
 
-	interface ELocalDateTimeField extends EJavaField {}
-	
-	interface EEnumField extends EJavaField {}
-		
-	interface ENotNullField extends EJavaField {}
+	interface ELocalDateTimeField extends EJavaField {
+	}
 
-	interface ETransientField extends EJavaField {}
+	interface EEnumField extends EJavaField {
+	}
 
-	interface EUniqueField extends EJavaField {}
+	interface ENotNullField extends EJavaField {
+	}
 
-	interface EOneToOneField extends EJavaField {}
+	interface ETransientField extends EJavaField {
+	}
 
-	interface EOneToManyField extends EJavaField {}
+	interface EUniqueField extends EJavaField {
+	}
 
-	interface EManyToOneField extends EJavaField {}
+	interface EOneToOneField extends EJavaField {
+	}
 
-	interface EManyToManyField extends EJavaField {}
-	
+	interface EOneToManyField extends EJavaField {
+	}
+
+	interface EManyToOneField extends EJavaField {
+	}
+
+	interface EManyToManyField extends EJavaField {
+	}
 
 }

@@ -26,6 +26,7 @@ import br.xtool.service.FileService;
 import br.xtool.service.NgProjectService;
 import br.xtool.service.ShellService;
 import lombok.NonNull;
+import strman.Strman;
 
 @Service
 public class NgProjectServiceImpl implements NgProjectService {
@@ -134,8 +135,11 @@ public class NgProjectServiceImpl implements NgProjectService {
 		Map<String, Object> vars = new HashMap<String, Object>() {
 			private static final long serialVersionUID = 1L;
 			{
+				put("Strman", Strman.class);
 				put("entityFileName", ENgClass.genFileName(entity.getName()));
 				put("entityClassName", entity.getName());
+				put("entity", entity);
+				put("typesMap", ENgClass.typesMap());
 			}
 		};
 		this.fs.copy(Paths.get("angular").resolve(ngProject.getProjectVersion().getName()).resolve("domain"), vars, ngProject.getNgAppModule().getPath().getParent().resolve("domain"));

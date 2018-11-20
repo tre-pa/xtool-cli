@@ -23,6 +23,7 @@ import org.jboss.forge.roaster.model.util.Types;
 
 import br.xtool.core.representation.EJavaAnnotation;
 import br.xtool.core.representation.EJavaClass;
+import br.xtool.core.representation.EJavaEnum;
 import br.xtool.core.representation.EJavaField;
 import br.xtool.core.representation.EJavaRelationship;
 import br.xtool.core.representation.EJpaEntity;
@@ -54,9 +55,14 @@ public class EJavaFieldImpl implements EJavaField {
 		return this.javaClass;
 	}
 
+
 	@Override
-	public boolean isEnum() {
-		return this.getJavaClass().getProject().getEnums().stream().anyMatch(javaEnum -> javaEnum.getName().equals(this.getType().getName()));
+	public Optional<EJavaEnum> getEnum() {
+		// @formatter:off
+		return this.getJavaClass().getProject().getEnums().stream()
+				.filter(javaEnum -> javaEnum.getName().equals(this.getType().getName()))
+				.findFirst();
+		// @formatter:on
 	}
 
 	/**
@@ -111,6 +117,7 @@ public class EJavaFieldImpl implements EJavaField {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.xtool.core.representation.EJavaField#getRoasterField()
 	 */
 	@Override
@@ -120,6 +127,7 @@ public class EJavaFieldImpl implements EJavaField {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.xtool.core.representation.EJavaField#getRelationship()
 	 */
 	@Override
@@ -146,7 +154,10 @@ public class EJavaFieldImpl implements EJavaField {
 
 	/*
 	 * (non-Javadoc)
-	 * @see br.xtool.core.representation.EJavaField#addSizeAnnotation(java.lang.Integer, java.lang.Integer)
+	 * 
+	 * @see
+	 * br.xtool.core.representation.EJavaField#addSizeAnnotation(java.lang.Integer,
+	 * java.lang.Integer)
 	 */
 	@Override
 	public EJavaAnnotation<JavaClassSource> addSizeAnnotation(Integer min, Integer max) {
@@ -158,7 +169,10 @@ public class EJavaFieldImpl implements EJavaField {
 
 	/*
 	 * (non-Javadoc)
-	 * @see br.xtool.core.representation.EJavaField#addBatchSizeAnnotation(java.lang.Integer)
+	 * 
+	 * @see
+	 * br.xtool.core.representation.EJavaField#addBatchSizeAnnotation(java.lang.
+	 * Integer)
 	 */
 	@Override
 	public EJavaAnnotation<JavaClassSource> addBatchSizeAnnotation(Integer size) {
@@ -169,7 +183,9 @@ public class EJavaFieldImpl implements EJavaField {
 
 	/*
 	 * (non-Javadoc)
-	 * @see br.xtool.core.representation.EJavaField#addLazyCollectionAnnotation(org.hibernate.annotations.LazyCollectionOption)
+	 * 
+	 * @see br.xtool.core.representation.EJavaField#addLazyCollectionAnnotation(org.
+	 * hibernate.annotations.LazyCollectionOption)
 	 */
 	@Override
 	public EJavaAnnotation<JavaClassSource> addLazyCollectionAnnotation(LazyCollectionOption lazyCollectionOption) {
@@ -180,7 +196,10 @@ public class EJavaFieldImpl implements EJavaField {
 
 	/*
 	 * (non-Javadoc)
-	 * @see br.xtool.core.representation.EJavaField#addGeneratedValueAnnotation(javax.persistence.GenerationType)
+	 * 
+	 * @see
+	 * br.xtool.core.representation.EJavaField#addGeneratedValueAnnotation(javax.
+	 * persistence.GenerationType)
 	 */
 	@Override
 	public EJavaAnnotation<JavaClassSource> addGeneratedValueAnnotation(GenerationType generationType) {
@@ -191,6 +210,7 @@ public class EJavaFieldImpl implements EJavaField {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.xtool.core.representation.EJavaField#addSequenceGeneratorAnnotation()
 	 */
 	@Override
@@ -207,6 +227,7 @@ public class EJavaFieldImpl implements EJavaField {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Comparable#compareTo(java.lang.Object)
 	 */
 	@Override
@@ -268,7 +289,7 @@ public class EJavaFieldImpl implements EJavaField {
 		}
 
 	}
-	
+
 	public static class EENumFieldImpl extends EJavaFieldImpl implements EEnumField {
 		public EENumFieldImpl(EJavaField javaField) {
 			super(javaField.getJavaClass(), javaField.getRoasterField());

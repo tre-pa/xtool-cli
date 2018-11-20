@@ -60,7 +60,7 @@ public class EUmlRelationshipConverter implements BiFunction<EJavaClass, EPlantR
 	private void visit(EJavaField javaField, EPlantRelationship umlRelationship) {
 		this.visitors.forEach(visitor -> {
 			visitor.visit(javaField, umlRelationship);
-			if (!javaField.isEnum()) {
+			if (!javaField.getEnum().isPresent()) {
 				if (umlRelationship.isOneToOne() && umlRelationship.isAssociation()) visitor.visit(new EOneToOneFieldImpl(javaField), new EAssociationImpl(umlRelationship));
 				if (umlRelationship.isOneToMany() && umlRelationship.isAssociation()) visitor.visit(new EOneToManyFieldImpl(javaField), new EAssociationImpl(umlRelationship));
 				if (umlRelationship.isManyToOne() && umlRelationship.isAssociation()) visitor.visit(new EManyToOneFieldImpl(javaField), new EAssociationImpl(umlRelationship));

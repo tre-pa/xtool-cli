@@ -366,7 +366,7 @@ public class JpaVisitor implements Visitor {
 	 */
 	@Override
 	public void visit(EJavaField javaField, EPlantRelationship umlRelationship) {
-		if (javaField.isEnum()) {
+		if (javaField.getEnum().isPresent()) {
 			javaField.addAnnotation(Enumerated.class).setEnumValue(EnumType.STRING);
 		}
 	}

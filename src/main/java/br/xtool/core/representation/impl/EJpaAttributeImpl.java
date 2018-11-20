@@ -33,6 +33,7 @@ public class EJpaAttributeImpl extends EJavaFieldImpl implements EJpaAttribute {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.xtool.core.representation.EJpaAttribute#isJpaTransient()
 	 */
 	@Override
@@ -42,6 +43,7 @@ public class EJpaAttributeImpl extends EJavaFieldImpl implements EJpaAttribute {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.xtool.core.representation.EJpaAttribute#isLob()
 	 */
 	@Override
@@ -51,6 +53,7 @@ public class EJpaAttributeImpl extends EJavaFieldImpl implements EJpaAttribute {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.xtool.core.representation.EJpaAttribute#getRelationship()
 	 */
 	@Override
@@ -74,5 +77,6 @@ public class EJpaAttributeImpl extends EJavaFieldImpl implements EJpaAttribute {
 				.findFirst();
 		// @formatter:on
 	}
+
 
 }
