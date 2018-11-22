@@ -1,0 +1,37 @@
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
+@Component({
+  selector: 'app-main-layout',
+  templateUrl: './main-layout.component.html'
+})
+export class MainLayoutComponent implements OnInit {
+
+  userInfo: any = {
+    email: '',
+    family_name: '',
+    given_name: '',
+    name: '',
+    preferred_username: '',
+    sub: ''
+  };
+
+  routes: Object[] = [{
+    title: '',
+    route: '',
+    icon: '',
+  }];
+
+  constructor(private router: Router) { }
+
+  ngOnInit() { }
+
+  getLink(route: string) {
+    return `http://${window.location.hostname}/${route}`;
+  }
+
+  logout(): void {
+    this.router.navigate(['/']);
+  }
+
+}

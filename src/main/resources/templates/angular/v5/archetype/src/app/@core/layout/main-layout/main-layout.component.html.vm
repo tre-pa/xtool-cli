@@ -1,0 +1,18 @@
+<td-layout #layout>
+  <td-navigation-drawer [name]="userInfo.name"
+    [email]="userInfo.email">
+    <mat-nav-list>
+      <ng-template let-item
+        let-last="last"
+        ngFor
+        [ngForOf]="routes">
+        <a mat-list-item
+          [href]="getLink(item.route)"
+          (click)="layout.close()">
+          <mat-icon>{{ item.icon }}</mat-icon>{{ item.title }}
+        </a>
+      </ng-template>
+    </mat-nav-list>
+  </td-navigation-drawer>
+  <router-outlet></router-outlet>
+</td-layout>

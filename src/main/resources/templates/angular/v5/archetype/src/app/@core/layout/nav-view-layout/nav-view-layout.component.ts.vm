@@ -1,18 +1,23 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { 
+  Component, 
+  OnInit, 
+  Input 
+} from '@angular/core';
 
-/**
- * 
- */
 @Component({
   selector: 'nav-view-layout',
-  templateUrl: './nav-view-layout.component.html',
-  styles: []
+  templateUrl: './nav-view-layout.component.html'
 })
 export class NavViewLayoutComponent implements OnInit {
 
+  @Input()
+  layoutTitle: string;
+
+  @Input()
+  layoutSubtitle: string;
+
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
 }

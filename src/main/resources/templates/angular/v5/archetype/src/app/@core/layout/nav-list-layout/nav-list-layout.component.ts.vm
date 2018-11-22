@@ -1,33 +1,34 @@
+import {
+  Input,
+  OnInit,
+  Component,
+  AfterViewInit,
+  ChangeDetectorRef
+} from '@angular/core';
 import { TdMediaService } from '@covalent/core';
-import { Component, OnInit, AfterViewInit, Input, ChangeDetectorRef } from '@angular/core';
-
 
 @Component({
   selector: 'nav-list-layout',
-  templateUrl: './nav-list-layout.component.html',
-  styles: []
+  templateUrl: './nav-list-layout.component.html'
 })
 export class NavListLayoutComponent implements OnInit, AfterViewInit {
 
-  /**
-   *
-   * @param media
-   * @param _changeDetectorRef
-   */
+  @Input()
+  layoutTitle: string;
+
+  @Input()
+  layoutSubtitle: string;
+
   constructor(
     public media: TdMediaService,
-    private _changeDetectorRef: ChangeDetectorRef) { }
+    private _changeDetectorRef: ChangeDetectorRef
+  ) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
-  /**
-   *
-   */
   ngAfterViewInit(): void {
     this.media.broadcast();
     this._changeDetectorRef.detectChanges();
-    // broadcast to all listener observables when loading the page
   }
 
 }

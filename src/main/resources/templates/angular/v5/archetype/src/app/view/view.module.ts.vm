@@ -1,10 +1,15 @@
 import { NgModule } from '@angular/core';
+
 import { SharedModule } from './../@core/shared.module';
 import { viewRoutes } from './view-routing.module';
 
+import { NavListLayoutComponent } from './../@core/layout/nav-list-layout/nav-list-layout.component';
+import { NavViewLayoutComponent } from './../@core/layout/nav-view-layout/nav-view-layout.component';
+
 @NgModule({
     declarations: [
-
+        NavListLayoutComponent,
+        NavViewLayoutComponent
     ],
     imports: [
         SharedModule,
