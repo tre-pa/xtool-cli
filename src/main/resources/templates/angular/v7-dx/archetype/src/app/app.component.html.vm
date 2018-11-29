@@ -2,8 +2,8 @@
     <router-outlet></router-outlet>
 
     <app-footer>
-        Copyright © 2011-2018 Developer Express Inc.
+        Tribunal Regional Eleitoral do Pará.
         <br/>
-        All trademarks or registered trademarks are property of their respective owners.
+        STI/COSIS/SDS.
     </app-footer>
 </app-side-nav-outer-toolbar>
