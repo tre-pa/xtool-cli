@@ -26,7 +26,9 @@ public class NewAngularProjectGenerator {
 	private WorkspaceService workspaceService;
 
 	@ShellMethod(key = "new:angular", value = "Novo projeto Angular 5.x", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
-	public void run(@ShellOption(help = "Nome do projeto") String name) throws IOException {
+	public void run(
+			@ShellOption(help = "Nome do projeto") String name, 
+			@ShellOption(help = "Qualificador do projeto", defaultValue="dx") String qualifier) throws IOException {
 		Map<String, Object> vars = new HashMap<String, Object>() {
 			private static final long serialVersionUID = 1L;
 			{
@@ -38,7 +40,8 @@ public class NewAngularProjectGenerator {
 				ENgProject.class, 
 				EProject.Type.ANGULAR, 
 				name, 
-				EProject.Version.V5, 
+				EProject.Version.V7, 
+				qualifier,
 				vars);
 		// @formatter:on
 		ConsoleLog.print(ConsoleLog.cyan("\t-- npm install --"));

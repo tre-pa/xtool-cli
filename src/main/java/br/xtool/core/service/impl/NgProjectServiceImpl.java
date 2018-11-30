@@ -11,17 +11,22 @@ import org.springframework.stereotype.Service;
 
 import com.google.common.collect.ImmutableMap;
 
+import br.xtool.core.representation.EJpaEntity;
+import br.xtool.core.representation.ENgClass;
 import br.xtool.core.representation.ENgComponent;
 import br.xtool.core.representation.ENgDialog;
+import br.xtool.core.representation.ENgEntity;
 import br.xtool.core.representation.ENgModule;
 import br.xtool.core.representation.ENgPage;
 import br.xtool.core.representation.ENgProject;
 import br.xtool.core.representation.ENgService;
+import br.xtool.core.representation.impl.ENgEntityImpl;
 import br.xtool.core.representation.impl.ENgPageImpl;
 import br.xtool.service.FileService;
 import br.xtool.service.NgProjectService;
 import br.xtool.service.ShellService;
 import lombok.NonNull;
+import strman.Strman;
 
 @Service
 public class NgProjectServiceImpl implements NgProjectService {
@@ -29,15 +34,17 @@ public class NgProjectServiceImpl implements NgProjectService {
 	@Autowired
 	private ShellService shellService;
 
-	//	@Autowired
-	//	private WorkspaceService workspaceService;
+	// @Autowired
+	// private WorkspaceService workspaceService;
 
 	@Autowired
 	private FileService fs;
 
 	/*
 	 * (non-Javadoc)
-	 * @see br.xtool.core.service.NgService#addDeclarationToModule(br.xtool.core.representation.ENgModule, br.xtool.core.representation.ENgComponent)
+	 * 
+	 * @see br.xtool.core.service.NgService#addDeclarationToModule(br.xtool.core.
+	 * representation.ENgModule, br.xtool.core.representation.ENgComponent)
 	 */
 	@Override
 	public <T extends ENgComponent> void addDeclarationToModule(ENgProject ngProject, @NonNull ENgModule ngModule, @NonNull T ngComponent) {
@@ -51,12 +58,15 @@ public class NgProjectServiceImpl implements NgProjectService {
 				.build();
 		// @formatter:on
 		copyXtoolNg(ngProject, vars);
-		this.shellService.runCmd("node ${xtoolNg} --module-path=${modulePath} --module-name=${moduleName} --component-path=${componentPath} --component-name=${componentName}", vars);
+		this.shellService.runCmd(
+				"node ${xtoolNg} --module-path=${modulePath} --module-name=${moduleName} --component-path=${componentPath} --component-name=${componentName}", vars);
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see br.xtool.core.service.NgService#addProviderToModule(br.xtool.core.representation.ENgModule, br.xtool.core.representation.ENgService)
+	 * 
+	 * @see br.xtool.core.service.NgService#addProviderToModule(br.xtool.core.
+	 * representation.ENgModule, br.xtool.core.representation.ENgService)
 	 */
 	@Override
 	public void addProviderToModule(ENgProject ngProject, @NonNull ENgModule ngModule, @NonNull ENgService ngService) {
@@ -70,12 +80,16 @@ public class NgProjectServiceImpl implements NgProjectService {
 				.build();
 		// @formatter:on
 		copyXtoolNg(ngProject, vars);
-		this.shellService.runCmd("node ${xtoolNg} --module-path=${modulePath} --module-name=${moduleName} --service-path=${servicePath} --service-name=${serviceName}", vars);
+		this.shellService.runCmd("node ${xtoolNg} --module-path=${modulePath} --module-name=${moduleName} --service-path=${servicePath} --service-name=${serviceName}",
+				vars);
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see br.xtool.core.service.NgService#addEntryComponentsToModule(br.xtool.core.representation.ENgModule, br.xtool.core.representation.ENgDialog)
+	 * 
+	 * @see
+	 * br.xtool.core.service.NgService#addEntryComponentsToModule(br.xtool.core.
+	 * representation.ENgModule, br.xtool.core.representation.ENgDialog)
 	 */
 	@Override
 	public void addEntryComponentsToModule(ENgProject ngProject, @NonNull ENgModule ngModule, @NonNull ENgDialog ngDialog) {
@@ -94,7 +108,11 @@ public class NgProjectServiceImpl implements NgProjectService {
 
 	/*
 	 * (non-Javadoc)
-	 * @see br.xtool.core.service.NgService#createNgPage(br.xtool.core.representation.ENgProject, br.xtool.core.representation.EProject.Version, br.xtool.core.representation.ENgModule, java.lang.String)
+	 * 
+	 * @see
+	 * br.xtool.core.service.NgService#createNgPage(br.xtool.core.representation.
+	 * ENgProject, br.xtool.core.representation.EProject.Version,
+	 * br.xtool.core.representation.ENgModule, java.lang.String)
 	 */
 	@Override
 	public ENgPage createNgPage(ENgProject ngProject, ENgModule ngModule, String name) {
@@ -110,6 +128,24 @@ public class NgProjectServiceImpl implements NgProjectService {
 		ENgPage ngPage = new ENgPageImpl(ngPagePath);
 		this.addDeclarationToModule(ngProject, ngModule, ngPage);
 		return ngPage;
+	}
+
+	@Override
+	public ENgEntity createNgEntity(ENgProject ngProject, EJpaEntity entity) {
+		Map<String, Object> vars = new HashMap<String, Object>() {
+			private static final long serialVersionUID = 1L;
+			{
+				put("Strman", Strman.class);
+				put("entityFileName", ENgClass.genFileName(entity.getName()));
+				put("entityClassName", entity.getName());
+				put("entity", entity);
+				put("typesMap", ENgClass.typesMap());
+			}
+		};
+		this.fs.copy(Paths.get("angular").resolve(ngProject.getProjectVersion().getName()).resolve("domain"), vars, ngProject.getNgAppModule().getPath().getParent().resolve("domain"));
+		Path ngEntityPath = ngProject.getNgAppModule().getPath().getParent().resolve("domain").resolve(ENgClass.genFileName(entity.getName())).resolve(entity.getName().concat(".ts"));
+		ENgEntity ngEntity = new ENgEntityImpl(ngEntityPath);
+		return ngEntity;
 	}
 
 	private void copyXtoolNg(ENgProject ngProject, Map<String, Object> vars) {

@@ -62,5 +62,19 @@ public interface WorkspaceService {
 	 * @return
 	 */
 	<T extends EProject> T createProject(Class<T> projectClass, EProject.Type type, String name, EProject.Version version, Map<String, Object> vars);
+	
+	/**
+	 * 
+	 * Cria um projeto no workspace.
+	 * 
+	 * @param projectClass
+	 * @param type
+	 * @param name
+	 * @param version
+	 * @param qualifier Qualificado de projeto
+	 * @param vars
+	 * @return
+	 */
+	<T extends EProject> T createProject(Class<T> projectClass, EProject.Type type, String name, EProject.Version version, String qualifier , Map<String, Object> vars);
 
 }

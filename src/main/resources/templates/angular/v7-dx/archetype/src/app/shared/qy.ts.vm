@@ -1,0 +1,110 @@
+import * as _ from 'lodash';
+export namespace Qy {
+
+    /**
+     * 
+     */
+    class QyExpression {
+        type?: string;
+    }
+
+    export class QyFilter extends QyExpression {
+        predicates: QyExpression[] = [];
+    }
+
+    class QyConjunction extends QyFilter {
+        type = 'and';
+    }
+
+    class QyDisjunction extends QyFilter {
+        type = 'or';
+    }
+
+    class QyPredicate extends QyExpression {
+        constructor(
+            private dataField: string,
+            op: string,
+            private value: any) {
+            super()
+            this.type = op;
+        }
+    }
+
+    let comparisonOperators = [['=', '<>', '>', '<', '>=', '<=', 'contains', 'notcontains'], ['<>', '=', '<=', '>=', '<', '>', 'notcontains', 'contains']];
+    let logicalOperators = [['and', 'or'], ['or', 'and']];
+    let isSimplePredicate = (p: QyPredicate | any[]): boolean => { return p instanceof QyPredicate; };
+    let hasAndOperator = (arr: any[]): boolean => { return _.includes(arr, 'and'); };
+    let isComparisonOperator = (op: string): boolean => { return !_.isEmpty(_.intersection([op], comparisonOperators[0])); };
+    let isLogicalOperator = (op: string): boolean => { return !_.isEmpty(_.intersection([op], logicalOperators[0])); };
+    let getComparisonOperator = (op: string, inverse: boolean = false): string => { return inverse ? comparisonOperators[1][comparisonOperators[0].indexOf(op)] : op; };
+    let getLogicalOperator = (op: string, inverse: boolean = false): string => { return inverse ? logicalOperators[1][logicalOperators[0].indexOf(op)] : op; };
+
+
+    /**
+     * Aplica o teorema de 'de morgan'.
+     * 
+     * @param v 
+     * @param inverse 
+     */
+    let parser1 = (v: any[], inverse: boolean = false): any[] => {
+        return v.map((ele) => {
+            if (Array.isArray(ele)) return ele[0] === '!' ? _.compact(parser1(ele, inverse)) : parser1(ele, inverse);
+            if (isComparisonOperator(ele)) return getComparisonOperator(ele, inverse);
+            if (isLogicalOperator(ele)) return getLogicalOperator(ele, inverse);
+            if (ele === '!') {
+                inverse = true
+                return null;
+            };
+            return ele;
+        });
+    };
+
+    /**
+     * Trasnforma os predicatos de array para QyPredicate
+     * 
+     * @param v 
+     */
+    let parser2 = (v: any[]): any[] => {
+        if (Array.isArray(v) && isComparisonOperator(v[1])) return [new QyPredicate(v[0], v[1], v[2])];
+        return v.map(ele => {
+            if (Array.isArray(ele)) {
+                if (isComparisonOperator(ele[1])) {
+                    return new QyPredicate(ele[0], ele[1], ele[2]);
+                }
+                return parser2(ele);
+            }
+            return ele;
+        });
+    }
+
+    /**
+     * Une os predicados em lógicas booleanas OR (QyDisjunction) e AND (QyConjunction) gerando um QyFilter.
+     * 
+     * @param v 
+     * @param qyFilter 
+     */
+    let parser3 = (v: any[], qyFilter: QyFilter = new QyConjunction()): QyFilter => {
+        v.forEach(ele => {
+            if (Array.isArray(ele)) {
+                if (hasAndOperator(ele)) {
+                    qyFilter.predicates.push(parser3(ele, new QyConjunction()));
+                    return;
+                }
+                qyFilter.predicates.push(parser3(ele, new QyDisjunction()));
+            }
+            if (isSimplePredicate(ele)) {
+                qyFilter.predicates.push(ele);
+            }
+        });
+        return qyFilter;
+    }
+
+    /**
+     * 
+     * Serializa o array de filtragem em um objeto QyFilter.
+     * 
+     * @param v Array com os predicados de filtragem.
+     */
+    export let serialize = (v: any[]): QyFilter => { return parser3(parser2(parser1(v))); }
+
+}

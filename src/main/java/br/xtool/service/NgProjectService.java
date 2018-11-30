@@ -1,5 +1,7 @@
 package br.xtool.service;
 
+import br.xtool.core.representation.EJpaEntity;
+import br.xtool.core.representation.ENgClass;
 import br.xtool.core.representation.ENgComponent;
 import br.xtool.core.representation.ENgDialog;
 import br.xtool.core.representation.ENgModule;
@@ -46,4 +48,13 @@ public interface NgProjectService {
 	 * @return
 	 */
 	ENgPage createNgPage(ENgProject ngProject, ENgModule ngModule, String name);
+
+	/**
+	 * Cria uma entidade angular baseada em uma entidade JPA.
+	 * 
+	 * @param ngProject
+	 * @param entity
+	 * @return
+	 */
+	ENgClass createNgEntity(ENgProject ngProject, EJpaEntity entity);
 }

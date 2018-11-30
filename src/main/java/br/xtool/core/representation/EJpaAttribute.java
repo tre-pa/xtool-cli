@@ -24,7 +24,7 @@ public interface EJpaAttribute extends EJavaField {
 	 */
 	boolean isLob();
 
-	//	Optional<EJpaEntity> getGenericType();
+	// Optional<EJpaEntity> getGenericType();
 
 	/**
 	 * Retorna o relacionamento JPA.
