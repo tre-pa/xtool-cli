@@ -7,6 +7,7 @@ import br.xtool.core.representation.EJavaPackage;
 import br.xtool.core.representation.EJpaEntity;
 import br.xtool.core.representation.EJpaProjection;
 import br.xtool.core.representation.EJpaRepository;
+import br.xtool.core.representation.EJpaSpecification;
 
 /**
  * Classe que representa uma inteface Repository
@@ -68,6 +69,16 @@ public class EJpaRepositoryImpl extends EJavaInterfaceImpl implements EJpaReposi
 				.filter(e -> e.getName().equals(this.getTargetEntity().getName().concat("Projection")))
 				.findFirst()
 				.orElseThrow(() -> new IllegalArgumentException(String.format("O repositório %s não possui projeção associada.", this.getName())));
+		// @formatter:on
+	}
+
+	@Override
+	public EJpaSpecification getTargetSpecification() {
+		// @formatter:off
+		return this.springBootProject.getSpecifications().stream()
+				.filter(e -> e.getName().equals(this.getTargetEntity().getName().concat("Specification")))
+				.findFirst()
+				.orElseThrow(() -> new IllegalArgumentException(String.format("O repositório %s não possui specification associada.", this.getName())));
 		// @formatter:on
 	}
 

@@ -221,7 +221,7 @@ public class RestTemplates {
 	}
 
 	public static void genFindAll(EBootRest rest, EJpaRepository repository) {
-		if (!rest.getRoasterJavaClass().hasMethodSignature("findAllEntities", Pageable.class)) {
+		if (!rest.getRoasterJavaClass().hasMethodSignature("findAll", Pageable.class)) {
 			rest.getRoasterJavaClass().addImport(repository.getTargetEntity().getQualifiedName());
 			rest.getRoasterJavaClass().addImport(Pageable.class);
 			rest.getRoasterJavaClass().addImport(ResponseEntity.class);
@@ -257,6 +257,53 @@ public class RestTemplates {
 			JavaDocSource<MethodSource<JavaClassSource>> javaDoc = method.getRoasterMethod().getJavaDoc();
 			javaDoc.setText(
 					JavaTemplate.from("Retorna uma lista paginada de {{target_name}}")
+					.put("target_name", repository.getTargetEntity().getName())
+					.build()); 
+			javaDoc.addTagValue("@return", "Lista de entidades gerenciadas.");
+			// @formatter:on
+		}
+	}
+	
+	public static void genFilter(EBootRest rest, EJpaRepository repository) {
+		if (!rest.getRoasterJavaClass().hasMethodSignature("filter", "Pageable", "QyFilter")) {
+			rest.getRoasterJavaClass().addImport(repository.getTargetEntity().getQualifiedName());
+			rest.getRoasterJavaClass().addImport(Pageable.class);
+			rest.getRoasterJavaClass().addImport(ResponseEntity.class);
+			rest.getRoasterJavaClass().addImport(Page.class);
+			rest.getRoasterJavaClass().addImport(repository.getTargetSpecification().getQualifiedName());
+			rest.getRoasterJavaClass().addImport(repository.getProject().getRootPackage().getName().concat(".groovy.qy.filter.QyFilter"));
+
+			EJavaMethod<JavaClassSource> method = rest.addMethod("filter");
+			method.getRoasterMethod().setPublic();
+			// @formatter:off
+			method.getRoasterMethod()
+				.addAnnotation(PostMapping.class).setStringValue("path", "/_filter");
+			method.getRoasterMethod()
+				.setReturnType(String.format("ResponseEntity<Page<%s>>", repository.getTargetEntity().getName()));
+			method.getRoasterMethod()
+				.addParameter(Pageable.class.getSimpleName(), "pageable");
+			method.getRoasterMethod()
+				.addParameter("QyFilter", "filter")
+				.addAnnotation(RequestBody.class);
+			method.getRoasterMethod().setBody(
+					JavaTemplate.from(""
+							+ "	// @formatter:off\n"
+							+ "	return ResponseEntity\n"
+							+ "			.ok()\n"
+							+ "			.body({{repository_instance_name}}.findAll({{specification_name}}.filter(filter), pageable));\n"
+							+ "	// @formatter:on "
+							+ "")
+						.put("repository_instance_name", repository.getInstanceName())
+						.put("target_instance_name", repository.getTargetEntity().getInstanceName())
+						.put("specification_name", repository.getTargetSpecification().getName())
+						.put("target_name", repository.getTargetEntity().getName())
+					.build());
+			/*
+			 * Adição do JavaDoc
+			 */
+			JavaDocSource<MethodSource<JavaClassSource>> javaDoc = method.getRoasterMethod().getJavaDoc();
+			javaDoc.setText(
+					JavaTemplate.from("Retorna uma lista paginada filtrada de {{target_name}}")
 					.put("target_name", repository.getTargetEntity().getName())
 					.build()); 
 			javaDoc.addTagValue("@return", "Lista de entidades gerenciadas.");

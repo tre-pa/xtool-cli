@@ -30,4 +30,11 @@ public interface EJpaRepository extends EJavaInterface {
 	 */
 	EJpaProjection getTargetProjection();
 
+	/**
+	 * Retorna a specification alvo do repositório.
+	 * 
+	 * @return
+	 */
+	EJpaSpecification getTargetSpecification();
+
 }
