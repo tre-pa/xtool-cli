@@ -192,6 +192,7 @@ public class BootProjectServiceImpl implements BootProjectService {
 			write.write(formatedJavaClassSource);
 			write.flush();
 			javaType.getProject().refresh();
+			ConsoleLog.print(ConsoleLog.cyan(" + "), ConsoleLog.white(javaType.getQualifiedName()));
 		}
 	}
 

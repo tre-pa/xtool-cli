@@ -105,7 +105,7 @@ public class RestTemplates {
 			rest.getRoasterJavaClass().addImport(EntityNotFoundException.class);
 			method.getRoasterMethod().setBody(
 					JavaTemplate.from(""
-							+ "	if (!{{repository_instance_name}}.exists(id)) throw new EntityNotFoundException(\"Entidade {{target_name}} não encontrada.\");"
+							+ "	if (!{{repository_instance_name}}.existsById(id)) throw new EntityNotFoundException(\"Entidade {{target_name}} não encontrada.\");"
 							+ " return {{repository_instance_name}}.save({{target_instance_name}});"
 							+ "")
 						.put("repository_instance_name", repository.getInstanceName())
@@ -156,8 +156,8 @@ public class RestTemplates {
 			rest.getRoasterJavaClass().addImport(EntityNotFoundException.class);
 			method.getRoasterMethod().setBody(
 					JavaTemplate.from(""
-							+ "	if (!{{repository_instance_name}}.exists(id)) throw new EntityNotFoundException(\"Entidade {{target_name}} não encontrada.\");"
-							+ " {{repository_instance_name}}.delete(id);"
+							+ "	if (!{{repository_instance_name}}.existsById(id)) throw new EntityNotFoundException(\"Entidade {{target_name}} não encontrada.\");"
+							+ " {{repository_instance_name}}.deleteById(id);"
 							+ "")
 						.put("repository_instance_name", repository.getInstanceName())
 						.put("target_instance_name", repository.getTargetEntity().getInstanceName())
@@ -182,12 +182,12 @@ public class RestTemplates {
 	 * @param rest
 	 * @param repository
 	 */
-	public static void genFindOne(EBootRest rest, EJpaRepository repository) {
-		if (!rest.getRoasterJavaClass().hasMethodSignature("findOne", Long.class.getSimpleName())) {
+	public static void genFindById(EBootRest rest, EJpaRepository repository) {
+		if (!rest.getRoasterJavaClass().hasMethodSignature("findById", Long.class.getSimpleName())) {
 			rest.getRoasterJavaClass().addImport(repository.getTargetEntity().getQualifiedName());
 			rest.getRoasterJavaClass().addImport(EntityNotFoundException.class);
 
-			EJavaMethod<JavaClassSource> method = rest.addMethod("findOne");
+			EJavaMethod<JavaClassSource> method = rest.addMethod("findById");
 			method.getRoasterMethod().setPublic();
 			// @formatter:off
 			method.getRoasterMethod()
@@ -200,8 +200,7 @@ public class RestTemplates {
 				.addAnnotation(PathVariable.class);
 			method.getRoasterMethod().setBody(
 					JavaTemplate.from(""
-							+ "	if (!{{repository_instance_name}}.exists(id)) throw new EntityNotFoundException(\"Entidade {{target_name}} não encontrada.\");"
-							+ " return {{repository_instance_name}}.findOne(id);"
+							+ " return {{repository_instance_name}}.findById(id).orElseThrow(() -> new EntityNotFoundException(\"Registro de Material não encontrado.\"));"
 							+ "")
 						.put("repository_instance_name", repository.getInstanceName())
 						.put("target_instance_name", repository.getTargetEntity().getInstanceName())
@@ -264,7 +263,7 @@ public class RestTemplates {
 			// @formatter:on
 		}
 	}
-
+	
 	public static void genCount(EBootRest rest, EJpaRepository repository) {
 		if (!rest.getRoasterJavaClass().hasMethodSignature("count")) {
 			EJavaMethod<JavaClassSource> method = rest.addMethod("count");

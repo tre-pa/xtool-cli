@@ -15,7 +15,7 @@ import br.xtool.core.provider.EJpaEntityValueProvider;
 import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.EJpaEntity;
 import br.xtool.core.representation.EJpaRepository;
-import br.xtool.core.representation.EJpaSpecification;
+import br.xtool.core.template.JpaSpecificationTemplates;
 import br.xtool.service.BootProjectService;
 import br.xtool.service.WorkspaceService;
 
@@ -38,7 +38,7 @@ public class GenRepositoryCommand extends SpringBootAware {
 	public void run(@ShellOption(help = "Entidade JPA", valueProvider = EJpaEntityValueProvider.class, defaultValue = "") EJpaEntity entity)
 			throws IOException, JDOMException {
 		EBootProject bootProject = this.workspaceService.getWorkingProject(EBootProject.class);
-		if(Objects.isNull(entity)) {
+		if (Objects.isNull(entity)) {
 			bootProject.getEntities().stream().forEach(_entity -> this.createRepository(_entity, bootProject));
 			return;
 		}
@@ -47,8 +47,10 @@ public class GenRepositoryCommand extends SpringBootAware {
 	}
 
 	private void createRepository(EJpaEntity entity, EBootProject bootProject) {
-		EJpaSpecification jpaSpecification = this.bootProjectService.createSpecification(bootProject, entity);
+		this.bootProjectService.createSpecification(bootProject, entity, specification -> {
+			JpaSpecificationTemplates.genFilterSpecfication(specification);
+		});
 		EJpaRepository jpaRepository = this.bootProjectService.createRepository(bootProject, entity);
-		this.bootProjectService.save(jpaSpecification, jpaRepository);
+		this.bootProjectService.save(jpaRepository);
 	}
 }

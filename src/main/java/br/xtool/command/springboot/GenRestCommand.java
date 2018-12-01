@@ -34,7 +34,7 @@ public class GenRestCommand extends SpringBootAware {
 
 		this.bootProjectService.createRest(bootProject, repository, rest -> {
 			RestTemplates.genFindAll(rest, repository);
-			RestTemplates.genFindOne(rest, repository);
+			RestTemplates.genFindById(rest, repository);
 			RestTemplates.genInsertMethod(rest, repository);
 			RestTemplates.genUpdateMethod(rest, repository);
 			RestTemplates.genDeleteMethod(rest, repository);
