@@ -1,4 +1,4 @@
-package br.xtool.core.template;
+package br.xtool.templates;
 
 import org.jboss.forge.roaster.model.source.JavaInterfaceSource;
 import org.jboss.forge.roaster.model.source.MethodSource;

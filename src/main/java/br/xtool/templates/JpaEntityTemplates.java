@@ -1,10 +1,10 @@
-package br.xtool.core.template;
+package br.xtool.templates;
 
 import org.hibernate.annotations.Immutable;
 
 import br.xtool.core.representation.EJavaClass;
 import br.xtool.core.representation.EPlantRelationship;
-import br.xtool.core.template.base.JavaTemplate;
+import br.xtool.core.template.JavaTemplate;
 
 public class JpaEntityTemplates {
 

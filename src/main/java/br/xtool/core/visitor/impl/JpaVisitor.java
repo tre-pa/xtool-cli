@@ -59,8 +59,8 @@ import br.xtool.core.representation.EPlantRelationship.EAssociation;
 import br.xtool.core.representation.EPlantRelationship.EComposition;
 import br.xtool.core.representation.EPlantStereotype;
 import br.xtool.core.representation.EPlantStereotype.StereotypeType;
-import br.xtool.core.template.JpaEntityTemplates;
 import br.xtool.core.visitor.Visitor;
+import br.xtool.templates.JpaEntityTemplates;
 import lombok.EqualsAndHashCode;
 import lombok.val;
 

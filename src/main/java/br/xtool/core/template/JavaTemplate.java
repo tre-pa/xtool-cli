@@ -1,4 +1,4 @@
-package br.xtool.core.template.base;
+package br.xtool.core.template;
 
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;

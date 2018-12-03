@@ -1,4 +1,4 @@
-package br.xtool.core.template;
+package br.xtool.templates;
 
 import java.util.concurrent.TimeUnit;
 
@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import br.xtool.core.representation.EBootRest;
 import br.xtool.core.representation.EJavaMethod;
 import br.xtool.core.representation.EJpaRepository;
-import br.xtool.core.template.base.JavaTemplate;
+import br.xtool.core.template.JavaTemplate;
 
 public class RestTemplates {
 
