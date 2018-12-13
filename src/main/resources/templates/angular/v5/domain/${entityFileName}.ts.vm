@@ -2,27 +2,31 @@
 #set($C1 = "[") 
 #set($C2 = "]")
 #foreach($attribute in $entity.attributes)
-	#if($attribute.relationship.isPresent())
+	#if($attribute.relationshipField)
 		#if(!$attribute.collection)
 import { $attribute.type } from $SQ./$Strman.toKebabCase($attribute.type.name)$SQ;
 		#else##
-import { $attribute.type.typeArguments[0].name } from $SQ./$Strman.toKebabCase($attribute.type.typeArguments[0].name)$SQ;
+import { $attribute.type.typeArguments[0].name } from $SQ./$Strman.toKebabCase($attribute.type.typeArguments[0].name)$SQ;##
 		#end##
-	#end
+	#end##
 #end
 
 export class ${entityClassName} {
 #foreach($attribute in $entity.attributes)
-	#if($attribute.relationship.isPresent())
+	#if($attribute.relationshipField)
 		#if(!$attribute.collection) 
-	$attribute.name?: $attribute.type.name;
+			#setindent(2)
+			$attribute.name?: $attribute.type.name;
 		#else	
-	$attribute.name?: $attribute.type.typeArguments[0].name$C1$C2;
+			#setindent(2)
+			$attribute.name?: $attribute.type.typeArguments[0].name$C1$C2;
 		#end
-	#elseif($attribute.enum.isPresent())
-	$attribute.name?: $typesMap[$attribute.enum.get().type.name];
+	#elseif($attribute.enumField)
+		#setindent(2)
+		$attribute.name?: $typesMap[$attribute.enum.get().type.name];
 	#else
-	$attribute.name?: $typesMap[$attribute.type.name];
+		#setindent(2)
+		$attribute.name?: $typesMap[$attribute.type.name];
 	#end
 #end
 }
