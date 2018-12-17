@@ -21,13 +21,34 @@ public interface EJpaEntity extends EJavaClass {
 	 */
 	Collection<EJpaAttribute> getAttributes();
 
-	//	/**
-	//	 * Retorna os relacionamentos da entidade.
-	//	 * 
-	//	 * @return
-	//	 */
-	//	@Deprecated
-	//	Set<EJpaRelationship> getRelationships();
+	/**
+	 * Retorna os atributos simples (não relacionamento e não enums) da entidade
+	 * 
+	 * @return
+	 */
+	Collection<EJpaAttribute> getSimpleAttributes();
+
+	/**
+	 * Retorna os atributos que são relacionamentos.
+	 * 
+	 * @return
+	 */
+	Collection<EJpaAttribute> getRelationshipAttributes();
+
+	/**
+	 * Retorna os atributos que são do tipo enum.
+	 * 
+	 * @return
+	 */
+	Collection<EJpaAttribute> getEnumAttributes();
+
+	// /**
+	// * Retorna os relacionamentos da entidade.
+	// *
+	// * @return
+	// */
+	// @Deprecated
+	// Set<EJpaRelationship> getRelationships();
 
 	/**
 	 * Retorna um nome válido de uma tabela do banco de dados com no máximo 30

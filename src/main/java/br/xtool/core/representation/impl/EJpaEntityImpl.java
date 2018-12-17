@@ -36,5 +36,48 @@ public class EJpaEntityImpl extends EJavaClassImpl implements EJpaEntity {
 			.collect(Collectors.toList());
 		// @formatter:on
 	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EJpaEntity#getSimpleAttributes()
+	 */
+	@Override
+	public Collection<EJpaAttribute> getSimpleAttributes() {
+		// @formatter:off
+		return this.getAttributes().stream()
+				.filter(attr ->  !attr.getJpaRelationship().isPresent())
+				.filter(attr -> !attr.getEnum().isPresent())
+				.collect(Collectors.toList());
+		// @formatter:on
+				
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EJpaEntity#getRelationshipAttributes()
+	 */
+	@Override
+	public Collection<EJpaAttribute> getRelationshipAttributes() {
+		// @formatter:off
+		return this.getAttributes().stream()
+				.filter(attr -> attr.getJpaRelationship().isPresent())
+				.collect(Collectors.toList());
+		// @formatter:on
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.EJpaEntity#getEnumAttributes()
+	 */
+	@Override
+	public Collection<EJpaAttribute> getEnumAttributes() {
+		// @formatter:off
+		return this.getAttributes().stream()
+				.filter(attr -> attr.getEnum().isPresent())
+				.collect(Collectors.toList());
+		// @formatter:on
+	}
+	
+	
 
 }
