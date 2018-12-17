@@ -2,6 +2,7 @@ package br.xtool.core.representation.impl;
 
 import java.util.Collection;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 
@@ -36,9 +37,10 @@ public class EJpaEntityImpl extends EJavaClassImpl implements EJpaEntity {
 			.collect(Collectors.toList());
 		// @formatter:on
 	}
-	
+
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.xtool.core.representation.EJpaEntity#getSimpleAttributes()
 	 */
 	@Override
@@ -49,11 +51,12 @@ public class EJpaEntityImpl extends EJavaClassImpl implements EJpaEntity {
 				.filter(attr -> !attr.getEnum().isPresent())
 				.collect(Collectors.toList());
 		// @formatter:on
-				
+
 	}
-	
+
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.xtool.core.representation.EJpaEntity#getRelationshipAttributes()
 	 */
 	@Override
@@ -64,9 +67,10 @@ public class EJpaEntityImpl extends EJavaClassImpl implements EJpaEntity {
 				.collect(Collectors.toList());
 		// @formatter:on
 	}
-	
+
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.xtool.core.representation.EJpaEntity#getEnumAttributes()
 	 */
 	@Override
@@ -77,7 +81,23 @@ public class EJpaEntityImpl extends EJavaClassImpl implements EJpaEntity {
 				.collect(Collectors.toList());
 		// @formatter:on
 	}
-	
-	
+
+	@Override
+	public Collection<EJpaAttribute> getToManyRelationshipAtttributes() {
+		// @formatter:off
+		return this.getRelationshipAttributes().stream()
+				.filter(attr -> Stream.of("List", "Set", "Collection").anyMatch(type ->  attr.getType().getName().equals(type)))
+				.collect(Collectors.toList());
+		// @formatter:on
+	}
+
+	@Override
+	public Collection<EJpaAttribute> getToOneRelationshipAttributes() {
+		// @formatter:off
+		return this.getRelationshipAttributes().stream()
+				.filter(attr -> Stream.of("List", "Set", "Collection").noneMatch(type ->  attr.getType().getName().equals(type)))
+				.collect(Collectors.toList());
+		// @formatter:on
+	}
 
 }
