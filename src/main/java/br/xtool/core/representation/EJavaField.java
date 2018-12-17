@@ -29,6 +29,12 @@ public interface EJavaField extends Comparable<EJavaField> {
 
 	Optional<EJavaEnum> getEnum();
 
+	/**
+	 * 
+	 * @return
+	 */
+	boolean isEnumField();
+
 	EJavaClass getJavaClass();
 
 	SortedSet<EJavaAnnotation<JavaClassSource>> getAnnotations();
@@ -41,6 +47,8 @@ public interface EJavaField extends Comparable<EJavaField> {
 	 * @return
 	 */
 	Optional<EJavaRelationship> getRelationship();
+
+	boolean isRelationshipField();
 
 	FieldSource<JavaClassSource> getRoasterField();
 

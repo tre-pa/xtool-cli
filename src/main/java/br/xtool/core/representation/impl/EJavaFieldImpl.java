@@ -55,7 +55,6 @@ public class EJavaFieldImpl implements EJavaField {
 		return this.javaClass;
 	}
 
-
 	@Override
 	public Optional<EJavaEnum> getEnum() {
 		// @formatter:off
@@ -63,6 +62,16 @@ public class EJavaFieldImpl implements EJavaField {
 				.filter(javaEnum -> javaEnum.getName().equals(this.getType().getName()))
 				.findFirst();
 		// @formatter:on
+	}
+
+	@Override
+	public boolean isEnumField() {
+		return this.getEnum().isPresent();
+	}
+
+	@Override
+	public boolean isRelationshipField() {
+		return this.getRelationship().isPresent();
 	}
 
 	/**

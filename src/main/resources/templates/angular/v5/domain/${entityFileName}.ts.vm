@@ -3,7 +3,7 @@
 #set($C2 = "]")
 #macro(tsImport $type)
 $SQ./$Strman.toKebabCase($type)$SQ;
-#end
+#end 
 
 ##Itera sobre os atributos simples
 #foreach($attribute in $entity.simpleAttributes)
