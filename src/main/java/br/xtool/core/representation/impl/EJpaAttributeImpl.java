@@ -26,8 +26,9 @@ public class EJpaAttributeImpl extends EJavaFieldImpl implements EJpaAttribute {
 
 	private EJpaEntity entitySource;
 
-	public EJpaAttributeImpl(EJpaEntity entitySource, FieldSource<JavaClassSource> fieldSource) {
+	public EJpaAttributeImpl(EBootProject springBootProject, EJpaEntity entitySource, FieldSource<JavaClassSource> fieldSource) {
 		super(entitySource, fieldSource);
+		this.springBootProject = springBootProject;
 		this.entitySource = entitySource;
 	}
 
@@ -58,6 +59,7 @@ public class EJpaAttributeImpl extends EJavaFieldImpl implements EJpaAttribute {
 	 */
 	@Override
 	public Optional<EJpaRelationship> getJpaRelationship() {
+		if (this.isEnumField()) return Optional.empty();
 		if (this.isCollection()) {
 			String entityName = Types.getGenericsTypeParameter(this.getType().getQualifiedNameWithGenerics());
 			// @formatter:off
@@ -70,6 +72,7 @@ public class EJpaAttributeImpl extends EJavaFieldImpl implements EJpaAttribute {
 		}
 		// @formatter:off
 		String entityName = this.getType().getName();
+		
 		return this.springBootProject.getEntities().stream()
 				.filter(entity -> entity.getName().equals(entityName))
 				.map(entityTarget -> new EJpaRelationshipImpl(this.entitySource, entityTarget, this))
@@ -77,6 +80,5 @@ public class EJpaAttributeImpl extends EJavaFieldImpl implements EJpaAttribute {
 				.findFirst();
 		// @formatter:on
 	}
-
 
 }

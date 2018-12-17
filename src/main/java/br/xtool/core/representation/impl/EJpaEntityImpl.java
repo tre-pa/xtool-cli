@@ -32,7 +32,7 @@ public class EJpaEntityImpl extends EJavaClassImpl implements EJpaEntity {
 		// @formatter:off
 		return this.javaClassSource.getFields().stream()
 			.filter(fieldSource -> !fieldSource.isStatic())
-			.map(fieldSource -> new EJpaAttributeImpl(this, fieldSource))
+			.map(fieldSource -> new EJpaAttributeImpl(this.getProject(),this, fieldSource))
 			.collect(Collectors.toList());
 		// @formatter:on
 	}
