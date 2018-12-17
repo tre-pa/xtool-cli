@@ -9,8 +9,12 @@ $SQ./$Strman.toKebabCase($type)$SQ;
 #foreach($attribute in $entity.simpleAttributes)
 import { $attribute.type } from #tsImport($attribute.type.name);
 #end
-##Itera sobre os atributos de relacionamento
-#foreach($attribute in $entity.relationshipAttributes)
+##Itera sobre os atributos de relacionamento toOne
+#foreach($attribute in $entity.toOneRelationshipAttributes)
+import { $attribute.type } from #tsImport($attribute.type.name);
+#end
+##Itera sobre os atributos de relacionamento toMany
+#foreach($attribute in $entity.toManyRelationshipAttributes)
 import { $attribute.type.typeArguments[0].name } from #tsImport($attribute.type.typeArguments[0].name);
 #end
 
@@ -19,8 +23,11 @@ export class ${entityClassName} {
 #foreach($attribute in $entity.simpleAttributes)
 $attribute.name?: $attribute.type.name;
 #end
+#foreach($attribute in $entity.toOneRelationshipAttributes)
+$attribute.name?: $attribute.type.name;
+#end
 ##Itera sobre os atributos de relacionamento
-#foreach($attribute in $entity.relationshipAttributes)
+#foreach($attribute in $entity.toManyRelationshipAttributes)
 $attribute.name?: $attribute.type.typeArguments[0].name$C1$C2;
 #end
 ##Itera sobre os atributos do tipo enum

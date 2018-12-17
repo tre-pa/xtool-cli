@@ -36,6 +36,20 @@ public interface EJpaEntity extends EJavaClass {
 	Collection<EJpaAttribute> getRelationshipAttributes();
 
 	/**
+	 * Retorna os relacionamentos 'para muitos'
+	 * 
+	 * @return
+	 */
+	Collection<EJpaAttribute> getToManyRelationshipAtttributes();
+
+	/**
+	 * Retorna os relacionamentos 'para um'
+	 * 
+	 * @return
+	 */
+	Collection<EJpaAttribute> getToOneRelationshipAttributes();
+
+	/**
 	 * Retorna os atributos que são do tipo enum.
 	 * 
 	 * @return
