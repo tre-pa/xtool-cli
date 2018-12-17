@@ -40,7 +40,7 @@ public interface EJpaEntity extends EJavaClass {
 	 * 
 	 * @return
 	 */
-	Collection<EJpaAttribute> getToManyRelationshipAtttributes();
+	Collection<EJpaAttribute> getToManyRelationshipAttributes();
 
 	/**
 	 * Retorna os relacionamentos 'para um'

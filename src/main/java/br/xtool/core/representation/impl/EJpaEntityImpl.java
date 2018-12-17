@@ -2,7 +2,11 @@ package br.xtool.core.representation.impl;
 
 import java.util.Collection;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
+
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 
@@ -83,10 +87,10 @@ public class EJpaEntityImpl extends EJavaClassImpl implements EJpaEntity {
 	}
 
 	@Override
-	public Collection<EJpaAttribute> getToManyRelationshipAtttributes() {
+	public Collection<EJpaAttribute> getToManyRelationshipAttributes() {
 		// @formatter:off
 		return this.getRelationshipAttributes().stream()
-				.filter(attr -> Stream.of("List", "Set", "Collection").anyMatch(type ->  attr.getType().getName().equals(type)))
+				.filter(attr -> attr.getRoasterField().hasAnnotation(ManyToMany.class) || attr.getRoasterField().hasAnnotation(OneToMany.class))
 				.collect(Collectors.toList());
 		// @formatter:on
 	}
@@ -95,7 +99,7 @@ public class EJpaEntityImpl extends EJavaClassImpl implements EJpaEntity {
 	public Collection<EJpaAttribute> getToOneRelationshipAttributes() {
 		// @formatter:off
 		return this.getRelationshipAttributes().stream()
-				.filter(attr -> Stream.of("List", "Set", "Collection").noneMatch(type ->  attr.getType().getName().equals(type)))
+				.filter(attr -> attr.getRoasterField().hasAnnotation(OneToOne.class) || attr.getRoasterField().hasAnnotation(ManyToOne.class))
 				.collect(Collectors.toList());
 		// @formatter:on
 	}

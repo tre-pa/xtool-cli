@@ -1,14 +1,30 @@
 #set($SQ = "'")
 #set($C1 = "[") 
 #set($C2 = "]")
+##
+## Macro com para geração de nome de import no typescript
+##
 #macro(tsImport $type)
 $SQ./$Strman.toKebabCase($type)$SQ;
+#end
+##
+## Macro para definiç"ao de tipo no typescript
+##
+#macro(tsType $type)
+#if($type == 'String')
+string
+#end
+#if($type == 'Boolean')
+boolean
+#end
+#if($type == 'LocalDate' || $type == 'LocalDateTime'|| $type == 'Date') 
+Date
+#end
+#if($type == 'Long' || $type == 'Integer' || $type == 'Short' || $type == 'BigDecimal')
+number
+#end
 #end 
 
-##Itera sobre os atributos simples
-#foreach($attribute in $entity.simpleAttributes)
-import { $attribute.type } from #tsImport($attribute.type.name);
-#end
 ##Itera sobre os atributos de relacionamento toOne
 #foreach($attribute in $entity.toOneRelationshipAttributes)
 import { $attribute.type } from #tsImport($attribute.type.name);
@@ -21,17 +37,17 @@ import { $attribute.type.typeArguments[0].name } from #tsImport($attribute.type.
 export class ${entityClassName} {
 ##Itera sobre os atributos simples
 #foreach($attribute in $entity.simpleAttributes)
-$attribute.name?: $attribute.type.name;
+	$attribute.name?: #tsType($attribute.type.name);
 #end
 #foreach($attribute in $entity.toOneRelationshipAttributes)
-$attribute.name?: $attribute.type.name;
+	$attribute.name?: $attribute.type.name;
 #end
 ##Itera sobre os atributos de relacionamento
 #foreach($attribute in $entity.toManyRelationshipAttributes)
-$attribute.name?: $attribute.type.typeArguments[0].name$C1$C2;
+	$attribute.name?: $attribute.type.typeArguments[0].name$C1$C2;
 #end
 ##Itera sobre os atributos do tipo enum
 #foreach($attribute in $entity.enumAttributes)
-$attribute.name?: $typesMap[$attribute.enum.get().type.name];
+	$attribute.name?: $typesMap[$attribute.enum.get().type.name];
 #end
 }

@@ -234,10 +234,10 @@ public class BootProjectServiceImpl implements BootProjectService {
 		Collection<EJavaEnum> javaEnums = bootProject.getDomainClassDiagram().getEnums().stream()
 				.map(umlEnum -> this.convertUmlEnumToJavaEnum(bootProject, umlEnum))
 				.collect(Collectors.toList());
+		
 		// @formatter:on
 		javaEnums.stream().forEach(javaEnum -> {
 			this.save(javaEnum);
-			ConsoleLog.print(ConsoleLog.cyan(" + "), ConsoleLog.white(javaEnum.getQualifiedName()));
 		});
 //		print(bold(cyan(String.valueOf(javaEnums.size()))), " enums mapeadas.");
 		return javaEnums;
