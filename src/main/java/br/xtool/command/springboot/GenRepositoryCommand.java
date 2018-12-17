@@ -15,9 +15,9 @@ import br.xtool.core.provider.EJpaEntityValueProvider;
 import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.EJpaEntity;
 import br.xtool.core.representation.EJpaRepository;
-import br.xtool.core.template.JpaSpecificationTemplates;
 import br.xtool.service.BootProjectService;
 import br.xtool.service.WorkspaceService;
+import br.xtool.templates.JpaSpecificationTemplates;
 
 /**
  * Comando que gera um classe Repository no projeto Spring Boot

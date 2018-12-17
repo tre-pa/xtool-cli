@@ -1,11 +1,11 @@
-package br.xtool.core.template;
+package br.xtool.templates;
 
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.jboss.forge.roaster.model.source.MethodSource;
 import org.springframework.data.jpa.domain.Specification;
 
 import br.xtool.core.representation.EJpaSpecification;
-import br.xtool.core.template.base.JavaTemplate;
+import br.xtool.core.template.JavaTemplate;
 
 public class JpaSpecificationTemplates {
 
