@@ -11,16 +11,19 @@ import org.springframework.stereotype.Service;
 
 import com.google.common.collect.ImmutableMap;
 
+import br.xtool.core.representation.EJavaEnum;
 import br.xtool.core.representation.EJpaEntity;
 import br.xtool.core.representation.ENgClass;
 import br.xtool.core.representation.ENgComponent;
 import br.xtool.core.representation.ENgDialog;
 import br.xtool.core.representation.ENgEntity;
+import br.xtool.core.representation.ENgEnum;
 import br.xtool.core.representation.ENgModule;
 import br.xtool.core.representation.ENgPage;
 import br.xtool.core.representation.ENgProject;
 import br.xtool.core.representation.ENgService;
 import br.xtool.core.representation.impl.ENgEntityImpl;
+import br.xtool.core.representation.impl.ENgEnumImpl;
 import br.xtool.core.representation.impl.ENgPageImpl;
 import br.xtool.service.FileService;
 import br.xtool.service.NgProjectService;
@@ -139,16 +142,35 @@ public class NgProjectServiceImpl implements NgProjectService {
 				put("entityFileName", ENgClass.genFileName(entity.getName()));
 				put("entityClassName", entity.getName());
 				put("entity", entity);
-				put("typesMap", ENgClass.typesMap());
+				put("typescriptTypeMap", ENgClass.typescriptTypeMap());
 			}
 		};
 		Path resourcePath = Paths.get("angular").resolve(ngProject.getProjectVersion().getName()).resolve("domain");
 		Path destinationPath = ngProject.getNgAppModule().getPath().getParent().resolve("domain");
-		
+
 		this.fs.copy(resourcePath, vars, destinationPath);
 		Path ngEntityPath = destinationPath.resolve(ENgClass.genFileName(entity.getName())).resolve(entity.getName().concat(".ts"));
 		ENgEntity ngEntity = new ENgEntityImpl(ngEntityPath);
 		return ngEntity;
+	}
+
+	@Override
+	public ENgEnum createNgEnum(ENgProject ngProject, EJavaEnum javaEnum) {
+		Map<String, Object> vars = new HashMap<String, Object>() {
+			private static final long serialVersionUID = 1L;
+			{
+				put("Strman", Strman.class);
+				put("enumFileName", ENgClass.genFileName(javaEnum.getName()));
+				put("enumClassName", javaEnum.getName());
+			}
+		};
+		Path resourcePath = Paths.get("angular").resolve(ngProject.getProjectVersion().getName()).resolve("enums");
+		Path destinationPath = ngProject.getNgAppModule().getPath().getParent().resolve("domain").resolve("enums");
+		this.fs.copy(resourcePath, vars, destinationPath);
+		Path ngEnumPath = destinationPath.resolve(ENgClass.genFileName(javaEnum.getName())).resolve(javaEnum.getName().concat(".ts"));
+		
+		ENgEnum ngEnum = new ENgEnumImpl(ngEnumPath);
+		return ngEnum;
 	}
 
 	private void copyXtoolNg(ENgProject ngProject, Map<String, Object> vars) {

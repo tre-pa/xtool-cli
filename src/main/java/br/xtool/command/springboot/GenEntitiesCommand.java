@@ -60,6 +60,7 @@ public class GenEntitiesCommand extends SpringBootAware {
 
 	private void genNgEntities(EBootProject bootProject) {
 		bootProject.getAssociatedAngularProject().ifPresent(ngProject -> {
+			bootProject.getEnums().forEach(javaEnum -> ngProjectService.createNgEnum(ngProject, javaEnum));
 			bootProject.getEntities().forEach(entity -> ngProjectService.createNgEntity(ngProject, entity));
 		});
 	}

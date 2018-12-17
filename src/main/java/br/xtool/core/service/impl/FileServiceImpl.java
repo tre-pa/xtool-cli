@@ -91,7 +91,7 @@ public class FileServiceImpl implements FileService {
 		os.write(resource.read());
 		os.flush();
 		os.close();
-		ConsoleLog.print("\t" + ConsoleLog.green("[+] "), resource.getRelativePath().toString());
+		ConsoleLog.print(ConsoleLog.green("[+] "), resource.getRelativePath().toString());
 	}
 
 }

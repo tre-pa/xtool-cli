@@ -29,7 +29,7 @@ public interface ENgClass extends Comparable<ENgClass> {
 		return Strman.toKebabCase(name);
 	}
 
-	static Map<String, String> typesMap() {
+	static Map<String, String> typescriptTypeMap() {
 		return new HashMap<String, String>() {
 			private static final long serialVersionUID = 1L;
 

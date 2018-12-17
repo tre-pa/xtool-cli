@@ -1,9 +1,11 @@
 package br.xtool.service;
 
+import br.xtool.core.representation.EJavaEnum;
 import br.xtool.core.representation.EJpaEntity;
 import br.xtool.core.representation.ENgClass;
 import br.xtool.core.representation.ENgComponent;
 import br.xtool.core.representation.ENgDialog;
+import br.xtool.core.representation.ENgEnum;
 import br.xtool.core.representation.ENgModule;
 import br.xtool.core.representation.ENgPage;
 import br.xtool.core.representation.ENgProject;
@@ -57,4 +59,12 @@ public interface NgProjectService {
 	 * @return
 	 */
 	ENgClass createNgEntity(ENgProject ngProject, EJpaEntity entity);
+	
+	/**
+	 * 
+	 * @param ngProject
+	 * @param javaEnum
+	 * @return
+	 */
+	ENgEnum createNgEnum(ENgProject ngProject, EJavaEnum javaEnum);
 }
