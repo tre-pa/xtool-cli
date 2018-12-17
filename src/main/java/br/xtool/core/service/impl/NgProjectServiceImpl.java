@@ -142,8 +142,11 @@ public class NgProjectServiceImpl implements NgProjectService {
 				put("typesMap", ENgClass.typesMap());
 			}
 		};
-		this.fs.copy(Paths.get("angular").resolve(ngProject.getProjectVersion().getName()).resolve("domain"), vars, ngProject.getNgAppModule().getPath().getParent().resolve("domain"));
-		Path ngEntityPath = ngProject.getNgAppModule().getPath().getParent().resolve("domain").resolve(ENgClass.genFileName(entity.getName())).resolve(entity.getName().concat(".ts"));
+		Path resourcePath = Paths.get("angular").resolve(ngProject.getProjectVersion().getName()).resolve("domain");
+		Path destinationPath = ngProject.getNgAppModule().getPath().getParent().resolve("domain");
+		
+		this.fs.copy(resourcePath, vars, destinationPath);
+		Path ngEntityPath = destinationPath.resolve(ENgClass.genFileName(entity.getName())).resolve(entity.getName().concat(".ts"));
 		ENgEntity ngEntity = new ENgEntityImpl(ngEntityPath);
 		return ngEntity;
 	}
