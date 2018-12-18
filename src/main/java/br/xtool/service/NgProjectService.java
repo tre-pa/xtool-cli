@@ -52,7 +52,7 @@ public interface NgProjectService {
 	ENgPage createNgPage(ENgProject ngProject, ENgModule ngModule, String name);
 
 	/**
-	 * Cria uma entidade angular baseada em uma entidade JPA.
+	 * Cria uma class typescript baseada em uma entidade JPA.
 	 * 
 	 * @param ngProject
 	 * @param entity
@@ -61,6 +61,7 @@ public interface NgProjectService {
 	ENgClass createNgEntity(ENgProject ngProject, EJpaEntity entity);
 	
 	/**
+	 * Cria um Enum typescript baseado em um enum Java.
 	 * 
 	 * @param ngProject
 	 * @param javaEnum
