@@ -26,6 +26,8 @@ import org.hibernate.annotations.Immutable;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import br.xtool.core.representation.EJavaClass;
 import br.xtool.core.representation.EJavaClass.EAuditableJavaClass;
 import br.xtool.core.representation.EJavaClass.ECacheableJavaClass;
@@ -85,6 +87,7 @@ public class JpaVisitor implements Visitor {
 		umlClass.getTaggedValue("table.name").ifPresent(tagValue -> javaClass.addAnnotation(Table.class).setStringValue("name", tagValue));
 		umlClass.getTaggedValue("table.schema").ifPresent(tagValue -> javaClass.addAnnotation(Table.class).setStringValue("schema", tagValue));
 		umlClass.getTaggedValueAsArray("equalsAndHashCode").ifPresent(tagValues -> javaClass.addAnnotation(EqualsAndHashCode.class).setStringArrayValue("of", tagValues));
+		javaClass.addAnnotation(JsonInclude.class).setEnumArrayValue(JsonInclude.Include.NON_EMPTY);
 	}
 
 	/*
