@@ -6,6 +6,7 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -160,8 +161,10 @@ public class NgProjectServiceImpl implements NgProjectService {
 			private static final long serialVersionUID = 1L;
 			{
 				put("Strman", Strman.class);
-				put("enumFileName", ENgClass.genFileName(javaEnum.getName()));
-				put("enumClassName", javaEnum.getName());
+				put("javaEnumFileName", ENgClass.genFileName(javaEnum.getName()));
+				put("javaEnumClassName", javaEnum.getName());
+				put("javaEnum", javaEnum);
+				put("javaEnumConstants", StringUtils.join(javaEnum.getConstants(), ","));
 			}
 		};
 		Path resourcePath = Paths.get("angular").resolve(ngProject.getProjectVersion().getName()).resolve("enums");

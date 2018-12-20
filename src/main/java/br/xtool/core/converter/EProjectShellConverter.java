@@ -22,7 +22,7 @@ public class EProjectShellConverter implements Converter<String, EProject> {
 				.stream()
 				.filter(e -> e.getName().equals(source))
 				.findFirst()
-				.orElseThrow(() -> new RuntimeException("Erro ao converer projeto"));
+				.orElseThrow(() -> new RuntimeException("Projeto não encontrado no workspace."));
 			// @formatter:on
 		}
 		return null;
