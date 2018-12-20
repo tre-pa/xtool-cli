@@ -40,6 +40,7 @@ public interface BootProjectService {
 	 * @param bootProject
 	 * @param supportClass
 	 */
+	@Deprecated
 	<T extends BootProjectSupport> void addSupport(EBootProject bootProject, Class<T> supportClass);
 
 	/**
@@ -49,6 +50,7 @@ public interface BootProjectService {
 	 * @param supportClass
 	 * @return
 	 */
+	@Deprecated
 	<T extends BootProjectSupport> boolean hasSupport(EBootProject bootProject, Class<T> supportClass);
 
 	//	/**
