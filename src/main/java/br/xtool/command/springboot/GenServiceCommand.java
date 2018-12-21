@@ -15,8 +15,8 @@ import br.xtool.core.provider.EJpaRepositoryValueProvider;
 import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.EBootService;
 import br.xtool.core.representation.EJpaRepository;
-import br.xtool.service.BootProjectService;
-import br.xtool.service.WorkspaceService;
+import br.xtool.core.service.BootProjectService;
+import br.xtool.core.service.WorkspaceService;
 
 @ShellComponent
 public class GenServiceCommand extends SpringBootAware {

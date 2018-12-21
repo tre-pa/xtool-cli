@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 import br.xtool.core.representation.ENgModule;
 import br.xtool.core.representation.ENgProject;
-import br.xtool.service.WorkspaceService;
+import br.xtool.core.service.WorkspaceService;
 
 @Component
 public class ENgModuleShellConverter implements Converter<String, ENgModule> {

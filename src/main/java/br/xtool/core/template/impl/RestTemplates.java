@@ -1,4 +1,4 @@
-package br.xtool.templates;
+package br.xtool.core.template.impl;
 
 import java.util.concurrent.TimeUnit;
 

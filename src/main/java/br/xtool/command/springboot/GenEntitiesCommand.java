@@ -12,14 +12,14 @@ import org.springframework.shell.standard.ShellOption;
 import br.xtool.XtoolCliApplication;
 import br.xtool.core.aware.SpringBootAware;
 import br.xtool.core.representation.EBootProject;
+import br.xtool.core.service.BootProjectService;
+import br.xtool.core.service.NgProjectService;
+import br.xtool.core.service.WorkspaceService;
 import br.xtool.core.visitor.Visitor;
 import br.xtool.core.visitor.impl.JacksonVisitor;
 import br.xtool.core.visitor.impl.JavaxValidationVisitor;
 import br.xtool.core.visitor.impl.JpaVisitor;
 import br.xtool.core.visitor.impl.LombokVisitor;
-import br.xtool.service.BootProjectService;
-import br.xtool.service.NgProjectService;
-import br.xtool.service.WorkspaceService;
 
 @ShellComponent
 public class GenEntitiesCommand extends SpringBootAware {

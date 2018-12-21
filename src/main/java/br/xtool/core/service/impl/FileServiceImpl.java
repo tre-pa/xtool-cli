@@ -16,7 +16,7 @@ import br.xtool.core.ConsoleLog;
 import br.xtool.core.representation.EProject;
 import br.xtool.core.representation.EResource;
 import br.xtool.core.representation.impl.EResourceImpl;
-import br.xtool.service.FileService;
+import br.xtool.core.service.FileService;
 import lombok.SneakyThrows;
 
 @Service

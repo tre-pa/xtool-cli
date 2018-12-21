@@ -18,8 +18,8 @@ import br.xtool.core.representation.EProject.Version;
 import br.xtool.core.representation.EWorkspace;
 import br.xtool.core.representation.impl.ENoneProjectImpl;
 import br.xtool.core.representation.impl.EWorkspaceImpl;
-import br.xtool.service.FileService;
-import br.xtool.service.WorkspaceService;
+import br.xtool.core.service.FileService;
+import br.xtool.core.service.WorkspaceService;
 import lombok.Getter;
 import lombok.SneakyThrows;
 

@@ -9,7 +9,7 @@ import br.xtool.core.representation.EBootAppProperties;
 import br.xtool.core.representation.EBootPom;
 import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.EBootProject.BootProjectSupport;
-import br.xtool.service.BootProjectService;
+import br.xtool.core.service.BootProjectService;
 
 @Component
 public class JpaSupport implements BootProjectSupport {

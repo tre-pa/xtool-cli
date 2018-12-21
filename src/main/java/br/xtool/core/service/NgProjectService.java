@@ -1,4 +1,4 @@
-package br.xtool.service;
+package br.xtool.core.service;
 
 import br.xtool.core.representation.EJavaEnum;
 import br.xtool.core.representation.EJpaEntity;

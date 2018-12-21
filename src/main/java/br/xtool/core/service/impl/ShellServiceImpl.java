@@ -10,8 +10,8 @@ import org.apache.velocity.app.VelocityEngine;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.xtool.service.ShellService;
-import br.xtool.service.WorkspaceService;
+import br.xtool.core.service.ShellService;
+import br.xtool.core.service.WorkspaceService;
 import lombok.SneakyThrows;
 
 @Service

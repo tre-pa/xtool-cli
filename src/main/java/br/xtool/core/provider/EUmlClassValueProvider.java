@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 
 import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.EPlantClass;
-import br.xtool.service.WorkspaceService;
+import br.xtool.core.service.WorkspaceService;
 
 @Component
 public class EUmlClassValueProvider extends ValueProviderSupport {

@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 
 import br.xtool.core.representation.ENgLayout;
 import br.xtool.core.representation.ENgProject;
-import br.xtool.service.WorkspaceService;
+import br.xtool.core.service.WorkspaceService;
 
 @Component
 public class ENgLayoutValueProvider extends ValueProviderSupport {

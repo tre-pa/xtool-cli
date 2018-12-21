@@ -12,10 +12,10 @@ import org.springframework.shell.standard.ShellOption;
 import br.xtool.XtoolCliApplication;
 import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.EProject;
+import br.xtool.core.service.BootProjectService;
+import br.xtool.core.service.WorkspaceService;
 import br.xtool.core.support.JpaSupport;
 import br.xtool.core.support.WebSupport;
-import br.xtool.service.BootProjectService;
-import br.xtool.service.WorkspaceService;
 
 /**
  * Shell Commando responsável por criar uma projeto Spring Boot 1.5.x

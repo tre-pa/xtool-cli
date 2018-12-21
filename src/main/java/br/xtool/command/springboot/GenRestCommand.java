@@ -13,9 +13,9 @@ import br.xtool.core.aware.SpringBootAware;
 import br.xtool.core.provider.EJpaRepositoryValueProvider;
 import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.EJpaRepository;
-import br.xtool.service.BootProjectService;
-import br.xtool.service.WorkspaceService;
-import br.xtool.templates.RestTemplates;
+import br.xtool.core.service.BootProjectService;
+import br.xtool.core.service.WorkspaceService;
+import br.xtool.core.template.impl.RestTemplates;
 
 //@Profile("in-dev")
 @ShellComponent

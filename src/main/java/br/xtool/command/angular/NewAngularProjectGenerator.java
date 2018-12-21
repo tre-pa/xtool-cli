@@ -13,8 +13,8 @@ import br.xtool.XtoolCliApplication;
 import br.xtool.core.ConsoleLog;
 import br.xtool.core.representation.ENgProject;
 import br.xtool.core.representation.EProject;
-import br.xtool.service.ShellService;
-import br.xtool.service.WorkspaceService;
+import br.xtool.core.service.ShellService;
+import br.xtool.core.service.WorkspaceService;
 
 @ShellComponent
 public class NewAngularProjectGenerator {

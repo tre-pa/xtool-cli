@@ -12,8 +12,8 @@ import br.xtool.core.provider.ENgModuleValueProvider;
 import br.xtool.core.representation.ENgModule;
 import br.xtool.core.representation.ENgPage;
 import br.xtool.core.representation.ENgProject;
-import br.xtool.service.NgProjectService;
-import br.xtool.service.WorkspaceService;
+import br.xtool.core.service.NgProjectService;
+import br.xtool.core.service.WorkspaceService;
 
 @Profile("in-dev")
 @ShellComponent

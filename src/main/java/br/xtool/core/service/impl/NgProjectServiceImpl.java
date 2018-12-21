@@ -26,9 +26,9 @@ import br.xtool.core.representation.ENgService;
 import br.xtool.core.representation.impl.ENgEntityImpl;
 import br.xtool.core.representation.impl.ENgEnumImpl;
 import br.xtool.core.representation.impl.ENgPageImpl;
-import br.xtool.service.FileService;
-import br.xtool.service.NgProjectService;
-import br.xtool.service.ShellService;
+import br.xtool.core.service.FileService;
+import br.xtool.core.service.NgProjectService;
+import br.xtool.core.service.ShellService;
 import lombok.NonNull;
 import strman.Strman;
 

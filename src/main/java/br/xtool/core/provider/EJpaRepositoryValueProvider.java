@@ -12,7 +12,7 @@ import org.springframework.shell.standard.ValueProviderSupport;
 import org.springframework.stereotype.Component;
 
 import br.xtool.core.representation.EJpaRepository;
-import br.xtool.service.WorkspaceService;
+import br.xtool.core.service.WorkspaceService;
 import br.xtool.core.representation.EBootProject;
 
 @Component

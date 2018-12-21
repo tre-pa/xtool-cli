@@ -1,4 +1,4 @@
-package br.xtool.service;
+package br.xtool.core.service;
 
 import java.nio.file.Path;
 import java.util.Map;
