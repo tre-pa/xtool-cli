@@ -14,8 +14,6 @@ import br.xtool.core.representation.EBootProject;
 import br.xtool.core.representation.EProject;
 import br.xtool.core.service.BootProjectService;
 import br.xtool.core.service.WorkspaceService;
-import br.xtool.core.support.JpaSupport;
-import br.xtool.core.support.WebSupport;
 
 /**
  * Shell Commando responsável por criar uma projeto Spring Boot 1.5.x
@@ -56,8 +54,6 @@ public class NewSpringBootProjectGenerator {
 				EProject.Version.V1, 
 				vars);
 		// @formatter:on
-		if (!noJpa) this.bootProjectService.addSupport(bootProject, JpaSupport.class);
-		if (!noWeb) this.bootProjectService.addSupport(bootProject, WebSupport.class);
 
 		this.workspaceService.setWorkingProject(bootProject);
 	}
