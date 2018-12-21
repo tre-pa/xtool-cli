@@ -6,7 +6,6 @@ import java.util.Set;
 import java.util.function.Consumer;
 
 import br.xtool.core.representation.EBootProject;
-import br.xtool.core.representation.EBootProject.BootProjectSupport;
 import br.xtool.core.representation.EBootRest;
 import br.xtool.core.representation.EBootService;
 import br.xtool.core.representation.EJavaClass;
@@ -35,49 +34,9 @@ public interface BootProjectService {
 	void createDirectory(EBootProject bootProject, Path path);
 
 	/**
-	 * Adicionar um suporte ao projeto.
 	 * 
-	 * @param bootProject
-	 * @param supportClass
+	 * @param javaType
 	 */
-	@Deprecated
-	<T extends BootProjectSupport> void addSupport(EBootProject bootProject, Class<T> supportClass);
-
-	/**
-	 * Verifica se o projeto possui suporte.
-	 * 
-	 * @param bootProject
-	 * @param supportClass
-	 * @return
-	 */
-	@Deprecated
-	<T extends BootProjectSupport> boolean hasSupport(EBootProject bootProject, Class<T> supportClass);
-
-	//	/**
-	//	 * 
-	//	 * @param sourceFolder
-	//	 * @param javaClass
-	//	 */
-	//	void save(EJavaSourceFolder sourceFolder, EJavaClass javaClass);
-	//
-	//	/**
-	//	 * 
-	//	 * @param javaClass
-	//	 */
-	//	void save(EJavaClass javaClass);
-	//
-	//	/**
-	//	 * 
-	//	 * @param sourceFolder
-	//	 * @param javaInterface
-	//	 */
-	//	void save(EJavaSourceFolder sourceFolder, EJavaInterface javaInterface);
-	//
-	//	/**
-	//	 * 
-	//	 * @param javaInterface
-	//	 */
-	//	void save(EJavaInterface javaInterface);
 	void save(EJavaType<?> javaType);
 
 	/**

@@ -26,7 +26,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.xtool.core.ConsoleLog;
 import br.xtool.core.representation.EBootProject;
-import br.xtool.core.representation.EBootProject.BootProjectSupport;
 import br.xtool.core.representation.EBootRest;
 import br.xtool.core.representation.EBootService;
 import br.xtool.core.representation.EJavaClass;
@@ -62,8 +61,8 @@ public class BootProjectServiceImpl implements BootProjectService {
 	@Autowired
 	private ApplicationContext applicationContext;
 
-	//	@Autowired
-	//	private JavaxValidationVisitor javaxValidationVisitor;
+	// @Autowired
+	// private JavaxValidationVisitor javaxValidationVisitor;
 
 	@Override
 	@SneakyThrows
@@ -75,32 +74,13 @@ public class BootProjectServiceImpl implements BootProjectService {
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see br.xtool.core.service.BootService#addSupport(br.xtool.core.representation.EBootProject, java.lang.Class)
-	 */
-	@Override
-	public <T extends BootProjectSupport> void addSupport(EBootProject bootProject, Class<T> supportClass) {
-		BootProjectSupport support = this.applicationContext.getBean(supportClass);
-		support.apply(bootProject);
-		support.apply(bootProject.getApplicationProperties());
-		support.apply(bootProject.getPom());
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * @see br.xtool.core.service.BootService#hasSupport(br.xtool.core.representation.EBootProject, java.lang.Class)
-	 */
-	@Override
-	public <T extends BootProjectSupport> boolean hasSupport(EBootProject bootProject, Class<T> supportClass) {
-		return this.applicationContext.getBean(supportClass).has(bootProject);
-	}
-
-	//	/*
-	//	 * (non-Javadoc)
-	//	 * @see br.xtool.service.BootService#save(br.xtool.core.representation.EJavaSourceFolder, br.xtool.core.representation.EJavaClass)
-	//	 */
-	//	//	@Override
+	// /*
+	// * (non-Javadoc)
+	// * @see
+	// br.xtool.service.BootService#save(br.xtool.core.representation.EJavaSourceFolder,
+	// br.xtool.core.representation.EJavaClass)
+	// */
+	// // @Override
 	@SneakyThrows
 	public void save(EJavaSourceFolder sourceFolder, EJavaClass javaClass) {
 		Path javaPath = sourceFolder.getPath().resolve(javaClass.getJavaPackage().getDir()).resolve(String.format("%s.java", javaClass.getName()));
@@ -115,7 +95,7 @@ public class BootProjectServiceImpl implements BootProjectService {
 		prefs.setProperty(DefaultCodeFormatterConstants.FORMATTER_BLANK_LINES_AFTER_PACKAGE, "1");
 		prefs.setProperty(DefaultCodeFormatterConstants.FORMATTER_USE_ON_OFF_TAGS, DefaultCodeFormatterConstants.TRUE);
 
-		//		prefs.setProperty(DefaultCodeFormatterConstants., "TRUE");
+		// prefs.setProperty(DefaultCodeFormatterConstants., "TRUE");
 		try (BufferedWriter write = Files.newBufferedWriter(javaPath)) {
 			String formatedJavaClassSource = Roaster.format(prefs, javaClass.getRoasterJavaClass().toUnformattedString());
 			write.write(formatedJavaClassSource);
@@ -123,60 +103,18 @@ public class BootProjectServiceImpl implements BootProjectService {
 			sourceFolder.getBootProject().refresh();
 		}
 	}
-	//
-	//	/*
-	//	 * (non-Javadoc)
-	//	 * @see br.xtool.service.BootProjectService#save(br.xtool.core.representation.EJavaClass)
-	//	 */
-	//	//	@Override
-	//	public void save(EJavaClass javaClass) {
-	//		this.save(javaClass.getProject().getMainSourceFolder(), javaClass);
-	//	}
-	//
-	//	/*
-	//	 * (non-Javadoc)
-	//	 * @see br.xtool.service.BootService#save(br.xtool.core.representation.EJavaSourceFolder, br.xtool.core.representation.EJavaInterface)
-	//	 */
-	//	//	@Override
-	//	@SneakyThrows
-	//	public void save(EJavaSourceFolder sourceFolder, EJavaInterface javaInterface) {
-	//		Path javaPath = sourceFolder.getPath().resolve(javaInterface.getJavaPackage().getDir()).resolve(String.format("%s.java", javaInterface.getName()));
-	//		if (Files.notExists(javaPath.getParent())) Files.createDirectories(javaPath.getParent());
-	//		Properties prefs = new Properties();
-	//		prefs.setProperty(JavaCore.COMPILER_SOURCE, CompilerOptions.VERSION_1_8);
-	//		prefs.setProperty(JavaCore.COMPILER_COMPLIANCE, CompilerOptions.VERSION_1_8);
-	//		prefs.setProperty(JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM, CompilerOptions.VERSION_1_8);
-	//		prefs.setProperty(DefaultCodeFormatterConstants.FORMATTER_LINE_SPLIT, "120");
-	//		prefs.setProperty(DefaultCodeFormatterConstants.FORMATTER_BLANK_LINES_BEFORE_FIELD, "1");
-	//		prefs.setProperty(DefaultCodeFormatterConstants.FORMATTER_BLANK_LINES_AFTER_IMPORTS, "1");
-	//		prefs.setProperty(DefaultCodeFormatterConstants.FORMATTER_BLANK_LINES_AFTER_PACKAGE, "1");
-	//
-	//		//		prefs.setProperty(DefaultCodeFormatterConstants., "TRUE");
-	//		try (BufferedWriter write = Files.newBufferedWriter(javaPath)) {
-	//			String formatedJavaClassSource = Roaster.format(prefs, javaInterface.getRoasterInterface().toUnformattedString());
-	//			write.write(formatedJavaClassSource);
-	//			write.flush();
-	//			sourceFolder.getBootProject().refresh();
-	//		}
-	//	}
-	//
-	//	/*
-	//	 * (non-Javadoc)
-	//	 * @see br.xtool.service.BootProjectService#save(br.xtool.core.representation.EJavaInterface)
-	//	 */
-	//	//	@Override
-	//	public void save(EJavaInterface javaInterface) {
-	//		this.save(javaInterface.getProject().getMainSourceFolder(), javaInterface);
-	//	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see br.xtool.service.BootProjectService#save(br.xtool.core.representation.EJavaType)
+	 * 
+	 * @see br.xtool.service.BootProjectService#save(br.xtool.core.representation.
+	 * EJavaType)
 	 */
 	@SneakyThrows
 	@Override
 	public void save(EJavaType<?> javaType) {
-		Path javaPath = javaType.getProject().getMainSourceFolder().getPath().resolve(javaType.getJavaPackage().getDir()).resolve(String.format("%s.java", javaType.getName()));
+		Path javaPath = javaType.getProject().getMainSourceFolder().getPath().resolve(javaType.getJavaPackage().getDir())
+				.resolve(String.format("%s.java", javaType.getName()));
 		if (Files.notExists(javaPath.getParent())) Files.createDirectories(javaPath.getParent());
 		Properties prefs = new Properties();
 		prefs.setProperty(JavaCore.COMPILER_SOURCE, CompilerOptions.VERSION_1_8);
@@ -198,7 +136,9 @@ public class BootProjectServiceImpl implements BootProjectService {
 
 	/*
 	 * (non-Javadoc)
-	 * @see br.xtool.service.BootProjectService#save(br.xtool.core.representation.EJavaType[])
+	 * 
+	 * @see br.xtool.service.BootProjectService#save(br.xtool.core.representation.
+	 * EJavaType[])
 	 */
 	@Override
 	public void save(EJavaType<?>... javaTypes) {
@@ -207,7 +147,10 @@ public class BootProjectServiceImpl implements BootProjectService {
 
 	/*
 	 * (non-Javadoc)
-	 * @see br.xtool.core.service.BootService#convertUmlClassDiagramToJavaClasses(br.xtool.core.representation.EBootProject)
+	 * 
+	 * @see
+	 * br.xtool.core.service.BootService#convertUmlClassDiagramToJavaClasses(br.
+	 * xtool.core.representation.EBootProject)
 	 */
 	@Override
 	public Collection<EJavaClass> umlClassesToJavaClasses(EBootProject bootProject, Set<Visitor> vistors) {
@@ -226,7 +169,9 @@ public class BootProjectServiceImpl implements BootProjectService {
 
 	/*
 	 * (non-Javadoc)
-	 * @see br.xtool.service.BootProjectService#umlEnumsToJavaEnums(br.xtool.core.representation.EBootProject, java.util.Set)
+	 * 
+	 * @see br.xtool.service.BootProjectService#umlEnumsToJavaEnums(br.xtool.core.
+	 * representation.EBootProject, java.util.Set)
 	 */
 	@Override
 	public Collection<EJavaEnum> umlEnumsToJavaEnums(EBootProject bootProject) {
@@ -257,7 +202,10 @@ public class BootProjectServiceImpl implements BootProjectService {
 
 	/*
 	 * (non-Javadoc)
-	 * @see br.xtool.service.BootService#createRepository(br.xtool.core.representation.EBootProject, br.xtool.core.representation.EJpaEntity)
+	 * 
+	 * @see
+	 * br.xtool.service.BootService#createRepository(br.xtool.core.representation.
+	 * EBootProject, br.xtool.core.representation.EJpaEntity)
 	 */
 	@Override
 	public EJpaRepository createRepository(EBootProject bootProject, EJpaEntity entity) {
@@ -272,7 +220,10 @@ public class BootProjectServiceImpl implements BootProjectService {
 
 	/*
 	 * (non-Javadoc)
-	 * @see br.xtool.service.BootProjectService#createRepository(br.xtool.core.representation.EBootProject, br.xtool.core.representation.EJpaEntity, java.util.function.Consumer)
+	 * 
+	 * @see br.xtool.service.BootProjectService#createRepository(br.xtool.core.
+	 * representation.EBootProject, br.xtool.core.representation.EJpaEntity,
+	 * java.util.function.Consumer)
 	 */
 	@Override
 	public void createRepository(EBootProject bootProject, EJpaEntity entity, Consumer<EJpaRepository> consumer) {
@@ -295,7 +246,10 @@ public class BootProjectServiceImpl implements BootProjectService {
 
 	/*
 	 * (non-Javadoc)
-	 * @see br.xtool.service.BootService#createProjection(br.xtool.core.representation.EBootProject, br.xtool.core.representation.EJpaEntity)
+	 * 
+	 * @see
+	 * br.xtool.service.BootService#createProjection(br.xtool.core.representation.
+	 * EBootProject, br.xtool.core.representation.EJpaEntity)
 	 */
 	@Override
 	public EJpaProjection createProjection(EBootProject bootProject, EJpaEntity entity) {
@@ -310,7 +264,10 @@ public class BootProjectServiceImpl implements BootProjectService {
 
 	/*
 	 * (non-Javadoc)
-	 * @see br.xtool.service.BootProjectService#createProjection(br.xtool.core.representation.EBootProject, br.xtool.core.representation.EJpaEntity, java.util.function.Consumer)
+	 * 
+	 * @see br.xtool.service.BootProjectService#createProjection(br.xtool.core.
+	 * representation.EBootProject, br.xtool.core.representation.EJpaEntity,
+	 * java.util.function.Consumer)
 	 */
 	@Override
 	public void createProjection(EBootProject bootProject, EJpaEntity entity, Consumer<EJpaProjection> consumer) {
@@ -338,7 +295,10 @@ public class BootProjectServiceImpl implements BootProjectService {
 
 	/*
 	 * (non-Javadoc)
-	 * @see br.xtool.service.BootService#createSpecification(br.xtool.core.representation.EBootProject, br.xtool.core.representation.EJpaEntity)
+	 * 
+	 * @see
+	 * br.xtool.service.BootService#createSpecification(br.xtool.core.representation
+	 * .EBootProject, br.xtool.core.representation.EJpaEntity)
 	 */
 	@Override
 	public EJpaSpecification createSpecification(EBootProject bootProject, EJpaEntity entity) {
@@ -353,7 +313,10 @@ public class BootProjectServiceImpl implements BootProjectService {
 
 	/*
 	 * (non-Javadoc)
-	 * @see br.xtool.service.BootProjectService#createSpecification(br.xtool.core.representation.EBootProject, br.xtool.core.representation.EJpaEntity, java.util.function.Consumer)
+	 * 
+	 * @see br.xtool.service.BootProjectService#createSpecification(br.xtool.core.
+	 * representation.EBootProject, br.xtool.core.representation.EJpaEntity,
+	 * java.util.function.Consumer)
 	 */
 	@Override
 	public void createSpecification(EBootProject bootProject, EJpaEntity entity, Consumer<EJpaSpecification> consumer) {
@@ -370,7 +333,9 @@ public class BootProjectServiceImpl implements BootProjectService {
 
 	/*
 	 * (non-Javadoc)
-	 * @see br.xtool.service.BootProjectService#createService(br.xtool.core.representation.EBootProject, br.xtool.core.representation.EJpaRepository)
+	 * 
+	 * @see br.xtool.service.BootProjectService#createService(br.xtool.core.
+	 * representation.EBootProject, br.xtool.core.representation.EJpaRepository)
 	 */
 	@Override
 	public EBootService createService(EBootProject bootProject, EJpaRepository jpaRepository) {
@@ -385,7 +350,10 @@ public class BootProjectServiceImpl implements BootProjectService {
 
 	/*
 	 * (non-Javadoc)
-	 * @see br.xtool.service.BootProjectService#createService(br.xtool.core.representation.EBootProject, br.xtool.core.representation.EJpaRepository, java.util.function.Consumer)
+	 * 
+	 * @see br.xtool.service.BootProjectService#createService(br.xtool.core.
+	 * representation.EBootProject, br.xtool.core.representation.EJpaRepository,
+	 * java.util.function.Consumer)
 	 */
 	@Override
 	public void createService(EBootProject bootProject, EJpaRepository jpaRepository, Consumer<EBootService> consumer) {
@@ -412,7 +380,10 @@ public class BootProjectServiceImpl implements BootProjectService {
 
 	/*
 	 * (non-Javadoc)
-	 * @see br.xtool.service.BootProjectService#createRest(br.xtool.core.representation.EBootProject, br.xtool.core.representation.EJpaRepository)
+	 * 
+	 * @see
+	 * br.xtool.service.BootProjectService#createRest(br.xtool.core.representation.
+	 * EBootProject, br.xtool.core.representation.EJpaRepository)
 	 */
 	@Override
 	public EBootRest createRest(EBootProject bootProject, EJpaRepository jpaRepository) {
@@ -427,7 +398,11 @@ public class BootProjectServiceImpl implements BootProjectService {
 
 	/*
 	 * (non-Javadoc)
-	 * @see br.xtool.service.BootProjectService#createRest(br.xtool.core.representation.EBootProject, br.xtool.core.representation.EJpaRepository, java.util.function.Consumer)
+	 * 
+	 * @see
+	 * br.xtool.service.BootProjectService#createRest(br.xtool.core.representation.
+	 * EBootProject, br.xtool.core.representation.EJpaRepository,
+	 * java.util.function.Consumer)
 	 */
 	@Override
 	public void createRest(EBootProject bootProject, EJpaRepository jpaRepository, Consumer<EBootRest> consumer) {
