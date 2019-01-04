@@ -18,8 +18,6 @@ import org.jboss.forge.roaster.Roaster;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import br.xtool.core.ConsoleLog;
 import br.xtool.core.implementation.SpringBootProject;
@@ -31,26 +29,15 @@ import br.xtool.core.representation.JavaTypeRepresentation;
 import br.xtool.core.representation.JpaProjectionRepresentation;
 import br.xtool.core.representation.PlantClassRepresentation;
 import br.xtool.core.representation.PlantEnumRepresentation;
-import br.xtool.core.representation.RepositoryRepresentation;
-import br.xtool.core.representation.RestClassRepresentation;
-import br.xtool.core.representation.ServiceClassRepresentation;
-import br.xtool.core.representation.SpecificationRepresentation;
 import br.xtool.core.representation.SpringBootProjectRepresentation;
-import br.xtool.core.representation.SpringBootProjectRepresentation.BootProjectSupport;
 import br.xtool.core.representation.converter.EUmlRelationshipConverter;
 import br.xtool.core.representation.converter.PlantClassFieldToJavaClassConverter;
 import br.xtool.core.representation.converter.PlantClassToJavaClassConverter;
 import br.xtool.core.representation.converter.PlantEnumToJavaEnumConverter;
-import br.xtool.core.representation.impl.RestClassRepresentationImpl;
-import br.xtool.core.representation.impl.EBootServiceImpl;
 import br.xtool.core.representation.impl.EJpaProjectionImpl;
-import br.xtool.core.representation.impl.EJpaSpecificationImpl;
-import br.xtool.core.util.Inflector;
 import br.xtool.core.util.RoasterUtil;
 import br.xtool.core.visitor.Visitor;
 import lombok.SneakyThrows;
-import lombok.extern.slf4j.Slf4j;
-import strman.Strman;
 
 @Service
 @Deprecated

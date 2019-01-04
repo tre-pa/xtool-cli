@@ -10,12 +10,7 @@ import br.xtool.core.representation.JavaClassRepresentation;
 import br.xtool.core.representation.JavaEnumRepresentation;
 import br.xtool.core.representation.JavaTypeRepresentation;
 import br.xtool.core.representation.JpaProjectionRepresentation;
-import br.xtool.core.representation.RepositoryRepresentation;
-import br.xtool.core.representation.RestClassRepresentation;
-import br.xtool.core.representation.ServiceClassRepresentation;
-import br.xtool.core.representation.SpecificationRepresentation;
 import br.xtool.core.representation.SpringBootProjectRepresentation;
-import br.xtool.core.representation.SpringBootProjectRepresentation.BootProjectSupport;
 import br.xtool.core.visitor.Visitor;
 
 /**

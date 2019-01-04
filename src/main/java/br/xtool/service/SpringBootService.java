@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+import org.apache.commons.lang3.StringUtils;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.formatter.DefaultCodeFormatterConstants;
 import org.eclipse.jdt.internal.compiler.impl.CompilerOptions;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 import br.xtool.core.ConsoleLog;
 import br.xtool.core.Workspace;
 import br.xtool.core.representation.EntityRepresentation;
+import br.xtool.core.representation.JavaPackageRepresentation;
 import br.xtool.core.representation.JavaTypeRepresentation;
 import br.xtool.core.representation.ProjectRepresentation;
 import br.xtool.core.representation.RepositoryRepresentation;
@@ -24,11 +26,13 @@ import br.xtool.core.representation.RestClassRepresentation;
 import br.xtool.core.representation.ServiceClassRepresentation;
 import br.xtool.core.representation.SpecificationRepresentation;
 import br.xtool.core.representation.SpringBootProjectRepresentation;
+import br.xtool.core.representation.impl.EJavaPackageImpl;
 import br.xtool.core.template.RepositoryTemplates;
 import br.xtool.core.template.RestClassTemplates;
 import br.xtool.core.template.ServiceClassTemplates;
 import br.xtool.core.template.SpecificationTemplates;
 import lombok.SneakyThrows;
+import strman.Strman;
 
 @Service
 public class SpringBootService {
@@ -37,24 +41,61 @@ public class SpringBootService {
 	private Workspace workspaceService;
 
 	/**
+	 * Gera um nome de projeto válido.
+	 * 
+	 * @param commomName
+	 * @return
+	 */
+	public String genProjectName(String commomName) {
+		// @formatter:off
+		return StringUtils.lowerCase(
+				Strman.toKebabCase(
+					StringUtils.endsWithIgnoreCase(commomName, "-service") ? 
+						commomName : 
+						commomName.concat("-service")
+						)
+				);
+		// @formatter:on
+	}
+
+	/**
+	 * Gera um nome de classe base (Classe main) valido.
+	 * 
+	 * @param projectName
+	 * @return
+	 */
+	public String genBaseClassName(String projectName) {
+		return Strman.toStudlyCase(projectName.endsWith("Application") ? projectName.replace("Application", "") : projectName);
+
+	}
+
+	/**
+	 * Gera um nome de pacote base válido.
+	 * 
+	 * @param projectName
+	 * @return
+	 */
+	public JavaPackageRepresentation genRootPackage(String projectName) {
+		String packageName = JavaPackageRepresentation.getDefaultPrefix().concat(".")
+				.concat(StringUtils.join(StringUtils.split(Strman.toKebabCase(projectName), "-"), "."));
+		return EJavaPackageImpl.of(packageName);
+	}
+
+	/**
 	 * Cria uma nova aplicação Spring Boot.
 	 * 
 	 * @param name Nome do projeto Spring Boot.
 	 */
 	public void newApp(String name) {
-		Map<String, Object> vars = new HashMap<String, Object>() {
-			private static final long serialVersionUID = 1L;
-			{
-				put("projectName", SpringBootProjectRepresentation.genProjectName(name));
-				put("rootPackage", SpringBootProjectRepresentation.genRootPackage(name));
-				put("baseClassName", SpringBootProjectRepresentation.genBaseClassName(name));
-			}
-		};
+		Map<String, Object> vars = new HashMap<String, Object>();
+		vars.put("projectName", genProjectName(name));
+		vars.put("baseClassName", genBaseClassName(name));
+		vars.put("rootPackage", genRootPackage(name));
 		// @formatter:off
 		SpringBootProjectRepresentation bootProject = this.workspaceService.createProject(
 				SpringBootProjectRepresentation.class, 
 				ProjectRepresentation.Type.SPRINGBOOT, 
-				SpringBootProjectRepresentation.genProjectName(name), 
+				genProjectName(name), 
 				ProjectRepresentation.Version.V1, 
 				vars);
 		// @formatter:on
