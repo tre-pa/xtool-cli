@@ -4,9 +4,9 @@ import java.util.function.BiFunction;
 
 import org.jboss.forge.roaster.model.source.JavaEnumSource;
 
-import br.xtool.core.representation.EBootProject;
-import br.xtool.core.representation.EJavaEnum;
-import br.xtool.core.representation.EPlantEnum;
+import br.xtool.core.representation.SpringBootProjectRepresentation;
+import br.xtool.core.representation.JavaEnumRepresentation;
+import br.xtool.core.representation.PlantEnumRepresentation;
 import br.xtool.core.representation.impl.EJavaEnumImpl;
 import br.xtool.core.util.RoasterUtil;
 import lombok.AllArgsConstructor;
@@ -18,12 +18,12 @@ import lombok.AllArgsConstructor;
  *
  */
 @AllArgsConstructor
-public class PlantEnumToJavaEnumConverter implements BiFunction<EBootProject, EPlantEnum, EJavaEnum> {
+public class PlantEnumToJavaEnumConverter implements BiFunction<SpringBootProjectRepresentation, PlantEnumRepresentation, JavaEnumRepresentation> {
 
 	@Override
-	public EJavaEnum apply(EBootProject bootProject, EPlantEnum umlEnum) {
+	public JavaEnumRepresentation apply(SpringBootProjectRepresentation bootProject, PlantEnumRepresentation umlEnum) {
 		// @formatter:off
-		EJavaEnum javaEnum = bootProject.getRoasterJavaUnits().stream()
+		JavaEnumRepresentation javaEnum = bootProject.getRoasterJavaUnits().stream()
 				.filter(javaUnit -> javaUnit.getGoverningType().isEnum())
 				.filter(javaUnit -> javaUnit.getGoverningType().getName().equals(umlEnum.getName()))
 				.map(javaUnit -> javaUnit.<JavaEnumSource>getGoverningType())

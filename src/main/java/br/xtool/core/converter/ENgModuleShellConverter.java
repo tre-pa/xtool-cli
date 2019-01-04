@@ -4,20 +4,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
-import br.xtool.core.representation.ENgModule;
-import br.xtool.core.representation.ENgProject;
-import br.xtool.core.service.WorkspaceService;
+import br.xtool.core.Workspace;
+import br.xtool.core.representation.NgModuleRepresentation;
+import br.xtool.core.representation.NgProjectRepresentation;
 
 @Component
-public class ENgModuleShellConverter implements Converter<String, ENgModule> {
+public class ENgModuleShellConverter implements Converter<String, NgModuleRepresentation> {
 
 	@Autowired
-	private WorkspaceService workspaceService;
+	private Workspace workspace;
 
 	@Override
-	public ENgModule convert(String source) {
-		if (this.workspaceService.getWorkingProject() instanceof ENgProject) {
-			ENgProject project = ENgProject.class.cast(this.workspaceService.getWorkingProject());
+	public NgModuleRepresentation convert(String source) {
+		if (this.workspace.getWorkingProject() instanceof NgProjectRepresentation) {
+			NgProjectRepresentation project = NgProjectRepresentation.class.cast(this.workspace.getWorkingProject());
 			// @formatter:off
 			return project.getNgModules()
 				.stream()

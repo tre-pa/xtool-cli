@@ -2,12 +2,12 @@ package br.xtool.core.representation.impl;
 
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 
-import br.xtool.core.representation.EBootProject;
-import br.xtool.core.representation.EBootService;
+import br.xtool.core.representation.SpringBootProjectRepresentation;
+import br.xtool.core.representation.ServiceClassRepresentation;
 
-public class EBootServiceImpl extends EJavaClassImpl implements EBootService {
+public class EBootServiceImpl extends EJavaClassImpl implements ServiceClassRepresentation {
 
-	public EBootServiceImpl(EBootProject project, JavaClassSource javaClassSource) {
+	public EBootServiceImpl(SpringBootProjectRepresentation project, JavaClassSource javaClassSource) {
 		super(project, javaClassSource);
 	}
 

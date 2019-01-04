@@ -10,20 +10,20 @@ import org.springframework.shell.CompletionProposal;
 import org.springframework.shell.standard.ValueProviderSupport;
 import org.springframework.stereotype.Component;
 
-import br.xtool.core.representation.EProject;
-import br.xtool.core.service.WorkspaceService;
+import br.xtool.core.Workspace;
+import br.xtool.core.representation.ProjectRepresentation;
 
 @Component
 public class EProjectValueProvider extends ValueProviderSupport {
 
 	@Autowired
-	private WorkspaceService workspaceService;
+	private Workspace workspace;
 
 	@Override
 	public List<CompletionProposal> complete(MethodParameter parameter, CompletionContext completionContext, String[] hints) {
 		// @formatter:off
-		return this.workspaceService.getWorkspace().getProjects().stream()
-				.map(EProject::getName)
+		return this.workspace.getWorkspace().getProjects().stream()
+				.map(ProjectRepresentation::getName)
 				.map(CompletionProposal::new)
 				.collect(Collectors.toList());
 		// @formatter:on

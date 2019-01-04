@@ -6,13 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.Availability;
 import org.springframework.shell.standard.ShellMethodAvailability;
 
-import br.xtool.core.representation.EProject;
-import br.xtool.core.service.WorkspaceService;
+import br.xtool.core.Workspace;
+import br.xtool.core.representation.ProjectRepresentation;
 
 public class AngularAware {
 
 	@Autowired
-	private WorkspaceService workspaceService;
+	private Workspace workspace;
 
 	/**
 	 * Define a disponibilidade dos comando do grupo Angular.
@@ -22,7 +22,7 @@ public class AngularAware {
 	 */
 	@ShellMethodAvailability
 	public Availability availabilitySpringBootCommand() throws IOException {
-		return this.workspaceService.getWorkingProject().getProjectType().equals(EProject.Type.ANGULAR) ? Availability.available()
+		return this.workspace.getWorkingProject().getProjectType().equals(ProjectRepresentation.Type.ANGULAR) ? Availability.available()
 				: Availability.unavailable("O diretório de trabalho não é um projeto angular válido. Use o comando cd para alterar o diretório de trabalho.");
 	}
 }

@@ -2,9 +2,9 @@ package br.xtool.core.representation.impl;
 
 import java.nio.file.Path;
 
-import br.xtool.core.representation.ENgService;
+import br.xtool.core.representation.NgServiceRepresentation;
 
-public class ENgServiceImpl extends ENgClassImpl implements ENgService {
+public class ENgServiceImpl extends ENgClassImpl implements NgServiceRepresentation {
 
 	public ENgServiceImpl(Path path) {
 		super(path);

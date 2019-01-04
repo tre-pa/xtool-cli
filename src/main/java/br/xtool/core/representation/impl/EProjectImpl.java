@@ -8,9 +8,9 @@ import java.util.Collection;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import br.xtool.core.representation.EProject;
+import br.xtool.core.representation.ProjectRepresentation;
 
-public abstract class EProjectImpl implements EProject {
+public abstract class EProjectImpl implements ProjectRepresentation {
 
 	private Path path;
 
@@ -95,7 +95,7 @@ public abstract class EProjectImpl implements EProject {
 	 * 
 	 */
 	@Override
-	public int compareTo(EProject o) {
+	public int compareTo(ProjectRepresentation o) {
 		return this.getName().compareTo(o.getName());
 	}
 }

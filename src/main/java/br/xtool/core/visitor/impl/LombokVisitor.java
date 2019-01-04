@@ -2,37 +2,37 @@ package br.xtool.core.visitor.impl;
 
 import org.springframework.stereotype.Component;
 
-import br.xtool.core.representation.EJavaClass;
-import br.xtool.core.representation.EJavaClass.EAuditableJavaClass;
-import br.xtool.core.representation.EJavaClass.ECacheableJavaClass;
-import br.xtool.core.representation.EJavaClass.EIndexedJavaClass;
-import br.xtool.core.representation.EJavaClass.EReadOnlyJavaClass;
-import br.xtool.core.representation.EJavaClass.EVersionableJavaClass;
-import br.xtool.core.representation.EJavaClass.EViewJavaClass;
-import br.xtool.core.representation.EJavaField;
-import br.xtool.core.representation.EJavaField.EBigDecimalField;
-import br.xtool.core.representation.EJavaField.EBooleanField;
-import br.xtool.core.representation.EJavaField.EByteField;
-import br.xtool.core.representation.EJavaField.EEnumField;
-import br.xtool.core.representation.EJavaField.EIntegerField;
-import br.xtool.core.representation.EJavaField.ELocalDateField;
-import br.xtool.core.representation.EJavaField.ELocalDateTimeField;
-import br.xtool.core.representation.EJavaField.ELongField;
-import br.xtool.core.representation.EJavaField.EManyToManyField;
-import br.xtool.core.representation.EJavaField.EManyToOneField;
-import br.xtool.core.representation.EJavaField.ENotNullField;
-import br.xtool.core.representation.EJavaField.EOneToManyField;
-import br.xtool.core.representation.EJavaField.EOneToOneField;
-import br.xtool.core.representation.EJavaField.EStringField;
-import br.xtool.core.representation.EJavaField.ETransientField;
-import br.xtool.core.representation.EJavaField.EUniqueField;
-import br.xtool.core.representation.EPlantClass;
-import br.xtool.core.representation.EPlantField;
-import br.xtool.core.representation.EPlantFieldProperty;
-import br.xtool.core.representation.EPlantRelationship;
-import br.xtool.core.representation.EPlantRelationship.EAssociation;
-import br.xtool.core.representation.EPlantRelationship.EComposition;
-import br.xtool.core.representation.EPlantStereotype;
+import br.xtool.core.representation.JavaClassRepresentation;
+import br.xtool.core.representation.JavaClassRepresentation.EAuditableJavaClass;
+import br.xtool.core.representation.JavaClassRepresentation.ECacheableJavaClass;
+import br.xtool.core.representation.JavaClassRepresentation.EIndexedJavaClass;
+import br.xtool.core.representation.JavaClassRepresentation.EReadOnlyJavaClass;
+import br.xtool.core.representation.JavaClassRepresentation.EVersionableJavaClass;
+import br.xtool.core.representation.JavaClassRepresentation.EViewJavaClass;
+import br.xtool.core.representation.JavaFieldRepresentation;
+import br.xtool.core.representation.JavaFieldRepresentation.EBigDecimalField;
+import br.xtool.core.representation.JavaFieldRepresentation.EBooleanField;
+import br.xtool.core.representation.JavaFieldRepresentation.EByteField;
+import br.xtool.core.representation.JavaFieldRepresentation.EEnumField;
+import br.xtool.core.representation.JavaFieldRepresentation.EIntegerField;
+import br.xtool.core.representation.JavaFieldRepresentation.ELocalDateField;
+import br.xtool.core.representation.JavaFieldRepresentation.ELocalDateTimeField;
+import br.xtool.core.representation.JavaFieldRepresentation.ELongField;
+import br.xtool.core.representation.JavaFieldRepresentation.EManyToManyField;
+import br.xtool.core.representation.JavaFieldRepresentation.EManyToOneField;
+import br.xtool.core.representation.JavaFieldRepresentation.ENotNullField;
+import br.xtool.core.representation.JavaFieldRepresentation.EOneToManyField;
+import br.xtool.core.representation.JavaFieldRepresentation.EOneToOneField;
+import br.xtool.core.representation.JavaFieldRepresentation.EStringField;
+import br.xtool.core.representation.JavaFieldRepresentation.ETransientField;
+import br.xtool.core.representation.JavaFieldRepresentation.EUniqueField;
+import br.xtool.core.representation.PlantClassRepresentation;
+import br.xtool.core.representation.PlantFieldRepresentation;
+import br.xtool.core.representation.PlantFieldPropertyRepresentation;
+import br.xtool.core.representation.PlantRelationshipRepresentation;
+import br.xtool.core.representation.PlantRelationshipRepresentation.EAssociation;
+import br.xtool.core.representation.PlantRelationshipRepresentation.EComposition;
+import br.xtool.core.representation.PlantStereotypeRepresentation;
 import br.xtool.core.visitor.Visitor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -42,7 +42,7 @@ import lombok.Setter;
 public class LombokVisitor implements Visitor {
 
 	@Override
-	public void visit(EJavaClass javaClass, EPlantClass umlClass) {
+	public void visit(JavaClassRepresentation javaClass, PlantClassRepresentation umlClass) {
 		javaClass.addAnnotation(Getter.class);
 		javaClass.addAnnotation(Setter.class);
 		javaClass.addAnnotation(NoArgsConstructor.class);
@@ -51,111 +51,111 @@ public class LombokVisitor implements Visitor {
 	}
 
 	@Override
-	public void visit(EJavaClass javaClass, EPlantStereotype umlStereotype) {
+	public void visit(JavaClassRepresentation javaClass, PlantStereotypeRepresentation umlStereotype) {
 
 	}
 
 	@Override
-	public void visit(EAuditableJavaClass auditableClass, EPlantStereotype umlStereotype) {
+	public void visit(EAuditableJavaClass auditableClass, PlantStereotypeRepresentation umlStereotype) {
 
 	}
 
 	@Override
-	public void visit(ECacheableJavaClass cacheableClass, EPlantStereotype umlStereotype) {
+	public void visit(ECacheableJavaClass cacheableClass, PlantStereotypeRepresentation umlStereotype) {
 
 	}
 
 	@Override
-	public void visit(EIndexedJavaClass indexedClass, EPlantStereotype umlStereotype) {
+	public void visit(EIndexedJavaClass indexedClass, PlantStereotypeRepresentation umlStereotype) {
 
 	}
 
 	@Override
-	public void visit(EViewJavaClass viewClass, EPlantStereotype umlStereotype) {
+	public void visit(EViewJavaClass viewClass, PlantStereotypeRepresentation umlStereotype) {
 
 	}
 
 	@Override
-	public void visit(EReadOnlyJavaClass readOnlyClass, EPlantStereotype umlStereotype) {
+	public void visit(EReadOnlyJavaClass readOnlyClass, PlantStereotypeRepresentation umlStereotype) {
 
 	}
 
 	@Override
-	public void visit(EVersionableJavaClass versionableClass, EPlantStereotype umlStereotype) {
+	public void visit(EVersionableJavaClass versionableClass, PlantStereotypeRepresentation umlStereotype) {
 	}
 
 	@Override
-	public void visit(EJavaField javaField, EPlantField umlField) {
-
-	}
-
-	@Override
-	public void visit(EJavaField javaField, EPlantFieldProperty umlFieldProperty) {
+	public void visit(JavaFieldRepresentation javaField, PlantFieldRepresentation umlField) {
 
 	}
 
 	@Override
-	public void visit(EStringField stringField, EPlantField umlField) {
+	public void visit(JavaFieldRepresentation javaField, PlantFieldPropertyRepresentation umlFieldProperty) {
 
 	}
 
 	@Override
-	public void visit(EBooleanField booleanField, EPlantField umlField) {
+	public void visit(EStringField stringField, PlantFieldRepresentation umlField) {
 
 	}
 
 	@Override
-	public void visit(ELongField longField, EPlantField umlField) {
+	public void visit(EBooleanField booleanField, PlantFieldRepresentation umlField) {
 
 	}
 
 	@Override
-	public void visit(EIntegerField integerField, EPlantField umlField) {
+	public void visit(ELongField longField, PlantFieldRepresentation umlField) {
 
 	}
 
 	@Override
-	public void visit(EByteField byteField, EPlantField umlField) {
+	public void visit(EIntegerField integerField, PlantFieldRepresentation umlField) {
 
 	}
 
 	@Override
-	public void visit(EBigDecimalField bigDecimalField, EPlantField umlField) {
+	public void visit(EByteField byteField, PlantFieldRepresentation umlField) {
 
 	}
 
 	@Override
-	public void visit(ELocalDateField localDateField, EPlantField umlField) {
+	public void visit(EBigDecimalField bigDecimalField, PlantFieldRepresentation umlField) {
 
 	}
 
 	@Override
-	public void visit(ELocalDateTimeField localDateTimeField, EPlantField umlField) {
+	public void visit(ELocalDateField localDateField, PlantFieldRepresentation umlField) {
+
+	}
+
+	@Override
+	public void visit(ELocalDateTimeField localDateTimeField, PlantFieldRepresentation umlField) {
 
 	}
 	
 	@Override
-	public void visit(EEnumField enumField, EPlantField umlField) {
+	public void visit(EEnumField enumField, PlantFieldRepresentation umlField) {
 
 	}
 
 	@Override
-	public void visit(ENotNullField notNullField, EPlantFieldProperty property) {
+	public void visit(ENotNullField notNullField, PlantFieldPropertyRepresentation property) {
 
 	}
 
 	@Override
-	public void visit(ETransientField notNullField, EPlantFieldProperty property) {
+	public void visit(ETransientField notNullField, PlantFieldPropertyRepresentation property) {
 
 	}
 
 	@Override
-	public void visit(EUniqueField notNullField, EPlantFieldProperty property) {
+	public void visit(EUniqueField notNullField, PlantFieldPropertyRepresentation property) {
 
 	}
 
 	@Override
-	public void visit(EJavaField javaField, EPlantRelationship umlRelationship) {
+	public void visit(JavaFieldRepresentation javaField, PlantRelationshipRepresentation umlRelationship) {
 
 	}
 

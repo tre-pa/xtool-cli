@@ -22,12 +22,12 @@ import org.jtwig.util.HtmlUtils;
 import com.google.common.base.Splitter;
 import com.google.common.collect.ImmutableSet;
 
-import br.xtool.core.representation.EPlantClass;
-import br.xtool.core.representation.EPlantClassDiagram;
-import br.xtool.core.representation.EPlantField;
-import br.xtool.core.representation.EPlantPackage;
-import br.xtool.core.representation.EPlantRelationship;
-import br.xtool.core.representation.EPlantStereotype;
+import br.xtool.core.representation.PlantClassRepresentation;
+import br.xtool.core.representation.PlantClassDiagramRepresentation;
+import br.xtool.core.representation.PlantFieldRepresentation;
+import br.xtool.core.representation.PlantPackageRepresentation;
+import br.xtool.core.representation.PlantRelationshipRepresentation;
+import br.xtool.core.representation.PlantStereotypeRepresentation;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
@@ -35,9 +35,9 @@ import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
 import strman.Strman;
 
-public class EPlantClassImpl implements EPlantClass {
+public class EPlantClassImpl implements PlantClassRepresentation {
 
-	private EPlantClassDiagram umlClassDiagram;
+	private PlantClassDiagramRepresentation umlClassDiagram;
 
 	private ClassDiagram classDiagram;
 
@@ -45,14 +45,14 @@ public class EPlantClassImpl implements EPlantClass {
 
 	private ILeaf leaf;
 
-	public EPlantClassImpl(EPlantClassDiagram umlClassDiagram, ClassDiagram classDiagram, ILeaf leaf) {
+	public EPlantClassImpl(PlantClassDiagramRepresentation umlClassDiagram, ClassDiagram classDiagram, ILeaf leaf) {
 		this.umlClassDiagram = umlClassDiagram;
 		this.classDiagram = classDiagram;
 		this.leaf = leaf;
 	}
 
 	@Override
-	public EPlantClassDiagram getClassDiagram() {
+	public PlantClassDiagramRepresentation getClassDiagram() {
 		return this.umlClassDiagram;
 	}
 
@@ -87,7 +87,7 @@ public class EPlantClassImpl implements EPlantClass {
 	 * @see br.xtool.core.representation.EUmlClass#getPackage()
 	 */
 	@Override
-	public EPlantPackage getUmlPackage() {
+	public PlantPackageRepresentation getUmlPackage() {
 		return new EPlantPackageImpl(this.leaf.getParentContainer());
 	}
 
@@ -97,7 +97,7 @@ public class EPlantClassImpl implements EPlantClass {
 	 * @see br.xtool.core.representation.EUmlClass#getFields()
 	 */
 	@Override
-	public Collection<EPlantField> getFields() {
+	public Collection<PlantFieldRepresentation> getFields() {
 		// @formatter:off
 		return this.leaf.getBodier().getFieldsToDisplay().stream()
 				.filter(member -> StringUtils.isNotEmpty(member.getDisplay(false)))
@@ -114,7 +114,7 @@ public class EPlantClassImpl implements EPlantClass {
 	 * @see br.xtool.core.representation.EUmlClass#getStereotypes()
 	 */
 	@Override
-	public Set<EPlantStereotype> getStereotypes() {
+	public Set<PlantStereotypeRepresentation> getStereotypes() {
 		// @formatter:off
 		if(Objects.nonNull(this.leaf.getStereotype())) {
 			return this.leaf.getStereotype().getLabels(false).stream()
@@ -190,10 +190,10 @@ public class EPlantClassImpl implements EPlantClass {
 	 * @see br.xtool.core.representation.EUmlClass#getRelationships()
 	 */
 	@Override
-	public Set<EPlantRelationship> getRelationships() {
+	public Set<PlantRelationshipRepresentation> getRelationships() {
 
 		// @formatter:off
-		Set<EPlantRelationship> relationship1 = this.classDiagram.getEntityFactory().getLinks().stream()
+		Set<PlantRelationshipRepresentation> relationship1 = this.classDiagram.getEntityFactory().getLinks().stream()
 				.filter(link -> link.getEntity2().getEntityType().equals(LeafType.CLASS))
 				.filter(link -> link.getEntity1().getDisplay().asStringWithHiddenNewLine().equals(this.getName()))
 				.map(link -> new EPlantRelationshipImpl(this, findPlantClassByName(link.getEntity2().getDisplay().asStringWithHiddenNewLine()), link, getEntity2Qualifier(link), getEntity1Qualifier(link)))
@@ -201,17 +201,17 @@ public class EPlantClassImpl implements EPlantClass {
 		// @formatter:on
 
 		// @formatter:off
-		Set<EPlantRelationship> relationship2 = this.classDiagram.getEntityFactory().getLinks().stream()
+		Set<PlantRelationshipRepresentation> relationship2 = this.classDiagram.getEntityFactory().getLinks().stream()
 				.filter(link -> link.getEntity1().getEntityType().equals(LeafType.CLASS))
 				.filter(link -> link.getEntity2().getDisplay().asStringWithHiddenNewLine().equals(this.getName()))
 				.map(link -> new EPlantRelationshipImpl(this, findPlantClassByName(link.getEntity1().getDisplay().asStringWithHiddenNewLine()), link, getEntity1Qualifier(link), getEntity2Qualifier(link)))
 				.collect(Collectors.toSet());
 		// @formatter:on
 
-		return ImmutableSet.<EPlantRelationship>builder().addAll(relationship1).addAll(relationship2).build();
+		return ImmutableSet.<PlantRelationshipRepresentation>builder().addAll(relationship1).addAll(relationship2).build();
 	}
 
-	private EPlantClass findPlantClassByName(String name) {
+	private PlantClassRepresentation findPlantClassByName(String name) {
 		// @formatter:off
 		return this.umlClassDiagram.getClasses().stream()
 			.filter(pClass -> pClass.getName().equals(name))

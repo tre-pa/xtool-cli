@@ -3,16 +3,16 @@ package br.xtool.core.representation.impl;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import br.xtool.core.representation.EPlantField;
-import br.xtool.core.representation.EPlantFieldProperty;
+import br.xtool.core.representation.PlantFieldRepresentation;
+import br.xtool.core.representation.PlantFieldPropertyRepresentation;
 
-public class EPlantFieldPropertyImpl implements EPlantFieldProperty {
+public class EPlantFieldPropertyImpl implements PlantFieldPropertyRepresentation {
 
-	private EPlantField field;
+	private PlantFieldRepresentation field;
 
 	private String property;
 
-	public EPlantFieldPropertyImpl(EPlantField field, String property) {
+	public EPlantFieldPropertyImpl(PlantFieldRepresentation field, String property) {
 		super();
 		this.field = field;
 		this.property = property;
@@ -41,7 +41,7 @@ public class EPlantFieldPropertyImpl implements EPlantFieldProperty {
 	 * @see br.xtool.core.representation.EUmlFieldProperty#getField()
 	 */
 	@Override
-	public EPlantField getField() {
+	public PlantFieldRepresentation getField() {
 		return this.field;
 	}
 

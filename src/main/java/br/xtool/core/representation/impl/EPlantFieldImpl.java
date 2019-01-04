@@ -18,23 +18,23 @@ import com.google.common.base.Enums;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Sets;
 
-import br.xtool.core.representation.EPlantClassDiagram;
-import br.xtool.core.representation.EPlantEnum;
-import br.xtool.core.representation.EPlantField;
-import br.xtool.core.representation.EPlantFieldProperty;
-import br.xtool.core.representation.EPlantFieldProperty.FieldPropertyType;
+import br.xtool.core.representation.PlantClassDiagramRepresentation;
+import br.xtool.core.representation.PlantEnumRepresentation;
+import br.xtool.core.representation.PlantFieldRepresentation;
+import br.xtool.core.representation.PlantFieldPropertyRepresentation;
+import br.xtool.core.representation.PlantFieldPropertyRepresentation.FieldPropertyType;
 import net.sourceforge.plantuml.cucadiagram.Member;
 import strman.Strman;
 
-public class EPlantFieldImpl implements EPlantField {
+public class EPlantFieldImpl implements PlantFieldRepresentation {
 
-	private EPlantClassDiagram classDiagram;
+	private PlantClassDiagramRepresentation classDiagram;
 
 	private Member member;
 
 	private Map<String, String> taggedValues = new HashMap<>();
 
-	public EPlantFieldImpl(EPlantClassDiagram classDiagram, Member member, Map<String, String> taggedValues) {
+	public EPlantFieldImpl(PlantClassDiagramRepresentation classDiagram, Member member, Map<String, String> taggedValues) {
 		super();
 		this.classDiagram = classDiagram;
 		this.member = member;
@@ -60,7 +60,7 @@ public class EPlantFieldImpl implements EPlantField {
 	public FieldType getType() {
 		if (this.isEnum()) {
 			// @formatter:off
-			EPlantEnum plantEnum = this.classDiagram.getEnums()
+			PlantEnumRepresentation plantEnum = this.classDiagram.getEnums()
 					.stream()
 					.filter(pEnum -> pEnum.getName().equals(this.memberType()))
 					.findFirst()
@@ -222,7 +222,7 @@ public class EPlantFieldImpl implements EPlantField {
 	 * @see br.xtool.core.representation.EUmlField#getProperties()
 	 */
 	@Override
-	public Set<EPlantFieldProperty> getProperties() {
+	public Set<PlantFieldPropertyRepresentation> getProperties() {
 		if (Strman.containsAll(memberType(), new String[] { "{", "}" })) {
 			String[] propertiesBlock = Strman.between(memberType(), "{", "}");
 			String[] propertiesItens = StringUtils.split(StringUtils.join(propertiesBlock), ",");

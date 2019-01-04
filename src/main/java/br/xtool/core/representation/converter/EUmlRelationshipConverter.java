@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.Set;
 import java.util.function.BiFunction;
 
-import br.xtool.core.representation.EJavaClass;
-import br.xtool.core.representation.EJavaField;
-import br.xtool.core.representation.EPlantRelationship;
+import br.xtool.core.representation.JavaClassRepresentation;
+import br.xtool.core.representation.JavaFieldRepresentation;
+import br.xtool.core.representation.PlantRelationshipRepresentation;
 import br.xtool.core.representation.impl.EJavaFieldImpl.EManyToManyFieldImpl;
 import br.xtool.core.representation.impl.EJavaFieldImpl.EManyToOneFieldImpl;
 import br.xtool.core.representation.impl.EJavaFieldImpl.EOneToManyFieldImpl;
@@ -25,13 +25,13 @@ import lombok.AllArgsConstructor;
  *
  */
 @AllArgsConstructor
-public class EUmlRelationshipConverter implements BiFunction<EJavaClass, EPlantRelationship, EJavaField> {
+public class EUmlRelationshipConverter implements BiFunction<JavaClassRepresentation, PlantRelationshipRepresentation, JavaFieldRepresentation> {
 
 	private Set<? extends Visitor> visitors = new HashSet<>();
 
 	@Override
-	public EJavaField apply(EJavaClass javaClass, EPlantRelationship umlRelationship) {
-		EJavaField javaField = javaClass.addField(umlRelationship.getSourceRole());
+	public JavaFieldRepresentation apply(JavaClassRepresentation javaClass, PlantRelationshipRepresentation umlRelationship) {
+		JavaFieldRepresentation javaField = javaClass.addField(umlRelationship.getSourceRole());
 		if (umlRelationship.getSourceMultiplicity().isToMany()) {
 			// @formatter:off
 			javaField.getRoasterField().getOrigin().addImport(List.class);
@@ -57,7 +57,7 @@ public class EUmlRelationshipConverter implements BiFunction<EJavaClass, EPlantR
 		return javaField;
 	}
 
-	private void visit(EJavaField javaField, EPlantRelationship umlRelationship) {
+	private void visit(JavaFieldRepresentation javaField, PlantRelationshipRepresentation umlRelationship) {
 		this.visitors.forEach(visitor -> {
 			visitor.visit(javaField, umlRelationship);
 			if (!javaField.getEnum().isPresent()) {

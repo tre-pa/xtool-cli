@@ -21,20 +21,20 @@ import org.jboss.forge.roaster.model.source.FieldSource;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.jboss.forge.roaster.model.util.Types;
 
-import br.xtool.core.representation.EJavaAnnotation;
-import br.xtool.core.representation.EJavaClass;
-import br.xtool.core.representation.EJavaEnum;
-import br.xtool.core.representation.EJavaField;
-import br.xtool.core.representation.EJavaRelationship;
-import br.xtool.core.representation.EJpaEntity;
+import br.xtool.core.representation.JavaAnnotationRepresentation;
+import br.xtool.core.representation.JavaClassRepresentation;
+import br.xtool.core.representation.JavaEnumRepresentation;
+import br.xtool.core.representation.JavaFieldRepresentation;
+import br.xtool.core.representation.JavaRelationshipRepresentation;
+import br.xtool.core.representation.EntityRepresentation;
 
-public class EJavaFieldImpl implements EJavaField {
+public class EJavaFieldImpl implements JavaFieldRepresentation {
 
-	private EJavaClass javaClass;
+	private JavaClassRepresentation javaClass;
 
 	protected FieldSource<JavaClassSource> fieldSource;
 
-	public EJavaFieldImpl(EJavaClass javaClass, FieldSource<JavaClassSource> fieldSource) {
+	public EJavaFieldImpl(JavaClassRepresentation javaClass, FieldSource<JavaClassSource> fieldSource) {
 		super();
 		this.javaClass = javaClass;
 		this.fieldSource = fieldSource;
@@ -51,12 +51,12 @@ public class EJavaFieldImpl implements EJavaField {
 	}
 
 	@Override
-	public EJavaClass getJavaClass() {
+	public JavaClassRepresentation getJavaClass() {
 		return this.javaClass;
 	}
 
 	@Override
-	public Optional<EJavaEnum> getEnum() {
+	public Optional<JavaEnumRepresentation> getEnum() {
 		// @formatter:off
 		return this.getJavaClass().getProject().getEnums().stream()
 				.filter(javaEnum -> javaEnum.getName().equals(this.getType().getName()))
@@ -105,7 +105,7 @@ public class EJavaFieldImpl implements EJavaField {
 	}
 
 	@Override
-	public SortedSet<EJavaAnnotation<JavaClassSource>> getAnnotations() {
+	public SortedSet<JavaAnnotationRepresentation<JavaClassSource>> getAnnotations() {
 		// @formatter:off
 		return this.fieldSource.getAnnotations()
 				.stream()
@@ -115,7 +115,7 @@ public class EJavaFieldImpl implements EJavaField {
 	}
 
 	@Override
-	public EJavaAnnotation<JavaClassSource> addAnnotation(Class<? extends Annotation> type) {
+	public JavaAnnotationRepresentation<JavaClassSource> addAnnotation(Class<? extends Annotation> type) {
 		// @formatter:off
 		return this.getAnnotations().stream()
 				.filter(javaAnn -> javaAnn.getName().equals(type.getSimpleName()))
@@ -140,14 +140,14 @@ public class EJavaFieldImpl implements EJavaField {
 	 * @see br.xtool.core.representation.EJavaField#getRelationship()
 	 */
 	@Override
-	public Optional<EJavaRelationship> getRelationship() {
+	public Optional<JavaRelationshipRepresentation> getRelationship() {
 		if (this.isCollection()) {
 			String entityName = Types.getGenericsTypeParameter(this.getType().getQualifiedNameWithGenerics());
 			// @formatter:off
 			return this.getJavaClass().getProject().getEntities().stream()
 					.filter(entity -> entity.getName().equals(entityName))
 					.map(entityTarget -> new EJavaRelationshipImpl(this.javaClass, entityTarget, this))
-					.map(EJavaRelationship.class::cast)
+					.map(JavaRelationshipRepresentation.class::cast)
 					.findFirst();
 			// @formatter:on
 		}
@@ -156,7 +156,7 @@ public class EJavaFieldImpl implements EJavaField {
 		return this.getJavaClass().getProject().getEntities().stream()
 				.filter(entity -> entity.getName().equals(entityName))
 				.map(entityTarget -> new EJavaRelationshipImpl(this.javaClass, entityTarget, this))
-				.map(EJavaRelationship.class::cast)
+				.map(JavaRelationshipRepresentation.class::cast)
 				.findFirst();
 		// @formatter:on
 	}
@@ -169,8 +169,8 @@ public class EJavaFieldImpl implements EJavaField {
 	 * java.lang.Integer)
 	 */
 	@Override
-	public EJavaAnnotation<JavaClassSource> addSizeAnnotation(Integer min, Integer max) {
-		EJavaAnnotation<JavaClassSource> ann = this.addAnnotation(Size.class);
+	public JavaAnnotationRepresentation<JavaClassSource> addSizeAnnotation(Integer min, Integer max) {
+		JavaAnnotationRepresentation<JavaClassSource> ann = this.addAnnotation(Size.class);
 		if (Objects.nonNull(min)) ann.setLiteralValue("min", String.valueOf(min));
 		if (Objects.nonNull(max)) ann.setLiteralValue("max", String.valueOf(max));
 		return ann;
@@ -184,8 +184,8 @@ public class EJavaFieldImpl implements EJavaField {
 	 * Integer)
 	 */
 	@Override
-	public EJavaAnnotation<JavaClassSource> addBatchSizeAnnotation(Integer size) {
-		EJavaAnnotation<JavaClassSource> ann = this.addAnnotation(BatchSize.class);
+	public JavaAnnotationRepresentation<JavaClassSource> addBatchSizeAnnotation(Integer size) {
+		JavaAnnotationRepresentation<JavaClassSource> ann = this.addAnnotation(BatchSize.class);
 		ann.setLiteralValue("size", String.valueOf(size));
 		return ann;
 	}
@@ -197,8 +197,8 @@ public class EJavaFieldImpl implements EJavaField {
 	 * hibernate.annotations.LazyCollectionOption)
 	 */
 	@Override
-	public EJavaAnnotation<JavaClassSource> addLazyCollectionAnnotation(LazyCollectionOption lazyCollectionOption) {
-		EJavaAnnotation<JavaClassSource> ann = this.addAnnotation(LazyCollection.class);
+	public JavaAnnotationRepresentation<JavaClassSource> addLazyCollectionAnnotation(LazyCollectionOption lazyCollectionOption) {
+		JavaAnnotationRepresentation<JavaClassSource> ann = this.addAnnotation(LazyCollection.class);
 		ann.setEnumValue(lazyCollectionOption);
 		return ann;
 	}
@@ -211,9 +211,9 @@ public class EJavaFieldImpl implements EJavaField {
 	 * persistence.GenerationType)
 	 */
 	@Override
-	public EJavaAnnotation<JavaClassSource> addGeneratedValueAnnotation(GenerationType generationType) {
-		EJavaAnnotation<JavaClassSource> ann = this.addAnnotation(GeneratedValue.class);
-		ann.setEnumValue("strategy", GenerationType.SEQUENCE).setStringValue("generator", EJpaEntity.genDBSequenceName(this.getJavaClass().getName()));
+	public JavaAnnotationRepresentation<JavaClassSource> addGeneratedValueAnnotation(GenerationType generationType) {
+		JavaAnnotationRepresentation<JavaClassSource> ann = this.addAnnotation(GeneratedValue.class);
+		ann.setEnumValue("strategy", GenerationType.SEQUENCE).setStringValue("generator", EntityRepresentation.genDBSequenceName(this.getJavaClass().getName()));
 		return ann;
 	}
 
@@ -223,13 +223,13 @@ public class EJavaFieldImpl implements EJavaField {
 	 * @see br.xtool.core.representation.EJavaField#addSequenceGeneratorAnnotation()
 	 */
 	@Override
-	public EJavaAnnotation<JavaClassSource> addSequenceGeneratorAnnotation() {
-		EJavaAnnotation<JavaClassSource> ann = this.addAnnotation(SequenceGenerator.class);
+	public JavaAnnotationRepresentation<JavaClassSource> addSequenceGeneratorAnnotation() {
+		JavaAnnotationRepresentation<JavaClassSource> ann = this.addAnnotation(SequenceGenerator.class);
 		// @formatter:off
 		ann.setLiteralValue("initialValue", "1")
 			.setLiteralValue("allocationSize", "1")
-			.setStringValue("name", EJpaEntity.genDBSequenceName(this.getJavaClass().getName()))
-			.setStringValue("sequenceName", EJpaEntity.genDBSequenceName(this.getJavaClass().getName()));
+			.setStringValue("name", EntityRepresentation.genDBSequenceName(this.getJavaClass().getName()))
+			.setStringValue("sequenceName", EntityRepresentation.genDBSequenceName(this.getJavaClass().getName()));
 		// @formatter:on
 		return ann;
 	}
@@ -240,116 +240,116 @@ public class EJavaFieldImpl implements EJavaField {
 	 * @see java.lang.Comparable#compareTo(java.lang.Object)
 	 */
 	@Override
-	public int compareTo(EJavaField o) {
+	public int compareTo(JavaFieldRepresentation o) {
 		return this.getName().compareTo(o.getName());
 	}
 
 	public static class EStringFieldImpl extends EJavaFieldImpl implements EStringField {
-		public EStringFieldImpl(EJavaField javaField) {
+		public EStringFieldImpl(JavaFieldRepresentation javaField) {
 			super(javaField.getJavaClass(), javaField.getRoasterField());
 		}
 	}
 
 	public static class EBooleanFieldImpl extends EJavaFieldImpl implements EBooleanField {
-		public EBooleanFieldImpl(EJavaField javaField) {
+		public EBooleanFieldImpl(JavaFieldRepresentation javaField) {
 			super(javaField.getJavaClass(), javaField.getRoasterField());
 		}
 
 	}
 
 	public static class ELongFieldImpl extends EJavaFieldImpl implements ELongField {
-		public ELongFieldImpl(EJavaField javaField) {
+		public ELongFieldImpl(JavaFieldRepresentation javaField) {
 			super(javaField.getJavaClass(), javaField.getRoasterField());
 		}
 
 	}
 
 	public static class EIntegerFieldImpl extends EJavaFieldImpl implements EIntegerField {
-		public EIntegerFieldImpl(EJavaField javaField) {
+		public EIntegerFieldImpl(JavaFieldRepresentation javaField) {
 			super(javaField.getJavaClass(), javaField.getRoasterField());
 		}
 
 	}
 
-	public static class EByteFieldImpl extends EJavaFieldImpl implements EJavaField {
-		public EByteFieldImpl(EJavaField javaField) {
+	public static class EByteFieldImpl extends EJavaFieldImpl implements JavaFieldRepresentation {
+		public EByteFieldImpl(JavaFieldRepresentation javaField) {
 			super(javaField.getJavaClass(), javaField.getRoasterField());
 		}
 
 	}
 
 	public static class EBigDecimalFieldImpl extends EJavaFieldImpl implements EBigDecimalField {
-		public EBigDecimalFieldImpl(EJavaField javaField) {
+		public EBigDecimalFieldImpl(JavaFieldRepresentation javaField) {
 			super(javaField.getJavaClass(), javaField.getRoasterField());
 		}
 
 	}
 
 	public static class ELocalDateFieldImpl extends EJavaFieldImpl implements ELocalDateField {
-		public ELocalDateFieldImpl(EJavaField javaField) {
+		public ELocalDateFieldImpl(JavaFieldRepresentation javaField) {
 			super(javaField.getJavaClass(), javaField.getRoasterField());
 		}
 
 	}
 
 	public static class ELocalDateTimeFieldImpl extends EJavaFieldImpl implements ELocalDateTimeField {
-		public ELocalDateTimeFieldImpl(EJavaField javaField) {
+		public ELocalDateTimeFieldImpl(JavaFieldRepresentation javaField) {
 			super(javaField.getJavaClass(), javaField.getRoasterField());
 		}
 
 	}
 
 	public static class EENumFieldImpl extends EJavaFieldImpl implements EEnumField {
-		public EENumFieldImpl(EJavaField javaField) {
+		public EENumFieldImpl(JavaFieldRepresentation javaField) {
 			super(javaField.getJavaClass(), javaField.getRoasterField());
 		}
 
 	}
 
 	public static class ENotNullFieldImpl extends EJavaFieldImpl implements ENotNullField {
-		public ENotNullFieldImpl(EJavaField javaField) {
+		public ENotNullFieldImpl(JavaFieldRepresentation javaField) {
 			super(javaField.getJavaClass(), javaField.getRoasterField());
 		}
 
 	}
 
 	public static class ETransientFieldImpl extends EJavaFieldImpl implements ETransientField {
-		public ETransientFieldImpl(EJavaField javaField) {
+		public ETransientFieldImpl(JavaFieldRepresentation javaField) {
 			super(javaField.getJavaClass(), javaField.getRoasterField());
 		}
 
 	}
 
 	public static class EUniqueFieldImpl extends EJavaFieldImpl implements EUniqueField {
-		public EUniqueFieldImpl(EJavaField javaField) {
+		public EUniqueFieldImpl(JavaFieldRepresentation javaField) {
 			super(javaField.getJavaClass(), javaField.getRoasterField());
 		}
 
 	}
 
 	public static class EOneToOneFieldImpl extends EJavaFieldImpl implements EOneToOneField {
-		public EOneToOneFieldImpl(EJavaField javaField) {
+		public EOneToOneFieldImpl(JavaFieldRepresentation javaField) {
 			super(javaField.getJavaClass(), javaField.getRoasterField());
 		}
 
 	}
 
 	public static class EOneToManyFieldImpl extends EJavaFieldImpl implements EOneToManyField {
-		public EOneToManyFieldImpl(EJavaField javaField) {
+		public EOneToManyFieldImpl(JavaFieldRepresentation javaField) {
 			super(javaField.getJavaClass(), javaField.getRoasterField());
 		}
 
 	}
 
 	public static class EManyToOneFieldImpl extends EJavaFieldImpl implements EManyToOneField {
-		public EManyToOneFieldImpl(EJavaField javaField) {
+		public EManyToOneFieldImpl(JavaFieldRepresentation javaField) {
 			super(javaField.getJavaClass(), javaField.getRoasterField());
 		}
 
 	}
 
 	public static class EManyToManyFieldImpl extends EJavaFieldImpl implements EManyToManyField {
-		public EManyToManyFieldImpl(EJavaField javaField) {
+		public EManyToManyFieldImpl(JavaFieldRepresentation javaField) {
 			super(javaField.getJavaClass(), javaField.getRoasterField());
 		}
 

@@ -8,17 +8,17 @@ import org.jboss.forge.roaster.model.Type;
 import org.jboss.forge.roaster.model.source.JavaSource;
 import org.jboss.forge.roaster.model.source.ParameterSource;
 
-import br.xtool.core.representation.EJavaAnnotation;
-import br.xtool.core.representation.EJavaMethod;
-import br.xtool.core.representation.EJavaMethodParameter;
+import br.xtool.core.representation.JavaAnnotationRepresentation;
+import br.xtool.core.representation.JavaMethodRepresentation;
+import br.xtool.core.representation.JavaMethodParameterRepresentation;
 
-public class EJavaMethodParameterImpl<T extends JavaSource<T>> implements EJavaMethodParameter<T> {
+public class EJavaMethodParameterImpl<T extends JavaSource<T>> implements JavaMethodParameterRepresentation<T> {
 
-	private EJavaMethod<T> javaMethod;
+	private JavaMethodRepresentation<T> javaMethod;
 
 	private ParameterSource<T> parameterSource;
 
-	public EJavaMethodParameterImpl(EJavaMethod<T> javaMethod, ParameterSource<T> parameterSource) {
+	public EJavaMethodParameterImpl(JavaMethodRepresentation<T> javaMethod, ParameterSource<T> parameterSource) {
 		super();
 		this.javaMethod = javaMethod;
 		this.parameterSource = parameterSource;
@@ -38,7 +38,7 @@ public class EJavaMethodParameterImpl<T extends JavaSource<T>> implements EJavaM
 	 * @see br.xtool.core.representation.EJavaMethodParameter#getJavaMethod()
 	 */
 	@Override
-	public EJavaMethod<T> getJavaMethod() {
+	public JavaMethodRepresentation<T> getJavaMethod() {
 		return this.javaMethod;
 	}
 
@@ -56,7 +56,7 @@ public class EJavaMethodParameterImpl<T extends JavaSource<T>> implements EJavaM
 	 * @see br.xtool.core.representation.EJavaMethodParameter#getAnnotations()
 	 */
 	@Override
-	public SortedSet<EJavaAnnotation<T>> getAnnotations() {
+	public SortedSet<JavaAnnotationRepresentation<T>> getAnnotations() {
 		// @formatter:off
 		return this.parameterSource.getAnnotations()
 				.stream()

@@ -3,16 +3,16 @@ package br.xtool.core.representation.impl;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import br.xtool.core.representation.EPlantClass;
-import br.xtool.core.representation.EPlantStereotype;
+import br.xtool.core.representation.PlantClassRepresentation;
+import br.xtool.core.representation.PlantStereotypeRepresentation;
 
-public class EPlantStereotypeImpl implements EPlantStereotype {
+public class EPlantStereotypeImpl implements PlantStereotypeRepresentation {
 
-	private EPlantClass umlClass;
+	private PlantClassRepresentation umlClass;
 
 	private String stereotype;
 
-	public EPlantStereotypeImpl(EPlantClass umlClass, String stereotype) {
+	public EPlantStereotypeImpl(PlantClassRepresentation umlClass, String stereotype) {
 		super();
 		this.umlClass = umlClass;
 		this.stereotype = stereotype;

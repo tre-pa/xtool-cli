@@ -10,23 +10,23 @@ import java.util.function.Function;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import br.xtool.core.representation.ENgClass;
-import br.xtool.core.representation.ENgComponent;
-import br.xtool.core.representation.ENgDetail;
-import br.xtool.core.representation.ENgEdit;
-import br.xtool.core.representation.ENgLayout;
-import br.xtool.core.representation.ENgModule;
-import br.xtool.core.representation.ENgPackage;
-import br.xtool.core.representation.ENgPage;
-import br.xtool.core.representation.ENgProject;
-import br.xtool.core.representation.ENgService;
-import br.xtool.core.representation.EProject;
+import br.xtool.core.representation.NgClassRepresentation;
+import br.xtool.core.representation.NgComponentRepresentation;
+import br.xtool.core.representation.NgDetailRepresentation;
+import br.xtool.core.representation.NgEditRepresentation;
+import br.xtool.core.representation.NgLayoutRepresentation;
+import br.xtool.core.representation.NgModuleRepresentation;
+import br.xtool.core.representation.NgPackageRepresentation;
+import br.xtool.core.representation.NgPageRepresentation;
+import br.xtool.core.representation.NgProjectRepresentation;
+import br.xtool.core.representation.NgServiceRepresentation;
+import br.xtool.core.representation.ProjectRepresentation;
 import lombok.Getter;
 
 @Getter
-public class ENgProjectImpl extends EProjectImpl implements ENgProject {
+public class ENgProjectImpl extends EProjectImpl implements NgProjectRepresentation {
 
-	private Map<String, ENgClass> ngClasses;
+	private Map<String, NgClassRepresentation> ngClasses;
 
 	public ENgProjectImpl(Path path) {
 		super(path);
@@ -69,12 +69,12 @@ public class ENgProjectImpl extends EProjectImpl implements ENgProject {
 	}
 
 	@Override
-	public ENgPackage getNgPackage() {
+	public NgPackageRepresentation getNgPackage() {
 		return ENgPackageImpl.of(this.getPath().resolve("package.json")).orElse(null);
 	}
 
 	@Override
-	public ENgModule getNgViewModule() {
+	public NgModuleRepresentation getNgViewModule() {
 		// @formatter:off
 		return this.getNgModules().stream()
 				.filter(ngModule -> ngModule.getName().equals("ViewModule"))
@@ -84,7 +84,7 @@ public class ENgProjectImpl extends EProjectImpl implements ENgProject {
 	}
 
 	@Override
-	public ENgModule getNgAppModule() {
+	public NgModuleRepresentation getNgAppModule() {
 		// @formatter:off
 		return this.getNgModules().stream()
 				.filter(ngModule -> ngModule.getName().equals("AppModule"))
@@ -99,11 +99,11 @@ public class ENgProjectImpl extends EProjectImpl implements ENgProject {
 	 * @return
 	 */
 	@Override
-	public SortedSet<ENgModule> getNgModules() {
+	public SortedSet<NgModuleRepresentation> getNgModules() {
 		// @formatter:off
 		return this.getNgClasses().values().stream()
-				.filter(ngClass -> !ngClass.getFileName().endsWith(ENgProject.ArtifactyType.ROUTING_MODULE.getExt()))
-				.filter(ngClass -> ngClass.getFileName().endsWith(ENgProject.ArtifactyType.MODULE.getExt()))
+				.filter(ngClass -> !ngClass.getFileName().endsWith(NgProjectRepresentation.ArtifactyType.ROUTING_MODULE.getExt()))
+				.filter(ngClass -> ngClass.getFileName().endsWith(NgProjectRepresentation.ArtifactyType.MODULE.getExt()))
 				.map(ngClass -> new ENgModuleImpl(ngClass.getPath()))
 				.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
@@ -115,10 +115,10 @@ public class ENgProjectImpl extends EProjectImpl implements ENgProject {
 	 * @return
 	 */
 	@Override
-	public SortedSet<ENgComponent> getNgComponents() {
+	public SortedSet<NgComponentRepresentation> getNgComponents() {
 		// @formatter:off
 		return this.getNgClasses().values().stream()
-				.filter(ngClass -> ngClass.getFileName().endsWith(ENgProject.ArtifactyType.MODULE.getExt()))
+				.filter(ngClass -> ngClass.getFileName().endsWith(NgProjectRepresentation.ArtifactyType.MODULE.getExt()))
 				.map(ngClass -> new ENgComponentImpl(ngClass.getPath()))
 				.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
@@ -130,10 +130,10 @@ public class ENgProjectImpl extends EProjectImpl implements ENgProject {
 	 * @return
 	 */
 	@Override
-	public SortedSet<ENgService> getNgServices() {
+	public SortedSet<NgServiceRepresentation> getNgServices() {
 		// @formatter:off
 		return this.getNgClasses().values().stream()
-				.filter(ngClass -> ngClass.getFileName().endsWith(ENgProject.ArtifactyType.MODULE.getExt()))
+				.filter(ngClass -> ngClass.getFileName().endsWith(NgProjectRepresentation.ArtifactyType.MODULE.getExt()))
 				.map(ngClass -> new ENgServiceImpl(ngClass.getPath()))
 				.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
@@ -145,10 +145,10 @@ public class ENgProjectImpl extends EProjectImpl implements ENgProject {
 	 * @return
 	 */
 	@Override
-	public SortedSet<ENgLayout> getNgLayouts() {
+	public SortedSet<NgLayoutRepresentation> getNgLayouts() {
 		// @formatter:off
 		return this.getNgClasses().values().stream()
-				.filter(ngClass -> ngClass.getFileName().endsWith(ENgProject.ArtifactyType.MODULE.getExt()))
+				.filter(ngClass -> ngClass.getFileName().endsWith(NgProjectRepresentation.ArtifactyType.MODULE.getExt()))
 				.map(ngClass -> new ENgLayoutImpl(ngClass.getPath()))
 				.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
@@ -160,10 +160,10 @@ public class ENgProjectImpl extends EProjectImpl implements ENgProject {
 	 * @return
 	 */
 	@Override
-	public SortedSet<ENgPage> getNgPages() {
+	public SortedSet<NgPageRepresentation> getNgPages() {
 		// @formatter:off
 		return this.getNgClasses().values().stream()
-				.filter(ngClass -> ngClass.getFileName().endsWith(ENgProject.ArtifactyType.MODULE.getExt()))
+				.filter(ngClass -> ngClass.getFileName().endsWith(NgProjectRepresentation.ArtifactyType.MODULE.getExt()))
 				.map(ngClass -> new ENgPageImpl(ngClass.getPath()))
 				.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
@@ -175,10 +175,10 @@ public class ENgProjectImpl extends EProjectImpl implements ENgProject {
 	 * @return
 	 */
 	@Override
-	public SortedSet<ENgEdit> getNgEdits() {
+	public SortedSet<NgEditRepresentation> getNgEdits() {
 		// @formatter:off
 		return this.getNgClasses().values().stream()
-				.filter(ngClass -> ngClass.getFileName().endsWith(ENgProject.ArtifactyType.MODULE.getExt()))
+				.filter(ngClass -> ngClass.getFileName().endsWith(NgProjectRepresentation.ArtifactyType.MODULE.getExt()))
 				.map(ngClass -> new ENgEditImpl(ngClass.getPath()))
 				.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
@@ -190,16 +190,16 @@ public class ENgProjectImpl extends EProjectImpl implements ENgProject {
 	 * @return
 	 */
 	@Override
-	public SortedSet<ENgDetail> getNgDetails() {
+	public SortedSet<NgDetailRepresentation> getNgDetails() {
 		// @formatter:off
 		return this.getNgClasses().values().stream()
-				.filter(ngClass -> ngClass.getFileName().endsWith(ENgProject.ArtifactyType.MODULE.getExt()))
+				.filter(ngClass -> ngClass.getFileName().endsWith(NgProjectRepresentation.ArtifactyType.MODULE.getExt()))
 				.map(ngClass -> new ENgDetailImpl(ngClass.getPath()))
 				.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
 	}
 
-	private Map<String, ENgClass> getNgClasses() {
+	private Map<String, NgClassRepresentation> getNgClasses() {
 		if (Objects.isNull(this.ngClasses)) {
 			// @formatter:off
 			this.ngClasses = this.listAllFiles().stream()
@@ -237,7 +237,7 @@ public class ENgProjectImpl extends EProjectImpl implements ENgProject {
 
 	@Override
 	public Type getProjectType() {
-		return EProject.Type.ANGULAR;
+		return ProjectRepresentation.Type.ANGULAR;
 	}
 
 }

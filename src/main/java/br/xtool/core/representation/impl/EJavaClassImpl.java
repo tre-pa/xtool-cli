@@ -15,29 +15,29 @@ import org.jboss.forge.roaster.model.SyntaxError;
 import org.jboss.forge.roaster.model.Visibility;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 
-import br.xtool.core.representation.EBootProject;
-import br.xtool.core.representation.EJavaAnnotation;
-import br.xtool.core.representation.EJavaClass;
-import br.xtool.core.representation.EJavaField;
-import br.xtool.core.representation.EJavaMethod;
-import br.xtool.core.representation.EJavaPackage;
+import br.xtool.core.representation.SpringBootProjectRepresentation;
+import br.xtool.core.representation.JavaAnnotationRepresentation;
+import br.xtool.core.representation.JavaClassRepresentation;
+import br.xtool.core.representation.JavaFieldRepresentation;
+import br.xtool.core.representation.JavaMethodRepresentation;
+import br.xtool.core.representation.JavaPackageRepresentation;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
-public class EJavaClassImpl implements EJavaClass {
+public class EJavaClassImpl implements JavaClassRepresentation {
 
 	protected JavaClassSource javaClassSource;
 
-	private EBootProject project;
+	private SpringBootProjectRepresentation project;
 
-	public EJavaClassImpl(EBootProject project, JavaClassSource javaClassSource) {
+	public EJavaClassImpl(SpringBootProjectRepresentation project, JavaClassSource javaClassSource) {
 		super();
 		this.project = project;
 		this.javaClassSource = javaClassSource;
 	}
 
 	@Override
-	public EBootProject getProject() {
+	public SpringBootProjectRepresentation getProject() {
 		return this.project;
 	}
 
@@ -72,7 +72,7 @@ public class EJavaClassImpl implements EJavaClass {
 	 * @return
 	 */
 	@Override
-	public EJavaPackage getJavaPackage() {
+	public JavaPackageRepresentation getJavaPackage() {
 		return EJavaPackageImpl.of(this.javaClassSource.getPackage());
 	}
 
@@ -99,7 +99,7 @@ public class EJavaClassImpl implements EJavaClass {
 	}
 
 	@Override
-	public Collection<EJavaField> getJavaFields() {
+	public Collection<JavaFieldRepresentation> getJavaFields() {
 		// @formatter:off
 		return this.javaClassSource.getFields()
 				.stream()
@@ -109,7 +109,7 @@ public class EJavaClassImpl implements EJavaClass {
 	}
 
 	@Override
-	public EJavaField addField(String name) {
+	public JavaFieldRepresentation addField(String name) {
 		// @formatter:off
 		return this.getJavaFields().stream()
 				.filter(javaField -> javaField.getName().equals(name))
@@ -119,7 +119,7 @@ public class EJavaClassImpl implements EJavaClass {
 	}
 
 	@Override
-	public EJavaMethod<JavaClassSource> addMethod(String name) {
+	public JavaMethodRepresentation<JavaClassSource> addMethod(String name) {
 		// @formatter:off
 		return this.getJavaMethods().stream()
 				.filter(javaMethod -> javaMethod.getName().equals(name))
@@ -129,7 +129,7 @@ public class EJavaClassImpl implements EJavaClass {
 	}
 
 	@Override
-	public SortedSet<EJavaAnnotation<JavaClassSource>> getJavaAnnotations() {
+	public SortedSet<JavaAnnotationRepresentation<JavaClassSource>> getJavaAnnotations() {
 		// @formatter:off
 		return this.javaClassSource.getAnnotations()
 				.stream()
@@ -139,7 +139,7 @@ public class EJavaClassImpl implements EJavaClass {
 	}
 
 	@Override
-	public EJavaAnnotation<JavaClassSource> addAnnotation(Class<? extends Annotation> type) {
+	public JavaAnnotationRepresentation<JavaClassSource> addAnnotation(Class<? extends Annotation> type) {
 		// @formatter:off
 		return this.getJavaAnnotations().stream()
 				.filter(javaAnn -> javaAnn.getName().equals(type.getSimpleName()))
@@ -149,7 +149,7 @@ public class EJavaClassImpl implements EJavaClass {
 	}
 
 	@Override
-	public SortedSet<EJavaMethod<JavaClassSource>> getJavaMethods() {
+	public SortedSet<JavaMethodRepresentation<JavaClassSource>> getJavaMethods() {
 		// @formatter:off
 		return this.javaClassSource.getMethods()
 				.stream()
@@ -175,8 +175,8 @@ public class EJavaClassImpl implements EJavaClass {
 	 * @see br.xtool.core.representation.EJavaClass#addToString(java.lang.String[])
 	 */
 	@Override
-	public EJavaAnnotation<JavaClassSource> addToStringAnnotation(String... attributes) {
-		EJavaAnnotation<JavaClassSource> javaAnnotation = this.addAnnotation(ToString.class);
+	public JavaAnnotationRepresentation<JavaClassSource> addToStringAnnotation(String... attributes) {
+		JavaAnnotationRepresentation<JavaClassSource> javaAnnotation = this.addAnnotation(ToString.class);
 		javaAnnotation.setStringArrayValue("of", attributes);
 		return javaAnnotation;
 	}
@@ -186,14 +186,14 @@ public class EJavaClassImpl implements EJavaClass {
 	 * @see br.xtool.core.representation.EJavaClass#addEqualsAndHashCode(java.lang.String[])
 	 */
 	@Override
-	public EJavaAnnotation<JavaClassSource> addEqualsAndHashCodeAnnotation(String... attributes) {
-		EJavaAnnotation<JavaClassSource> javaAnnotation = this.addAnnotation(EqualsAndHashCode.class);
+	public JavaAnnotationRepresentation<JavaClassSource> addEqualsAndHashCodeAnnotation(String... attributes) {
+		JavaAnnotationRepresentation<JavaClassSource> javaAnnotation = this.addAnnotation(EqualsAndHashCode.class);
 		javaAnnotation.setStringArrayValue("of", attributes);
 		return javaAnnotation;
 	}
 
 	@Override
-	public int compareTo(EJavaClass o) {
+	public int compareTo(JavaClassRepresentation o) {
 		return this.getName().compareTo(o.getName());
 	}
 
@@ -318,37 +318,37 @@ public class EJavaClassImpl implements EJavaClass {
 	}
 
 	public static class EAuditableJavaClassImpl extends EJavaClassImpl implements EAuditableJavaClass {
-		public EAuditableJavaClassImpl(EJavaClass javaClass) {
+		public EAuditableJavaClassImpl(JavaClassRepresentation javaClass) {
 			super(javaClass.getProject(), javaClass.getRoasterJavaClass());
 		}
 	}
 
 	public static class ECacheableJavaClassImpl extends EJavaClassImpl implements ECacheableJavaClass {
-		public ECacheableJavaClassImpl(EJavaClass javaClass) {
+		public ECacheableJavaClassImpl(JavaClassRepresentation javaClass) {
 			super(javaClass.getProject(), javaClass.getRoasterJavaClass());
 		}
 	}
 
 	public static class EIndexedJavaClassImpl extends EJavaClassImpl implements EIndexedJavaClass {
-		public EIndexedJavaClassImpl(EJavaClass javaClass) {
+		public EIndexedJavaClassImpl(JavaClassRepresentation javaClass) {
 			super(javaClass.getProject(), javaClass.getRoasterJavaClass());
 		}
 	}
 
 	public static class EViewJavaClassImpl extends EJavaClassImpl implements EViewJavaClass {
-		public EViewJavaClassImpl(EJavaClass javaClass) {
+		public EViewJavaClassImpl(JavaClassRepresentation javaClass) {
 			super(javaClass.getProject(), javaClass.getRoasterJavaClass());
 		}
 	}
 
 	public static class EReadOnlyJavaClassImpl extends EJavaClassImpl implements EReadOnlyJavaClass {
-		public EReadOnlyJavaClassImpl(EJavaClass javaClass) {
+		public EReadOnlyJavaClassImpl(JavaClassRepresentation javaClass) {
 			super(javaClass.getProject(), javaClass.getRoasterJavaClass());
 		}
 	}
 
 	public static class EVersionableJavaClassImpl extends EJavaClassImpl implements EVersionableJavaClass {
-		public EVersionableJavaClassImpl(EJavaClass javaClass) {
+		public EVersionableJavaClassImpl(JavaClassRepresentation javaClass) {
 			super(javaClass.getProject(), javaClass.getRoasterJavaClass());
 		}
 	}

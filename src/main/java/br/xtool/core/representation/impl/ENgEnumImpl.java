@@ -7,10 +7,10 @@ import java.util.stream.Stream;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import br.xtool.core.representation.ENgEnum;
+import br.xtool.core.representation.NgEnumRepresentation;
 import lombok.Getter;
 
-public class ENgEnumImpl implements ENgEnum {
+public class ENgEnumImpl implements NgEnumRepresentation {
 	@Getter
 	private Path path;
 
@@ -34,7 +34,7 @@ public class ENgEnumImpl implements ENgEnum {
 	}
 
 	@Override
-	public int compareTo(ENgEnum o) {
+	public int compareTo(NgEnumRepresentation o) {
 		return this.getName().compareTo(o.getName());
 	}
 }

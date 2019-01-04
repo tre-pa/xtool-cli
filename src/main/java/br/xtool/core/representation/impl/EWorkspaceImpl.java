@@ -8,17 +8,17 @@ import java.util.TreeSet;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import br.xtool.core.representation.EBootProject;
-import br.xtool.core.representation.ENgProject;
-import br.xtool.core.representation.EProject;
-import br.xtool.core.representation.EWorkspace;
+import br.xtool.core.representation.SpringBootProjectRepresentation;
+import br.xtool.core.representation.NgProjectRepresentation;
+import br.xtool.core.representation.ProjectRepresentation;
+import br.xtool.core.representation.WorkspaceRepresentation;
 import lombok.SneakyThrows;
 
-public class EWorkspaceImpl implements EWorkspace {
+public class EWorkspaceImpl implements WorkspaceRepresentation {
 
-	private SortedSet<EBootProject> springBootProjects;
+	private SortedSet<SpringBootProjectRepresentation> springBootProjects;
 
-	private SortedSet<ENgProject> angularProjects;
+	private SortedSet<NgProjectRepresentation> angularProjects;
 
 	private Path path;
 
@@ -29,12 +29,12 @@ public class EWorkspaceImpl implements EWorkspace {
 
 	@Override
 	@SneakyThrows
-	public SortedSet<EBootProject> getSpringBootProjects() {
+	public SortedSet<SpringBootProjectRepresentation> getSpringBootProjects() {
 		if (Objects.isNull(this.springBootProjects)) {
 			// @formatter:off
 			this.springBootProjects = Files.list(this.path)
 					.filter(Files::isDirectory)
-					.filter(EBootProject::isValid)
+					.filter(SpringBootProjectRepresentation::isValid)
 					.map(EBootProjectImpl::new)
 					.collect(Collectors.toCollection(TreeSet::new));
 			// @formatter:on
@@ -44,12 +44,12 @@ public class EWorkspaceImpl implements EWorkspace {
 
 	@Override
 	@SneakyThrows
-	public SortedSet<ENgProject> getAngularProjections() {
+	public SortedSet<NgProjectRepresentation> getAngularProjections() {
 		if (Objects.isNull(this.angularProjects)) {
 			// @formatter:off
 			this.angularProjects = Files.list(this.path)
 					.filter(Files::isDirectory)
-					.filter(ENgProject::isValid)
+					.filter(NgProjectRepresentation::isValid)
 					.map(ENgProjectImpl::new)
 					.collect(Collectors.toCollection(TreeSet::new));
 			// @formatter:on
@@ -58,7 +58,7 @@ public class EWorkspaceImpl implements EWorkspace {
 	}
 
 	@Override
-	public SortedSet<EProject> getProjects() {
+	public SortedSet<ProjectRepresentation> getProjects() {
 		return Stream.concat(this.getSpringBootProjects().stream(), this.getAngularProjections().stream()).collect(Collectors.toCollection(TreeSet::new));
 	}
 

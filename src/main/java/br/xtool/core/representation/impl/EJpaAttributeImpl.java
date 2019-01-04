@@ -9,10 +9,10 @@ import org.jboss.forge.roaster.model.source.FieldSource;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.jboss.forge.roaster.model.util.Types;
 
-import br.xtool.core.representation.EBootProject;
-import br.xtool.core.representation.EJpaAttribute;
-import br.xtool.core.representation.EJpaEntity;
-import br.xtool.core.representation.EJpaRelationship;
+import br.xtool.core.representation.SpringBootProjectRepresentation;
+import br.xtool.core.representation.EntityAttributeRepresentation;
+import br.xtool.core.representation.EntityRepresentation;
+import br.xtool.core.representation.JpaRelationshipRepresentation;
 
 /**
  * Classe que representa um atributo JPA de uma entidade.
@@ -20,13 +20,13 @@ import br.xtool.core.representation.EJpaRelationship;
  * @author jcruz
  *
  */
-public class EJpaAttributeImpl extends EJavaFieldImpl implements EJpaAttribute {
+public class EJpaAttributeImpl extends EJavaFieldImpl implements EntityAttributeRepresentation {
 
-	private EBootProject springBootProject;
+	private SpringBootProjectRepresentation springBootProject;
 
-	private EJpaEntity entitySource;
+	private EntityRepresentation entitySource;
 
-	public EJpaAttributeImpl(EBootProject springBootProject, EJpaEntity entitySource, FieldSource<JavaClassSource> fieldSource) {
+	public EJpaAttributeImpl(SpringBootProjectRepresentation springBootProject, EntityRepresentation entitySource, FieldSource<JavaClassSource> fieldSource) {
 		super(entitySource, fieldSource);
 		this.springBootProject = springBootProject;
 		this.entitySource = entitySource;
@@ -58,7 +58,7 @@ public class EJpaAttributeImpl extends EJavaFieldImpl implements EJpaAttribute {
 	 * @see br.xtool.core.representation.EJpaAttribute#getRelationship()
 	 */
 	@Override
-	public Optional<EJpaRelationship> getJpaRelationship() {
+	public Optional<JpaRelationshipRepresentation> getJpaRelationship() {
 		if (this.isEnumField()) return Optional.empty();
 		if (this.isCollection()) {
 			String entityName = Types.getGenericsTypeParameter(this.getType().getQualifiedNameWithGenerics());
@@ -66,7 +66,7 @@ public class EJpaAttributeImpl extends EJavaFieldImpl implements EJpaAttribute {
 			return this.springBootProject.getEntities().stream()
 					.filter(entity -> entity.getName().equals(entityName))
 					.map(entityTarget -> new EJpaRelationshipImpl(this.entitySource, entityTarget, this))
-					.map(EJpaRelationship.class::cast)
+					.map(JpaRelationshipRepresentation.class::cast)
 					.findFirst();
 			// @formatter:on
 		}
@@ -76,7 +76,7 @@ public class EJpaAttributeImpl extends EJavaFieldImpl implements EJpaAttribute {
 		return this.springBootProject.getEntities().stream()
 				.filter(entity -> entity.getName().equals(entityName))
 				.map(entityTarget -> new EJpaRelationshipImpl(this.entitySource, entityTarget, this))
-				.map(EJpaRelationship.class::cast)
+				.map(JpaRelationshipRepresentation.class::cast)
 				.findFirst();
 		// @formatter:on
 	}

@@ -5,17 +5,17 @@ import java.util.function.Predicate;
 
 import org.jboss.forge.roaster.model.util.Types;
 
-import br.xtool.core.representation.EJavaClass;
-import br.xtool.core.representation.EJavaField;
-import br.xtool.core.representation.EJavaRelationship;
+import br.xtool.core.representation.JavaClassRepresentation;
+import br.xtool.core.representation.JavaFieldRepresentation;
+import br.xtool.core.representation.JavaRelationshipRepresentation;
 
-public class EJavaRelationshipImpl implements EJavaRelationship {
+public class EJavaRelationshipImpl implements JavaRelationshipRepresentation {
 
-	private EJavaClass sourceClass;
-	private EJavaClass targetClass;
-	private EJavaField sourceField;
+	private JavaClassRepresentation sourceClass;
+	private JavaClassRepresentation targetClass;
+	private JavaFieldRepresentation sourceField;
 
-	public EJavaRelationshipImpl(EJavaClass sourceClass, EJavaClass targetClass, EJavaField sourceField) {
+	public EJavaRelationshipImpl(JavaClassRepresentation sourceClass, JavaClassRepresentation targetClass, JavaFieldRepresentation sourceField) {
 		this.sourceClass = sourceClass;
 		this.targetClass = targetClass;
 		this.sourceField = sourceField;
@@ -32,25 +32,25 @@ public class EJavaRelationshipImpl implements EJavaRelationship {
 	}
 
 	@Override
-	public EJavaClass getSourceClass() {
+	public JavaClassRepresentation getSourceClass() {
 		return this.sourceClass;
 	}
 
 	@Override
-	public EJavaClass getTargetClass() {
+	public JavaClassRepresentation getTargetClass() {
 		return this.targetClass;
 	}
 
 	@Override
-	public EJavaField getSourceField() {
+	public JavaFieldRepresentation getSourceField() {
 		return this.sourceField;
 	}
 
 	@Override
-	public Optional<EJavaField> getTargetField() {
-		Predicate<EJavaField> listPredicate = javaField -> javaField.isCollection()
+	public Optional<JavaFieldRepresentation> getTargetField() {
+		Predicate<JavaFieldRepresentation> listPredicate = javaField -> javaField.isCollection()
 				&& Types.getGenericsTypeParameter(javaField.getType().getQualifiedNameWithGenerics()).equals(this.sourceClass.getName());
-		Predicate<EJavaField> nonListPredicate = javaField -> javaField.getType().getName().equals(this.sourceClass.getName());
+		Predicate<JavaFieldRepresentation> nonListPredicate = javaField -> javaField.getType().getName().equals(this.sourceClass.getName());
 		// @formatter:off
 		return this.targetClass.getJavaFields().stream()
 				.filter(listPredicate.or(nonListPredicate))

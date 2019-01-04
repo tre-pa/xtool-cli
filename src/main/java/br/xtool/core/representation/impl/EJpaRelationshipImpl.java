@@ -9,20 +9,20 @@ import javax.persistence.OneToOne;
 
 import org.jboss.forge.roaster.model.util.Types;
 
-import br.xtool.core.representation.EJpaAttribute;
-import br.xtool.core.representation.EJpaEntity;
-import br.xtool.core.representation.EJpaRelationship;
+import br.xtool.core.representation.EntityAttributeRepresentation;
+import br.xtool.core.representation.EntityRepresentation;
+import br.xtool.core.representation.JpaRelationshipRepresentation;
 import lombok.val;
 
-public class EJpaRelationshipImpl extends EJavaRelationshipImpl implements EJpaRelationship {
+public class EJpaRelationshipImpl extends EJavaRelationshipImpl implements JpaRelationshipRepresentation {
 
-	private EJpaEntity sourceEntity;
+	private EntityRepresentation sourceEntity;
 
-	private EJpaEntity targetEntity;
+	private EntityRepresentation targetEntity;
 
-	private EJpaAttribute sourceAttribute;
+	private EntityAttributeRepresentation sourceAttribute;
 
-	public EJpaRelationshipImpl(EJpaEntity sourceEntity, EJpaEntity targetEntity, EJpaAttribute sourceAttribute) {
+	public EJpaRelationshipImpl(EntityRepresentation sourceEntity, EntityRepresentation targetEntity, EntityAttributeRepresentation sourceAttribute) {
 		super(sourceEntity, targetEntity, sourceAttribute);
 		this.sourceEntity = sourceEntity;
 		this.targetEntity = targetEntity;
@@ -119,7 +119,7 @@ public class EJpaRelationshipImpl extends EJavaRelationshipImpl implements EJpaR
 	 * @see br.xtool.core.representation.EJpaRelationship#getTargetAttribute()
 	 */
 	@Override
-	public Optional<EJpaAttribute> getTargetAttribute() {
+	public Optional<EntityAttributeRepresentation> getTargetAttribute() {
 		if (this.isManyToMany() || this.isManyToOne()) {
 			// @formatter:off
 			return this.targetEntity.getAttributes().stream()
@@ -139,7 +139,7 @@ public class EJpaRelationshipImpl extends EJavaRelationshipImpl implements EJpaR
 	 * @see br.xtool.core.representation.EJpaRelationship#getSourceAttribute()
 	 */
 	@Override
-	public EJpaAttribute getSourceAttribute() {
+	public EntityAttributeRepresentation getSourceAttribute() {
 		return this.sourceAttribute;
 	}
 
@@ -148,7 +148,7 @@ public class EJpaRelationshipImpl extends EJavaRelationshipImpl implements EJpaR
 	 * @see br.xtool.core.representation.EJpaRelationship#getSourceEntity()
 	 */
 	@Override
-	public EJpaEntity getSourceEntity() {
+	public EntityRepresentation getSourceEntity() {
 		return this.sourceEntity;
 	}
 
@@ -157,7 +157,7 @@ public class EJpaRelationshipImpl extends EJavaRelationshipImpl implements EJpaR
 	 * @see br.xtool.core.representation.EJpaRelationship#getTargetEntity()
 	 */
 	@Override
-	public EJpaEntity getTargetEntity() {
+	public EntityRepresentation getTargetEntity() {
 		return this.targetEntity;
 	}
 

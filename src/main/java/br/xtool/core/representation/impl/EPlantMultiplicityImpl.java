@@ -4,18 +4,18 @@ import java.util.stream.Stream;
 
 import org.apache.commons.lang3.StringUtils;
 
-import br.xtool.core.representation.EPlantClass;
-import br.xtool.core.representation.EPlantMultiplicity;
+import br.xtool.core.representation.PlantClassRepresentation;
+import br.xtool.core.representation.PlantMultiplicityRepresentation;
 
-public class EPlantMultiplicityImpl implements EPlantMultiplicity {
+public class EPlantMultiplicityImpl implements PlantMultiplicityRepresentation {
 
 	private String sourceQualifier;
 
-	private EPlantClass sourceClass;
+	private PlantClassRepresentation sourceClass;
 
-	private EPlantClass targetClass;
+	private PlantClassRepresentation targetClass;
 
-	public EPlantMultiplicityImpl(EPlantClass sourceClass, EPlantClass targetClass, String sourceQualifier) {
+	public EPlantMultiplicityImpl(PlantClassRepresentation sourceClass, PlantClassRepresentation targetClass, String sourceQualifier) {
 		super();
 		this.sourceQualifier = sourceQualifier;
 		this.sourceClass = sourceClass;

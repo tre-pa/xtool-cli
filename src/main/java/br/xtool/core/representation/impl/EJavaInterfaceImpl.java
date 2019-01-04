@@ -12,18 +12,18 @@ import org.jboss.forge.roaster.model.SyntaxError;
 import org.jboss.forge.roaster.model.Visibility;
 import org.jboss.forge.roaster.model.source.JavaInterfaceSource;
 
-import br.xtool.core.representation.EBootProject;
-import br.xtool.core.representation.EJavaInterface;
-import br.xtool.core.representation.EJavaMethod;
-import br.xtool.core.representation.EJavaPackage;
+import br.xtool.core.representation.SpringBootProjectRepresentation;
+import br.xtool.core.representation.JavaInterfaceRepresentation;
+import br.xtool.core.representation.JavaMethodRepresentation;
+import br.xtool.core.representation.JavaPackageRepresentation;
 
-public class EJavaInterfaceImpl implements EJavaInterface {
+public class EJavaInterfaceImpl implements JavaInterfaceRepresentation {
 
-	private EBootProject bootProject;
+	private SpringBootProjectRepresentation bootProject;
 
 	private JavaInterfaceSource javaInterfaceSource;
 
-	public EJavaInterfaceImpl(EBootProject bootProject, JavaInterfaceSource javaInterfaceSource) {
+	public EJavaInterfaceImpl(SpringBootProjectRepresentation bootProject, JavaInterfaceSource javaInterfaceSource) {
 		super();
 		this.bootProject = bootProject;
 		this.javaInterfaceSource = javaInterfaceSource;
@@ -43,7 +43,7 @@ public class EJavaInterfaceImpl implements EJavaInterface {
 	 * @see br.xtool.core.representation.EJavaInterface#getProject()
 	 */
 	@Override
-	public EBootProject getProject() {
+	public SpringBootProjectRepresentation getProject() {
 		return this.bootProject;
 	}
 
@@ -53,7 +53,7 @@ public class EJavaInterfaceImpl implements EJavaInterface {
 	 * @return
 	 */
 	@Override
-	public EJavaPackage getJavaPackage() {
+	public JavaPackageRepresentation getJavaPackage() {
 		return EJavaPackageImpl.of(this.javaInterfaceSource.getPackage());
 	}
 
@@ -198,7 +198,7 @@ public class EJavaInterfaceImpl implements EJavaInterface {
 	}
 
 	@Override
-	public Collection<EJavaMethod<JavaInterfaceSource>> getJavaMethods() {
+	public Collection<JavaMethodRepresentation<JavaInterfaceSource>> getJavaMethods() {
 		// @formatter:off
 		return this.javaInterfaceSource.getMethods().stream()
 				.map(methodSource -> new EJavaMethodImpl<>(this.javaInterfaceSource, methodSource))
@@ -207,7 +207,7 @@ public class EJavaInterfaceImpl implements EJavaInterface {
 	}
 
 	@Override
-	public int compareTo(EJavaInterface o) {
+	public int compareTo(JavaInterfaceRepresentation o) {
 		return this.getName().compareTo(o.getName());
 	}
 

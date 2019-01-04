@@ -2,27 +2,27 @@ package br.xtool.core.representation.impl;
 
 import org.apache.commons.lang3.StringUtils;
 
-import br.xtool.core.representation.EPlantClass;
-import br.xtool.core.representation.EPlantMultiplicity;
-import br.xtool.core.representation.EPlantRelationship;
+import br.xtool.core.representation.PlantClassRepresentation;
+import br.xtool.core.representation.PlantMultiplicityRepresentation;
+import br.xtool.core.representation.PlantRelationshipRepresentation;
 import br.xtool.core.util.Inflector;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkArrow;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
 
-public class EPlantRelationshipImpl implements EPlantRelationship {
+public class EPlantRelationshipImpl implements PlantRelationshipRepresentation {
 
 	private Link link;
 
-	private EPlantClass sourceClass;
+	private PlantClassRepresentation sourceClass;
 
 	private String sourceQualifier;
 
-	private EPlantClass targetClass;
+	private PlantClassRepresentation targetClass;
 
 	private String targetQualifier;
 
-	public EPlantRelationshipImpl(EPlantClass sourceClass, EPlantClass targetClass, Link link, String sourceQualifer, String targetQualifier) {
+	public EPlantRelationshipImpl(PlantClassRepresentation sourceClass, PlantClassRepresentation targetClass, Link link, String sourceQualifer, String targetQualifier) {
 		super();
 		this.sourceClass = sourceClass;
 		this.sourceQualifier = sourceQualifer;
@@ -64,7 +64,7 @@ public class EPlantRelationshipImpl implements EPlantRelationship {
 	 * @see br.xtool.core.representation.EUmlRelationship#getSourceClass()
 	 */
 	@Override
-	public EPlantClass getSourceClass() {
+	public PlantClassRepresentation getSourceClass() {
 		return this.sourceClass;
 	}
 
@@ -93,7 +93,7 @@ public class EPlantRelationshipImpl implements EPlantRelationship {
 	 * @see br.xtool.core.representation.EUmlRelationship#getTargetClass()
 	 */
 	@Override
-	public EPlantClass getTargetClass() {
+	public PlantClassRepresentation getTargetClass() {
 		return this.targetClass;
 	}
 
@@ -114,7 +114,7 @@ public class EPlantRelationshipImpl implements EPlantRelationship {
 	 * @see br.xtool.core.representation.EUmlRelationship#getSourceMutiplicity()
 	 */
 	@Override
-	public EPlantMultiplicity getSourceMultiplicity() {
+	public PlantMultiplicityRepresentation getSourceMultiplicity() {
 		return new EPlantMultiplicityImpl(this.getSourceClass(), this.getTargetClass(), this.sourceQualifier);
 	}
 
@@ -123,7 +123,7 @@ public class EPlantRelationshipImpl implements EPlantRelationship {
 	 * @see br.xtool.core.representation.EUmlRelationship#getTargetMultiplicity()
 	 */
 	@Override
-	public EPlantMultiplicity getTargetMultiplicity() {
+	public PlantMultiplicityRepresentation getTargetMultiplicity() {
 		return new EPlantMultiplicityImpl(this.getSourceClass(), this.getTargetClass(), this.targetQualifier);
 	}
 
@@ -171,13 +171,13 @@ public class EPlantRelationshipImpl implements EPlantRelationship {
 	}
 
 	public static class EAssociationImpl extends EPlantRelationshipImpl implements EAssociation {
-		public EAssociationImpl(EPlantRelationship umlRelationship) {
+		public EAssociationImpl(PlantRelationshipRepresentation umlRelationship) {
 			super(umlRelationship.getSourceClass(), umlRelationship.getTargetClass(), umlRelationship.getLink(), umlRelationship.getSourceQualifier(), umlRelationship.getTargetQualifier());
 		}
 	}
 
 	public static class ECompositionImpl extends EPlantRelationshipImpl implements EComposition {
-		public ECompositionImpl(EPlantRelationship umlRelationship) {
+		public ECompositionImpl(PlantRelationshipRepresentation umlRelationship) {
 			super(umlRelationship.getSourceClass(), umlRelationship.getTargetClass(), umlRelationship.getLink(), umlRelationship.getSourceQualifier(), umlRelationship.getTargetQualifier());
 		}
 	}

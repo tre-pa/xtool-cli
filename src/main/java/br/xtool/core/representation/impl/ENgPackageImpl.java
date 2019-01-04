@@ -10,7 +10,7 @@ import java.util.Optional;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import br.xtool.core.representation.ENgPackage;
+import br.xtool.core.representation.NgPackageRepresentation;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -25,7 +25,7 @@ import lombok.ToString;
 @Setter
 @ToString(of = { "name" })
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ENgPackageImpl implements ENgPackage {
+public class ENgPackageImpl implements NgPackageRepresentation {
 
 	private Path path;
 
@@ -41,7 +41,7 @@ public class ENgPackageImpl implements ENgPackage {
 		super();
 	}
 
-	public static Optional<ENgPackage> of(Path path) {
+	public static Optional<NgPackageRepresentation> of(Path path) {
 		if (Files.exists(path)) {
 			ObjectMapper mapper = new ObjectMapper();
 			try {

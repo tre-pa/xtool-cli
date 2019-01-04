@@ -11,23 +11,23 @@ import org.springframework.shell.CompletionProposal;
 import org.springframework.shell.standard.ValueProviderSupport;
 import org.springframework.stereotype.Component;
 
-import br.xtool.core.representation.EJpaRepository;
-import br.xtool.core.service.WorkspaceService;
-import br.xtool.core.representation.EBootProject;
+import br.xtool.core.Workspace;
+import br.xtool.core.representation.RepositoryRepresentation;
+import br.xtool.core.representation.SpringBootProjectRepresentation;
 
 @Component
 public class EJpaRepositoryValueProvider extends ValueProviderSupport {
 
 	@Autowired
-	private WorkspaceService workspaceService;
+	private Workspace workspace;
 
 	@Override
 	public List<CompletionProposal> complete(MethodParameter parameter, CompletionContext completionContext, String[] hints) {
-		if (this.workspaceService.getWorkingProject() instanceof EBootProject) {
-			EBootProject project = EBootProject.class.cast(this.workspaceService.getWorkingProject());
+		if (this.workspace.getWorkingProject() instanceof SpringBootProjectRepresentation) {
+			SpringBootProjectRepresentation project = SpringBootProjectRepresentation.class.cast(this.workspace.getWorkingProject());
 			// @formatter:off
 			return project.getRepositories()
-				.stream().map(EJpaRepository::getName)
+				.stream().map(RepositoryRepresentation::getName)
 				.map(CompletionProposal::new)
 				.collect(Collectors.toList());
 			// @formatter:on

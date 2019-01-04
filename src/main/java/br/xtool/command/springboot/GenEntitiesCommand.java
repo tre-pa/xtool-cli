@@ -10,11 +10,11 @@ import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 
 import br.xtool.XtoolCliApplication;
+import br.xtool.core.Workspace;
 import br.xtool.core.aware.SpringBootAware;
-import br.xtool.core.representation.EBootProject;
-import br.xtool.core.service.BootProjectService;
-import br.xtool.core.service.NgProjectService;
-import br.xtool.core.service.WorkspaceService;
+import br.xtool.core.implementation.NgProject;
+import br.xtool.core.implementation.SpringBootProject;
+import br.xtool.core.representation.SpringBootProjectRepresentation;
 import br.xtool.core.visitor.Visitor;
 import br.xtool.core.visitor.impl.JacksonVisitor;
 import br.xtool.core.visitor.impl.JavaxValidationVisitor;
@@ -25,13 +25,13 @@ import br.xtool.core.visitor.impl.LombokVisitor;
 public class GenEntitiesCommand extends SpringBootAware {
 
 	@Autowired
-	private WorkspaceService workspaceService;
+	private Workspace workspaceService;
 
 	@Autowired
-	private BootProjectService bootProjectService;
+	private SpringBootProject bootProjectService;
 
 	@Autowired
-	private NgProjectService ngProjectService;
+	private NgProject ngProjectService;
 
 	@Autowired
 	private ApplicationContext applicationContext;
@@ -39,18 +39,15 @@ public class GenEntitiesCommand extends SpringBootAware {
 	@ShellMethod(key = "gen:entities", value = "Gera as entidades Java do diagrama de classe UML.", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
 	// @formatter:off
 	public void run(
-			@ShellOption(help = "Desabilita o mapeamento JPA da classe", defaultValue = "false", arity = 0) Boolean noJpa,
-			@ShellOption(help = "Desabilita o mapeamento Lombok da classe", defaultValue = "false", arity = 0) Boolean noLombok,
-			@ShellOption(help = "Desabilita o mapeamento Jackson da classe", defaultValue = "false", arity = 0) Boolean noJackson,
 			@ShellOption(help = "Gera as classes Typescript no projeto Angular associado", defaultValue = "false", arity = 0) Boolean ngEntities) {
 	// @formatter:on
-		EBootProject bootProject = this.workspaceService.getWorkingProject(EBootProject.class);
+		SpringBootProjectRepresentation bootProject = this.workspaceService.getWorkingProject(SpringBootProjectRepresentation.class);
 
 		Set<Visitor> visitors = new HashSet<>();
 		visitors.add(this.applicationContext.getBean(JavaxValidationVisitor.class));
-		if (!noLombok) visitors.add(this.applicationContext.getBean(LombokVisitor.class));
-		if (!noJpa) visitors.add(this.applicationContext.getBean(JpaVisitor.class));
-		if (!noJackson) visitors.add(this.applicationContext.getBean(JacksonVisitor.class));
+		visitors.add(this.applicationContext.getBean(LombokVisitor.class));
+		visitors.add(this.applicationContext.getBean(JpaVisitor.class));
+		visitors.add(this.applicationContext.getBean(JacksonVisitor.class));
 
 		this.bootProjectService.umlEnumsToJavaEnums(bootProject);
 		this.bootProjectService.umlClassesToJavaClasses(bootProject, visitors);
@@ -58,7 +55,7 @@ public class GenEntitiesCommand extends SpringBootAware {
 		if (ngEntities) this.genNgEntities(bootProject);
 	}
 
-	private void genNgEntities(EBootProject bootProject) {
+	private void genNgEntities(SpringBootProjectRepresentation bootProject) {
 		bootProject.getAssociatedAngularProject().ifPresent(ngProject -> {
 			bootProject.getEnums().forEach(javaEnum -> ngProjectService.createNgEnum(ngProject, javaEnum));
 			bootProject.getEntities().forEach(entity -> ngProjectService.createNgEntity(ngProject, entity));

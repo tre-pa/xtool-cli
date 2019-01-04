@@ -18,12 +18,12 @@ import org.apache.commons.configuration2.builder.FileBasedConfigurationBuilder;
 import org.apache.commons.configuration2.builder.fluent.Parameters;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 
-import br.xtool.core.representation.EBootAppProperties;
-import br.xtool.core.representation.EBootProject;
+import br.xtool.core.representation.ApplicationPropertiesRepresentation;
+import br.xtool.core.representation.SpringBootProjectRepresentation;
 import lombok.SneakyThrows;
 import strman.Strman;
 
-public class EBootAppPropertiesImpl implements EBootAppProperties {
+public class EBootAppPropertiesImpl implements ApplicationPropertiesRepresentation {
 
 	private Path path;
 
@@ -33,9 +33,9 @@ public class EBootAppPropertiesImpl implements EBootAppProperties {
 
 	private FileBasedConfiguration configuration;
 
-	private EBootProject bootProject;
+	private SpringBootProjectRepresentation bootProject;
 
-	private EBootAppPropertiesImpl(EBootProject bootProject, Path path) throws ConfigurationException {
+	private EBootAppPropertiesImpl(SpringBootProjectRepresentation bootProject, Path path) throws ConfigurationException {
 		super();
 		this.path = path;
 		this.bootProject = bootProject;
@@ -53,7 +53,7 @@ public class EBootAppPropertiesImpl implements EBootAppProperties {
 	}
 
 	@Override
-	public EBootProject getProject() {
+	public SpringBootProjectRepresentation getProject() {
 		return this.bootProject;
 	}
 
@@ -63,7 +63,7 @@ public class EBootAppPropertiesImpl implements EBootAppProperties {
 	}
 
 	@Override
-	public EBootAppProperties set(String key, String value) {
+	public ApplicationPropertiesRepresentation set(String key, String value) {
 		if (!this.configuration.containsKey(key)) {
 			this.configuration.setProperty(key, value);
 			print(bold(yellow("\t[~] ")), purple("Item: "), white("application.properties"), gray(" -- "), gray(Strman.surround(key, "Key [", "]")));
@@ -72,12 +72,12 @@ public class EBootAppPropertiesImpl implements EBootAppProperties {
 	}
 
 	@Override
-	public EBootAppProperties set(String key, String value, Object... params) {
+	public ApplicationPropertiesRepresentation set(String key, String value, Object... params) {
 		return this.set(key, String.format(value, params));
 	}
 
 	@Override
-	public EBootAppProperties comment(String key, String value) {
+	public ApplicationPropertiesRepresentation comment(String key, String value) {
 		this.layout.setComment(key, value);
 		return this;
 	}
@@ -93,7 +93,7 @@ public class EBootAppPropertiesImpl implements EBootAppProperties {
 		this.builder.save();
 	}
 
-	public static EBootAppProperties of(EBootProject bootProject, Path path) {
+	public static ApplicationPropertiesRepresentation of(SpringBootProjectRepresentation bootProject, Path path) {
 		if (Files.exists(path)) {
 			try {
 				EBootAppPropertiesImpl representation = new EBootAppPropertiesImpl(bootProject, path);

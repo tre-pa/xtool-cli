@@ -11,23 +11,23 @@ import org.springframework.shell.CompletionProposal;
 import org.springframework.shell.standard.ValueProviderSupport;
 import org.springframework.stereotype.Component;
 
-import br.xtool.core.representation.ENgLayout;
-import br.xtool.core.representation.ENgProject;
-import br.xtool.core.service.WorkspaceService;
+import br.xtool.core.Workspace;
+import br.xtool.core.representation.NgLayoutRepresentation;
+import br.xtool.core.representation.NgProjectRepresentation;
 
 @Component
 public class ENgLayoutValueProvider extends ValueProviderSupport {
 
 	@Autowired
-	private WorkspaceService workspaceService;
+	private Workspace workspace;
 
 	@Override
 	public List<CompletionProposal> complete(MethodParameter parameter, CompletionContext completionContext, String[] hints) {
-		if (this.workspaceService.getWorkingProject() instanceof ENgProject) {
-			ENgProject project = ENgProject.class.cast(this.workspaceService.getWorkingProject());
+		if (this.workspace.getWorkingProject() instanceof NgProjectRepresentation) {
+			NgProjectRepresentation project = NgProjectRepresentation.class.cast(this.workspace.getWorkingProject());
 			// @formatter:off
 			return project.getNgLayouts().stream()
-					.map(ENgLayout::getName)
+					.map(NgLayoutRepresentation::getName)
 					.map(CompletionProposal::new)
 					.collect(Collectors.toList());
 			// @formatter:on

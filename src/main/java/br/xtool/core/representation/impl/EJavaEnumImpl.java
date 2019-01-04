@@ -11,17 +11,17 @@ import org.jboss.forge.roaster.model.SyntaxError;
 import org.jboss.forge.roaster.model.Visibility;
 import org.jboss.forge.roaster.model.source.JavaEnumSource;
 
-import br.xtool.core.representation.EBootProject;
-import br.xtool.core.representation.EJavaEnum;
-import br.xtool.core.representation.EJavaPackage;
+import br.xtool.core.representation.SpringBootProjectRepresentation;
+import br.xtool.core.representation.JavaEnumRepresentation;
+import br.xtool.core.representation.JavaPackageRepresentation;
 
-public class EJavaEnumImpl implements EJavaEnum {
+public class EJavaEnumImpl implements JavaEnumRepresentation {
 
-	private EBootProject project;
+	private SpringBootProjectRepresentation project;
 
 	private JavaEnumSource javaEnumSource;
 
-	public EJavaEnumImpl(EBootProject project, JavaEnumSource javaEnumSource) {
+	public EJavaEnumImpl(SpringBootProjectRepresentation project, JavaEnumSource javaEnumSource) {
 		super();
 		this.project = project;
 		this.javaEnumSource = javaEnumSource;
@@ -32,7 +32,7 @@ public class EJavaEnumImpl implements EJavaEnum {
 	 * @see br.xtool.core.representation.EJavaType#getProject()
 	 */
 	@Override
-	public EBootProject getProject() {
+	public SpringBootProjectRepresentation getProject() {
 		return this.project;
 	}
 
@@ -41,7 +41,7 @@ public class EJavaEnumImpl implements EJavaEnum {
 	 * @see br.xtool.core.representation.EJavaType#getJavaPackage()
 	 */
 	@Override
-	public EJavaPackage getJavaPackage() {
+	public JavaPackageRepresentation getJavaPackage() {
 		return EJavaPackageImpl.of(this.javaEnumSource.getPackage());
 	}
 

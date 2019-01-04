@@ -6,13 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.Availability;
 import org.springframework.shell.standard.ShellMethodAvailability;
 
-import br.xtool.core.representation.EProject.Type;
-import br.xtool.core.service.WorkspaceService;
+import br.xtool.core.Workspace;
+import br.xtool.core.representation.ProjectRepresentation.Type;
 
 public class RegularAware {
 
 	@Autowired
-	private WorkspaceService workspaceService;
+	private Workspace workspace;
 
 	/**
 	 * Define a disponibilidade dos comando do grupo Spring Boot.
@@ -22,7 +22,7 @@ public class RegularAware {
 	 */
 	@ShellMethodAvailability
 	public Availability availabilitySpringBootCommand() throws IOException {
-		return this.workspaceService.getWorkingProject().getProjectType().equals(Type.NONE) ? Availability.available()
+		return this.workspace.getWorkingProject().getProjectType().equals(Type.NONE) ? Availability.available()
 				: Availability.unavailable("O commando não é aplicável ao diretório atual.");
 	}
 

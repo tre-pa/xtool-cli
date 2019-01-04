@@ -8,18 +8,18 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
 
-import br.xtool.core.representation.EBootProject;
-import br.xtool.core.representation.EJavaPackage;
-import br.xtool.core.representation.EJavaSourceFolder;
+import br.xtool.core.representation.SpringBootProjectRepresentation;
+import br.xtool.core.representation.JavaPackageRepresentation;
+import br.xtool.core.representation.JavaSourceFolderRepresentation;
 import lombok.SneakyThrows;
 
-public class EJavaSourceFolderImpl implements EJavaSourceFolder {
+public class EJavaSourceFolderImpl implements JavaSourceFolderRepresentation {
 
 	private Path path;
 
-	private EBootProject bootProject;
+	private SpringBootProjectRepresentation bootProject;
 
-	public EJavaSourceFolderImpl(EBootProject bootProject, Path path) {
+	public EJavaSourceFolderImpl(SpringBootProjectRepresentation bootProject, Path path) {
 		super();
 		this.bootProject = bootProject;
 		this.path = path;
@@ -40,7 +40,7 @@ public class EJavaSourceFolderImpl implements EJavaSourceFolder {
 	 */
 	@Override
 	@SneakyThrows
-	public SortedSet<EJavaPackage> getPackages() {
+	public SortedSet<JavaPackageRepresentation> getPackages() {
 		// @formatter:off
 		return Files.walk(this.getPath())
 				.filter(Files::isDirectory)
@@ -54,7 +54,7 @@ public class EJavaSourceFolderImpl implements EJavaSourceFolder {
 	}
 
 	@Override
-	public EBootProject getBootProject() {
+	public SpringBootProjectRepresentation getBootProject() {
 		return this.bootProject;
 	}
 

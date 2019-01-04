@@ -2,17 +2,17 @@ package br.xtool.core.representation.impl;
 
 import java.nio.file.Path;
 
-import br.xtool.core.representation.ENgComponent;
-import br.xtool.core.representation.ENgTemplate;
+import br.xtool.core.representation.NgComponentRepresentation;
+import br.xtool.core.representation.NgTemplateRepresentation;
 
-public class ENgComponentImpl extends ENgClassImpl implements ENgComponent {
+public class ENgComponentImpl extends ENgClassImpl implements NgComponentRepresentation {
 
 	public ENgComponentImpl(Path path) {
 		super(path);
 	}
 
 	@Override
-	public ENgTemplate getNgTemplate() {
+	public NgTemplateRepresentation getNgTemplate() {
 		throw new UnsupportedOperationException();
 	}
 

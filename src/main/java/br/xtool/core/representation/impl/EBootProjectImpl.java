@@ -17,22 +17,22 @@ import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.jboss.forge.roaster.model.source.JavaEnumSource;
 import org.jboss.forge.roaster.model.source.JavaInterfaceSource;
 
-import br.xtool.core.representation.EBootAppProperties;
-import br.xtool.core.representation.EBootPom;
-import br.xtool.core.representation.EBootProject;
-import br.xtool.core.representation.EBootRest;
-import br.xtool.core.representation.EBootService;
-import br.xtool.core.representation.EJavaClass;
-import br.xtool.core.representation.EJavaEnum;
-import br.xtool.core.representation.EJavaPackage;
-import br.xtool.core.representation.EJavaSourceFolder;
-import br.xtool.core.representation.EJpaEntity;
-import br.xtool.core.representation.EJpaProjection;
-import br.xtool.core.representation.EJpaRepository;
-import br.xtool.core.representation.EJpaSpecification;
-import br.xtool.core.representation.ENgProject;
-import br.xtool.core.representation.EProject;
-import br.xtool.core.representation.EPlantClassDiagram;
+import br.xtool.core.representation.ApplicationPropertiesRepresentation;
+import br.xtool.core.representation.PomRepresentation;
+import br.xtool.core.representation.SpringBootProjectRepresentation;
+import br.xtool.core.representation.RestClassRepresentation;
+import br.xtool.core.representation.ServiceClassRepresentation;
+import br.xtool.core.representation.JavaClassRepresentation;
+import br.xtool.core.representation.JavaEnumRepresentation;
+import br.xtool.core.representation.JavaPackageRepresentation;
+import br.xtool.core.representation.JavaSourceFolderRepresentation;
+import br.xtool.core.representation.EntityRepresentation;
+import br.xtool.core.representation.JpaProjectionRepresentation;
+import br.xtool.core.representation.RepositoryRepresentation;
+import br.xtool.core.representation.SpecificationRepresentation;
+import br.xtool.core.representation.NgProjectRepresentation;
+import br.xtool.core.representation.ProjectRepresentation;
+import br.xtool.core.representation.PlantClassDiagramRepresentation;
 import br.xtool.core.util.RoasterUtil;
 
 /**
@@ -41,15 +41,15 @@ import br.xtool.core.util.RoasterUtil;
  * @author jcruz
  *
  */
-public class EBootProjectImpl extends EProjectImpl implements EBootProject {
+public class EBootProjectImpl extends EProjectImpl implements SpringBootProjectRepresentation {
 
 	private Collection<JavaUnit> javaUnits;
 
-	private EBootPom pom;
+	private PomRepresentation pom;
 
-	private EBootAppProperties applicationProperties;
+	private ApplicationPropertiesRepresentation applicationProperties;
 
-	private EJavaClass mainClass;
+	private JavaClassRepresentation mainClass;
 
 	public EBootProjectImpl(Path path) {
 		super(path);
@@ -69,7 +69,7 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 	 * @see br.xtool.core.representation.ESBootProject#getMainclass()
 	 */
 	@Override
-	public EJavaClass getMainclass() {
+	public JavaClassRepresentation getMainclass() {
 		if (Objects.isNull(this.mainClass)) {
 			// @formatter:off
 			this.mainClass = this.getJavaUnits()
@@ -90,7 +90,7 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 	 * @see br.xtool.core.representation.ESBootProject#getRootPackage()
 	 */
 	@Override
-	public EJavaPackage getRootPackage() {
+	public JavaPackageRepresentation getRootPackage() {
 		return this.getPom().getGroupId();
 	}
 
@@ -99,7 +99,7 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 	 * @see br.xtool.core.representation.ESBootProject#getMainSourceFolder()
 	 */
 	@Override
-	public EJavaSourceFolder getMainSourceFolder() {
+	public JavaSourceFolderRepresentation getMainSourceFolder() {
 		return new EJavaSourceFolderImpl(this, this.getPath().resolve("src/main/java"));
 	}
 
@@ -108,7 +108,7 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 	 * @see br.xtool.core.representation.ESBootProject#getTestSourceFolder()
 	 */
 	@Override
-	public EJavaSourceFolder getTestSourceFolder() {
+	public JavaSourceFolderRepresentation getTestSourceFolder() {
 		return new EJavaSourceFolderImpl(this, this.getPath().resolve("src/test/java"));
 	}
 
@@ -117,7 +117,7 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 	 * @see br.xtool.core.representation.ESBootProject#getPom()
 	 */
 	@Override
-	public EBootPom getPom() {
+	public PomRepresentation getPom() {
 		if (Objects.isNull(this.pom)) {
 			this.pom = EBootPomImpl.of(this, this.getPath().resolve("pom.xml"));
 		}
@@ -129,7 +129,7 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 	 * @see br.xtool.core.representation.EBootProject#getApplicationProperties()
 	 */
 	@Override
-	public EBootAppProperties getApplicationProperties() {
+	public ApplicationPropertiesRepresentation getApplicationProperties() {
 		if (Objects.isNull(this.applicationProperties)) {
 			this.applicationProperties = EBootAppPropertiesImpl.of(this, this.getPath().resolve("src/main/resources/application.properties"));
 		}
@@ -141,7 +141,7 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 	 * @see br.xtool.core.representation.EBootProject#getEnums()
 	 */
 	@Override
-	public Collection<EJavaEnum> getEnums() {
+	public Collection<JavaEnumRepresentation> getEnums() {
 		// @formatter:off
 		return this.getJavaUnits()
 			.parallelStream()
@@ -157,7 +157,7 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 	 * @see br.xtool.core.representation.EBootProject#getEntities()
 	 */
 	@Override
-	public SortedSet<EJpaEntity> getEntities() {
+	public SortedSet<EntityRepresentation> getEntities() {
 		// @formatter:off
 		return this.getJavaUnits()
 			.parallelStream()
@@ -174,7 +174,7 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 	 * @see br.xtool.core.representation.EBootProject#getProjections()
 	 */
 	@Override
-	public SortedSet<EJpaProjection> getProjections() {
+	public SortedSet<JpaProjectionRepresentation> getProjections() {
 		// @formatter:off
 		return this.getJavaUnits()
 				.parallelStream()
@@ -191,7 +191,7 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 	 * @see br.xtool.core.representation.EBootProject#getSpecifications()
 	 */
 	@Override
-	public SortedSet<EJpaSpecification> getSpecifications() {
+	public SortedSet<SpecificationRepresentation> getSpecifications() {
 		// @formatter:off
 		return this.getJavaUnits()
 				.parallelStream()
@@ -208,7 +208,7 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 	 * @see br.xtool.core.representation.EBootProject#getServices()
 	 */
 	@Override
-	public SortedSet<EBootService> getServices() {
+	public SortedSet<ServiceClassRepresentation> getServices() {
 		// @formatter:off
 		return this.getJavaUnits()
 				.parallelStream()
@@ -225,14 +225,14 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 	 * @see br.xtool.core.representation.EBootProject#getRepositories()
 	 */
 	@Override
-	public SortedSet<EJpaRepository> getRepositories() {
+	public SortedSet<RepositoryRepresentation> getRepositories() {
 		// @formatter:off
 		return this.getJavaUnits()
 			.parallelStream()
 			.filter(javaUnit -> javaUnit.getGoverningType().isInterface())
 			.map(javaUnit -> javaUnit.<JavaInterfaceSource>getGoverningType())
 			.filter(j -> j.getAnnotations().stream().anyMatch(ann -> ann.getName().equals("Repository")))
-			.map(j -> new EJpaRepositoryImpl(this, j))
+			.map(j -> new RepositoryRepresentationImpl(this, j))
 			.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
 	}
@@ -242,14 +242,14 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 	 * @see br.xtool.core.representation.EBootProject#getRests()
 	 */
 	@Override
-	public SortedSet<EBootRest> getRests() {
+	public SortedSet<RestClassRepresentation> getRests() {
 		// @formatter:off
 		return this.getJavaUnits()
 			.parallelStream()
 			.filter(javaUnit -> javaUnit.getGoverningType().isClass())
 			.map(javaUnit -> javaUnit.<JavaClassSource>getGoverningType())
 			.filter(j -> j.getAnnotations().stream().anyMatch(ann -> ann.getName().equals("RestController")))
-			.map(j -> new EBootRestImpl(this, j))
+			.map(j -> new RestClassRepresentationImpl(this, j))
 			.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
 	}
@@ -279,11 +279,11 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 	 * @see br.xtool.core.representation.EBootProject#getAssociatedAngularProject()
 	 */
 	@Override
-	public Optional<ENgProject> getAssociatedAngularProject() {
+	public Optional<NgProjectRepresentation> getAssociatedAngularProject() {
 		String angularPath = this.getPath().toString().replace("-service", "");
 		if (StringUtils.isNotEmpty(angularPath)) {
 			if (Files.exists(Paths.get(angularPath))) {
-				if (ENgProject.isValid(Paths.get(angularPath))) {
+				if (NgProjectRepresentation.isValid(Paths.get(angularPath))) {
 					return Optional.of(new ENgProjectImpl(Paths.get(angularPath)));
 				}
 			}
@@ -296,7 +296,7 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 	 * @see br.xtool.core.representation.EBootProject#getDomainClassDiagram()
 	 */
 	@Override
-	public EPlantClassDiagram getDomainClassDiagram() {
+	public PlantClassDiagramRepresentation getDomainClassDiagram() {
 		return EPlantDiagramImpl.of(this.getPath().resolve("docs/diagrams/domain-class.md"));
 	}
 
@@ -337,7 +337,7 @@ public class EBootProjectImpl extends EProjectImpl implements EBootProject {
 	 */
 	@Override
 	public Type getProjectType() {
-		return EProject.Type.SPRINGBOOT;
+		return ProjectRepresentation.Type.SPRINGBOOT;
 	}
 
 }

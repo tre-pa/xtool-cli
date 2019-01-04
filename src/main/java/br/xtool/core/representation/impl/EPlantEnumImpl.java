@@ -5,24 +5,24 @@ import java.util.stream.Collectors;
 
 import org.springframework.util.StringUtils;
 
-import br.xtool.core.representation.EPlantClassDiagram;
-import br.xtool.core.representation.EPlantEnum;
-import br.xtool.core.representation.EPlantPackage;
+import br.xtool.core.representation.PlantClassDiagramRepresentation;
+import br.xtool.core.representation.PlantEnumRepresentation;
+import br.xtool.core.representation.PlantPackageRepresentation;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
 
-public class EPlantEnumImpl implements EPlantEnum {
+public class EPlantEnumImpl implements PlantEnumRepresentation {
 
-	private EPlantClassDiagram umlClassDiagram;
+	private PlantClassDiagramRepresentation umlClassDiagram;
 
 	private ILeaf leaf;
 
-	public EPlantEnumImpl(EPlantClassDiagram umlClassDiagram, ILeaf leaf) {
+	public EPlantEnumImpl(PlantClassDiagramRepresentation umlClassDiagram, ILeaf leaf) {
 		this.umlClassDiagram = umlClassDiagram;
 		this.leaf = leaf;
 	}
 
 	@Override
-	public EPlantClassDiagram getClassDiagram() {
+	public PlantClassDiagramRepresentation getClassDiagram() {
 		return this.umlClassDiagram;
 	}
 
@@ -67,7 +67,7 @@ public class EPlantEnumImpl implements EPlantEnum {
 	 * @see br.xtool.core.representation.EUmlClass#getPackage()
 	 */
 	@Override
-	public EPlantPackage getUmlPackage() {
+	public PlantPackageRepresentation getUmlPackage() {
 		return new EPlantPackageImpl(this.leaf.getParentContainer());
 	}
 

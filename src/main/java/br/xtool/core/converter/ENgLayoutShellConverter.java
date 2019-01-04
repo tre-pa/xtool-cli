@@ -4,20 +4,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
-import br.xtool.core.representation.ENgLayout;
-import br.xtool.core.representation.ENgProject;
-import br.xtool.core.service.WorkspaceService;
+import br.xtool.core.Workspace;
+import br.xtool.core.representation.NgLayoutRepresentation;
+import br.xtool.core.representation.NgProjectRepresentation;
 
 @Component
-public class ENgLayoutShellConverter implements Converter<String, ENgLayout> {
+public class ENgLayoutShellConverter implements Converter<String, NgLayoutRepresentation> {
 
 	@Autowired
-	private WorkspaceService workspaceService;
+	private Workspace workspace;
 
 	@Override
-	public ENgLayout convert(String source) {
-		if (this.workspaceService.getWorkingProject() instanceof ENgProject) {
-			ENgProject project = ENgProject.class.cast(this.workspaceService.getWorkingProject());
+	public NgLayoutRepresentation convert(String source) {
+		if (this.workspace.getWorkingProject() instanceof NgProjectRepresentation) {
+			NgProjectRepresentation project = NgProjectRepresentation.class.cast(this.workspace.getWorkingProject());
 			// @formatter:off
 			return project.getNgLayouts()
 				.stream()

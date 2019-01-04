@@ -10,9 +10,9 @@ import javax.persistence.OneToOne;
 
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 
-import br.xtool.core.representation.EBootProject;
-import br.xtool.core.representation.EJpaAttribute;
-import br.xtool.core.representation.EJpaEntity;
+import br.xtool.core.representation.SpringBootProjectRepresentation;
+import br.xtool.core.representation.EntityAttributeRepresentation;
+import br.xtool.core.representation.EntityRepresentation;
 
 /**
  * Classe que representa um entidade JPA
@@ -20,9 +20,9 @@ import br.xtool.core.representation.EJpaEntity;
  * @author jcruz
  *
  */
-public class EJpaEntityImpl extends EJavaClassImpl implements EJpaEntity {
+public class EJpaEntityImpl extends EJavaClassImpl implements EntityRepresentation {
 
-	public EJpaEntityImpl(EBootProject springBootProject, JavaClassSource javaClassSource) {
+	public EJpaEntityImpl(SpringBootProjectRepresentation springBootProject, JavaClassSource javaClassSource) {
 		super(springBootProject, javaClassSource);
 		this.javaClassSource = javaClassSource;
 	}
@@ -33,7 +33,7 @@ public class EJpaEntityImpl extends EJavaClassImpl implements EJpaEntity {
 	 * @return
 	 */
 	@Override
-	public Collection<EJpaAttribute> getAttributes() {
+	public Collection<EntityAttributeRepresentation> getAttributes() {
 		// @formatter:off
 		return this.javaClassSource.getFields().stream()
 			.filter(fieldSource -> !fieldSource.isStatic())
@@ -48,7 +48,7 @@ public class EJpaEntityImpl extends EJavaClassImpl implements EJpaEntity {
 	 * @see br.xtool.core.representation.EJpaEntity#getSimpleAttributes()
 	 */
 	@Override
-	public Collection<EJpaAttribute> getSimpleAttributes() {
+	public Collection<EntityAttributeRepresentation> getSimpleAttributes() {
 		// @formatter:off
 		return this.getAttributes().stream()
 				.filter(attr ->  !attr.getJpaRelationship().isPresent())
@@ -64,7 +64,7 @@ public class EJpaEntityImpl extends EJavaClassImpl implements EJpaEntity {
 	 * @see br.xtool.core.representation.EJpaEntity#getRelationshipAttributes()
 	 */
 	@Override
-	public Collection<EJpaAttribute> getRelationshipAttributes() {
+	public Collection<EntityAttributeRepresentation> getRelationshipAttributes() {
 		// @formatter:off
 		return this.getAttributes().stream()
 				.filter(attr -> attr.getJpaRelationship().isPresent())
@@ -78,7 +78,7 @@ public class EJpaEntityImpl extends EJavaClassImpl implements EJpaEntity {
 	 * @see br.xtool.core.representation.EJpaEntity#getEnumAttributes()
 	 */
 	@Override
-	public Collection<EJpaAttribute> getEnumAttributes() {
+	public Collection<EntityAttributeRepresentation> getEnumAttributes() {
 		// @formatter:off
 		return this.getAttributes().stream()
 				.filter(attr -> attr.getEnum().isPresent())
@@ -87,7 +87,7 @@ public class EJpaEntityImpl extends EJavaClassImpl implements EJpaEntity {
 	}
 
 	@Override
-	public Collection<EJpaAttribute> getToManyRelationshipAttributes() {
+	public Collection<EntityAttributeRepresentation> getToManyRelationshipAttributes() {
 		// @formatter:off
 		return this.getRelationshipAttributes().stream()
 				.filter(attr -> attr.getRoasterField().hasAnnotation(ManyToMany.class) || attr.getRoasterField().hasAnnotation(OneToMany.class))
@@ -96,7 +96,7 @@ public class EJpaEntityImpl extends EJavaClassImpl implements EJpaEntity {
 	}
 
 	@Override
-	public Collection<EJpaAttribute> getToOneRelationshipAttributes() {
+	public Collection<EntityAttributeRepresentation> getToOneRelationshipAttributes() {
 		// @formatter:off
 		return this.getRelationshipAttributes().stream()
 				.filter(attr -> attr.getRoasterField().hasAnnotation(OneToOne.class) || attr.getRoasterField().hasAnnotation(ManyToOne.class))

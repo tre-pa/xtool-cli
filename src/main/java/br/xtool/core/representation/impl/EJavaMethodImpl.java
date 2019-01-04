@@ -9,11 +9,11 @@ import org.jboss.forge.roaster.model.Type;
 import org.jboss.forge.roaster.model.source.JavaSource;
 import org.jboss.forge.roaster.model.source.MethodSource;
 
-import br.xtool.core.representation.EJavaAnnotation;
-import br.xtool.core.representation.EJavaMethod;
-import br.xtool.core.representation.EJavaMethodParameter;
+import br.xtool.core.representation.JavaAnnotationRepresentation;
+import br.xtool.core.representation.JavaMethodRepresentation;
+import br.xtool.core.representation.JavaMethodParameterRepresentation;
 
-public class EJavaMethodImpl<T extends JavaSource<T>> implements EJavaMethod<T> {
+public class EJavaMethodImpl<T extends JavaSource<T>> implements JavaMethodRepresentation<T> {
 
 	private MethodSource<T> methodSource;
 
@@ -54,7 +54,7 @@ public class EJavaMethodImpl<T extends JavaSource<T>> implements EJavaMethod<T> 
 	 * @see br.xtool.core.representation.EJavaMethod#getParameters()
 	 */
 	@Override
-	public Collection<EJavaMethodParameter<T>> getParameters() {
+	public Collection<JavaMethodParameterRepresentation<T>> getParameters() {
 		// @formatter:off
 		return this.methodSource.getParameters().stream()
 				.map(parameterSource -> new EJavaMethodParameterImpl<T>(this, parameterSource))
@@ -76,7 +76,7 @@ public class EJavaMethodImpl<T extends JavaSource<T>> implements EJavaMethod<T> 
 	 * @see br.xtool.core.representation.EJavaMethod#getAnnotations()
 	 */
 	@Override
-	public SortedSet<EJavaAnnotation<T>> getAnnotations() {
+	public SortedSet<JavaAnnotationRepresentation<T>> getAnnotations() {
 		// @formatter:off
 		return this.methodSource.getAnnotations()
 				.stream()
@@ -90,7 +90,7 @@ public class EJavaMethodImpl<T extends JavaSource<T>> implements EJavaMethod<T> 
 	 * @see java.lang.Comparable#compareTo(java.lang.Object)
 	 */
 	@Override
-	public int compareTo(EJavaMethod<T> o) {
+	public int compareTo(JavaMethodRepresentation<T> o) {
 		return this.getName().compareTo(o.getName());
 	}
 

@@ -2,9 +2,9 @@ package br.xtool.core.representation.impl;
 
 import java.nio.file.Path;
 
-import br.xtool.core.representation.ENgLayout;
+import br.xtool.core.representation.NgLayoutRepresentation;
 
-public class ENgLayoutImpl extends ENgComponentImpl implements ENgLayout {
+public class ENgLayoutImpl extends ENgComponentImpl implements NgLayoutRepresentation {
 
 	public ENgLayoutImpl(Path path) {
 		super(path);

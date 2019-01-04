@@ -5,21 +5,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
-import br.xtool.core.representation.EJpaRepository;
-import br.xtool.core.service.WorkspaceService;
-import br.xtool.core.representation.EBootProject;
+import br.xtool.core.Workspace;
+import br.xtool.core.representation.RepositoryRepresentation;
+import br.xtool.core.representation.SpringBootProjectRepresentation;
 
 @Component
-public class EJpaRepositoryShellConverter implements Converter<String, EJpaRepository> {
+public class EJpaRepositoryShellConverter implements Converter<String, RepositoryRepresentation> {
 
 	@Autowired
-	private WorkspaceService workspaceService;
+	private Workspace workspace;
 
 	@Override
-	public EJpaRepository convert(String source) {
+	public RepositoryRepresentation convert(String source) {
 		if (StringUtils.isNotEmpty(source)) {
-			if (this.workspaceService.getWorkingProject() instanceof EBootProject) {
-				EBootProject project = EBootProject.class.cast(this.workspaceService.getWorkingProject());
+			if (this.workspace.getWorkingProject() instanceof SpringBootProjectRepresentation) {
+				SpringBootProjectRepresentation project = SpringBootProjectRepresentation.class.cast(this.workspace.getWorkingProject());
 				// @formatter:off
 				return project.getRepositories()
 					.stream()

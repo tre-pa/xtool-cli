@@ -7,7 +7,7 @@ import java.util.stream.Stream;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import br.xtool.core.representation.ENgClass;
+import br.xtool.core.representation.NgClassRepresentation;
 import lombok.Getter;
 
 /**
@@ -16,7 +16,7 @@ import lombok.Getter;
  * @author jcruz
  *
  */
-public class ENgClassImpl implements ENgClass {
+public class ENgClassImpl implements NgClassRepresentation {
 
 	@Getter
 	private Path path;
@@ -41,7 +41,7 @@ public class ENgClassImpl implements ENgClass {
 	}
 
 	@Override
-	public int compareTo(ENgClass o) {
+	public int compareTo(NgClassRepresentation o) {
 		return this.getName().compareTo(o.getName());
 	}
 

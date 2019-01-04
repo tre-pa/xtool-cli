@@ -5,16 +5,16 @@ import java.nio.file.Path;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import br.xtool.core.representation.EPlantClass;
-import br.xtool.core.representation.EPlantClassDiagram;
-import br.xtool.core.representation.EPlantEnum;
+import br.xtool.core.representation.PlantClassRepresentation;
+import br.xtool.core.representation.PlantClassDiagramRepresentation;
+import br.xtool.core.representation.PlantEnumRepresentation;
 import lombok.SneakyThrows;
 import net.sourceforge.plantuml.BlockUml;
 import net.sourceforge.plantuml.SourceStringReader;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 
-public class EPlantDiagramImpl implements EPlantClassDiagram {
+public class EPlantDiagramImpl implements PlantClassDiagramRepresentation {
 
 	private ClassDiagram classDiagram;
 
@@ -28,7 +28,7 @@ public class EPlantDiagramImpl implements EPlantClassDiagram {
 	 * @see br.xtool.core.representation.EUmlClassDiagram#getClasses()
 	 */
 	@Override
-	public Set<EPlantClass> getClasses() {
+	public Set<PlantClassRepresentation> getClasses() {
 		// @formatter:off
 		return this.classDiagram.getGroups(false).stream()
 			 .flatMap(groups -> groups.getLeafsDirect().stream())
@@ -43,7 +43,7 @@ public class EPlantDiagramImpl implements EPlantClassDiagram {
 	 * @see br.xtool.core.representation.EUmlClassDiagram#getEnums()
 	 */
 	@Override
-	public Set<EPlantEnum> getEnums() {
+	public Set<PlantEnumRepresentation> getEnums() {
 		// @formatter:off
 		return this.classDiagram.getGroups(false).stream()
 			 .flatMap(groups -> groups.getLeafsDirect().stream())
@@ -54,7 +54,7 @@ public class EPlantDiagramImpl implements EPlantClassDiagram {
 	}
 
 	@SneakyThrows
-	public static EPlantClassDiagram of(Path path) {
+	public static PlantClassDiagramRepresentation of(Path path) {
 		if (Files.notExists(path)) throw new IllegalArgumentException("Diagrama de classe não encontrado");
 		//		String diagram = FileUtils.readFileToString(new File(path), "UTF-8");
 		String diagram = new String(Files.readAllBytes(path));

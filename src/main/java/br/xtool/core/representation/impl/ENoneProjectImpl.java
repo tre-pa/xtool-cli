@@ -2,10 +2,10 @@ package br.xtool.core.representation.impl;
 
 import java.nio.file.Path;
 
-import br.xtool.core.representation.ENoneProject;
-import br.xtool.core.representation.EProject;
+import br.xtool.core.representation.NoneProjectRepresentation;
+import br.xtool.core.representation.ProjectRepresentation;
 
-public class ENoneProjectImpl extends EProjectImpl implements ENoneProject {
+public class ENoneProjectImpl extends EProjectImpl implements NoneProjectRepresentation {
 
 	public ENoneProjectImpl(Path path) {
 		super(path);
@@ -23,7 +23,7 @@ public class ENoneProjectImpl extends EProjectImpl implements ENoneProject {
 
 	@Override
 	public Type getProjectType() {
-		return EProject.Type.NONE;
+		return ProjectRepresentation.Type.NONE;
 	}
 
 	@Override

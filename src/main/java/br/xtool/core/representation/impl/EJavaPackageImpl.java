@@ -5,7 +5,7 @@ import java.nio.file.Paths;
 
 import org.apache.commons.lang3.StringUtils;
 
-import br.xtool.core.representation.EJavaPackage;
+import br.xtool.core.representation.JavaPackageRepresentation;
 
 /**
  * Representa um pacote Java.
@@ -13,7 +13,7 @@ import br.xtool.core.representation.EJavaPackage;
  * @author jcruz
  *
  */
-public class EJavaPackageImpl implements EJavaPackage {
+public class EJavaPackageImpl implements JavaPackageRepresentation {
 
 	private String name;
 
@@ -23,14 +23,14 @@ public class EJavaPackageImpl implements EJavaPackage {
 		super();
 	}
 
-	public static EJavaPackage of(String packageName) {
+	public static JavaPackageRepresentation of(String packageName) {
 		EJavaPackageImpl package1 = new EJavaPackageImpl();
 		package1.name = packageName;
 		package1.dir = packageName.replaceAll("\\.", "/");
 		return package1;
 	}
 
-	public static EJavaPackage of(String... packageElements) {
+	public static JavaPackageRepresentation of(String... packageElements) {
 		EJavaPackageImpl package1 = new EJavaPackageImpl();
 		package1.name = StringUtils.join(packageElements, ".");
 		package1.dir = package1.name.replaceAll("\\.", "/");
@@ -53,7 +53,7 @@ public class EJavaPackageImpl implements EJavaPackage {
 	}
 
 	@Override
-	public int compareTo(EJavaPackage o) {
+	public int compareTo(JavaPackageRepresentation o) {
 		return this.getName().compareTo(o.getName());
 	}
 

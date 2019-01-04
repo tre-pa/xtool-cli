@@ -6,11 +6,11 @@ import java.util.function.BiFunction;
 
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 
-import br.xtool.core.representation.EBootProject;
-import br.xtool.core.representation.EJavaClass;
-import br.xtool.core.representation.EPlantClass;
-import br.xtool.core.representation.EPlantStereotype;
-import br.xtool.core.representation.EPlantStereotype.StereotypeType;
+import br.xtool.core.representation.SpringBootProjectRepresentation;
+import br.xtool.core.representation.JavaClassRepresentation;
+import br.xtool.core.representation.PlantClassRepresentation;
+import br.xtool.core.representation.PlantStereotypeRepresentation;
+import br.xtool.core.representation.PlantStereotypeRepresentation.StereotypeType;
 import br.xtool.core.representation.impl.EJavaClassImpl;
 import br.xtool.core.representation.impl.EJavaClassImpl.EAuditableJavaClassImpl;
 import br.xtool.core.representation.impl.EJavaClassImpl.ECacheableJavaClassImpl;
@@ -29,14 +29,14 @@ import lombok.AllArgsConstructor;
  *
  */
 @AllArgsConstructor
-public class PlantClassToJavaClassConverter implements BiFunction<EBootProject, EPlantClass, EJavaClass> {
+public class PlantClassToJavaClassConverter implements BiFunction<SpringBootProjectRepresentation, PlantClassRepresentation, JavaClassRepresentation> {
 
 	private Set<? extends Visitor> visitors = new HashSet<>();
 
 	@Override
-	public EJavaClass apply(EBootProject bootProject, EPlantClass umlClass) {
+	public JavaClassRepresentation apply(SpringBootProjectRepresentation bootProject, PlantClassRepresentation umlClass) {
 		// @formatter:off
-		EJavaClass javaClass = bootProject.getRoasterJavaUnits().stream()
+		JavaClassRepresentation javaClass = bootProject.getRoasterJavaUnits().stream()
 				.filter(javaUnit -> javaUnit.getGoverningType().isClass())
 				.filter(javaUnit -> javaUnit.getGoverningType().getName().equals(umlClass.getName()))
 				.map(javaUnit -> javaUnit.<JavaClassSource>getGoverningType())
@@ -49,7 +49,7 @@ public class PlantClassToJavaClassConverter implements BiFunction<EBootProject, 
 		return javaClass;
 	}
 
-	private void visit(EJavaClass javaClass, EPlantStereotype stereotype) {
+	private void visit(JavaClassRepresentation javaClass, PlantStereotypeRepresentation stereotype) {
 		this.visitors.forEach(visitor -> {
 			if (stereotype.getStereotypeType().equals(StereotypeType.AUDITABLE)) visitor.visit(new EAuditableJavaClassImpl(javaClass), stereotype);
 			if (stereotype.getStereotypeType().equals(StereotypeType.CACHEABLE)) visitor.visit(new ECacheableJavaClassImpl(javaClass), stereotype);

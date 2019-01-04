@@ -10,10 +10,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 
-import br.xtool.core.representation.EResource;
+import br.xtool.core.representation.ResourceRepresentation;
 import lombok.SneakyThrows;
 
-public class EResourceImpl implements EResource {
+public class EResourceImpl implements ResourceRepresentation {
 
 	private Path rootPath;
 

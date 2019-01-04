@@ -18,13 +18,13 @@ import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
 import br.xtool.core.ConsoleLog;
-import br.xtool.core.representation.EBootPom;
-import br.xtool.core.representation.EBootPomDependency;
-import br.xtool.core.representation.EBootProject;
-import br.xtool.core.representation.EJavaPackage;
+import br.xtool.core.representation.PomRepresentation;
+import br.xtool.core.representation.PomDependencyRepresentation;
+import br.xtool.core.representation.SpringBootProjectRepresentation;
+import br.xtool.core.representation.JavaPackageRepresentation;
 import br.xtool.core.representation.impl.EBootPomDependencyImpl.ScopeType;
 
-public class EBootPomImpl implements EBootPom {
+public class EBootPomImpl implements PomRepresentation {
 
 	public static final Namespace NAMESPACE = Namespace.getNamespace("http://maven.apache.org/POM/4.0.0");
 
@@ -32,18 +32,18 @@ public class EBootPomImpl implements EBootPom {
 
 	private Document pomDoc;
 
-	private EBootProject bootProject;
+	private SpringBootProjectRepresentation bootProject;
 
 	//	private File file;
 
-	private EBootPomImpl(EBootProject bootProject, Path path) {
+	private EBootPomImpl(SpringBootProjectRepresentation bootProject, Path path) {
 		super();
 		this.bootProject = bootProject;
 		this.path = path;
 	}
 
 	@Override
-	public EBootProject getProject() {
+	public SpringBootProjectRepresentation getProject() {
 		return null;
 	}
 
@@ -52,7 +52,7 @@ public class EBootPomImpl implements EBootPom {
 	 * @see br.xtool.core.representation.ESBootPom#getGroupId()
 	 */
 	@Override
-	public EJavaPackage getGroupId() {
+	public JavaPackageRepresentation getGroupId() {
 		return EJavaPackageImpl.of(this.pomDoc.getRootElement().getChild("groupId", NAMESPACE).getText());
 	}
 
@@ -103,8 +103,8 @@ public class EBootPomImpl implements EBootPom {
 	 * @see br.xtool.core.representation.ESBootPom#getDependencies()
 	 */
 	@Override
-	public List<EBootPomDependency> getDependencies() {
-		List<EBootPomDependency> dependencies = new ArrayList<>();
+	public List<PomDependencyRepresentation> getDependencies() {
+		List<PomDependencyRepresentation> dependencies = new ArrayList<>();
 		Element dependenciesNode = this.pomDoc.getRootElement().getChild("dependencies", NAMESPACE);
 		for (Element dependency : dependenciesNode.getChildren()) {
 			String groupId = dependency.getChild("groupId", NAMESPACE).getTextTrim();
@@ -124,7 +124,7 @@ public class EBootPomImpl implements EBootPom {
 	 * @see br.xtool.core.representation.ESBootPom#addDependency(java.lang.String, java.lang.String)
 	 */
 	@Override
-	public EBootPom addDependency(String groupId, String artifactId) {
+	public PomRepresentation addDependency(String groupId, String artifactId) {
 		EBootPomDependencyImpl dependency = new EBootPomDependencyImpl(groupId, artifactId);
 		if (!hasArtifactId(dependency.getArtifactId())) {
 			this.pomDoc.getRootElement().getChild("dependencies", NAMESPACE).addContent(dependency.getAsDom());
@@ -138,7 +138,7 @@ public class EBootPomImpl implements EBootPom {
 	 * @see br.xtool.core.representation.ESBootPom#addDependency(java.lang.String, java.lang.String, java.lang.String)
 	 */
 	@Override
-	public EBootPom addDependency(String groupId, String artifactId, String version) {
+	public PomRepresentation addDependency(String groupId, String artifactId, String version) {
 		EBootPomDependencyImpl dependency = new EBootPomDependencyImpl(groupId, artifactId, version);
 		if (!hasArtifactId(dependency.getArtifactId())) {
 			this.pomDoc.getRootElement().getChild("dependencies", NAMESPACE).addContent(dependency.getAsDom());
@@ -147,7 +147,7 @@ public class EBootPomImpl implements EBootPom {
 	}
 
 	@Override
-	public EBootPom addDependency(String groupId, String artifactId, ScopeType scopeType) {
+	public PomRepresentation addDependency(String groupId, String artifactId, ScopeType scopeType) {
 		EBootPomDependencyImpl dependency = new EBootPomDependencyImpl(groupId, artifactId, scopeType);
 		if (!hasArtifactId(dependency.getArtifactId())) {
 			this.pomDoc.getRootElement().getChild("dependencies", NAMESPACE).addContent(dependency.getAsDom());
@@ -155,7 +155,7 @@ public class EBootPomImpl implements EBootPom {
 		return this;
 	}
 
-	public static EBootPomImpl of(EBootProject bootProject, Path path) {
+	public static EBootPomImpl of(SpringBootProjectRepresentation bootProject, Path path) {
 		if (Files.exists(path)) {
 			try {
 				EBootPomImpl pomRepresentation = new EBootPomImpl(bootProject, path);

@@ -11,23 +11,23 @@ import org.springframework.shell.CompletionProposal;
 import org.springframework.shell.standard.ValueProviderSupport;
 import org.springframework.stereotype.Component;
 
-import br.xtool.core.representation.EBootProject;
-import br.xtool.core.representation.EPlantClass;
-import br.xtool.core.service.WorkspaceService;
+import br.xtool.core.representation.SpringBootProjectRepresentation;
+import br.xtool.core.Workspace;
+import br.xtool.core.representation.PlantClassRepresentation;
 
 @Component
 public class EUmlClassValueProvider extends ValueProviderSupport {
 
 	@Autowired
-	private WorkspaceService workspaceService;
+	private Workspace workspace;
 
 	@Override
 	public List<CompletionProposal> complete(MethodParameter parameter, CompletionContext completionContext, String[] hints) {
 		// @formatter:off
-		if(this.workspaceService.getWorkingProject() instanceof EBootProject) {
-			EBootProject project = EBootProject.class.cast(this.workspaceService.getWorkingProject());
+		if(this.workspace.getWorkingProject() instanceof SpringBootProjectRepresentation) {
+			SpringBootProjectRepresentation project = SpringBootProjectRepresentation.class.cast(this.workspace.getWorkingProject());
 			return project.getDomainClassDiagram().getClasses().stream()
-					.map(EPlantClass::getName)
+					.map(PlantClassRepresentation::getName)
 					.map(CompletionProposal::new)
 					.collect(Collectors.toList());
 		}

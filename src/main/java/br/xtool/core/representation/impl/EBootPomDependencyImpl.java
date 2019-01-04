@@ -4,8 +4,8 @@ import java.util.Optional;
 
 import org.jdom2.Element;
 
-import br.xtool.core.representation.EBootPom;
-import br.xtool.core.representation.EBootPomDependency;
+import br.xtool.core.representation.PomRepresentation;
+import br.xtool.core.representation.PomDependencyRepresentation;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -17,7 +17,7 @@ import lombok.Getter;
  *
  */
 @EqualsAndHashCode
-public class EBootPomDependencyImpl implements EBootPomDependency {
+public class EBootPomDependencyImpl implements PomDependencyRepresentation {
 	private String groupId;
 
 	private String artifactId;
@@ -68,7 +68,7 @@ public class EBootPomDependencyImpl implements EBootPomDependency {
 	 */
 	@Override
 	public Element getAsDom() {
-		Element dependency = new Element("dependency", EBootPom.NAMESPACE);
+		Element dependency = new Element("dependency", PomRepresentation.NAMESPACE);
 		this.buildGroupId(dependency);
 		this.buildArtifiactId(dependency);
 		this.buildVersion(dependency);
@@ -77,20 +77,20 @@ public class EBootPomDependencyImpl implements EBootPomDependency {
 	}
 
 	private void buildGroupId(Element dependency) {
-		Element groupId = new Element("groupId", EBootPom.NAMESPACE);
+		Element groupId = new Element("groupId", PomRepresentation.NAMESPACE);
 		groupId.setText(this.getGroupId());
 		dependency.addContent(groupId);
 	}
 
 	private void buildArtifiactId(Element dependency) {
-		Element artifactId = new Element("artifactId", EBootPom.NAMESPACE);
+		Element artifactId = new Element("artifactId", PomRepresentation.NAMESPACE);
 		artifactId.setText(this.getArtifactId());
 		dependency.addContent(artifactId);
 	}
 
 	private void buildVersion(Element dependency) {
 		if (this.getVersion().isPresent()) {
-			Element version = new Element("version", EBootPom.NAMESPACE);
+			Element version = new Element("version", PomRepresentation.NAMESPACE);
 			version.setText(this.getVersion().get());
 			dependency.addContent(version);
 		}
@@ -98,7 +98,7 @@ public class EBootPomDependencyImpl implements EBootPomDependency {
 
 	private void buildScope(Element dependency) {
 		if (!this.getScope().equals(ScopeType.COMPILE)) {
-			Element scope = new Element("scope", EBootPom.NAMESPACE);
+			Element scope = new Element("scope", PomRepresentation.NAMESPACE);
 			scope.setText(this.getScope().getScope());
 			dependency.addContent(scope);
 		}

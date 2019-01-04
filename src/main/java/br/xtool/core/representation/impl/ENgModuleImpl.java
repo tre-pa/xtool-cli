@@ -2,7 +2,7 @@ package br.xtool.core.representation.impl;
 
 import java.nio.file.Path;
 
-import br.xtool.core.representation.ENgModule;
+import br.xtool.core.representation.NgModuleRepresentation;
 
 /**
  * Classe que representa um módulo Angular
@@ -10,7 +10,7 @@ import br.xtool.core.representation.ENgModule;
  * @author jcruz
  *
  */
-public class ENgModuleImpl extends ENgClassImpl implements ENgModule {
+public class ENgModuleImpl extends ENgClassImpl implements NgModuleRepresentation {
 
 	public ENgModuleImpl(Path path) {
 		super(path);
