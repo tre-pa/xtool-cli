@@ -8,7 +8,9 @@ import org.springframework.shell.standard.ShellOption;
 import br.xtool.XtoolCliApplication;
 import br.xtool.core.provider.EJpaRepositoryValueProvider;
 import br.xtool.core.provider.EntityRepresentationValueProvider;
+import br.xtool.core.provider.PlantClassRepresentationValueProvider;
 import br.xtool.core.representation.EntityRepresentation;
+import br.xtool.core.representation.PlantClassRepresentation;
 import br.xtool.core.representation.RepositoryRepresentation;
 import br.xtool.service.SpringBootService;
 
@@ -32,9 +34,14 @@ public class SpringBootCommand {
 	public void newApp(@ShellOption(help = "Nome do projeto") String name) {
 		springBootService.newApp(name);
 	}
-
-	public void genEntities() {
-
+	
+	/**
+	 * 
+	 * @param plantClass
+	 */
+	@ShellMethod(key = "gen:entity", value = "Gera uma classe Jpa", group = XtoolCliApplication.SPRINGBOOT_COMMAND_GROUP)
+	public void genEntities(@ShellOption(help = "Classe do diagrama de classe", valueProvider = PlantClassRepresentationValueProvider.class) PlantClassRepresentation plantClass) {
+		springBootService.genEntity(plantClass);
 	}
 
 	/**

@@ -13,11 +13,13 @@ import org.eclipse.jdt.core.formatter.DefaultCodeFormatterConstants;
 import org.eclipse.jdt.internal.compiler.impl.CompilerOptions;
 import org.jboss.forge.roaster.Roaster;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import br.xtool.core.ConsoleLog;
 import br.xtool.core.Workspace;
 import br.xtool.core.representation.EntityRepresentation;
+import br.xtool.core.representation.JavaClassRepresentation;
 import br.xtool.core.representation.JavaPackageRepresentation;
 import br.xtool.core.representation.JavaTypeRepresentation;
 import br.xtool.core.representation.PlantClassRepresentation;
@@ -27,6 +29,7 @@ import br.xtool.core.representation.RestClassRepresentation;
 import br.xtool.core.representation.ServiceClassRepresentation;
 import br.xtool.core.representation.SpecificationRepresentation;
 import br.xtool.core.representation.SpringBootProjectRepresentation;
+import br.xtool.core.representation.converter.PlantClassRepresentationToJavaClassRepresentationConverter;
 import br.xtool.core.representation.impl.EJavaPackageImpl;
 import br.xtool.core.template.RepositoryTemplates;
 import br.xtool.core.template.RestClassTemplates;
@@ -40,6 +43,9 @@ public class SpringBootService {
 
 	@Autowired
 	private Workspace workspace;
+	
+	@Autowired
+	private ApplicationContext applicationContext;
 
 	/**
 	 * Gera um nome de projeto válido.
@@ -105,6 +111,11 @@ public class SpringBootService {
 	}
 	
 	public EntityRepresentation genEntity(PlantClassRepresentation plantClass) {
+		JavaClassRepresentation javaClass = applicationContext.getBean(PlantClassRepresentationToJavaClassRepresentationConverter.class).apply(plantClass);
+//		plantClass.getFields().stream()
+//			.filter(plantField -> plantField.isEnum())
+//			.map(PlantFieldRepresentation::getEnumRepresentation)
+		save(javaClass);
 		return null;
 	}
 

@@ -16,7 +16,7 @@ import br.xtool.core.Workspace;
 import br.xtool.core.representation.PlantClassRepresentation;
 
 @Component
-public class EUmlClassValueProvider extends ValueProviderSupport {
+public class PlantClassRepresentationValueProvider extends ValueProviderSupport {
 
 	@Autowired
 	private Workspace workspace;

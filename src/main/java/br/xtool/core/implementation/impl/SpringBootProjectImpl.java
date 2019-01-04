@@ -5,7 +5,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Collection;
 import java.util.Properties;
-import java.util.Set;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -19,7 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
-import br.xtool.core.ConsoleLog;
 import br.xtool.core.implementation.SpringBootProject;
 import br.xtool.core.representation.EntityRepresentation;
 import br.xtool.core.representation.JavaClassRepresentation;
@@ -27,16 +25,11 @@ import br.xtool.core.representation.JavaEnumRepresentation;
 import br.xtool.core.representation.JavaSourceFolderRepresentation;
 import br.xtool.core.representation.JavaTypeRepresentation;
 import br.xtool.core.representation.JpaProjectionRepresentation;
-import br.xtool.core.representation.PlantClassRepresentation;
 import br.xtool.core.representation.PlantEnumRepresentation;
 import br.xtool.core.representation.SpringBootProjectRepresentation;
-import br.xtool.core.representation.converter.EUmlRelationshipConverter;
-import br.xtool.core.representation.converter.PlantClassFieldToJavaClassConverter;
-import br.xtool.core.representation.converter.PlantClassToJavaClassConverter;
 import br.xtool.core.representation.converter.PlantEnumToJavaEnumConverter;
 import br.xtool.core.representation.impl.EJpaProjectionImpl;
 import br.xtool.core.util.RoasterUtil;
-import br.xtool.core.visitor.Visitor;
 import lombok.SneakyThrows;
 
 @Service
@@ -46,8 +39,8 @@ public class SpringBootProjectImpl implements SpringBootProject {
 	@Autowired
 	private ApplicationContext applicationContext;
 
-	//	@Autowired
-	//	private JavaxValidationVisitor javaxValidationVisitor;
+	// @Autowired
+	// private JavaxValidationVisitor javaxValidationVisitor;
 
 	@Override
 	@SneakyThrows
@@ -80,11 +73,13 @@ public class SpringBootProjectImpl implements SpringBootProject {
 //		return this.applicationContext.getBean(supportClass).has(bootProject);
 //	}
 
-	//	/*
-	//	 * (non-Javadoc)
-	//	 * @see br.xtool.service.BootService#save(br.xtool.core.representation.EJavaSourceFolder, br.xtool.core.representation.EJavaClass)
-	//	 */
-	//	//	@Override
+	// /*
+	// * (non-Javadoc)
+	// * @see
+	// br.xtool.service.BootService#save(br.xtool.core.representation.EJavaSourceFolder,
+	// br.xtool.core.representation.EJavaClass)
+	// */
+	// // @Override
 	@SneakyThrows
 	public void save(JavaSourceFolderRepresentation sourceFolder, JavaClassRepresentation javaClass) {
 		Path javaPath = sourceFolder.getPath().resolve(javaClass.getJavaPackage().getDir()).resolve(String.format("%s.java", javaClass.getName()));
@@ -99,7 +94,7 @@ public class SpringBootProjectImpl implements SpringBootProject {
 		prefs.setProperty(DefaultCodeFormatterConstants.FORMATTER_BLANK_LINES_AFTER_PACKAGE, "1");
 		prefs.setProperty(DefaultCodeFormatterConstants.FORMATTER_USE_ON_OFF_TAGS, DefaultCodeFormatterConstants.TRUE);
 
-		//		prefs.setProperty(DefaultCodeFormatterConstants., "TRUE");
+		// prefs.setProperty(DefaultCodeFormatterConstants., "TRUE");
 		try (BufferedWriter write = Files.newBufferedWriter(javaPath)) {
 			String formatedJavaClassSource = Roaster.format(prefs, javaClass.getRoasterJavaClass().toUnformattedString());
 			write.write(formatedJavaClassSource);
@@ -108,81 +103,98 @@ public class SpringBootProjectImpl implements SpringBootProject {
 		}
 	}
 	//
-	//	/*
-	//	 * (non-Javadoc)
-	//	 * @see br.xtool.service.BootProjectService#save(br.xtool.core.representation.EJavaClass)
-	//	 */
-	//	//	@Override
-	//	public void save(EJavaClass javaClass) {
-	//		this.save(javaClass.getProject().getMainSourceFolder(), javaClass);
-	//	}
+	// /*
+	// * (non-Javadoc)
+	// * @see
+	// br.xtool.service.BootProjectService#save(br.xtool.core.representation.EJavaClass)
+	// */
+	// // @Override
+	// public void save(EJavaClass javaClass) {
+	// this.save(javaClass.getProject().getMainSourceFolder(), javaClass);
+	// }
 	//
-	//	/*
-	//	 * (non-Javadoc)
-	//	 * @see br.xtool.service.BootService#save(br.xtool.core.representation.EJavaSourceFolder, br.xtool.core.representation.EJavaInterface)
-	//	 */
-	//	//	@Override
-	//	@SneakyThrows
-	//	public void save(EJavaSourceFolder sourceFolder, EJavaInterface javaInterface) {
-	//		Path javaPath = sourceFolder.getPath().resolve(javaInterface.getJavaPackage().getDir()).resolve(String.format("%s.java", javaInterface.getName()));
-	//		if (Files.notExists(javaPath.getParent())) Files.createDirectories(javaPath.getParent());
-	//		Properties prefs = new Properties();
-	//		prefs.setProperty(JavaCore.COMPILER_SOURCE, CompilerOptions.VERSION_1_8);
-	//		prefs.setProperty(JavaCore.COMPILER_COMPLIANCE, CompilerOptions.VERSION_1_8);
-	//		prefs.setProperty(JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM, CompilerOptions.VERSION_1_8);
-	//		prefs.setProperty(DefaultCodeFormatterConstants.FORMATTER_LINE_SPLIT, "120");
-	//		prefs.setProperty(DefaultCodeFormatterConstants.FORMATTER_BLANK_LINES_BEFORE_FIELD, "1");
-	//		prefs.setProperty(DefaultCodeFormatterConstants.FORMATTER_BLANK_LINES_AFTER_IMPORTS, "1");
-	//		prefs.setProperty(DefaultCodeFormatterConstants.FORMATTER_BLANK_LINES_AFTER_PACKAGE, "1");
+	// /*
+	// * (non-Javadoc)
+	// * @see
+	// br.xtool.service.BootService#save(br.xtool.core.representation.EJavaSourceFolder,
+	// br.xtool.core.representation.EJavaInterface)
+	// */
+	// // @Override
+	// @SneakyThrows
+	// public void save(EJavaSourceFolder sourceFolder, EJavaInterface
+	// javaInterface) {
+	// Path javaPath =
+	// sourceFolder.getPath().resolve(javaInterface.getJavaPackage().getDir()).resolve(String.format("%s.java",
+	// javaInterface.getName()));
+	// if (Files.notExists(javaPath.getParent()))
+	// Files.createDirectories(javaPath.getParent());
+	// Properties prefs = new Properties();
+	// prefs.setProperty(JavaCore.COMPILER_SOURCE, CompilerOptions.VERSION_1_8);
+	// prefs.setProperty(JavaCore.COMPILER_COMPLIANCE, CompilerOptions.VERSION_1_8);
+	// prefs.setProperty(JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM,
+	// CompilerOptions.VERSION_1_8);
+	// prefs.setProperty(DefaultCodeFormatterConstants.FORMATTER_LINE_SPLIT, "120");
+	// prefs.setProperty(DefaultCodeFormatterConstants.FORMATTER_BLANK_LINES_BEFORE_FIELD,
+	// "1");
+	// prefs.setProperty(DefaultCodeFormatterConstants.FORMATTER_BLANK_LINES_AFTER_IMPORTS,
+	// "1");
+	// prefs.setProperty(DefaultCodeFormatterConstants.FORMATTER_BLANK_LINES_AFTER_PACKAGE,
+	// "1");
 	//
-	//		//		prefs.setProperty(DefaultCodeFormatterConstants., "TRUE");
-	//		try (BufferedWriter write = Files.newBufferedWriter(javaPath)) {
-	//			String formatedJavaClassSource = Roaster.format(prefs, javaInterface.getRoasterInterface().toUnformattedString());
-	//			write.write(formatedJavaClassSource);
-	//			write.flush();
-	//			sourceFolder.getBootProject().refresh();
-	//		}
-	//	}
+	// // prefs.setProperty(DefaultCodeFormatterConstants., "TRUE");
+	// try (BufferedWriter write = Files.newBufferedWriter(javaPath)) {
+	// String formatedJavaClassSource = Roaster.format(prefs,
+	// javaInterface.getRoasterInterface().toUnformattedString());
+	// write.write(formatedJavaClassSource);
+	// write.flush();
+	// sourceFolder.getBootProject().refresh();
+	// }
+	// }
 	//
-	//	/*
-	//	 * (non-Javadoc)
-	//	 * @see br.xtool.service.BootProjectService#save(br.xtool.core.representation.EJavaInterface)
-	//	 */
-	//	//	@Override
-	//	public void save(EJavaInterface javaInterface) {
-	//		this.save(javaInterface.getProject().getMainSourceFolder(), javaInterface);
-	//	}
+	// /*
+	// * (non-Javadoc)
+	// * @see
+	// br.xtool.service.BootProjectService#save(br.xtool.core.representation.EJavaInterface)
+	// */
+	// // @Override
+	// public void save(EJavaInterface javaInterface) {
+	// this.save(javaInterface.getProject().getMainSourceFolder(), javaInterface);
+	// }
 
 	/*
 	 * (non-Javadoc)
-	 * @see br.xtool.service.BootProjectService#save(br.xtool.core.representation.EJavaType)
+	 * 
+	 * @see br.xtool.service.BootProjectService#save(br.xtool.core.representation.
+	 * EJavaType)
 	 */
-	@SneakyThrows
-	@Override
-	public void save(JavaTypeRepresentation<?> javaType) {
-		Path javaPath = javaType.getProject().getMainSourceFolder().getPath().resolve(javaType.getJavaPackage().getDir()).resolve(String.format("%s.java", javaType.getName()));
-		if (Files.notExists(javaPath.getParent())) Files.createDirectories(javaPath.getParent());
-		Properties prefs = new Properties();
-		prefs.setProperty(JavaCore.COMPILER_SOURCE, CompilerOptions.VERSION_1_8);
-		prefs.setProperty(JavaCore.COMPILER_COMPLIANCE, CompilerOptions.VERSION_1_8);
-		prefs.setProperty(JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM, CompilerOptions.VERSION_1_8);
-		prefs.setProperty(DefaultCodeFormatterConstants.FORMATTER_LINE_SPLIT, "120");
-		prefs.setProperty(DefaultCodeFormatterConstants.FORMATTER_BLANK_LINES_BEFORE_FIELD, "1");
-		prefs.setProperty(DefaultCodeFormatterConstants.FORMATTER_BLANK_LINES_AFTER_IMPORTS, "1");
-		prefs.setProperty(DefaultCodeFormatterConstants.FORMATTER_BLANK_LINES_AFTER_PACKAGE, "1");
-		prefs.setProperty(DefaultCodeFormatterConstants.FORMATTER_USE_ON_OFF_TAGS, DefaultCodeFormatterConstants.TRUE);
-		try (BufferedWriter write = Files.newBufferedWriter(javaPath)) {
-			String formatedJavaClassSource = Roaster.format(prefs, javaType.toUnformattedString());
-			write.write(formatedJavaClassSource);
-			write.flush();
-			javaType.getProject().refresh();
-			ConsoleLog.print(ConsoleLog.cyan(" + "), ConsoleLog.white(javaType.getQualifiedName()));
-		}
-	}
+//	@SneakyThrows
+//	@Override
+//	public void save(JavaTypeRepresentation<?> javaType) {
+//		Path javaPath = javaType.getProject().getMainSourceFolder().getPath().resolve(javaType.getJavaPackage().getDir()).resolve(String.format("%s.java", javaType.getName()));
+//		if (Files.notExists(javaPath.getParent())) Files.createDirectories(javaPath.getParent());
+//		Properties prefs = new Properties();
+//		prefs.setProperty(JavaCore.COMPILER_SOURCE, CompilerOptions.VERSION_1_8);
+//		prefs.setProperty(JavaCore.COMPILER_COMPLIANCE, CompilerOptions.VERSION_1_8);
+//		prefs.setProperty(JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM, CompilerOptions.VERSION_1_8);
+//		prefs.setProperty(DefaultCodeFormatterConstants.FORMATTER_LINE_SPLIT, "120");
+//		prefs.setProperty(DefaultCodeFormatterConstants.FORMATTER_BLANK_LINES_BEFORE_FIELD, "1");
+//		prefs.setProperty(DefaultCodeFormatterConstants.FORMATTER_BLANK_LINES_AFTER_IMPORTS, "1");
+//		prefs.setProperty(DefaultCodeFormatterConstants.FORMATTER_BLANK_LINES_AFTER_PACKAGE, "1");
+//		prefs.setProperty(DefaultCodeFormatterConstants.FORMATTER_USE_ON_OFF_TAGS, DefaultCodeFormatterConstants.TRUE);
+//		try (BufferedWriter write = Files.newBufferedWriter(javaPath)) {
+//			String formatedJavaClassSource = Roaster.format(prefs, javaType.toUnformattedString());
+//			write.write(formatedJavaClassSource);
+//			write.flush();
+//			javaType.getProject().refresh();
+//			ConsoleLog.print(ConsoleLog.cyan(" + "), ConsoleLog.white(javaType.getQualifiedName()));
+//		}
+//	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see br.xtool.service.BootProjectService#save(br.xtool.core.representation.EJavaType[])
+	 * 
+	 * @see br.xtool.service.BootProjectService#save(br.xtool.core.representation.
+	 * EJavaType[])
 	 */
 	@Override
 	public void save(JavaTypeRepresentation<?>... javaTypes) {
@@ -191,28 +203,35 @@ public class SpringBootProjectImpl implements SpringBootProject {
 
 	/*
 	 * (non-Javadoc)
-	 * @see br.xtool.core.service.BootService#convertUmlClassDiagramToJavaClasses(br.xtool.core.representation.EBootProject)
+	 * 
+	 * @see
+	 * br.xtool.core.service.BootService#convertUmlClassDiagramToJavaClasses(br.
+	 * xtool.core.representation.EBootProject)
 	 */
-	@Override
-	public Collection<JavaClassRepresentation> umlClassesToJavaClasses(SpringBootProjectRepresentation bootProject, Set<Visitor> vistors) {
-		// @formatter:off
-		Collection<JavaClassRepresentation> javaClasses = bootProject.getDomainClassDiagram().getClasses().stream()
-				.map(umlClass -> convertUmlClassToJavaClass(bootProject, umlClass, vistors))
-				.collect(Collectors.toList());
-		// @formatter:on
-		javaClasses.stream().forEach(javaClass -> {
-			this.save(bootProject.getMainSourceFolder(), javaClass);
-			ConsoleLog.print(ConsoleLog.cyan(" + "), ConsoleLog.white(javaClass.getQualifiedName()));
-		});
-//		print(bold(cyan(String.valueOf(javaClasses.size()))), " classes mapeadas.");
-		return javaClasses;
-	}
+//	@Override
+//	@Deprecated
+//	public Collection<JavaClassRepresentation> umlClassesToJavaClasses(SpringBootProjectRepresentation bootProject, Set<Visitor> vistors) {
+//		// @formatter:off
+//		Collection<JavaClassRepresentation> javaClasses = bootProject.getDomainClassDiagram().getClasses().stream()
+//				.map(umlClass -> convertUmlClassToJavaClass(bootProject, umlClass, vistors))
+//				.collect(Collectors.toList());
+//		// @formatter:on
+//		javaClasses.stream().forEach(javaClass -> {
+//			this.save(bootProject.getMainSourceFolder(), javaClass);
+//			ConsoleLog.print(ConsoleLog.cyan(" + "), ConsoleLog.white(javaClass.getQualifiedName()));
+//		});
+////		print(bold(cyan(String.valueOf(javaClasses.size()))), " classes mapeadas.");
+//		return javaClasses;
+//	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see br.xtool.service.BootProjectService#umlEnumsToJavaEnums(br.xtool.core.representation.EBootProject, java.util.Set)
+	 * 
+	 * @see br.xtool.service.BootProjectService#umlEnumsToJavaEnums(br.xtool.core.
+	 * representation.EBootProject, java.util.Set)
 	 */
 	@Override
+	@Deprecated
 	public Collection<JavaEnumRepresentation> umlEnumsToJavaEnums(SpringBootProjectRepresentation bootProject) {
 		// @formatter:off
 		Collection<JavaEnumRepresentation> javaEnums = bootProject.getDomainClassDiagram().getEnums().stream()
@@ -227,13 +246,14 @@ public class SpringBootProjectImpl implements SpringBootProject {
 		return javaEnums;
 	}
 
-	// Converte uma classe UML para um objeto EJavaClass.
-	private JavaClassRepresentation convertUmlClassToJavaClass(SpringBootProjectRepresentation bootProject, PlantClassRepresentation umlClass, Set<? extends Visitor> vistors) {
-		JavaClassRepresentation javaClass = new PlantClassToJavaClassConverter(vistors).apply(bootProject, umlClass);
-		umlClass.getFields().stream().forEach(umlField -> new PlantClassFieldToJavaClassConverter(vistors).apply(javaClass, umlField));
-		umlClass.getRelationships().stream().forEach(umlRelationship -> new EUmlRelationshipConverter(vistors).apply(javaClass, umlRelationship));
-		return javaClass;
-	}
+//	// Converte uma classe UML para um objeto EJavaClass.
+//	private JavaClassRepresentation convertUmlClassToJavaClass(SpringBootProjectRepresentation bootProject, PlantClassRepresentation umlClass,
+//			Set<? extends Visitor> vistors) {
+//		JavaClassRepresentation javaClass = new PlantClassRepresentationToJavaClassRepresentationConverter(vistors).apply(bootProject, umlClass);
+//		umlClass.getFields().stream().forEach(umlField -> new PlantClassFieldToJavaClassConverter(vistors).apply(javaClass, umlField));
+//		umlClass.getRelationships().stream().forEach(umlRelationship -> new PlantRelationshipConverter(vistors).apply(javaClass, umlRelationship));
+//		return javaClass;
+//	}
 
 	private JavaEnumRepresentation convertUmlEnumToJavaEnum(SpringBootProjectRepresentation bootProject, PlantEnumRepresentation umlEnum) {
 		return new PlantEnumToJavaEnumConverter().apply(bootProject, umlEnum);
@@ -241,7 +261,10 @@ public class SpringBootProjectImpl implements SpringBootProject {
 
 	/*
 	 * (non-Javadoc)
-	 * @see br.xtool.service.BootService#createRepository(br.xtool.core.representation.EBootProject, br.xtool.core.representation.EJpaEntity)
+	 * 
+	 * @see
+	 * br.xtool.service.BootService#createRepository(br.xtool.core.representation.
+	 * EBootProject, br.xtool.core.representation.EJpaEntity)
 	 */
 //	@Override
 //	public RepositoryRepresentation createRepository(SpringBootProjectRepresentation bootProject, EntityRepresentation entity) {
@@ -256,7 +279,10 @@ public class SpringBootProjectImpl implements SpringBootProject {
 
 	/*
 	 * (non-Javadoc)
-	 * @see br.xtool.service.BootProjectService#createRepository(br.xtool.core.representation.EBootProject, br.xtool.core.representation.EJpaEntity, java.util.function.Consumer)
+	 * 
+	 * @see br.xtool.service.BootProjectService#createRepository(br.xtool.core.
+	 * representation.EBootProject, br.xtool.core.representation.EJpaEntity,
+	 * java.util.function.Consumer)
 	 */
 //	@Override
 //	public void createRepository(SpringBootProjectRepresentation bootProject, EntityRepresentation entity, Consumer<RepositoryRepresentation> consumer) {
@@ -279,7 +305,10 @@ public class SpringBootProjectImpl implements SpringBootProject {
 
 	/*
 	 * (non-Javadoc)
-	 * @see br.xtool.service.BootService#createProjection(br.xtool.core.representation.EBootProject, br.xtool.core.representation.EJpaEntity)
+	 * 
+	 * @see
+	 * br.xtool.service.BootService#createProjection(br.xtool.core.representation.
+	 * EBootProject, br.xtool.core.representation.EJpaEntity)
 	 */
 	@Override
 	public JpaProjectionRepresentation createProjection(SpringBootProjectRepresentation bootProject, EntityRepresentation entity) {
@@ -294,7 +323,10 @@ public class SpringBootProjectImpl implements SpringBootProject {
 
 	/*
 	 * (non-Javadoc)
-	 * @see br.xtool.service.BootProjectService#createProjection(br.xtool.core.representation.EBootProject, br.xtool.core.representation.EJpaEntity, java.util.function.Consumer)
+	 * 
+	 * @see br.xtool.service.BootProjectService#createProjection(br.xtool.core.
+	 * representation.EBootProject, br.xtool.core.representation.EJpaEntity,
+	 * java.util.function.Consumer)
 	 */
 	@Override
 	public void createProjection(SpringBootProjectRepresentation bootProject, EntityRepresentation entity, Consumer<JpaProjectionRepresentation> consumer) {
@@ -356,7 +388,9 @@ public class SpringBootProjectImpl implements SpringBootProject {
 
 	/*
 	 * (non-Javadoc)
-	 * @see br.xtool.service.BootProjectService#createService(br.xtool.core.representation.EBootProject, br.xtool.core.representation.EJpaRepository)
+	 * 
+	 * @see br.xtool.service.BootProjectService#createService(br.xtool.core.
+	 * representation.EBootProject, br.xtool.core.representation.EJpaRepository)
 	 */
 //	@Override
 //	public ServiceClassRepresentation createService(SpringBootProjectRepresentation bootProject, RepositoryRepresentation jpaRepository) {

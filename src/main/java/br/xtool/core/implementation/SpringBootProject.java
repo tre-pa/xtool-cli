@@ -2,16 +2,13 @@ package br.xtool.core.implementation;
 
 import java.nio.file.Path;
 import java.util.Collection;
-import java.util.Set;
 import java.util.function.Consumer;
 
 import br.xtool.core.representation.EntityRepresentation;
-import br.xtool.core.representation.JavaClassRepresentation;
 import br.xtool.core.representation.JavaEnumRepresentation;
 import br.xtool.core.representation.JavaTypeRepresentation;
 import br.xtool.core.representation.JpaProjectionRepresentation;
 import br.xtool.core.representation.SpringBootProjectRepresentation;
-import br.xtool.core.visitor.Visitor;
 
 /**
  * Serviços para projetos Spring Boot.
@@ -74,8 +71,8 @@ public interface SpringBootProject {
 	//	 * @param javaInterface
 	//	 */
 	//	void save(EJavaInterface javaInterface);
-	@Deprecated
-	void save(JavaTypeRepresentation<?> javaType);
+//	@Deprecated
+//	void save(JavaTypeRepresentation<?> javaType);
 
 	/**
 	 * 
@@ -91,7 +88,8 @@ public interface SpringBootProject {
 	 * @param umlClass
 	 * @return
 	 */
-	Collection<JavaClassRepresentation> umlClassesToJavaClasses(SpringBootProjectRepresentation bootProject, Set<Visitor> vistors);
+//	@Deprecated
+//	Collection<JavaClassRepresentation> umlClassesToJavaClasses(SpringBootProjectRepresentation bootProject, Set<Visitor> vistors);
 
 	/**
 	 * Converte os enums UML para as classes Java correspondentes.
@@ -100,6 +98,7 @@ public interface SpringBootProject {
 	 * @param vistors
 	 * @return
 	 */
+	@Deprecated
 	Collection<JavaEnumRepresentation> umlEnumsToJavaEnums(SpringBootProjectRepresentation bootProject);
 
 	/**

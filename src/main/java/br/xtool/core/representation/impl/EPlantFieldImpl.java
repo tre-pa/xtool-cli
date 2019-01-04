@@ -10,19 +10,17 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.apache.commons.lang3.EnumUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
-import com.google.common.base.Enums;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Sets;
 
 import br.xtool.core.representation.PlantClassDiagramRepresentation;
 import br.xtool.core.representation.PlantEnumRepresentation;
-import br.xtool.core.representation.PlantFieldRepresentation;
 import br.xtool.core.representation.PlantFieldPropertyRepresentation;
 import br.xtool.core.representation.PlantFieldPropertyRepresentation.FieldPropertyType;
+import br.xtool.core.representation.PlantFieldRepresentation;
 import net.sourceforge.plantuml.cucadiagram.Member;
 import strman.Strman;
 
@@ -72,13 +70,11 @@ public class EPlantFieldImpl implements PlantFieldRepresentation {
 			return fieldType;
 		}
 		if (this.isArray()) {
-			String type = StringUtils.substring(this.memberType(), 0, StringUtils.indexOf(this.memberType(), "["))
-					.trim();
+			String type = StringUtils.substring(this.memberType(), 0, StringUtils.indexOf(this.memberType(), "[")).trim();
 			return FieldType.valueOf(StringUtils.upperCase(type));
 		}
 		if (this.hasProperties()) {
-			String type = StringUtils.substring(this.memberType(), 0, StringUtils.indexOf(this.memberType(), "{"))
-					.trim();
+			String type = StringUtils.substring(this.memberType(), 0, StringUtils.indexOf(this.memberType(), "{")).trim();
 			return FieldType.valueOf(StringUtils.upperCase(type));
 		}
 		return FieldType.valueOf(StringUtils.upperCase(this.memberType()));
@@ -154,6 +150,19 @@ public class EPlantFieldImpl implements PlantFieldRepresentation {
 	public boolean isEnum() {
 		return this.classDiagram.getEnums().stream().anyMatch(plantEnum -> plantEnum.getName().equals(this.memberType()));
 	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.PlantFieldRepresentation#getEnumRepresentation()
+	 */
+	@Override
+	public Optional<PlantEnumRepresentation> getEnumRepresentation() {
+		// @formatter:off
+		return this.classDiagram.getEnums().stream()
+				.filter(plantEnum -> plantEnum.getName().equals(this.getName()))
+				.findFirst();
+		// @formatter:on
+	}
 
 	/*
 	 * (non-Javadoc)
@@ -184,8 +193,7 @@ public class EPlantFieldImpl implements PlantFieldRepresentation {
 		if (this.isArray()) {
 			String[] arrayMultiplicity = Strman.between(memberType(), "[", "]");
 			String multiplicityValue = StringUtils.join(arrayMultiplicity);
-			if (NumberUtils.isDigits(multiplicityValue))
-				return Optional.of(Integer.parseInt(multiplicityValue));
+			if (NumberUtils.isDigits(multiplicityValue)) return Optional.of(Integer.parseInt(multiplicityValue));
 			Matcher matcher = Pattern.compile("\\d*\\.\\.(\\d*)").matcher(multiplicityValue);
 			if (matcher.find()) {
 				Integer max = Integer.parseInt(matcher.group(1));

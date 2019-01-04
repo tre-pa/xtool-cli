@@ -7,7 +7,6 @@ import java.util.Set;
 import br.xtool.core.representation.PlantFieldPropertyRepresentation.FieldPropertyType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
 
 /**
  * Representação de um campo de uma classe do diagrama de classe UML.
@@ -101,8 +100,15 @@ public interface PlantFieldRepresentation {
 	 * @return
 	 */
 	boolean isArray();
-	
+
 	boolean isEnum();
+
+	/**
+	 * Retorna a representação do enum.
+	 * 
+	 * @return
+	 */
+	Optional<PlantEnumRepresentation> getEnumRepresentation();
 
 	/**
 	 * Retorna o valor mínimo do attributo array.
@@ -148,8 +154,8 @@ public interface PlantFieldRepresentation {
 
 	Optional<String[]> getTaggedValues(String key);
 
-	//	@Deprecated
-	//	EJavaField convertToJavaField(EJavaClass javaClass);
+	// @Deprecated
+	// EJavaField convertToJavaField(EJavaClass javaClass);
 
 	@AllArgsConstructor
 	@Getter
@@ -171,6 +177,7 @@ public interface PlantFieldRepresentation {
 		public void setJavaName(String javaName) {
 			this.javaName = javaName;
 		}
+
 		public void setClassName(String className) {
 			this.className = className;
 		}
