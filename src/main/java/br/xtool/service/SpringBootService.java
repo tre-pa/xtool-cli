@@ -39,7 +39,7 @@ import strman.Strman;
 public class SpringBootService {
 
 	@Autowired
-	private Workspace workspaceService;
+	private Workspace workspace;
 
 	/**
 	 * Gera um nome de projeto válido.
@@ -93,7 +93,7 @@ public class SpringBootService {
 		vars.put("baseClassName", genBaseClassName(name));
 		vars.put("rootPackage", genRootPackage(name));
 		// @formatter:off
-		SpringBootProjectRepresentation bootProject = this.workspaceService.createProject(
+		SpringBootProjectRepresentation bootProject = this.workspace.createProject(
 				SpringBootProjectRepresentation.class, 
 				ProjectRepresentation.Type.SPRINGBOOT, 
 				genProjectName(name), 
@@ -101,21 +101,21 @@ public class SpringBootService {
 				vars);
 		// @formatter:on
 
-		this.workspaceService.setWorkingProject(bootProject);
+		this.workspace.setWorkingProject(bootProject);
 	}
 	
-	public EntityRepresentation genEntity(SpringBootProjectRepresentation springBootProject, PlantClassRepresentation plantClass) {
+	public EntityRepresentation genEntity(PlantClassRepresentation plantClass) {
 		return null;
 	}
 
 	/**
 	 * Cria uma inteface de Repository no projeto para a entidade.
 	 * 
-	 * @param springBootProject
 	 * @param entity
 	 * @return
 	 */
-	public RepositoryRepresentation genRepository(SpringBootProjectRepresentation springBootProject, EntityRepresentation entity) {
+	public RepositoryRepresentation genRepository(EntityRepresentation entity) {
+		SpringBootProjectRepresentation springBootProject = this.workspace.getWorkingProject(SpringBootProjectRepresentation.class);
 		String repositoryName = entity.getName().concat("Repository");
 		// @formatter:off
 		RepositoryRepresentation repository = springBootProject.getRepositories().stream()
@@ -129,11 +129,11 @@ public class SpringBootService {
 
 	/**
 	 * 
-	 * @param springBootProject
 	 * @param entity
 	 * @return
 	 */
-	public SpecificationRepresentation genSpecification(SpringBootProjectRepresentation springBootProject, EntityRepresentation entity) {
+	public SpecificationRepresentation genSpecification(EntityRepresentation entity) {
+		SpringBootProjectRepresentation springBootProject = this.workspace.getWorkingProject(SpringBootProjectRepresentation.class);
 		String specificationName = entity.getName().concat("Specification");
 		// @formatter:off
 		SpecificationRepresentation specification = springBootProject.getSpecifications().stream()
@@ -147,17 +147,17 @@ public class SpringBootService {
 	/**
 	 * Cria uma classe de Service no projeto.
 	 * 
-	 * @param bootProject Projeto Spring Boot alvo.
 	 * @param repository  Repositório selecionado.
 	 * @return
 	 */
-	public ServiceClassRepresentation genService(SpringBootProjectRepresentation bootProject, RepositoryRepresentation repository) {
+	public ServiceClassRepresentation genService(RepositoryRepresentation repository) {
+		SpringBootProjectRepresentation springBootProject = this.workspace.getWorkingProject(SpringBootProjectRepresentation.class);
 		String serviceName = repository.getTargetEntity().getName().concat("Service");
 		// @formatter:off
-		ServiceClassRepresentation serviceClass = bootProject.getServices().stream()
+		ServiceClassRepresentation serviceClass = springBootProject.getServices().stream()
 				.filter(service -> service.getName().equals(serviceName))
 				.findFirst()
-				.orElseGet(() -> ServiceClassTemplates.newServiceClassRepresentation(bootProject, repository));
+				.orElseGet(() -> ServiceClassTemplates.newServiceClassRepresentation(springBootProject, repository));
 		this.save(serviceClass);
 		return serviceClass;
 	}
@@ -165,17 +165,17 @@ public class SpringBootService {
 	/**
 	 * Cria uma classe Rest no projeto.
 	 * 
-	 * @param bootProject Projecto Spring Boot alvo.
 	 * @param repository  Repositório selecionado.
 	 * @return
 	 */
-	public RestClassRepresentation genRest(SpringBootProjectRepresentation bootProject, RepositoryRepresentation repository) {
+	public RestClassRepresentation genRest(RepositoryRepresentation repository) {
+		SpringBootProjectRepresentation springBootProject = this.workspace.getWorkingProject(SpringBootProjectRepresentation.class);
 		String restName = repository.getTargetEntity().getName().concat("Rest");
 		// @formatter:off
-		RestClassRepresentation restClass = bootProject.getRests().stream()
+		RestClassRepresentation restClass = springBootProject.getRests().stream()
 				.filter(rest -> rest.getName().equals(restName))
 				.findFirst()
-				.orElseGet(() -> RestClassTemplates.newRestClassRepresentation(bootProject, repository));
+				.orElseGet(() -> RestClassTemplates.newRestClassRepresentation(springBootProject, repository));
 		// @formatter:on
 		RestClassTemplates.genFindAll(restClass, repository);
 		RestClassTemplates.genFilter(restClass, repository);
