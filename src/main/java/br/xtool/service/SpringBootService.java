@@ -20,6 +20,7 @@ import br.xtool.core.Workspace;
 import br.xtool.core.representation.EntityRepresentation;
 import br.xtool.core.representation.JavaPackageRepresentation;
 import br.xtool.core.representation.JavaTypeRepresentation;
+import br.xtool.core.representation.PlantClassRepresentation;
 import br.xtool.core.representation.ProjectRepresentation;
 import br.xtool.core.representation.RepositoryRepresentation;
 import br.xtool.core.representation.RestClassRepresentation;
@@ -101,6 +102,10 @@ public class SpringBootService {
 		// @formatter:on
 
 		this.workspaceService.setWorkingProject(bootProject);
+	}
+	
+	public EntityRepresentation genEntity(SpringBootProjectRepresentation springBootProject, PlantClassRepresentation plantClass) {
+		return null;
 	}
 
 	/**
