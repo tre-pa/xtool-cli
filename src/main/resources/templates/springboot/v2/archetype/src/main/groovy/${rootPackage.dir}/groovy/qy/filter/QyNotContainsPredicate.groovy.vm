@@ -1,0 +1,27 @@
+package ${rootPackage.name}.groovy.qy.filter;
+
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+
+class QyNotContainsPredicate extends QyPredicate {
+
+	@Override
+	String toSql() {
+		this.dataField + " not like '%" + this.value + "%'";
+	}
+
+	@Override
+	String toJpql() {
+		this.dataField + " not like '%" + this.value + "%'";
+	}
+
+	@Override
+	<T> Predicate toPredicate(Class<T> clazz, Root<T> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
+		Class<?> dataFieldType = getDataType(clazz, this.dataField);
+		if (dataFieldType == String.class) return cb.notLike(cb.upper(root.get(this.dataField)), "%" + ((String) this.value).toUpperCase() + "%");
+		throw new IllegalArgumentException(String.format("Não foi possível montar um predicado para o campo '%s' com o tipo 'notcontains'", this.dataField));
+	}
+
+}

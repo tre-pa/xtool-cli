@@ -1,0 +1,11 @@
+package br.jus.tre_pa.springboot.v2.template.service.groovy.qy.sql
+
+import br.jus.tre_pa.springboot.v2.template.service.groovy.qy.QyFilterable
+
+interface QySqlWhereStep extends QySqlFetchStep, QySqlOrderByStep {
+	
+//	QySqlOrderByStep where(String sql)
+
+	QySqlOrderByStep where(QyFilterable filter)
+	
+}

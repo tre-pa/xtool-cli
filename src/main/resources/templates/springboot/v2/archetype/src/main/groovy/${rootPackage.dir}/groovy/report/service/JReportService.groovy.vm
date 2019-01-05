@@ -1,0 +1,196 @@
+package br.jus.tre_pa.springboot.v2.template.service.groovy.report.service;
+
+import java.time.LocalDateTime
+import java.util.stream.Collectors
+
+import org.apache.commons.lang3.StringUtils
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
+import org.springframework.data.domain.Sort
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.rowset.SqlRowSet;
+import org.springframework.stereotype.Service;
+
+import com.fasterxml.jackson.databind.ObjectMapper
+
+import ar.com.fdvs.dj.core.DynamicJasperHelper
+import ar.com.fdvs.dj.core.layout.ClassicLayoutManager
+import ar.com.fdvs.dj.domain.DynamicReport
+import br.jus.tre_pa.springboot.v2.template.service.groovy.qy.QyAggregation
+import br.jus.tre_pa.springboot.v2.template.service.groovy.qy.QyFilterable
+import br.jus.tre_pa.springboot.v2.template.service.groovy.qy.QyPage
+import br.jus.tre_pa.springboot.v2.template.service.groovy.qy.QyPayload
+import br.jus.tre_pa.springboot.v2.template.service.groovy.qy.sql.QySqlContext
+import br.jus.tre_pa.springboot.v2.template.service.groovy.report.JReportStyles
+import br.jus.tre_pa.springboot.v2.template.service.groovy.report.domain.JReport
+import br.jus.tre_pa.springboot.v2.template.service.groovy.report.repository.JReportRepository
+import br.jus.tre_pa.springboot.v2.template.service.groovy.report.types.JReportColumn
+import groovy.json.JsonSlurper
+import net.sf.jasperreports.engine.JRDataSource
+import net.sf.jasperreports.engine.JasperExportManager
+import net.sf.jasperreports.engine.JasperPrint
+import net.sf.jasperreports.engine.data.ListOfArrayDataSource
+
+
+
+@Service
+class JReportService {
+
+	@Autowired
+	JdbcTemplate jdbcTemplate;
+
+	@Autowired
+	JReportRepository jreportRepository;
+
+	@Autowired
+	private QySqlContext qyContext;
+
+	/**
+	 * Salva um novo report.
+	 * 
+	 * @param jreport
+	 * @return
+	 */
+	JReport insert(JReport jreport) {
+		jreport.createdAt = LocalDateTime.now();
+		jreport.uuid = UUID.randomUUID();
+		if(jreport.columns.empty) jreport.columns = this.genDefaultColumnsTemplate(jreport.sql);
+		if(StringUtils.isEmpty(jreport.gpdf)) jreport.gpdf = this.genDefaultGPDFTemplate();
+		if(StringUtils.isEmpty(jreport.gexcel)) jreport.gexcel = "excel";
+		return this.jreportRepository.save(jreport);
+	}
+
+	/**
+	 * Atualiza um report.
+	 * 
+	 * @param jreport
+	 * @return
+	 */
+	JReport update(JReport jreport) {
+		jreport.lastUpdateAt = LocalDateTime.now();
+		return this.jreportRepository.save(jreport);
+	}
+
+	/**
+	 * Executa a consulta SQL.
+	 * 
+	 * @param id
+	 * @return
+	 */
+	QyPage<Map<String, Object>> executeSQLPageable(String sql, Pageable pageable, QyPayload payload) {
+		Page<Map<String, Object>> page = qyContext.selectFrom(sql)
+				.where(payload?.filterable)
+				.orderBy(pageable.sort)
+				.limit(pageable)
+				.fetchMaps()
+		List<QyAggregation> aggregations = this.executeSQLAgg(sql, payload);
+		qyContext.clear();
+		new QyPage(pagination: page, aggregations: aggregations);
+	}
+
+	/**
+	 * Executa a consulta SQL de aggregação.
+	 *
+	 * @param id
+	 * @return
+	 */
+	List<QyAggregation> executeSQLAgg(String sql, QyPayload payload) {
+		qyContext.aggregation(sql, payload);
+	}
+
+	private List<Map<String, Object>> executeSQL(String sql, Sort sort, QyFilterable filter) {
+		List<Map<String, Object>> list = [];
+		if (filter) {
+			list = qyContext.selectFrom(sql)
+					.where(filter)
+					.orderBy(sort)
+					.fetchMaps()
+			qyContext.clear();
+			return list;
+		}
+		list = qyContext.selectFrom(sql)
+				.orderBy(sort)
+				.fetchMaps()
+		qyContext.clear();
+		return list;
+	}
+
+	/**
+	 * Executa o código groovy para a geração do relatório em PDF.
+	 * 
+	 * @param id Id do Relatório.
+	 * 
+	 */
+	ByteArrayInputStream genGPDF(JReport jreport,Sort sort, QyFilterable filter) {
+		Binding binding = new Binding();
+		binding.setProperty("report", new JsonSlurper().parseText(new ObjectMapper().writeValueAsString(jreport)));
+		binding.setProperty("jdbcTemplate", jdbcTemplate);
+		binding.setProperty("JReportStyles", JReportStyles.class);
+		GroovyShell groovyShell = new GroovyShell(binding);
+		List<Map<String, Object>> sqlResult = executeSQL(jreport.sql, sort, filter);
+		List<Object[]> records = sqlResult.stream().map { row -> row.values().toArray() }.collect(Collectors.toList());
+		List<String> columnNames = jreport.getColumns().stream().map { it.dataField }.collect(Collectors.toList());
+
+		DynamicReport dynamicReport = (DynamicReport) groovyShell.evaluate(jreport.gpdf);
+		JRDataSource ds = new ListOfArrayDataSource(records, columnNames as String[]);
+		JasperPrint jp = DynamicJasperHelper.generateJasperPrint(dynamicReport, new ClassicLayoutManager(), ds);
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		JasperExportManager.exportReportToPdfStream(jp, baos);
+		ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
+	}
+
+	/**
+	 * Gera o template da coluna baseado em uma consuta SQL.
+	 * 
+	 * @param sql
+	 * @return
+	 */
+	List<JReportColumn> genDefaultColumnsTemplate(String sql) {
+		SqlRowSet sqlRowSet = jdbcTemplate.queryForRowSet(sql);
+		List<JReportColumn> columns = new ArrayList<>();
+		String[] columnNames = sqlRowSet.getMetaData().getColumnNames();
+		for (int i = 0; i < columnNames.length; i++) {
+			JReportColumn column = new JReportColumn();
+			column.dataField = columnNames[i];
+			column.caption = columnNames[i];
+			column.dataType = JReportColumn.toTypescriptType(sqlRowSet.getMetaData().getColumnType(i + 1))
+			column.javaType = JReportColumn.toJavaType(sqlRowSet.getMetaData().getColumnType(i + 1)).getName();
+			columns.add(column);
+		}
+		columns;
+	}
+
+	/**
+	 * Gera o template do gpdf baseado nas colunas JReportColumn.
+	 * 
+	 * @param columns
+	 * @return
+	 */
+	String genDefaultGPDFTemplate() {
+		String gpdfTemplate = '''
+        import ar.com.fdvs.dj.domain.builders.ColumnBuilder
+        import ar.com.fdvs.dj.domain.builders.DynamicReportBuilder
+		
+        def drb = new DynamicReportBuilder()
+		
+		drb.title = report.title
+        drb.subtitle = report.subtitle
+        drb.useFullPageWidth = true
+		drb.setDefaultStyles(JReportStyles.titleStyle, JReportStyles.subtitleStyle, JReportStyles.columnHeaderStyle, JReportStyles.columnDetailStyle)
+		
+        def columns = [:]
+		
+        report.columns.each { 
+            columns[it.dataField] = ColumnBuilder.new
+                .setColumnProperty(it.dataField, it.javaType)
+                .setTitle(it.caption)
+                .setWidth(it.width)
+                .build()
+            drb.addColumn(columns[it.dataField])
+        }
+		
+        def dr = drb.build()
+		'''.stripIndent();
+	}
+}

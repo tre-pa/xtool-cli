@@ -1,0 +1,15 @@
+package br.jus.tre_pa.springboot.v2.template.service.groovy.qy.sql
+
+import br.jus.tre_pa.springboot.v2.template.service.groovy.qy.QyAggregable
+import br.jus.tre_pa.springboot.v2.template.service.groovy.qy.QyAggregation
+import br.jus.tre_pa.springboot.v2.template.service.groovy.qy.QyFilterable
+import br.jus.tre_pa.springboot.v2.template.service.groovy.qy.QyPayload
+
+interface QySqlContext {
+
+	QySqlWhereStep selectFrom(String sql)
+
+	List<QyAggregation> aggregation(String sql, QyPayload payload)
+	
+	void clear();
+}

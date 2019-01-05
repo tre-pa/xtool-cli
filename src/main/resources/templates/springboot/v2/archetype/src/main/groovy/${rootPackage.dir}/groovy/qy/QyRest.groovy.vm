@@ -1,0 +1,121 @@
+package br.jus.tre_pa.springboot.v2.template.service.groovy.qy
+
+import javax.annotation.PostConstruct
+import javax.persistence.EntityNotFoundException
+import javax.validation.Valid
+
+import org.springframework.beans.BeanUtils
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.context.ApplicationContext
+import org.springframework.core.ResolvableType
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
+import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.DeleteMapping
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.PutMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.ResponseStatus
+
+import br.jus.tre_pa.springboot.v2.template.service.groovy.qy.jpa.QyRepository
+
+/**
+ * Classe abstrata com funcionalidades padrões de um Rest.
+ *
+ */
+abstract class QyRest<T, ID, S extends QySpecification<T> ,R extends JpaRepository<T, ID> & QyRepository<T>> {
+
+	Class<T> entityClass
+
+	Class<S> specificationClass
+
+	R repository
+	
+	@Autowired
+	private ApplicationContext appContext;
+
+	public QyRest() {
+		super()
+		this.entityClass = ResolvableType.forClass(this.getClass()).getSuperType().getGeneric(0).getRawClass()
+		this.specificationClass  = ResolvableType.forClass(this.getClass()).getSuperType().getGeneric(2).getRawClass()
+	}
+	
+	@PostConstruct
+	protected void init() {
+		this.repository = appContext.getBean(ResolvableType.forClass(this.getClass()).getSuperType().getGeneric(3).getRawClass())
+	}
+	
+	/**
+	 * Retorna a listagem paginada de recursos
+	 * 
+	 * @param pageable
+	 * @return
+	 */
+	@GetMapping
+	public ResponseEntity<Page<T>> findAll(Pageable pageable) {
+		return ResponseEntity.ok().body(repository.findAll(pageable))
+	}
+	
+	/**
+	 * Retorna um recurso específico.
+	 * 
+	 * @param id
+	 * @return
+	 */
+	@GetMapping(path = "/{id}")
+	public T findById(@PathVariable ID id) {
+		return repository.findById(id).orElseThrow{ new EntityNotFoundException("Entidade não encontrada.") }
+	}
+
+	/**
+	 * Cria um novo recurso
+	 *
+	 * @param recurso
+	 * @return Entidade gerenciada.
+	 */
+	@PostMapping
+	@ResponseStatus(HttpStatus.CREATED)
+	public T insert(@RequestBody @Valid T entity) {
+		return repository.save(entity)
+	}
+
+	/**
+	 * Atualiza um recurso
+	 *
+	 * @param recurso
+	 * @return Entidade gerenciada.
+	 */
+	@PutMapping(path = "/{id}")
+	public T update(@PathVariable ID id, @RequestBody T entity) {
+		if (!repository.existsById(id)) throw new EntityNotFoundException("Entidade não encontrada.")
+		return repository.save(entity)
+	}
+
+	/**
+	 * Deleta umn recurso
+	 *
+	 * @param id
+	 */
+	@DeleteMapping(path = "/{id}")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void delete(@PathVariable ID id) {
+		if (!repository.existsById(id)) throw new EntityNotFoundException("Entidade não encontrada.")
+		repository.deleteById(id)
+	}
+	
+	/**
+	 * 
+	 * @param payload
+	 * @param pageable
+	 * @param projectable
+	 * @return
+	 */
+	@PostMapping("/all")
+	public ResponseEntity<QyPage<T>> findAllEntities(@RequestBody(required = false) QyPayload payload, Pageable pageable, QyProjectable projectable) {
+		return ResponseEntity.ok(repository.findAll(entityClass, pageable, projectable, specificationClass, payload))
+	}
+}

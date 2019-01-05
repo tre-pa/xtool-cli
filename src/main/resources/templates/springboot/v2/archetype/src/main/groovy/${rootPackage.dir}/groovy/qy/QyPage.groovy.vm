@@ -1,0 +1,16 @@
+package br.jus.tre_pa.springboot.v2.template.service.groovy.qy
+
+import org.springframework.data.domain.Page
+
+/**
+ * 
+ * @author jcruz
+ *
+ * @param <T>
+ */
+class QyPage<T>  {
+
+	Page<T> pagination;
+
+	List<QyAggregation> aggregations;
+}

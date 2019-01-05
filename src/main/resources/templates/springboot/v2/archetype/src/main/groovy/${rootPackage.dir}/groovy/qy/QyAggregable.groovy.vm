@@ -1,0 +1,34 @@
+package br.jus.tre_pa.springboot.v2.template.service.groovy.qy
+
+import com.fasterxml.jackson.annotation.JsonAlias
+import com.fasterxml.jackson.annotation.JsonProperty
+
+import groovy.transform.ToString
+
+/**
+ * 
+ * @author jcruz
+ *
+ */
+@ToString
+class QyAggregable {
+
+	@JsonAlias("selector")
+	String dataField
+
+	@JsonAlias("summaryType")
+	Operation operation
+
+	public enum Operation {
+		@JsonProperty("sum")
+		SUM, 
+		@JsonProperty("max")
+		MAX, 
+		@JsonProperty("min")
+		MIN, 
+		@JsonProperty("count")
+		COUNT, 
+		@JsonProperty("avg")
+		AVG
+	}
+}

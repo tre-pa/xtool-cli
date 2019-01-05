@@ -1,0 +1,17 @@
+package br.jus.tre_pa.springboot.v2.template.service.groovy.qy
+
+import br.jus.tre_pa.springboot.v2.template.service.groovy.qy.QyAggregable.Operation
+
+/**
+ * 
+ * @author jcruz
+ *
+ */
+class QyAggregation {
+
+	String dataField
+
+	Object result;
+	
+	Operation operation;
+}
