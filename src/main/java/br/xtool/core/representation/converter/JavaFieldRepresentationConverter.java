@@ -3,17 +3,20 @@ package br.xtool.core.representation.converter;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.function.BiFunction;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import br.xtool.core.representation.JavaClassRepresentation;
 import br.xtool.core.representation.JavaFieldRepresentation;
-import br.xtool.core.representation.PlantFieldRepresentation;
-import br.xtool.core.representation.PlantFieldPropertyRepresentation.FieldPropertyType;
+import br.xtool.core.representation.PlantClassFieldPropertyRepresentation.FieldPropertyType;
+import br.xtool.core.representation.PlantClassFieldRepresentation;
 import br.xtool.core.representation.impl.EJavaFieldImpl.EBigDecimalFieldImpl;
 import br.xtool.core.representation.impl.EJavaFieldImpl.EBooleanFieldImpl;
 import br.xtool.core.representation.impl.EJavaFieldImpl.EByteFieldImpl;
+import br.xtool.core.representation.impl.EJavaFieldImpl.EENumFieldImpl;
 import br.xtool.core.representation.impl.EJavaFieldImpl.EIntegerFieldImpl;
 import br.xtool.core.representation.impl.EJavaFieldImpl.ELocalDateFieldImpl;
 import br.xtool.core.representation.impl.EJavaFieldImpl.ELocalDateTimeFieldImpl;
@@ -22,11 +25,8 @@ import br.xtool.core.representation.impl.EJavaFieldImpl.ENotNullFieldImpl;
 import br.xtool.core.representation.impl.EJavaFieldImpl.EStringFieldImpl;
 import br.xtool.core.representation.impl.EJavaFieldImpl.ETransientFieldImpl;
 import br.xtool.core.representation.impl.EJavaFieldImpl.EUniqueFieldImpl;
-import br.xtool.core.representation.impl.EJavaFieldImpl.EENumFieldImpl;
-
 import br.xtool.core.util.RoasterUtil;
 import br.xtool.core.visitor.Visitor;
-import lombok.AllArgsConstructor;
 
 /**
  * Converter um atributo UML do diagrama de classe em um EJavaField.
@@ -34,13 +34,15 @@ import lombok.AllArgsConstructor;
  * @author jcruz
  *
  */
-@AllArgsConstructor
-public class PlantClassFieldToJavaClassConverter implements BiFunction<JavaClassRepresentation, PlantFieldRepresentation, JavaFieldRepresentation> {
+//@AllArgsConstructor
+@Component
+public class JavaFieldRepresentationConverter implements BiFunction<JavaClassRepresentation, PlantClassFieldRepresentation, JavaFieldRepresentation> {
 
-	private Set<? extends Visitor> visitors = new HashSet<>();
+	@Autowired
+	private Set<Visitor> visitors;
 
 	@Override
-	public JavaFieldRepresentation apply(JavaClassRepresentation javaClass, PlantFieldRepresentation umlField) {
+	public JavaFieldRepresentation apply(JavaClassRepresentation javaClass, PlantClassFieldRepresentation umlField) {
 		JavaFieldRepresentation javaField = javaClass.addField(umlField.getName());
 		RoasterUtil.addImport(javaField.getRoasterField().getOrigin(), umlField.getType().getClassName());
 		// @formatter:off
@@ -56,7 +58,7 @@ public class PlantClassFieldToJavaClassConverter implements BiFunction<JavaClass
 	/*
 	 * Visita os atributos da classe e as respectivas propridades.
 	 */
-	private void visit(JavaFieldRepresentation javaField, PlantFieldRepresentation umlField) {
+	private void visit(JavaFieldRepresentation javaField, PlantClassFieldRepresentation umlField) {
 		this.visitors.forEach(visitor -> {
 			visitor.visit(javaField, umlField);
 			if (javaField.getType().isType(String.class)) visitor.visit(new EStringFieldImpl(javaField), umlField);

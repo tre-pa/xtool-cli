@@ -17,14 +17,14 @@ import com.google.common.base.Splitter;
 import com.google.common.collect.Sets;
 
 import br.xtool.core.representation.PlantClassDiagramRepresentation;
+import br.xtool.core.representation.PlantClassFieldPropertyRepresentation;
+import br.xtool.core.representation.PlantClassFieldPropertyRepresentation.FieldPropertyType;
+import br.xtool.core.representation.PlantClassFieldRepresentation;
 import br.xtool.core.representation.PlantEnumRepresentation;
-import br.xtool.core.representation.PlantFieldPropertyRepresentation;
-import br.xtool.core.representation.PlantFieldPropertyRepresentation.FieldPropertyType;
-import br.xtool.core.representation.PlantFieldRepresentation;
 import net.sourceforge.plantuml.cucadiagram.Member;
 import strman.Strman;
 
-public class EPlantFieldImpl implements PlantFieldRepresentation {
+public class EPlantFieldImpl implements PlantClassFieldRepresentation {
 
 	private PlantClassDiagramRepresentation classDiagram;
 
@@ -159,7 +159,7 @@ public class EPlantFieldImpl implements PlantFieldRepresentation {
 	public Optional<PlantEnumRepresentation> getEnumRepresentation() {
 		// @formatter:off
 		return this.classDiagram.getEnums().stream()
-				.filter(plantEnum -> plantEnum.getName().equals(this.getName()))
+				.filter(plantEnum -> plantEnum.getName().equals(this.getType().getJavaName()))
 				.findFirst();
 		// @formatter:on
 	}
@@ -230,7 +230,7 @@ public class EPlantFieldImpl implements PlantFieldRepresentation {
 	 * @see br.xtool.core.representation.EUmlField#getProperties()
 	 */
 	@Override
-	public Set<PlantFieldPropertyRepresentation> getProperties() {
+	public Set<PlantClassFieldPropertyRepresentation> getProperties() {
 		if (Strman.containsAll(memberType(), new String[] { "{", "}" })) {
 			String[] propertiesBlock = Strman.between(memberType(), "{", "}");
 			String[] propertiesItens = StringUtils.split(StringUtils.join(propertiesBlock), ",");

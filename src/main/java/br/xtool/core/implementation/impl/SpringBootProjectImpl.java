@@ -3,10 +3,8 @@ package br.xtool.core.implementation.impl;
 import java.io.BufferedWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Collection;
 import java.util.Properties;
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.apache.commons.lang3.StringUtils;
@@ -21,13 +19,10 @@ import org.springframework.stereotype.Service;
 import br.xtool.core.implementation.SpringBootProject;
 import br.xtool.core.representation.EntityRepresentation;
 import br.xtool.core.representation.JavaClassRepresentation;
-import br.xtool.core.representation.JavaEnumRepresentation;
 import br.xtool.core.representation.JavaSourceFolderRepresentation;
 import br.xtool.core.representation.JavaTypeRepresentation;
 import br.xtool.core.representation.JpaProjectionRepresentation;
-import br.xtool.core.representation.PlantEnumRepresentation;
 import br.xtool.core.representation.SpringBootProjectRepresentation;
-import br.xtool.core.representation.converter.PlantEnumToJavaEnumConverter;
 import br.xtool.core.representation.impl.EJpaProjectionImpl;
 import br.xtool.core.util.RoasterUtil;
 import lombok.SneakyThrows;
@@ -230,21 +225,21 @@ public class SpringBootProjectImpl implements SpringBootProject {
 	 * @see br.xtool.service.BootProjectService#umlEnumsToJavaEnums(br.xtool.core.
 	 * representation.EBootProject, java.util.Set)
 	 */
-	@Override
-	@Deprecated
-	public Collection<JavaEnumRepresentation> umlEnumsToJavaEnums(SpringBootProjectRepresentation bootProject) {
-		// @formatter:off
-		Collection<JavaEnumRepresentation> javaEnums = bootProject.getDomainClassDiagram().getEnums().stream()
-				.map(umlEnum -> this.convertUmlEnumToJavaEnum(bootProject, umlEnum))
-				.collect(Collectors.toList());
-		
-		// @formatter:on
-		javaEnums.stream().forEach(javaEnum -> {
-			this.save(javaEnum);
-		});
-//		print(bold(cyan(String.valueOf(javaEnums.size()))), " enums mapeadas.");
-		return javaEnums;
-	}
+//	@Override
+//	@Deprecated
+//	public Collection<JavaEnumRepresentation> umlEnumsToJavaEnums(SpringBootProjectRepresentation bootProject) {
+//		// @formatter:off
+//		Collection<JavaEnumRepresentation> javaEnums = bootProject.getDomainClassDiagram().getEnums().stream()
+//				.map(umlEnum -> this.convertUmlEnumToJavaEnum(bootProject, umlEnum))
+//				.collect(Collectors.toList());
+//		
+//		// @formatter:on
+//		javaEnums.stream().forEach(javaEnum -> {
+//			this.save(javaEnum);
+//		});
+////		print(bold(cyan(String.valueOf(javaEnums.size()))), " enums mapeadas.");
+//		return javaEnums;
+//	}
 
 //	// Converte uma classe UML para um objeto EJavaClass.
 //	private JavaClassRepresentation convertUmlClassToJavaClass(SpringBootProjectRepresentation bootProject, PlantClassRepresentation umlClass,
@@ -255,9 +250,9 @@ public class SpringBootProjectImpl implements SpringBootProject {
 //		return javaClass;
 //	}
 
-	private JavaEnumRepresentation convertUmlEnumToJavaEnum(SpringBootProjectRepresentation bootProject, PlantEnumRepresentation umlEnum) {
-		return new PlantEnumToJavaEnumConverter().apply(bootProject, umlEnum);
-	}
+//	private JavaEnumRepresentation convertUmlEnumToJavaEnum(SpringBootProjectRepresentation bootProject, PlantEnumRepresentation umlEnum) {
+//		return new JavaEnumRepresentationConverter().apply(bootProject, umlEnum);
+//	}
 
 	/*
 	 * (non-Javadoc)

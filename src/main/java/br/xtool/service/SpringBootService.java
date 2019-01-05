@@ -20,8 +20,10 @@ import br.xtool.core.ConsoleLog;
 import br.xtool.core.Workspace;
 import br.xtool.core.representation.EntityRepresentation;
 import br.xtool.core.representation.JavaClassRepresentation;
+import br.xtool.core.representation.JavaEnumRepresentation;
 import br.xtool.core.representation.JavaPackageRepresentation;
 import br.xtool.core.representation.JavaTypeRepresentation;
+import br.xtool.core.representation.PlantClassFieldRepresentation;
 import br.xtool.core.representation.PlantClassRepresentation;
 import br.xtool.core.representation.ProjectRepresentation;
 import br.xtool.core.representation.RepositoryRepresentation;
@@ -29,8 +31,12 @@ import br.xtool.core.representation.RestClassRepresentation;
 import br.xtool.core.representation.ServiceClassRepresentation;
 import br.xtool.core.representation.SpecificationRepresentation;
 import br.xtool.core.representation.SpringBootProjectRepresentation;
-import br.xtool.core.representation.converter.PlantClassRepresentationToJavaClassRepresentationConverter;
+import br.xtool.core.representation.converter.JavaClassRepresentationConverter;
+import br.xtool.core.representation.converter.JavaEnumRepresentationConverter;
+import br.xtool.core.representation.converter.JavaFieldRepresentationConverter;
+import br.xtool.core.representation.converter.JavaRelationshipRepresentationConverter;
 import br.xtool.core.representation.impl.EJavaPackageImpl;
+import br.xtool.core.representation.impl.EntityRepresentationImpl;
 import br.xtool.core.template.RepositoryTemplates;
 import br.xtool.core.template.RestClassTemplates;
 import br.xtool.core.template.ServiceClassTemplates;
@@ -43,9 +49,9 @@ public class SpringBootService {
 
 	@Autowired
 	private Workspace workspace;
-	
+
 	@Autowired
-	private ApplicationContext applicationContext;
+	private ApplicationContext appCtx;
 
 	/**
 	 * Gera um nome de projeto válido.
@@ -83,8 +89,7 @@ public class SpringBootService {
 	 * @return
 	 */
 	public JavaPackageRepresentation genRootPackage(String projectName) {
-		String packageName = JavaPackageRepresentation.getDefaultPrefix().concat(".")
-				.concat(StringUtils.join(StringUtils.split(Strman.toKebabCase(projectName), "-"), "."));
+		String packageName = JavaPackageRepresentation.getDefaultPrefix().concat(".").concat(StringUtils.join(StringUtils.split(Strman.toKebabCase(projectName), "-"), "."));
 		return EJavaPackageImpl.of(packageName);
 	}
 
@@ -109,14 +114,27 @@ public class SpringBootService {
 
 		this.workspace.setWorkingProject(bootProject);
 	}
-	
+
 	public EntityRepresentation genEntity(PlantClassRepresentation plantClass) {
-		JavaClassRepresentation javaClass = applicationContext.getBean(PlantClassRepresentationToJavaClassRepresentationConverter.class).apply(plantClass);
-//		plantClass.getFields().stream()
-//			.filter(plantField -> plantField.isEnum())
-//			.map(PlantFieldRepresentation::getEnumRepresentation)
+		SpringBootProjectRepresentation springBootProject = this.workspace.getWorkingProject(SpringBootProjectRepresentation.class);
+		JavaClassRepresentation javaClass = appCtx.getBean(JavaClassRepresentationConverter.class).apply(plantClass);
+		plantClass.getFields().stream().forEach(plantField -> appCtx.getBean(JavaFieldRepresentationConverter.class).apply(javaClass, plantField));
+		plantClass.getRelationships().stream().forEach(plantRelationship -> appCtx.getBean(JavaRelationshipRepresentationConverter.class).apply(javaClass, plantRelationship));
+		plantClass.getFields().stream()
+			.filter(PlantClassFieldRepresentation::isEnum)
+			.forEach(plantClassField -> {
+				JavaEnumRepresentation javaEnum = appCtx.getBean(JavaEnumRepresentationConverter.class).apply(plantClassField.getEnumRepresentation().get());
+				save(javaEnum);
+			});
 		save(javaClass);
-		return null;
+		// Gera as classes dos relacionamento associados a classe.
+		plantClass.getRelationships().stream().forEach(plantRelationship -> {
+			if (springBootProject.getEntities().stream().noneMatch(entity -> entity.getName().equals(plantRelationship.getTargetClass().getName()))) {
+				genEntity(plantRelationship.getTargetClass());
+			}
+		});
+		springBootProject.refresh();
+		return new EntityRepresentationImpl(springBootProject, javaClass.getRoasterJavaClass());
 	}
 
 	/**
@@ -200,10 +218,8 @@ public class SpringBootService {
 
 	@SneakyThrows
 	private void save(JavaTypeRepresentation<?> javaType) {
-		Path javaPath = javaType.getProject().getMainSourceFolder().getPath().resolve(javaType.getJavaPackage().getDir())
-				.resolve(String.format("%s.java", javaType.getName()));
-		if (Files.notExists(javaPath.getParent()))
-			Files.createDirectories(javaPath.getParent());
+		Path javaPath = javaType.getProject().getMainSourceFolder().getPath().resolve(javaType.getJavaPackage().getDir()).resolve(String.format("%s.java", javaType.getName()));
+		if (Files.notExists(javaPath.getParent())) Files.createDirectories(javaPath.getParent());
 		Properties prefs = new Properties();
 		prefs.setProperty(JavaCore.COMPILER_SOURCE, CompilerOptions.VERSION_1_8);
 		prefs.setProperty(JavaCore.COMPILER_COMPLIANCE, CompilerOptions.VERSION_1_8);

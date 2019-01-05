@@ -14,7 +14,7 @@ import br.xtool.core.representation.SpringBootProjectRepresentation;
 import br.xtool.core.representation.RestClassRepresentation;
 import br.xtool.core.representation.JavaMethodRepresentation;
 
-public class RestClassRepresentationImpl extends EJavaClassImpl implements RestClassRepresentation {
+public class RestClassRepresentationImpl extends JavaClassRepresentationImpl implements RestClassRepresentation {
 
 	public RestClassRepresentationImpl(SpringBootProjectRepresentation bootProject, JavaClassSource javaClassSource) {
 		super(bootProject, javaClassSource);

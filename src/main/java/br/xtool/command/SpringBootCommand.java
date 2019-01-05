@@ -34,13 +34,14 @@ public class SpringBootCommand {
 	public void newApp(@ShellOption(help = "Nome do projeto") String name) {
 		springBootService.newApp(name);
 	}
-	
+
 	/**
 	 * 
 	 * @param plantClass
 	 */
 	@ShellMethod(key = "gen:entity", value = "Gera uma classe Jpa", group = XtoolCliApplication.SPRINGBOOT_COMMAND_GROUP)
-	public void genEntities(@ShellOption(help = "Classe do diagrama de classe", valueProvider = PlantClassRepresentationValueProvider.class) PlantClassRepresentation plantClass) {
+	public void genEntities(
+			@ShellOption(value = "--plantClass", help = "Classe do diagrama de classe", valueProvider = PlantClassRepresentationValueProvider.class) PlantClassRepresentation plantClass) {
 		springBootService.genEntity(plantClass);
 	}
 

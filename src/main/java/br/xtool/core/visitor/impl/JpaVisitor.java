@@ -54,8 +54,8 @@ import br.xtool.core.representation.JavaFieldRepresentation.ETransientField;
 import br.xtool.core.representation.JavaFieldRepresentation.EUniqueField;
 import br.xtool.core.representation.EntityRepresentation;
 import br.xtool.core.representation.PlantClassRepresentation;
-import br.xtool.core.representation.PlantFieldRepresentation;
-import br.xtool.core.representation.PlantFieldPropertyRepresentation;
+import br.xtool.core.representation.PlantClassFieldRepresentation;
+import br.xtool.core.representation.PlantClassFieldPropertyRepresentation;
 import br.xtool.core.representation.PlantRelationshipRepresentation;
 import br.xtool.core.representation.PlantRelationshipRepresentation.EAssociation;
 import br.xtool.core.representation.PlantRelationshipRepresentation.EComposition;
@@ -185,7 +185,7 @@ public class JpaVisitor implements Visitor {
 	 * br.xtool.core.representation.EUmlField)
 	 */
 	@Override
-	public void visit(JavaFieldRepresentation javaField, PlantFieldRepresentation umlField) {
+	public void visit(JavaFieldRepresentation javaField, PlantClassFieldRepresentation umlField) {
 	}
 
 	/*
@@ -196,7 +196,7 @@ public class JpaVisitor implements Visitor {
 	 * EStringField, br.xtool.core.representation.EUmlField)
 	 */
 	@Override
-	public void visit(EStringField stringField, PlantFieldRepresentation umlField) {
+	public void visit(EStringField stringField, PlantClassFieldRepresentation umlField) {
 		val annColumn = stringField.addAnnotation(Column.class);
 		annColumn.setLiteralValue("length", String.valueOf(umlField.getMaxArrayLength().orElse(255)));
 		umlField.getTaggedValue("column.name").ifPresent(tagValue -> annColumn.setStringValue("name", tagValue));
@@ -210,7 +210,7 @@ public class JpaVisitor implements Visitor {
 	 * EBooleanField, br.xtool.core.representation.EUmlField)
 	 */
 	@Override
-	public void visit(EBooleanField booleanField, PlantFieldRepresentation umlField) {
+	public void visit(EBooleanField booleanField, PlantClassFieldRepresentation umlField) {
 		val annColumn = booleanField.addAnnotation(Column.class);
 		umlField.getTaggedValue("column.name").ifPresent(tagValue -> annColumn.setStringValue("name", tagValue));
 	}
@@ -223,7 +223,7 @@ public class JpaVisitor implements Visitor {
 	 * ELongField, br.xtool.core.representation.EUmlField)
 	 */
 	@Override
-	public void visit(ELongField longField, PlantFieldRepresentation umlField) {
+	public void visit(ELongField longField, PlantClassFieldRepresentation umlField) {
 		if (umlField.isId()) {
 			longField.addAnnotation(Id.class);
 			// @formatter:off
@@ -248,7 +248,7 @@ public class JpaVisitor implements Visitor {
 	 * EIntegerField, br.xtool.core.representation.EUmlField)
 	 */
 	@Override
-	public void visit(EIntegerField integerField, PlantFieldRepresentation umlField) {
+	public void visit(EIntegerField integerField, PlantClassFieldRepresentation umlField) {
 		val annColumn = integerField.addAnnotation(Column.class);
 		umlField.getTaggedValue("column.name").ifPresent(tagValue -> annColumn.setStringValue("name", tagValue));
 	}
@@ -261,7 +261,7 @@ public class JpaVisitor implements Visitor {
 	 * EByteField, br.xtool.core.representation.EUmlField)
 	 */
 	@Override
-	public void visit(EByteField byteField, PlantFieldRepresentation umlField) {
+	public void visit(EByteField byteField, PlantClassFieldRepresentation umlField) {
 		val annColumn = byteField.addAnnotation(Lob.class);
 		umlField.getTaggedValue("column.name").ifPresent(tagValue -> annColumn.setStringValue("name", tagValue));
 	}
@@ -274,7 +274,7 @@ public class JpaVisitor implements Visitor {
 	 * EBigDecimalField, br.xtool.core.representation.EUmlField)
 	 */
 	@Override
-	public void visit(EBigDecimalField bigDecimalField, PlantFieldRepresentation umlField) {
+	public void visit(EBigDecimalField bigDecimalField, PlantClassFieldRepresentation umlField) {
 		val annColumn = bigDecimalField.addAnnotation(Column.class);
 		umlField.getTaggedValue("column.name").ifPresent(tagValue -> annColumn.setStringValue("name", tagValue));
 	}
@@ -287,7 +287,7 @@ public class JpaVisitor implements Visitor {
 	 * ELocalDateField, br.xtool.core.representation.EUmlField)
 	 */
 	@Override
-	public void visit(ELocalDateField localDateField, PlantFieldRepresentation umlField) {
+	public void visit(ELocalDateField localDateField, PlantClassFieldRepresentation umlField) {
 		val annColumn = localDateField.addAnnotation(Column.class);
 		umlField.getTaggedValue("column.name").ifPresent(tagValue -> annColumn.setStringValue("name", tagValue));
 	}
@@ -300,13 +300,13 @@ public class JpaVisitor implements Visitor {
 	 * ELocalDateTimeField, br.xtool.core.representation.EUmlField)
 	 */
 	@Override
-	public void visit(ELocalDateTimeField localDateTimeField, PlantFieldRepresentation umlField) {
+	public void visit(ELocalDateTimeField localDateTimeField, PlantClassFieldRepresentation umlField) {
 		val annColumn = localDateTimeField.addAnnotation(Column.class);
 		umlField.getTaggedValue("column.name").ifPresent(tagValue -> annColumn.setStringValue("name", tagValue));
 	}
 
 	@Override
-	public void visit(EEnumField enumField, PlantFieldRepresentation umlField) {
+	public void visit(EEnumField enumField, PlantClassFieldRepresentation umlField) {
 		val annEnum = enumField.addAnnotation(Enumerated.class).setEnumValue(EnumType.STRING);
 		annEnum.setEnumValue(EnumType.STRING);
 		enumField.addAnnotation(Column.class).setLiteralValue("nullable", "false");
@@ -320,7 +320,7 @@ public class JpaVisitor implements Visitor {
 	 * br.xtool.core.representation.EUmlFieldProperty)
 	 */
 	@Override
-	public void visit(JavaFieldRepresentation javaField, PlantFieldPropertyRepresentation umlFieldProperty) {
+	public void visit(JavaFieldRepresentation javaField, PlantClassFieldPropertyRepresentation umlFieldProperty) {
 	}
 
 	/*
@@ -331,7 +331,7 @@ public class JpaVisitor implements Visitor {
 	 * ENotNullField, br.xtool.core.representation.EUmlFieldProperty)
 	 */
 	@Override
-	public void visit(ENotNullField notNullField, PlantFieldPropertyRepresentation property) {
+	public void visit(ENotNullField notNullField, PlantClassFieldPropertyRepresentation property) {
 		notNullField.addAnnotation(Column.class).setLiteralValue("nullable", "false");
 
 	}
@@ -344,7 +344,7 @@ public class JpaVisitor implements Visitor {
 	 * ETransientField, br.xtool.core.representation.EUmlFieldProperty)
 	 */
 	@Override
-	public void visit(ETransientField transientField, PlantFieldPropertyRepresentation property) {
+	public void visit(ETransientField transientField, PlantClassFieldPropertyRepresentation property) {
 		transientField.addAnnotation(Transient.class);
 
 	}
@@ -357,7 +357,7 @@ public class JpaVisitor implements Visitor {
 	 * EUniqueField, br.xtool.core.representation.EUmlFieldProperty)
 	 */
 	@Override
-	public void visit(EUniqueField uniqueField, PlantFieldPropertyRepresentation property) {
+	public void visit(EUniqueField uniqueField, PlantClassFieldPropertyRepresentation property) {
 		uniqueField.addAnnotation(Column.class).setLiteralValue("unique", "true");
 	}
 

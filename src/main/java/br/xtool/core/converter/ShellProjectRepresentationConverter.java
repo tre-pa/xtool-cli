@@ -9,7 +9,7 @@ import br.xtool.core.Workspace;
 import br.xtool.core.representation.ProjectRepresentation;
 
 @Component
-public class StringToProjectRepresentationConverter implements Converter<String, ProjectRepresentation> {
+public class ShellProjectRepresentationConverter implements Converter<String, ProjectRepresentation> {
 
 	@Autowired
 	private Workspace workspace;

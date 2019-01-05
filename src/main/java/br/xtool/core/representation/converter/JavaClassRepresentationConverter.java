@@ -13,13 +13,13 @@ import br.xtool.core.representation.PlantClassRepresentation;
 import br.xtool.core.representation.PlantStereotypeRepresentation;
 import br.xtool.core.representation.PlantStereotypeRepresentation.StereotypeType;
 import br.xtool.core.representation.SpringBootProjectRepresentation;
-import br.xtool.core.representation.impl.EJavaClassImpl;
-import br.xtool.core.representation.impl.EJavaClassImpl.EAuditableJavaClassImpl;
-import br.xtool.core.representation.impl.EJavaClassImpl.ECacheableJavaClassImpl;
-import br.xtool.core.representation.impl.EJavaClassImpl.EIndexedJavaClassImpl;
-import br.xtool.core.representation.impl.EJavaClassImpl.EReadOnlyJavaClassImpl;
-import br.xtool.core.representation.impl.EJavaClassImpl.EVersionableJavaClassImpl;
-import br.xtool.core.representation.impl.EJavaClassImpl.EViewJavaClassImpl;
+import br.xtool.core.representation.impl.JavaClassRepresentationImpl;
+import br.xtool.core.representation.impl.JavaClassRepresentationImpl.EAuditableJavaClassImpl;
+import br.xtool.core.representation.impl.JavaClassRepresentationImpl.ECacheableJavaClassImpl;
+import br.xtool.core.representation.impl.JavaClassRepresentationImpl.EIndexedJavaClassImpl;
+import br.xtool.core.representation.impl.JavaClassRepresentationImpl.EReadOnlyJavaClassImpl;
+import br.xtool.core.representation.impl.JavaClassRepresentationImpl.EVersionableJavaClassImpl;
+import br.xtool.core.representation.impl.JavaClassRepresentationImpl.EViewJavaClassImpl;
 import br.xtool.core.util.RoasterUtil;
 import br.xtool.core.visitor.Visitor;
 
@@ -30,7 +30,7 @@ import br.xtool.core.visitor.Visitor;
  *
  */
 @Component
-public class PlantClassRepresentationToJavaClassRepresentationConverter implements Function<PlantClassRepresentation, JavaClassRepresentation> {
+public class JavaClassRepresentationConverter implements Function<PlantClassRepresentation, JavaClassRepresentation> {
 
 	@Autowired
 	private Workspace workspace;
@@ -46,9 +46,9 @@ public class PlantClassRepresentationToJavaClassRepresentationConverter implemen
 				.filter(javaUnit -> javaUnit.getGoverningType().isClass())
 				.filter(javaUnit -> javaUnit.getGoverningType().getName().equals(umlClass.getName()))
 				.map(javaUnit -> javaUnit.<JavaClassSource>getGoverningType())
-				.map(javaClassSource -> new EJavaClassImpl(springBootProject, javaClassSource))
+				.map(javaClassSource -> new JavaClassRepresentationImpl(springBootProject, javaClassSource))
 				.findFirst()
-				.orElseGet(() -> new EJavaClassImpl(springBootProject,RoasterUtil.createJavaClassSource(umlClass.getUmlPackage().getName(),umlClass.getName())));
+				.orElseGet(() -> new JavaClassRepresentationImpl(springBootProject,RoasterUtil.createJavaClassSource(umlClass.getUmlPackage().getName(),umlClass.getName())));
 		// @formatter:on
 		this.visitors.forEach(visitor -> visitor.visit(javaClass, umlClass));
 		umlClass.getStereotypes().stream().forEach(stereotype -> this.visit(javaClass, stereotype));

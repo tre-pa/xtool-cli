@@ -6,22 +6,22 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 import br.xtool.core.Workspace;
-import br.xtool.core.representation.PlantClassRepresentation;
+import br.xtool.core.representation.RepositoryRepresentation;
 import br.xtool.core.representation.SpringBootProjectRepresentation;
 
 @Component
-public class StringToPlantClassRepresentationConverter implements Converter<String, PlantClassRepresentation> {
+public class ShellRepositoryRepresentationConverter implements Converter<String, RepositoryRepresentation> {
 
 	@Autowired
 	private Workspace workspace;
 
 	@Override
-	public PlantClassRepresentation convert(String source) {
+	public RepositoryRepresentation convert(String source) {
 		if (StringUtils.isNotEmpty(source)) {
 			if (this.workspace.getWorkingProject() instanceof SpringBootProjectRepresentation) {
 				SpringBootProjectRepresentation project = SpringBootProjectRepresentation.class.cast(this.workspace.getWorkingProject());
 				// @formatter:off
-				return project.getDomainClassDiagram().getClasses()
+				return project.getRepositories()
 					.stream()
 					.filter(e -> e.getName().equals(source))
 					.findFirst()

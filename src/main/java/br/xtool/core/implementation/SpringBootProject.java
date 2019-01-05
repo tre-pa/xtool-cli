@@ -1,11 +1,9 @@
 package br.xtool.core.implementation;
 
 import java.nio.file.Path;
-import java.util.Collection;
 import java.util.function.Consumer;
 
 import br.xtool.core.representation.EntityRepresentation;
-import br.xtool.core.representation.JavaEnumRepresentation;
 import br.xtool.core.representation.JavaTypeRepresentation;
 import br.xtool.core.representation.JpaProjectionRepresentation;
 import br.xtool.core.representation.SpringBootProjectRepresentation;
@@ -97,9 +95,9 @@ public interface SpringBootProject {
 	 * @param bootProject
 	 * @param vistors
 	 * @return
-	 */
-	@Deprecated
-	Collection<JavaEnumRepresentation> umlEnumsToJavaEnums(SpringBootProjectRepresentation bootProject);
+//	 */
+//	@Deprecated
+//	Collection<JavaEnumRepresentation> umlEnumsToJavaEnums(SpringBootProjectRepresentation bootProject);
 
 	/**
 	 * Cria a interface de repositório no projeto.

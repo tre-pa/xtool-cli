@@ -24,7 +24,7 @@ import com.google.common.collect.ImmutableSet;
 
 import br.xtool.core.representation.PlantClassRepresentation;
 import br.xtool.core.representation.PlantClassDiagramRepresentation;
-import br.xtool.core.representation.PlantFieldRepresentation;
+import br.xtool.core.representation.PlantClassFieldRepresentation;
 import br.xtool.core.representation.PlantPackageRepresentation;
 import br.xtool.core.representation.PlantRelationshipRepresentation;
 import br.xtool.core.representation.PlantStereotypeRepresentation;
@@ -97,7 +97,7 @@ public class EPlantClassImpl implements PlantClassRepresentation {
 	 * @see br.xtool.core.representation.EUmlClass#getFields()
 	 */
 	@Override
-	public Collection<PlantFieldRepresentation> getFields() {
+	public Collection<PlantClassFieldRepresentation> getFields() {
 		// @formatter:off
 		return this.leaf.getBodier().getFieldsToDisplay().stream()
 				.filter(member -> StringUtils.isNotEmpty(member.getDisplay(false)))

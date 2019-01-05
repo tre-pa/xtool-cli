@@ -27,8 +27,8 @@ import br.xtool.core.representation.JavaFieldRepresentation.EStringField;
 import br.xtool.core.representation.JavaFieldRepresentation.ETransientField;
 import br.xtool.core.representation.JavaFieldRepresentation.EUniqueField;
 import br.xtool.core.representation.PlantClassRepresentation;
-import br.xtool.core.representation.PlantFieldRepresentation;
-import br.xtool.core.representation.PlantFieldPropertyRepresentation;
+import br.xtool.core.representation.PlantClassFieldRepresentation;
+import br.xtool.core.representation.PlantClassFieldPropertyRepresentation;
 import br.xtool.core.representation.PlantRelationshipRepresentation;
 import br.xtool.core.representation.PlantRelationshipRepresentation.EAssociation;
 import br.xtool.core.representation.PlantRelationshipRepresentation.EComposition;
@@ -85,72 +85,72 @@ public class LombokVisitor implements Visitor {
 	}
 
 	@Override
-	public void visit(JavaFieldRepresentation javaField, PlantFieldRepresentation umlField) {
+	public void visit(JavaFieldRepresentation javaField, PlantClassFieldRepresentation umlField) {
 
 	}
 
 	@Override
-	public void visit(JavaFieldRepresentation javaField, PlantFieldPropertyRepresentation umlFieldProperty) {
+	public void visit(JavaFieldRepresentation javaField, PlantClassFieldPropertyRepresentation umlFieldProperty) {
 
 	}
 
 	@Override
-	public void visit(EStringField stringField, PlantFieldRepresentation umlField) {
+	public void visit(EStringField stringField, PlantClassFieldRepresentation umlField) {
 
 	}
 
 	@Override
-	public void visit(EBooleanField booleanField, PlantFieldRepresentation umlField) {
+	public void visit(EBooleanField booleanField, PlantClassFieldRepresentation umlField) {
 
 	}
 
 	@Override
-	public void visit(ELongField longField, PlantFieldRepresentation umlField) {
+	public void visit(ELongField longField, PlantClassFieldRepresentation umlField) {
 
 	}
 
 	@Override
-	public void visit(EIntegerField integerField, PlantFieldRepresentation umlField) {
+	public void visit(EIntegerField integerField, PlantClassFieldRepresentation umlField) {
 
 	}
 
 	@Override
-	public void visit(EByteField byteField, PlantFieldRepresentation umlField) {
+	public void visit(EByteField byteField, PlantClassFieldRepresentation umlField) {
 
 	}
 
 	@Override
-	public void visit(EBigDecimalField bigDecimalField, PlantFieldRepresentation umlField) {
+	public void visit(EBigDecimalField bigDecimalField, PlantClassFieldRepresentation umlField) {
 
 	}
 
 	@Override
-	public void visit(ELocalDateField localDateField, PlantFieldRepresentation umlField) {
+	public void visit(ELocalDateField localDateField, PlantClassFieldRepresentation umlField) {
 
 	}
 
 	@Override
-	public void visit(ELocalDateTimeField localDateTimeField, PlantFieldRepresentation umlField) {
+	public void visit(ELocalDateTimeField localDateTimeField, PlantClassFieldRepresentation umlField) {
 
 	}
 	
 	@Override
-	public void visit(EEnumField enumField, PlantFieldRepresentation umlField) {
+	public void visit(EEnumField enumField, PlantClassFieldRepresentation umlField) {
 
 	}
 
 	@Override
-	public void visit(ENotNullField notNullField, PlantFieldPropertyRepresentation property) {
+	public void visit(ENotNullField notNullField, PlantClassFieldPropertyRepresentation property) {
 
 	}
 
 	@Override
-	public void visit(ETransientField notNullField, PlantFieldPropertyRepresentation property) {
+	public void visit(ETransientField notNullField, PlantClassFieldPropertyRepresentation property) {
 
 	}
 
 	@Override
-	public void visit(EUniqueField notNullField, PlantFieldPropertyRepresentation property) {
+	public void visit(EUniqueField notNullField, PlantClassFieldPropertyRepresentation property) {
 
 	}
 

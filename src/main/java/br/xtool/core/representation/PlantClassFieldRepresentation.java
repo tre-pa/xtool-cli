@@ -4,7 +4,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
-import br.xtool.core.representation.PlantFieldPropertyRepresentation.FieldPropertyType;
+import br.xtool.core.representation.PlantClassFieldPropertyRepresentation.FieldPropertyType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -14,7 +14,7 @@ import lombok.Getter;
  * @author jcruz
  *
  */
-public interface PlantFieldRepresentation {
+public interface PlantClassFieldRepresentation {
 
 	/**
 	 * Retorna o nome do atributo.
@@ -134,7 +134,7 @@ public interface PlantFieldRepresentation {
 	 * 
 	 * @return
 	 */
-	Set<PlantFieldPropertyRepresentation> getProperties();
+	Set<PlantClassFieldPropertyRepresentation> getProperties();
 
 	/**
 	 * 

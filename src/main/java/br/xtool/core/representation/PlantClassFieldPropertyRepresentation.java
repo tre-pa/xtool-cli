@@ -3,7 +3,7 @@ package br.xtool.core.representation;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-public interface PlantFieldPropertyRepresentation {
+public interface PlantClassFieldPropertyRepresentation {
 
 	@AllArgsConstructor
 	@Getter
@@ -24,7 +24,7 @@ public interface PlantFieldPropertyRepresentation {
 	 * 
 	 * @return
 	 */
-	PlantFieldRepresentation getField();
+	PlantClassFieldRepresentation getField();
 
 	boolean isNotNull();
 

@@ -48,7 +48,7 @@ public class GenEntitiesCommand extends SpringBootAware {
 		visitors.add(this.applicationContext.getBean(JpaVisitor.class));
 		visitors.add(this.applicationContext.getBean(JacksonVisitor.class));
 
-		this.bootProjectService.umlEnumsToJavaEnums(bootProject);
+//		this.bootProjectService.umlEnumsToJavaEnums(bootProject);
 //		this.bootProjectService.umlClassesToJavaClasses(bootProject, visitors);
 		bootProject.refresh();
 		if (ngEntities) this.genNgEntities(bootProject);

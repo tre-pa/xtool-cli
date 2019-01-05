@@ -25,8 +25,8 @@ import br.xtool.core.representation.JavaFieldRepresentation.EStringField;
 import br.xtool.core.representation.JavaFieldRepresentation.ETransientField;
 import br.xtool.core.representation.JavaFieldRepresentation.EUniqueField;
 import br.xtool.core.representation.PlantClassRepresentation;
-import br.xtool.core.representation.PlantFieldRepresentation;
-import br.xtool.core.representation.PlantFieldPropertyRepresentation;
+import br.xtool.core.representation.PlantClassFieldRepresentation;
+import br.xtool.core.representation.PlantClassFieldPropertyRepresentation;
 import br.xtool.core.representation.PlantRelationshipRepresentation;
 import br.xtool.core.representation.PlantRelationshipRepresentation.EAssociation;
 import br.xtool.core.representation.PlantRelationshipRepresentation.EComposition;
@@ -91,97 +91,97 @@ public interface Visitor {
 	 * 
 	 * @param umlField
 	 */
-	void visit(JavaFieldRepresentation javaField, PlantFieldRepresentation umlField);
+	void visit(JavaFieldRepresentation javaField, PlantClassFieldRepresentation umlField);
 
 	/**
 	 * 
 	 * @param stringField
 	 * @param umlField
 	 */
-	void visit(EStringField stringField, PlantFieldRepresentation umlField);
+	void visit(EStringField stringField, PlantClassFieldRepresentation umlField);
 
 	/**
 	 * 
 	 * @param booleanField
 	 * @param umlField
 	 */
-	void visit(EBooleanField booleanField, PlantFieldRepresentation umlField);
+	void visit(EBooleanField booleanField, PlantClassFieldRepresentation umlField);
 
 	/**
 	 * 
 	 * @param longField
 	 * @param umlField
 	 */
-	void visit(ELongField longField, PlantFieldRepresentation umlField);
+	void visit(ELongField longField, PlantClassFieldRepresentation umlField);
 
 	/**
 	 * 
 	 * @param integerField
 	 * @param umlField
 	 */
-	void visit(EIntegerField integerField, PlantFieldRepresentation umlField);
+	void visit(EIntegerField integerField, PlantClassFieldRepresentation umlField);
 
 	/**
 	 * 
 	 * @param byteField
 	 * @param umlField
 	 */
-	void visit(EByteField byteField, PlantFieldRepresentation umlField);
+	void visit(EByteField byteField, PlantClassFieldRepresentation umlField);
 
 	/**
 	 * 
 	 * @param bigDecimalField
 	 * @param umlField
 	 */
-	void visit(EBigDecimalField bigDecimalField, PlantFieldRepresentation umlField);
+	void visit(EBigDecimalField bigDecimalField, PlantClassFieldRepresentation umlField);
 
 	/**
 	 * 
 	 * @param localDateField
 	 * @param umlField
 	 */
-	void visit(ELocalDateField localDateField, PlantFieldRepresentation umlField);
+	void visit(ELocalDateField localDateField, PlantClassFieldRepresentation umlField);
 
 	/**
 	 * 
 	 * @param localDateTimeField
 	 * @param umlField
 	 */
-	void visit(ELocalDateTimeField localDateTimeField, PlantFieldRepresentation umlField);
+	void visit(ELocalDateTimeField localDateTimeField, PlantClassFieldRepresentation umlField);
 	
 	/**
 	 * 
 	 * @param enumField
 	 * @param umlField
 	 */
-	void visit(EEnumField enumField, PlantFieldRepresentation umlField);
+	void visit(EEnumField enumField, PlantClassFieldRepresentation umlField);
 
 	/**
 	 * 
 	 * @param notNullField
 	 * @param property
 	 */
-	void visit(ENotNullField notNullField, PlantFieldPropertyRepresentation property);
+	void visit(ENotNullField notNullField, PlantClassFieldPropertyRepresentation property);
 
 	/**
 	 * 
 	 * @param transientField
 	 * @param property
 	 */
-	void visit(ETransientField transientField, PlantFieldPropertyRepresentation property);
+	void visit(ETransientField transientField, PlantClassFieldPropertyRepresentation property);
 
 	/**
 	 * 
 	 * @param uniqueField
 	 * @param property
 	 */
-	void visit(EUniqueField uniqueField, PlantFieldPropertyRepresentation property);
+	void visit(EUniqueField uniqueField, PlantClassFieldPropertyRepresentation property);
 
 	/**
 	 * 
 	 * @param umlFieldProperty
 	 */
-	void visit(JavaFieldRepresentation javaField, PlantFieldPropertyRepresentation umlFieldProperty);
+	void visit(JavaFieldRepresentation javaField, PlantClassFieldPropertyRepresentation umlFieldProperty);
 
 	/**
 	 * 

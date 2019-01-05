@@ -24,13 +24,13 @@ import br.xtool.core.representation.JavaPackageRepresentation;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
-public class EJavaClassImpl implements JavaClassRepresentation {
+public class JavaClassRepresentationImpl implements JavaClassRepresentation {
 
 	protected JavaClassSource javaClassSource;
 
 	private SpringBootProjectRepresentation project;
 
-	public EJavaClassImpl(SpringBootProjectRepresentation project, JavaClassSource javaClassSource) {
+	public JavaClassRepresentationImpl(SpringBootProjectRepresentation project, JavaClassSource javaClassSource) {
 		super();
 		this.project = project;
 		this.javaClassSource = javaClassSource;
@@ -317,37 +317,37 @@ public class EJavaClassImpl implements JavaClassRepresentation {
 		return this.getRoasterJavaClass().getVisibility();
 	}
 
-	public static class EAuditableJavaClassImpl extends EJavaClassImpl implements EAuditableJavaClass {
+	public static class EAuditableJavaClassImpl extends JavaClassRepresentationImpl implements EAuditableJavaClass {
 		public EAuditableJavaClassImpl(JavaClassRepresentation javaClass) {
 			super(javaClass.getProject(), javaClass.getRoasterJavaClass());
 		}
 	}
 
-	public static class ECacheableJavaClassImpl extends EJavaClassImpl implements ECacheableJavaClass {
+	public static class ECacheableJavaClassImpl extends JavaClassRepresentationImpl implements ECacheableJavaClass {
 		public ECacheableJavaClassImpl(JavaClassRepresentation javaClass) {
 			super(javaClass.getProject(), javaClass.getRoasterJavaClass());
 		}
 	}
 
-	public static class EIndexedJavaClassImpl extends EJavaClassImpl implements EIndexedJavaClass {
+	public static class EIndexedJavaClassImpl extends JavaClassRepresentationImpl implements EIndexedJavaClass {
 		public EIndexedJavaClassImpl(JavaClassRepresentation javaClass) {
 			super(javaClass.getProject(), javaClass.getRoasterJavaClass());
 		}
 	}
 
-	public static class EViewJavaClassImpl extends EJavaClassImpl implements EViewJavaClass {
+	public static class EViewJavaClassImpl extends JavaClassRepresentationImpl implements EViewJavaClass {
 		public EViewJavaClassImpl(JavaClassRepresentation javaClass) {
 			super(javaClass.getProject(), javaClass.getRoasterJavaClass());
 		}
 	}
 
-	public static class EReadOnlyJavaClassImpl extends EJavaClassImpl implements EReadOnlyJavaClass {
+	public static class EReadOnlyJavaClassImpl extends JavaClassRepresentationImpl implements EReadOnlyJavaClass {
 		public EReadOnlyJavaClassImpl(JavaClassRepresentation javaClass) {
 			super(javaClass.getProject(), javaClass.getRoasterJavaClass());
 		}
 	}
 
-	public static class EVersionableJavaClassImpl extends EJavaClassImpl implements EVersionableJavaClass {
+	public static class EVersionableJavaClassImpl extends JavaClassRepresentationImpl implements EVersionableJavaClass {
 		public EVersionableJavaClassImpl(JavaClassRepresentation javaClass) {
 			super(javaClass.getProject(), javaClass.getRoasterJavaClass());
 		}

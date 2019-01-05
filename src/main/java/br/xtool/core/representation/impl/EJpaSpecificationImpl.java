@@ -6,7 +6,7 @@ import br.xtool.core.representation.SpringBootProjectRepresentation;
 import br.xtool.core.representation.EntityRepresentation;
 import br.xtool.core.representation.SpecificationRepresentation;
 
-public class EJpaSpecificationImpl extends EJavaClassImpl implements SpecificationRepresentation {
+public class EJpaSpecificationImpl extends JavaClassRepresentationImpl implements SpecificationRepresentation {
 
 	public EJpaSpecificationImpl(SpringBootProjectRepresentation project, JavaClassSource javaClassSource) {
 		super(project, javaClassSource);

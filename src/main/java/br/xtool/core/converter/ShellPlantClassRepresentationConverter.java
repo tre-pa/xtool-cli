@@ -6,26 +6,26 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 import br.xtool.core.Workspace;
-import br.xtool.core.representation.EntityRepresentation;
+import br.xtool.core.representation.PlantClassRepresentation;
 import br.xtool.core.representation.SpringBootProjectRepresentation;
 
 @Component
-public class StringToEntityRepresentationConverter implements Converter<String, EntityRepresentation> {
+public class ShellPlantClassRepresentationConverter implements Converter<String, PlantClassRepresentation> {
 
 	@Autowired
 	private Workspace workspace;
 
 	@Override
-	public EntityRepresentation convert(String source) {
+	public PlantClassRepresentation convert(String source) {
 		if (StringUtils.isNotEmpty(source)) {
 			if (this.workspace.getWorkingProject() instanceof SpringBootProjectRepresentation) {
 				SpringBootProjectRepresentation project = SpringBootProjectRepresentation.class.cast(this.workspace.getWorkingProject());
 				// @formatter:off
-				return project.getEntities()
+				return project.getDomainClassDiagram().getClasses()
 					.stream()
 					.filter(e -> e.getName().equals(source))
 					.findFirst()
-					.orElseThrow(() -> new RuntimeException("Erro ao converter entidade."));
+					.orElseThrow(() -> new RuntimeException("Erro ao converter repositório."));
 				// @formatter:on
 			}
 		}

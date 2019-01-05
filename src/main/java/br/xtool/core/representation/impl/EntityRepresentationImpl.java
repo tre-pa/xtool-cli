@@ -20,9 +20,9 @@ import br.xtool.core.representation.EntityRepresentation;
  * @author jcruz
  *
  */
-public class EJpaEntityImpl extends EJavaClassImpl implements EntityRepresentation {
+public class EntityRepresentationImpl extends JavaClassRepresentationImpl implements EntityRepresentation {
 
-	public EJpaEntityImpl(SpringBootProjectRepresentation springBootProject, JavaClassSource javaClassSource) {
+	public EntityRepresentationImpl(SpringBootProjectRepresentation springBootProject, JavaClassSource javaClassSource) {
 		super(springBootProject, javaClassSource);
 		this.javaClassSource = javaClassSource;
 	}

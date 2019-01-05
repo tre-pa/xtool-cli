@@ -1,10 +1,12 @@
 package br.xtool.core.representation.converter;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.function.BiFunction;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import br.xtool.core.representation.JavaClassRepresentation;
 import br.xtool.core.representation.JavaFieldRepresentation;
@@ -16,7 +18,6 @@ import br.xtool.core.representation.impl.EJavaFieldImpl.EOneToOneFieldImpl;
 import br.xtool.core.representation.impl.EPlantRelationshipImpl.EAssociationImpl;
 import br.xtool.core.representation.impl.EPlantRelationshipImpl.ECompositionImpl;
 import br.xtool.core.visitor.Visitor;
-import lombok.AllArgsConstructor;
 
 /**
  * Converte um relacionamento UML em um EJavaField.
@@ -24,10 +25,11 @@ import lombok.AllArgsConstructor;
  * @author jcruz
  *
  */
-@AllArgsConstructor
-public class PlantRelationshipConverter implements BiFunction<JavaClassRepresentation, PlantRelationshipRepresentation, JavaFieldRepresentation> {
+@Component
+public class JavaRelationshipRepresentationConverter implements BiFunction<JavaClassRepresentation, PlantRelationshipRepresentation, JavaFieldRepresentation> {
 
-	private Set<? extends Visitor> visitors = new HashSet<>();
+	@Autowired
+	private Set<Visitor> visitors;
 
 	@Override
 	public JavaFieldRepresentation apply(JavaClassRepresentation javaClass, PlantRelationshipRepresentation umlRelationship) {
