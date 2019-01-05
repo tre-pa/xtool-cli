@@ -62,7 +62,15 @@ public class SpringBootCommand {
 	 * @param entity
 	 */
 	@ShellMethod(key = "gen:repository", value = "Gera uma classe de Repository (JpaRepository) para entidade JPA em um projeto Spring Boot", group = XtoolCliApplication.SPRINGBOOT_COMMAND_GROUP)
-	public void genRepository(@ShellOption(help = "Entidade JPA", valueProvider = EntityRepresentationValueProvider.class) EntityRepresentation entity) {
+	public void genRepository(@ShellOption(help = "Entidade JPA", valueProvider = EntityRepresentationValueProvider.class, defaultValue="") EntityRepresentation entity) {
+		if (Objects.isNull(entity)) {
+			// @formatter:off
+			this.workspace.getWorkingProject(SpringBootProjectRepresentation.class).getEntities().stream()
+				.peek(springBootService::genSpecification)
+				.forEach(springBootService::genRepository);
+			// @formatter:on
+			return;
+		}
 		springBootService.genRepository(entity);
 		springBootService.genSpecification(entity);
 	}
@@ -73,7 +81,14 @@ public class SpringBootCommand {
 	 * @param repository
 	 */
 	@ShellMethod(key = "gen:service", value = "Gera uma classe Service em um projeto Spring Boot", group = XtoolCliApplication.SPRINGBOOT_COMMAND_GROUP)
-	public void genService(@ShellOption(help = "Classe de repositório", valueProvider = EJpaRepositoryValueProvider.class) RepositoryRepresentation repository) {
+	public void genService(@ShellOption(help = "Classe de repositório", valueProvider = EJpaRepositoryValueProvider.class, defaultValue="") RepositoryRepresentation repository) {
+		if (Objects.isNull(repository)) {
+			// @formatter:off
+			this.workspace.getWorkingProject(SpringBootProjectRepresentation.class).getRepositories().stream()
+				.forEach(springBootService::genService);
+			// @formatter:on
+			return;
+		}
 		springBootService.genService(repository);
 	}
 
@@ -83,7 +98,14 @@ public class SpringBootCommand {
 	 * @param repository
 	 */
 	@ShellMethod(key = "gen:rest", value = "Gera uma classe Rest em um projeto Spring Boot", group = XtoolCliApplication.SPRINGBOOT_COMMAND_GROUP)
-	public void genRest(@ShellOption(help = "Classe de repositório", valueProvider = EJpaRepositoryValueProvider.class) RepositoryRepresentation repository) {
+	public void genRest(@ShellOption(help = "Classe de repositório", valueProvider = EJpaRepositoryValueProvider.class, defaultValue="") RepositoryRepresentation repository) {
+		if (Objects.isNull(repository)) {
+			// @formatter:off
+			this.workspace.getWorkingProject(SpringBootProjectRepresentation.class).getRepositories().stream()
+				.forEach(springBootService::genRest);
+			// @formatter:on
+			return;
+		}
 		springBootService.genRest(repository);
 	}
 
