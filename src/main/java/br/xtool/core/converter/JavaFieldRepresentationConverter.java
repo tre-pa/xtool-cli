@@ -1,4 +1,4 @@
-package br.xtool.core.representation.converter;
+package br.xtool.core.converter;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

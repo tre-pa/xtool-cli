@@ -1,4 +1,4 @@
-package br.xtool.core.representation.converter;
+package br.xtool.core.converter;
 
 import java.util.function.Function;
 
