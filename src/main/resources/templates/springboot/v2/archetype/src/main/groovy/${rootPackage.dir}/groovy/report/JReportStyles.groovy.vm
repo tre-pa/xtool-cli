@@ -1,4 +1,4 @@
-package br.jus.tre_pa.springboot.v2.template.service.groovy.report
+package ${rootPackage.name}.groovy.report
 
 import java.awt.Color
 
