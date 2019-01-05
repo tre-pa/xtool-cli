@@ -52,6 +52,7 @@ import br.xtool.core.representation.JavaFieldRepresentation.EOneToOneField;
 import br.xtool.core.representation.JavaFieldRepresentation.EStringField;
 import br.xtool.core.representation.JavaFieldRepresentation.ETransientField;
 import br.xtool.core.representation.JavaFieldRepresentation.EUniqueField;
+import br.xtool.core.Visitor;
 import br.xtool.core.representation.EntityRepresentation;
 import br.xtool.core.representation.PlantClassRepresentation;
 import br.xtool.core.representation.PlantClassFieldRepresentation;
@@ -62,7 +63,6 @@ import br.xtool.core.representation.PlantRelationshipRepresentation.EComposition
 import br.xtool.core.representation.PlantStereotypeRepresentation;
 import br.xtool.core.representation.PlantStereotypeRepresentation.StereotypeType;
 import br.xtool.core.template.EntityTemplates;
-import br.xtool.core.visitor.Visitor;
 import lombok.EqualsAndHashCode;
 import lombok.val;
 

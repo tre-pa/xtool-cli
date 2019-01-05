@@ -7,6 +7,7 @@ import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import br.xtool.core.Visitor;
 import br.xtool.core.Workspace;
 import br.xtool.core.representation.JavaClassRepresentation;
 import br.xtool.core.representation.PlantClassRepresentation;
@@ -21,7 +22,6 @@ import br.xtool.core.representation.impl.JavaClassRepresentationImpl.EReadOnlyJa
 import br.xtool.core.representation.impl.JavaClassRepresentationImpl.EVersionableJavaClassImpl;
 import br.xtool.core.representation.impl.JavaClassRepresentationImpl.EViewJavaClassImpl;
 import br.xtool.core.util.RoasterUtil;
-import br.xtool.core.visitor.Visitor;
 
 /**
  * Converte uma classe UML em um EJavaClass.

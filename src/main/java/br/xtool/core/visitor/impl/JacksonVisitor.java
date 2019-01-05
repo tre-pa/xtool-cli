@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import br.xtool.core.Visitor;
 import br.xtool.core.representation.JavaClassRepresentation;
 import br.xtool.core.representation.JavaClassRepresentation.EAuditableJavaClass;
 import br.xtool.core.representation.JavaClassRepresentation.ECacheableJavaClass;
@@ -35,7 +36,6 @@ import br.xtool.core.representation.PlantRelationshipRepresentation;
 import br.xtool.core.representation.PlantRelationshipRepresentation.EAssociation;
 import br.xtool.core.representation.PlantRelationshipRepresentation.EComposition;
 import br.xtool.core.representation.PlantStereotypeRepresentation;
-import br.xtool.core.visitor.Visitor;
 import lombok.val;
 
 @Component

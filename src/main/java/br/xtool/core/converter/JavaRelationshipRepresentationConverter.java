@@ -8,6 +8,7 @@ import java.util.function.BiFunction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import br.xtool.core.Visitor;
 import br.xtool.core.representation.JavaClassRepresentation;
 import br.xtool.core.representation.JavaFieldRepresentation;
 import br.xtool.core.representation.PlantRelationshipRepresentation;
@@ -17,7 +18,6 @@ import br.xtool.core.representation.impl.EJavaFieldImpl.EOneToManyFieldImpl;
 import br.xtool.core.representation.impl.EJavaFieldImpl.EOneToOneFieldImpl;
 import br.xtool.core.representation.impl.EPlantRelationshipImpl.EAssociationImpl;
 import br.xtool.core.representation.impl.EPlantRelationshipImpl.ECompositionImpl;
-import br.xtool.core.visitor.Visitor;
 
 /**
  * Converte um relacionamento UML em um EJavaField.

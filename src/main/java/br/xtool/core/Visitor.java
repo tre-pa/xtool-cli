@@ -1,4 +1,4 @@
-package br.xtool.core.visitor;
+package br.xtool.core;
 
 import br.xtool.core.representation.JavaClassRepresentation;
 import br.xtool.core.representation.JavaClassRepresentation.EAuditableJavaClass;

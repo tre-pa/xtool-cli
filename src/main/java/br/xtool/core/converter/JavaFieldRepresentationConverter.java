@@ -9,6 +9,7 @@ import java.util.function.BiFunction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import br.xtool.core.Visitor;
 import br.xtool.core.representation.JavaClassRepresentation;
 import br.xtool.core.representation.JavaFieldRepresentation;
 import br.xtool.core.representation.PlantClassFieldPropertyRepresentation.FieldPropertyType;
@@ -26,7 +27,6 @@ import br.xtool.core.representation.impl.EJavaFieldImpl.EStringFieldImpl;
 import br.xtool.core.representation.impl.EJavaFieldImpl.ETransientFieldImpl;
 import br.xtool.core.representation.impl.EJavaFieldImpl.EUniqueFieldImpl;
 import br.xtool.core.util.RoasterUtil;
-import br.xtool.core.visitor.Visitor;
 
 /**
  * Converter um atributo UML do diagrama de classe em um EJavaField.

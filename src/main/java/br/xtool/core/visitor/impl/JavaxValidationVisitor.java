@@ -5,6 +5,7 @@ import javax.validation.constraints.Min;
 
 import org.springframework.stereotype.Component;
 
+import br.xtool.core.Visitor;
 import br.xtool.core.representation.JavaClassRepresentation;
 import br.xtool.core.representation.JavaClassRepresentation.EAuditableJavaClass;
 import br.xtool.core.representation.JavaClassRepresentation.ECacheableJavaClass;
@@ -36,7 +37,6 @@ import br.xtool.core.representation.PlantRelationshipRepresentation;
 import br.xtool.core.representation.PlantRelationshipRepresentation.EAssociation;
 import br.xtool.core.representation.PlantRelationshipRepresentation.EComposition;
 import br.xtool.core.representation.PlantStereotypeRepresentation;
-import br.xtool.core.visitor.Visitor;
 
 @Component
 public class JavaxValidationVisitor implements Visitor {

@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.xtool.core.JavaTemplate;
 import br.xtool.core.representation.JavaMethodRepresentation;
 import br.xtool.core.representation.RepositoryRepresentation;
 import br.xtool.core.representation.RestClassRepresentation;
