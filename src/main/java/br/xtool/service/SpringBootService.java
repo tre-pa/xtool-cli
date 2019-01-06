@@ -108,7 +108,7 @@ public class SpringBootService {
 				SpringBootProjectRepresentation.class, 
 				ProjectRepresentation.Type.SPRINGBOOT, 
 				genProjectName(name), 
-				ProjectRepresentation.Version.V1, 
+				ProjectRepresentation.Version.V2, 
 				vars);
 		// @formatter:on
 

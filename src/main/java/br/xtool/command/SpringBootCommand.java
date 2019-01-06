@@ -41,7 +41,7 @@ public class SpringBootCommand {
 	 * 
 	 * @param name Nome do Projeto Spring Boot
 	 */
-	@ShellMethod(key = "new:springboot", value = "Novo projeto Spring Boot 1.5.x", group = XtoolCliApplication.SPRINGBOOT_COMMAND_GROUP)
+	@ShellMethod(key = "new:springboot", value = "Novo projeto Spring Boot v2", group = XtoolCliApplication.SPRINGBOOT_COMMAND_GROUP)
 	public void newApp(@ShellOption(help = "Nome do projeto") String name) {
 		springBootService.newApp(name);
 	}
