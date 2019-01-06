@@ -1,4 +1,4 @@
-package br.jus.tre_pa.springboot.v2.template.service.groovy.report.repository;
+package ${rootPackage.name}.groovy.report.repository;
 
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
@@ -7,8 +7,8 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor
 import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository;
 
-import br.jus.tre_pa.springboot.v2.template.service.groovy.qy.jpa.QyRepository
-import br.jus.tre_pa.springboot.v2.template.service.groovy.report.domain.JReport
+import ${rootPackage.name}.groovy.qy.jpa.QyRepository
+import ${rootPackage.name}.groovy.report.domain.JReport
 
 
 @Repository

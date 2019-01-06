@@ -1,4 +1,4 @@
-package br.jus.tre_pa.springboot.v2.template.service.groovy.report.service;
+package ${rootPackage.name}.groovy.report.service;
 
 import java.time.LocalDateTime
 import java.util.stream.Collectors
@@ -17,15 +17,15 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import ar.com.fdvs.dj.core.DynamicJasperHelper
 import ar.com.fdvs.dj.core.layout.ClassicLayoutManager
 import ar.com.fdvs.dj.domain.DynamicReport
-import br.jus.tre_pa.springboot.v2.template.service.groovy.qy.QyAggregation
-import br.jus.tre_pa.springboot.v2.template.service.groovy.qy.QyFilterable
-import br.jus.tre_pa.springboot.v2.template.service.groovy.qy.QyPage
-import br.jus.tre_pa.springboot.v2.template.service.groovy.qy.QyPayload
-import br.jus.tre_pa.springboot.v2.template.service.groovy.qy.sql.QySqlContext
-import br.jus.tre_pa.springboot.v2.template.service.groovy.report.JReportStyles
-import br.jus.tre_pa.springboot.v2.template.service.groovy.report.domain.JReport
-import br.jus.tre_pa.springboot.v2.template.service.groovy.report.repository.JReportRepository
-import br.jus.tre_pa.springboot.v2.template.service.groovy.report.types.JReportColumn
+import ${rootPackage.name}.groovy.qy.QyAggregation
+import ${rootPackage.name}.groovy.qy.QyFilterable
+import ${rootPackage.name}.groovy.qy.QyPage
+import ${rootPackage.name}.groovy.qy.QyPayload
+import ${rootPackage.name}.groovy.qy.sql.QySqlContext
+import ${rootPackage.name}.groovy.report.JReportStyles
+import ${rootPackage.name}.groovy.report.domain.JReport
+import ${rootPackage.name}.groovy.report.repository.JReportRepository
+import ${rootPackage.name}.groovy.report.types.JReportColumn
 import groovy.json.JsonSlurper
 import net.sf.jasperreports.engine.JRDataSource
 import net.sf.jasperreports.engine.JasperExportManager

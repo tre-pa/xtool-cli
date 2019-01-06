@@ -1,6 +1,6 @@
-package br.jus.tre_pa.springboot.v2.template.service.groovy.qy.sql
+package ${rootPackage.name}.groovy.qy.sql
 
-import br.jus.tre_pa.springboot.v2.template.service.groovy.qy.QyFilterable
+import ${rootPackage.name}.groovy.qy.QyFilterable
 
 interface QySqlWhereStep extends QySqlFetchStep, QySqlOrderByStep {
 	

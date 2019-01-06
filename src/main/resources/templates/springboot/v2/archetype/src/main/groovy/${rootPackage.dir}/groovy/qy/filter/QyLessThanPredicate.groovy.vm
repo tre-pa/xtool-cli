@@ -1,3 +1,5 @@
+#set ($OB = "${")
+#set ($CB = "}")
 package ${rootPackage.name}.groovy.qy.filter;
 
 import java.time.LocalDate;
@@ -29,7 +31,7 @@ class QyLessThanPredicate extends QyPredicate {
 		if (dataFieldType == Integer.class) return cb.lt(root.get(this.dataField), (Number) this.value);
 		if (dataFieldType == Short.class) return cb.lt(root.get(this.dataField), (Number) this.value);
 		if (dataFieldType == BigDecimal.class) return cb.lt(root.get(this.dataField), new BigDecimal(String.valueOf(this.value)));
-		throw new IllegalArgumentException("Não foi possível montar um predicado para o campo '${this.dataField}' com o tipo '>'");
+		throw new IllegalArgumentException("Não foi possível montar um predicado para o campo '${OB}this.dataField${CB}' com o tipo '>'");
 	}
 
 }

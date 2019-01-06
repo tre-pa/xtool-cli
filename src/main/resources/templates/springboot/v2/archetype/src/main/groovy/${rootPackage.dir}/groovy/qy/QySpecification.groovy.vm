@@ -1,4 +1,4 @@
-package br.jus.tre_pa.springboot.v2.template.service.groovy.qy
+package ${rootPackage.name}.groovy.qy
 
 import javax.persistence.criteria.CriteriaBuilder
 import javax.persistence.criteria.CriteriaQuery
@@ -7,7 +7,6 @@ import javax.persistence.criteria.Root
 
 import org.springframework.data.jpa.domain.Specification
 
-import br.jus.tre_pa.springboot.v2.template.service.domain.Unidade
 
 /**
  * 

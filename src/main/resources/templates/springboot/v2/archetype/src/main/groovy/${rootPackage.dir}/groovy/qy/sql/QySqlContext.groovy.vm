@@ -1,9 +1,9 @@
-package br.jus.tre_pa.springboot.v2.template.service.groovy.qy.sql
+package ${rootPackage.name}.groovy.qy.sql
 
-import br.jus.tre_pa.springboot.v2.template.service.groovy.qy.QyAggregable
-import br.jus.tre_pa.springboot.v2.template.service.groovy.qy.QyAggregation
-import br.jus.tre_pa.springboot.v2.template.service.groovy.qy.QyFilterable
-import br.jus.tre_pa.springboot.v2.template.service.groovy.qy.QyPayload
+import ${rootPackage.name}.groovy.qy.QyAggregable
+import ${rootPackage.name}.groovy.qy.QyAggregation
+import ${rootPackage.name}.groovy.qy.QyFilterable
+import ${rootPackage.name}.groovy.qy.QyPayload
 
 interface QySqlContext {
 

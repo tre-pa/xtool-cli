@@ -1,4 +1,4 @@
-package br.jus.tre_pa.springboot.v2.template.service.groovy.qy.sql
+package ${rootPackage.name}.groovy.qy.sql
 
 interface QySqlFetchStep {
 	List<Map<String, Object>> fetchMaps();

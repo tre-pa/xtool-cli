@@ -1,4 +1,4 @@
-package br.jus.tre_pa.springboot.v2.template.service.groovy.report.types
+package ${rootPackage.name}.groovy.report.types
 
 import java.sql.Types;
 

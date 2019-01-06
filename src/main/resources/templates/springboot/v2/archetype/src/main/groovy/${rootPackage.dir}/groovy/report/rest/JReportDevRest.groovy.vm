@@ -1,4 +1,6 @@
-package br.jus.tre_pa.springboot.v2.template.service.groovy.report.rest
+#set ($OB = "${")
+#set ($CB = "}")
+package ${rootPackage.name}.groovy.report.rest
 
 
 import javax.persistence.EntityNotFoundException
@@ -25,11 +27,11 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
 
-import br.jus.tre_pa.springboot.v2.template.service.groovy.qy.QyRest
-import br.jus.tre_pa.springboot.v2.template.service.groovy.report.domain.JReport
-import br.jus.tre_pa.springboot.v2.template.service.groovy.report.repository.JReportRepository
-import br.jus.tre_pa.springboot.v2.template.service.groovy.report.repository.specification.JReportSpecification
-import br.jus.tre_pa.springboot.v2.template.service.groovy.report.service.JReportService
+import ${rootPackage.name}.groovy.qy.QyRest
+import ${rootPackage.name}.groovy.report.domain.JReport
+import ${rootPackage.name}.groovy.report.repository.JReportRepository
+import ${rootPackage.name}.groovy.report.repository.specification.JReportSpecification
+import ${rootPackage.name}.groovy.report.service.JReportService
 
 /**
  * Classe Rest com a API de desenvolvimento de reports.
@@ -76,7 +78,7 @@ class JReportDevRest extends QyRest<JReport, Long, JReportSpecification, JReport
 	 */
 	@PutMapping(path = "/{id}")
 	public JReport update(@PathVariable Long id, @RequestBody @Valid JReport jReport) {
-		if (!this.getRepository().existsById(id)) throw new EntityNotFoundException("Relatório não encontrado: Id=${id}");
+		if (!this.getRepository().existsById(id)) throw new EntityNotFoundException("Relatório não encontrado: Id=${OB}id${CB}");
 		return jreportService.update(jReport);
 	}
 

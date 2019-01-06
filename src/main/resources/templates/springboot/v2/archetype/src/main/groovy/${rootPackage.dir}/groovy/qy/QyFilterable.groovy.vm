@@ -1,4 +1,4 @@
-package br.jus.tre_pa.springboot.v2.template.service.groovy.qy;
+package ${rootPackage.name}.groovy.qy;
 
 import java.util.stream.Collectors
 
@@ -7,7 +7,7 @@ import javax.persistence.criteria.CriteriaQuery
 import javax.persistence.criteria.Predicate
 import javax.persistence.criteria.Root
 
-import br.jus.tre_pa.springboot.v2.template.service.groovy.qy.filter.QyExpression
+import ${rootPackage.name}.groovy.qy.filter.QyExpression
 
 /**
  * Classe de filtragem. Paramatro do método rest de filtragem.

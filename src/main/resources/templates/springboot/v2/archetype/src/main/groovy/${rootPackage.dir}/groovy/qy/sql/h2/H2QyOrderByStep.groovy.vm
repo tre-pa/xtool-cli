@@ -1,3 +1,5 @@
+#set ($OB = "${")
+#set ($CB = "}")
 package ${rootPackage.name}.groovy.qy.sql.h2
 
 import org.apache.commons.lang3.StringUtils
@@ -27,14 +29,14 @@ class H2QyOrderByStep implements QySqlOrderByStep {
 	@Override
 	public QySqlPaginationStep orderBy(String sortSql) {
 		if(StringUtils.isNotBlank(sortSql)) {
-			sqlFragments['sql'] = "${sqlFragments['sql']} order by ${sortSql} "
+			sqlFragments['sql'] = "${OB}sqlFragments['sql']${CB} order by ${OB}sortSql${CB} "
 		}
 		new H2QyPaginationStep(sqlFragments, jdbcTemplate)
 	}
 
 	@Override
 	public QySqlPaginationStep orderBy(Sort sort) {
-		String orders = sort?.orders.collect { "${it.property} ${it.direction} " }.join(",")
+		String orders = sort?.orders.collect { "${OB}it.property${CB} ${OB}it.direction${CB} " }.join(",")
 		orderBy(orders);
 	}
 }

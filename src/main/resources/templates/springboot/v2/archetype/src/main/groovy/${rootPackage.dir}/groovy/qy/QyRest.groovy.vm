@@ -1,4 +1,4 @@
-package br.jus.tre_pa.springboot.v2.template.service.groovy.qy
+package ${rootPackage.name}.groovy.qy
 
 import javax.annotation.PostConstruct
 import javax.persistence.EntityNotFoundException
@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.ResponseStatus
 
-import br.jus.tre_pa.springboot.v2.template.service.groovy.qy.jpa.QyRepository
+import ${rootPackage.name}.groovy.qy.jpa.QyRepository
 
 /**
  * Classe abstrata com funcionalidades padrões de um Rest.

@@ -1,4 +1,4 @@
-package br.jus.tre_pa.springboot.v2.template.service.groovy.report.domain;
+package ${rootPackage.name}.groovy.report.domain;
 
 import java.time.LocalDateTime
 
@@ -20,9 +20,9 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener
 
-import br.jus.tre_pa.springboot.v2.template.service.groovy.report.converter.JReportColumnListToByteConverter
-import br.jus.tre_pa.springboot.v2.template.service.groovy.report.converter.StringToByteConverter
-import br.jus.tre_pa.springboot.v2.template.service.groovy.report.types.JReportColumn
+import ${rootPackage.name}.groovy.report.converter.JReportColumnListToByteConverter
+import ${rootPackage.name}.groovy.report.converter.StringToByteConverter
+import ${rootPackage.name}.groovy.report.types.JReportColumn
 import groovy.transform.EqualsAndHashCode;
 
 @Entity

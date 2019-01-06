@@ -1,3 +1,5 @@
+#set ($OB = "${")
+#set ($CB = "}")
 package ${rootPackage.name}.groovy.qy.filter;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -16,16 +18,16 @@ class QyEqualsPredicate extends QyPredicate {
 	@Override
 	String toSql() {
 		if (isBoolean()) return this.dataField + " = " + ((boolean) this.value ? 1 : 0);
-		if (getValue().equals("@null")) return "${this.dataField} is null ";
-		if (getValue().equals("@notnull")) return "${this.dataField} is not null ";
+		if (getValue().equals("@null")) return "${OB}this.dataField${CB} is null ";
+		if (getValue().equals("@notnull")) return "${OB}this.dataField${CB} is not null ";
 		this.dataField + " = " + this.surroundSingleQuotes(this.value);
 	}
 
 	@Override
 	String toJpql() {
 		if (isBoolean()) return this.dataField + " is " + (boolean) this.getValue();
-		if (getValue().equals("@null")) return "${this.dataField} is null ";
-		if (getValue().equals("@notnull")) return "${this.dataField} is not null ";
+		if (getValue().equals("@null")) return "${OB}this.dataField${CB} is null ";
+		if (getValue().equals("@notnull")) return "${OB}this.dataField${CB} is not null ";
 		this.dataField + " = " + this.surroundSingleQuotes(this.getValue());
 	}
 

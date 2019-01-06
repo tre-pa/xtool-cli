@@ -1,6 +1,6 @@
-package br.jus.tre_pa.springboot.v2.template.service.groovy.qy
+package ${rootPackage.name}.groovy.qy
 
-import br.jus.tre_pa.springboot.v2.template.service.groovy.qy.QyAggregable.Operation
+import ${rootPackage.name}.groovy.qy.QyAggregable.Operation
 
 /**
  * 

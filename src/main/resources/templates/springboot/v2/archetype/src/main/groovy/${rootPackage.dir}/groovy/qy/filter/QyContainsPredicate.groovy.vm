@@ -1,3 +1,5 @@
+#set ($OB = "${")
+#set ($CB = "}")
 package ${rootPackage.name}.groovy.qy.filter;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -15,12 +17,12 @@ public class QyContainsPredicate extends QyPredicate {
 
 	@Override
 	public String toSql() {
-		"${this.dataField} like '%${this.value}%'"
+		"${OB}this.dataField${CB} like '%${OB}this.value${CB}%'"
 	}
 
 	@Override
 	public String toJpql() {
-		"${this.dataField} like '%${this.value}%'"
+		"${OB}this.dataField${CB} like '%${OB}this.value${CB}%'"
 	}
 
 	@Override

@@ -1,11 +1,13 @@
-package br.jus.tre_pa.springboot.v2.template.service.groovy.qy.sql.oracle
+#set ($OB = "${")
+#set ($CB = "}")
+package ${rootPackage.name}.groovy.qy.sql.oracle
 
 import org.apache.commons.lang3.StringUtils
 import org.springframework.data.domain.Sort
 import org.springframework.jdbc.core.JdbcTemplate
 
-import br.jus.tre_pa.springboot.v2.template.service.groovy.qy.sql.QySqlOrderByStep
-import br.jus.tre_pa.springboot.v2.template.service.groovy.qy.sql.QySqlPaginationStep
+import ${rootPackage.name}.groovy.qy.sql.QySqlOrderByStep
+import ${rootPackage.name}.groovy.qy.sql.QySqlPaginationStep
 
 class OracleQyOrderByStep implements QySqlOrderByStep {
 
@@ -27,14 +29,14 @@ class OracleQyOrderByStep implements QySqlOrderByStep {
 	@Override
 	public QySqlPaginationStep orderBy(String sortSql) {
 		if(StringUtils.isNotBlank(sortSql)) {
-			sqlFragments['sql'] = "${sqlFragments['sql']} order by ${sortSql} "
+			sqlFragments['sql'] = "${OB}sqlFragments['sql']${CB} order by ${OB}sortSql${CB} "
 		}
 		new OracleQyPaginationStep(sqlFragments, jdbcTemplate)
 	}
 
 	@Override
 	public QySqlPaginationStep orderBy(Sort sort) {
-		String orders = sort?.orders.collect { "${it.property} ${it.direction} " }.join(",")
+		String orders = sort?.orders.collect { "${OB}it.property${CB} ${OB}it.direction${CB} " }.join(",")
 		orderBy(orders);
 	}
 }

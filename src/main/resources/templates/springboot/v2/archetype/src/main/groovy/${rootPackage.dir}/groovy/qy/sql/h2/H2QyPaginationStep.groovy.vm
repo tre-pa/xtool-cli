@@ -28,12 +28,12 @@ class H2QyPaginationStep implements QySqlPaginationStep {
 	@Override
 	public QySqlPageableSelectStep limit(Pageable pageable) {
 		def sql = sqlFragments['whereSql'] ? sqlFragments['whereSql'] : sqlFragments['sourceSql']
-		sqlFragments['countSql'] = "select count(0) from (${OB}sql${OC})  "
+		sqlFragments['countSql'] = "select count(0) from (${OB}sql${CB})  "
 		if(pageable.pageNumber == 0) {
-			sqlFragments['sql'] = "${OB}sqlFragments['sql']${OC} limit ${OB}pageable.pageSize${OC}"
+			sqlFragments['sql'] = "${OB}sqlFragments['sql']${CB} limit ${OB}pageable.pageSize${CB}"
 			return new H2QyPageableSelectStep(jdbcTemplate, sqlFragments, pageable);
 		}
-		sqlFragments['sql'] = "${OB}sqlFragments['sql']${OC} limit ${OB}pageable.pageSize${OC} offset ${OB}pageable.pageSize*pageable.pageNumber${OC}"
+		sqlFragments['sql'] = "${OB}sqlFragments['sql']${CB} limit ${OB}pageable.pageSize${CB} offset ${OB}pageable.pageSize*pageable.pageNumber${CB}"
 		return new H2QyPageableSelectStep(jdbcTemplate, sqlFragments, pageable);
 	}
 }

@@ -1,0 +1,8 @@
+package ${rootPackage.name}.groovy.report.repository.specification
+
+import ${rootPackage.name}.groovy.qy.QySpecification
+import ${rootPackage.name}.groovy.report.domain.JReport
+
+class JReportSpecification extends QySpecification<JReport> {
+
+}

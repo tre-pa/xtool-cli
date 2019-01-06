@@ -39,8 +39,8 @@ class H2QyContextImpl implements QySqlContext {
 	public List<QyAggregation> aggregation(String sql, QyPayload payload) {
 		if(!payload?.aggregables) return null;
 		List<QyAggregation> aggregrations = payload.aggregables.collect { 
-			def whereSql = payload.filterable instanceof EmptyQyFilterable ? "": "where ${payload.filterable.toSql()}" ;
-			def aggSql = "select ${it.operation.name()}(${it.dataField}) from ( ${sql} ) ${whereSql} "; 
+			def whereSql = payload.filterable instanceof EmptyQyFilterable ? "": "where ${OB}payload.filterable.toSql()${CB}" ;
+			def aggSql = "select ${OB}it.operation.name()${CB}(${OB}it.dataField${CB}) from ( ${OB}sql${CB} ) ${OB}whereSql${CB} "; 
 			def result = jdbcTemplate.queryForObject(aggSql, Object.class);
 			new QyAggregation(dataField: it.dataField, operation: it.operation, result: result);
 		}

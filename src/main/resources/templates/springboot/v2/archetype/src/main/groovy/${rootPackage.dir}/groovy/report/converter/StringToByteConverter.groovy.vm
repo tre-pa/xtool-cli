@@ -1,4 +1,4 @@
-package br.jus.tre_pa.springboot.v2.template.service.groovy.report.converter;
+package ${rootPackage.name}.groovy.report.converter;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
