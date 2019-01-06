@@ -1,4 +1,4 @@
-package br.jus.tre_pa.springboot.v2.template.service;
+package ${rootPackage.name};
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,7 +7,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class SpringbootV2TemplateApplicationTests {
+public class SpringBootAppTests {
 
 	@Test
 	public void contextLoads() {
