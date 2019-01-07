@@ -12,7 +12,7 @@ import org.springframework.shell.standard.ShellOption;
 
 import br.xtool.XtoolCliApplication;
 import br.xtool.core.Workspace;
-import br.xtool.core.provider.EJpaRepositoryValueProvider;
+import br.xtool.core.provider.RepositoryRepresentationValueProvider;
 import br.xtool.core.provider.EntityRepresentationValueProvider;
 import br.xtool.core.provider.PlantClassRepresentationValueProvider;
 import br.xtool.core.representation.EntityRepresentation;
@@ -88,7 +88,7 @@ public class SpringBootCommand {
 	 */
 	@ShellMethod(key = "gen:service", value = "Gera uma classe Service em um projeto Spring Boot", group = XtoolCliApplication.SPRINGBOOT_COMMAND_GROUP)
 	@ShellMethodAvailability("availabilitySpringBootCommand")
-	public void genService(@ShellOption(help = "Classe de repositório", valueProvider = EJpaRepositoryValueProvider.class, defaultValue="") RepositoryRepresentation repository) {
+	public void genService(@ShellOption(help = "Classe de repositório", valueProvider = RepositoryRepresentationValueProvider.class, defaultValue="") RepositoryRepresentation repository) {
 		if (Objects.isNull(repository)) {
 			// @formatter:off
 			this.workspace.getWorkingProject(SpringBootProjectRepresentation.class).getRepositories().stream()
@@ -106,7 +106,7 @@ public class SpringBootCommand {
 	 */
 	@ShellMethod(key = "gen:rest", value = "Gera uma classe Rest em um projeto Spring Boot", group = XtoolCliApplication.SPRINGBOOT_COMMAND_GROUP)
 	@ShellMethodAvailability("availabilitySpringBootCommand")
-	public void genRest(@ShellOption(help = "Classe de repositório", valueProvider = EJpaRepositoryValueProvider.class, defaultValue="") RepositoryRepresentation repository) {
+	public void genRest(@ShellOption(help = "Classe de repositório", valueProvider = RepositoryRepresentationValueProvider.class, defaultValue="") RepositoryRepresentation repository) {
 		if (Objects.isNull(repository)) {
 			// @formatter:off
 			this.workspace.getWorkingProject(SpringBootProjectRepresentation.class).getRepositories().stream()

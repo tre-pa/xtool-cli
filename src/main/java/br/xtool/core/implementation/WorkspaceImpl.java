@@ -86,7 +86,11 @@ public class WorkspaceImpl implements Workspace {
 		}
 		return Files.createDirectory(directory);
 	}
-
+	
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.Workspace#createProject(br.xtool.core.representation.ProjectRepresentation.Type, java.lang.String, java.lang.String, java.util.Map)
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public <T extends ProjectRepresentation> T createProject(Type type, String name, String qualifier, Map<String, Object> vars) {

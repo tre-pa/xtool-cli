@@ -12,11 +12,11 @@ import org.springframework.shell.standard.ValueProviderSupport;
 import org.springframework.stereotype.Component;
 
 import br.xtool.core.Workspace;
-import br.xtool.core.representation.NgPageRepresentation;
+import br.xtool.core.representation.NgLayoutRepresentation;
 import br.xtool.core.representation.NgProjectRepresentation;
 
 @Component
-public class ENgPageValueProvider extends ValueProviderSupport {
+public class NgLayoutRepresentationValueProvider extends ValueProviderSupport {
 
 	@Autowired
 	private Workspace workspace;
@@ -26,8 +26,8 @@ public class ENgPageValueProvider extends ValueProviderSupport {
 		if (this.workspace.getWorkingProject() instanceof NgProjectRepresentation) {
 			NgProjectRepresentation project = NgProjectRepresentation.class.cast(this.workspace.getWorkingProject());
 			// @formatter:off
-			return project.getNgPages().stream()
-					.map(NgPageRepresentation::getName)
+			return project.getNgLayouts().stream()
+					.map(NgLayoutRepresentation::getName)
 					.map(CompletionProposal::new)
 					.collect(Collectors.toList());
 			// @formatter:on
