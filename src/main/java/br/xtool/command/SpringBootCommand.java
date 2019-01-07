@@ -117,7 +117,6 @@ public class SpringBootCommand {
 		springBootService.genRest(repository);
 	}
 	
-//	@ShellMethodAvailability
 	protected Availability availabilitySpringBootCommand() throws IOException {
 		return this.workspace.getWorkingProject().getProjectType().equals(ProjectRepresentation.Type.SPRINGBOOT) ? Availability.available()
 				: Availability.unavailable("O diretório de trabalho não é um projeto maven válido. Use o comando cd para alterar o diretório de trabalho.");
