@@ -25,8 +25,9 @@ public interface ProjectRepresentation extends Comparable<ProjectRepresentation>
 	@AllArgsConstructor
 	@Getter
 	enum Type {
-		SPRINGBOOT("springboot"), ANGULAR("angular"), NONE("none");
+		SPRINGBOOT("springboot", SpringBootProjectRepresentation.class), ANGULAR("angular", NgProjectRepresentation.class), NONE("none", NoneProjectRepresentation.class);
 		private String name;
+		private Class<?> projectClass;
 	}
 
 	/**

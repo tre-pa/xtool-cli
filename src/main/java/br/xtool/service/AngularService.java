@@ -21,7 +21,7 @@ public class AngularService {
 	@Autowired
 	private Workspace workspace;
 
-	public void newApp(String name) {
+	public void newApp(String name, String qualifier) {
 		Map<String, Object> vars = new HashMap<String, Object>() {
 			private static final long serialVersionUID = 1L;
 			{
@@ -30,11 +30,9 @@ public class AngularService {
 		};
 		// @formatter:off
 		NgProjectRepresentation project = this.workspace.createProject(
-				NgProjectRepresentation.class, 
 				ProjectRepresentation.Type.ANGULAR, 
 				name, 
-				ProjectRepresentation.Version.V7, 
-				"dx",
+				qualifier,
 				vars);
 		// @formatter:on
 		ConsoleLog.print(ConsoleLog.cyan("\t-- npm install --"));

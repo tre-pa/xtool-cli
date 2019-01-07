@@ -44,9 +44,11 @@ public class CoreCommand {
 	 * @param name Nome da aplicação.
 	 */
 	@ShellMethod(key = "new:app", value = "Novo projeto Spring Boot e Angular", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
-	public void newApp(@ShellOption(help = "Nome do projeto") String name) {
-		springBootService.newApp(name);
-		angularService.newApp(name);
+	public void newApp(@ShellOption(help = "Nome do projeto") String name,
+			@ShellOption(help = "Qualificador do projeto Angular", defaultValue="v7-dx") String ngQualifier,
+			@ShellOption(help = "Qualiifcador do projeto Spring Boot", defaultValue="v2") String qualifier) {
+		springBootService.newApp(name, qualifier);
+		angularService.newApp(name, ngQualifier);
 	}
 
 	/**

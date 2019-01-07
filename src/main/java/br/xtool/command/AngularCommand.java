@@ -24,8 +24,8 @@ public class AngularCommand {
 
 	// FIXME Remover o qualifier
 	@ShellMethod(key = "new:angular", value = "Novo projeto Angular 5.x", group = XtoolCliApplication.ANGULAR_COMMAND_GROUP)
-	public void run(@ShellOption(help = "Nome do projeto") String name) throws IOException {
-		angularService.newApp(name);
+	public void run(@ShellOption(help = "Nome do projeto") String name, @ShellOption(help = "Qualiifcador de geração", defaultValue="v7-dx") String qualifier) throws IOException {
+		angularService.newApp(name, qualifier);
 	}
 	
 	public Availability availabilitySpringBootCommand() throws IOException {

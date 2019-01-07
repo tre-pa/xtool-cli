@@ -51,30 +51,13 @@ public interface Workspace {
 	Path createDirectory(String name);
 
 	/**
-	 * Cria um projeto no workspace.
 	 * 
-	 * @param projectClass
-	 *            Classe do tipo de projeto.
-	 * @param name
-	 *            Nome do projeto.
-	 * @param version
-	 *            Versão do projeto.
-	 * @return
-	 */
-	<T extends ProjectRepresentation> T createProject(Class<T> projectClass, ProjectRepresentation.Type type, String name, ProjectRepresentation.Version version, Map<String, Object> vars);
-	
-	/**
-	 * 
-	 * Cria um projeto no workspace.
-	 * 
-	 * @param projectClass
 	 * @param type
 	 * @param name
-	 * @param version
-	 * @param qualifier Qualificado de projeto
+	 * @param qualifier
 	 * @param vars
 	 * @return
 	 */
-	<T extends ProjectRepresentation> T createProject(Class<T> projectClass, ProjectRepresentation.Type type, String name, ProjectRepresentation.Version version, String qualifier , Map<String, Object> vars);
+	<T extends ProjectRepresentation> T createProject(ProjectRepresentation.Type type, String name, String qualifier, Map<String, Object> vars);
 
 }
