@@ -1,8 +1,4 @@
-
-
 # Instalação do Groovy no Eclipse
-
-
 
 https://github.com/groovy/groovy-eclipse/wiki
 
@@ -18,3 +14,13 @@ https://github.com/groovy/groovy-eclipse/wiki
 |4.3j8 (Kepler with Java 8 patch)		| http://dist.springsource.org/release/GRECLIPSE/e4.3-j8   |
 |4.2 and 3.8 (Juno)						| http://dist.springsource.org/release/GRECLIPSE/e4.2      |
 |3.7 (Indigo)							| http://dist.springsource.org/release/GRECLIPSE/e3.7      |
+
+## Instalação do Keycloak
+
+**TODO**
+
+> Snippet de código para requisições via Postman
+
+## Instalação do Oracle XE
+
+**TODO**
