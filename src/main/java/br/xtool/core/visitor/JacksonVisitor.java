@@ -1,4 +1,4 @@
-package br.xtool.core.visitor.impl;
+package br.xtool.core.visitor;
 
 import org.springframework.stereotype.Component;
 
