@@ -205,12 +205,12 @@ public class SpringBootService {
 				.findFirst()
 				.orElseGet(() -> RestClassTemplates.newRestClassRepresentation(springBootProject, repository));
 		// @formatter:on
-		RestClassTemplates.genFindAll(restClass, repository);
-		RestClassTemplates.genFilter(restClass, repository);
-		RestClassTemplates.genFindById(restClass, repository);
-		RestClassTemplates.genInsertMethod(restClass, repository);
-		RestClassTemplates.genUpdateMethod(restClass, repository);
-		RestClassTemplates.genDeleteMethod(restClass, repository);
+//		RestClassTemplates.genFindAll(restClass, repository);
+//		RestClassTemplates.genFilter(restClass, repository);
+//		RestClassTemplates.genFindById(restClass, repository);
+//		RestClassTemplates.genInsertMethod(restClass, repository);
+//		RestClassTemplates.genUpdateMethod(restClass, repository);
+//		RestClassTemplates.genDeleteMethod(restClass, repository);
 		this.save(restClass);
 		return restClass;
 	}

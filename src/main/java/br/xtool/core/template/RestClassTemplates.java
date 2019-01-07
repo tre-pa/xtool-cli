@@ -8,7 +8,6 @@ import org.hibernate.annotations.Immutable;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.jboss.forge.roaster.model.source.JavaDocSource;
 import org.jboss.forge.roaster.model.source.MethodSource;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.CacheControl;
@@ -42,17 +41,29 @@ public class RestClassTemplates {
 		RestClassRepresentation rest = new RestClassRepresentationImpl(bootProject, RoasterUtil.createJavaClassSource(restName));
 		rest.getRoasterJavaClass().setPackage(bootProject.getRootPackage().getName().concat(".rest"));
 		rest.getRoasterJavaClass().addAnnotation(Slf4j.class);
-		rest.getRoasterJavaClass().addImport(Autowired.class);
-		rest.getRoasterJavaClass().addImport(repository.getQualifiedName());
+//		rest.getRoasterJavaClass().addImport(Autowired.class);
+//		rest.getRoasterJavaClass().addImport(repository.getQualifiedName());
 		rest.getRoasterJavaClass().addAnnotation(RestController.class);
 		// @formatter:off
 		rest.getRoasterJavaClass().addAnnotation(RequestMapping.class)
 			.setStringValue(String.format("api/%s",Inflector.getInstance().pluralize(Strman.toKebabCase(repository.getTargetEntity().getName()))));
-		rest.getRoasterJavaClass().addField()
-			.setPrivate()
-			.setName(repository.getInstanceName())
-			.setType(repository)
-			.addAnnotation(Autowired.class);
+//		rest.getRoasterJavaClass().addField()
+//			.setPrivate()
+//			.setName(repository.getInstanceName())
+//			.setType(repository)
+//			.addAnnotation(Autowired.class);
+		// @formatter:on
+		
+		// Suporte a classe QyRest
+		rest.getRoasterJavaClass().addImport(bootProject.getRootPackage().getName().concat(".groovy.qy.QyRest"));
+		rest.getRoasterJavaClass().addImport(repository.getTargetEntity().getQualifiedName());
+		rest.getRoasterJavaClass().addImport(repository.getQualifiedName());
+		rest.getRoasterJavaClass().addImport(repository.getTargetSpecification().getQualifiedName());
+		// @formatter:off
+		rest.getRoasterJavaClass().setSuperType(String.format("QyRest<%s,Long,%s,%s>", 
+				repository.getTargetEntity().getName(), 
+				repository.getTargetSpecification().getName(),
+				repository.getName()));
 		// @formatter:on
 		return rest;
 	}
