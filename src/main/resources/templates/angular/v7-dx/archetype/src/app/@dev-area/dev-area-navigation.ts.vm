@@ -1,0 +1,12 @@
+export const navigation = [
+  {
+    text: 'Voltar',
+    path: '/',
+    icon: 'revert'
+  },
+  {
+    text: 'Gerência de Relatórios',
+    path: '/dev-area/report',
+    icon: 'doc'
+  }
+];

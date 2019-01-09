@@ -1,0 +1,47 @@
+import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
+import { Subscription } from 'rxjs';
+
+import { QyStoreOptions } from 'src/app/shared/qy/qy-store-options';
+import { ReportService } from 'src/app/service/report.service';
+import { QyStore } from 'src/app/shared/qy/qy-store';
+import { Report } from 'src/app/domain/report';
+
+@Component({
+  selector: 'app-report-list',
+  templateUrl: './report-list.component.html',
+  styleUrls: ['./report-list.component.scss']
+})
+export class ReportListComponent implements OnInit {
+
+  reportStore: QyStore<Report>;
+
+  downloadSub: Subscription;
+
+  constructor(
+    private reportService: ReportService,
+    private httpClient: HttpClient,
+    private router: Router,
+    private title: Title
+  ) { }
+
+  ngOnInit() {
+    this.title.setTitle('Relatórios');
+    let reportStoreOptions: QyStoreOptions = {
+      key: 'id',
+      path: 'jreport'
+    };
+    this.reportStore = new QyStore(this.httpClient, reportStoreOptions);
+  }
+
+  navigate(route: string) {
+    this.router.navigate([route]);
+  }
+
+  download(report: Report) {
+    this.downloadSub = this.reportService.export(report.id, report.title);
+  }
+
+}

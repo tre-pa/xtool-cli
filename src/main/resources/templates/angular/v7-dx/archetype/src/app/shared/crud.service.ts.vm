@@ -1,0 +1,67 @@
+#set ($OB = "${")
+#set ($CB = "}")
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
+import { environment } from 'src/environments/environment';
+import { Page } from './page';
+
+/**
+ * Classe abstrata com a implementação base das operações de crud;
+ */
+export abstract class CrudService<T> {
+
+  constructor(
+    private _http: HttpClient,
+    private apiContext: string
+  ) { }
+
+  public findAll(params: string = ""): Observable<Page<T>> {
+    return this._http.get<Page<T>>(`${OB}environment.urlbase${CB}${OB}this.apiContext${CB}${OB}params${CB}`);
+  }
+
+  /**
+   * Retorna um returno pelo id.
+   *
+   * @param id Id do recurso
+   */
+  public findById(id: number): Observable<T> {
+    return this._http.get<T>(`${OB}environment.urlbase${CB}${OB}this.apiContext${CB}/${OB}id${CB}`);
+  }
+
+  /**
+   * Insere um novo recurso.
+   *
+   * @param resource
+   */
+  public insert(resource: T): Observable<T> {
+    return this._http.post<T>(`${OB}environment.urlbase${CB}${OB}this.apiContext${CB}`, resource);
+  }
+
+  /**
+   * Atualiza um recurso.
+   *
+   * @param id
+   * @param resource
+   */
+  public update(id: number, resource: T): Observable<T> {
+    return this._http.put<T>(`${OB}environment.urlbase${CB}${OB}this.apiContext${CB}/${OB}id${CB}`, resource);
+  }
+
+  /**
+   * Deleta um recurso pelo id.
+   *
+   * @param id Id do recurso.
+   */
+  public delete(id: number): Observable<void> {
+    return this._http.delete<void>(`${OB}environment.urlbase${CB}${OB}this.apiContext${CB}/${OB}id${CB}`);
+  }
+
+  /**
+   * Retorna a quantidade total de recursos.
+   */
+  public count(): Observable<number> {
+    return this._http.get<number>(`${OB}environment.urlbase${CB}${OB}this.apiContext${CB}/_count`);
+  }
+
+}

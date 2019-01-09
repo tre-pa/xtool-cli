@@ -1,0 +1,7 @@
+import { QyAggregable } from './qy-aggregable';
+import { QyFilterable } from './qy-filter';
+
+export class QyPayload {
+  filterable?: QyFilterable;
+  aggregables?: QyAggregable[];
+}

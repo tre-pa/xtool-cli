@@ -1,0 +1,19 @@
+import { Component, OnInit } from '@angular/core';
+
+import { navigation } from '../dev-area-navigation';
+
+@Component({
+  selector: 'app-dev-area-page',
+  templateUrl: './dev-area-page.component.html',
+  styleUrls: ['./dev-area-page.component.scss']
+})
+export class DevAreaPageComponent implements OnInit {
+
+  navigation = navigation;
+
+  constructor() { }
+
+  ngOnInit() {
+  }
+
+}

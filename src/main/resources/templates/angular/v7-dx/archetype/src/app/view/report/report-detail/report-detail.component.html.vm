@@ -1,0 +1,40 @@
+<h2>{{ report?.title }}</h2>
+<div *ngIf="aggregations"
+  fxLayout="row">
+  <div *ngFor="let agg of aggregations"
+    class="dx-card content-block">
+    <p>{{ agg.dataField }}</p>
+    <p>{{ agg.operation }}</p>
+    <p>{{ agg.result }}</p>
+  </div>
+</div>
+<dx-data-grid *ngIf="report"
+  id="gridContainer"
+  [dataSource]="reportStore"
+  [columns]="report.columns"
+  [wordWrapEnabled]="true"
+  [showBorders]="true"
+  [showRowLines]="true"
+  [showColumnLines]="false"
+  [remoteOperations]="true"
+  (onToolbarPreparing)="onToolbarPreparing($event.toolbarOptions)">
+  <dxo-sorting mode="multiple"></dxo-sorting>
+  <dxo-paging [pageSize]="20"></dxo-paging>
+  <dxo-pager [allowedPageSizes]="[20]"
+    [showNavigationButtons]="true"
+    [showInfo]="true"></dxo-pager>
+  <dxo-filter-row [visible]="true"></dxo-filter-row>
+  <dxo-header-filter [visible]="true"></dxo-header-filter>
+  <dxo-search-panel [visible]="true"
+    [width]="300"></dxo-search-panel>
+</dx-data-grid>
+<dx-load-panel #loadPanel
+  shadingColor="rgba(0,0,0,0.4)"
+  container="#gridContainer"
+  [position]="{ of: '#gridContainer' }"
+  [visible]="downloadSub && !downloadSub.closed"
+  [showIndicator]="true"
+  [showPane]="true"
+  [shading]="true"
+  [closeOnOutsideClick]="false">
+</dx-load-panel>

@@ -1,4 +1,11 @@
-import { Component, NgModule, Input, Output, EventEmitter } from '@angular/core';
+import {
+  EventEmitter,
+  Component,
+  NgModule,
+  Output,
+  Input
+} from '@angular/core';
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 import { LoginFormModule } from '../login-form/login-form.component';
@@ -8,63 +15,71 @@ import { DxToolbarModule } from 'devextreme-angular/ui/toolbar';
 import { DxPopupModule } from 'devextreme-angular/ui/popup';
 
 @Component({
-    selector: 'app-header',
-    templateUrl: 'header.component.html',
-    styleUrls: ['./header.component.scss']
+  selector: 'app-header',
+  templateUrl: 'header.component.html',
+  styleUrls: ['./header.component.scss']
 })
 
 export class HeaderComponent {
-    @Output()
-    menuToggle = new EventEmitter<boolean>();
+  @Output()
+  menuToggle = new EventEmitter<boolean>();
 
-    @Input()
-    menuToggleEnabled = false;
+  @Input()
+  menuToggleEnabled = false;
 
-    @Input()
-    title: string;
+  @Input()
+  toolbarTitle: string;
 
-    showLoginPopup = false;
-    isUserAuthorized = true;
-    userMenuItems = [{
-        text: 'Profile',
-        icon: 'user'
-    }, {
-        text: 'Logout',
-        icon: 'runner'
-    }];
-
-    constructor() { }
-
-    toggleMenu = () => {
-        this.menuToggle.emit();
+  showLoginPopup = false;
+  isUserAuthorized = true;
+  userMenuItems = [
+    {
+      text: 'Profile',
+      icon: 'user'
+    },
+    {
+      text: 'Dev Area',
+      icon: 'coffee'
+    },
+    {
+      text: 'Logout',
+      icon: 'runner'
     }
+  ];
 
-    onShowLoginPopup = () => {
-        this.showLoginPopup = true;
-    }
+  constructor(
+    private router: Router
+  ) { }
 
-    onLoginClick(args) {
-        this.showLoginPopup = false;
-        this.isUserAuthorized = true;
-    }
+  toggleMenu = () => {
+    this.menuToggle.emit();
+  }
 
-    onUserMenuItemClick(item) {
-        if (item === this.userMenuItems[1]) {
-            this.isUserAuthorized = false;
-        }
-    }
+  onShowLoginPopup = () => {
+    this.showLoginPopup = true;
+  }
+
+  onLoginClick(args) {
+    this.showLoginPopup = false;
+    this.isUserAuthorized = true;
+  }
+
+  onUserMenuItemClick(item) {
+    if (item === this.userMenuItems[1]) this.router.navigate(['/dev-area']);
+    if (item === this.userMenuItems[2]) this.isUserAuthorized = false;
+  }
 }
 
 @NgModule({
-    imports: [
-        CommonModule,
-        DxPopupModule,
-        DxButtonModule,
-        UserPanelModule,
-        DxToolbarModule,
-        LoginFormModule
-    ],
-    declarations: [ HeaderComponent ],
-    exports: [ HeaderComponent ]
+  imports: [
+    CommonModule,
+    DxPopupModule,
+    DxButtonModule,
+    UserPanelModule,
+    DxToolbarModule,
+    LoginFormModule
+  ],
+  declarations: [HeaderComponent],
+  exports: [HeaderComponent]
 })
 export class HeaderModule { }

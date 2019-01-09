@@ -1,0 +1,18 @@
+import { ReportColumn } from 'src/app/domain/report-column';
+
+export class Report {
+  id: number;
+  title: string;
+  subtitle?: string;
+  createdAt: Date;
+  lastUpdateAt?: Date;
+  version: number;
+  uuid?: string;
+  sql: string;
+  columns?: ReportColumn[];
+  gpdf?: string;
+  gexcel?: string;
+  category: string;
+  devOnly?: boolean = true;
+  printOnly?: boolean = false;
+}

@@ -1,0 +1,49 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import {
+  DxLoadPanelModule,
+  DxDataGridModule,
+  DxButtonModule
+} from 'devextreme-angular';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { fas } from '@fortawesome/free-solid-svg-icons';
+
+import { SideNavOuterToolbarModule } from './../shared/layouts/side-nav-outer-toolbar/side-nav-outer-toolbar.component';
+
+import { ReportDetailComponent } from './report/report-detail/report-detail.component';
+import { ReportListComponent } from './report/report-list/report-list.component';
+import { ViewPageComponent } from './view-page.component';
+import { ViewRoutingModule } from './view-routing.module';
+import { HomeComponent } from './home/home.component';
+
+library.add(fas);
+
+const DEVEXTREME_MODULES: any[] = [
+  DxLoadPanelModule,
+  DxDataGridModule,
+  DxButtonModule
+];
+
+const ANGULAR_MODULES: any[] = [
+  FlexLayoutModule,
+  CommonModule
+];
+
+@NgModule({
+  imports: [
+    DEVEXTREME_MODULES,
+    ANGULAR_MODULES,
+    SideNavOuterToolbarModule,
+    FontAwesomeModule,
+    ViewRoutingModule
+  ],
+  declarations: [
+    ReportDetailComponent,
+    ReportListComponent,
+    ViewPageComponent,
+    HomeComponent
+  ]
+})
+export class ViewModule { }

@@ -1,0 +1,27 @@
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+
+import { DevReportListComponent } from 'src/app/@dev-area/view/report/report-list/dev-report-list.component';
+import { DevReportEditComponent } from 'src/app/@dev-area/view/report/report-edit/dev-report-edit.component';
+import { DevAreaPageComponent } from 'src/app/@dev-area/view/dev-area-page.component';
+
+const routes: Routes = [
+  { path: '', component: DevAreaPageComponent, children: [
+      { path: '', redirectTo: 'report', pathMatch: 'full' },
+      { path: 'report', children: [
+          { path: '', component: DevReportListComponent },
+          { path: 'edit', children: [
+              { path: '', component: DevReportEditComponent },
+              { path: ':idReport', component: DevReportEditComponent }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+];
+@NgModule({
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
+})
+export class DevAreaRoutingModule { };

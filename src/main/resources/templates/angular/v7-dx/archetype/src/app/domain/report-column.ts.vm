@@ -1,0 +1,7 @@
+export class ReportColumn {
+  dataField: string;
+  caption: string;
+  dataType: string;
+  javaType: string;
+  properties: Map<string, any>;
+}

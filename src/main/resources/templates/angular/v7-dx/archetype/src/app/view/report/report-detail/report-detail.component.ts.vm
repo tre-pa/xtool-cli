@@ -1,0 +1,86 @@
+#set ($OB = "${")
+#set ($CB = "}")
+import {
+  OnInit,
+  Component,
+  ViewChild
+} from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
+import { DxDataGridComponent } from 'devextreme-angular';
+import { Subscription } from 'rxjs';
+
+import { QyStoreOptions } from 'src/app/shared/qy/qy-store-options';
+import { QyAggregation } from 'src/app/shared/qy/qy-aggregation';
+import { ReportService } from 'src/app/service/report.service';
+import { QyStore } from 'src/app/shared/qy/qy-store';
+import { Report } from 'src/app/domain/report';
+
+@Component({
+  selector: 'app-report-detail',
+  templateUrl: './report-detail.component.html',
+  styleUrls: ['./report-detail.component.scss']
+})
+export class ReportDetailComponent implements OnInit {
+
+  @ViewChild(DxDataGridComponent)
+  dataGrid: DxDataGridComponent;
+
+  idReport: number;
+  report: Report;
+  aggregations: QyAggregation[];
+
+  reportStore: QyStore<Report>;
+
+  downloadSub: Subscription;
+
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private reportService: ReportService,
+    private httpClient: HttpClient
+  ) { }
+
+  ngOnInit() {
+    this.idReport = +this.activatedRoute.snapshot.params['idReport'];
+    if (this.idReport) this.loadData();
+  }
+
+  private loadData() {
+    this.reportService.findById(this.idReport)
+      .subscribe(report => {
+        report.columns.forEach(column => column['width'] = undefined);
+        this.report = report;
+      });
+    let reportStoreOptions: QyStoreOptions = {
+      path: 'jreport',
+      loadEndpoint: `/${OB}this.idReport${CB}/datasource`
+    };
+    this.reportStore = new QyStore<Report>(this.httpClient, reportStoreOptions);
+    this.reportStore.onLoad
+      .subscribe(() => this.aggregations = this.reportStore.getSummary());
+  }
+
+  onToolbarPreparing(toolbar) {
+    toolbar.items.unshift({
+      location: 'after',
+      widget: 'dxButton',
+      options: {
+        icon: 'revert',
+        onClick: () => {
+          this.dataGrid.instance.clearFilter();
+        }
+      }
+    });
+    toolbar.items.unshift({
+      location: 'after',
+      widget: 'dxButton',
+      options: {
+        icon: 'export',
+        onClick: () => {
+          this.downloadSub = this.reportService.export(this.idReport, this.report.title, this.reportStore.sortParams, this.reportStore.filter);
+        }
+      }
+    });
+  }
+
+}

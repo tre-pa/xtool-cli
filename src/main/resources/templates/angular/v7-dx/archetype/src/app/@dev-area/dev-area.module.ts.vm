@@ -1,0 +1,47 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import {
+  DxDataGridModule,
+  DxButtonModule,
+  DxFormModule,
+} from 'devextreme-angular';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { fas } from '@fortawesome/free-solid-svg-icons';
+
+import { SideNavOuterToolbarModule } from 'src/app/shared/layouts/side-nav-outer-toolbar/side-nav-outer-toolbar.component';
+import { DevAreaRoutingModule } from 'src/app/@dev-area/dev-area-routing.module';
+
+import { DevReportEditComponent } from 'src/app/@dev-area/view/report/report-edit/dev-report-edit.component';
+import { DevReportListComponent } from 'src/app/@dev-area/view/report/report-list/dev-report-list.component';
+import { DevAreaPageComponent } from 'src/app/@dev-area/view/dev-area-page.component';
+
+library.add(fas);
+
+const DEVEXTREME_MODULES: any[] = [
+  DxDataGridModule,
+  DxButtonModule,
+  DxFormModule
+];
+
+const ANGULAR_MODULES: any[] = [
+  FlexLayoutModule,
+  CommonModule
+];
+
+@NgModule({
+  imports: [
+    DEVEXTREME_MODULES,
+    ANGULAR_MODULES,
+    SideNavOuterToolbarModule,
+    DevAreaRoutingModule,
+    FontAwesomeModule
+  ],
+  declarations: [
+    DevReportEditComponent,
+    DevReportListComponent,
+    DevAreaPageComponent
+  ]
+})
+export class DevAreaModule { }

@@ -1,0 +1,4 @@
+export class QyAggregable {
+  selector: string;
+  operation: 'count' | 'sum' | 'max' | 'min' | 'avg';
+}

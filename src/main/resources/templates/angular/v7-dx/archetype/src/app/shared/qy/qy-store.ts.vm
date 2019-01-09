@@ -1,0 +1,99 @@
+#set ($OB = "${")
+#set ($CB = "}")
+import { EventEmitter } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { LoadOptions } from 'devextreme/data/load_options';
+import CustomStore from 'devextreme/data/custom_store';
+
+import { QyFilter, QyFilterable } from './qy-filter';
+import { QyStoreOptions } from './qy-store-options';
+import { QyAggregation } from './qy-aggregation';
+import { environment } from '../../../environments/environment';
+import { QyPayload } from './qy-payload';
+import { QyPage } from './qy-page';
+import { Page } from '../page';
+
+export class QyStore<T> extends CustomStore {
+
+  onLoad: EventEmitter<any> = new EventEmitter<any>();
+
+  filter: QyFilterable;
+  sortParams: string;
+  aggregations: QyAggregation[];
+
+  constructor(http: HttpClient, options: QyStoreOptions) {
+    super({
+      key: options.key,
+      byKey: (key) => {
+        if (!options.key)
+          return key;
+        return http.get<T>(`${OB}environment.urlbase${CB}/${OB}options.path${CB}/${OB}key${CB}`)
+          .toPromise()
+          .then((data: T) => this.transformData(data));
+      },
+      load: (loadOptions: LoadOptions) => {
+        console.log(loadOptions);
+        let skip = loadOptions.skip,
+          take = loadOptions.take,
+          page = skip ? (skip / take) : 0,
+          params = `?page=${OB}page${CB}&size=${OB}take${CB}`,
+          sort = loadOptions.sort,
+          payload = new QyPayload(),
+          filter = loadOptions.filter,
+          aggregations = loadOptions.totalSummary;
+        if (sort) {
+          this.sortParams = sort.map(order => `sort=${OB}order.selector${CB},${OB}order.desc ? 'desc' : 'asc'${CB}`).join('&');
+          params += `&${OB}this.sortParams${CB}`;
+        } else this.sortParams = null;
+        if (options.loadByGet) return http.get<Page<T>>(`${OB}environment.urlbase${CB}/${OB}options.path${CB}${OB}options.loadEndpoint || '/all'${CB}${OB}params${CB}`)
+          .toPromise()
+          .then((data: Page<T>) => {
+            this.onLoad.emit();
+            return {
+              data: data.content.map(data => this.transformData(data)),
+              totalCount: data.totalElements
+            };
+          });
+        if (filter) {
+          this.filter = QyFilter.of(loadOptions.filter).qyFilterable;
+          payload.filterable = this.filter;
+        } else this.filter = null;
+        if (aggregations) payload.aggregables = aggregations;
+        if (options.fields) params += `&fields=${options.fields.join(',')}`;
+
+        return http.post<QyPage<T>>(`${OB}environment.urlbase${CB}/${OB}options.path${CB}${OB}options.loadEndpoint || '/all'${CB}${OB}params${CB}`, payload)
+          .toPromise()
+          .then((qyPage: QyPage<T>) => {
+            if (aggregations) this.aggregations = qyPage.aggregations;
+            else this.aggregations = null;
+
+            let returnData = {};
+            if (qyPage.pagination) {
+              returnData['data'] = qyPage.pagination.content.map(data => this.transformData(data));
+              returnData['totalCount'] = qyPage.pagination.totalElements;
+            }
+
+            if (qyPage.aggregations) returnData['summary'] = qyPage.aggregations.map(agg => agg.result);
+            this.onLoad.emit();
+            return returnData;
+          });
+      }
+    });
+  }
+
+  transformData(data: T): any {
+    return data;
+  }
+
+  getSummary(dataField?: string, operation?: 'count' | 'sum' | 'max' | 'min' | 'avg'): QyAggregation[] {
+    let filteredSummary: QyAggregation[];
+    if (!dataField) return this.aggregations;
+    if (operation) filteredSummary = this.aggregations
+      .filter(agg => agg.dataField === dataField && agg.operation === operation);
+    else filteredSummary = this.aggregations
+      .filter(agg => agg.dataField === dataField);
+    if (filteredSummary.length === 0) return null;
+    return filteredSummary;
+  }
+
+}

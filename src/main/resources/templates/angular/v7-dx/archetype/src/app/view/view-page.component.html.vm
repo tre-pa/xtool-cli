@@ -1,0 +1,4 @@
+<app-side-nav-outer-toolbar toolbarTitle="Dx App"
+  [menuItems]="navigation">
+  <router-outlet></router-outlet>
+</app-side-nav-outer-toolbar>

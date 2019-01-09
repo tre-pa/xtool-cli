@@ -1,4 +1,10 @@
-import { Component, NgModule, Input, Output, EventEmitter } from '@angular/core';
+import {
+    EventEmitter,
+    Component,
+    NgModule,
+    Output,
+    Input
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { DxListModule } from 'devextreme-angular/ui/list';
@@ -34,7 +40,7 @@ export class UserPanelComponent {
         DxContextMenuModule,
         CommonModule
     ],
-    declarations: [ UserPanelComponent ],
-    exports: [ UserPanelComponent ]
+    declarations: [UserPanelComponent],
+    exports: [UserPanelComponent]
 })
 export class UserPanelModule { }

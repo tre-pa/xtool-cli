@@ -2,7 +2,7 @@
     <app-header
         [menuToggleEnabled]="true"
         (menuToggle)="menuOpened = !menuOpened;"
-        [title]="title">
+        [toolbarTitle]="toolbarTitle">
     </app-header>
 
     <dx-drawer

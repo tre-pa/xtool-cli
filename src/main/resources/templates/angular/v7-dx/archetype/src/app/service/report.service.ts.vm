@@ -1,0 +1,72 @@
+#set ($OB = "${")
+#set ($CB = "}")
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Subscription } from 'rxjs';
+import * as _ from 'lodash';
+
+import { QyFilterable } from 'src/app/shared/qy/qy-filter';
+import { environment } from 'src/environments/environment';
+import { CrudService } from 'src/app/shared/crud.service';
+import { Report } from 'src/app/domain/report';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ReportService extends CrudService<Report> {
+
+  constructor(private http: HttpClient) {
+    super(http, '/jreport');
+  }
+
+  export(id: number, title: string, params?: string, filter?: QyFilterable): Subscription {
+    let url = `${OB}environment.urlbase${CB}/jreport/${OB}id${CB}/pdf`;
+    return this.http.post(`${OB}url${CB}${OB}params ? `?${OB}params${CB}` : ''${CB}`, filter, {
+      responseType: 'blob',
+      headers: new HttpHeaders({
+        'Accept': 'application/octet-stream'
+      })
+    })
+      .subscribe(data => {
+        this.downloadFromRequest(title, 'PDF', data);
+      }, (err) => {
+        console.log(err);
+        this.errorMensage();
+      }, () => {
+        console.log("this._loadingService.resolve();");
+      });
+  }
+
+  /**
+   * 
+   * @param data 
+   */
+  private downloadFromRequest(title: string, type: string, data: any) {
+    type = type.toLowerCase();
+    let options = { type: `application/${OB}type${CB};charset=utf-8;` };
+    let filename = `${OB}_.kebabCase(title.toLowerCase())${CB}.${OB}type${CB}`;
+    var blob = new Blob([data], options);
+    if (navigator.msSaveBlob) {
+      // IE 10+
+      navigator.msSaveBlob(blob, filename);
+    }
+    else {
+      var link = document.createElement('a');
+      // Browsers that support HTML5 download attribute
+      if (link.download !== undefined) {
+        var url = URL.createObjectURL(blob);
+        link.setAttribute('href', url);
+        link.setAttribute('download', filename);
+        link.style.visibility = 'hidden';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+    }
+  }
+
+  private errorMensage() {
+    console.error('Um erro inesperado aconteceu!')
+  }
+
+}

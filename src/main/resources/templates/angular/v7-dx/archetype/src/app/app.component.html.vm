@@ -1,9 +1,1 @@
-<app-side-nav-outer-toolbar title="${projectName}">
-    <router-outlet></router-outlet>
-
-    <app-footer>
-        Tribunal Regional Eleitoral do Pará.
-        <br/>
-        STI/COSIS/SDS.
-    </app-footer>
-</app-side-nav-outer-toolbar>
+<router-outlet></router-outlet>

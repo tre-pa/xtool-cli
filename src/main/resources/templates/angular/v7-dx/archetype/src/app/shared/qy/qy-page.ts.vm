@@ -1,0 +1,7 @@
+import { Page } from 'src/app/shared/page';
+import { QyAggregation } from './qy-aggregation';
+
+export class QyPage<T> {
+  pagination: Page<T>;
+  aggregations?: QyAggregation[];
+}

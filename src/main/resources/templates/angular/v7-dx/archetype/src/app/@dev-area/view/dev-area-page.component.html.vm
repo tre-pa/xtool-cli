@@ -1,0 +1,4 @@
+<app-side-nav-outer-toolbar toolbarTitle="Dev Area"
+  [menuItems]="navigation">
+  <router-outlet></router-outlet>
+</app-side-nav-outer-toolbar>

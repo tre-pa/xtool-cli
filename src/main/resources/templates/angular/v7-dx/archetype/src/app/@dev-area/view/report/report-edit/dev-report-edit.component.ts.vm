@@ -1,0 +1,86 @@
+import { QyStore } from './../../../../shared/qy/qy-store';
+import { HttpClient } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Title } from '@angular/platform-browser';
+import DataSource from 'devextreme/data/data_source';
+
+import { DevReportService } from 'src/app/@dev-area/dev-report.service';
+import { Report } from 'src/app/domain/report';
+import { QyStoreOptions } from 'src/app/shared/qy/qy-store-options';
+
+@Component({
+  selector: 'app-dev-report-edit',
+  templateUrl: './dev-report-edit.component.html',
+  styleUrls: ['./dev-report-edit.component.scss']
+})
+export class DevReportEditComponent implements OnInit {
+
+  idReport: number;
+  report: Report;
+
+  categoryDataSource: DataSource;
+
+  constructor(
+    private httpClient: HttpClient,
+    private devReportService: DevReportService,
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
+    private title: Title
+  ) { }
+
+  ngOnInit() {
+    this.processReport();
+    let categoryStoreOptions: QyStoreOptions = {
+      path: 'dev/jreport',
+      loadEndpoint: `/categories`,
+      loadByGet: true
+    };
+    this.categoryDataSource = new DataSource({
+      store: new QyStore(this.httpClient, categoryStoreOptions),
+      paginate: true,
+      pageSize: 10
+    });
+  }
+
+  processReport() {
+    this.idReport = +this.activatedRoute.snapshot.params['idReport'];
+    if (this.idReport && !isNaN(this.idReport)) this.edit();
+    else this.create();
+  }
+
+  private create() {
+    this.title.setTitle('Novo Relatório');
+    this.report = new Report();
+  }
+
+  private edit() {
+    this.title.setTitle('Edição de Relatório');
+    this.devReportService.findById(this.idReport)
+      .subscribe(report => this.report = report);
+  }
+
+
+  onFocusOutSql(event) {
+    console.log(event);
+  }
+
+  back() {
+    this.router.navigate(['dev-area', 'report']);
+  }
+
+  save(event) {
+    this.devReportService.save(this.report)
+      .subscribe(() => this.back());
+    event.preventDefault();
+  }
+
+  sqlPreview(event) {
+    console.log(event);
+  }
+
+  pdfPreview(event) {
+    console.log(event);
+  }
+
+}

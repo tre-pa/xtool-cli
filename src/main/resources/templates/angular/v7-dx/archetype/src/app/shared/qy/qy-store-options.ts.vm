@@ -1,0 +1,69 @@
+#set ($OB = "${")
+#set ($CB = "}")
+/**
+ * Opções de configuração do QyStore
+ * 
+ * - key: string
+ * - path: string
+ * - fields: string[]
+ * - loadEndpoint: string
+ * - loadByGet: boolean
+ * 
+ * Apenas path é obrigatório
+ */
+export class QyStoreOptions {
+
+  /**
+   * *Opcional*
+   * 
+   * Chave que será usada na QyStore, que definirá qual atributo
+   * do objeto será enviado no request do byKey
+   * 
+   * Se não definida (key = undefined) a QyStore condiderá todo
+   * o Objeto como a Chave, e o retornará no byKey
+   * 
+   * *Dica: não definir key para uso em header filter, pois ele*
+   * *só precisa do load, e a key causa comportamentos estranhos*
+   * *nele*
+   */
+  key?: string;
+
+  /**
+   * *Obrigatório*
+   * 
+   * Caminho base dos endpoints usados na QyStore
+   */
+  path: string;
+
+  /**
+   * *Opcional*
+   * 
+   * Listagem de atributos do objeto que devem ser trazidos na
+   * projection de retorno do load
+   * 
+   * Se não definidos, trará o JSON padrão
+   */
+  fields?: string[];
+
+  /**
+   * *Opcional*
+   * 
+   * Fragmento de URL que deve ser usado para complementar a
+   * URL de requesição do load
+   * 
+   * Se não definido o load usa o endpoint ${OB}path${CB}/all
+   */
+  loadEndpoint?: string;
+
+  /**
+   * *Opcional*
+   * 
+   * Flag que indica se o endpoint do load é apenas um GET
+   * simples (não faz envio de QyPayload)
+   * 
+   * Se não definido, o load será feito com o método POST,
+   * enviando QyPayload como body
+   */
+  loadByGet?: boolean;
+
+}

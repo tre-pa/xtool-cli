@@ -1,4 +1,4 @@
-@import "../../../themes/generated/variables.base.scss";
+@import "../../../../themes/generated/variables.base.scss";
 
 .layout {
     flex-direction: column;

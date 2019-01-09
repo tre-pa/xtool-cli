@@ -1,11 +1,9 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
 
-import { AppComponent } from './app.component';
-import { SideNavOuterToolbarModule, SideNavInnerToolbarModule } from './layouts';
-import { FooterModule } from './shared/components/footer/footer.component';
 import { AppRoutingModule } from './app-routing.module';
-
+import { AppComponent } from './app.component';
 
 import "devextreme/localization/globalize/number";
 import "devextreme/localization/globalize/date";
@@ -15,7 +13,6 @@ import "devextreme/localization/globalize/message";
 import 'devextreme-intl';
 
 import * as Globalize from 'globalize';
-
 
 Globalize.load(require('cldr-data/supplemental/likelySubtags.json'))
 Globalize.load(require('cldr-data/supplemental/numberingSystems.json'));
@@ -35,11 +32,9 @@ Globalize.locale(navigator.language)
     AppComponent
   ],
   imports: [
-    BrowserModule,
-    SideNavOuterToolbarModule,
-    SideNavInnerToolbarModule,
-    FooterModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
+    BrowserModule
   ],
   providers: [],
   bootstrap: [AppComponent]

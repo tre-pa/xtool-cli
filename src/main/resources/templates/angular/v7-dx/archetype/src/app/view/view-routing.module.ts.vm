@@ -1,0 +1,28 @@
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+
+import { ReportDetailComponent } from './report/report-detail/report-detail.component';
+import { ReportListComponent } from './report/report-list/report-list.component';
+import { ViewPageComponent } from './view-page.component';
+import { HomeComponent } from './home/home.component';
+
+const routes: Routes = [
+  { path: '', component: ViewPageComponent, children: [
+      { path: '', redirectTo: 'home', pathMatch: 'full' },
+      { path: 'home', component: HomeComponent },
+      { path: 'relatorios', children: [
+          { path: '', component: ReportListComponent },
+          { path: ':idReport', component: ReportDetailComponent }
+        ]
+      }
+    ]
+  },
+
+  { path: '**', redirectTo: 'home' }
+];
+
+@NgModule({
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
+})
+export class ViewRoutingModule { }
