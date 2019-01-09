@@ -3,6 +3,8 @@ package br.xtool.view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.annotation.PostConstruct;
 import javax.swing.JDialog;
@@ -24,8 +26,19 @@ public class GuiView extends JDialog {
 		this.setSize(new Dimension(550, 500));
 		setLocationRelativeTo(null);
 		setModal(true);
-		setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		getContentPane().setBackground(Color.WHITE);
+//		addWindowListener(dialogWindowListener());
 	}
+
+
+//	private WindowAdapter dialogWindowListener() {
+//		return new WindowAdapter() {
+//			@Override
+//			public void windowClosing(WindowEvent e) {
+//				System.exit(0);
+//			}
+//		};
+//	}
 
 }
