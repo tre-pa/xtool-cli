@@ -1,0 +1,26 @@
+# Instalação do Groovy no Eclipse
+
+https://github.com/groovy/groovy-eclipse/wiki
+
+| Versão do Eclipse                     | Plugin                                                   |
+|---------------------------------------|----------------------------------------------------------|
+|4.9 (2018-09)							| http://dist.springsource.org/release/GRECLIPSE/e4.9      |
+|4.8 (Photon)							| http://dist.springsource.org/release/GRECLIPSE/e4.8      |	
+|4.7 (Oxygen)							| http://dist.springsource.org/release/GRECLIPSE/e4.7      |
+|4.6 (Neon)								| http://dist.springsource.org/release/GRECLIPSE/e4.6      |
+|4.5 (Mars)								| http://dist.springsource.org/release/GRECLIPSE/e4.5      |
+|4.4 (Luna)								| http://dist.springsource.org/release/GRECLIPSE/e4.4      |
+|4.3 (Kepler)							| http://dist.springsource.org/release/GRECLIPSE/e4.3      |
+|4.3j8 (Kepler with Java 8 patch)		| http://dist.springsource.org/release/GRECLIPSE/e4.3-j8   |
+|4.2 and 3.8 (Juno)						| http://dist.springsource.org/release/GRECLIPSE/e4.2      |
+|3.7 (Indigo)							| http://dist.springsource.org/release/GRECLIPSE/e3.7      |
+
+## Instalação do Keycloak
+
+**TODO**
+
+> Snippet de código para requisições via Postman
+
+## Instalação do Oracle XE
+
+**TODO**

@@ -28,6 +28,11 @@ public class RepositoryTemplates {
 				.addInterface(JpaRepository.class.getSimpleName().concat("<").concat(entity.getName()).concat(",").concat("Long").concat(">"));
 		repository.getRoasterInterface().addInterface(JpaSpecificationExecutor.class.getSimpleName().concat("<").concat(entity.getName()).concat(">"));
 		repository.getRoasterInterface().addAnnotation(Repository.class);
+		
+		//Suporte a classe Qy
+		repository.getRoasterInterface().addImport(springBootProject.getRootPackage().getName().concat(".groovy.qy.jpa.QyRepository"));
+		repository.getRoasterInterface().addInterface("QyRepository<".concat(entity.getName()).concat(">"));
+		
 		return repository;
 	}
 

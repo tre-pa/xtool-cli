@@ -1,0 +1,26 @@
+package ${rootPackage.name}.groovy.report.converter;
+
+import javax.persistence.AttributeConverter;
+import javax.persistence.Converter;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import ${rootPackage.name}.groovy.report.types.JReportColumn
+
+@Converter
+class JReportColumnListToByteConverter implements AttributeConverter<List<JReportColumn>, byte[]> {
+
+	@Override
+	byte[] convertToDatabaseColumn(List<JReportColumn> attribute) {
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.writeValueAsBytes(attribute);
+	}
+
+	@Override
+	List<JReportColumn> convertToEntityAttribute(byte[] dbData) {
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.readValue(dbData, new TypeReference<List<JReportColumn>>() {
+				});
+	}
+}

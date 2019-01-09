@@ -86,29 +86,18 @@ public class WorkspaceImpl implements Workspace {
 		}
 		return Files.createDirectory(directory);
 	}
-
+	
 	/*
 	 * (non-Javadoc)
-	 * 
-	 * @see br.xtool.core.service.WorkspaceService#createProject(java.lang.Class,
-	 * java.lang.String, br.xtool.core.representation.EProject.Version)
+	 * @see br.xtool.core.Workspace#createProject(br.xtool.core.representation.ProjectRepresentation.Type, java.lang.String, java.lang.String, java.util.Map)
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
-	public <T extends ProjectRepresentation> T createProject(Class<T> projectClass, ProjectRepresentation.Type type, String name, Version version, Map<String, Object> vars) {
-		Path archetypePath = Paths.get(type.getName()).resolve(version.getName()).resolve("archetype");
+	public <T extends ProjectRepresentation> T createProject(Type type, String name, String qualifier, Map<String, Object> vars) {
+		Path archetypePath = Paths.get(type.getName()).resolve(qualifier).resolve("archetype");
 		Path projectPath = this.createDirectory(name);
 		this.fs.copy(archetypePath, vars, projectPath);
-		return projectClass.cast(ProjectRepresentation.factory(projectClass, projectPath));
-	}
-
-	@Override
-	public <T extends ProjectRepresentation> T createProject(Class<T> projectClass, Type type, String name, Version version, String qualifier, Map<String, Object> vars) {
-		if (StringUtils.isEmpty(qualifier))
-			return this.createProject(projectClass, type, name, version, vars);
-		Path archetypePath = Paths.get(type.getName()).resolve(version.getName().concat("-").concat(qualifier)).resolve("archetype");
-		Path projectPath = this.createDirectory(name);
-		this.fs.copy(archetypePath, vars, projectPath);
-		return projectClass.cast(ProjectRepresentation.factory(projectClass, projectPath));
+		return (T) type.getProjectClass().cast(ProjectRepresentation.factory((Class<T>) type.getProjectClass(), projectPath));
 	}
 
 }

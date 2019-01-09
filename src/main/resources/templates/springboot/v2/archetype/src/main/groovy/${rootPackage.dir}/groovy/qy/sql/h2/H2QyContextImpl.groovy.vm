@@ -1,0 +1,54 @@
+#set ($OB = "${")
+#set ($CB = "}")
+package ${rootPackage.name}.groovy.qy.sql.h2
+
+import org.apache.commons.lang3.StringUtils
+import org.springframework.jdbc.core.JdbcTemplate
+
+import ${rootPackage.name}.groovy.qy.QyAggregable
+import ${rootPackage.name}.groovy.qy.QyAggregation
+import ${rootPackage.name}.groovy.qy.QyFilterable
+import ${rootPackage.name}.groovy.qy.QyFilterable.EmptyQyFilterable
+import ${rootPackage.name}.groovy.qy.QyPayload
+import ${rootPackage.name}.groovy.qy.sql.QySqlContext
+import ${rootPackage.name}.groovy.qy.sql.QySqlWhereStep
+
+class H2QyContextImpl implements QySqlContext {
+
+	JdbcTemplate jdbcTemplate
+
+	Map sqlFragments = [:]
+
+	public H2QyContextImpl(JdbcTemplate jdbcTemplate) {
+		super()
+		this.jdbcTemplate = jdbcTemplate
+	}
+
+	@Override
+	public QySqlWhereStep selectFrom(String sql) {
+		def selectSql = StringUtils.prependIfMissing(sql, "select * from (")
+		selectSql = StringUtils.appendIfMissing(selectSql, " ) ")
+
+		sqlFragments['sourceSql'] = sql
+		sqlFragments['sql'] = selectSql
+
+		return new H2QyWhereStep(jdbcTemplate,sqlFragments)
+	}
+
+	@Override
+	public List<QyAggregation> aggregation(String sql, QyPayload payload) {
+		if(!payload?.aggregables) return null;
+		List<QyAggregation> aggregrations = payload.aggregables.collect { 
+			def whereSql = payload.filterable instanceof EmptyQyFilterable ? "": "where ${OB}payload.filterable.toSql()${CB}" ;
+			def aggSql = "select ${OB}it.operation.name()${CB}(${OB}it.dataField${CB}) from ( ${OB}sql${CB} ) ${OB}whereSql${CB} "; 
+			def result = jdbcTemplate.queryForObject(aggSql, Object.class);
+			new QyAggregation(dataField: it.dataField, operation: it.operation, result: result);
+		}
+		return aggregrations
+	}
+
+	@Override
+	public void clear() {
+		sqlFragments.clear()
+	}
+}

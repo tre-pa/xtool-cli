@@ -4,8 +4,8 @@ import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.jboss.forge.roaster.model.source.MethodSource;
 import org.springframework.data.jpa.domain.Specification;
 
+import br.xtool.core.JavaTemplate;
 import br.xtool.core.representation.EntityRepresentation;
-import br.xtool.core.representation.RepositoryRepresentation;
 import br.xtool.core.representation.SpecificationRepresentation;
 import br.xtool.core.representation.SpringBootProjectRepresentation;
 import br.xtool.core.representation.impl.EJpaSpecificationImpl;
@@ -23,6 +23,9 @@ public class SpecificationTemplates {
 		String specificationName = entity.getName().concat("Specification");
 		SpecificationRepresentation specification = new EJpaSpecificationImpl(springBootProject, RoasterUtil.createJavaClassSource(specificationName));
 		specification.getRoasterJavaClass().setPackage(springBootProject.getRootPackage().getName().concat(".repository").concat(".specification"));
+		specification.getRoasterJavaClass().addImport(entity.getQualifiedName());
+		specification.getRoasterJavaClass().addImport(springBootProject.getRootPackage().getName().concat(".groovy.qy.QySpecification"));
+		specification.getRoasterJavaClass().setSuperType("QySpecification<".concat(entity.getName()).concat(">"));
 		return specification;
 	}
 

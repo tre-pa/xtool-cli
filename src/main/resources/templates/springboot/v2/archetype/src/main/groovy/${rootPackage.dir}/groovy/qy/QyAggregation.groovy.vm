@@ -1,0 +1,17 @@
+package ${rootPackage.name}.groovy.qy
+
+import ${rootPackage.name}.groovy.qy.QyAggregable.Operation
+
+/**
+ * 
+ * @author jcruz
+ *
+ */
+class QyAggregation {
+
+	String dataField
+
+	Object result;
+	
+	Operation operation;
+}

@@ -1,0 +1,8 @@
+package ${rootPackage.name}.groovy.qy.sql
+
+import org.springframework.data.domain.Page
+
+interface QySqlPageableSelectStep {
+
+	Page<List<Map<String, Object>>> fetchMaps();
+}

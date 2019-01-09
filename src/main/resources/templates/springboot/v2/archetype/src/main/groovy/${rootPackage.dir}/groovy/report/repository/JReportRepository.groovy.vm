@@ -1,0 +1,19 @@
+package ${rootPackage.name}.groovy.report.repository;
+
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor
+import org.springframework.data.jpa.repository.Query
+import org.springframework.stereotype.Repository;
+
+import ${rootPackage.name}.groovy.qy.jpa.QyRepository
+import ${rootPackage.name}.groovy.report.domain.JReport
+
+
+@Repository
+interface JReportRepository extends JpaRepository<JReport, Long>, JpaSpecificationExecutor<JReport> , QyRepository<JReport> {
+	
+	@Query("select distinct r.category from JReport r")
+	Page<String> findAllCategories(Pageable pageable);
+}

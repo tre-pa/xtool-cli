@@ -6,12 +6,9 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.SortedSet;
 
-import org.apache.commons.lang3.StringUtils;
 import org.jboss.forge.roaster.model.JavaUnit;
 
 import br.xtool.core.representation.impl.EBootPomImpl;
-import br.xtool.core.representation.impl.EJavaPackageImpl;
-import strman.Strman;
 
 /**
  * Representação de um projeto Spring Boot
@@ -128,12 +125,6 @@ public interface SpringBootProjectRepresentation extends ProjectRepresentation {
 	Optional<NgProjectRepresentation> getAssociatedAngularProject();
 
 	/**
-	 * Retorna o diretório principal do java.
-	 */
-	//	@Override
-	//	String getMainDir();
-
-	/**
 	 * Retorna o diagrama de classe das entidades de domínio.
 	 * 
 	 * @return
@@ -147,44 +138,9 @@ public interface SpringBootProjectRepresentation extends ProjectRepresentation {
 	void refresh();
 
 	/**
-	 * gera um nome valido de projeto.
-	 * 
-	 * @param commomName
-	 * @return
-	 */
-	static String genProjectName(String commomName) {
-		// @formatter:off
-		return StringUtils.lowerCase(
-				Strman.toKebabCase(
-					StringUtils.endsWithIgnoreCase(commomName, "-service") ? 
-						commomName : 
-						commomName.concat("-service")
-						)
-				);
-		// @formatter:on
-	}
-
-	static String genBaseClassName(String projectName) {
-		return Strman.toStudlyCase(projectName.endsWith("Application") ? projectName.replace("Application", "") : projectName);
-
-	}
-
-	/**
-	 * Gera um pacote raiz para um nome de projeto.
-	 * 
-	 * @param projectName
-	 * @return
-	 */
-	static JavaPackageRepresentation genRootPackage(String projectName) {
-		String packageName = JavaPackageRepresentation.getDefaultPrefix().concat(".").concat(StringUtils.join(StringUtils.split(Strman.toKebabCase(projectName), "-"), "."));
-		return EJavaPackageImpl.of(packageName);
-	}
-
-	/**
 	 * Verifica se o path possui um projeto spring boot válido.
 	 * 
-	 * @param path
-	 *            Caminho do projeto
+	 * @param path Caminho do projeto
 	 * @return
 	 */
 	static boolean isValid(Path path) {
@@ -196,12 +152,6 @@ public interface SpringBootProjectRepresentation extends ProjectRepresentation {
 			}
 		}
 		return false;
-	}
-
-	interface BootProjectSupport extends Support<SpringBootProjectRepresentation> {
-		void apply(ApplicationPropertiesRepresentation appProperties);
-
-		void apply(PomRepresentation pom);
 	}
 
 }

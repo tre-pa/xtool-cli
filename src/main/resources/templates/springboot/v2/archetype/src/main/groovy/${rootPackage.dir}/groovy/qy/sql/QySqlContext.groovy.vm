@@ -1,0 +1,15 @@
+package ${rootPackage.name}.groovy.qy.sql
+
+import ${rootPackage.name}.groovy.qy.QyAggregable
+import ${rootPackage.name}.groovy.qy.QyAggregation
+import ${rootPackage.name}.groovy.qy.QyFilterable
+import ${rootPackage.name}.groovy.qy.QyPayload
+
+interface QySqlContext {
+
+	QySqlWhereStep selectFrom(String sql)
+
+	List<QyAggregation> aggregation(String sql, QyPayload payload)
+	
+	void clear();
+}

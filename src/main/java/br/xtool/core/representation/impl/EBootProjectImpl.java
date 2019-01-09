@@ -77,7 +77,7 @@ public class EBootProjectImpl extends EProjectImpl implements SpringBootProjectR
 				.filter(javaUnit -> javaUnit.getGoverningType().isClass())
 				.map(javaUnit -> javaUnit.<JavaClassSource>getGoverningType())
 				.filter(j -> j.getAnnotations().stream().anyMatch(ann -> ann.getName().equals("SpringBootApplication")))
-				.map(javaUnit -> new EJavaClassImpl(this, javaUnit))
+				.map(javaUnit -> new JavaClassRepresentationImpl(this, javaUnit))
 				.findFirst()
 				.orElseThrow(() -> new IllegalArgumentException("Não foi possível localizar a classe principal (@SpringBootApplication). Verifique se a mesma existe ou contêm erros."));
 			// @formatter:on
@@ -164,7 +164,7 @@ public class EBootProjectImpl extends EProjectImpl implements SpringBootProjectR
 			.filter(javaUnit -> javaUnit.getGoverningType().isClass())
 			.map(javaUnit -> javaUnit.<JavaClassSource>getGoverningType())
 			.filter(j -> j.getAnnotations().stream().anyMatch(ann -> ann.getName().equals("Entity")))
-			.map(j -> new EJpaEntityImpl(this, j))
+			.map(j -> new EntityRepresentationImpl(this, j))
 			.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
 	}

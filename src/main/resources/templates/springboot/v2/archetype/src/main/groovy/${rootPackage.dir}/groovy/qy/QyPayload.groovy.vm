@@ -1,0 +1,12 @@
+package ${rootPackage.name}.groovy.qy
+
+import ${rootPackage.name}.groovy.qy.QyFilterable.EmptyQyFilterable
+import groovy.transform.ToString
+
+@ToString
+class QyPayload {
+	
+	QyFilterable filterable = new EmptyQyFilterable();
+	
+	QyAggregable[] aggregables;
+}

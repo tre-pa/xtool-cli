@@ -56,7 +56,7 @@ public interface PlantClassRepresentation extends  JavaType<JavaClassSource> {
 	 * 
 	 * @return
 	 */
-	Collection<PlantFieldRepresentation> getFields();
+	Collection<PlantClassFieldRepresentation> getFields();
 
 	/**
 	 * Retorna os stereotipos da classe UML.

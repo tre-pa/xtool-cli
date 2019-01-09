@@ -1,0 +1,5 @@
+package ${rootPackage.name}.groovy.qy
+
+class QyProjectable {
+	List<String> fields
+}

@@ -1,0 +1,16 @@
+package ${rootPackage.name}.groovy.qy
+
+import org.springframework.data.domain.Page
+
+/**
+ * 
+ * @author jcruz
+ *
+ * @param <T>
+ */
+class QyPage<T>  {
+
+	Page<T> pagination;
+
+	List<QyAggregation> aggregations;
+}

@@ -1,0 +1,35 @@
+package ${rootPackage.name}.groovy.qy
+
+import javax.persistence.criteria.CriteriaBuilder
+import javax.persistence.criteria.CriteriaQuery
+import javax.persistence.criteria.Predicate
+import javax.persistence.criteria.Root
+
+import org.springframework.data.jpa.domain.Specification
+
+
+/**
+ * 
+ *
+ */
+class QySpecification<T> {
+	
+	public Specification<T> variableSpecification(Class<T> entityClass, QyFilterable filterable) {
+		return new Specification() {
+			@Override
+			public Predicate toPredicate(Root root, CriteriaQuery query, CriteriaBuilder criteriaBuilder) {
+				return filterable.toPredicate(entityClass, root, query, criteriaBuilder);
+			}
+		};
+	}
+	
+	public Specification<T> fixedSpecification() {
+		return new Specification() {
+			@Override
+			public Predicate toPredicate(Root root, CriteriaQuery query, CriteriaBuilder criteriaBuilder) {
+				return null;
+			}
+		};
+	}
+	
+}

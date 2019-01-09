@@ -14,7 +14,7 @@ import org.springframework.shell.standard.ShellOption;
 
 import br.xtool.XtoolCliApplication;
 import br.xtool.core.Workspace;
-import br.xtool.core.provider.EProjectValueProvider;
+import br.xtool.core.provider.ProjectRepresentationValueProvider;
 import br.xtool.core.representation.SpringBootProjectRepresentation;
 import br.xtool.core.representation.NgProjectRepresentation;
 import br.xtool.core.representation.ProjectRepresentation;
@@ -44,9 +44,11 @@ public class CoreCommand {
 	 * @param name Nome da aplicação.
 	 */
 	@ShellMethod(key = "new:app", value = "Novo projeto Spring Boot e Angular", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
-	public void newApp(@ShellOption(help = "Nome do projeto") String name) {
-		springBootService.newApp(name);
-		angularService.newApp(name);
+	public void newApp(@ShellOption(help = "Nome do projeto") String name,
+			@ShellOption(help = "Qualificador do projeto Angular", defaultValue="v7-dx") String ngQualifier,
+			@ShellOption(help = "Qualiifcador do projeto Spring Boot", defaultValue="v2") String qualifier) {
+		springBootService.newApp(name, qualifier);
+		angularService.newApp(name, ngQualifier);
 	}
 
 	/**
@@ -80,7 +82,7 @@ public class CoreCommand {
 	 * @param project projeto do workspace.
 	 */
 	@ShellMethod(value = "Define o projeto de trabalho atual", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
-	public void use(@ShellOption(help = "Nome do projeto do workspace", valueProvider = EProjectValueProvider.class) ProjectRepresentation project) {
+	public void use(@ShellOption(help = "Nome do projeto do workspace", valueProvider = ProjectRepresentationValueProvider.class) ProjectRepresentation project) {
 		this.workspace.setWorkingProject(project);
 	}
 

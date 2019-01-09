@@ -1,0 +1,54 @@
+#set ($OB = "${")
+#set ($CB = "}")
+package ${rootPackage.name}.groovy.qy.sql.oracle
+
+import org.apache.commons.lang3.StringUtils
+import org.springframework.data.domain.Sort
+import org.springframework.jdbc.core.JdbcTemplate
+
+import ${rootPackage.name}.groovy.qy.QyFilterable
+import ${rootPackage.name}.groovy.qy.QyFilterable.EmptyQyFilterable
+import ${rootPackage.name}.groovy.qy.sql.QySqlOrderByStep
+import ${rootPackage.name}.groovy.qy.sql.QySqlPaginationStep
+import ${rootPackage.name}.groovy.qy.sql.QySqlWhereStep
+
+class OracleQyWhereStep implements QySqlWhereStep {
+
+	JdbcTemplate jdbcTemplate
+
+	Map sqlFragments = [:]
+
+	public OracleQyWhereStep(JdbcTemplate jdbcTemplate, Map sqlFragments) {
+		super()
+		this.jdbcTemplate = jdbcTemplate
+		this.sqlFragments = sqlFragments
+	}
+
+	@Override
+	public List<Map<String, Object>> fetchMaps() {
+		jdbcTemplate.queryForList(sqlFragments['sql']);
+	}
+
+
+	@Override
+	public QySqlOrderByStep where(QyFilterable filter) {
+		if(filter instanceof EmptyQyFilterable == false) {
+			sqlFragments['whereSql'] = sqlFragments['sql'] = "${OB}sqlFragments['sql']${CB} where ${OB}filter.toSql()${CB} "
+		}
+		new OracleQyOrderByStep(sqlFragments, jdbcTemplate)
+	}
+
+	@Override
+	public QySqlPaginationStep orderBy(String sortSql) {
+		if(StringUtils.isNotBlank(sortSql)) {
+			sqlFragments['sql'] = "${OB}sqlFragments['sql']${CB} order by ${OB}sortSql${CB} "
+		}
+		new OracleQyPaginationStep(sqlFragments, jdbcTemplate)
+	}
+
+	@Override
+	public QySqlPaginationStep orderBy(Sort sort) {
+		String orders = sort?.orders.collect { "${OB}it.property${CB} ${OB}it.direction${CB} " }.join(",")
+		orderBy(orders);
+	}
+}

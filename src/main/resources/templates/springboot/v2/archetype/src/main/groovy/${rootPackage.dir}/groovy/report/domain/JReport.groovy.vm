@@ -1,0 +1,140 @@
+package ${rootPackage.name}.groovy.report.domain;
+
+import java.time.LocalDateTime
+
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Convert;
+import javax.persistence.Entity;
+import javax.persistence.EntityListeners
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.persistence.Version
+import javax.validation.constraints.NotBlank;
+
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener
+
+import ${rootPackage.name}.groovy.report.converter.JReportColumnListToByteConverter
+import ${rootPackage.name}.groovy.report.converter.StringToByteConverter
+import ${rootPackage.name}.groovy.report.types.JReportColumn
+import groovy.transform.EqualsAndHashCode;
+
+@Entity
+@DynamicInsert
+@DynamicUpdate
+@EntityListeners(AuditingEntityListener.class)
+@Table(name = "DEV_JREPORT")
+@EqualsAndHashCode(includes="id")
+class JReport {
+
+	@Id
+	@Column(updatable = false, nullable = false)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_DEV_JREPORT")
+	@SequenceGenerator(initialValue = 1, allocationSize = 1, name = "SEQ_DEV_JREPORT", sequenceName = "SEQ_DEV_JREPORT")
+	Long id;
+
+	/**
+	 * Título do relatório.
+	 */
+	@Column(nullable = false, unique = true)
+	@NotBlank
+	String title;
+
+	/**
+	 * Subtítulo do relatório.
+	 */
+	@Column
+	String subtitle;
+	
+	/**
+	 * Quando o relatório foi criado.
+	 */
+	@Column(nullable = false, updatable = false)
+	LocalDateTime createdAt;
+	
+	/**
+	 * Quando o relatório foi atualizado pela última vez.
+	 */
+	@Column
+	LocalDateTime lastUpdateAt;
+	
+	/**
+	 * Versão do relatório.
+	 */
+	@Column
+	@Version
+	Integer version;
+	
+	@Column
+	UUID uuid;
+
+	/**
+	 * Fonte de dados com código SQL nativo.
+	 */
+	@Column(name = "SQL", nullable = false, columnDefinition = "blob")
+	@Convert(converter = StringToByteConverter.class)
+	@Basic(fetch = FetchType.LAZY)
+	@NotBlank
+	String sql;
+
+	// @formatter:off
+	/**
+	 * Defininição das colunas do relatório utilizados tanto nos relatórios online quanto no relatórios PDF.
+	 * 
+	 * Ex:
+	 * 
+	 * [{
+	 * 		"dataField" : "nome",
+	 * 		"caption" : "Nome",
+	 * 		"width" : 80
+	 * }]
+	 * 
+	 */
+	// @formatter:on
+	@Column(nullable = false, columnDefinition = "blob")
+	@Convert(converter = JReportColumnListToByteConverter.class)
+	@Basic(fetch = FetchType.LAZY)
+	List<JReportColumn> columns = [];
+
+	/**
+	 * Código groovy do relatório em DynamicJasper.
+	 * 
+	 */
+	@Column(name = "GPDF", nullable = false, columnDefinition = "blob")
+	@Convert(converter = StringToByteConverter.class)
+	@Basic(fetch = FetchType.LAZY)
+	String gpdf;
+	
+	@Column(name = "GEXCEL", nullable = false, columnDefinition = "blob")
+	@Convert(converter = StringToByteConverter.class)
+	@Basic(fetch = FetchType.LAZY)
+	String gexcel;
+	
+	/**
+	 * Categoria do relatório.
+	 */
+	@Column(nullable = false)
+	@NotBlank
+	String category;
+
+	/**
+	 * Flag informando se o relatório está disponível apenas aos desenvolvedores.
+	 * 
+	 */
+	@Column
+	boolean devOnly = true;
+
+	/**
+	 * Flag informando se o relatório está disponível apenas para impressão.
+	 * 
+	 */
+	@Column
+	boolean printOnly = false;
+
+}

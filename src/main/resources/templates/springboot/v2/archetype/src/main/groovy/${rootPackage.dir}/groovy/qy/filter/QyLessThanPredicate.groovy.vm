@@ -1,0 +1,37 @@
+#set ($OB = "${")
+#set ($CB = "}")
+package ${rootPackage.name}.groovy.qy.filter;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+
+class QyLessThanPredicate extends QyPredicate {
+
+	@Override
+	String toSql() {
+		this.dataField + " < " + this.surroundSingleQuotes(this.value);
+	}
+
+	@Override
+	String toJpql() {
+		this.dataField + " < " + this.surroundSingleQuotes(this.value);
+	}
+
+	@Override
+	<T> Predicate toPredicate(Class<T> clazz, Root<T> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
+		Class<?> dataFieldType = getDataType(clazz, this.dataField);
+		if (dataFieldType == LocalDate.class) return cb.lessThan(root.get(this.dataField), LocalDate.parse((String) this.value));
+		if (dataFieldType == LocalDateTime.class) return cb.lessThan(root.get(this.dataField), LocalDateTime.parse((String) this.value));
+		if (dataFieldType == Long.class) return cb.lt(root.get(this.dataField), (Number) this.value);
+		if (dataFieldType == Integer.class) return cb.lt(root.get(this.dataField), (Number) this.value);
+		if (dataFieldType == Short.class) return cb.lt(root.get(this.dataField), (Number) this.value);
+		if (dataFieldType == BigDecimal.class) return cb.lt(root.get(this.dataField), new BigDecimal(String.valueOf(this.value)));
+		throw new IllegalArgumentException("Não foi possível montar um predicado para o campo '${OB}this.dataField${CB}' com o tipo '>'");
+	}
+
+}

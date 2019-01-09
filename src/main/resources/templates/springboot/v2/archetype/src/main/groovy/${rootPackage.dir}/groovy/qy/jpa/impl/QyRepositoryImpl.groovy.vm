@@ -1,0 +1,128 @@
+package ${rootPackage.name}.groovy.qy.jpa.impl
+
+import static ${rootPackage.name}.groovy.qy.QyAggregable.Operation.COUNT
+
+import javax.annotation.PostConstruct
+import javax.persistence.EntityManager
+import javax.persistence.PersistenceContext
+import javax.persistence.TypedQuery
+import javax.persistence.criteria.CriteriaBuilder
+import javax.persistence.criteria.CriteriaQuery
+import javax.persistence.criteria.Root
+
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageImpl
+import org.springframework.data.domain.Pageable
+import org.springframework.data.jpa.domain.Specification
+import org.springframework.stereotype.Repository
+import org.springframework.transaction.annotation.Transactional
+
+import ${rootPackage.name}.groovy.qy.QyAggregable
+import ${rootPackage.name}.groovy.qy.QyAggregation
+import ${rootPackage.name}.groovy.qy.QyPage
+import ${rootPackage.name}.groovy.qy.QyPayload
+import ${rootPackage.name}.groovy.qy.QyProjectable
+import ${rootPackage.name}.groovy.qy.QySpecification
+import ${rootPackage.name}.groovy.qy.jpa.QyRepository
+import groovy.util.logging.Slf4j
+
+@Slf4j
+@Repository
+@Transactional(readOnly = true)
+class QyRepositoryImpl<T> implements QyRepository<T>{
+
+	@PersistenceContext
+	EntityManager entityManager
+
+	Map operations = [:]
+
+	T type
+
+	@PostConstruct
+	protected void init() {
+		operations[QyAggregable.Operation.COUNT] = { dataField, Root<T> root, CriteriaBuilder cb -> cb.count(root.get(dataField)) }
+		operations[QyAggregable.Operation.SUM]   = { dataField, Root<T> root, CriteriaBuilder cb -> cb.sum(root.get(dataField)) }
+		operations[QyAggregable.Operation.MIN]   = { dataField, Root<T> root, CriteriaBuilder cb -> cb.min(root.get(dataField)) }
+		operations[QyAggregable.Operation.MAX]   = { dataField, Root<T> root, CriteriaBuilder cb -> cb.max(root.get(dataField)) }
+		operations[QyAggregable.Operation.AVG]   = { dataField, Root<T> root, CriteriaBuilder cb -> cb.avg(root.get(dataField)) }
+	}
+
+	@Override
+	public QyPage<T> findAll(Class<T> entityClass, Pageable pageable, QyProjectable projectable, Class<? extends QySpecification<T>> specificationClass, QyPayload payload) {
+		if(payload?.filterable) {
+			QySpecification<T>  specification = specificationClass.getDeclaredConstructor().newInstance();
+			Specification<T> finalSpec = specification.fixedSpecification().and(specification.variableSpecification(entityClass, payload.filterable))
+			if(projectable?.fields) return this.findAllWithProjection(entityClass, pageable, projectable, finalSpec, payload.aggregables)
+			return this.findAllWithoutProjection(entityClass, pageable, finalSpec, payload.aggregables)
+		}
+		if(projectable?.fields) return this.findAllWithProjection(entityClass, pageable, projectable, null, payload?.aggregables)
+		return this.findAllWithoutProjection(entityClass, pageable, null, payload?.aggregables);
+	}
+	
+	public List<QyAggregation> aggregation(Class<T> entityClass, Specification<T> specification, QyAggregable... aggregragables) {
+		aggregragables.collect { aggregationTemplate(entityClass, it.dataField, specification, it.operation) }
+	}
+
+	//	@Override
+	protected QyPage<T> findAllWithProjection(Class<T> entityClass, Pageable pageable, QyProjectable projectable, Specification<T> spec, QyAggregable... aggregables) {
+
+		CriteriaBuilder cb = entityManager.criteriaBuilder
+		CriteriaQuery<Object[]> cq = cb.createQuery(Object[].class)
+		Root<T> root = cq.from(entityClass)
+		cq.select(cb.array(projectable.fields.collect { root.get(it) }))
+		if(spec?.toPredicate(root, cq, cb)) cq.where(spec.toPredicate(root, cq, cb))
+		if(pageable?.sort) cq.orderBy(pageable.sort.orders.collect { it.ascending ? cb.asc(root.get(it.property)) : cb.desc(root.get(it.property))})
+		TypedQuery<T> q = entityManager.createQuery(cq)
+		if(pageable) {
+			q.setFirstResult(pageable.getPageNumber() * pageable.getPageSize())
+			q.setMaxResults(pageable.getPageSize())
+		}
+		QyAggregation countAggregation = this.aggregationTemplate(entityClass, "id", spec, COUNT)
+
+		List<T> results = q.resultList.collect {
+			T entity = entityClass.getDeclaredConstructor().newInstance()
+			projectable.fields.eachWithIndex { field, idx -> entity[field] = it[idx] }
+			return entity
+		}
+
+		Page<T> page = new PageImpl(results, pageable, countAggregation.result as Long)
+		if(aggregables) return new QyPage(pagination: page, aggregations: aggregation(entityClass, spec, aggregables))
+		return new QyPage(pagination: page)
+	}
+
+	/**
+	 * FindAll sem Projeção.
+	 * 
+	 * @param entityClass
+	 * @param pageable
+	 * @param spec
+	 * @param aggregables
+	 * @return
+	 */
+	protected QyPage<T> findAllWithoutProjection(Class<T> entityClass,Pageable pageable, Specification<T> spec, QyAggregable... aggregables) {
+		CriteriaBuilder cb = entityManager.criteriaBuilder
+		CriteriaQuery<T> cq = cb.createQuery(entityClass)
+		Root<T> root = cq.from(entityClass)
+		if(spec && spec.toPredicate(root, cq, cb)) cq.where(spec.toPredicate(root, cq, cb))
+		if(pageable?.sort) cq.orderBy(pageable.sort.orders.collect { it.ascending ? cb.asc(root.get(it.property)) : cb.desc(root.get(it.property))})
+		TypedQuery<T> q = entityManager.createQuery(cq)
+		if(pageable) {
+			q.setFirstResult(pageable.getPageNumber() * pageable.getPageSize())
+			q.setMaxResults(pageable.getPageSize())
+		}
+		QyAggregation countAggregation = this.aggregationTemplate(entityClass, "id", spec, COUNT)
+		Page<T> page = new PageImpl(q.resultList, pageable, countAggregation.result as Long)
+		if(aggregables) return new QyPage(pagination: page, aggregations: aggregation(entityClass, spec, aggregables))
+		return new QyPage(pagination: page)
+	}
+
+	private QyAggregation aggregationTemplate(Class<T> entityClass, String dataField, Specification<T> spec, QyAggregable.Operation operation) {
+		CriteriaBuilder cb = entityManager.criteriaBuilder
+		CriteriaQuery<T> cq = cb.createQuery(entityClass)
+		Root<T> root = cq.from(entityClass)
+		cq.select(operations[operation](dataField, root, cb))
+		if(spec && spec.toPredicate(root, cq, cb)) cq.where(spec.toPredicate(root, cq, cb))
+		TypedQuery query = entityManager.createQuery(cq)
+		return new QyAggregation(dataField: dataField, result: query.getSingleResult(), operation: operation)
+	}
+}

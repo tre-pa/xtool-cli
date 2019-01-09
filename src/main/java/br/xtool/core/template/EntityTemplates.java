@@ -2,6 +2,7 @@ package br.xtool.core.template;
 
 import org.hibernate.annotations.Immutable;
 
+import br.xtool.core.JavaTemplate;
 import br.xtool.core.representation.JavaClassRepresentation;
 import br.xtool.core.representation.PlantRelationshipRepresentation;
 

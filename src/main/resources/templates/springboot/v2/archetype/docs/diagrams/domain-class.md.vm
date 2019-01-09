@@ -1,0 +1,11 @@
+```plantuml
+
+package "${rootPackage.name}.domain" <<Frame>> {
+
+}
+
+package "${rootPackage.name}.domain.enums" <<Frame>>{
+
+}
+
+```
