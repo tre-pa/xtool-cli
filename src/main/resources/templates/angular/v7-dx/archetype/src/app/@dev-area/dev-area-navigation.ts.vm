@@ -1,7 +1,7 @@
 export const navigation = [
   {
     text: 'Voltar',
-    path: '/',
+    path: '/home',
     icon: 'revert'
   },
   {
