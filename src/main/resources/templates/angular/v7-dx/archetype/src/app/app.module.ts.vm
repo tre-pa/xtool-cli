@@ -1,9 +1,13 @@
-import { NgModule } from '@angular/core';
+import { NgxPermissionsModule } from 'ngx-permissions';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+
+import { KeycloakService } from './security/keycloak/keycloak.service';
+import { SecurityService } from './security/security.service';
 
 import "devextreme/localization/globalize/number";
 import "devextreme/localization/globalize/date";
@@ -27,6 +31,10 @@ Globalize.loadMessages(require('devextreme/localization/messages/pt.json'));
 
 Globalize.locale(navigator.language)
 
+export function kcFactory(securityService: SecurityService) {
+  return () => securityService.init();
+}
+
 @NgModule({
   declarations: [
     AppComponent
@@ -34,9 +42,19 @@ Globalize.locale(navigator.language)
   imports: [
     AppRoutingModule,
     HttpClientModule,
-    BrowserModule
+    BrowserModule,
+    NgxPermissionsModule.forRoot()
   ],
-  providers: [],
+  providers: [
+  	SecurityService,
+    KeycloakService,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: kcFactory,
+      deps: [SecurityService, KeycloakService],
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

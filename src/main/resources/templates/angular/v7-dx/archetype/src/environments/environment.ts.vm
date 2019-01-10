@@ -4,7 +4,10 @@
 
 export const environment = {
   production: false,
-  urlbase: "/${projectName}-service/api"
+  urlbase: "/${projectName}-service/api",
+  keycloak_installation: { url: 'http://localhost:8080/auth', realm: 'master', clientId: "${projectName}" },
+  keycloak_redirect_uri: "/${projectName}",
+  keycloak_clientId_sboot: "${projectName}-service",
 };
 
 /*

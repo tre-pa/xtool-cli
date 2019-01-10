@@ -1,3 +1,6 @@
+import { environment } from 'src/environments/environment';
+import { NgxPermissionsService, NgxPermissionsModule } from 'ngx-permissions';
+import { KeycloakService } from './../security/keycloak/keycloak.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
@@ -52,7 +55,8 @@ const routes: Routes = [
     ANGULAR_MODULES,
     SideNavOuterToolbarModule,
     FontAwesomeModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    NgxPermissionsModule.forChild()
   ],
   exports: [RouterModule],
   declarations: [
@@ -62,4 +66,9 @@ const routes: Routes = [
     HomeComponent
   ]
 })
-export class ViewRoutingModule { }
+export class ViewRoutingModule {
+	constructor(private keycloakService: KeycloakService, private permissionsService: NgxPermissionsService){
+    this.permissionsService.loadPermissions(this.keycloakService.getTokenParsed().resource_access[environment.keycloak_installation.clientId].roles);
+    
+  }
+ }
