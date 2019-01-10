@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { navigation } from 'src/app/view/view-navigation';
+import { navigation } from 'src/app/app-navigation';
 
 @Component({
   selector: 'app-view-page',

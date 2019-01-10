@@ -3,8 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 const routes: Routes = [
-    { path: 'dev-area', loadChildren: './@dev-area/dev-area.module#DevAreaModule' },
-    { path: '', loadChildren: './view/view.module#ViewModule' },
+    { path: 'dev-area', loadChildren: './@dev-area/dev-area-routing.module#DevAreaRoutingModule' },
+    { path: '', loadChildren: './view/view-routing.module#ViewRoutingModule' },
 
     { path: '**', redirectTo: '' } // Rota padrão
 ]

@@ -1,0 +1,9 @@
+export const navigation = [{
+    text: 'Home',
+    path: '/home',
+    icon: 'home'
+}, {
+    text: 'Relatorios',
+    path: '/relatorios',
+    icon: 'doc'
+}];
