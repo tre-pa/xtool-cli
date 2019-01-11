@@ -54,7 +54,7 @@ public class SpringBootCommand {
 	public void genEntities(
 			@ShellOption(value = "--plantClass", help = "Classe do diagrama de classe", valueProvider = PlantClassRepresentationValueProvider.class, defaultValue = "") PlantClassRepresentation plantClass) {
 		if (Objects.isNull(plantClass)) {
-			this.workspace.getWorkingProject(SpringBootProjectRepresentation.class).getDomainClassDiagram().getClasses().stream().forEach(springBootService::genEntity);
+			this.workspace.getWorkingProject(SpringBootProjectRepresentation.class).getMainDomainClassDiagram().getClasses().stream().forEach(springBootService::genEntity);
 			return;
 		}
 		springBootService.genEntity(plantClass);

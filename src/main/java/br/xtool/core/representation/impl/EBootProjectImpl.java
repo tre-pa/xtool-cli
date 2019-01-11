@@ -296,8 +296,8 @@ public class EBootProjectImpl extends EProjectImpl implements SpringBootProjectR
 	 * @see br.xtool.core.representation.EBootProject#getDomainClassDiagram()
 	 */
 	@Override
-	public PlantClassDiagramRepresentation getDomainClassDiagram() {
-		return EPlantDiagramImpl.of(this.getPath().resolve("docs/diagrams/domain-class.md"));
+	public PlantClassDiagramRepresentation getMainDomainClassDiagram() {
+		return EPlantDiagramImpl.of(this.getPath().resolve("docs/diagrams/class/main.md"));
 	}
 
 	/*

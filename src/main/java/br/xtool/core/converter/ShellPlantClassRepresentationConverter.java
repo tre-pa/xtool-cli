@@ -21,7 +21,7 @@ public class ShellPlantClassRepresentationConverter implements Converter<String,
 			if (this.workspace.getWorkingProject() instanceof SpringBootProjectRepresentation) {
 				SpringBootProjectRepresentation project = SpringBootProjectRepresentation.class.cast(this.workspace.getWorkingProject());
 				// @formatter:off
-				return project.getDomainClassDiagram().getClasses()
+				return project.getMainDomainClassDiagram().getClasses()
 					.stream()
 					.filter(e -> e.getName().equals(source))
 					.findFirst()

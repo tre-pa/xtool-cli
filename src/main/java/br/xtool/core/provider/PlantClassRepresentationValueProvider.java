@@ -26,7 +26,7 @@ public class PlantClassRepresentationValueProvider extends ValueProviderSupport 
 		// @formatter:off
 		if(this.workspace.getWorkingProject() instanceof SpringBootProjectRepresentation) {
 			SpringBootProjectRepresentation project = SpringBootProjectRepresentation.class.cast(this.workspace.getWorkingProject());
-			return project.getDomainClassDiagram().getClasses().stream()
+			return project.getMainDomainClassDiagram().getClasses().stream()
 					.map(PlantClassRepresentation::getName)
 					.map(CompletionProposal::new)
 					.collect(Collectors.toList());

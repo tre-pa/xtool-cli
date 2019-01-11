@@ -125,11 +125,11 @@ public interface SpringBootProjectRepresentation extends ProjectRepresentation {
 	Optional<NgProjectRepresentation> getAssociatedAngularProject();
 
 	/**
-	 * Retorna o diagrama de classe das entidades de domínio.
+	 * Retorna o diagrama de classe principal do projeto.
 	 * 
 	 * @return
 	 */
-	PlantClassDiagramRepresentation getDomainClassDiagram();
+	PlantClassDiagramRepresentation getMainDomainClassDiagram();
 
 	/**
 	 * 

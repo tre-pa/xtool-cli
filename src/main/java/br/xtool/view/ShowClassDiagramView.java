@@ -57,7 +57,7 @@ public class ShowClassDiagramView extends JDialog {
 	}
 	
 	private void showDiagramPng() {
-		picDiagram.setIcon(new ImageIcon(springBootProjectRepresentation.getDomainClassDiagram().getPng()));
+		picDiagram.setIcon(new ImageIcon(springBootProjectRepresentation.getMainDomainClassDiagram().getPng()));
 	}
 
 }
