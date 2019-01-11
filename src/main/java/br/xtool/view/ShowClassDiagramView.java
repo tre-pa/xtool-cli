@@ -7,7 +7,9 @@ import java.awt.Dimension;
 import javax.annotation.PostConstruct;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -18,7 +20,7 @@ import br.xtool.core.representation.SpringBootProjectRepresentation;
 
 @Component
 @Lazy
-public class ShowClassDiagramView extends JDialog {
+public class ShowClassDiagramView extends JFrame {
 
 	/**
 	 * 
@@ -37,12 +39,12 @@ public class ShowClassDiagramView extends JDialog {
 		setLayout(new BorderLayout());
 		this.setSize(new Dimension(550, 500));
 		setLocationRelativeTo(null);
-		setModal(true);
 		setResizable(true);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		getContentPane().setBackground(Color.WHITE);
 		this.picDiagram = new JLabel();
-		this.add(picDiagram);
+		JScrollPane scrollPane = new JScrollPane(this.picDiagram);
+		this.add(scrollPane);
 	}
 
 	public void showDialog() {
