@@ -1,3 +1,22 @@
+${AnsiColor.BRIGHT_GREEN}${AnsiStyle.BOLD}
+
+      .--.   |V|  ---------------- 
+     /    \ _| /  | HELLO WORLD! |
+     q .. p \ /  /----------------
+      \--/  //  / 
+     __||__//
+    /.    _/
+   // \  /
+  //   ||
+  \\  /  \
+   )\|    |
+  / || || |
+  |/\| || |
+     | || |
+     \ || /
+   __/ || \__
+  \____/\____/
+${AnsiColor.DEFAULT}  
 Bem vindo a ferramenta ${AnsiColor.BRIGHT_GREEN}${AnsiStyle.BOLD}xtool${AnsiColor.DEFAULT}${AnsiStyle.NORMAL}
 O diretório de trabalho atual é: ${AnsiColor.BRIGHT_GREEN}${AnsiStyle.BOLD}${user.home}/git${AnsiColor.DEFAULT}${AnsiStyle.NORMAL}
 Digite ${AnsiColor.BRIGHT_GREEN}${AnsiStyle.BOLD}help${AnsiColor.DEFAULT}${AnsiStyle.NORMAL} para ver as opções de comandos.
