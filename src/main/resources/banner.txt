@@ -1,9 +1,14 @@
 ${AnsiColor.BRIGHT_GREEN}${AnsiStyle.BOLD}
 
-      .--.   |V|  ---------------- 
-     /    \ _| /  | HELLO WORLD! |
-     q .. p \ /  /----------------
-      \--/  //  / 
+          --------------------- 
+          |   HELLO WORLD!    |
+          | ${AnsiColor.RED}SEARCH KNOWLEDGE!${AnsiColor.BRIGHT_GREEN} |
+          |/-------------------
+          /
+      .--.   |V|
+     /    \ _| /
+     q .. p \ / 
+      \--/  //
      __||__//
     /.    _/
    // \  /
