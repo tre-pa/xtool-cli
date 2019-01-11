@@ -1,5 +1,6 @@
 package br.xtool.core.representation;
 
+import java.io.OutputStream;
 import java.util.Set;
 
 /**
@@ -25,6 +26,13 @@ public interface PlantClassDiagramRepresentation {
 	 * @return
 	 */
 	Set<PlantEnumRepresentation> getEnums();
+
+	/**
+	 * Retorna a representação gráfica do diagrama de classe.
+	 * 
+	 * @return
+	 */
+	byte[] getPng();
 
 	// /**
 	// * Retorna os relacionamento UML.

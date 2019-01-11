@@ -1,7 +1,7 @@
 package br.xtool;
 
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 
 @SpringBootApplication
 public class XtoolCliApplication {
@@ -14,7 +14,11 @@ public class XtoolCliApplication {
 
 	public static void main(String[] args) {
 		System.setProperty("spring.devtools.restart.enabled", "false");
-		SpringApplication.run(XtoolCliApplication.class, args);
+		new SpringApplicationBuilder(XtoolCliApplication.class)
+				.headless(false)
+				.run(args);
+
+
 	}
 
 }

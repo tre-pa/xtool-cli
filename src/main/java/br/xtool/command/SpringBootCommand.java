@@ -3,7 +3,10 @@ package br.xtool.command;
 import java.io.IOException;
 import java.util.Objects;
 
+import javax.swing.SwingUtilities;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.shell.Availability;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
@@ -21,6 +24,7 @@ import br.xtool.core.representation.ProjectRepresentation;
 import br.xtool.core.representation.RepositoryRepresentation;
 import br.xtool.core.representation.SpringBootProjectRepresentation;
 import br.xtool.service.SpringBootService;
+import br.xtool.view.ShowClassDiagramView;
 
 /**
  * Classe com os comandos Shell para Spring Boot.
@@ -34,6 +38,9 @@ public class SpringBootCommand {
 	private SpringBootService springBootService;
 
 	@Autowired
+	private ApplicationContext appCtx;
+
+	@Autowired
 	private Workspace workspace;
 
 	/**
@@ -42,7 +49,7 @@ public class SpringBootCommand {
 	 * @param name Nome do Projeto Spring Boot
 	 */
 	@ShellMethod(key = "new:springboot", value = "Novo projeto Spring Boot v2", group = XtoolCliApplication.SPRINGBOOT_COMMAND_GROUP)
-	public void newApp(@ShellOption(help = "Nome do projeto") String name, @ShellOption(help = "Qualificador de geração", defaultValue="v2") String qualifier) {
+	public void newApp(@ShellOption(help = "Nome do projeto") String name, @ShellOption(help = "Qualificador de geração", defaultValue = "v2") String qualifier) {
 		springBootService.newApp(name, qualifier);
 	}
 
@@ -53,7 +60,7 @@ public class SpringBootCommand {
 	@ShellMethod(key = "gen:entity", value = "Gera uma classe Jpa", group = XtoolCliApplication.SPRINGBOOT_COMMAND_GROUP)
 	@ShellMethodAvailability("availabilitySpringBootCommand")
 	public void genEntities(
-			@ShellOption(value = "--plantClass", help = "Classe do diagrama de classe", valueProvider = PlantClassRepresentationValueProvider.class, defaultValue="") PlantClassRepresentation plantClass) {
+			@ShellOption(value = "--plantClass", help = "Classe do diagrama de classe", valueProvider = PlantClassRepresentationValueProvider.class, defaultValue = "") PlantClassRepresentation plantClass) {
 		if (Objects.isNull(plantClass)) {
 			this.workspace.getWorkingProject(SpringBootProjectRepresentation.class).getDomainClassDiagram().getClasses().stream().forEach(springBootService::genEntity);
 			return;
@@ -68,7 +75,7 @@ public class SpringBootCommand {
 	 */
 	@ShellMethod(key = "gen:repository", value = "Gera uma classe de Repository (JpaRepository) para entidade JPA em um projeto Spring Boot", group = XtoolCliApplication.SPRINGBOOT_COMMAND_GROUP)
 	@ShellMethodAvailability("availabilitySpringBootCommand")
-	public void genRepository(@ShellOption(help = "Entidade JPA", valueProvider = EntityRepresentationValueProvider.class, defaultValue="") EntityRepresentation entity) {
+	public void genRepository(@ShellOption(help = "Entidade JPA", valueProvider = EntityRepresentationValueProvider.class, defaultValue = "") EntityRepresentation entity) {
 		if (Objects.isNull(entity)) {
 			// @formatter:off
 			this.workspace.getWorkingProject(SpringBootProjectRepresentation.class).getEntities().stream()
@@ -88,7 +95,7 @@ public class SpringBootCommand {
 	 */
 	@ShellMethod(key = "gen:service", value = "Gera uma classe Service em um projeto Spring Boot", group = XtoolCliApplication.SPRINGBOOT_COMMAND_GROUP)
 	@ShellMethodAvailability("availabilitySpringBootCommand")
-	public void genService(@ShellOption(help = "Classe de repositório", valueProvider = RepositoryRepresentationValueProvider.class, defaultValue="") RepositoryRepresentation repository) {
+	public void genService(@ShellOption(help = "Classe de repositório", valueProvider = RepositoryRepresentationValueProvider.class, defaultValue = "") RepositoryRepresentation repository) {
 		if (Objects.isNull(repository)) {
 			// @formatter:off
 			this.workspace.getWorkingProject(SpringBootProjectRepresentation.class).getRepositories().stream()
@@ -106,7 +113,7 @@ public class SpringBootCommand {
 	 */
 	@ShellMethod(key = "gen:rest", value = "Gera uma classe Rest em um projeto Spring Boot", group = XtoolCliApplication.SPRINGBOOT_COMMAND_GROUP)
 	@ShellMethodAvailability("availabilitySpringBootCommand")
-	public void genRest(@ShellOption(help = "Classe de repositório", valueProvider = RepositoryRepresentationValueProvider.class, defaultValue="") RepositoryRepresentation repository) {
+	public void genRest(@ShellOption(help = "Classe de repositório", valueProvider = RepositoryRepresentationValueProvider.class, defaultValue = "") RepositoryRepresentation repository) {
 		if (Objects.isNull(repository)) {
 			// @formatter:off
 			this.workspace.getWorkingProject(SpringBootProjectRepresentation.class).getRepositories().stream()
@@ -116,7 +123,20 @@ public class SpringBootCommand {
 		}
 		springBootService.genRest(repository);
 	}
-	
+
+	@ShellMethod(key = "show:class-diagram", value = "Exibe o diagrama de classe do projeto", group = XtoolCliApplication.SPRINGBOOT_COMMAND_GROUP)
+	@ShellMethodAvailability("availabilitySpringBootCommand")
+	public void showClassDiagram() {
+		ShowClassDiagramView guiView = appCtx.getBean(ShowClassDiagramView.class);
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				guiView.showDialog();
+			}
+		});
+
+	}
+
 	protected Availability availabilitySpringBootCommand() throws IOException {
 		return this.workspace.getWorkingProject().getProjectType().equals(ProjectRepresentation.Type.SPRINGBOOT) ? Availability.available()
 				: Availability.unavailable("O diretório de trabalho não é um projeto maven válido. Use o comando cd para alterar o diretório de trabalho.");
