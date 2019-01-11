@@ -55,7 +55,7 @@ public class CoreCommand {
 	 * Exibe os projetos disponíveis no workspace atual.
 	 * 
 	 */
-	@ShellMethod(key = { "show:projects" }, value = "Exibe os projetos do workspace", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
+	@ShellMethod(key = { "list:projects" }, value = "Exibe os projetos do workspace", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
 	public void run() {
 		Consumer<ProjectRepresentation> prettyPrintProject = (project) -> {
 			StringBuilder sb = new StringBuilder();
