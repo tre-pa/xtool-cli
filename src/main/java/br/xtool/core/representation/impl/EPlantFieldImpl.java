@@ -16,11 +16,11 @@ import org.apache.commons.lang3.math.NumberUtils;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Sets;
 
-import br.xtool.core.representation.PlantClassDiagramRepresentation;
-import br.xtool.core.representation.PlantClassFieldPropertyRepresentation;
-import br.xtool.core.representation.PlantClassFieldPropertyRepresentation.FieldPropertyType;
-import br.xtool.core.representation.PlantClassFieldRepresentation;
-import br.xtool.core.representation.PlantEnumRepresentation;
+import br.xtool.core.representation.plantuml.PlantClassDiagramRepresentation;
+import br.xtool.core.representation.plantuml.PlantClassFieldPropertyRepresentation;
+import br.xtool.core.representation.plantuml.PlantClassFieldRepresentation;
+import br.xtool.core.representation.plantuml.PlantEnumRepresentation;
+import br.xtool.core.representation.plantuml.PlantClassFieldPropertyRepresentation.FieldPropertyType;
 import net.sourceforge.plantuml.cucadiagram.Member;
 import strman.Strman;
 

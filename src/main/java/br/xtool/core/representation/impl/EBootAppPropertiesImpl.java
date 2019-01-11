@@ -18,8 +18,8 @@ import org.apache.commons.configuration2.builder.FileBasedConfigurationBuilder;
 import org.apache.commons.configuration2.builder.fluent.Parameters;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 
-import br.xtool.core.representation.ApplicationPropertiesRepresentation;
-import br.xtool.core.representation.SpringBootProjectRepresentation;
+import br.xtool.core.representation.springboot.ApplicationPropertiesRepresentation;
+import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 import lombok.SneakyThrows;
 import strman.Strman;
 

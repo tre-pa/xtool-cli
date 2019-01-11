@@ -4,8 +4,8 @@ import java.util.stream.Stream;
 
 import org.apache.commons.lang3.StringUtils;
 
-import br.xtool.core.representation.PlantClassRepresentation;
-import br.xtool.core.representation.PlantMultiplicityRepresentation;
+import br.xtool.core.representation.plantuml.PlantClassRepresentation;
+import br.xtool.core.representation.plantuml.PlantMultiplicityRepresentation;
 
 public class EPlantMultiplicityImpl implements PlantMultiplicityRepresentation {
 

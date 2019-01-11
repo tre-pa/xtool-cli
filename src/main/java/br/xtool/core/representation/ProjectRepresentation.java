@@ -3,8 +3,10 @@ package br.xtool.core.representation;
 import java.nio.file.Path;
 import java.util.Collection;
 
+import br.xtool.core.representation.angular.NgProjectRepresentation;
 import br.xtool.core.representation.impl.EBootProjectImpl;
 import br.xtool.core.representation.impl.ENgProjectImpl;
+import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

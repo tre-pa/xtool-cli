@@ -9,11 +9,6 @@ import org.springframework.stereotype.Component;
 
 import br.xtool.core.Visitor;
 import br.xtool.core.Workspace;
-import br.xtool.core.representation.JavaClassRepresentation;
-import br.xtool.core.representation.PlantClassRepresentation;
-import br.xtool.core.representation.PlantStereotypeRepresentation;
-import br.xtool.core.representation.PlantStereotypeRepresentation.StereotypeType;
-import br.xtool.core.representation.SpringBootProjectRepresentation;
 import br.xtool.core.representation.impl.JavaClassRepresentationImpl;
 import br.xtool.core.representation.impl.JavaClassRepresentationImpl.EAuditableJavaClassImpl;
 import br.xtool.core.representation.impl.JavaClassRepresentationImpl.ECacheableJavaClassImpl;
@@ -21,6 +16,11 @@ import br.xtool.core.representation.impl.JavaClassRepresentationImpl.EIndexedJav
 import br.xtool.core.representation.impl.JavaClassRepresentationImpl.EReadOnlyJavaClassImpl;
 import br.xtool.core.representation.impl.JavaClassRepresentationImpl.EVersionableJavaClassImpl;
 import br.xtool.core.representation.impl.JavaClassRepresentationImpl.EViewJavaClassImpl;
+import br.xtool.core.representation.plantuml.PlantClassRepresentation;
+import br.xtool.core.representation.plantuml.PlantStereotypeRepresentation;
+import br.xtool.core.representation.plantuml.PlantStereotypeRepresentation.StereotypeType;
+import br.xtool.core.representation.springboot.JavaClassRepresentation;
+import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 import br.xtool.core.util.RoasterUtil;
 
 /**

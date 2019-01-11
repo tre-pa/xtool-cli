@@ -5,9 +5,9 @@ import java.util.function.Predicate;
 
 import org.jboss.forge.roaster.model.util.Types;
 
-import br.xtool.core.representation.JavaClassRepresentation;
-import br.xtool.core.representation.JavaFieldRepresentation;
-import br.xtool.core.representation.JavaRelationshipRepresentation;
+import br.xtool.core.representation.springboot.JavaClassRepresentation;
+import br.xtool.core.representation.springboot.JavaFieldRepresentation;
+import br.xtool.core.representation.springboot.JavaRelationshipRepresentation;
 
 public class EJavaRelationshipImpl implements JavaRelationshipRepresentation {
 

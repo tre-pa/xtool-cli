@@ -2,7 +2,7 @@ package br.xtool.core.representation.impl;
 
 import java.nio.file.Path;
 
-import br.xtool.core.representation.NgPageRepresentation;
+import br.xtool.core.representation.angular.NgPageRepresentation;
 
 public class ENgPageImpl extends ENgComponentImpl implements NgPageRepresentation {
 

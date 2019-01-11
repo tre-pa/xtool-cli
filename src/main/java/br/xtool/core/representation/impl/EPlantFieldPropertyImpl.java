@@ -3,8 +3,8 @@ package br.xtool.core.representation.impl;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import br.xtool.core.representation.PlantClassFieldRepresentation;
-import br.xtool.core.representation.PlantClassFieldPropertyRepresentation;
+import br.xtool.core.representation.plantuml.PlantClassFieldPropertyRepresentation;
+import br.xtool.core.representation.plantuml.PlantClassFieldRepresentation;
 
 public class EPlantFieldPropertyImpl implements PlantClassFieldPropertyRepresentation {
 

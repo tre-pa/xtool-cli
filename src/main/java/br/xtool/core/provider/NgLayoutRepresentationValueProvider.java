@@ -12,8 +12,8 @@ import org.springframework.shell.standard.ValueProviderSupport;
 import org.springframework.stereotype.Component;
 
 import br.xtool.core.Workspace;
-import br.xtool.core.representation.NgLayoutRepresentation;
-import br.xtool.core.representation.NgProjectRepresentation;
+import br.xtool.core.representation.angular.NgLayoutRepresentation;
+import br.xtool.core.representation.angular.NgProjectRepresentation;
 
 @Component
 public class NgLayoutRepresentationValueProvider extends ValueProviderSupport {

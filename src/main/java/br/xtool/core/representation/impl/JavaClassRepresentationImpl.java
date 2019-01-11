@@ -15,12 +15,12 @@ import org.jboss.forge.roaster.model.SyntaxError;
 import org.jboss.forge.roaster.model.Visibility;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 
-import br.xtool.core.representation.SpringBootProjectRepresentation;
-import br.xtool.core.representation.JavaAnnotationRepresentation;
-import br.xtool.core.representation.JavaClassRepresentation;
-import br.xtool.core.representation.JavaFieldRepresentation;
-import br.xtool.core.representation.JavaMethodRepresentation;
-import br.xtool.core.representation.JavaPackageRepresentation;
+import br.xtool.core.representation.springboot.JavaAnnotationRepresentation;
+import br.xtool.core.representation.springboot.JavaClassRepresentation;
+import br.xtool.core.representation.springboot.JavaFieldRepresentation;
+import br.xtool.core.representation.springboot.JavaMethodRepresentation;
+import br.xtool.core.representation.springboot.JavaPackageRepresentation;
+import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 

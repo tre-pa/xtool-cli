@@ -7,10 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import br.xtool.core.Workspace;
-import br.xtool.core.representation.JavaEnumRepresentation;
-import br.xtool.core.representation.PlantEnumRepresentation;
-import br.xtool.core.representation.SpringBootProjectRepresentation;
 import br.xtool.core.representation.impl.EJavaEnumImpl;
+import br.xtool.core.representation.plantuml.PlantEnumRepresentation;
+import br.xtool.core.representation.springboot.JavaEnumRepresentation;
+import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 import br.xtool.core.util.RoasterUtil;
 
 /**

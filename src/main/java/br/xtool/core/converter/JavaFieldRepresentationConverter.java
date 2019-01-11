@@ -10,10 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import br.xtool.core.Visitor;
-import br.xtool.core.representation.JavaClassRepresentation;
-import br.xtool.core.representation.JavaFieldRepresentation;
-import br.xtool.core.representation.PlantClassFieldPropertyRepresentation.FieldPropertyType;
-import br.xtool.core.representation.PlantClassFieldRepresentation;
 import br.xtool.core.representation.impl.EJavaFieldImpl.EBigDecimalFieldImpl;
 import br.xtool.core.representation.impl.EJavaFieldImpl.EBooleanFieldImpl;
 import br.xtool.core.representation.impl.EJavaFieldImpl.EByteFieldImpl;
@@ -26,6 +22,10 @@ import br.xtool.core.representation.impl.EJavaFieldImpl.ENotNullFieldImpl;
 import br.xtool.core.representation.impl.EJavaFieldImpl.EStringFieldImpl;
 import br.xtool.core.representation.impl.EJavaFieldImpl.ETransientFieldImpl;
 import br.xtool.core.representation.impl.EJavaFieldImpl.EUniqueFieldImpl;
+import br.xtool.core.representation.plantuml.PlantClassFieldRepresentation;
+import br.xtool.core.representation.plantuml.PlantClassFieldPropertyRepresentation.FieldPropertyType;
+import br.xtool.core.representation.springboot.JavaClassRepresentation;
+import br.xtool.core.representation.springboot.JavaFieldRepresentation;
 import br.xtool.core.util.RoasterUtil;
 
 /**

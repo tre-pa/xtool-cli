@@ -2,9 +2,9 @@ package br.xtool.core.representation.impl;
 
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 
-import br.xtool.core.representation.SpringBootProjectRepresentation;
-import br.xtool.core.representation.EntityRepresentation;
-import br.xtool.core.representation.SpecificationRepresentation;
+import br.xtool.core.representation.springboot.EntityRepresentation;
+import br.xtool.core.representation.springboot.SpecificationRepresentation;
+import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 
 public class EJpaSpecificationImpl extends JavaClassRepresentationImpl implements SpecificationRepresentation {
 

@@ -18,8 +18,8 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import br.xtool.core.Workspace;
-import br.xtool.core.representation.PlantClassDiagramRepresentation;
-import br.xtool.core.representation.SpringBootProjectRepresentation;
+import br.xtool.core.representation.plantuml.PlantClassDiagramRepresentation;
+import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 
 @Component
 @Lazy

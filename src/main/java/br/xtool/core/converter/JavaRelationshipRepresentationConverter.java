@@ -9,15 +9,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import br.xtool.core.Visitor;
-import br.xtool.core.representation.JavaClassRepresentation;
-import br.xtool.core.representation.JavaFieldRepresentation;
-import br.xtool.core.representation.PlantRelationshipRepresentation;
 import br.xtool.core.representation.impl.EJavaFieldImpl.EManyToManyFieldImpl;
 import br.xtool.core.representation.impl.EJavaFieldImpl.EManyToOneFieldImpl;
 import br.xtool.core.representation.impl.EJavaFieldImpl.EOneToManyFieldImpl;
 import br.xtool.core.representation.impl.EJavaFieldImpl.EOneToOneFieldImpl;
 import br.xtool.core.representation.impl.EPlantRelationshipImpl.EAssociationImpl;
 import br.xtool.core.representation.impl.EPlantRelationshipImpl.ECompositionImpl;
+import br.xtool.core.representation.plantuml.PlantRelationshipRepresentation;
+import br.xtool.core.representation.springboot.JavaClassRepresentation;
+import br.xtool.core.representation.springboot.JavaFieldRepresentation;
 
 /**
  * Converte um relacionamento UML em um EJavaField.

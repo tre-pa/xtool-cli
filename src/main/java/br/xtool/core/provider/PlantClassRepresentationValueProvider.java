@@ -11,9 +11,9 @@ import org.springframework.shell.CompletionProposal;
 import org.springframework.shell.standard.ValueProviderSupport;
 import org.springframework.stereotype.Component;
 
-import br.xtool.core.representation.SpringBootProjectRepresentation;
 import br.xtool.core.Workspace;
-import br.xtool.core.representation.PlantClassRepresentation;
+import br.xtool.core.representation.plantuml.PlantClassRepresentation;
+import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 
 @Component
 public class PlantClassRepresentationValueProvider extends ValueProviderSupport {

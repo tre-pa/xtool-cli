@@ -19,12 +19,12 @@ import br.xtool.core.provider.EntityRepresentationValueProvider;
 import br.xtool.core.provider.PlantClassDiagramRepresentationValueProvider;
 import br.xtool.core.provider.PlantClassRepresentationValueProvider;
 import br.xtool.core.provider.RepositoryRepresentationValueProvider;
-import br.xtool.core.representation.EntityRepresentation;
-import br.xtool.core.representation.PlantClassDiagramRepresentation;
-import br.xtool.core.representation.PlantClassRepresentation;
 import br.xtool.core.representation.ProjectRepresentation;
-import br.xtool.core.representation.RepositoryRepresentation;
-import br.xtool.core.representation.SpringBootProjectRepresentation;
+import br.xtool.core.representation.plantuml.PlantClassDiagramRepresentation;
+import br.xtool.core.representation.plantuml.PlantClassRepresentation;
+import br.xtool.core.representation.springboot.EntityRepresentation;
+import br.xtool.core.representation.springboot.RepositoryRepresentation;
+import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 import br.xtool.service.SpringBootService;
 import br.xtool.view.ShowClassDiagramView;
 

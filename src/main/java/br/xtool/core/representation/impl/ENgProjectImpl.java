@@ -10,17 +10,17 @@ import java.util.function.Function;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import br.xtool.core.representation.NgClassRepresentation;
-import br.xtool.core.representation.NgComponentRepresentation;
-import br.xtool.core.representation.NgDetailRepresentation;
-import br.xtool.core.representation.NgEditRepresentation;
-import br.xtool.core.representation.NgLayoutRepresentation;
-import br.xtool.core.representation.NgModuleRepresentation;
-import br.xtool.core.representation.NgPackageRepresentation;
-import br.xtool.core.representation.NgPageRepresentation;
-import br.xtool.core.representation.NgProjectRepresentation;
-import br.xtool.core.representation.NgServiceRepresentation;
 import br.xtool.core.representation.ProjectRepresentation;
+import br.xtool.core.representation.angular.NgClassRepresentation;
+import br.xtool.core.representation.angular.NgComponentRepresentation;
+import br.xtool.core.representation.angular.NgDetailRepresentation;
+import br.xtool.core.representation.angular.NgEditRepresentation;
+import br.xtool.core.representation.angular.NgLayoutRepresentation;
+import br.xtool.core.representation.angular.NgModuleRepresentation;
+import br.xtool.core.representation.angular.NgPackageRepresentation;
+import br.xtool.core.representation.angular.NgPageRepresentation;
+import br.xtool.core.representation.angular.NgProjectRepresentation;
+import br.xtool.core.representation.angular.NgServiceRepresentation;
 import lombok.Getter;
 
 @Getter

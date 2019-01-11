@@ -6,7 +6,7 @@ import java.util.List;
 import org.jboss.forge.roaster.model.source.AnnotationSource;
 import org.jboss.forge.roaster.model.source.JavaSource;
 
-import br.xtool.core.representation.JavaAnnotationRepresentation;
+import br.xtool.core.representation.springboot.JavaAnnotationRepresentation;
 
 /**
  * Representação de uma annotation.

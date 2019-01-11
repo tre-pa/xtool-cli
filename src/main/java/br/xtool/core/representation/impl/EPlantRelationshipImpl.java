@@ -2,9 +2,9 @@ package br.xtool.core.representation.impl;
 
 import org.apache.commons.lang3.StringUtils;
 
-import br.xtool.core.representation.PlantClassRepresentation;
-import br.xtool.core.representation.PlantMultiplicityRepresentation;
-import br.xtool.core.representation.PlantRelationshipRepresentation;
+import br.xtool.core.representation.plantuml.PlantClassRepresentation;
+import br.xtool.core.representation.plantuml.PlantMultiplicityRepresentation;
+import br.xtool.core.representation.plantuml.PlantRelationshipRepresentation;
 import br.xtool.core.util.Inflector;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkArrow;

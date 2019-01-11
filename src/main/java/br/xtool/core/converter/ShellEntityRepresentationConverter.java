@@ -6,8 +6,8 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 import br.xtool.core.Workspace;
-import br.xtool.core.representation.EntityRepresentation;
-import br.xtool.core.representation.SpringBootProjectRepresentation;
+import br.xtool.core.representation.springboot.EntityRepresentation;
+import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 
 @Component
 public class ShellEntityRepresentationConverter implements Converter<String, EntityRepresentation> {

@@ -7,7 +7,7 @@ import java.util.stream.Stream;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import br.xtool.core.representation.NgEnumRepresentation;
+import br.xtool.core.representation.angular.NgEnumRepresentation;
 import lombok.Getter;
 
 public class ENgEnumImpl implements NgEnumRepresentation {

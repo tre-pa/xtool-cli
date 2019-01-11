@@ -3,8 +3,8 @@ package br.xtool.core.template;
 import org.hibernate.annotations.Immutable;
 
 import br.xtool.core.JavaTemplate;
-import br.xtool.core.representation.JavaClassRepresentation;
-import br.xtool.core.representation.PlantRelationshipRepresentation;
+import br.xtool.core.representation.plantuml.PlantRelationshipRepresentation;
+import br.xtool.core.representation.springboot.JavaClassRepresentation;
 
 public class EntityTemplates {
 

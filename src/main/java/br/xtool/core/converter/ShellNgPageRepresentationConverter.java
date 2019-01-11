@@ -5,8 +5,8 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 import br.xtool.core.Workspace;
-import br.xtool.core.representation.NgPageRepresentation;
-import br.xtool.core.representation.NgProjectRepresentation;
+import br.xtool.core.representation.angular.NgPageRepresentation;
+import br.xtool.core.representation.angular.NgProjectRepresentation;
 
 @Component
 public class ShellNgPageRepresentationConverter implements Converter<String, NgPageRepresentation> {

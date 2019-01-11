@@ -6,9 +6,9 @@ import java.nio.file.Path;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import br.xtool.core.representation.PlantClassDiagramRepresentation;
-import br.xtool.core.representation.PlantClassRepresentation;
-import br.xtool.core.representation.PlantEnumRepresentation;
+import br.xtool.core.representation.plantuml.PlantClassDiagramRepresentation;
+import br.xtool.core.representation.plantuml.PlantClassRepresentation;
+import br.xtool.core.representation.plantuml.PlantEnumRepresentation;
 import lombok.SneakyThrows;
 import net.sourceforge.plantuml.BlockUml;
 import net.sourceforge.plantuml.SourceStringReader;

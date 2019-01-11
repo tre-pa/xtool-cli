@@ -9,9 +9,9 @@ import org.jboss.forge.roaster.model.Type;
 import org.jboss.forge.roaster.model.source.JavaSource;
 import org.jboss.forge.roaster.model.source.MethodSource;
 
-import br.xtool.core.representation.JavaAnnotationRepresentation;
-import br.xtool.core.representation.JavaMethodRepresentation;
-import br.xtool.core.representation.JavaMethodParameterRepresentation;
+import br.xtool.core.representation.springboot.JavaAnnotationRepresentation;
+import br.xtool.core.representation.springboot.JavaMethodParameterRepresentation;
+import br.xtool.core.representation.springboot.JavaMethodRepresentation;
 
 public class EJavaMethodImpl<T extends JavaSource<T>> implements JavaMethodRepresentation<T> {
 

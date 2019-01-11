@@ -9,10 +9,10 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import br.xtool.core.representation.EntityRepresentation;
-import br.xtool.core.representation.RepositoryRepresentation;
-import br.xtool.core.representation.SpringBootProjectRepresentation;
 import br.xtool.core.representation.impl.RepositoryRepresentationImpl;
+import br.xtool.core.representation.springboot.EntityRepresentation;
+import br.xtool.core.representation.springboot.RepositoryRepresentation;
+import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 import br.xtool.core.util.RoasterUtil;
 
 public class RepositoryTemplates {
