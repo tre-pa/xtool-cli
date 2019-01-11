@@ -3,6 +3,7 @@ package br.xtool.core.representation;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.SortedSet;
 
@@ -127,9 +128,17 @@ public interface SpringBootProjectRepresentation extends ProjectRepresentation {
 	/**
 	 * Retorna o diagrama de classe principal do projeto.
 	 * 
-	 * @return
+	 * @return PlantClassDiagramRepresentation com a representação do diagrama de
+	 *         classe.
 	 */
 	PlantClassDiagramRepresentation getMainDomainClassDiagram();
+
+	/**
+	 * Retorna a lista de diagramas de classes localizados em docs/diagrams/class
+	 * 
+	 * @return Lista de PlantClassDiagramRepresentation
+	 */
+	List<PlantClassDiagramRepresentation> getClassDiagrams();
 
 	/**
 	 * 

@@ -1,8 +1,6 @@
 package br.xtool.core.representation.impl;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Set;
@@ -19,14 +17,22 @@ import net.sourceforge.plantuml.cucadiagram.LeafType;
 
 public class EPlantDiagramImpl implements PlantClassDiagramRepresentation {
 
+	private Path path;
+
 	private SourceStringReader sourceStringReader;
-	
+
 	private ClassDiagram classDiagram;
 
-	private EPlantDiagramImpl(SourceStringReader sourceStringReader, ClassDiagram classDiagram) {
+	private EPlantDiagramImpl(Path path, SourceStringReader sourceStringReader, ClassDiagram classDiagram) {
 		super();
+		this.path = path;
 		this.sourceStringReader = sourceStringReader;
 		this.classDiagram = classDiagram;
+	}
+
+	@Override
+	public Path getPath() {
+		return this.path;
 	}
 
 	/*
@@ -84,7 +90,7 @@ public class EPlantDiagramImpl implements PlantClassDiagramRepresentation {
 				.findAny()
 				.orElseThrow(() -> new IllegalArgumentException("Diagrama de classe com erros."));
 		// @formatter:on
-		return new EPlantDiagramImpl(reader,classDiagram);
+		return new EPlantDiagramImpl(path, reader, classDiagram);
 	}
 
 }

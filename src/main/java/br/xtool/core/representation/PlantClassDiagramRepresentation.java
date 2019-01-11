@@ -1,6 +1,6 @@
 package br.xtool.core.representation;
 
-import java.io.OutputStream;
+import java.nio.file.Path;
 import java.util.Set;
 
 /**
@@ -10,6 +10,13 @@ import java.util.Set;
  *
  */
 public interface PlantClassDiagramRepresentation {
+
+	/**
+	 * Retorna o objeto Path do diagrama.
+	 * 
+	 * @return
+	 */
+	Path getPath();
 
 	/**
 	 * Retorna as classes do diagrama de classe UML.

@@ -18,6 +18,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import br.xtool.core.Workspace;
+import br.xtool.core.representation.PlantClassDiagramRepresentation;
 import br.xtool.core.representation.SpringBootProjectRepresentation;
 
 @Component
@@ -50,9 +51,9 @@ public class ShowClassDiagramView extends JFrame {
 		this.addWindowListener(this.onClose());
 	}
 
-	public void showDialog() {
+	public void showDialog(PlantClassDiagramRepresentation diagram) {
 		updateTitle();
-		showDiagramPng();
+		showDiagramPng(diagram);
 		this.setVisible(true);
 	}
 
@@ -61,8 +62,8 @@ public class ShowClassDiagramView extends JFrame {
 		setTitle(String.format("Diagrama de Classe do Projeto %s", this.springBootProjectRepresentation.getName()));
 	}
 
-	private void showDiagramPng() {
-		picDiagram.setIcon(new ImageIcon(springBootProjectRepresentation.getMainDomainClassDiagram().getPng()));
+	private void showDiagramPng(PlantClassDiagramRepresentation diagram) {
+		picDiagram.setIcon(new ImageIcon(diagram.getPng()));
 	}
 	
 	private WindowAdapter onClose() {
