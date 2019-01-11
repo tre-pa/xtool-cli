@@ -14,6 +14,7 @@ import org.eclipse.jdt.internal.compiler.impl.CompilerOptions;
 import org.jboss.forge.roaster.Roaster;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import br.xtool.core.ConsoleLog;
@@ -45,6 +46,7 @@ import lombok.SneakyThrows;
 import strman.Strman;
 
 @Service
+@Lazy
 public class SpringBootService {
 
 	@Autowired

@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import br.xtool.core.ConsoleLog;
@@ -13,6 +14,7 @@ import br.xtool.core.representation.NgProjectRepresentation;
 import br.xtool.core.representation.ProjectRepresentation;
 
 @Service
+@Lazy
 public class AngularService {
 	
 	@Autowired

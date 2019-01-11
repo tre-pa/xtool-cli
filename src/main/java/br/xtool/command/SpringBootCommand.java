@@ -43,15 +43,7 @@ public class SpringBootCommand {
 	@Autowired
 	private Workspace workspace;
 
-	/**
-	 * Gera um novo projeto Spring Boot.
-	 * 
-	 * @param name Nome do Projeto Spring Boot
-	 */
-	@ShellMethod(key = "new:springboot", value = "Novo projeto Spring Boot v2", group = XtoolCliApplication.SPRINGBOOT_COMMAND_GROUP)
-	public void newApp(@ShellOption(help = "Nome do projeto") String name, @ShellOption(help = "Qualificador de geração", defaultValue = "v2") String qualifier) {
-		springBootService.newApp(name, qualifier);
-	}
+	
 
 	/**
 	 * 

@@ -4,6 +4,7 @@ import static br.xtool.core.ConsoleLog.cyan;
 import static br.xtool.core.ConsoleLog.print;
 import static br.xtool.core.ConsoleLog.white;
 
+import java.io.IOException;
 import java.util.Optional;
 import java.util.function.Consumer;
 
@@ -55,6 +56,27 @@ public class CoreCommand {
 			@ShellOption(help = "Qualiifcador do projeto Spring Boot", defaultValue = "v2") String qualifier) {
 		springBootService.newApp(name, qualifier);
 		angularService.newApp(name, ngQualifier);
+	}
+	
+	/**
+	 * Gera um novo projeto Spring Boot.
+	 * 
+	 * @param name Nome do Projeto Spring Boot
+	 */
+	@ShellMethod(key = "new:springboot", value = "Novo projeto Spring Boot v2", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
+	public void newAppSringBoot(@ShellOption(help = "Nome do projeto") String name, @ShellOption(help = "Qualificador de geração", defaultValue = "v2") String qualifier) {
+		springBootService.newApp(name, qualifier);
+	}
+	
+	/**
+	 * 
+	 * @param name
+	 * @param qualifier
+	 * @throws IOException
+	 */
+	@ShellMethod(key = "new:angular", value = "Novo projeto Angular 7.x", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
+	public void newAppAngular(@ShellOption(help = "Nome do projeto") String name, @ShellOption(help = "Qualiifcador de geração", defaultValue="v7-dx") String qualifier) throws IOException {
+		angularService.newApp(name, qualifier);
 	}
 
 	/**
