@@ -3,6 +3,8 @@ package br.xtool.view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.annotation.PostConstruct;
 import javax.swing.ImageIcon;
@@ -31,7 +33,7 @@ public class ShowClassDiagramView extends JFrame {
 	private Workspace workspace;
 
 	private SpringBootProjectRepresentation springBootProjectRepresentation;
-	
+
 	private JLabel picDiagram;
 
 	@PostConstruct
@@ -45,6 +47,7 @@ public class ShowClassDiagramView extends JFrame {
 		this.picDiagram = new JLabel();
 		JScrollPane scrollPane = new JScrollPane(this.picDiagram);
 		this.add(scrollPane);
+		this.addWindowListener(this.onClose());
 	}
 
 	public void showDialog() {
@@ -57,9 +60,17 @@ public class ShowClassDiagramView extends JFrame {
 		this.springBootProjectRepresentation = workspace.getWorkingProject(SpringBootProjectRepresentation.class);
 		setTitle(String.format("Diagrama de Classe do Projeto %s", this.springBootProjectRepresentation.getName()));
 	}
-	
+
 	private void showDiagramPng() {
 		picDiagram.setIcon(new ImageIcon(springBootProjectRepresentation.getMainDomainClassDiagram().getPng()));
+	}
+	
+	private WindowAdapter onClose() {
+		return new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+			}
+		};
 	}
 
 }
