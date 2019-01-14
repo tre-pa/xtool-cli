@@ -70,8 +70,10 @@ public class EPlantDiagramImpl implements PlantClassDiagramRepresentation {
 	@Override
 	@SneakyThrows
 	public byte[] getPng() {
+		String diagram = new String(Files.readAllBytes(path));
+		SourceStringReader reader = new SourceStringReader(diagram.replace("```plantuml", "@startuml").replace("```", "@enduml"));
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
-		sourceStringReader.generateImage(os);
+		reader.generateImage(os);
 		return os.toByteArray();
 	}
 
