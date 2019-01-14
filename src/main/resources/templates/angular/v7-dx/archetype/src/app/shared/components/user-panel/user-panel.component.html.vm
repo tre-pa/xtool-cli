@@ -1,24 +1,50 @@
 <div class="user-panel">
-    <div class="user-info">
-        <div class="image-container">
-            <img class="user-image" src="https://js.devexpress.com/Demos/WidgetsGallery/JSDemos/images/employees/06.png">
+  <div class="user-options"
+    fxLayout="row">
+    <div [ngStyle]="randonColorStyle()"
+      class="user-initials">{{ getInitials() }}</div>
+    <fa-icon [icon]="['fas', 'ellipsis-v']"
+      class="ellipsis-icon"></fa-icon>
+  </div>
+  <dx-context-menu *ngIf="menuMode === 'context'"
+    [position]="{ my: 'top center', at: 'bottom center' }"
+    (onItemClick)="itemMenuClick($event)"
+    target=".user-button"
+    cssClass="user-menu"
+    [items]="menuItems"
+    showEvent="dxclick"
+    width="170px">
+    <div *dxTemplate="let item of 'item'"
+      [ngClass]="{ 'user-info': item.text === 'userinfo'}">
+      <div *ngIf="item.text === 'userinfo'; else defaultItemTemplate">
+        <p class="user-name">{{ userInfo?.name }}</p>
+        <p class="user-email"
+          title="userInfo?.email">{{ userInfo?.email }}</p>
+      </div>
+      <ng-template #defaultItemTemplate>
+        <div fxLayout="row">
+          <div class="menu-icon-container">
+            <fa-icon [icon]="['fas', item.icon]"></fa-icon>
+          </div>
+          {{ item.text }}
         </div>
-        <div class="user-name">Sandra Johnson</div>
+      </ng-template>
     </div>
-    <dx-context-menu
-        *ngIf="menuMode === 'context'"
-        cssClass="user-menu"
-        (onItemClick)="itemMenuClick($event)"
-        [items]="menuItems"
-        target=".user-button"
-        showEvent="dxclick"
-        width="170px"
-        [position]="{ my: 'top center', at: 'bottom center' }">
-    </dx-context-menu>
-    <dx-list
-        class="dx-toolbar-menu-action"
-        *ngIf="menuMode === 'list'"
-        (onItemClick)="itemMenuClick($event)"
-        [items]="menuItems">
-    </dx-list>
+  </dx-context-menu>
+  <dx-list class="dx-toolbar-menu-action"
+    *ngIf="menuMode === 'list'"
+    (onItemClick)="itemMenuClick($event)"
+    [items]="menuItems">
+    <div *dxTemplate="let item of 'item'">
+      <div *ngIf="item.text === 'userinfo'; else defaultItemTemplate">
+        {{ item.text }}
+      </div>
+      <ng-template #defaultItemTemplate>
+        <div class="menu-icon-container">
+          <fa-icon [icon]="['fas', item.icon]"></fa-icon>
+        </div>
+        {{ item.text }}
+      </ng-template>
+    </div>
+  </dx-list>
 </div>

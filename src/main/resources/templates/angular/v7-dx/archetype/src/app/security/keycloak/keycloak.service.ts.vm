@@ -1,9 +1,10 @@
-import { SecurityModule } from './../security.module';
-import { CommonModule } from '@angular/common';
-import { KeycloakEnum } from './keycloak.enum';
-import { Observable, Subject } from 'rxjs';
-import { environment } from 'src/environments/environment';
 import { Injectable } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
+
+import { SecurityModule } from './../security.module';
+import { KeycloakEnum } from './keycloak.enum';
+import { environment } from 'src/environments/environment';
+import { UserInfo } from './user-info';
 
 declare var Keycloak: any;
 
@@ -11,6 +12,8 @@ declare var Keycloak: any;
 export class KeycloakService {
 
   auth: any = {};
+
+  userInfo: UserInfo = new UserInfo();
 
   private eventObservable = new Subject<KeycloakEnum>();
 
@@ -45,7 +48,11 @@ export class KeycloakService {
         .success(() => {
           this.auth.loggedIn = true;
           this.auth.authz = keycloak;
-          this.auth.logoutUrl = keycloak.authServerUrl + `/realms/${environment.keycloak_installation.realm}/protocol/openid-connect/logout?redirect_uri=${window.location.origin}${environment.keycloak_redirect_uri}`;
+          this.auth.logoutUrl = keycloak.authServerUrl + `/realms`
+            + `/${environment.keycloak_installation.realm}/protocol/openid-connect/logout`
+            + `?redirect_uri=${window.location.origin}${environment.keycloak_redirect_uri}`;
+          this.auth.authz.loadUserInfo()
+            .success((userInfo) => this.userInfo = userInfo);
 
           this.getEvent();
 
@@ -90,13 +97,8 @@ export class KeycloakService {
   /**
    * Retorna as informações do usuário
    */
-  getLoadUserInfo(): Promise<any> {
-    return new Promise<any>((resolve, reject) => {
-      this.auth.authz.loadUserInfo().success((userInfo) => {
-        resolve(userInfo);
-      });
-
-    });
+  getUserInfo(): UserInfo {
+    return this.userInfo;
   }
 
   /**

@@ -1,4 +1,3 @@
-import { KeycloakService } from './../../../security/keycloak/keycloak.service';
 import {
   EventEmitter,
   Component,
@@ -8,12 +7,15 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import {
+  DxToolbarModule,
+  DxButtonModule,
+  DxPopupModule
+} from 'devextreme-angular';
 
+import { KeycloakService } from './../../../security/keycloak/keycloak.service';
 import { LoginFormModule } from '../login-form/login-form.component';
 import { UserPanelModule } from '../user-panel/user-panel.component';
-import { DxButtonModule } from 'devextreme-angular/ui/button';
-import { DxToolbarModule } from 'devextreme-angular/ui/toolbar';
-import { DxPopupModule } from 'devextreme-angular/ui/popup';
 
 @Component({
   selector: 'app-header',
@@ -22,6 +24,7 @@ import { DxPopupModule } from 'devextreme-angular/ui/popup';
 })
 
 export class HeaderComponent {
+
   @Output()
   menuToggle = new EventEmitter<boolean>();
 
@@ -35,8 +38,8 @@ export class HeaderComponent {
   isUserAuthorized = true;
   userMenuItems = [
     {
-      text: 'Profile',
-      icon: 'user'
+      text: 'userinfo',
+      closeMenuOnClick: false
     },
     {
       text: 'Dev Area',
@@ -44,7 +47,7 @@ export class HeaderComponent {
     },
     {
       text: 'Logout',
-      icon: 'runner'
+      icon: 'running'
     }
   ];
 
@@ -74,12 +77,12 @@ export class HeaderComponent {
 
 @NgModule({
   imports: [
-    CommonModule,
-    DxPopupModule,
-    DxButtonModule,
+    LoginFormModule,
     UserPanelModule,
     DxToolbarModule,
-    LoginFormModule
+    DxButtonModule,
+    DxPopupModule,
+    CommonModule
   ],
   declarations: [HeaderComponent],
   exports: [HeaderComponent]

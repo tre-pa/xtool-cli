@@ -1,35 +1,70 @@
 @import "../../../../themes/generated/variables.base.scss";
 
-.image-container {
-    overflow: hidden;
+.user-initials {
     border-radius: 50%;
+    color: #fff;
+    display: inline-block;
+    font-size: 14px;
+    font-style: normal;
     height: 30px;
     width: 30px;
-    margin: 0 6px;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+    line-height: 30px;
+    margin: 0px 5px;
+    overflow: hidden;
+    text-align: center;
+    text-transform: uppercase;
+    vertical-align: middle;
 }
 
-.user-image {
-    width: 100%;
+.ellipsis-icon {
+    font-size: 18px;
+    color: #737373;
+    margin: 5px 5px;
+}
+
+.menu-icon-container {
+    font-size: 18px;
+    text-align: center;
+    width: 30px;
 }
 
 .user-info {
-    display: flex;
-    align-items: center;
+    background-color: #fff !important;
+    cursor: default;
 }
 
-::ng-deep .dx-toolbar-menu-section {
-    .user-info {
-        padding: 10px 5px;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-    }
+.user-info :hover {
+    background-color: #fff !important;
 }
 
 .user-name {
-    font-size: 14px;
-    color: $base-text-color;
-    margin: 0 9px;
+    margin: 0px;
+    width: 170px !important;
+    white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
+    white-space: -pre-wrap;                 /* Opera 4-6 */
+    white-space: -o-pre-wrap;               /* Opera 7 */
+    white-space: pre-wrap;                  /* CSS-3 */
+    word-wrap: break-word;                  /* Internet Explorer 5.5+ */
+    white-space: -webkit-pre-wrap;          /* Newer versions of Chrome/Safari*/
+    word-break: normal;
+    white-space: normal;
+}
+
+.user-email {
+    margin: 0px;
+    width: 170px !important;
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 12px;
+    color: #737373;
+}
+
+::ng-deep .dx-toolbar-menu-section {
+    .user-options {
+        padding: 10px 5px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
 }
 
 ::ng-deep .user-panel {

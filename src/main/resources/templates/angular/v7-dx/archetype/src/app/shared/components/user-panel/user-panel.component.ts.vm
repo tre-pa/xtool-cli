@@ -1,46 +1,87 @@
 import {
-    EventEmitter,
-    Component,
-    NgModule,
-    Output,
-    Input
+  EventEmitter,
+  Component,
+  NgModule,
+  Output,
+  Input,
+  OnInit
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import {
+  DxContextMenuModule,
+  DxTemplateModule,
+  DxButtonModule,
+  DxListModule
+} from 'devextreme-angular';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { fas } from '@fortawesome/free-solid-svg-icons';
 
-import { DxListModule } from 'devextreme-angular/ui/list';
-import { DxContextMenuModule } from 'devextreme-angular/ui/context-menu';
+import { SecurityService } from 'src/app/security/security.service';
+import { UserInfo } from 'src/app/security/keycloak/user-info';
+
+library.add(fas);
 
 @Component({
-    selector: 'app-user-panel',
-    templateUrl: 'user-panel.component.html',
-    styleUrls: ['./user-panel.component.scss']
+  selector: 'app-user-panel',
+  templateUrl: 'user-panel.component.html',
+  styleUrls: ['./user-panel.component.scss']
 })
+export class UserPanelComponent implements OnInit {
 
-export class UserPanelComponent {
-    @Input()
-    menuItems: any;
+  @Input()
+  menuItems: any;
 
-    @Input()
-    menuMode: string;
+  @Input()
+  menuMode: string;
 
-    @Output()
-    itemClick: EventEmitter<any> = new EventEmitter<any>();
+  @Output()
+  itemClick: EventEmitter<any> = new EventEmitter<any>();
 
-    constructor() {
-    }
+  userInfo: UserInfo;
 
-    itemMenuClick(args) {
-        this.itemClick.next(args.itemData);
-    }
+  colors = ['#2196F3', '#32c787', '#00BCD4', '#ff5652',
+    '#ffc107', '#ff85af', '#FF9800', '#39bbb0'];
+
+  constructor(
+    private securityService: SecurityService
+  ) { }
+
+  ngOnInit() {
+    this.userInfo = this.securityService.getUserInfo();
+  }
+
+  getInitials(): string {
+    let aaa: string[] = this.userInfo.name.split(' ');
+    return aaa[0].charAt(0) + aaa[aaa.length - 1].charAt(0);
+  }
+
+  randonColorStyle() {
+    var hash = 0;
+    for (var i = 0; i < this.getInitials().length; i++)
+      hash = 31 * hash + this.getInitials().charCodeAt(i);
+    var index = Math.abs(hash % this.colors.length);
+    return { 'background-color': this.colors[index] };
+  }
+
+  itemMenuClick(args) {
+    this.itemClick.next(args.itemData);
+  }
+
 }
 
 @NgModule({
-    imports: [
-        DxListModule,
-        DxContextMenuModule,
-        CommonModule
-    ],
-    declarations: [UserPanelComponent],
-    exports: [UserPanelComponent]
+  imports: [
+    DxContextMenuModule,
+    FontAwesomeModule,
+    FlexLayoutModule,
+    DxTemplateModule,
+    DxButtonModule,
+    DxListModule,
+    CommonModule,
+  ],
+  declarations: [UserPanelComponent],
+  exports: [UserPanelComponent]
 })
 export class UserPanelModule { }

@@ -1,6 +1,8 @@
-import { KeycloakService } from './keycloak/keycloak.service';
 import { Injectable } from '@angular/core';
+
+import { KeycloakService } from './keycloak/keycloak.service';
 import { SecurityModule } from './security.module';
+import { UserInfo } from './keycloak/user-info';
 
 @Injectable({
   providedIn: SecurityModule
@@ -38,8 +40,8 @@ export class SecurityService {
   /**
    * Retorna as informações do usuário
    */
-  public getLoadUserInfo(): Promise<any> {
-    return this.keycloakService.getLoadUserInfo();
+  public getUserInfo(): UserInfo {
+    return this.keycloakService.getUserInfo();
   }
 
   /**
