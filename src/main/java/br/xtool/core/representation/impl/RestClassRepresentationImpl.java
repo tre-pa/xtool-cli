@@ -10,9 +10,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.jboss.forge.roaster.model.source.MethodSource;
 
-import br.xtool.core.representation.SpringBootProjectRepresentation;
-import br.xtool.core.representation.RestClassRepresentation;
-import br.xtool.core.representation.JavaMethodRepresentation;
+import br.xtool.core.representation.springboot.JavaMethodRepresentation;
+import br.xtool.core.representation.springboot.RestClassRepresentation;
+import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 
 public class RestClassRepresentationImpl extends JavaClassRepresentationImpl implements RestClassRepresentation {
 

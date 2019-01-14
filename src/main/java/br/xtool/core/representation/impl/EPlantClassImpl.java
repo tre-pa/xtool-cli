@@ -22,12 +22,12 @@ import org.jtwig.util.HtmlUtils;
 import com.google.common.base.Splitter;
 import com.google.common.collect.ImmutableSet;
 
-import br.xtool.core.representation.PlantClassRepresentation;
-import br.xtool.core.representation.PlantClassDiagramRepresentation;
-import br.xtool.core.representation.PlantClassFieldRepresentation;
-import br.xtool.core.representation.PlantPackageRepresentation;
-import br.xtool.core.representation.PlantRelationshipRepresentation;
-import br.xtool.core.representation.PlantStereotypeRepresentation;
+import br.xtool.core.representation.plantuml.PlantClassDiagramRepresentation;
+import br.xtool.core.representation.plantuml.PlantClassFieldRepresentation;
+import br.xtool.core.representation.plantuml.PlantClassRepresentation;
+import br.xtool.core.representation.plantuml.PlantPackageRepresentation;
+import br.xtool.core.representation.plantuml.PlantRelationshipRepresentation;
+import br.xtool.core.representation.plantuml.PlantStereotypeRepresentation;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.LeafType;

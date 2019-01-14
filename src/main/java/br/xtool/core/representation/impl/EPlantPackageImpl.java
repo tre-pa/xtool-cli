@@ -1,6 +1,6 @@
 package br.xtool.core.representation.impl;
 
-import br.xtool.core.representation.PlantPackageRepresentation;
+import br.xtool.core.representation.plantuml.PlantPackageRepresentation;
 import net.sourceforge.plantuml.cucadiagram.IGroup;
 
 public class EPlantPackageImpl implements PlantPackageRepresentation {

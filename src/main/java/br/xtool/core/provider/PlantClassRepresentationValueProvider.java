@@ -11,9 +11,9 @@ import org.springframework.shell.CompletionProposal;
 import org.springframework.shell.standard.ValueProviderSupport;
 import org.springframework.stereotype.Component;
 
-import br.xtool.core.representation.SpringBootProjectRepresentation;
 import br.xtool.core.Workspace;
-import br.xtool.core.representation.PlantClassRepresentation;
+import br.xtool.core.representation.plantuml.PlantClassRepresentation;
+import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 
 @Component
 public class PlantClassRepresentationValueProvider extends ValueProviderSupport {
@@ -26,7 +26,7 @@ public class PlantClassRepresentationValueProvider extends ValueProviderSupport 
 		// @formatter:off
 		if(this.workspace.getWorkingProject() instanceof SpringBootProjectRepresentation) {
 			SpringBootProjectRepresentation project = SpringBootProjectRepresentation.class.cast(this.workspace.getWorkingProject());
-			return project.getDomainClassDiagram().getClasses().stream()
+			return project.getMainDomainClassDiagram().getClasses().stream()
 					.map(PlantClassRepresentation::getName)
 					.map(CompletionProposal::new)
 					.collect(Collectors.toList());

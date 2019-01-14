@@ -10,9 +10,9 @@ import javax.persistence.OneToOne;
 
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 
-import br.xtool.core.representation.SpringBootProjectRepresentation;
-import br.xtool.core.representation.EntityAttributeRepresentation;
-import br.xtool.core.representation.EntityRepresentation;
+import br.xtool.core.representation.springboot.EntityAttributeRepresentation;
+import br.xtool.core.representation.springboot.EntityRepresentation;
+import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 
 /**
  * Classe que representa um entidade JPA

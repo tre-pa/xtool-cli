@@ -18,11 +18,11 @@ import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
 import br.xtool.core.ConsoleLog;
-import br.xtool.core.representation.PomRepresentation;
-import br.xtool.core.representation.PomDependencyRepresentation;
-import br.xtool.core.representation.SpringBootProjectRepresentation;
-import br.xtool.core.representation.JavaPackageRepresentation;
 import br.xtool.core.representation.impl.EBootPomDependencyImpl.ScopeType;
+import br.xtool.core.representation.springboot.JavaPackageRepresentation;
+import br.xtool.core.representation.springboot.PomDependencyRepresentation;
+import br.xtool.core.representation.springboot.PomRepresentation;
+import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 
 public class EBootPomImpl implements PomRepresentation {
 

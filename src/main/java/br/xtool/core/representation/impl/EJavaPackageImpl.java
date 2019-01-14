@@ -5,7 +5,7 @@ import java.nio.file.Paths;
 
 import org.apache.commons.lang3.StringUtils;
 
-import br.xtool.core.representation.JavaPackageRepresentation;
+import br.xtool.core.representation.springboot.JavaPackageRepresentation;
 
 /**
  * Representa um pacote Java.

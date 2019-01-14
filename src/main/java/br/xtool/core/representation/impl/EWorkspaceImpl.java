@@ -8,10 +8,10 @@ import java.util.TreeSet;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import br.xtool.core.representation.SpringBootProjectRepresentation;
-import br.xtool.core.representation.NgProjectRepresentation;
 import br.xtool.core.representation.ProjectRepresentation;
 import br.xtool.core.representation.WorkspaceRepresentation;
+import br.xtool.core.representation.angular.NgProjectRepresentation;
+import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 import lombok.SneakyThrows;
 
 public class EWorkspaceImpl implements WorkspaceRepresentation {

@@ -8,9 +8,9 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
 
-import br.xtool.core.representation.SpringBootProjectRepresentation;
-import br.xtool.core.representation.JavaPackageRepresentation;
-import br.xtool.core.representation.JavaSourceFolderRepresentation;
+import br.xtool.core.representation.springboot.JavaPackageRepresentation;
+import br.xtool.core.representation.springboot.JavaSourceFolderRepresentation;
+import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 import lombok.SneakyThrows;
 
 public class EJavaSourceFolderImpl implements JavaSourceFolderRepresentation {

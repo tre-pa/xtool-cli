@@ -24,11 +24,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.xtool.core.JavaTemplate;
-import br.xtool.core.representation.JavaMethodRepresentation;
-import br.xtool.core.representation.RepositoryRepresentation;
-import br.xtool.core.representation.RestClassRepresentation;
-import br.xtool.core.representation.SpringBootProjectRepresentation;
 import br.xtool.core.representation.impl.RestClassRepresentationImpl;
+import br.xtool.core.representation.springboot.JavaMethodRepresentation;
+import br.xtool.core.representation.springboot.RepositoryRepresentation;
+import br.xtool.core.representation.springboot.RestClassRepresentation;
+import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 import br.xtool.core.util.Inflector;
 import br.xtool.core.util.RoasterUtil;
 import lombok.extern.slf4j.Slf4j;

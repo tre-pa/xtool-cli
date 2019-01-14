@@ -4,8 +4,8 @@ import java.util.Optional;
 
 import org.jdom2.Element;
 
-import br.xtool.core.representation.PomRepresentation;
-import br.xtool.core.representation.PomDependencyRepresentation;
+import br.xtool.core.representation.springboot.PomDependencyRepresentation;
+import br.xtool.core.representation.springboot.PomRepresentation;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

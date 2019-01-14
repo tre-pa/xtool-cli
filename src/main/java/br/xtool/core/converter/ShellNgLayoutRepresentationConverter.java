@@ -5,8 +5,8 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 import br.xtool.core.Workspace;
-import br.xtool.core.representation.NgLayoutRepresentation;
-import br.xtool.core.representation.NgProjectRepresentation;
+import br.xtool.core.representation.angular.NgLayoutRepresentation;
+import br.xtool.core.representation.angular.NgProjectRepresentation;
 
 @Component
 public class ShellNgLayoutRepresentationConverter implements Converter<String, NgLayoutRepresentation> {

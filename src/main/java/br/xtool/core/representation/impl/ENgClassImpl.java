@@ -7,7 +7,7 @@ import java.util.stream.Stream;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import br.xtool.core.representation.NgClassRepresentation;
+import br.xtool.core.representation.angular.NgClassRepresentation;
 import lombok.Getter;
 
 /**

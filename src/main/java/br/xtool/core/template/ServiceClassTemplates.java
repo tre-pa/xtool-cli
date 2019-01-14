@@ -3,10 +3,10 @@ package br.xtool.core.template;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.xtool.core.representation.RepositoryRepresentation;
-import br.xtool.core.representation.ServiceClassRepresentation;
-import br.xtool.core.representation.SpringBootProjectRepresentation;
 import br.xtool.core.representation.impl.EBootServiceImpl;
+import br.xtool.core.representation.springboot.RepositoryRepresentation;
+import br.xtool.core.representation.springboot.ServiceClassRepresentation;
+import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 import br.xtool.core.util.RoasterUtil;
 
 public class ServiceClassTemplates {

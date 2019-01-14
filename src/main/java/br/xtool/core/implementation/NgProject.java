@@ -1,15 +1,15 @@
 package br.xtool.core.implementation;
 
-import br.xtool.core.representation.EntityRepresentation;
-import br.xtool.core.representation.JavaEnumRepresentation;
-import br.xtool.core.representation.NgClassRepresentation;
-import br.xtool.core.representation.NgComponentRepresentation;
-import br.xtool.core.representation.NgDialogRepresentation;
-import br.xtool.core.representation.NgEnumRepresentation;
-import br.xtool.core.representation.NgModuleRepresentation;
-import br.xtool.core.representation.NgPageRepresentation;
-import br.xtool.core.representation.NgProjectRepresentation;
-import br.xtool.core.representation.NgServiceRepresentation;
+import br.xtool.core.representation.angular.NgClassRepresentation;
+import br.xtool.core.representation.angular.NgComponentRepresentation;
+import br.xtool.core.representation.angular.NgDialogRepresentation;
+import br.xtool.core.representation.angular.NgEnumRepresentation;
+import br.xtool.core.representation.angular.NgModuleRepresentation;
+import br.xtool.core.representation.angular.NgPageRepresentation;
+import br.xtool.core.representation.angular.NgProjectRepresentation;
+import br.xtool.core.representation.angular.NgServiceRepresentation;
+import br.xtool.core.representation.springboot.EntityRepresentation;
+import br.xtool.core.representation.springboot.JavaEnumRepresentation;
 import lombok.NonNull;
 
 /**

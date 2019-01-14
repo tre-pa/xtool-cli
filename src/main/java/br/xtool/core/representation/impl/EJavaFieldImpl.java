@@ -21,12 +21,12 @@ import org.jboss.forge.roaster.model.source.FieldSource;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.jboss.forge.roaster.model.util.Types;
 
-import br.xtool.core.representation.JavaAnnotationRepresentation;
-import br.xtool.core.representation.JavaClassRepresentation;
-import br.xtool.core.representation.JavaEnumRepresentation;
-import br.xtool.core.representation.JavaFieldRepresentation;
-import br.xtool.core.representation.JavaRelationshipRepresentation;
-import br.xtool.core.representation.EntityRepresentation;
+import br.xtool.core.representation.springboot.EntityRepresentation;
+import br.xtool.core.representation.springboot.JavaAnnotationRepresentation;
+import br.xtool.core.representation.springboot.JavaClassRepresentation;
+import br.xtool.core.representation.springboot.JavaEnumRepresentation;
+import br.xtool.core.representation.springboot.JavaFieldRepresentation;
+import br.xtool.core.representation.springboot.JavaRelationshipRepresentation;
 
 public class EJavaFieldImpl implements JavaFieldRepresentation {
 

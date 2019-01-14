@@ -2,7 +2,7 @@ package br.xtool.core.representation.impl;
 
 import java.nio.file.Path;
 
-import br.xtool.core.representation.NgLayoutRepresentation;
+import br.xtool.core.representation.angular.NgLayoutRepresentation;
 
 public class ENgLayoutImpl extends ENgComponentImpl implements NgLayoutRepresentation {
 

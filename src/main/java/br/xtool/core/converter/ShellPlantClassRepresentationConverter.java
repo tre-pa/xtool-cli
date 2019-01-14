@@ -6,8 +6,8 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 import br.xtool.core.Workspace;
-import br.xtool.core.representation.PlantClassRepresentation;
-import br.xtool.core.representation.SpringBootProjectRepresentation;
+import br.xtool.core.representation.plantuml.PlantClassRepresentation;
+import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 
 @Component
 public class ShellPlantClassRepresentationConverter implements Converter<String, PlantClassRepresentation> {
@@ -21,7 +21,7 @@ public class ShellPlantClassRepresentationConverter implements Converter<String,
 			if (this.workspace.getWorkingProject() instanceof SpringBootProjectRepresentation) {
 				SpringBootProjectRepresentation project = SpringBootProjectRepresentation.class.cast(this.workspace.getWorkingProject());
 				// @formatter:off
-				return project.getDomainClassDiagram().getClasses()
+				return project.getMainDomainClassDiagram().getClasses()
 					.stream()
 					.filter(e -> e.getName().equals(source))
 					.findFirst()

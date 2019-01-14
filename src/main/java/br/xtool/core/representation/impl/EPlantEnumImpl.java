@@ -5,9 +5,9 @@ import java.util.stream.Collectors;
 
 import org.springframework.util.StringUtils;
 
-import br.xtool.core.representation.PlantClassDiagramRepresentation;
-import br.xtool.core.representation.PlantEnumRepresentation;
-import br.xtool.core.representation.PlantPackageRepresentation;
+import br.xtool.core.representation.plantuml.PlantClassDiagramRepresentation;
+import br.xtool.core.representation.plantuml.PlantEnumRepresentation;
+import br.xtool.core.representation.plantuml.PlantPackageRepresentation;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
 
 public class EPlantEnumImpl implements PlantEnumRepresentation {

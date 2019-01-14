@@ -2,7 +2,7 @@ package br.xtool.core.representation.impl;
 
 import java.nio.file.Path;
 
-import br.xtool.core.representation.NgDialogRepresentation;
+import br.xtool.core.representation.angular.NgDialogRepresentation;
 
 public class ENgDialogImpl extends ENgClassImpl implements NgDialogRepresentation {
 

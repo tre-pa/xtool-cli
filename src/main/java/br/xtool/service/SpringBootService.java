@@ -14,6 +14,7 @@ import org.eclipse.jdt.internal.compiler.impl.CompilerOptions;
 import org.jboss.forge.roaster.Roaster;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import br.xtool.core.ConsoleLog;
@@ -22,21 +23,21 @@ import br.xtool.core.converter.JavaClassRepresentationConverter;
 import br.xtool.core.converter.JavaEnumRepresentationConverter;
 import br.xtool.core.converter.JavaFieldRepresentationConverter;
 import br.xtool.core.converter.JavaRelationshipRepresentationConverter;
-import br.xtool.core.representation.EntityRepresentation;
-import br.xtool.core.representation.JavaClassRepresentation;
-import br.xtool.core.representation.JavaEnumRepresentation;
-import br.xtool.core.representation.JavaPackageRepresentation;
-import br.xtool.core.representation.JavaTypeRepresentation;
-import br.xtool.core.representation.PlantClassFieldRepresentation;
-import br.xtool.core.representation.PlantClassRepresentation;
 import br.xtool.core.representation.ProjectRepresentation;
-import br.xtool.core.representation.RepositoryRepresentation;
-import br.xtool.core.representation.RestClassRepresentation;
-import br.xtool.core.representation.ServiceClassRepresentation;
-import br.xtool.core.representation.SpecificationRepresentation;
-import br.xtool.core.representation.SpringBootProjectRepresentation;
 import br.xtool.core.representation.impl.EJavaPackageImpl;
 import br.xtool.core.representation.impl.EntityRepresentationImpl;
+import br.xtool.core.representation.plantuml.PlantClassFieldRepresentation;
+import br.xtool.core.representation.plantuml.PlantClassRepresentation;
+import br.xtool.core.representation.springboot.EntityRepresentation;
+import br.xtool.core.representation.springboot.JavaClassRepresentation;
+import br.xtool.core.representation.springboot.JavaEnumRepresentation;
+import br.xtool.core.representation.springboot.JavaPackageRepresentation;
+import br.xtool.core.representation.springboot.JavaTypeRepresentation;
+import br.xtool.core.representation.springboot.RepositoryRepresentation;
+import br.xtool.core.representation.springboot.RestClassRepresentation;
+import br.xtool.core.representation.springboot.ServiceClassRepresentation;
+import br.xtool.core.representation.springboot.SpecificationRepresentation;
+import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 import br.xtool.core.template.RepositoryTemplates;
 import br.xtool.core.template.RestClassTemplates;
 import br.xtool.core.template.ServiceClassTemplates;
@@ -45,6 +46,7 @@ import lombok.SneakyThrows;
 import strman.Strman;
 
 @Service
+@Lazy
 public class SpringBootService {
 
 	@Autowired

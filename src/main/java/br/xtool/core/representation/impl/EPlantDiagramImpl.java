@@ -1,13 +1,14 @@
 package br.xtool.core.representation.impl;
 
+import java.io.ByteArrayOutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import br.xtool.core.representation.PlantClassRepresentation;
-import br.xtool.core.representation.PlantClassDiagramRepresentation;
-import br.xtool.core.representation.PlantEnumRepresentation;
+import br.xtool.core.representation.plantuml.PlantClassDiagramRepresentation;
+import br.xtool.core.representation.plantuml.PlantClassRepresentation;
+import br.xtool.core.representation.plantuml.PlantEnumRepresentation;
 import lombok.SneakyThrows;
 import net.sourceforge.plantuml.BlockUml;
 import net.sourceforge.plantuml.SourceStringReader;
@@ -16,15 +17,27 @@ import net.sourceforge.plantuml.cucadiagram.LeafType;
 
 public class EPlantDiagramImpl implements PlantClassDiagramRepresentation {
 
+	private Path path;
+
+	private SourceStringReader sourceStringReader;
+
 	private ClassDiagram classDiagram;
 
-	private EPlantDiagramImpl(ClassDiagram classDiagram) {
+	private EPlantDiagramImpl(Path path, SourceStringReader sourceStringReader, ClassDiagram classDiagram) {
 		super();
+		this.path = path;
+		this.sourceStringReader = sourceStringReader;
 		this.classDiagram = classDiagram;
+	}
+
+	@Override
+	public Path getPath() {
+		return this.path;
 	}
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.xtool.core.representation.EUmlClassDiagram#getClasses()
 	 */
 	@Override
@@ -40,6 +53,7 @@ public class EPlantDiagramImpl implements PlantClassDiagramRepresentation {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.xtool.core.representation.EUmlClassDiagram#getEnums()
 	 */
 	@Override
@@ -53,10 +67,21 @@ public class EPlantDiagramImpl implements PlantClassDiagramRepresentation {
 		// @formatter:on
 	}
 
+	@Override
+	@SneakyThrows
+	public byte[] getPng() {
+		String diagram = new String(Files.readAllBytes(path));
+		SourceStringReader reader = new SourceStringReader(diagram.replace("```plantuml", "@startuml").replace("```", "@enduml"));
+		ByteArrayOutputStream os = new ByteArrayOutputStream();
+		reader.generateImage(os);
+		return os.toByteArray();
+	}
+
 	@SneakyThrows
 	public static PlantClassDiagramRepresentation of(Path path) {
-		if (Files.notExists(path)) throw new IllegalArgumentException("Diagrama de classe não encontrado");
-		//		String diagram = FileUtils.readFileToString(new File(path), "UTF-8");
+		if (Files.notExists(path))
+			throw new IllegalArgumentException("Diagrama de classe não encontrado");
+		// String diagram = FileUtils.readFileToString(new File(path), "UTF-8");
 		String diagram = new String(Files.readAllBytes(path));
 		SourceStringReader reader = new SourceStringReader(diagram.replace("```plantuml", "@startuml").replace("```", "@enduml"));
 		// @formatter:off
@@ -67,7 +92,7 @@ public class EPlantDiagramImpl implements PlantClassDiagramRepresentation {
 				.findAny()
 				.orElseThrow(() -> new IllegalArgumentException("Diagrama de classe com erros."));
 		// @formatter:on
-		return new EPlantDiagramImpl(classDiagram);
+		return new EPlantDiagramImpl(path, reader, classDiagram);
 	}
 
 }

@@ -2,12 +2,12 @@ package br.xtool.core.representation.impl;
 
 import org.jboss.forge.roaster.model.source.JavaInterfaceSource;
 
-import br.xtool.core.representation.SpringBootProjectRepresentation;
-import br.xtool.core.representation.JavaPackageRepresentation;
-import br.xtool.core.representation.EntityRepresentation;
-import br.xtool.core.representation.JpaProjectionRepresentation;
-import br.xtool.core.representation.RepositoryRepresentation;
-import br.xtool.core.representation.SpecificationRepresentation;
+import br.xtool.core.representation.springboot.EntityRepresentation;
+import br.xtool.core.representation.springboot.JavaPackageRepresentation;
+import br.xtool.core.representation.springboot.JpaProjectionRepresentation;
+import br.xtool.core.representation.springboot.RepositoryRepresentation;
+import br.xtool.core.representation.springboot.SpecificationRepresentation;
+import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 
 /**
  * Classe que representa uma inteface Repository

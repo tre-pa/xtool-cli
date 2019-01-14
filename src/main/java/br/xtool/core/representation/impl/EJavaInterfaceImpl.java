@@ -12,10 +12,10 @@ import org.jboss.forge.roaster.model.SyntaxError;
 import org.jboss.forge.roaster.model.Visibility;
 import org.jboss.forge.roaster.model.source.JavaInterfaceSource;
 
-import br.xtool.core.representation.SpringBootProjectRepresentation;
-import br.xtool.core.representation.JavaInterfaceRepresentation;
-import br.xtool.core.representation.JavaMethodRepresentation;
-import br.xtool.core.representation.JavaPackageRepresentation;
+import br.xtool.core.representation.springboot.JavaInterfaceRepresentation;
+import br.xtool.core.representation.springboot.JavaMethodRepresentation;
+import br.xtool.core.representation.springboot.JavaPackageRepresentation;
+import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 
 public class EJavaInterfaceImpl implements JavaInterfaceRepresentation {
 

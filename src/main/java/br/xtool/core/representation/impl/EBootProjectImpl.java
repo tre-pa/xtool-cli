@@ -4,12 +4,14 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.apache.commons.lang3.StringUtils;
 import org.jboss.forge.roaster.model.JavaUnit;
@@ -17,23 +19,24 @@ import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.jboss.forge.roaster.model.source.JavaEnumSource;
 import org.jboss.forge.roaster.model.source.JavaInterfaceSource;
 
-import br.xtool.core.representation.ApplicationPropertiesRepresentation;
-import br.xtool.core.representation.PomRepresentation;
-import br.xtool.core.representation.SpringBootProjectRepresentation;
-import br.xtool.core.representation.RestClassRepresentation;
-import br.xtool.core.representation.ServiceClassRepresentation;
-import br.xtool.core.representation.JavaClassRepresentation;
-import br.xtool.core.representation.JavaEnumRepresentation;
-import br.xtool.core.representation.JavaPackageRepresentation;
-import br.xtool.core.representation.JavaSourceFolderRepresentation;
-import br.xtool.core.representation.EntityRepresentation;
-import br.xtool.core.representation.JpaProjectionRepresentation;
-import br.xtool.core.representation.RepositoryRepresentation;
-import br.xtool.core.representation.SpecificationRepresentation;
-import br.xtool.core.representation.NgProjectRepresentation;
 import br.xtool.core.representation.ProjectRepresentation;
-import br.xtool.core.representation.PlantClassDiagramRepresentation;
+import br.xtool.core.representation.angular.NgProjectRepresentation;
+import br.xtool.core.representation.plantuml.PlantClassDiagramRepresentation;
+import br.xtool.core.representation.springboot.ApplicationPropertiesRepresentation;
+import br.xtool.core.representation.springboot.EntityRepresentation;
+import br.xtool.core.representation.springboot.JavaClassRepresentation;
+import br.xtool.core.representation.springboot.JavaEnumRepresentation;
+import br.xtool.core.representation.springboot.JavaPackageRepresentation;
+import br.xtool.core.representation.springboot.JavaSourceFolderRepresentation;
+import br.xtool.core.representation.springboot.JpaProjectionRepresentation;
+import br.xtool.core.representation.springboot.PomRepresentation;
+import br.xtool.core.representation.springboot.RepositoryRepresentation;
+import br.xtool.core.representation.springboot.RestClassRepresentation;
+import br.xtool.core.representation.springboot.ServiceClassRepresentation;
+import br.xtool.core.representation.springboot.SpecificationRepresentation;
+import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 import br.xtool.core.util.RoasterUtil;
+import lombok.SneakyThrows;
 
 /**
  * Classe que representa um projeto Spring Boot
@@ -57,6 +60,7 @@ public class EBootProjectImpl extends EProjectImpl implements SpringBootProjectR
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.xtool.core.representation.EBootProject#getBaseClassName()
 	 */
 	@Override
@@ -66,6 +70,7 @@ public class EBootProjectImpl extends EProjectImpl implements SpringBootProjectR
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.xtool.core.representation.ESBootProject#getMainclass()
 	 */
 	@Override
@@ -87,6 +92,7 @@ public class EBootProjectImpl extends EProjectImpl implements SpringBootProjectR
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.xtool.core.representation.ESBootProject#getRootPackage()
 	 */
 	@Override
@@ -96,6 +102,7 @@ public class EBootProjectImpl extends EProjectImpl implements SpringBootProjectR
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.xtool.core.representation.ESBootProject#getMainSourceFolder()
 	 */
 	@Override
@@ -105,6 +112,7 @@ public class EBootProjectImpl extends EProjectImpl implements SpringBootProjectR
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.xtool.core.representation.ESBootProject#getTestSourceFolder()
 	 */
 	@Override
@@ -114,6 +122,7 @@ public class EBootProjectImpl extends EProjectImpl implements SpringBootProjectR
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.xtool.core.representation.ESBootProject#getPom()
 	 */
 	@Override
@@ -126,6 +135,7 @@ public class EBootProjectImpl extends EProjectImpl implements SpringBootProjectR
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.xtool.core.representation.EBootProject#getApplicationProperties()
 	 */
 	@Override
@@ -138,6 +148,7 @@ public class EBootProjectImpl extends EProjectImpl implements SpringBootProjectR
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.xtool.core.representation.EBootProject#getEnums()
 	 */
 	@Override
@@ -154,6 +165,7 @@ public class EBootProjectImpl extends EProjectImpl implements SpringBootProjectR
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.xtool.core.representation.EBootProject#getEntities()
 	 */
 	@Override
@@ -171,6 +183,7 @@ public class EBootProjectImpl extends EProjectImpl implements SpringBootProjectR
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.xtool.core.representation.EBootProject#getProjections()
 	 */
 	@Override
@@ -188,6 +201,7 @@ public class EBootProjectImpl extends EProjectImpl implements SpringBootProjectR
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.xtool.core.representation.EBootProject#getSpecifications()
 	 */
 	@Override
@@ -205,6 +219,7 @@ public class EBootProjectImpl extends EProjectImpl implements SpringBootProjectR
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.xtool.core.representation.EBootProject#getServices()
 	 */
 	@Override
@@ -222,6 +237,7 @@ public class EBootProjectImpl extends EProjectImpl implements SpringBootProjectR
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.xtool.core.representation.EBootProject#getRepositories()
 	 */
 	@Override
@@ -239,6 +255,7 @@ public class EBootProjectImpl extends EProjectImpl implements SpringBootProjectR
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.xtool.core.representation.EBootProject#getRests()
 	 */
 	@Override
@@ -276,6 +293,7 @@ public class EBootProjectImpl extends EProjectImpl implements SpringBootProjectR
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.xtool.core.representation.EBootProject#getAssociatedAngularProject()
 	 */
 	@Override
@@ -293,15 +311,32 @@ public class EBootProjectImpl extends EProjectImpl implements SpringBootProjectR
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.xtool.core.representation.EBootProject#getDomainClassDiagram()
 	 */
 	@Override
-	public PlantClassDiagramRepresentation getDomainClassDiagram() {
-		return EPlantDiagramImpl.of(this.getPath().resolve("docs/diagrams/domain-class.md"));
+	public PlantClassDiagramRepresentation getMainDomainClassDiagram() {
+		return EPlantDiagramImpl.of(this.getPath().resolve("docs/diagrams/class/main.md"));
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.SpringBootProjectRepresentation#getClassDiagrams()
+	 */
+	@Override
+	@SneakyThrows
+	public List<PlantClassDiagramRepresentation> getClassDiagrams() {
+		try (Stream<Path> paths = Files.walk(this.getPath().resolve("docs/diagrams/class"))) {
+		    return paths
+		        .filter(Files::isRegularFile)
+		        .map(EPlantDiagramImpl::of)
+		        .collect(Collectors.toList());
+		} 
 	}
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.xtool.core.representation.EProject#getFrameworkVersion()
 	 */
 	@Override
@@ -311,19 +346,23 @@ public class EBootProjectImpl extends EProjectImpl implements SpringBootProjectR
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.xtool.core.representation.EProject#getProjectVersion()
 	 */
 	@Override
 	public Version getProjectVersion() {
 		Pattern v5pattern = Pattern.compile("1\\.5\\.\\d+\\.\\w*");
 		Pattern v6pattern = Pattern.compile("2\\.\\d+\\.\\d+\\.\\w*");
-		if (v5pattern.matcher(getFrameworkVersion()).matches()) return Version.V1;
-		if (v6pattern.matcher(getFrameworkVersion()).matches()) return Version.V2;
+		if (v5pattern.matcher(getFrameworkVersion()).matches())
+			return Version.V1;
+		if (v6pattern.matcher(getFrameworkVersion()).matches())
+			return Version.V2;
 		return Version.NONE;
 	}
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.xtool.core.representation.EProject#refresh()
 	 */
 	@Override
@@ -333,6 +372,7 @@ public class EBootProjectImpl extends EProjectImpl implements SpringBootProjectR
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.xtool.core.representation.EProject#getProjectType()
 	 */
 	@Override

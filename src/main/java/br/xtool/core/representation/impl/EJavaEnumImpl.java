@@ -11,9 +11,9 @@ import org.jboss.forge.roaster.model.SyntaxError;
 import org.jboss.forge.roaster.model.Visibility;
 import org.jboss.forge.roaster.model.source.JavaEnumSource;
 
-import br.xtool.core.representation.SpringBootProjectRepresentation;
-import br.xtool.core.representation.JavaEnumRepresentation;
-import br.xtool.core.representation.JavaPackageRepresentation;
+import br.xtool.core.representation.springboot.JavaEnumRepresentation;
+import br.xtool.core.representation.springboot.JavaPackageRepresentation;
+import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 
 public class EJavaEnumImpl implements JavaEnumRepresentation {
 

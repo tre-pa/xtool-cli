@@ -13,6 +13,12 @@ Para Fedora
 sudo dnf install maven
 ```
 
+Para exibição dos diagrama de classe:
+
+```sh
+$ sudo dnf install graphviz
+```
+
 **1.** Clonar o projeto 
 
 ```sh

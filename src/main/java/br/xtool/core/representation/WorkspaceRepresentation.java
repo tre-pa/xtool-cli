@@ -3,6 +3,9 @@ package br.xtool.core.representation;
 import java.nio.file.Path;
 import java.util.SortedSet;
 
+import br.xtool.core.representation.angular.NgProjectRepresentation;
+import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
+
 /**
  * Representação do workspace.
  * 

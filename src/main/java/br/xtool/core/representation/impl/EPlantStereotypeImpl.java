@@ -3,8 +3,8 @@ package br.xtool.core.representation.impl;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import br.xtool.core.representation.PlantClassRepresentation;
-import br.xtool.core.representation.PlantStereotypeRepresentation;
+import br.xtool.core.representation.plantuml.PlantClassRepresentation;
+import br.xtool.core.representation.plantuml.PlantStereotypeRepresentation;
 
 public class EPlantStereotypeImpl implements PlantStereotypeRepresentation {
 

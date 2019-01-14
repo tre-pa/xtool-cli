@@ -10,7 +10,7 @@ import java.util.Optional;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import br.xtool.core.representation.NgPackageRepresentation;
+import br.xtool.core.representation.angular.NgPackageRepresentation;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
