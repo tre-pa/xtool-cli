@@ -26,13 +26,12 @@ import ${rootPackage.name}.groovy.report.JReportStyles
 import ${rootPackage.name}.groovy.report.domain.JReport
 import ${rootPackage.name}.groovy.report.repository.JReportRepository
 import ${rootPackage.name}.groovy.report.types.JReportColumn
+import ${rootPackage.name}.groovy.report.types.JReportGrid
 import groovy.json.JsonSlurper
 import net.sf.jasperreports.engine.JRDataSource
 import net.sf.jasperreports.engine.JasperExportManager
 import net.sf.jasperreports.engine.JasperPrint
 import net.sf.jasperreports.engine.data.ListOfArrayDataSource
-
-
 
 @Service
 class JReportService {
@@ -55,9 +54,9 @@ class JReportService {
 	JReport insert(JReport jreport) {
 		jreport.createdAt = LocalDateTime.now();
 		jreport.uuid = UUID.randomUUID();
-		if(jreport.columns.empty) jreport.columns = this.genDefaultColumnsTemplate(jreport.sql);
-		if(StringUtils.isEmpty(jreport.gpdf)) jreport.gpdf = this.genDefaultGPDFTemplate();
-		if(StringUtils.isEmpty(jreport.gexcel)) jreport.gexcel = "excel";
+		if (jreport.grid == null) jreport.grid = this.genDefaultGridTemplate(jreport.sql);
+		if (StringUtils.isEmpty(jreport.gpdf)) jreport.gpdf = this.genDefaultGPDFTemplate();
+		if (StringUtils.isEmpty(jreport.gexcel)) jreport.gexcel = "excel";
 		return this.jreportRepository.save(jreport);
 	}
 
@@ -129,8 +128,10 @@ class JReportService {
 		binding.setProperty("JReportStyles", JReportStyles.class);
 		GroovyShell groovyShell = new GroovyShell(binding);
 		List<Map<String, Object>> sqlResult = executeSQL(jreport.sql, sort, filter);
-		List<Object[]> records = sqlResult.stream().map { row -> row.values().toArray() }.collect(Collectors.toList());
-		List<String> columnNames = jreport.getColumns().stream().map { it.dataField }.collect(Collectors.toList());
+		List<Object[]> records = sqlResult.stream().map { row ->
+			row.values().toArray()
+		}.collect(Collectors.toList());
+		List<String> columnNames = jreport.getGrid().getColumns().stream().map { it.dataField }.collect(Collectors.toList());
 
 		DynamicReport dynamicReport = (DynamicReport) groovyShell.evaluate(jreport.gpdf);
 		JRDataSource ds = new ListOfArrayDataSource(records, columnNames as String[]);
@@ -161,6 +162,41 @@ class JReportService {
 		columns;
 	}
 
+	JReportGrid genDefaultGridTemplate(String sql) {
+		JReportGrid grid = new JReportGrid();
+		grid.columns = this.genDefaultColumnsTemplate(sql);
+		grid.properties = [
+			"wordWrapEnabled": true,
+			"showBorders": true,
+			"showRowLines": true,
+			"showColumnLines": false,
+			"sorting": [
+				"mode": "multiple"
+			],
+			"paging": [
+				"pageSize": 5
+			],
+			"pager": [
+				"allowedPageSizes": [5, 10, 20],
+				"showNavigationButtons": true,
+				"showPageSizeSelector": true,
+				"showInfo": true
+			],
+			"filterRow": [
+				"visible": true
+			],
+			"headerFilter": [
+				"visible": true
+			],
+			"searchPanel": [
+				"visible": true,
+				"width": 300
+			]
+		]
+		grid;
+	}
+
+
 	/**
 	 * Gera o template do gpdf baseado nas colunas JReportColumn.
 	 * 
@@ -169,19 +205,22 @@ class JReportService {
 	 */
 	String genDefaultGPDFTemplate() {
 		String gpdfTemplate = '''
+        import org.springframework.core.io.ClassPathResource
+        import ar.com.fdvs.dj.domain.ImageBanner;
         import ar.com.fdvs.dj.domain.builders.ColumnBuilder
         import ar.com.fdvs.dj.domain.builders.DynamicReportBuilder
 		
         def drb = new DynamicReportBuilder()
 		
-		drb.title = report.title
+        drb.title = report.title
         drb.subtitle = report.subtitle
         drb.useFullPageWidth = true
+		drb.addFirstPageImageBanner(new ClassPathResource("BOOT-INF/brasao-republica.png").getPath(), new Integer(50), new Integer(50), ImageBanner.ALIGN_CENTER);
 		drb.setDefaultStyles(JReportStyles.titleStyle, JReportStyles.subtitleStyle, JReportStyles.columnHeaderStyle, JReportStyles.columnDetailStyle)
 		
         def columns = [:]
 		
-        report.columns.each { 
+        report.grid.columns.each { 
             columns[it.dataField] = ColumnBuilder.new
                 .setColumnProperty(it.dataField, it.javaType)
                 .setTitle(it.caption)

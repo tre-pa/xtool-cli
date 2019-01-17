@@ -32,6 +32,7 @@ import ${rootPackage.name}.groovy.report.domain.JReport
 import ${rootPackage.name}.groovy.report.repository.JReportRepository
 import ${rootPackage.name}.groovy.report.repository.specification.JReportSpecification
 import ${rootPackage.name}.groovy.report.service.JReportService
+import ${rootPackage.name}.groovy.report.types.JReportGrid
 
 /**
  * Classe Rest com a API de desenvolvimento de reports.
@@ -102,13 +103,13 @@ class JReportDevRest extends QyRest<JReport, Long, JReportSpecification, JReport
 	 */
 	@PostMapping(path = "/preview/pdf", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	ResponseEntity<?> previewPDF(@RequestBody Map params, Sort sort) {
-		if(StringUtils.isEmpty(oarams.sql)) throw new IllegalArgumentException("SQL não definida na requisição.");
+		if(StringUtils.isEmpty(params.sql)) throw new IllegalArgumentException("SQL não definida na requisição.");
 		if(StringUtils.isEmpty(params.gpdf)) throw new IllegalArgumentException("Código Groovy (gpdf) não definido na requisição.");
 		if(params.columns.isEmpty()) throw new IllegalArgumentException("Colunas não definidas na requisição.");
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Content-Disposition", "inline; filename=preview.pdf" );
-		ByteArrayInputStream bais = jreportService.genGPDF(new JReport(sql:oarams.sql, gpdf: params.gpdf, columns: params.columns  ), sort, params.filter);
+		ByteArrayInputStream bais = jreportService.genGPDF(new JReport(sql:params.sql, gpdf: params.gpdf, grid: new JReportGrid(columns: params.columns)), sort, params.filter);
 		// @formatter:off
 		ResponseEntity
 				.ok()
@@ -123,10 +124,10 @@ class JReportDevRest extends QyRest<JReport, Long, JReportSpecification, JReport
 	 * @param jreport
 	 * @return
 	 */
-	@PostMapping("/columns/template")
-	ResponseEntity<?> genDefaultColumnsTemplate(@RequestBody JReport jreport) {
+	@PostMapping("/grid/template")
+	ResponseEntity<?> genDefaultGridTemplate(@RequestBody JReport jreport) {
 		if(StringUtils.isEmpty(jreport.sql)) throw new IllegalArgumentException("SQL não definida na requisição.");
-		ResponseEntity.ok(jreportService.genDefaultColumnsTemplate(jreport.sql));
+		ResponseEntity.ok(jreportService.genDefaultGridTemplate(jreport.sql));
 	}
 
 	/**

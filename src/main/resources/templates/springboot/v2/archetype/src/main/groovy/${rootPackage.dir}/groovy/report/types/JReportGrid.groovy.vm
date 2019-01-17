@@ -1,0 +1,24 @@
+package ${rootPackage.name}.groovy.report.types
+
+class JReportGrid {
+
+	/**
+	 * Defininição das colunas do relatório utilizados tanto nos relatórios online quanto no relatórios PDF.
+	 *
+	 * Ex:
+	 *
+	 * [{
+	 * 		"dataField" : "nome",
+	 * 		"caption" : "Nome",
+	 * 		"width" : 80
+	 * }]
+	 *
+	 */
+	List<JReportColumn> columns = [];
+
+	/**
+	 * Outras propriedades de customização do DxDataGrid
+	 */
+	Map properties = [:];
+
+}

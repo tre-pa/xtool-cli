@@ -20,9 +20,9 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener
 
-import ${rootPackage.name}.groovy.report.converter.JReportColumnListToByteConverter
+import ${rootPackage.name}.groovy.report.converter.JReportGridToByteConverter
 import ${rootPackage.name}.groovy.report.converter.StringToByteConverter
-import ${rootPackage.name}.groovy.report.types.JReportColumn
+import ${rootPackage.name}.groovy.report.types.JReportGrid
 import groovy.transform.EqualsAndHashCode;
 
 @Entity
@@ -83,24 +83,15 @@ class JReport {
 	@NotBlank
 	String sql;
 
-	// @formatter:off
 	/**
-	 * Defininição das colunas do relatório utilizados tanto nos relatórios online quanto no relatórios PDF.
-	 * 
-	 * Ex:
-	 * 
-	 * [{
-	 * 		"dataField" : "nome",
-	 * 		"caption" : "Nome",
-	 * 		"width" : 80
-	 * }]
+	 * Defininição do DataGrid do relatório, que possui a definição das colunas do
+	 * relatório utilizada tanto nos relatórios online quanto no relatórios PDF.
 	 * 
 	 */
-	// @formatter:on
 	@Column(nullable = false, columnDefinition = "blob")
-	@Convert(converter = JReportColumnListToByteConverter.class)
+	@Convert(converter = JReportGridToByteConverter.class)
 	@Basic(fetch = FetchType.LAZY)
-	List<JReportColumn> columns = [];
+	JReportGrid grid;
 
 	/**
 	 * Código groovy do relatório em DynamicJasper.

@@ -6,21 +6,21 @@ import javax.persistence.Converter;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import ${rootPackage.name}.groovy.report.types.JReportColumn
+import ${rootPackage.name}.groovy.report.types.JReportGrid
 
-@Converter
-class JReportColumnListToByteConverter implements AttributeConverter<List<JReportColumn>, byte[]> {
-
+class JReportGridToByteConverter implements AttributeConverter<JReportGrid, byte[]>  {
+	
 	@Override
-	byte[] convertToDatabaseColumn(List<JReportColumn> attribute) {
+	byte[] convertToDatabaseColumn(JReportGrid attribute) {
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.writeValueAsBytes(attribute);
 	}
 
 	@Override
-	List<JReportColumn> convertToEntityAttribute(byte[] dbData) {
+	JReportGrid convertToEntityAttribute(byte[] dbData) {
 		ObjectMapper mapper = new ObjectMapper();
-		mapper.readValue(dbData, new TypeReference<List<JReportColumn>>() {
-				});
+		mapper.readValue(dbData, new TypeReference<JReportGrid>() {
+		});
 	}
+
 }
