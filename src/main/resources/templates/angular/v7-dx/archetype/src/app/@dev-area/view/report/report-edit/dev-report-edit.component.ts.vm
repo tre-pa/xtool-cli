@@ -1,13 +1,19 @@
-import { QyStore } from './../../../../shared/qy/qy-store';
+import {
+  Component,
+  OnInit
+} from '@angular/core';
+import {
+  Router,
+  ActivatedRoute
+} from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import DataSource from 'devextreme/data/data_source';
 
 import { DevReportService } from 'src/app/@dev-area/dev-report.service';
-import { Report } from 'src/app/domain/report';
 import { QyStoreOptions } from 'src/app/shared/qy/qy-store-options';
+import { QyStore } from 'src/app/shared/qy/qy-store';
+import { Report } from 'src/app/domain/report';
 
 @Component({
   selector: 'app-dev-report-edit',
@@ -22,9 +28,9 @@ export class DevReportEditComponent implements OnInit {
   categoryDataSource: DataSource;
 
   constructor(
-    private httpClient: HttpClient,
     private devReportService: DevReportService,
     private activatedRoute: ActivatedRoute,
+    private httpClient: HttpClient,
     private router: Router,
     private title: Title
   ) { }
@@ -60,11 +66,6 @@ export class DevReportEditComponent implements OnInit {
       .subscribe(report => this.report = report);
   }
 
-
-  onFocusOutSql(event) {
-    console.log(event);
-  }
-
   back() {
     this.router.navigate(['dev-area', 'report']);
   }
@@ -73,14 +74,6 @@ export class DevReportEditComponent implements OnInit {
     this.devReportService.save(this.report)
       .subscribe(() => this.back());
     event.preventDefault();
-  }
-
-  sqlPreview(event) {
-    console.log(event);
-  }
-
-  pdfPreview(event) {
-    console.log(event);
   }
 
 }

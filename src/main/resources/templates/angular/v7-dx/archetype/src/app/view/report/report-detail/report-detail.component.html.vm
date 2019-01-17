@@ -8,25 +8,19 @@
     <p>{{ agg.result }}</p>
   </div>
 </div>
-<dx-data-grid *ngIf="report"
-  id="gridContainer"
+<dx-data-grid id="gridContainer"
   [dataSource]="reportStore"
-  [columns]="report.columns"
-  [wordWrapEnabled]="true"
-  [showBorders]="true"
-  [showRowLines]="true"
-  [showColumnLines]="false"
+  [columns]="report?.grid?.columns"
   [remoteOperations]="true"
   (onToolbarPreparing)="onToolbarPreparing($event.toolbarOptions)">
-  <dxo-sorting mode="multiple"></dxo-sorting>
-  <dxo-paging [pageSize]="20"></dxo-paging>
-  <dxo-pager [allowedPageSizes]="[20]"
-    [showNavigationButtons]="true"
-    [showInfo]="true"></dxo-pager>
-  <dxo-filter-row [visible]="true"></dxo-filter-row>
-  <dxo-header-filter [visible]="true"></dxo-header-filter>
-  <dxo-search-panel [visible]="true"
-    [width]="300"></dxo-search-panel>
+  <!-- <dxo-summary>
+    <dxi-total-item column="ID"
+      summaryType="count"></dxi-total-item>
+    <dxi-total-item column="NUMERO"
+      summaryType="min"></dxi-total-item>
+    <dxi-total-item column="NUMERO"
+      summaryType="max"></dxi-total-item>
+  </dxo-summary> -->
 </dx-data-grid>
 <dx-load-panel #loadPanel
   shadingColor="rgba(0,0,0,0.4)"

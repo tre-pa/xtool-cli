@@ -2,25 +2,37 @@
 #set ($CB = "}")
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import * as _ from 'lodash';
 
-import { QyFilterable } from 'src/app/shared/qy/qy-filter';
 import { environment } from 'src/environments/environment';
 import { CrudService } from 'src/app/shared/crud.service';
+import { QyFilterable } from 'src/app/shared/qy/qy-filter';
 import { Report } from 'src/app/domain/report';
+import { Subscription } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ReportService extends CrudService<Report> {
 
+  private url: string = `${OB}environment.urlbase${CB}/jreport`;
+
   constructor(private http: HttpClient) {
     super(http, '/jreport');
+    this.findById = (id: number): Observable<Report> => {
+      return this.http.get<Report>(`${OB}this.url${CB}/${OB}id${CB}`).pipe(
+        map(report => {
+          report.grid.columns.forEach(column => column['width'] = undefined);
+          return report;
+        })
+      );
+    };
   }
 
   export(id: number, title: string, params?: string, filter?: QyFilterable): Subscription {
-    let url = `${OB}environment.urlbase${CB}/jreport/${OB}id${CB}/pdf`;
+    let url = `${OB}this.url${CB}/${OB}id${CB}/pdf`;
     return this.http.post(`${OB}url${CB}${OB}params ? `?${OB}params${CB}` : ''${CB}`, filter, {
       responseType: 'blob',
       headers: new HttpHeaders({
@@ -70,3 +82,4 @@ export class ReportService extends CrudService<Report> {
   }
 
 }
+

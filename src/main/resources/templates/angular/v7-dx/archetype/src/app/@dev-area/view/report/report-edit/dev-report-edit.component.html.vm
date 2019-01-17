@@ -1,7 +1,8 @@
 <h2>{{ idReport ? 'Edição de' : 'Novo' }} Relatório{{ report?.title ? ' - ' + report.title : '' }}</h2>
 <div class="dx-card content-block">
-  <form (submit)="save($event)"
-    autocomplete="off">
+  <form *ngIf="report"
+    autocomplete="off"
+    (submit)="save($event)">
     <dx-form id="form"
       [formData]="report"
       [showOptionalMark]="true"
@@ -23,12 +24,12 @@
       </dxi-item>
       <dxi-item dataField="sql"
         editorType="dxTextArea"
-        [editorOptions]="{ 
-          autoResizeEnabled: true,
-          onFocusOut: onFocusOutSql
-        }">
+        [editorOptions]="{ autoResizeEnabled: true }">
         <dxi-validation-rule type="required"></dxi-validation-rule>
       </dxi-item>
+      <dxi-item dataField="_grid"
+        editorType="dxTextArea"
+        [editorOptions]="{ autoResizeEnabled: true }"></dxi-item>
       <dxi-item dataField="gpdf"
         editorType="dxTextArea"
         [editorOptions]="{ autoResizeEnabled: true }">

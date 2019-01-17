@@ -48,7 +48,8 @@ export class ReportDetailComponent implements OnInit {
   private loadData() {
     this.reportService.findById(this.idReport)
       .subscribe(report => {
-        report.columns.forEach(column => column['width'] = undefined);
+        for (const key in report.grid.properties) 
+          this.dataGrid[key] = report.grid.properties[key];
         this.report = report;
       });
     let reportStoreOptions: QyStoreOptions = {
