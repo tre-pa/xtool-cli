@@ -1,0 +1,47 @@
+package ${rootPackage.name}.config;
+
+
+import javax.sql.DataSource;
+
+import org.flywaydb.core.Flyway;
+import org.springframework.boot.autoconfigure.flyway.FlywayMigrationInitializer;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
+
+import lombok.extern.slf4j.Slf4j;
+
+@Configuration
+@Slf4j
+public class FlywayConfig {
+	
+	@Bean
+	FlywayMigrationInitializer flywayInitializer(Flyway flyway) {
+		return new FlywayMigrationInitializer(flyway, (f) -> {
+			/**
+			 * Devido a incompatibilidade com o Oracle 10c é necessário a implementação abaixo
+			 */
+			f.setBaselineOnMigrate(true);
+			f.setBaselineVersionAsString("0");
+		});
+	}
+
+	
+	@Bean
+	@DependsOn("entityManagerFactory")
+	FlywayMigrationInitializer delayedFlywayInitializer(Flyway flyway) {
+		log.debug("Inicializando flyway");
+		return new FlywayMigrationInitializer(flyway, null);
+	}
+
+	/**
+	 * Devido a incompatibilidade com o Oracle 10c é necessário a implementação abaixo
+	 */
+    @Bean
+    public Flyway flyway(DataSource dataSource) {
+        Flyway flyway = new Flyway();
+        flyway.setDataSource(dataSource);
+        return flyway;
+    }
+
+}

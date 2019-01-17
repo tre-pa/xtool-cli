@@ -28,9 +28,10 @@ logging.level.org.springframework.jdbc.core.JdbcTemplate=debug
 
 #
 # FLYWAY CONFIGS
-# 
-spring.flyway.baseline-version=0
-spring.flyway.baseline-on-migrate=true
+# Devido a incompatibilidade com o Oracle 10c é necessário Comentar os códigos do flayway no aap.properties
+#spring.flyway.baseline-version=0
+#spring.flyway.baseline-on-migrate=true
+
 
 
 
