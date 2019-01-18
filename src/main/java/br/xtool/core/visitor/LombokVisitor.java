@@ -34,6 +34,7 @@ import br.xtool.core.representation.springboot.JavaFieldRepresentation.EOneToOne
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.EStringField;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.ETransientField;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.EUniqueField;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -46,8 +47,9 @@ public class LombokVisitor implements Visitor {
 		javaClass.addAnnotation(Getter.class);
 		javaClass.addAnnotation(Setter.class);
 		javaClass.addAnnotation(NoArgsConstructor.class);
-		javaClass.addEqualsAndHashCodeAnnotation("id");
+//		javaClass.addEqualsAndHashCodeAnnotation("id");
 		javaClass.addToStringAnnotation("id");
+		umlClass.getTaggedValueAsArray("EqualsAndHashCode.of").ifPresent(tagValues -> javaClass.addAnnotation(EqualsAndHashCode.class).setStringArrayValue("of", tagValues));
 	}
 
 	@Override
