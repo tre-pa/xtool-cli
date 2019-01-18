@@ -4,6 +4,7 @@ package "${rootPackage.name}.domain" <<Frame>> {
 
 }
 
+/' Declarar os Enums no pacote abaixo e utilizá-los como atributos das classes, sem relacionamentos '/
 package "${rootPackage.name}.domain.enums" <<Frame>>{
 
 }
