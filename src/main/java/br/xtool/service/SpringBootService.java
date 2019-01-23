@@ -121,12 +121,10 @@ public class SpringBootService {
 		JavaClassRepresentation javaClass = appCtx.getBean(JavaClassRepresentationConverter.class).apply(plantClass);
 		plantClass.getFields().stream().forEach(plantField -> appCtx.getBean(JavaFieldRepresentationConverter.class).apply(javaClass, plantField));
 		plantClass.getRelationships().stream().forEach(plantRelationship -> appCtx.getBean(JavaRelationshipRepresentationConverter.class).apply(javaClass, plantRelationship));
-		plantClass.getFields().stream()
-			.filter(PlantClassFieldRepresentation::isEnum)
-			.forEach(plantClassField -> {
-				JavaEnumRepresentation javaEnum = appCtx.getBean(JavaEnumRepresentationConverter.class).apply(plantClassField.getEnumRepresentation().get());
-				save(javaEnum);
-			});
+		plantClass.getFields().stream().filter(PlantClassFieldRepresentation::isEnum).forEach(plantClassField -> {
+			JavaEnumRepresentation javaEnum = appCtx.getBean(JavaEnumRepresentationConverter.class).apply(plantClassField.getEnumRepresentation().get());
+			save(javaEnum);
+		});
 		save(javaClass);
 		// Gera as classes dos relacionamento associados a classe.
 		plantClass.getRelationships().stream().forEach(plantRelationship -> {
@@ -145,6 +143,7 @@ public class SpringBootService {
 	 * @return
 	 */
 	public RepositoryRepresentation genRepository(EntityRepresentation entity) {
+		entity.getAssociatedSpecification().orElseGet(() -> genSpecification(entity));
 		SpringBootProjectRepresentation springBootProject = this.workspace.getWorkingProject(SpringBootProjectRepresentation.class);
 		String repositoryName = entity.getName().concat("Repository");
 		// @formatter:off
@@ -180,9 +179,12 @@ public class SpringBootService {
 	 * @param repository  Repositório selecionado.
 	 * @return
 	 */
-	public ServiceClassRepresentation genService(RepositoryRepresentation repository) {
+	public ServiceClassRepresentation genService(EntityRepresentation entity) {
+		
+		RepositoryRepresentation repository = entity.getAssociatedRepository().orElseGet(() -> this.genRepository(entity));
+		
 		SpringBootProjectRepresentation springBootProject = this.workspace.getWorkingProject(SpringBootProjectRepresentation.class);
-		String serviceName = repository.getTargetEntity().getName().concat("Service");
+		String serviceName = entity.getName().concat("Service");
 		// @formatter:off
 		ServiceClassRepresentation serviceClass = springBootProject.getServices().stream()
 				.filter(service -> service.getName().equals(serviceName))
@@ -198,21 +200,18 @@ public class SpringBootService {
 	 * @param repository  Repositório selecionado.
 	 * @return
 	 */
-	public RestClassRepresentation genRest(RepositoryRepresentation repository) {
+	public RestClassRepresentation genRest(EntityRepresentation entity) {
+		
+		RepositoryRepresentation repository = entity.getAssociatedRepository().orElseGet(() -> this.genRepository(entity));
+		
 		SpringBootProjectRepresentation springBootProject = this.workspace.getWorkingProject(SpringBootProjectRepresentation.class);
-		String restName = repository.getTargetEntity().getName().concat("Rest");
+		String restName = entity.getName().concat("Rest");
 		// @formatter:off
 		RestClassRepresentation restClass = springBootProject.getRests().stream()
 				.filter(rest -> rest.getName().equals(restName))
 				.findFirst()
 				.orElseGet(() -> RestClassTemplates.newRestClassRepresentation(springBootProject, repository));
 		// @formatter:on
-//		RestClassTemplates.genFindAll(restClass, repository);
-//		RestClassTemplates.genFilter(restClass, repository);
-//		RestClassTemplates.genFindById(restClass, repository);
-//		RestClassTemplates.genInsertMethod(restClass, repository);
-//		RestClassTemplates.genUpdateMethod(restClass, repository);
-//		RestClassTemplates.genDeleteMethod(restClass, repository);
 		this.save(restClass);
 		return restClass;
 	}

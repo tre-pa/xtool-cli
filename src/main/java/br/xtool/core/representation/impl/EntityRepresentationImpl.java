@@ -1,6 +1,7 @@
 package br.xtool.core.representation.impl;
 
 import java.util.Collection;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.persistence.ManyToMany;
@@ -12,6 +13,10 @@ import org.jboss.forge.roaster.model.source.JavaClassSource;
 
 import br.xtool.core.representation.springboot.EntityAttributeRepresentation;
 import br.xtool.core.representation.springboot.EntityRepresentation;
+import br.xtool.core.representation.springboot.RepositoryRepresentation;
+import br.xtool.core.representation.springboot.RestClassRepresentation;
+import br.xtool.core.representation.springboot.ServiceClassRepresentation;
+import br.xtool.core.representation.springboot.SpecificationRepresentation;
 import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 
 /**
@@ -101,6 +106,42 @@ public class EntityRepresentationImpl extends JavaClassRepresentationImpl implem
 		return this.getRelationshipAttributes().stream()
 				.filter(attr -> attr.getRoasterField().hasAnnotation(OneToOne.class) || attr.getRoasterField().hasAnnotation(ManyToOne.class))
 				.collect(Collectors.toList());
+		// @formatter:on
+	}
+
+	@Override
+	public Optional<RepositoryRepresentation> getAssociatedRepository() {
+		// @formatter:off
+		return this.getProject().getRepositories().stream()
+				.filter(repository -> repository.getName().equals(this.getName().concat("Repository")))
+				.findFirst();
+		// @formatter:on
+	}
+
+	@Override
+	public Optional<SpecificationRepresentation> getAssociatedSpecification() {
+		// @formatter:off
+		return this.getProject().getSpecifications().stream()
+				.filter(repository -> repository.getName().equals(this.getName().concat("Specification")))
+				.findFirst();
+		// @formatter:on
+	}
+
+	@Override
+	public Optional<ServiceClassRepresentation> getAssociatedServiceClass() {
+		// @formatter:off
+		return this.getProject().getServices().stream()
+				.filter(service -> service.getName().equals(this.getName().concat("Service")))
+				.findFirst();
+		// @formatter:on
+	}
+
+	@Override
+	public Optional<RestClassRepresentation> getAssociatedRestClass() {
+		// @formatter:off
+		return this.getProject().getRests().stream()
+				.filter(rest -> rest.getName().equals(this.getName().concat("Rest")))
+				.findFirst();
 		// @formatter:on
 	}
 
