@@ -30,7 +30,7 @@ Globalize.load(require('cldr-data/supplemental/currencyData.json'))
 
 Globalize.loadMessages(require('devextreme/localization/messages/pt.json'));
 
-Globalize.locale(navigator.language)
+Globalize.locale('pt-BR')
 
 export function kcFactory(securityService: SecurityService) {
   return () => securityService.init();
