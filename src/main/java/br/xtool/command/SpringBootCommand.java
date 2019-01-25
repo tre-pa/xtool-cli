@@ -18,12 +18,10 @@ import br.xtool.core.Workspace;
 import br.xtool.core.provider.EntityRepresentationValueProvider;
 import br.xtool.core.provider.PlantClassDiagramRepresentationValueProvider;
 import br.xtool.core.provider.PlantClassRepresentationValueProvider;
-import br.xtool.core.provider.RepositoryRepresentationValueProvider;
 import br.xtool.core.representation.ProjectRepresentation;
 import br.xtool.core.representation.plantuml.PlantClassDiagramRepresentation;
 import br.xtool.core.representation.plantuml.PlantClassRepresentation;
 import br.xtool.core.representation.springboot.EntityRepresentation;
-import br.xtool.core.representation.springboot.RepositoryRepresentation;
 import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 import br.xtool.service.SpringBootService;
 import br.xtool.view.ShowClassDiagramView;
@@ -71,13 +69,12 @@ public class SpringBootCommand {
 		if (Objects.isNull(entity)) {
 			// @formatter:off
 			this.workspace.getWorkingProject(SpringBootProjectRepresentation.class).getEntities().stream()
-				.peek(springBootService::genSpecification)
 				.forEach(springBootService::genRepository);
 			// @formatter:on
 			return;
 		}
 		springBootService.genRepository(entity);
-		springBootService.genSpecification(entity);
+//		springBootService.genSpecification(entity);
 	}
 
 	/**
@@ -87,15 +84,15 @@ public class SpringBootCommand {
 	 */
 	@ShellMethod(key = "gen:service", value = "Gera uma classe Service em um projeto Spring Boot", group = XtoolCliApplication.SPRINGBOOT_COMMAND_GROUP)
 	@ShellMethodAvailability("availabilitySpringBootCommand")
-	public void genService(@ShellOption(help = "Classe de repositório", valueProvider = RepositoryRepresentationValueProvider.class, defaultValue = "") RepositoryRepresentation repository) {
-		if (Objects.isNull(repository)) {
+	public void genService(@ShellOption(help = "Entidade JPA", valueProvider = EntityRepresentationValueProvider.class, defaultValue = "") EntityRepresentation entity) {
+		if (Objects.isNull(entity)) {
 			// @formatter:off
-			this.workspace.getWorkingProject(SpringBootProjectRepresentation.class).getRepositories().stream()
+			this.workspace.getWorkingProject(SpringBootProjectRepresentation.class).getEntities().stream()
 				.forEach(springBootService::genService);
 			// @formatter:on
 			return;
 		}
-		springBootService.genService(repository);
+		springBootService.genService(entity);
 	}
 
 	/**
@@ -105,15 +102,15 @@ public class SpringBootCommand {
 	 */
 	@ShellMethod(key = "gen:rest", value = "Gera uma classe Rest em um projeto Spring Boot", group = XtoolCliApplication.SPRINGBOOT_COMMAND_GROUP)
 	@ShellMethodAvailability("availabilitySpringBootCommand")
-	public void genRest(@ShellOption(help = "Classe de repositório", valueProvider = RepositoryRepresentationValueProvider.class, defaultValue = "") RepositoryRepresentation repository) {
-		if (Objects.isNull(repository)) {
+	public void genRest(@ShellOption(help = "Entidade JPA", valueProvider = EntityRepresentationValueProvider.class, defaultValue = "") EntityRepresentation entity) {
+		if (Objects.isNull(entity)) {
 			// @formatter:off
-			this.workspace.getWorkingProject(SpringBootProjectRepresentation.class).getRepositories().stream()
+			this.workspace.getWorkingProject(SpringBootProjectRepresentation.class).getEntities().stream()
 				.forEach(springBootService::genRest);
 			// @formatter:on
 			return;
 		}
-		springBootService.genRest(repository);
+		springBootService.genRest(entity);
 	}
 
 	@ShellMethod(key = "show:class-diagram", value = "Exibe o diagrama de classe do projeto", group = XtoolCliApplication.SPRINGBOOT_COMMAND_GROUP)
