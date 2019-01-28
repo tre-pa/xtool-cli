@@ -70,6 +70,9 @@ const routes: Routes = [
 })
 export class ViewRoutingModule {
 	constructor(private keycloakService: KeycloakService, private permissionsService: NgxPermissionsService){
-    this.permissionsService.loadPermissions(this.keycloakService.getTokenParsed().resource_access[environment.keycloak_installation.clientId].roles);
+	    this.keycloakService.getPermisionScopes().then(ps => {
+	      this.permissionsService.loadPermissions(ps);
+	    });
+
   }
 }
