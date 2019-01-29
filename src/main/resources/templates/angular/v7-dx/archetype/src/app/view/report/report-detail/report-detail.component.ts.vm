@@ -1,16 +1,15 @@
 #set ($OB = "${")
 #set ($CB = "}")
 import {
-  OnInit,
   Component,
-  ViewChild
+  ViewChild,
+  OnInit
 } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
-import { DxDataGridComponent } from 'devextreme-angular';
+import { DxDataGridComponent } from 'devextreme-angular/ui/data-grid';
 import { Subscription } from 'rxjs';
 
-import { QyStoreOptions } from 'src/app/shared/qy/qy-store-options';
 import { QyAggregation } from 'src/app/shared/qy/qy-aggregation';
 import { ReportService } from 'src/app/service/report.service';
 import { QyStore } from 'src/app/shared/qy/qy-store';
@@ -52,11 +51,11 @@ export class ReportDetailComponent implements OnInit {
           this.dataGrid[key] = report.grid.properties[key];
         this.report = report;
       });
-    let reportStoreOptions: QyStoreOptions = {
-      path: 'jreport',
-      loadEndpoint: `/${OB}this.idReport${CB}/datasource`
-    };
-    this.reportStore = new QyStore<Report>(this.httpClient, reportStoreOptions);
+    this.reportStore = new QyStore<Report>(this.httpClient, '/jreport', {
+      endpoints: {
+        load: `/jreport/${this.idReport}/datasource`
+      }
+    });
     this.reportStore.onLoad
       .subscribe(() => this.aggregations = this.reportStore.getSummary());
   }

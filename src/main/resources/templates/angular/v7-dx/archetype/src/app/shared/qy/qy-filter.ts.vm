@@ -1,16 +1,35 @@
 import * as _ from 'lodash';
 
-  /**
-   * 
-   */
+  /** Expressão simples usada como parte do filtro */
   class QyExpression {
     type?: string;
   }
   
+  /**
+   * Expressão do filtro usada para fazer o request à um endpoint
+   * findAll() do pacote Qy, podendo ela ser simples ou complexa
+   */
   export class QyFilterable extends QyExpression {
     predicates: QyExpression[] = [];
   }
 
+  /**
+   * Objeto de filtro
+   * 
+   * ---
+   * Atributos
+   * 
+   * - dxFilter: any[] (filtro dx original)
+   * - qyFilterable: QyFilterable (filtro de uso em endpoints do pacote Qy)
+   * 
+   * ---
+   * Métodos
+   * 
+   * - of(dxFilter: any[]): QyFilter (conversão de um filtro dx em um QyFilter
+   * contendo o filtro original e o filterable parseado, pronto para uso em um
+   * payload de um endpoint do pacote Qy)
+   * 
+   */
   export class QyFilter {
     qyFilterable: QyFilterable;
     dxFilter: any[];

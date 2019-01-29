@@ -3,15 +3,14 @@ import {
   OnInit
 } from '@angular/core';
 import {
-  Router,
-  ActivatedRoute
+  ActivatedRoute,
+  Router
 } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Title } from '@angular/platform-browser';
 import DataSource from 'devextreme/data/data_source';
 
 import { DevReportService } from 'src/app/@dev-area/dev-report.service';
-import { QyStoreOptions } from 'src/app/shared/qy/qy-store-options';
 import { QyStore } from 'src/app/shared/qy/qy-store';
 import { Report } from 'src/app/domain/report';
 
@@ -37,13 +36,14 @@ export class DevReportEditComponent implements OnInit {
 
   ngOnInit() {
     this.processReport();
-    let categoryStoreOptions: QyStoreOptions = {
-      path: 'dev/jreport',
-      loadEndpoint: `/categories`,
-      loadByGet: true
-    };
     this.categoryDataSource = new DataSource({
-      store: new QyStore(this.httpClient, categoryStoreOptions),
+      store: new QyStore(this.httpClient, '/dev/jreport', {
+        key: null,
+        endpoints: {
+          load: `/dev/jreport/categories`
+        },
+        loadByGet: true
+      }),
       paginate: true,
       pageSize: 10
     });

@@ -13,78 +13,158 @@ import { QyPayload } from './qy-payload';
 import { QyPage } from './qy-page';
 import { Page } from '../page';
 
+/**
+ * Store para ser usado nos DataSouces que deve receber no seu construtor:
+ * 
+ * - http: HttpClient (usado para fazer as requisições ao servidor)
+ * - basePath: string (raíz dos endpoints rest onde os requests serão feitos)
+ * - options: QyStoreOptions (configurações específicas dos requests)
+ * 
+ * Apenas options é opcional
+ * 
+ * ---
+ * Atributos
+ * 
+ * - onLoad: EventEmitter (é emitido ao final do load, quando as variáveis do Store são atualizados)
+ * - sortParams: string (parâmetros de ordenação usados no request do último load)
+ * - filter: QyFilterable (filtro usado no request do último load)
+ * - aggregations: QyAggregation[] (agregações resultadas do último load)
+ * 
+ * ---
+ * Métodos
+ * 
+ * - getSummary(dataField?, operation?): QyAggregation[] (retorna as agregações resultadas do último load com filtros opcionais)
+ * 
+ */
 export class QyStore<T> extends CustomStore {
 
+  /** EventEmitter emitido ao final do load, quando as variáveis do Store são atualizados */
   onLoad: EventEmitter<any> = new EventEmitter<any>();
 
-  filter: QyFilterable;
+  /** Parâmetros de ordenação usados no request do último load do Store */
   sortParams: string;
+  /** Filtro usado no request do último load do Store */
+  filter: QyFilterable;
+  /** Agregações resultadas do último load do Store */
   aggregations: QyAggregation[];
 
-  constructor(http: HttpClient, options: QyStoreOptions) {
+  constructor(
+    /** Usado para fazer as requisições ao servidor, e deve ser uma depenência injetada do Componente que instanciar o Store */
+    http: HttpClient,
+    /** Caminho raíz dos endpoints rest onde os requests serão feitos pelo Store */
+    basePath: string,
+    /** QyStoreOptions contendo configurações específicas dos requests que serão feitos pelo Store */
+    options: QyStoreOptions = new QyStoreOptions()
+  ) {
     super({
-      key: options.key,
+      key: options.key === undefined ? 'id' : options.key,
       byKey: (key) => {
-        if (!options.key)
-          return key;
-        return http.get<T>(`${OB}environment.urlbase${CB}/${OB}options.path${CB}/${OB}key${CB}`)
-          .toPromise()
-          .then((data: T) => this.transformData(data));
+        if (options.key === null) return key;
+        return http.get<T>(this.byKeyUrl(options, basePath, key)).toPromise();
       },
       load: (loadOptions: LoadOptions) => {
-        console.log(loadOptions);
-        let skip = loadOptions.skip,
-          take = loadOptions.take,
-          page = skip ? (skip / take) : 0,
-          params = `?page=${OB}page${CB}&size=${OB}take${CB}`,
-          sort = loadOptions.sort,
-          payload = new QyPayload(),
-          filter = loadOptions.filter,
-          aggregations = loadOptions.totalSummary;
-        if (sort) {
-          this.sortParams = sort.map(order => `sort=${OB}order.selector${CB},${OB}order.desc ? 'desc' : 'asc'${CB}`).join('&');
-          params += `&${OB}this.sortParams${CB}`;
-        } else this.sortParams = null;
-        if (options.loadByGet) return http.get<Page<T>>(`${OB}environment.urlbase${CB}/${OB}options.path${CB}${OB}options.loadEndpoint || '/all'${CB}${OB}params${CB}`)
+        if (options.loadByGet) return http.get<Page<T>>(this.loadUrl(loadOptions, options, basePath))
           .toPromise()
-          .then((data: Page<T>) => {
-            this.onLoad.emit();
-            return {
-              data: data.content.map(data => this.transformData(data)),
-              totalCount: data.totalElements
-            };
-          });
-        if (filter) {
-          this.filter = QyFilter.of(loadOptions.filter).qyFilterable;
-          payload.filterable = this.filter;
-        } else this.filter = null;
-        if (aggregations) payload.aggregables = aggregations;
-        if (options.fields) params += `&fields=${options.fields.join(',')}`;
+          .finally(() => this.updateStoreVariables(loadOptions))
+          .then((page: Page<T>) => ({
+            data: page.content,
+            totalCount: page.totalElements
+          }));
 
-        return http.post<QyPage<T>>(`${OB}environment.urlbase${CB}/${OB}options.path${CB}${OB}options.loadEndpoint || '/all'${CB}${OB}params${CB}`, payload)
+        return http.post<QyPage<T>>(this.loadUrl(loadOptions, options, basePath), this.payloadFromLoadOptions(loadOptions))
           .toPromise()
           .then((qyPage: QyPage<T>) => {
-            if (aggregations) this.aggregations = qyPage.aggregations;
-            else this.aggregations = null;
-
-            let returnData = {};
-            if (qyPage.pagination) {
-              returnData['data'] = qyPage.pagination.content.map(data => this.transformData(data));
-              returnData['totalCount'] = qyPage.pagination.totalElements;
-            }
-
-            if (qyPage.aggregations) returnData['summary'] = qyPage.aggregations.map(agg => agg.result);
-            this.onLoad.emit();
-            return returnData;
-          });
+            this.updateStoreVariables(loadOptions, qyPage.aggregations);
+            return qyPage;
+          })
+          .then((qyPage: QyPage<T>) => ({
+            data: qyPage.pagination ? qyPage.pagination.content : undefined,
+            totalCount: qyPage.pagination ? qyPage.pagination.totalElements : undefined,
+            summary: qyPage.aggregations ? qyPage.aggregations.map(agg => agg.result) : undefined
+          }));
       }
     });
   }
 
-  transformData(data: T): any {
-    return data;
+  /**
+   * Retorna a string referente a URL que deve ser usada para o request do byKey (findOne)
+   * 
+   * @param options: QyStoreOptions
+   * @param basePath: string
+   * @param key: any
+   */
+  private byKeyUrl(options: QyStoreOptions, basePath: string, key: any): string {
+    return `${OB}environment.urlbase${CB}${OB}options.endpoints.byKey || basePath${CB}/${OB}key${CB}`;
   }
 
+  /**
+   * Retorna a string referente a URL que deve ser usada para o request do load (findAll)
+   * 
+   * @param loadOptions: LoadOptions 
+   * @param options: QyStoreOptions 
+   * @param basePath: string 
+   */
+  private loadUrl(loadOptions: LoadOptions, options: QyStoreOptions, basePath: string): string {
+    let params = this.paramsFromLoadOptions(loadOptions);
+    if (options.loadByGet) return `${OB}environment.urlbase${CB}${OB}options.endpoints.load || basePath${CB}${OB}params${CB}`;
+    return `${OB}environment.urlbase${CB}${OB}options.endpoints.load || `${OB}basePath${CB}/all`${CB}${OB}params${CB}`;
+  }
+
+  /**
+   * Retorna a string referente aos parâmetros que devem ser usado no request do load (findAll)
+   * 
+   * @param loadOptions: LoadOptions 
+   */
+  private paramsFromLoadOptions(loadOptions: LoadOptions): string {
+    let skip = loadOptions.skip,
+      take = loadOptions.take,
+      page = skip ? (skip / take) : 0,
+      params = `?page=${OB}page${CB}&size=${OB}take${CB}`;
+    if (loadOptions.sort) params += `&${OB}this.paramFromSort(loadOptions.sort)${CB}`;
+    if (loadOptions.select) params += `&fields=${OB}loadOptions.select.join(',')${CB}`;
+    return params;
+  }
+
+  /**
+   * Retorna o payload referente ao body que deve ser usado no request do load (findAll)
+   * 
+   * @param loadOptions: LoadOptions 
+   */
+  private payloadFromLoadOptions(loadOptions: LoadOptions): QyPayload {
+    return {
+      filterable: loadOptions.filter ? QyFilter.of(loadOptions.filter).qyFilterable : undefined,
+      aggregables: loadOptions.totalSummary
+    };
+  }
+
+  /**
+   * Retorna a string referente ao parâmetro de ordenação
+   * 
+   * @param sort: { selector: string, desc: boolean }[] 
+   */
+  private paramFromSort(sort: { selector: string, desc: boolean }[]): string {
+    return sort.map(order => `sort=${OB}order.selector${CB},${OB}order.desc ? 'desc' : 'asc'${CB}`).join('&');
+  }
+
+  /**
+   * Atualiza as variáveis do Store
+   * 
+   * @param loadOptions: LoadOptions 
+   * @param aggregations: QyAggregation[] (opcional)
+   */
+  private updateStoreVariables(loadOptions: LoadOptions, aggregations?: QyAggregation[]): void {
+    this.sortParams = loadOptions.sort ? this.paramFromSort(loadOptions.sort) : null;
+    this.filter = loadOptions.filter ? QyFilter.of(loadOptions.filter).qyFilterable : null;
+    this.aggregations = aggregations;
+    this.onLoad.emit();
+  }
+
+  /**
+   * Método que retorna as agregações resultadas do último load do Store com filtros opcionais
+   * 
+   * @param dataField?: string
+   * @param operation?: 'count' | 'sum' | 'max' | 'min' | 'avg' 
+   */
   getSummary(dataField?: string, operation?: 'count' | 'sum' | 'max' | 'min' | 'avg'): QyAggregation[] {
     let filteredSummary: QyAggregation[];
     if (!dataField) return this.aggregations;

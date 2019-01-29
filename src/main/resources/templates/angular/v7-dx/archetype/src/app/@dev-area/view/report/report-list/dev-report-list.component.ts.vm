@@ -1,12 +1,13 @@
-import { Report } from './../../../../domain/report';
+import {
+  Component,
+  OnInit
+} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
-import { DevReportService } from 'src/app/@dev-area/dev-report.service';
 import { QyStore } from 'src/app/shared/qy/qy-store';
-import { QyStoreOptions } from 'src/app/shared/qy/qy-store-options';
+import { Report } from 'src/app/domain/report';
 
 @Component({
   selector: 'app-dev-report-list',
@@ -29,11 +30,7 @@ export class DevReportListComponent implements OnInit {
 
   ngOnInit() {
     this.title.setTitle('Gerência de Relatórios');
-    let reportStoreOptions: QyStoreOptions = {
-      key: 'id',
-      path: 'dev/jreport'
-    };
-    this.reportStore = new QyStore(this.httpClient, reportStoreOptions);
+    this.reportStore = new QyStore(this.httpClient, '/dev/jreport');
   }
 
   create() {
@@ -46,6 +43,19 @@ export class DevReportListComponent implements OnInit {
 
   toggleDefault() {
     this.defaultVisible = !this.defaultVisible;
+  }
+
+  onToolbarPreparing(toolbar) {
+    toolbar.items.unshift({
+      location: 'before',
+      widget: 'dxButton',
+      options: {
+        text: 'Novo',
+        stylingMode: 'contained',
+        type: 'success',
+        onClick: () => this.create()
+      }
+    });
   }
 
 }

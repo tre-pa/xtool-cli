@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  OnInit
+} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { Subscription } from 'rxjs';
 
-import { QyStoreOptions } from 'src/app/shared/qy/qy-store-options';
 import { ReportService } from 'src/app/service/report.service';
 import { QyStore } from 'src/app/shared/qy/qy-store';
 import { Report } from 'src/app/domain/report';
@@ -29,11 +31,7 @@ export class ReportListComponent implements OnInit {
 
   ngOnInit() {
     this.title.setTitle('Relatórios');
-    let reportStoreOptions: QyStoreOptions = {
-      key: 'id',
-      path: 'jreport'
-    };
-    this.reportStore = new QyStore(this.httpClient, reportStoreOptions);
+    this.reportStore = new QyStore(this.httpClient, '/jreport');
   }
 
   navigate(route: string) {

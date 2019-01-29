@@ -2,11 +2,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import {
-  DxDataGridModule,
-  DxButtonModule,
-  DxFormModule
-} from 'devextreme-angular';
+import { DxDataGridModule } from 'devextreme-angular/ui/data-grid';
+import { DxButtonModule } from 'devextreme-angular/ui/button';
+import { DxFormModule } from 'devextreme-angular/ui/form';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';

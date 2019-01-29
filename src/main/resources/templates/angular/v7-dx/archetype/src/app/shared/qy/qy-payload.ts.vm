@@ -1,7 +1,17 @@
 import { QyAggregable } from './qy-aggregable';
 import { QyFilterable } from './qy-filter';
 
+/**
+ * Payload usado como body no request de load do QyStore, ou na
+ * chamada de um endpoint findAll() do pacore Qy, contendo:
+ * 
+ * - filterable?: QyFilterable (filtro que será usado)
+ * - aggregables?: QyAggregable[] (agregações que devem ser feitas)
+ * 
+ */
 export class QyPayload {
+  /** Informação do filtro que será usado em uma consulta */
   filterable?: QyFilterable;
+  /** Informação das agregações que devem ser feitas em uma consulta */
   aggregables?: QyAggregable[];
 }

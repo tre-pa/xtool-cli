@@ -2,11 +2,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import {
-  DxLoadPanelModule,
-  DxDataGridModule,
-  DxButtonModule
-} from 'devextreme-angular';
+import { DxLoadPanelModule } from 'devextreme-angular/ui/load-panel';
+import { DxDataGridModule } from 'devextreme-angular/ui/data-grid';
+import { DxButtonModule } from 'devextreme-angular/ui/button';
 import {
   NgxPermissionsService,
   NgxPermissionsModule

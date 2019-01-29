@@ -8,12 +8,10 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import {
-  DxContextMenuModule,
-  DxTemplateModule,
-  DxButtonModule,
-  DxListModule
-} from 'devextreme-angular';
+import { DxContextMenuModule } from 'devextreme-angular/ui/context-menu';
+import { DxTemplateModule } from 'devextreme-angular/core/template';
+import { DxButtonModule } from 'devextreme-angular/ui/button';
+import { DxListModule } from 'devextreme-angular/ui/list';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';

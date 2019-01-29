@@ -1,21 +1,12 @@
-<div fxLayout="row">
-  <div fxFlex>
-    <h2>Relatórios</h2>
-  </div>
-  <div fxFlexAlign="center"
-    style="padding-right: 20px">
-    <dx-button text="Novo"
-      type="success"
-      (onClick)="create()"></dx-button>
-  </div>
-</div>
+<h2>Relatórios</h2>
 <dx-data-grid #dataGrid
   id="gridContainer"
   [dataSource]="reportStore"
   [wordWrapEnabled]="true"
   [showBorders]="true"
   [showRowLines]="true"
-  [showColumnLines]="false">
+  [showColumnLines]="false"
+  (onToolbarPreparing)="onToolbarPreparing($event.toolbarOptions)">
   <dxo-remote-operations [paging]="true"
     [sorting]="true"
     [filtering]="true"></dxo-remote-operations>

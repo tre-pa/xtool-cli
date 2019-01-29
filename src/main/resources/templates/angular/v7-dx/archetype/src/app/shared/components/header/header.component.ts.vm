@@ -7,11 +7,9 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import {
-  DxToolbarModule,
-  DxButtonModule,
-  DxPopupModule
-} from 'devextreme-angular';
+import { DxToolbarModule } from 'devextreme-angular/ui/toolbar';
+import { DxButtonModule } from 'devextreme-angular/ui/button';
+import { DxPopupModule } from 'devextreme-angular/ui/popup';
 
 import { KeycloakService } from './../../../security/keycloak/keycloak.service';
 import { LoginFormModule } from '../login-form/login-form.component';

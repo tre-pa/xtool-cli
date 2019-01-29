@@ -1,7 +1,16 @@
-import { Page } from 'src/app/shared/page';
 import { QyAggregation } from './qy-aggregation';
+import { Page } from 'src/app/shared/page';
 
+/**
+ * Objeto de retorno de um request à um endpoint findAll() do pacote Qy, contendo: 
+ * 
+ * - pagination: Page<T> (página requisitada)
+ * - aggregations?: QyAggregation[] (resultado das agregações requisitadas)
+ * 
+ */
 export class QyPage<T> {
+  /** Objeto padrão de paginação */
   pagination: Page<T>;
+  /** Objeto com o resultado das agregações requisitadas à um endpoint findAll() do pacote Qy */
   aggregations?: QyAggregation[];
 }
