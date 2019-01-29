@@ -39,6 +39,9 @@ public class AngularService {
 		// @formatter:on
 		ConsoleLog.print(ConsoleLog.cyan("\t-- npm install --"));
 		this.shellService.runCmd(project.getPath(), "npm i && code .", vars);
+		this.shellService.runCmd(project.getPath(), "git init");
+		this.shellService.runCmd(project.getPath(), "git add .");
+		this.shellService.runCmd(project.getPath(), "git commit -m \"Inicial commit\" ");
 
 		this.workspace.setWorkingProject(project);
 	}

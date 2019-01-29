@@ -32,7 +32,10 @@
               "src/themes/generated/theme.base.css",
               "src/styles.scss"
             ],
-            "scripts": ["./node_modules/keycloak-js/dist/keycloak.min.js"]
+            "scripts": [
+              "./node_modules/keycloak-js/dist/keycloak.min.js",
+              "./node_modules/keycloak-js/dist/keycloak-authz.min.js"
+            ]
           },
           "configurations": {
             "production": {

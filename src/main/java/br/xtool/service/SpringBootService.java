@@ -18,6 +18,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import br.xtool.core.ConsoleLog;
+import br.xtool.core.Shell;
 import br.xtool.core.Workspace;
 import br.xtool.core.converter.JavaClassRepresentationConverter;
 import br.xtool.core.converter.JavaEnumRepresentationConverter;
@@ -51,6 +52,9 @@ public class SpringBootService {
 
 	@Autowired
 	private Workspace workspace;
+	
+	@Autowired
+	private Shell shellService;
 
 	@Autowired
 	private ApplicationContext appCtx;
@@ -114,6 +118,9 @@ public class SpringBootService {
 		// @formatter:on
 
 		this.workspace.setWorkingProject(bootProject);
+		this.shellService.runCmd(bootProject.getPath(), "git init");
+		this.shellService.runCmd(bootProject.getPath(), "git add .");
+		this.shellService.runCmd(bootProject.getPath(), "git commit -m \"Inicial commit\" ");
 	}
 
 	public EntityRepresentation genEntity(PlantClassRepresentation plantClass) {
