@@ -21,12 +21,21 @@ export abstract class CrudService<T> {
   }
 
   /**
-   * Retorna um returno pelo id.
+   * Retorna um recurso pelo id.
    *
    * @param id Id do recurso
    */
   public findById(id: number): Observable<T> {
     return this._http.get<T>(`${OB}environment.urlbase${CB}${OB}this.apiContext${CB}/${OB}id${CB}`);
+  }
+
+  /**
+   * Retorna um recurso detalhado pelo id.
+   *
+   * @param id Id do recurso
+   */
+  public findDetailById(id: number): Observable<T> {
+    return this._http.get<T>(`${OB}environment.urlbase${CB}${OB}this.apiContext${CB}/${OB}id${CB}/detail`);
   }
 
   /**
