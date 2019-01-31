@@ -1,0 +1,6 @@
+package ${rootPackage.name}.groovy.qy
+
+class Views {
+	public static class Default {}
+    public static class Detail extends Default {}
+}

@@ -4,7 +4,6 @@ import javax.annotation.PostConstruct
 import javax.persistence.EntityNotFoundException
 import javax.validation.Valid
 
-import org.springframework.beans.BeanUtils
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.ApplicationContext
 import org.springframework.core.ResolvableType
@@ -20,6 +19,8 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.ResponseStatus
+
+import com.fasterxml.jackson.annotation.JsonView
 
 import ${rootPackage.name}.groovy.qy.jpa.QyRepository
 
@@ -67,7 +68,20 @@ abstract class QyRest<T, ID, S extends QySpecification<T> ,R extends JpaReposito
 	 * @return
 	 */
 	@GetMapping(path = "/{id}")
+	@JsonView(Views.Default.class)
 	public T findById(@PathVariable ID id) {
+		return repository.findById(id).orElseThrow{ new EntityNotFoundException("Entidade não encontrada.") }
+	}
+
+	/**
+	 * Retorna um recurso específico detalhado.
+	 * 
+	 * @param id
+	 * @return
+	 */
+	@GetMapping(path = "/{id}/detail")
+	@JsonView(Views.Detail.class)
+	public T findDetailById(@PathVariable ID id) {
 		return repository.findById(id).orElseThrow{ new EntityNotFoundException("Entidade não encontrada.") }
 	}
 
