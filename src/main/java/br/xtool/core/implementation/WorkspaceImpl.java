@@ -86,15 +86,18 @@ public class WorkspaceImpl implements Workspace {
 		}
 		return Files.createDirectory(directory);
 	}
-	
+
 	/*
 	 * (non-Javadoc)
-	 * @see br.xtool.core.Workspace#createProject(br.xtool.core.representation.ProjectRepresentation.Type, java.lang.String, java.lang.String, java.util.Map)
+	 * 
+	 * @see br.xtool.core.Workspace#createProject(br.xtool.core.representation.
+	 * ProjectRepresentation.Type, java.lang.String, java.lang.String,
+	 * java.util.Map)
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public <T extends ProjectRepresentation> T createProject(Type type, String name, String qualifier, Map<String, Object> vars) {
-		Path archetypePath = Paths.get(type.getName()).resolve(qualifier).resolve("archetype");
+	public <T extends ProjectRepresentation> T createProject(Type type, String name, Map<String, Object> vars) {
+		Path archetypePath = Paths.get(type.getName()).resolve("archetype");
 		Path projectPath = this.createDirectory(name);
 		this.fs.copy(archetypePath, vars, projectPath);
 		return (T) type.getProjectClass().cast(ProjectRepresentation.factory((Class<T>) type.getProjectClass(), projectPath));
