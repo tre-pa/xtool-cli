@@ -17,10 +17,8 @@ import br.xtool.XtoolCliApplication;
 import br.xtool.core.Workspace;
 import br.xtool.core.provider.EntityRepresentationValueProvider;
 import br.xtool.core.provider.PlantClassDiagramRepresentationValueProvider;
-import br.xtool.core.provider.PlantClassRepresentationValueProvider;
 import br.xtool.core.representation.ProjectRepresentation;
 import br.xtool.core.representation.plantuml.PlantClassDiagramRepresentation;
-import br.xtool.core.representation.plantuml.PlantClassRepresentation;
 import br.xtool.core.representation.springboot.EntityRepresentation;
 import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 import br.xtool.service.SpringBootService;
@@ -47,15 +45,10 @@ public class SpringBootCommand {
 	 * 
 	 * @param plantClass
 	 */
-	@ShellMethod(key = "gen:entity", value = "Gera uma classe Jpa", group = XtoolCliApplication.SPRINGBOOT_COMMAND_GROUP)
+	@ShellMethod(key = "gen:entities", value = "Gera as classes Jpa do diagrama", group = XtoolCliApplication.SPRINGBOOT_COMMAND_GROUP)
 	@ShellMethodAvailability("availabilitySpringBootCommand")
-	public void genEntities(
-			@ShellOption(value = "--plantClass", help = "Classe do diagrama de classe", valueProvider = PlantClassRepresentationValueProvider.class, defaultValue = "") PlantClassRepresentation plantClass) {
-		if (Objects.isNull(plantClass)) {
-			this.workspace.getWorkingProject(SpringBootProjectRepresentation.class).getMainDomainClassDiagram().getClasses().stream().forEach(springBootService::genEntity);
-			return;
-		}
-		springBootService.genEntity(plantClass);
+	public void genEntities(@ShellOption(help = "Gera as classes Typescript correspondentes", arity = 0, value = "ng-entities") boolean ngEntities) {
+		this.workspace.getWorkingProject(SpringBootProjectRepresentation.class).getMainDomainClassDiagram().getClasses().stream().forEach(springBootService::genEntity);
 	}
 
 	/**

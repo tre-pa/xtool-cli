@@ -132,12 +132,12 @@ public class SpringBootService {
 			save(javaEnum);
 		});
 		save(javaClass);
-		// Gera as classes dos relacionamento associados a classe.
-		plantClass.getRelationships().stream().forEach(plantRelationship -> {
-			if (springBootProject.getEntities().stream().noneMatch(entity -> entity.getName().equals(plantRelationship.getTargetClass().getName()))) {
-				genEntity(plantRelationship.getTargetClass());
-			}
-		});
+//		// Gera as classes dos relacionamento associados a classe.
+//		plantClass.getRelationships().stream().forEach(plantRelationship -> {
+//			if (springBootProject.getEntities().stream().noneMatch(entity -> entity.getName().equals(plantRelationship.getTargetClass().getName()))) {
+//				genEntity(plantRelationship.getTargetClass());
+//			}
+//		});
 		springBootProject.refresh();
 		return new EntityRepresentationImpl(springBootProject, javaClass.getRoasterJavaClass());
 	}
