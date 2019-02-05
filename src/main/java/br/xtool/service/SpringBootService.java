@@ -104,7 +104,7 @@ public class SpringBootService {
 	 * 
 	 * @param name Nome do projeto Spring Boot.
 	 */
-	public void newApp(String name) {
+	public void newApp(String name, String version) {
 		Map<String, Object> vars = new HashMap<String, Object>();
 		vars.put("projectName", genProjectName(name));
 		vars.put("baseClassName", genBaseClassName(name));
@@ -112,6 +112,7 @@ public class SpringBootService {
 		// @formatter:off
 		SpringBootProjectRepresentation bootProject = this.workspace.createProject(
 				ProjectRepresentation.Type.SPRINGBOOT, 
+				version,
 				genProjectName(name), 
 				vars);
 		// @formatter:on

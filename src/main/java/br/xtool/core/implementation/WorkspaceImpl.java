@@ -96,8 +96,8 @@ public class WorkspaceImpl implements Workspace {
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public <T extends ProjectRepresentation> T createProject(Type type, String name, Map<String, Object> vars) {
-		Path archetypePath = Paths.get(type.getName()).resolve("archetype");
+	public <T extends ProjectRepresentation> T createProject(Type type, String version, String name, Map<String, Object> vars) {
+		Path archetypePath = Paths.get(type.getName()).resolve(version).resolve("archetype");
 		Path projectPath = this.createDirectory(name);
 		this.fs.copy(archetypePath, vars, projectPath);
 		return (T) type.getProjectClass().cast(ProjectRepresentation.factory((Class<T>) type.getProjectClass(), projectPath));

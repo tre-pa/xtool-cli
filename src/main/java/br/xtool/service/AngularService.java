@@ -4,6 +4,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +22,10 @@ import br.xtool.core.representation.angular.NgEnumRepresentation;
 import br.xtool.core.representation.angular.NgProjectRepresentation;
 import br.xtool.core.representation.impl.ENgEntityImpl;
 import br.xtool.core.representation.impl.ENgEnumImpl;
+import br.xtool.core.representation.springboot.EntityAttributeRepresentation;
 import br.xtool.core.representation.springboot.EntityRepresentation;
 import br.xtool.core.representation.springboot.JavaEnumRepresentation;
+import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 import strman.Strman;
 
 @Service
@@ -34,11 +37,11 @@ public class AngularService {
 
 	@Autowired
 	private Workspace workspace;
-	
+
 	@Autowired
 	private FS fs;
 
-	public void newApp(String name) {
+	public void newApp(String name, String version) {
 		Map<String, Object> vars = new HashMap<String, Object>() {
 			private static final long serialVersionUID = 1L;
 			{
@@ -48,6 +51,7 @@ public class AngularService {
 		// @formatter:off
 		NgProjectRepresentation project = this.workspace.createProject(
 				ProjectRepresentation.Type.ANGULAR, 
+				version,
 				name, 
 				vars);
 		// @formatter:on
@@ -60,7 +64,17 @@ public class AngularService {
 		this.workspace.setWorkingProject(project);
 	}
 
-	public NgEntityRepresentation createNgEntity(NgProjectRepresentation ngProject, EntityRepresentation entity) {
+	/**
+	 * Cria uma nova classe Typescript de dominio em src/app/domain
+	 * 
+	 * @param ngProject Projeto Angular
+	 * @param entity    classe Jpa
+	 * @return classe Typescript
+	 */
+	public NgEntityRepresentation createNgEntity(EntityRepresentation entity) {
+		SpringBootProjectRepresentation springBootProject = this.workspace.getWorkingProject(SpringBootProjectRepresentation.class);
+		NgProjectRepresentation ngProject = springBootProject.getAssociatedAngularProject()
+				.orElseThrow(() -> new IllegalArgumentException("Não há nenhum projeto Angular associado ao projeto: " + springBootProject.getName()));
 		Map<String, Object> vars = new HashMap<String, Object>() {
 			private static final long serialVersionUID = 1L;
 			{
@@ -77,10 +91,25 @@ public class AngularService {
 		this.fs.copy(resourcePath, vars, destinationPath);
 		Path ngEntityPath = destinationPath.resolve(NgClassRepresentation.genFileName(entity.getName())).resolve(entity.getName().concat(".ts"));
 		NgEntityRepresentation ngEntity = new ENgEntityImpl(ngEntityPath);
+		
+		entity.getAttributes().stream()
+			.filter(EntityAttributeRepresentation::isEnumField)
+			.map(EntityAttributeRepresentation::getEnum)
+			.map(Optional::get)
+			.forEach(this::createNgEnum);
 		return ngEntity;
 	}
 
-	public NgEnumRepresentation createNgEnum(NgProjectRepresentation ngProject, JavaEnumRepresentation javaEnum) {
+	/**
+	 * 
+	 * @param ngProject
+	 * @param javaEnum
+	 * @return
+	 */
+	public NgEnumRepresentation createNgEnum(JavaEnumRepresentation javaEnum) {
+		SpringBootProjectRepresentation springBootProject = this.workspace.getWorkingProject(SpringBootProjectRepresentation.class);
+		NgProjectRepresentation ngProject = springBootProject.getAssociatedAngularProject()
+				.orElseThrow(() -> new IllegalArgumentException("Não há nenhum projeto Angular associado ao projeto: " + springBootProject.getName()));
 		Map<String, Object> vars = new HashMap<String, Object>() {
 			private static final long serialVersionUID = 1L;
 			{

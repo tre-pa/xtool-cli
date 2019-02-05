@@ -5,7 +5,7 @@ import java.util.Collection;
 
 import br.xtool.core.representation.angular.NgProjectRepresentation;
 import br.xtool.core.representation.impl.EBootProjectImpl;
-import br.xtool.core.representation.impl.ENgProjectImpl;
+import br.xtool.core.representation.impl.NgProjectRepresentationImpl;
 import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -97,7 +97,7 @@ public interface ProjectRepresentation extends Comparable<ProjectRepresentation>
 		if (SpringBootProjectRepresentation.class.isAssignableFrom(projectClass)) {
 			return new EBootProjectImpl(path);
 		} else if (NgProjectRepresentation.class.isAssignableFrom(projectClass)) {
-			return new ENgProjectImpl(path);
+			return new NgProjectRepresentationImpl(path);
 		}
 		throw new IllegalArgumentException(String.format("Factory de projeto não encontrada para %s", projectClass.getName()));
 	}

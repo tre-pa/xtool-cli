@@ -302,7 +302,7 @@ public class EBootProjectImpl extends EProjectImpl implements SpringBootProjectR
 		if (StringUtils.isNotEmpty(angularPath)) {
 			if (Files.exists(Paths.get(angularPath))) {
 				if (NgProjectRepresentation.isValid(Paths.get(angularPath))) {
-					return Optional.of(new ENgProjectImpl(Paths.get(angularPath)));
+					return Optional.of(new NgProjectRepresentationImpl(Paths.get(angularPath)));
 				}
 			}
 		}

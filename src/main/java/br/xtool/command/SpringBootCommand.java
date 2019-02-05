@@ -21,6 +21,7 @@ import br.xtool.core.representation.ProjectRepresentation;
 import br.xtool.core.representation.plantuml.PlantClassDiagramRepresentation;
 import br.xtool.core.representation.springboot.EntityRepresentation;
 import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
+import br.xtool.service.AngularService;
 import br.xtool.service.SpringBootService;
 import br.xtool.view.ShowClassDiagramView;
 
@@ -34,6 +35,9 @@ public class SpringBootCommand {
 
 	@Autowired
 	private SpringBootService springBootService;
+	
+	@Autowired
+	private AngularService angularService;
 
 	@Autowired
 	private ApplicationContext appCtx;
@@ -47,8 +51,13 @@ public class SpringBootCommand {
 	 */
 	@ShellMethod(key = "gen:entities", value = "Gera as classes Jpa do diagrama", group = XtoolCliApplication.SPRINGBOOT_COMMAND_GROUP)
 	@ShellMethodAvailability("availabilitySpringBootCommand")
-	public void genEntities(@ShellOption(help = "Gera as classes Typescript correspondentes", arity = 0, value = "ng-entities") boolean ngEntities) {
-		this.workspace.getWorkingProject(SpringBootProjectRepresentation.class).getMainDomainClassDiagram().getClasses().stream().forEach(springBootService::genEntity);
+	public void genEntities(@ShellOption(help = "Gera as classes Typescript correspondentes", arity = 0, value = "--ng-entities") boolean ngEntities) {
+		SpringBootProjectRepresentation project = this.workspace.getWorkingProject(SpringBootProjectRepresentation.class);
+		project.getMainDomainClassDiagram().getClasses().stream().forEach(springBootService::genEntity);
+		if (ngEntities) {
+			project.getEntities().stream()
+				.forEach(angularService::createNgEntity);
+		}
 	}
 
 	/**

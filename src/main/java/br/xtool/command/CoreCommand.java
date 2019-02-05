@@ -52,9 +52,11 @@ public class CoreCommand {
 	 * @param name Nome da aplicação.
 	 */
 	@ShellMethod(key = "new:app", value = "Novo projeto Spring Boot e Angular", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
-	public void newApp(@ShellOption(help = "Nome do projeto") String name) {
-		springBootService.newApp(name);
-		angularService.newApp(name);
+	public void newApp(@ShellOption(help = "Nome do projeto") String name, 
+			@ShellOption(help = "Versão da aplicação SpringBoot", defaultValue = "v2", value = "--springboot-version") String sbversion,
+			@ShellOption(help = "Versão da aplicação Angular", defaultValue = "v7", value = "--angular-version") String ngversion) {
+		springBootService.newApp(name, sbversion);
+		angularService.newApp(name, ngversion);
 	}
 
 	/**
@@ -63,8 +65,8 @@ public class CoreCommand {
 	 * @param name Nome do Projeto Spring Boot
 	 */
 	@ShellMethod(key = "new:springboot", value = "Novo projeto Spring Boot v2", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
-	public void newAppSringBoot(@ShellOption(help = "Nome do projeto") String name) {
-		springBootService.newApp(name);
+	public void newAppSringBoot(@ShellOption(help = "Nome do projeto") String name, @ShellOption(help = "Versão da aplicação", defaultValue = "v2") String version) {
+		springBootService.newApp(name, version);
 	}
 
 	/**
@@ -74,8 +76,8 @@ public class CoreCommand {
 	 * @throws IOException
 	 */
 	@ShellMethod(key = "new:angular", value = "Novo projeto Angular 7.x", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
-	public void newAppAngular(@ShellOption(help = "Nome do projeto") String name) throws IOException {
-		angularService.newApp(name);
+	public void newAppAngular(@ShellOption(help = "Nome do projeto") String name, @ShellOption(help = "Versão da aplicação", defaultValue = "v7") String version) throws IOException {
+		angularService.newApp(name, version);
 	}
 
 	/**
