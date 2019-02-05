@@ -50,7 +50,7 @@ public class EWorkspaceImpl implements WorkspaceRepresentation {
 			this.angularProjects = Files.list(this.path)
 					.filter(Files::isDirectory)
 					.filter(NgProjectRepresentation::isValid)
-					.map(ENgProjectImpl::new)
+					.map(NgProjectRepresentationImpl::new)
 					.collect(Collectors.toCollection(TreeSet::new));
 			// @formatter:on
 		}

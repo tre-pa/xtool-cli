@@ -104,7 +104,7 @@ public class SpringBootService {
 	 * 
 	 * @param name Nome do projeto Spring Boot.
 	 */
-	public void newApp(String name) {
+	public void newApp(String name, String version) {
 		Map<String, Object> vars = new HashMap<String, Object>();
 		vars.put("projectName", genProjectName(name));
 		vars.put("baseClassName", genBaseClassName(name));
@@ -112,6 +112,7 @@ public class SpringBootService {
 		// @formatter:off
 		SpringBootProjectRepresentation bootProject = this.workspace.createProject(
 				ProjectRepresentation.Type.SPRINGBOOT, 
+				version,
 				genProjectName(name), 
 				vars);
 		// @formatter:on
@@ -132,12 +133,12 @@ public class SpringBootService {
 			save(javaEnum);
 		});
 		save(javaClass);
-		// Gera as classes dos relacionamento associados a classe.
-		plantClass.getRelationships().stream().forEach(plantRelationship -> {
-			if (springBootProject.getEntities().stream().noneMatch(entity -> entity.getName().equals(plantRelationship.getTargetClass().getName()))) {
-				genEntity(plantRelationship.getTargetClass());
-			}
-		});
+//		// Gera as classes dos relacionamento associados a classe.
+//		plantClass.getRelationships().stream().forEach(plantRelationship -> {
+//			if (springBootProject.getEntities().stream().noneMatch(entity -> entity.getName().equals(plantRelationship.getTargetClass().getName()))) {
+//				genEntity(plantRelationship.getTargetClass());
+//			}
+//		});
 		springBootProject.refresh();
 		return new EntityRepresentationImpl(springBootProject, javaClass.getRoasterJavaClass());
 	}

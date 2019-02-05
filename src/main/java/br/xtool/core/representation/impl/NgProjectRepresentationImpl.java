@@ -24,11 +24,11 @@ import br.xtool.core.representation.angular.NgServiceRepresentation;
 import lombok.Getter;
 
 @Getter
-public class ENgProjectImpl extends EProjectImpl implements NgProjectRepresentation {
+public class NgProjectRepresentationImpl extends EProjectImpl implements NgProjectRepresentation {
 
 	private Map<String, NgClassRepresentation> ngClasses;
 
-	public ENgProjectImpl(Path path) {
+	public NgProjectRepresentationImpl(Path path) {
 		super(path);
 	}
 
@@ -225,8 +225,10 @@ public class ENgProjectImpl extends EProjectImpl implements NgProjectRepresentat
 	public Version getProjectVersion() {
 		Pattern v5pattern = Pattern.compile("[\\^~]?5\\.2\\.\\d");
 		Pattern v6pattern = Pattern.compile("[\\^~]?6\\.\\d\\.\\d");
+		Pattern v7pattern = Pattern.compile("[\\^~]?7\\.\\d\\.\\d");
 		if (v5pattern.matcher(getFrameworkVersion()).matches()) return Version.V5;
 		if (v6pattern.matcher(getFrameworkVersion()).matches()) return Version.V6;
+		if (v7pattern.matcher(getFrameworkVersion()).matches()) return Version.V7;
 		return Version.NONE;
 	}
 

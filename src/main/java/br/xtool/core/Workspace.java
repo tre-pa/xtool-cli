@@ -58,6 +58,6 @@ public interface Workspace {
 	 * @param vars
 	 * @return
 	 */
-	<T extends ProjectRepresentation> T createProject(ProjectRepresentation.Type type, String name, Map<String, Object> vars);
+	<T extends ProjectRepresentation> T createProject(ProjectRepresentation.Type type, String version, String name, Map<String, Object> vars);
 
 }

@@ -1,29 +1,47 @@
 package br.xtool.service;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import br.xtool.core.ConsoleLog;
+import br.xtool.core.FS;
 import br.xtool.core.Shell;
 import br.xtool.core.Workspace;
 import br.xtool.core.representation.ProjectRepresentation;
+import br.xtool.core.representation.angular.NgClassRepresentation;
+import br.xtool.core.representation.angular.NgEntityRepresentation;
+import br.xtool.core.representation.angular.NgEnumRepresentation;
 import br.xtool.core.representation.angular.NgProjectRepresentation;
+import br.xtool.core.representation.impl.ENgEntityImpl;
+import br.xtool.core.representation.impl.ENgEnumImpl;
+import br.xtool.core.representation.springboot.EntityAttributeRepresentation;
+import br.xtool.core.representation.springboot.EntityRepresentation;
+import br.xtool.core.representation.springboot.JavaEnumRepresentation;
+import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
+import strman.Strman;
 
 @Service
 @Lazy
 public class AngularService {
-	
+
 	@Autowired
 	private Shell shellService;
 
 	@Autowired
 	private Workspace workspace;
 
-	public void newApp(String name) {
+	@Autowired
+	private FS fs;
+
+	public void newApp(String name, String version) {
 		Map<String, Object> vars = new HashMap<String, Object>() {
 			private static final long serialVersionUID = 1L;
 			{
@@ -33,6 +51,7 @@ public class AngularService {
 		// @formatter:off
 		NgProjectRepresentation project = this.workspace.createProject(
 				ProjectRepresentation.Type.ANGULAR, 
+				version,
 				name, 
 				vars);
 		// @formatter:on
@@ -43,5 +62,70 @@ public class AngularService {
 		this.shellService.runCmd(project.getPath(), "git commit -m \"Inicial commit\" ");
 
 		this.workspace.setWorkingProject(project);
+	}
+
+	/**
+	 * Cria uma nova classe Typescript de dominio em src/app/domain
+	 * 
+	 * @param ngProject Projeto Angular
+	 * @param entity    classe Jpa
+	 * @return classe Typescript
+	 */
+	public NgEntityRepresentation createNgEntity(EntityRepresentation entity) {
+		SpringBootProjectRepresentation springBootProject = this.workspace.getWorkingProject(SpringBootProjectRepresentation.class);
+		NgProjectRepresentation ngProject = springBootProject.getAssociatedAngularProject()
+				.orElseThrow(() -> new IllegalArgumentException("Não há nenhum projeto Angular associado ao projeto: " + springBootProject.getName()));
+		Map<String, Object> vars = new HashMap<String, Object>() {
+			private static final long serialVersionUID = 1L;
+			{
+				put("Strman", Strman.class);
+				put("entityFileName", NgClassRepresentation.genFileName(entity.getName()));
+				put("entityClassName", entity.getName());
+				put("entity", entity);
+				put("typescriptTypeMap", NgClassRepresentation.typescriptTypeMap());
+			}
+		};
+		Path resourcePath = Paths.get("angular").resolve(ngProject.getProjectVersion().getName()).resolve("domain");
+		Path destinationPath = ngProject.getNgAppModule().getPath().getParent().resolve("domain");
+
+		this.fs.copy(resourcePath, vars, destinationPath);
+		Path ngEntityPath = destinationPath.resolve(NgClassRepresentation.genFileName(entity.getName())).resolve(entity.getName().concat(".ts"));
+		NgEntityRepresentation ngEntity = new ENgEntityImpl(ngEntityPath);
+		
+		entity.getAttributes().stream()
+			.filter(EntityAttributeRepresentation::isEnumField)
+			.map(EntityAttributeRepresentation::getEnum)
+			.map(Optional::get)
+			.forEach(this::createNgEnum);
+		return ngEntity;
+	}
+
+	/**
+	 * 
+	 * @param ngProject
+	 * @param javaEnum
+	 * @return
+	 */
+	public NgEnumRepresentation createNgEnum(JavaEnumRepresentation javaEnum) {
+		SpringBootProjectRepresentation springBootProject = this.workspace.getWorkingProject(SpringBootProjectRepresentation.class);
+		NgProjectRepresentation ngProject = springBootProject.getAssociatedAngularProject()
+				.orElseThrow(() -> new IllegalArgumentException("Não há nenhum projeto Angular associado ao projeto: " + springBootProject.getName()));
+		Map<String, Object> vars = new HashMap<String, Object>() {
+			private static final long serialVersionUID = 1L;
+			{
+				put("Strman", Strman.class);
+				put("javaEnumFileName", NgClassRepresentation.genFileName(javaEnum.getName()));
+				put("javaEnumClassName", javaEnum.getName());
+				put("javaEnum", javaEnum);
+				put("javaEnumConstants", StringUtils.join(javaEnum.getConstants(), ","));
+			}
+		};
+		Path resourcePath = Paths.get("angular").resolve(ngProject.getProjectVersion().getName()).resolve("enums");
+		Path destinationPath = ngProject.getNgAppModule().getPath().getParent().resolve("domain").resolve("enums");
+		this.fs.copy(resourcePath, vars, destinationPath);
+		Path ngEnumPath = destinationPath.resolve(NgClassRepresentation.genFileName(javaEnum.getName())).resolve(javaEnum.getName().concat(".ts"));
+
+		NgEnumRepresentation ngEnum = new ENgEnumImpl(ngEnumPath);
+		return ngEnum;
 	}
 }

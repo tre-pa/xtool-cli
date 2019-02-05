@@ -1,0 +1,40 @@
+#set($SQ = "'")
+#set($C1 = "[") 
+#set($C2 = "]")
+##
+## Macro com para geração de nome de import no typescript
+##
+#macro(tsImport $type)##
+$SQ./$Strman.toKebabCase($type)$SQ;
+#end
+
+##Itera sobre os atributos de relacionamento toOne
+#foreach($attribute in $entity.toOneRelationshipAttributes)
+import { $attribute.type } from #tsImport($attribute.type.name);
+#end
+##Itera sobre os atributos de relacionamento toMany
+#foreach($attribute in $entity.toManyRelationshipAttributes)
+import { $attribute.type.typeArguments[0].name } from #tsImport($attribute.type.typeArguments[0].name);
+#end
+##Itera sobre os atributos do tipo enum
+#foreach($attribute in $entity.enumAttributes)
+import { $attribute.type } from $SQ./enums/$Strman.toKebabCase($attribute.type.name)$SQ;
+#end
+
+export class ${entityClassName} {
+##Itera sobre os atributos simples
+#foreach($attribute in $entity.simpleAttributes)
+	$attribute.name?: $typescriptTypeMap[$attribute.type.name];
+#end
+#foreach($attribute in $entity.toOneRelationshipAttributes)
+	$attribute.name?: $attribute.type.name;
+#end
+##Itera sobre os atributos de relacionamento
+#foreach($attribute in $entity.toManyRelationshipAttributes)
+	$attribute.name?: $attribute.type.typeArguments[0].name$C1$C2;
+#end
+##Itera sobre os atributos do tipo enum
+#foreach($attribute in $entity.enumAttributes)
+	$attribute.name?: $attribute.type.name;
+#end
+}
