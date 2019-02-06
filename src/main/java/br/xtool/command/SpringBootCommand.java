@@ -35,7 +35,7 @@ public class SpringBootCommand {
 
 	@Autowired
 	private SpringBootService springBootService;
-	
+
 	@Autowired
 	private AngularService angularService;
 
@@ -55,8 +55,7 @@ public class SpringBootCommand {
 		SpringBootProjectRepresentation project = this.workspace.getWorkingProject(SpringBootProjectRepresentation.class);
 		project.getMainDomainClassDiagram().getClasses().stream().forEach(springBootService::genEntity);
 		if (ngEntities) {
-			project.getEntities().stream()
-				.forEach(angularService::createNgEntity);
+			project.getEntities().stream().forEach(angularService::createNgEntity);
 		}
 	}
 
@@ -104,17 +103,32 @@ public class SpringBootCommand {
 	 */
 	@ShellMethod(key = "gen:rest", value = "Gera uma classe Rest em um projeto Spring Boot", group = XtoolCliApplication.SPRINGBOOT_COMMAND_GROUP)
 	@ShellMethodAvailability("availabilitySpringBootCommand")
-	public void genRest(@ShellOption(help = "Entidade JPA", valueProvider = EntityRepresentationValueProvider.class, defaultValue = "") EntityRepresentation entity,
-			@ShellOption(help="Gera as classes de serviço no projeto Angular associado", arity=0, value="--ng-service") boolean ngService) {
+	public void genRest(@ShellOption(help = "Entidade JPA", valueProvider = EntityRepresentationValueProvider.class, defaultValue = "") EntityRepresentation entity) {
 		if (Objects.isNull(entity)) {
 			// @formatter:off
 			this.workspace.getWorkingProject(SpringBootProjectRepresentation.class).getEntities().stream()
-				.peek(angularService::genNgService)
 				.forEach(springBootService::genRest);
 			// @formatter:on
 			return;
 		}
 		springBootService.genRest(entity);
+	}
+
+	/**
+	 * Comando qu gera uma nova classe de Rest.
+	 * 
+	 * @param repository
+	 */
+	@ShellMethod(key = "gen:ng-service", value = "Gera uma classe Service Angular", group = XtoolCliApplication.SPRINGBOOT_COMMAND_GROUP)
+	@ShellMethodAvailability("availabilitySpringBootCommand")
+	public void genNgService(@ShellOption(help = "Entidade JPA", valueProvider = EntityRepresentationValueProvider.class, defaultValue = "") EntityRepresentation entity) {
+		if (Objects.isNull(entity)) {
+			// @formatter:off
+			this.workspace.getWorkingProject(SpringBootProjectRepresentation.class).getEntities().stream()
+				.forEach(angularService::genNgService);
+			// @formatter:on
+			return;
+		}
 		angularService.genNgService(entity);
 	}
 
