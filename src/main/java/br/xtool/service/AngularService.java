@@ -20,8 +20,10 @@ import br.xtool.core.representation.angular.NgClassRepresentation;
 import br.xtool.core.representation.angular.NgEntityRepresentation;
 import br.xtool.core.representation.angular.NgEnumRepresentation;
 import br.xtool.core.representation.angular.NgProjectRepresentation;
+import br.xtool.core.representation.angular.NgServiceRepresentation;
 import br.xtool.core.representation.impl.ENgEntityImpl;
 import br.xtool.core.representation.impl.ENgEnumImpl;
+import br.xtool.core.representation.impl.ENgServiceImpl;
 import br.xtool.core.representation.springboot.EntityAttributeRepresentation;
 import br.xtool.core.representation.springboot.EntityRepresentation;
 import br.xtool.core.representation.springboot.JavaEnumRepresentation;
@@ -91,12 +93,8 @@ public class AngularService {
 		this.fs.copy(resourcePath, vars, destinationPath);
 		Path ngEntityPath = destinationPath.resolve(NgClassRepresentation.genFileName(entity.getName())).resolve(entity.getName().concat(".ts"));
 		NgEntityRepresentation ngEntity = new ENgEntityImpl(ngEntityPath);
-		
-		entity.getAttributes().stream()
-			.filter(EntityAttributeRepresentation::isEnumField)
-			.map(EntityAttributeRepresentation::getEnum)
-			.map(Optional::get)
-			.forEach(this::createNgEnum);
+
+		entity.getAttributes().stream().filter(EntityAttributeRepresentation::isEnumField).map(EntityAttributeRepresentation::getEnum).map(Optional::get).forEach(this::createNgEnum);
 		return ngEntity;
 	}
 
@@ -127,5 +125,35 @@ public class AngularService {
 
 		NgEnumRepresentation ngEnum = new ENgEnumImpl(ngEnumPath);
 		return ngEnum;
+	}
+
+	/**
+	 * Cria uma nova classe Typescript de dominio em src/app/domain
+	 * 
+	 * @param ngProject Projeto Angular
+	 * @param entity    classe Jpa
+	 * @return classe Typescript
+	 */
+	public NgServiceRepresentation genNgService(EntityRepresentation entity) {
+		SpringBootProjectRepresentation springBootProject = this.workspace.getWorkingProject(SpringBootProjectRepresentation.class);
+		NgProjectRepresentation ngProject = springBootProject.getAssociatedAngularProject()
+				.orElseThrow(() -> new IllegalArgumentException("Não há nenhum projeto Angular associado ao projeto: " + springBootProject.getName()));
+		Map<String, Object> vars = new HashMap<String, Object>() {
+			private static final long serialVersionUID = 1L;
+			{
+				put("Strman", Strman.class);
+				put("entityFileName", NgClassRepresentation.genFileName(entity.getName()));
+				put("entityClassName", entity.getName());
+				put("entity", entity);
+				put("typescriptTypeMap", NgClassRepresentation.typescriptTypeMap());
+			}
+		};
+		Path resourcePath = Paths.get("angular").resolve(ngProject.getProjectVersion().getName()).resolve("service");
+		Path destinationPath = ngProject.getNgAppModule().getPath().getParent().resolve("service");
+
+		this.fs.copy(resourcePath, vars, destinationPath);
+		Path ngServicePath = destinationPath.resolve(NgClassRepresentation.genFileName(entity.getName()).concat(".service")).resolve(entity.getName().concat(".ts"));
+		NgServiceRepresentation ngService = new ENgServiceImpl(ngServicePath);
+		return ngService;
 	}
 }

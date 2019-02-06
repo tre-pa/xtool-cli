@@ -1,0 +1,16 @@
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+
+import { CrudService } from 'src/app/shared/crud.service';
+import { ${entityClassName} } from 'src/app/domain/${entityFileName}';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ${entityClassName}Service extends CrudService<${entityClassName}> {
+
+  constructor(private http: HttpClient) {
+    super(http, '/${entityFileName}');
+  }
+
+}

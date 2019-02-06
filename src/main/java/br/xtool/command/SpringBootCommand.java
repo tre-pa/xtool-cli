@@ -104,15 +104,18 @@ public class SpringBootCommand {
 	 */
 	@ShellMethod(key = "gen:rest", value = "Gera uma classe Rest em um projeto Spring Boot", group = XtoolCliApplication.SPRINGBOOT_COMMAND_GROUP)
 	@ShellMethodAvailability("availabilitySpringBootCommand")
-	public void genRest(@ShellOption(help = "Entidade JPA", valueProvider = EntityRepresentationValueProvider.class, defaultValue = "") EntityRepresentation entity) {
+	public void genRest(@ShellOption(help = "Entidade JPA", valueProvider = EntityRepresentationValueProvider.class, defaultValue = "") EntityRepresentation entity,
+			@ShellOption(help="Gera as classes de serviço no projeto Angular associado", arity=0, value="--ng-service") boolean ngService) {
 		if (Objects.isNull(entity)) {
 			// @formatter:off
 			this.workspace.getWorkingProject(SpringBootProjectRepresentation.class).getEntities().stream()
+				.peek(angularService::genNgService)
 				.forEach(springBootService::genRest);
 			// @formatter:on
 			return;
 		}
 		springBootService.genRest(entity);
+		angularService.genNgService(entity);
 	}
 
 	@ShellMethod(key = "show:class-diagram", value = "Exibe o diagrama de classe do projeto", group = XtoolCliApplication.SPRINGBOOT_COMMAND_GROUP)
