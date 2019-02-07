@@ -10,7 +10,7 @@ import { ${entityClassName} } from 'src/app/domain/${entityFileName}';
 export class ${entityClassName}Service extends CrudService<${entityClassName}> {
 
   constructor(private http: HttpClient) {
-    super(http, '/${entityFileName}');
+    super(http, '/${entityApiName}');
   }
 
 }
