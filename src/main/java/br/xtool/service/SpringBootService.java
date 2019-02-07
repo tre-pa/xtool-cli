@@ -52,52 +52,12 @@ public class SpringBootService {
 
 	@Autowired
 	private Workspace workspace;
-	
+
 	@Autowired
 	private Shell shellService;
 
 	@Autowired
 	private ApplicationContext appCtx;
-
-	/**
-	 * Gera um nome de projeto válido.
-	 * 
-	 * @param commomName
-	 * @return
-	 */
-	public String genProjectName(String commomName) {
-		// @formatter:off
-		return StringUtils.lowerCase(
-				Strman.toKebabCase(
-					StringUtils.endsWithIgnoreCase(commomName, "-service") ? 
-						commomName : 
-						commomName.concat("-service")
-						)
-				);
-		// @formatter:on
-	}
-
-	/**
-	 * Gera um nome de classe base (Classe main) valido.
-	 * 
-	 * @param projectName
-	 * @return
-	 */
-	public String genBaseClassName(String projectName) {
-		return Strman.toStudlyCase(projectName.endsWith("Application") ? projectName.replace("Application", "") : projectName);
-
-	}
-
-	/**
-	 * Gera um nome de pacote base válido.
-	 * 
-	 * @param projectName
-	 * @return
-	 */
-	public JavaPackageRepresentation genRootPackage(String projectName) {
-		String packageName = JavaPackageRepresentation.getDefaultPrefix().concat(".").concat(StringUtils.join(StringUtils.split(Strman.toKebabCase(projectName), "-"), "."));
-		return EJavaPackageImpl.of(packageName);
-	}
 
 	/**
 	 * Cria uma nova aplicação Spring Boot.
@@ -226,7 +186,8 @@ public class SpringBootService {
 	@SneakyThrows
 	private void save(JavaTypeRepresentation<?> javaType) {
 		Path javaPath = javaType.getProject().getMainSourceFolder().getPath().resolve(javaType.getJavaPackage().getDir()).resolve(String.format("%s.java", javaType.getName()));
-		if (Files.notExists(javaPath.getParent())) Files.createDirectories(javaPath.getParent());
+		if (Files.notExists(javaPath.getParent()))
+			Files.createDirectories(javaPath.getParent());
 		Properties prefs = new Properties();
 		prefs.setProperty(JavaCore.COMPILER_SOURCE, CompilerOptions.VERSION_1_8);
 		prefs.setProperty(JavaCore.COMPILER_COMPLIANCE, CompilerOptions.VERSION_1_8);
@@ -243,6 +204,46 @@ public class SpringBootService {
 			javaType.getProject().refresh();
 			ConsoleLog.print(ConsoleLog.cyan(" + "), ConsoleLog.white(javaType.getQualifiedName()));
 		}
+	}
+
+	/**
+	 * Gera um nome de projeto válido.
+	 * 
+	 * @param commomName
+	 * @return
+	 */
+	public String genProjectName(String commomName) {
+		// @formatter:off
+		return StringUtils.lowerCase(
+				Strman.toKebabCase(
+					StringUtils.endsWithIgnoreCase(commomName, "-service") ? 
+						commomName : 
+						commomName.concat("-service")
+						)
+				);
+		// @formatter:on
+	}
+
+	/**
+	 * Gera um nome de classe base (Classe main) valido.
+	 * 
+	 * @param projectName
+	 * @return
+	 */
+	public String genBaseClassName(String projectName) {
+		return Strman.toStudlyCase(projectName.endsWith("Application") ? projectName.replace("Application", "") : projectName);
+
+	}
+
+	/**
+	 * Gera um nome de pacote base válido.
+	 * 
+	 * @param projectName
+	 * @return
+	 */
+	public JavaPackageRepresentation genRootPackage(String projectName) {
+		String packageName = JavaPackageRepresentation.getDefaultPrefix().concat(".").concat(StringUtils.join(StringUtils.split(Strman.toKebabCase(projectName), "-"), "."));
+		return EJavaPackageImpl.of(packageName);
 	}
 
 }
