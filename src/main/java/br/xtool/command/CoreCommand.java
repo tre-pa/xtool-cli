@@ -8,10 +8,7 @@ import java.io.IOException;
 import java.util.Optional;
 import java.util.function.Consumer;
 
-import javax.swing.SwingUtilities;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
@@ -24,7 +21,6 @@ import br.xtool.core.representation.angular.NgProjectRepresentation;
 import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 import br.xtool.service.AngularService;
 import br.xtool.service.SpringBootService;
-import br.xtool.view.ShowClassDiagramView;
 
 /**
  * Classe com os comandos padrões.
@@ -41,9 +37,6 @@ public class CoreCommand {
 	private AngularService angularService;
 
 	@Autowired
-	private ApplicationContext appCtx;
-
-	@Autowired
 	private Workspace workspace;
 
 	/**
@@ -52,8 +45,7 @@ public class CoreCommand {
 	 * @param name Nome da aplicação.
 	 */
 	@ShellMethod(key = "new:app", value = "Novo projeto Spring Boot e Angular", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
-	public void newApp(@ShellOption(help = "Nome do projeto") String name, 
-			@ShellOption(help = "Versão da aplicação SpringBoot", defaultValue = "v2", value = "--springboot-version") String sbversion,
+	public void newApp(@ShellOption(help = "Nome do projeto") String name, @ShellOption(help = "Versão da aplicação SpringBoot", defaultValue = "v2", value = "--springboot-version") String sbversion,
 			@ShellOption(help = "Versão da aplicação Angular", defaultValue = "v7", value = "--angular-version") String ngversion) {
 		springBootService.newApp(name, sbversion);
 		angularService.newApp(name, ngversion);

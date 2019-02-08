@@ -12,15 +12,13 @@ import br.xtool.service.AngularService;
 
 @ShellComponent
 public class AngularCommand {
-	
+
 	@Autowired
 	private AngularService angularService;
-	
+
 	@Autowired
 	private Workspace workspace;
 
-
-	
 	public Availability availabilityAngularCommand() throws IOException {
 		return this.workspace.getWorkingProject().getProjectType().equals(ProjectRepresentation.Type.ANGULAR) ? Availability.available()
 				: Availability.unavailable("O diretório de trabalho não é um projeto angular válido. Use o comando cd para alterar o diretório de trabalho.");
