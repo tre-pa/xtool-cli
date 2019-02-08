@@ -14,12 +14,12 @@ import org.springframework.stereotype.Service;
 
 import br.xtool.core.FS;
 import br.xtool.core.Workspace;
+import br.xtool.core.implementation.representation.NoneProjectRepresentationImpl;
+import br.xtool.core.implementation.representation.WorkspaceRepresentationImpl;
 import br.xtool.core.representation.ProjectRepresentation;
 import br.xtool.core.representation.ProjectRepresentation.Type;
 import br.xtool.core.representation.ProjectRepresentation.Version;
 import br.xtool.core.representation.WorkspaceRepresentation;
-import br.xtool.core.representation.impl.NoneProjectRepresentationImpl;
-import br.xtool.core.representation.impl.WorkspaceRepresentationImpl;
 import lombok.Getter;
 import lombok.SneakyThrows;
 

@@ -14,13 +14,13 @@ import com.google.common.collect.ImmutableMap;
 import br.xtool.core.FS;
 import br.xtool.core.Shell;
 import br.xtool.core.implementation.NgProject;
+import br.xtool.core.implementation.representation.NgPageRepresentationImpl;
 import br.xtool.core.representation.angular.NgComponentRepresentation;
 import br.xtool.core.representation.angular.NgDialogRepresentation;
 import br.xtool.core.representation.angular.NgModuleRepresentation;
 import br.xtool.core.representation.angular.NgPageRepresentation;
 import br.xtool.core.representation.angular.NgProjectRepresentation;
 import br.xtool.core.representation.angular.NgServiceRepresentation;
-import br.xtool.core.representation.impl.NgPageRepresentationImpl;
 import lombok.NonNull;
 
 @Service

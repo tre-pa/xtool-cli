@@ -12,34 +12,61 @@ import org.jboss.forge.roaster.model.source.FieldSource;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 
 /**
- * Representação de um campo de classe java.
+ * Representação de um atributo de uma classe java.
  * 
  * @author jcruz
  *
  */
 public interface JavaFieldRepresentation extends Comparable<JavaFieldRepresentation> {
 
+	/**
+	 * Retorna o nome do atributo.
+	 * 
+	 * @return
+	 */
 	String getName();
 
+	/**
+	 * Retorna o tipo do atributo.
+	 * 
+	 * @return
+	 */
 	Type<JavaClassSource> getType();
 
-	boolean isCollection();
-
-	boolean isStatic();
-
-	Optional<JavaEnumRepresentation> getEnum();
+	/**
+	 * Verifica se o atributo é uma coleção (Tipo List ou Set)
+	 * 
+	 * @return
+	 */
+	boolean isCollectionField();
 
 	/**
+	 * Verifica se o atributo é estático.
+	 * 
+	 * @return
+	 */
+	boolean isStaticField();
+
+	/**
+	 * Verifica se atributo é do tipo Enum.
 	 * 
 	 * @return
 	 */
 	boolean isEnumField();
 
-	JavaClassRepresentation getJavaClass();
+	/**
+	 * Verifica se o atributo é um relacionamento.
+	 * 
+	 * @return
+	 */
+	boolean isRelationshipField();
 
-	SortedSet<JavaAnnotationRepresentation<JavaClassSource>> getAnnotations();
-
-	JavaAnnotationRepresentation<JavaClassSource> addAnnotation(Class<? extends Annotation> type);
+	/**
+	 * Retorna a representação do Enum do atributo.
+	 * 
+	 * @return
+	 */
+	Optional<JavaEnumRepresentation> getEnum();
 
 	/**
 	 * Retorna o relacionamento JPA.
@@ -48,7 +75,22 @@ public interface JavaFieldRepresentation extends Comparable<JavaFieldRepresentat
 	 */
 	Optional<JavaRelationshipRepresentation> getRelationship();
 
-	boolean isRelationshipField();
+	/**
+	 * Retorna a classe do atributo.
+	 * 
+	 * @return
+	 */
+	JavaClassRepresentation getJavaClass();
+
+	/**
+	 * Retorna as annotation associadas ao atributo.
+	 * 
+	 * @return
+	 */
+	SortedSet<JavaAnnotationRepresentation<JavaClassSource>> getAnnotations();
+
+	@Deprecated
+	JavaAnnotationRepresentation<JavaClassSource> addAnnotation(Class<? extends Annotation> type);
 
 	FieldSource<JavaClassSource> getRoasterField();
 

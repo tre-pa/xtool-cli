@@ -9,9 +9,9 @@ import java.util.SortedSet;
 
 import org.jboss.forge.roaster.model.JavaUnit;
 
+import br.xtool.core.implementation.representation.PomRepresentationImpl;
 import br.xtool.core.representation.ProjectRepresentation;
 import br.xtool.core.representation.angular.NgProjectRepresentation;
-import br.xtool.core.representation.impl.PomRepresentationImpl;
 import br.xtool.core.representation.plantuml.PlantClassDiagramRepresentation;
 
 /**

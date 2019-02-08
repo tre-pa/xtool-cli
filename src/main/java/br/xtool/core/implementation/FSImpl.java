@@ -14,9 +14,9 @@ import org.springframework.stereotype.Service;
 
 import br.xtool.core.ConsoleLog;
 import br.xtool.core.FS;
+import br.xtool.core.implementation.representation.ResourceRepresentationImpl;
 import br.xtool.core.representation.ProjectRepresentation;
 import br.xtool.core.representation.ResourceRepresentation;
-import br.xtool.core.representation.impl.ResourceRepresentationImpl;
 import lombok.SneakyThrows;
 
 @Service

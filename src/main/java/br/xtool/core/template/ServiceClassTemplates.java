@@ -3,7 +3,7 @@ package br.xtool.core.template;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.xtool.core.representation.impl.ServiceClassRepresentationImpl;
+import br.xtool.core.implementation.representation.ServiceClassRepresentationImpl;
 import br.xtool.core.representation.springboot.RepositoryRepresentation;
 import br.xtool.core.representation.springboot.ServiceClassRepresentation;
 import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;

@@ -3,9 +3,9 @@ package br.xtool.core.representation;
 import java.nio.file.Path;
 import java.util.Collection;
 
+import br.xtool.core.implementation.representation.NgProjectRepresentationImpl;
+import br.xtool.core.implementation.representation.SpringBootProjectRepresentationImpl;
 import br.xtool.core.representation.angular.NgProjectRepresentation;
-import br.xtool.core.representation.impl.SpringBootProjectRepresentationImpl;
-import br.xtool.core.representation.impl.NgProjectRepresentationImpl;
 import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

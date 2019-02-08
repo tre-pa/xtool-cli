@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import org.jdom2.Namespace;
 
-import br.xtool.core.representation.impl.PomDependencyRepresentationImpl.ScopeType;
+import br.xtool.core.implementation.representation.PomDependencyRepresentationImpl.ScopeType;
 
 /**
  * Representação do arquivo pom.xml do projeto Spring Boot.

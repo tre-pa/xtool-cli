@@ -6,8 +6,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.SortedSet;
 
+import br.xtool.core.implementation.representation.NgPackageRepresentationImpl;
 import br.xtool.core.representation.ProjectRepresentation;
-import br.xtool.core.representation.impl.NgPackageRepresentationImpl;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

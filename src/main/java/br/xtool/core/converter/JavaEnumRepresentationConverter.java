@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import br.xtool.core.Workspace;
-import br.xtool.core.representation.impl.JavaEnumRepresentationImpl;
+import br.xtool.core.implementation.representation.JavaEnumRepresentationImpl;
 import br.xtool.core.representation.plantuml.PlantEnumRepresentation;
 import br.xtool.core.representation.springboot.JavaEnumRepresentation;
 import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;

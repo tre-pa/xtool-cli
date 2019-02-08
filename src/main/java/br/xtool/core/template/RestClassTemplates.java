@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.xtool.core.JavaTemplate;
-import br.xtool.core.representation.impl.RestClassRepresentationImpl;
+import br.xtool.core.implementation.representation.RestClassRepresentationImpl;
 import br.xtool.core.representation.springboot.JavaMethodRepresentation;
 import br.xtool.core.representation.springboot.RepositoryRepresentation;
 import br.xtool.core.representation.springboot.RestClassRepresentation;

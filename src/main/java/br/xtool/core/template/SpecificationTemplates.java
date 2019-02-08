@@ -5,7 +5,7 @@ import org.jboss.forge.roaster.model.source.MethodSource;
 import org.springframework.data.jpa.domain.Specification;
 
 import br.xtool.core.JavaTemplate;
-import br.xtool.core.representation.impl.SpecificationRepresentationImpl;
+import br.xtool.core.implementation.representation.SpecificationRepresentationImpl;
 import br.xtool.core.representation.springboot.EntityRepresentation;
 import br.xtool.core.representation.springboot.SpecificationRepresentation;
 import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
