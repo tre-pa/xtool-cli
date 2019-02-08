@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import br.xtool.core.Workspace;
-import br.xtool.core.representation.impl.EJavaEnumImpl;
+import br.xtool.core.representation.impl.JavaEnumRepresentationImpl;
 import br.xtool.core.representation.plantuml.PlantEnumRepresentation;
 import br.xtool.core.representation.springboot.JavaEnumRepresentation;
 import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
@@ -33,9 +33,9 @@ public class JavaEnumRepresentationConverter implements Function<PlantEnumRepres
 				.filter(javaUnit -> javaUnit.getGoverningType().isEnum())
 				.filter(javaUnit -> javaUnit.getGoverningType().getName().equals(plantEnum.getName()))
 				.map(javaUnit -> javaUnit.<JavaEnumSource>getGoverningType())
-				.map(javaEnumSource -> new EJavaEnumImpl(springBootProject, javaEnumSource))
+				.map(javaEnumSource -> new JavaEnumRepresentationImpl(springBootProject, javaEnumSource))
 				.findFirst()
-				.orElseGet(() -> new EJavaEnumImpl(springBootProject,RoasterUtil.createJavaEnumSource(plantEnum.getUmlPackage().getName(),plantEnum.getName())));
+				.orElseGet(() -> new JavaEnumRepresentationImpl(springBootProject,RoasterUtil.createJavaEnumSource(plantEnum.getUmlPackage().getName(),plantEnum.getName())));
 		plantEnum.getValues().stream()
 			.filter(value -> !javaEnum.getConstants().contains(value))
 			.forEach(value -> javaEnum.getRoasterEnum().addEnumConstant(value));

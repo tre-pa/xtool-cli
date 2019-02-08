@@ -42,7 +42,7 @@ public class EntityRepresentationImpl extends JavaClassRepresentationImpl implem
 		// @formatter:off
 		return this.javaClassSource.getFields().stream()
 			.filter(fieldSource -> !fieldSource.isStatic())
-			.map(fieldSource -> new EJpaAttributeImpl(this.getProject(),this, fieldSource))
+			.map(fieldSource -> new EntityAttributeRepresentationImpl(this.getProject(),this, fieldSource))
 			.collect(Collectors.toList());
 		// @formatter:on
 	}

@@ -9,12 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import br.xtool.core.Visitor;
-import br.xtool.core.representation.impl.EJavaFieldImpl.EManyToManyFieldImpl;
-import br.xtool.core.representation.impl.EJavaFieldImpl.EManyToOneFieldImpl;
-import br.xtool.core.representation.impl.EJavaFieldImpl.EOneToManyFieldImpl;
-import br.xtool.core.representation.impl.EJavaFieldImpl.EOneToOneFieldImpl;
-import br.xtool.core.representation.impl.EPlantRelationshipImpl.EAssociationImpl;
-import br.xtool.core.representation.impl.EPlantRelationshipImpl.ECompositionImpl;
+import br.xtool.core.representation.impl.JavaFieldRepresentationImpl.EManyToManyFieldImpl;
+import br.xtool.core.representation.impl.JavaFieldRepresentationImpl.EManyToOneFieldImpl;
+import br.xtool.core.representation.impl.JavaFieldRepresentationImpl.EOneToManyFieldImpl;
+import br.xtool.core.representation.impl.JavaFieldRepresentationImpl.EOneToOneFieldImpl;
+import br.xtool.core.representation.impl.PlantRelationshipRepresentationImpl.EAssociationImpl;
+import br.xtool.core.representation.impl.PlantRelationshipRepresentationImpl.ECompositionImpl;
 import br.xtool.core.representation.plantuml.PlantRelationshipRepresentation;
 import br.xtool.core.representation.springboot.JavaClassRepresentation;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation;

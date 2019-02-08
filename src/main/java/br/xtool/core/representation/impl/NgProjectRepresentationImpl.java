@@ -15,7 +15,6 @@ import br.xtool.core.representation.angular.NgClassRepresentation;
 import br.xtool.core.representation.angular.NgComponentRepresentation;
 import br.xtool.core.representation.angular.NgDetailRepresentation;
 import br.xtool.core.representation.angular.NgEditRepresentation;
-import br.xtool.core.representation.angular.NgLayoutRepresentation;
 import br.xtool.core.representation.angular.NgModuleRepresentation;
 import br.xtool.core.representation.angular.NgPackageRepresentation;
 import br.xtool.core.representation.angular.NgPageRepresentation;
@@ -24,7 +23,7 @@ import br.xtool.core.representation.angular.NgServiceRepresentation;
 import lombok.Getter;
 
 @Getter
-public class NgProjectRepresentationImpl extends EProjectImpl implements NgProjectRepresentation {
+public class NgProjectRepresentationImpl extends ProjectRepresentationImpl implements NgProjectRepresentation {
 
 	private Map<String, NgClassRepresentation> ngClasses;
 
@@ -34,6 +33,7 @@ public class NgProjectRepresentationImpl extends EProjectImpl implements NgProje
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.xtool.core.representation.ENgProject#getAppPath()
 	 */
 	@Override
@@ -43,6 +43,7 @@ public class NgProjectRepresentationImpl extends EProjectImpl implements NgProje
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.xtool.core.representation.ENgProject#getDomainPath()
 	 */
 	@Override
@@ -52,6 +53,7 @@ public class NgProjectRepresentationImpl extends EProjectImpl implements NgProje
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.xtool.core.representation.ENgProject#getServicePath()
 	 */
 	@Override
@@ -61,6 +63,7 @@ public class NgProjectRepresentationImpl extends EProjectImpl implements NgProje
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.xtool.core.representation.ENgProject#getViewPath()
 	 */
 	@Override
@@ -70,7 +73,7 @@ public class NgProjectRepresentationImpl extends EProjectImpl implements NgProje
 
 	@Override
 	public NgPackageRepresentation getNgPackage() {
-		return ENgPackageImpl.of(this.getPath().resolve("package.json")).orElse(null);
+		return NgPackageRepresentationImpl.of(this.getPath().resolve("package.json")).orElse(null);
 	}
 
 	@Override
@@ -104,7 +107,7 @@ public class NgProjectRepresentationImpl extends EProjectImpl implements NgProje
 		return this.getNgClasses().values().stream()
 				.filter(ngClass -> !ngClass.getFileName().endsWith(NgProjectRepresentation.ArtifactyType.ROUTING_MODULE.getExt()))
 				.filter(ngClass -> ngClass.getFileName().endsWith(NgProjectRepresentation.ArtifactyType.MODULE.getExt()))
-				.map(ngClass -> new ENgModuleImpl(ngClass.getPath()))
+				.map(ngClass -> new NgModuleRepresentationImpl(ngClass.getPath()))
 				.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
 	}
@@ -119,7 +122,7 @@ public class NgProjectRepresentationImpl extends EProjectImpl implements NgProje
 		// @formatter:off
 		return this.getNgClasses().values().stream()
 				.filter(ngClass -> ngClass.getFileName().endsWith(NgProjectRepresentation.ArtifactyType.MODULE.getExt()))
-				.map(ngClass -> new ENgComponentImpl(ngClass.getPath()))
+				.map(ngClass -> new NgComponentRepresentationImpl(ngClass.getPath()))
 				.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
 	}
@@ -134,22 +137,7 @@ public class NgProjectRepresentationImpl extends EProjectImpl implements NgProje
 		// @formatter:off
 		return this.getNgClasses().values().stream()
 				.filter(ngClass -> ngClass.getFileName().endsWith(NgProjectRepresentation.ArtifactyType.MODULE.getExt()))
-				.map(ngClass -> new ENgServiceImpl(ngClass.getPath()))
-				.collect(Collectors.toCollection(TreeSet::new));
-		// @formatter:on
-	}
-
-	/**
-	 * Retorna as classes layouts do projeto.
-	 * 
-	 * @return
-	 */
-	@Override
-	public SortedSet<NgLayoutRepresentation> getNgLayouts() {
-		// @formatter:off
-		return this.getNgClasses().values().stream()
-				.filter(ngClass -> ngClass.getFileName().endsWith(NgProjectRepresentation.ArtifactyType.MODULE.getExt()))
-				.map(ngClass -> new ENgLayoutImpl(ngClass.getPath()))
+				.map(ngClass -> new NgServiceRepresentationImpl(ngClass.getPath()))
 				.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
 	}
@@ -164,7 +152,7 @@ public class NgProjectRepresentationImpl extends EProjectImpl implements NgProje
 		// @formatter:off
 		return this.getNgClasses().values().stream()
 				.filter(ngClass -> ngClass.getFileName().endsWith(NgProjectRepresentation.ArtifactyType.MODULE.getExt()))
-				.map(ngClass -> new ENgPageImpl(ngClass.getPath()))
+				.map(ngClass -> new NgPageRepresentationImpl(ngClass.getPath()))
 				.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
 	}
@@ -179,7 +167,7 @@ public class NgProjectRepresentationImpl extends EProjectImpl implements NgProje
 		// @formatter:off
 		return this.getNgClasses().values().stream()
 				.filter(ngClass -> ngClass.getFileName().endsWith(NgProjectRepresentation.ArtifactyType.MODULE.getExt()))
-				.map(ngClass -> new ENgEditImpl(ngClass.getPath()))
+				.map(ngClass -> new NgEditRepresentationImpl(ngClass.getPath()))
 				.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
 	}
@@ -194,7 +182,7 @@ public class NgProjectRepresentationImpl extends EProjectImpl implements NgProje
 		// @formatter:off
 		return this.getNgClasses().values().stream()
 				.filter(ngClass -> ngClass.getFileName().endsWith(NgProjectRepresentation.ArtifactyType.MODULE.getExt()))
-				.map(ngClass -> new ENgDetailImpl(ngClass.getPath()))
+				.map(ngClass -> new NgDetailRepresentationImpl(ngClass.getPath()))
 				.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
 	}
@@ -204,17 +192,17 @@ public class NgProjectRepresentationImpl extends EProjectImpl implements NgProje
 			// @formatter:off
 			this.ngClasses = this.listAllFiles().stream()
 				.filter(path -> Arrays.asList(ArtifactyType.values()).stream().anyMatch(artifactType -> path.toString().endsWith(artifactType.getExt())))
-				.map(ENgClassImpl::new)
+				.map(NgClassRepresentationImpl::new)
 				.collect(Collectors.toMap(ngClass -> ngClass.getPath().toString(), Function.identity()));
 			// @formatter:on
 		}
 		return this.ngClasses;
 	}
 
-	//	@Override
-	//	public String getMainDir() {
-	//		return FilenameUtils.concat(this.getDirectory().getPath(), "src/app");
-	//	}
+	// @Override
+	// public String getMainDir() {
+	// return FilenameUtils.concat(this.getDirectory().getPath(), "src/app");
+	// }
 
 	@Override
 	public String getFrameworkVersion() {
@@ -226,9 +214,12 @@ public class NgProjectRepresentationImpl extends EProjectImpl implements NgProje
 		Pattern v5pattern = Pattern.compile("[\\^~]?5\\.2\\.\\d");
 		Pattern v6pattern = Pattern.compile("[\\^~]?6\\.\\d\\.\\d");
 		Pattern v7pattern = Pattern.compile("[\\^~]?7\\.\\d\\.\\d");
-		if (v5pattern.matcher(getFrameworkVersion()).matches()) return Version.V5;
-		if (v6pattern.matcher(getFrameworkVersion()).matches()) return Version.V6;
-		if (v7pattern.matcher(getFrameworkVersion()).matches()) return Version.V7;
+		if (v5pattern.matcher(getFrameworkVersion()).matches())
+			return Version.V5;
+		if (v6pattern.matcher(getFrameworkVersion()).matches())
+			return Version.V6;
+		if (v7pattern.matcher(getFrameworkVersion()).matches())
+			return Version.V7;
 		return Version.NONE;
 	}
 

@@ -7,7 +7,7 @@ import java.util.Optional;
 import java.util.SortedSet;
 
 import br.xtool.core.representation.ProjectRepresentation;
-import br.xtool.core.representation.impl.ENgPackageImpl;
+import br.xtool.core.representation.impl.NgPackageRepresentationImpl;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -90,13 +90,6 @@ public interface NgProjectRepresentation extends ProjectRepresentation {
 	SortedSet<NgServiceRepresentation> getNgServices();
 
 	/**
-	 * Retorna as classes layouts do projeto.
-	 * 
-	 * @return
-	 */
-	SortedSet<NgLayoutRepresentation> getNgLayouts();
-
-	/**
 	 * Retorna as classes pages do projeto.
 	 * 
 	 * @return
@@ -117,8 +110,8 @@ public interface NgProjectRepresentation extends ProjectRepresentation {
 	 */
 	SortedSet<NgDetailRepresentation> getNgDetails();
 
-	//	@Override
-	//	public String getMainDir();
+	// @Override
+	// public String getMainDir();
 
 	@Override
 	public void refresh();
@@ -126,14 +119,13 @@ public interface NgProjectRepresentation extends ProjectRepresentation {
 	/**
 	 * Verifica se o path possui um projeto angular válido.
 	 * 
-	 * @param path
-	 *            Caminho do projeto
+	 * @param path Caminho do projeto
 	 * @return
 	 */
 	static boolean isValid(Path path) {
 		Path packageJsonFile = path.resolve("package.json");
 		if (Files.exists(packageJsonFile)) {
-			Optional<NgPackageRepresentation> ngPackage = ENgPackageImpl.of(packageJsonFile);
+			Optional<NgPackageRepresentation> ngPackage = NgPackageRepresentationImpl.of(packageJsonFile);
 			if (ngPackage.isPresent()) {
 				Map<String, String> dependencies = ngPackage.get().getDependencies();
 				return dependencies.containsKey("@angular/core");

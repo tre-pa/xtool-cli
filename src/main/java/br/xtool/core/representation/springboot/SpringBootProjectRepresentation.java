@@ -11,7 +11,7 @@ import org.jboss.forge.roaster.model.JavaUnit;
 
 import br.xtool.core.representation.ProjectRepresentation;
 import br.xtool.core.representation.angular.NgProjectRepresentation;
-import br.xtool.core.representation.impl.EBootPomImpl;
+import br.xtool.core.representation.impl.PomRepresentationImpl;
 import br.xtool.core.representation.plantuml.PlantClassDiagramRepresentation;
 
 /**
@@ -158,7 +158,7 @@ public interface SpringBootProjectRepresentation extends ProjectRepresentation {
 	static boolean isValid(Path path) {
 		Path pomFile = path.resolve("pom.xml");
 		if (Files.exists(pomFile)) {
-			PomRepresentation ePom = EBootPomImpl.of(null, pomFile);
+			PomRepresentation ePom = PomRepresentationImpl.of(null, pomFile);
 			if (ePom.getParentVersion().isPresent()) {
 				return ePom.getParentGroupId().get().equals("org.springframework.boot");
 			}

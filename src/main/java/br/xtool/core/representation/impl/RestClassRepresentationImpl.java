@@ -74,7 +74,7 @@ public class RestClassRepresentationImpl extends JavaClassRepresentationImpl imp
 		return this.javaClassSource.getMethods()
 			.stream()
 			.filter(hasHttpAnnotation.or(hasRequestMapping.and(hasRequestMappingMethod)))
-			.map(methodSource -> new EJavaMethodImpl<JavaClassSource>(this.getRoasterJavaClass(), methodSource))
+			.map(methodSource -> new JavaMethodRepresentationImpl<JavaClassSource>(this.getRoasterJavaClass(), methodSource))
 			.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
 	}

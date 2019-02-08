@@ -25,7 +25,7 @@ import br.xtool.core.converter.JavaEnumRepresentationConverter;
 import br.xtool.core.converter.JavaFieldRepresentationConverter;
 import br.xtool.core.converter.JavaRelationshipRepresentationConverter;
 import br.xtool.core.representation.ProjectRepresentation;
-import br.xtool.core.representation.impl.EJavaPackageImpl;
+import br.xtool.core.representation.impl.JavaPackageRepresentationImpl;
 import br.xtool.core.representation.impl.EntityRepresentationImpl;
 import br.xtool.core.representation.plantuml.PlantClassFieldRepresentation;
 import br.xtool.core.representation.plantuml.PlantClassRepresentation;
@@ -243,7 +243,7 @@ public class SpringBootService {
 	 */
 	public JavaPackageRepresentation genRootPackage(String projectName) {
 		String packageName = JavaPackageRepresentation.getDefaultPrefix().concat(".").concat(StringUtils.join(StringUtils.split(Strman.toKebabCase(projectName), "-"), "."));
-		return EJavaPackageImpl.of(packageName);
+		return JavaPackageRepresentationImpl.of(packageName);
 	}
 
 }

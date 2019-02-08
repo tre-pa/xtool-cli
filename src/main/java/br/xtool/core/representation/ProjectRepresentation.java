@@ -4,7 +4,7 @@ import java.nio.file.Path;
 import java.util.Collection;
 
 import br.xtool.core.representation.angular.NgProjectRepresentation;
-import br.xtool.core.representation.impl.EBootProjectImpl;
+import br.xtool.core.representation.impl.SpringBootProjectRepresentationImpl;
 import br.xtool.core.representation.impl.NgProjectRepresentationImpl;
 import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 import lombok.AllArgsConstructor;
@@ -95,7 +95,7 @@ public interface ProjectRepresentation extends Comparable<ProjectRepresentation>
 	 */
 	static <T extends ProjectRepresentation> ProjectRepresentation factory(Class<T> projectClass, Path path) {
 		if (SpringBootProjectRepresentation.class.isAssignableFrom(projectClass)) {
-			return new EBootProjectImpl(path);
+			return new SpringBootProjectRepresentationImpl(path);
 		} else if (NgProjectRepresentation.class.isAssignableFrom(projectClass)) {
 			return new NgProjectRepresentationImpl(path);
 		}

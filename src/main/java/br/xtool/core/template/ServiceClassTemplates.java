@@ -3,7 +3,7 @@ package br.xtool.core.template;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.xtool.core.representation.impl.EBootServiceImpl;
+import br.xtool.core.representation.impl.ServiceClassRepresentationImpl;
 import br.xtool.core.representation.springboot.RepositoryRepresentation;
 import br.xtool.core.representation.springboot.ServiceClassRepresentation;
 import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
@@ -13,7 +13,7 @@ public class ServiceClassTemplates {
 
 	public static ServiceClassRepresentation newServiceClassRepresentation(SpringBootProjectRepresentation bootProject, RepositoryRepresentation repository) {
 		String serviceName = repository.getTargetEntity().getName().concat("Service");
-		ServiceClassRepresentation service = new EBootServiceImpl(bootProject, RoasterUtil.createJavaClassSource(serviceName));
+		ServiceClassRepresentation service = new ServiceClassRepresentationImpl(bootProject, RoasterUtil.createJavaClassSource(serviceName));
 		service.getRoasterJavaClass().setPackage(bootProject.getRootPackage().getName().concat(".service"));
 		service.getRoasterJavaClass().addImport(Autowired.class);
 		service.getRoasterJavaClass().addImport(repository.getQualifiedName());

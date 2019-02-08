@@ -15,7 +15,7 @@ import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
  * @author jcruz
  *
  */
-public class RepositoryRepresentationImpl extends EJavaInterfaceImpl implements RepositoryRepresentation {
+public class RepositoryRepresentationImpl extends JavaInterfaceRepresentationImpl implements RepositoryRepresentation {
 
 	private SpringBootProjectRepresentation springBootProject;
 
@@ -44,7 +44,7 @@ public class RepositoryRepresentationImpl extends EJavaInterfaceImpl implements 
 	 */
 	@Override
 	public JavaPackageRepresentation getJavaPackage() {
-		return EJavaPackageImpl.of(this.javaInterfaceSource.getPackage());
+		return JavaPackageRepresentationImpl.of(this.javaInterfaceSource.getPackage());
 	}
 
 	/**

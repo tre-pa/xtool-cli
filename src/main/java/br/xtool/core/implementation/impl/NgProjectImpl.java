@@ -20,7 +20,7 @@ import br.xtool.core.representation.angular.NgModuleRepresentation;
 import br.xtool.core.representation.angular.NgPageRepresentation;
 import br.xtool.core.representation.angular.NgProjectRepresentation;
 import br.xtool.core.representation.angular.NgServiceRepresentation;
-import br.xtool.core.representation.impl.ENgPageImpl;
+import br.xtool.core.representation.impl.NgPageRepresentationImpl;
 import lombok.NonNull;
 
 @Service
@@ -120,7 +120,7 @@ public class NgProjectImpl implements NgProject {
 		};
 		this.fs.copy(Paths.get("angular").resolve(ngProject.getProjectVersion().getName()).resolve("page"), vars, ngModule.getPath().getParent());
 		Path ngPagePath = ngModule.getPath().getParent().resolve(NgPageRepresentation.genFileName(name)).resolve(NgPageRepresentation.genFileName(name).concat(".component.ts"));
-		NgPageRepresentation ngPage = new ENgPageImpl(ngPagePath);
+		NgPageRepresentation ngPage = new NgPageRepresentationImpl(ngPagePath);
 		this.addDeclarationToModule(ngProject, ngModule, ngPage);
 		return ngPage;
 	}

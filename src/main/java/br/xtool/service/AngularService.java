@@ -21,9 +21,9 @@ import br.xtool.core.representation.angular.NgEntityRepresentation;
 import br.xtool.core.representation.angular.NgEnumRepresentation;
 import br.xtool.core.representation.angular.NgProjectRepresentation;
 import br.xtool.core.representation.angular.NgServiceRepresentation;
-import br.xtool.core.representation.impl.ENgEntityImpl;
-import br.xtool.core.representation.impl.ENgEnumImpl;
-import br.xtool.core.representation.impl.ENgServiceImpl;
+import br.xtool.core.representation.impl.NgEntityRepresentationImpl;
+import br.xtool.core.representation.impl.NgEnumRepresentationImpl;
+import br.xtool.core.representation.impl.NgServiceRepresentationImpl;
 import br.xtool.core.representation.springboot.EntityAttributeRepresentation;
 import br.xtool.core.representation.springboot.EntityRepresentation;
 import br.xtool.core.representation.springboot.JavaEnumRepresentation;
@@ -93,7 +93,7 @@ public class AngularService {
 
 		this.fs.copy(resourcePath, vars, destinationPath);
 		Path ngEntityPath = destinationPath.resolve(NgClassRepresentation.genFileName(entity.getName())).resolve(entity.getName().concat(".ts"));
-		NgEntityRepresentation ngEntity = new ENgEntityImpl(ngEntityPath);
+		NgEntityRepresentation ngEntity = new NgEntityRepresentationImpl(ngEntityPath);
 
 		entity.getAttributes().stream().filter(EntityAttributeRepresentation::isEnumField).map(EntityAttributeRepresentation::getEnum).map(Optional::get).forEach(this::createNgEnum);
 		return ngEntity;
@@ -124,7 +124,7 @@ public class AngularService {
 		this.fs.copy(resourcePath, vars, destinationPath);
 		Path ngEnumPath = destinationPath.resolve(NgClassRepresentation.genFileName(javaEnum.getName())).resolve(javaEnum.getName().concat(".ts"));
 
-		NgEnumRepresentation ngEnum = new ENgEnumImpl(ngEnumPath);
+		NgEnumRepresentation ngEnum = new NgEnumRepresentationImpl(ngEnumPath);
 		return ngEnum;
 	}
 
@@ -155,7 +155,7 @@ public class AngularService {
 
 		this.fs.copy(resourcePath, vars, destinationPath);
 		Path ngServicePath = destinationPath.resolve(NgClassRepresentation.genFileName(entity.getName()).concat(".service")).resolve(entity.getName().concat(".ts"));
-		NgServiceRepresentation ngService = new ENgServiceImpl(ngServicePath);
+		NgServiceRepresentation ngService = new NgServiceRepresentationImpl(ngServicePath);
 		return ngService;
 	}
 }

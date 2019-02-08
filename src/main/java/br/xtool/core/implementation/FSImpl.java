@@ -16,7 +16,7 @@ import br.xtool.core.ConsoleLog;
 import br.xtool.core.FS;
 import br.xtool.core.representation.ProjectRepresentation;
 import br.xtool.core.representation.ResourceRepresentation;
-import br.xtool.core.representation.impl.EResourceImpl;
+import br.xtool.core.representation.impl.ResourceRepresentationImpl;
 import lombok.SneakyThrows;
 
 @Service
@@ -36,7 +36,7 @@ public class FSImpl implements FS {
 		// @formatter:off
 		return Files.walk(realRootPath)
 			.filter(Files::isRegularFile)
-			.map(path -> new EResourceImpl(realRootPath,realRootPath.relativize(path),this.velocityEngine, velocityContext))
+			.map(path -> new ResourceRepresentationImpl(realRootPath,realRootPath.relativize(path),this.velocityEngine, velocityContext))
 			.collect(Collectors.toList());
 		// @formatter:on
 	}
@@ -44,7 +44,7 @@ public class FSImpl implements FS {
 	private ResourceRepresentation getResource(Path resourcePath, Map<String, Object> vars) {
 		Path realRootPath = ResourceRepresentation.ROOT_PATH.resolve(resourcePath);
 		VelocityContext velocityContext = new VelocityContext(vars);
-		return new EResourceImpl(realRootPath, resourcePath, this.velocityEngine, velocityContext);
+		return new ResourceRepresentationImpl(realRootPath, resourcePath, this.velocityEngine, velocityContext);
 	}
 
 	/*

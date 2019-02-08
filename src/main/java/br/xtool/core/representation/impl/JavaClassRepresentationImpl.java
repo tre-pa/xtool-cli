@@ -73,7 +73,7 @@ public class JavaClassRepresentationImpl implements JavaClassRepresentation {
 	 */
 	@Override
 	public JavaPackageRepresentation getJavaPackage() {
-		return EJavaPackageImpl.of(this.javaClassSource.getPackage());
+		return JavaPackageRepresentationImpl.of(this.javaClassSource.getPackage());
 	}
 
 	/**
@@ -103,7 +103,7 @@ public class JavaClassRepresentationImpl implements JavaClassRepresentation {
 		// @formatter:off
 		return this.javaClassSource.getFields()
 				.stream()
-				.map(fieldSource -> new EJavaFieldImpl(this, fieldSource))
+				.map(fieldSource -> new JavaFieldRepresentationImpl(this, fieldSource))
 				.collect(Collectors.toList());
 		// @formatter:on
 	}
@@ -114,7 +114,7 @@ public class JavaClassRepresentationImpl implements JavaClassRepresentation {
 		return this.getJavaFields().stream()
 				.filter(javaField -> javaField.getName().equals(name))
 				.findAny()
-				.orElseGet(() -> new EJavaFieldImpl(this,this.javaClassSource.addField().setName(name)));
+				.orElseGet(() -> new JavaFieldRepresentationImpl(this,this.javaClassSource.addField().setName(name)));
 		// @formatter:on
 	}
 
@@ -124,7 +124,7 @@ public class JavaClassRepresentationImpl implements JavaClassRepresentation {
 		return this.getJavaMethods().stream()
 				.filter(javaMethod -> javaMethod.getName().equals(name))
 				.findAny()
-				.orElseGet(() -> new EJavaMethodImpl<JavaClassSource>(this.javaClassSource, this.javaClassSource.addMethod().setName(name)));
+				.orElseGet(() -> new JavaMethodRepresentationImpl<JavaClassSource>(this.javaClassSource, this.javaClassSource.addMethod().setName(name)));
 		// @formatter:on
 	}
 
@@ -133,7 +133,7 @@ public class JavaClassRepresentationImpl implements JavaClassRepresentation {
 		// @formatter:off
 		return this.javaClassSource.getAnnotations()
 				.stream()
-				.map(EJavaAnnotationImpl::new)
+				.map(JavaAnnotationRepresentationImpl::new)
 				.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
 	}
@@ -144,7 +144,7 @@ public class JavaClassRepresentationImpl implements JavaClassRepresentation {
 		return this.getJavaAnnotations().stream()
 				.filter(javaAnn -> javaAnn.getName().equals(type.getSimpleName()))
 				.findAny()
-				.orElseGet(() -> new EJavaAnnotationImpl<JavaClassSource>(this.javaClassSource.addAnnotation(type)));
+				.orElseGet(() -> new JavaAnnotationRepresentationImpl<JavaClassSource>(this.javaClassSource.addAnnotation(type)));
 		// @formatter:on
 	}
 
@@ -153,7 +153,7 @@ public class JavaClassRepresentationImpl implements JavaClassRepresentation {
 		// @formatter:off
 		return this.javaClassSource.getMethods()
 				.stream()
-				.map(methodSource -> new EJavaMethodImpl<JavaClassSource>(this.javaClassSource, methodSource))
+				.map(methodSource -> new JavaMethodRepresentationImpl<JavaClassSource>(this.javaClassSource, methodSource))
 				.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
 	}

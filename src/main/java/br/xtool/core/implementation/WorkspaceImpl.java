@@ -18,8 +18,8 @@ import br.xtool.core.representation.ProjectRepresentation;
 import br.xtool.core.representation.ProjectRepresentation.Type;
 import br.xtool.core.representation.ProjectRepresentation.Version;
 import br.xtool.core.representation.WorkspaceRepresentation;
-import br.xtool.core.representation.impl.ENoneProjectImpl;
-import br.xtool.core.representation.impl.EWorkspaceImpl;
+import br.xtool.core.representation.impl.NoneProjectRepresentationImpl;
+import br.xtool.core.representation.impl.WorkspaceRepresentationImpl;
 import lombok.Getter;
 import lombok.SneakyThrows;
 
@@ -37,7 +37,7 @@ public class WorkspaceImpl implements Workspace {
 
 	@PostConstruct
 	private void init() {
-		this.workingProject = new ENoneProjectImpl(this.home);
+		this.workingProject = new NoneProjectRepresentationImpl(this.home);
 	}
 
 	/*
@@ -47,7 +47,7 @@ public class WorkspaceImpl implements Workspace {
 	 */
 	@Override
 	public WorkspaceRepresentation getWorkspace() {
-		return new EWorkspaceImpl(this.home);
+		return new WorkspaceRepresentationImpl(this.home);
 	}
 
 	/*
