@@ -52,20 +52,25 @@ public interface JavaFieldRepresentation extends Comparable<JavaFieldRepresentat
 
 	FieldSource<JavaClassSource> getRoasterField();
 
+	@Deprecated
 	JavaAnnotationRepresentation<JavaClassSource> addSizeAnnotation(Integer min, Integer max);
 
+	@Deprecated
 	JavaAnnotationRepresentation<JavaClassSource> addBatchSizeAnnotation(Integer size);
 
+	@Deprecated
 	JavaAnnotationRepresentation<JavaClassSource> addLazyCollectionAnnotation(LazyCollectionOption lazyCollectionOption);
 
+	@Deprecated
 	JavaAnnotationRepresentation<JavaClassSource> addGeneratedValueAnnotation(GenerationType generationType);
 
+	@Deprecated
 	JavaAnnotationRepresentation<JavaClassSource> addSequenceGeneratorAnnotation();
 
 	@Deprecated
 	interface EStringField extends JavaFieldRepresentation {
 	}
-	
+
 	@Deprecated
 	interface EBooleanField extends JavaFieldRepresentation {
 	}

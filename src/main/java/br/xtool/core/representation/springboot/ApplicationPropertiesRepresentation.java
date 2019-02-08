@@ -14,10 +14,13 @@ public interface ApplicationPropertiesRepresentation {
 
 	Optional<String> get(String key);
 
+	@Deprecated
 	ApplicationPropertiesRepresentation set(String key, String value);
 
+	@Deprecated
 	ApplicationPropertiesRepresentation set(String key, String value, Object... params);
 
+	@Deprecated
 	ApplicationPropertiesRepresentation comment(String key, String value);
 
 	boolean hasProperty(String key);

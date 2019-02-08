@@ -100,9 +100,11 @@ public interface JavaClassRepresentation extends Comparable<JavaClassRepresentat
 	JavaClassSource getRoasterJavaClass();
 
 	//	EJavaAnnotation<JavaClassSource> addTableAnnotation();
-
+	
+	@Deprecated
 	JavaAnnotationRepresentation<JavaClassSource> addToStringAnnotation(String... attributes);
 
+	@Deprecated
 	JavaAnnotationRepresentation<JavaClassSource> addEqualsAndHashCodeAnnotation(String... attibutes);
 
 	@Deprecated
