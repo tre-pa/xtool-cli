@@ -62,51 +62,67 @@ public interface JavaFieldRepresentation extends Comparable<JavaFieldRepresentat
 
 	JavaAnnotationRepresentation<JavaClassSource> addSequenceGeneratorAnnotation();
 
+	@Deprecated
 	interface EStringField extends JavaFieldRepresentation {
 	}
-
+	
+	@Deprecated
 	interface EBooleanField extends JavaFieldRepresentation {
 	}
 
+	@Deprecated
 	interface ELongField extends JavaFieldRepresentation {
 	}
 
+	@Deprecated
 	interface EIntegerField extends JavaFieldRepresentation {
 	}
 
+	@Deprecated
 	interface EByteField extends JavaFieldRepresentation {
 	}
 
+	@Deprecated
 	interface EBigDecimalField extends JavaFieldRepresentation {
 	}
 
+	@Deprecated
 	interface ELocalDateField extends JavaFieldRepresentation {
 	}
 
+	@Deprecated
 	interface ELocalDateTimeField extends JavaFieldRepresentation {
 	}
 
+	@Deprecated
 	interface EEnumField extends JavaFieldRepresentation {
 	}
 
+	@Deprecated
 	interface ENotNullField extends JavaFieldRepresentation {
 	}
 
+	@Deprecated
 	interface ETransientField extends JavaFieldRepresentation {
 	}
 
+	@Deprecated
 	interface EUniqueField extends JavaFieldRepresentation {
 	}
 
+	@Deprecated
 	interface EOneToOneField extends JavaFieldRepresentation {
 	}
 
+	@Deprecated
 	interface EOneToManyField extends JavaFieldRepresentation {
 	}
 
+	@Deprecated
 	interface EManyToOneField extends JavaFieldRepresentation {
 	}
 
+	@Deprecated
 	interface EManyToManyField extends JavaFieldRepresentation {
 	}
 

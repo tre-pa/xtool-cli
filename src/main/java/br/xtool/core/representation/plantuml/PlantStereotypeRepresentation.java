@@ -8,14 +8,7 @@ public interface PlantStereotypeRepresentation {
 	@AllArgsConstructor
 	@Getter
 	enum StereotypeType {
-		// @formatter:off
-		AUDITABLE("Auditable"),
-		CACHEABLE("Cacheable"),
-		INDEXED("Indexed"),
-		VIEW("View"),
-		READ_ONLY("ReadOnly"),
-		VERSIONABLE("Versionable");
-		// @formatter:on
+		AUDITABLE("Auditable"), CACHEABLE("Cacheable"), INDEXED("Indexed"), VIEW("View"), READ_ONLY("ReadOnly"), VERSIONABLE("Versionable");
 		String type;
 	}
 

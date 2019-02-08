@@ -17,6 +17,7 @@ public interface JavaPackageRepresentation extends Comparable<JavaPackageReprese
 
 	Path getPath();
 
+	@Deprecated
 	static String getDefaultPrefix() {
 		return "br.jus.tre_pa";
 	}

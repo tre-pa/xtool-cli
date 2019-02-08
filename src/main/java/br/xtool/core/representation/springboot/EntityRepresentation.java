@@ -92,6 +92,7 @@ public interface EntityRepresentation extends JavaClassRepresentation {
 	 * @param name
 	 * @return
 	 */
+	@Deprecated
 	static String genDBTableName(String name) {
 		// @formatter:off
 		return StringUtils.abbreviate(
@@ -106,6 +107,7 @@ public interface EntityRepresentation extends JavaClassRepresentation {
 	 * @param name
 	 * @return
 	 */
+	@Deprecated
 	public static String genDBSequenceName(String name) {
 		// @formatter:off
 		return StringUtils.abbreviate(
@@ -119,6 +121,7 @@ public interface EntityRepresentation extends JavaClassRepresentation {
 	 * @param name
 	 * @return
 	 */
+	@Deprecated
 	public static String genFKName(String name) {
 		// @formatter:off
 		return StringUtils.abbreviate(
