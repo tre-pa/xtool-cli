@@ -105,8 +105,10 @@ public interface PlantRelationshipRepresentation {
 
 	boolean isManyToMany();
 
+	@Deprecated
 	interface EAssociation extends PlantRelationshipRepresentation {}
 
+	@Deprecated
 	interface EComposition extends PlantRelationshipRepresentation {}
 
 }
