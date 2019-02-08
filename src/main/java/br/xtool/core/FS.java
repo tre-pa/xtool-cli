@@ -14,16 +14,6 @@ import br.xtool.core.representation.ProjectRepresentation;
 public interface FS {
 
 	/**
-	 * Retorna uma lista de recursos do diretório src/main/resources/templates/**
-	 * 
-	 * @param resourcePath
-	 * @param pathMatcher
-	 * @param vars
-	 * @return
-	 */
-	//	Collection<EResource> getTemplates(Path resourcePath, Map<String, Object> vars);
-
-	/**
 	 * 
 	 * @param resourcePath
 	 * @param vars
