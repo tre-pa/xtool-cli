@@ -1,4 +1,4 @@
-package br.xtool.core.converter;
+package br.xtool.core.map;
 
 import java.util.function.Function;
 
@@ -14,13 +14,13 @@ import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 import br.xtool.core.util.RoasterUtil;
 
 /**
- * Converter um enum UML do diagrama de classe em um EJavaEnum.
+ * Transforma um enum UML do diagrama de classe em um EJavaEnum.
  * 
  * @author jcruz
  *
  */
 @Component
-public class JavaEnumRepresentationConverter implements Function<PlantEnumRepresentation, JavaEnumRepresentation> {
+public class JavaEnumRepresentationMapper implements Function<PlantEnumRepresentation, JavaEnumRepresentation> {
 
 	@Autowired
 	private Workspace workspace;

@@ -1,4 +1,4 @@
-package br.xtool.core.converter;
+package br.xtool.core.map;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -22,21 +22,21 @@ import br.xtool.core.implementation.representation.JavaFieldRepresentationImpl.E
 import br.xtool.core.implementation.representation.JavaFieldRepresentationImpl.EStringFieldImpl;
 import br.xtool.core.implementation.representation.JavaFieldRepresentationImpl.ETransientFieldImpl;
 import br.xtool.core.implementation.representation.JavaFieldRepresentationImpl.EUniqueFieldImpl;
-import br.xtool.core.representation.plantuml.PlantClassFieldRepresentation;
 import br.xtool.core.representation.plantuml.PlantClassFieldPropertyRepresentation.FieldPropertyType;
+import br.xtool.core.representation.plantuml.PlantClassFieldRepresentation;
 import br.xtool.core.representation.springboot.JavaClassRepresentation;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation;
 import br.xtool.core.util.RoasterUtil;
 
 /**
- * Converter um atributo UML do diagrama de classe em um EJavaField.
+ * Transforma um atributo UML do diagrama de classe em um EJavaField.
  * 
  * @author jcruz
  *
  */
 //@AllArgsConstructor
 @Component
-public class JavaFieldRepresentationConverter implements BiFunction<JavaClassRepresentation, PlantClassFieldRepresentation, JavaFieldRepresentation> {
+public class JavaFieldRepresentationMapper implements BiFunction<JavaClassRepresentation, PlantClassFieldRepresentation, JavaFieldRepresentation> {
 
 	@Autowired
 	private Set<Visitor> visitors;
@@ -61,21 +61,33 @@ public class JavaFieldRepresentationConverter implements BiFunction<JavaClassRep
 	private void visit(JavaFieldRepresentation javaField, PlantClassFieldRepresentation umlField) {
 		this.visitors.forEach(visitor -> {
 			visitor.visit(javaField, umlField);
-			if (javaField.getType().isType(String.class)) visitor.visit(new EStringFieldImpl(javaField), umlField);
-			if (javaField.getType().isType(Boolean.class)) visitor.visit(new EBooleanFieldImpl(javaField), umlField);
-			if (javaField.getType().isType(Long.class)) visitor.visit(new ELongFieldImpl(javaField), umlField);
-			if (javaField.getType().isType(Integer.class)) visitor.visit(new EIntegerFieldImpl(javaField), umlField);
-			if (javaField.getType().isType(Byte.class)) visitor.visit(new EByteFieldImpl(javaField), umlField);
-			if (javaField.getType().isType(BigDecimal.class)) visitor.visit(new EBigDecimalFieldImpl(javaField), umlField);
-			if (javaField.getType().isType(LocalDate.class)) visitor.visit(new ELocalDateFieldImpl(javaField), umlField);
-			if (javaField.getType().isType(LocalDateTime.class)) visitor.visit(new ELocalDateTimeFieldImpl(javaField), umlField);
-			if (umlField.isEnum()) visitor.visit(new EENumFieldImpl(javaField), umlField);
+			if (javaField.getType().isType(String.class))
+				visitor.visit(new EStringFieldImpl(javaField), umlField);
+			if (javaField.getType().isType(Boolean.class))
+				visitor.visit(new EBooleanFieldImpl(javaField), umlField);
+			if (javaField.getType().isType(Long.class))
+				visitor.visit(new ELongFieldImpl(javaField), umlField);
+			if (javaField.getType().isType(Integer.class))
+				visitor.visit(new EIntegerFieldImpl(javaField), umlField);
+			if (javaField.getType().isType(Byte.class))
+				visitor.visit(new EByteFieldImpl(javaField), umlField);
+			if (javaField.getType().isType(BigDecimal.class))
+				visitor.visit(new EBigDecimalFieldImpl(javaField), umlField);
+			if (javaField.getType().isType(LocalDate.class))
+				visitor.visit(new ELocalDateFieldImpl(javaField), umlField);
+			if (javaField.getType().isType(LocalDateTime.class))
+				visitor.visit(new ELocalDateTimeFieldImpl(javaField), umlField);
+			if (umlField.isEnum())
+				visitor.visit(new EENumFieldImpl(javaField), umlField);
 		});
 		this.visitors.forEach(visitor -> umlField.getProperties().forEach(property -> {
 			visitor.visit(javaField, property);
-			if (property.getFieldProperty().equals(FieldPropertyType.NOTNULL)) visitor.visit(new ENotNullFieldImpl(javaField), property);
-			if (property.getFieldProperty().equals(FieldPropertyType.UNIQUE)) visitor.visit(new EUniqueFieldImpl(javaField), property);
-			if (property.getFieldProperty().equals(FieldPropertyType.TRANSIENT)) visitor.visit(new ETransientFieldImpl(javaField), property);
+			if (property.getFieldProperty().equals(FieldPropertyType.NOTNULL))
+				visitor.visit(new ENotNullFieldImpl(javaField), property);
+			if (property.getFieldProperty().equals(FieldPropertyType.UNIQUE))
+				visitor.visit(new EUniqueFieldImpl(javaField), property);
+			if (property.getFieldProperty().equals(FieldPropertyType.TRANSIENT))
+				visitor.visit(new ETransientFieldImpl(javaField), property);
 		}));
 	}
 

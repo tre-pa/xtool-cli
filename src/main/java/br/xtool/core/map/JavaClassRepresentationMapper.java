@@ -1,4 +1,4 @@
-package br.xtool.core.converter;
+package br.xtool.core.map;
 
 import java.util.Set;
 import java.util.function.Function;
@@ -24,17 +24,17 @@ import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 import br.xtool.core.util.RoasterUtil;
 
 /**
- * Converte uma classe UML em um EJavaClass.
+ * Transforma uma classe UML em um EJavaClass.
  * 
  * @author jcruz
  *
  */
 @Component
-public class JavaClassRepresentationConverter implements Function<PlantClassRepresentation, JavaClassRepresentation> {
+public class JavaClassRepresentationMapper implements Function<PlantClassRepresentation, JavaClassRepresentation> {
 
 	@Autowired
 	private Workspace workspace;
-	
+
 	@Autowired
 	private Set<Visitor> visitors;
 
@@ -57,12 +57,18 @@ public class JavaClassRepresentationConverter implements Function<PlantClassRepr
 
 	private void visit(JavaClassRepresentation javaClass, PlantStereotypeRepresentation stereotype) {
 		this.visitors.forEach(visitor -> {
-			if (stereotype.getStereotypeType().equals(StereotypeType.AUDITABLE)) visitor.visit(new EAuditableJavaClassImpl(javaClass), stereotype);
-			if (stereotype.getStereotypeType().equals(StereotypeType.CACHEABLE)) visitor.visit(new ECacheableJavaClassImpl(javaClass), stereotype);
-			if (stereotype.getStereotypeType().equals(StereotypeType.INDEXED)) visitor.visit(new EIndexedJavaClassImpl(javaClass), stereotype);
-			if (stereotype.getStereotypeType().equals(StereotypeType.VIEW)) visitor.visit(new EViewJavaClassImpl(javaClass), stereotype);
-			if (stereotype.getStereotypeType().equals(StereotypeType.READ_ONLY)) visitor.visit(new EReadOnlyJavaClassImpl(javaClass), stereotype);
-			if (stereotype.getStereotypeType().equals(StereotypeType.VERSIONABLE)) visitor.visit(new EVersionableJavaClassImpl(javaClass), stereotype);
+			if (stereotype.getStereotypeType().equals(StereotypeType.AUDITABLE))
+				visitor.visit(new EAuditableJavaClassImpl(javaClass), stereotype);
+			if (stereotype.getStereotypeType().equals(StereotypeType.CACHEABLE))
+				visitor.visit(new ECacheableJavaClassImpl(javaClass), stereotype);
+			if (stereotype.getStereotypeType().equals(StereotypeType.INDEXED))
+				visitor.visit(new EIndexedJavaClassImpl(javaClass), stereotype);
+			if (stereotype.getStereotypeType().equals(StereotypeType.VIEW))
+				visitor.visit(new EViewJavaClassImpl(javaClass), stereotype);
+			if (stereotype.getStereotypeType().equals(StereotypeType.READ_ONLY))
+				visitor.visit(new EReadOnlyJavaClassImpl(javaClass), stereotype);
+			if (stereotype.getStereotypeType().equals(StereotypeType.VERSIONABLE))
+				visitor.visit(new EVersionableJavaClassImpl(javaClass), stereotype);
 		});
 	}
 

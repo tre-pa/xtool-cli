@@ -20,12 +20,12 @@ import org.springframework.stereotype.Service;
 import br.xtool.core.ConsoleLog;
 import br.xtool.core.Shell;
 import br.xtool.core.Workspace;
-import br.xtool.core.converter.JavaClassRepresentationConverter;
-import br.xtool.core.converter.JavaEnumRepresentationConverter;
-import br.xtool.core.converter.JavaFieldRepresentationConverter;
-import br.xtool.core.converter.JavaRelationshipRepresentationConverter;
 import br.xtool.core.implementation.representation.EntityRepresentationImpl;
 import br.xtool.core.implementation.representation.JavaPackageRepresentationImpl;
+import br.xtool.core.map.JavaClassRepresentationMapper;
+import br.xtool.core.map.JavaEnumRepresentationMapper;
+import br.xtool.core.map.JavaFieldRepresentationMapper;
+import br.xtool.core.map.JavaRelationshipRepresentationMapper;
 import br.xtool.core.representation.ProjectRepresentation;
 import br.xtool.core.representation.plantuml.PlantClassFieldRepresentation;
 import br.xtool.core.representation.plantuml.PlantClassRepresentation;
@@ -95,11 +95,11 @@ public class SpringBootServiceImpl implements SpringBootService {
 	@Override
 	public EntityRepresentation genEntity(PlantClassRepresentation plantClass) {
 		SpringBootProjectRepresentation springBootProject = this.workspace.getWorkingProject(SpringBootProjectRepresentation.class);
-		JavaClassRepresentation javaClass = appCtx.getBean(JavaClassRepresentationConverter.class).apply(plantClass);
-		plantClass.getFields().stream().forEach(plantField -> appCtx.getBean(JavaFieldRepresentationConverter.class).apply(javaClass, plantField));
-		plantClass.getRelationships().stream().forEach(plantRelationship -> appCtx.getBean(JavaRelationshipRepresentationConverter.class).apply(javaClass, plantRelationship));
+		JavaClassRepresentation javaClass = appCtx.getBean(JavaClassRepresentationMapper.class).apply(plantClass);
+		plantClass.getFields().stream().forEach(plantField -> appCtx.getBean(JavaFieldRepresentationMapper.class).apply(javaClass, plantField));
+		plantClass.getRelationships().stream().forEach(plantRelationship -> appCtx.getBean(JavaRelationshipRepresentationMapper.class).apply(javaClass, plantRelationship));
 		plantClass.getFields().stream().filter(PlantClassFieldRepresentation::isEnum).forEach(plantClassField -> {
-			JavaEnumRepresentation javaEnum = appCtx.getBean(JavaEnumRepresentationConverter.class).apply(plantClassField.getEnumRepresentation().get());
+			JavaEnumRepresentation javaEnum = appCtx.getBean(JavaEnumRepresentationMapper.class).apply(plantClassField.getEnumRepresentation().get());
 			save(javaEnum);
 		});
 		save(javaClass);

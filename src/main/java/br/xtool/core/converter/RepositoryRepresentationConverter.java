@@ -6,26 +6,26 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 import br.xtool.core.Workspace;
-import br.xtool.core.representation.plantuml.PlantClassDiagramRepresentation;
+import br.xtool.core.representation.springboot.RepositoryRepresentation;
 import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 
 @Component
-public class ShellPlantClassDiagramRepresentationConverter implements Converter<String, PlantClassDiagramRepresentation> {
+public class RepositoryRepresentationConverter implements Converter<String, RepositoryRepresentation> {
 
 	@Autowired
 	private Workspace workspace;
 
 	@Override
-	public PlantClassDiagramRepresentation convert(String source) {
+	public RepositoryRepresentation convert(String source) {
 		if (StringUtils.isNotEmpty(source)) {
 			if (this.workspace.getWorkingProject() instanceof SpringBootProjectRepresentation) {
 				SpringBootProjectRepresentation project = SpringBootProjectRepresentation.class.cast(this.workspace.getWorkingProject());
 				// @formatter:off
-				return project.getClassDiagrams()
+				return project.getRepositories()
 					.stream()
-					.filter(e -> e.getPath().getFileName().toString().equals(source))
+					.filter(e -> e.getName().equals(source))
 					.findFirst()
-					.orElseThrow(() -> new RuntimeException("Erro ao converter PlantClassDiagramRepresentation."));
+					.orElseThrow(() -> new RuntimeException("Erro ao converter repositório."));
 				// @formatter:on
 			}
 		}
