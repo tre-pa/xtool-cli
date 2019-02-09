@@ -16,13 +16,11 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import javax.persistence.Version;
 
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.Immutable;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.stereotype.Component;
 
@@ -33,26 +31,19 @@ import br.xtool.core.representation.plantuml.PlantClassFieldPropertyRepresentati
 import br.xtool.core.representation.plantuml.PlantClassFieldRepresentation;
 import br.xtool.core.representation.plantuml.PlantClassRepresentation;
 import br.xtool.core.representation.plantuml.PlantRelationshipRepresentation;
-import br.xtool.core.representation.plantuml.PlantStereotypeRepresentation;
 import br.xtool.core.representation.plantuml.PlantRelationshipRepresentation.PlantRelationshipAssociation;
 import br.xtool.core.representation.plantuml.PlantRelationshipRepresentation.PlantRelationshipComposition;
 import br.xtool.core.representation.plantuml.PlantStereotypeRepresentation.StereotypeType;
 import br.xtool.core.representation.springboot.EntityRepresentation;
 import br.xtool.core.representation.springboot.JavaClassRepresentation;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation;
-import br.xtool.core.representation.springboot.JavaClassRepresentation.EAuditableJavaClass;
-import br.xtool.core.representation.springboot.JavaClassRepresentation.ECacheableJavaClass;
-import br.xtool.core.representation.springboot.JavaClassRepresentation.EIndexedJavaClass;
-import br.xtool.core.representation.springboot.JavaClassRepresentation.EReadOnlyJavaClass;
-import br.xtool.core.representation.springboot.JavaClassRepresentation.EVersionableJavaClass;
-import br.xtool.core.representation.springboot.JavaClassRepresentation.EViewJavaClass;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldBigDecimalType;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldBooleanType;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldByteType;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldEnumType;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldIntegerType;
-import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldLocalDateType;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldLocalDateTimeType;
+import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldLocalDateType;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldLongType;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldManyToManyType;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldManyToOneType;
@@ -63,7 +54,6 @@ import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaField
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldTransientType;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldUniqueType;
 import br.xtool.core.template.EntityTemplates;
-import lombok.EqualsAndHashCode;
 import lombok.val;
 
 @Component
@@ -89,92 +79,92 @@ public class JpaVisitor implements Visitor {
 		javaClass.addAnnotation(JsonInclude.class).setEnumArrayValue(JsonInclude.Include.NON_EMPTY);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaClass,
-	 * br.xtool.core.representation.EUmlStereotype)
-	 */
-	@Override
-	public void visit(JavaClassRepresentation javaClass, PlantStereotypeRepresentation umlStereotype) {
-
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaClass.
-	 * EAuditableJavaClass, br.xtool.core.representation.EUmlStereotype)
-	 */
-	@Override
-	public void visit(EAuditableJavaClass auditableClass, PlantStereotypeRepresentation umlStereotype) {
-
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaClass.
-	 * ECacheableJavaClass, br.xtool.core.representation.EUmlStereotype)
-	 */
-	@Override
-	public void visit(ECacheableJavaClass cacheableClass, PlantStereotypeRepresentation umlStereotype) {
-
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaClass.
-	 * EIndexedJavaClass, br.xtool.core.representation.EUmlStereotype)
-	 */
-	@Override
-	public void visit(EIndexedJavaClass indexedClass, PlantStereotypeRepresentation umlStereotype) {
-
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaClass.
-	 * EViewJavaClass, br.xtool.core.representation.EUmlStereotype)
-	 */
-	@Override
-	public void visit(EViewJavaClass viewClass, PlantStereotypeRepresentation umlStereotype) {
-		viewClass.addAnnotation(Immutable.class);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaClass.
-	 * EReadOnlyJavaClass, br.xtool.core.representation.EUmlStereotype)
-	 */
-	@Override
-	public void visit(EReadOnlyJavaClass readOnlyClass, PlantStereotypeRepresentation umlStereotype) {
-		readOnlyClass.addAnnotation(Immutable.class);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaClass.
-	 * EVersionableJavaClass, br.xtool.core.representation.EUmlStereotype)
-	 */
-	@Override
-	public void visit(EVersionableJavaClass versionableClass, PlantStereotypeRepresentation umlStereotype) {
-		JavaFieldRepresentation javaField = versionableClass.addField("version");
-		javaField.getRoasterField().setPrivate();
-		javaField.getRoasterField().setType(Long.class);
-		javaField.addAnnotation(Version.class);
-	}
+//	/*
+//	 * (non-Javadoc)
+//	 * 
+//	 * @see
+//	 * br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaClass,
+//	 * br.xtool.core.representation.EUmlStereotype)
+//	 */
+//	@Override
+//	public void visit(JavaClassRepresentation javaClass, PlantStereotypeRepresentation umlStereotype) {
+//
+//	}
+//
+//	/*
+//	 * (non-Javadoc)
+//	 * 
+//	 * @see
+//	 * br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaClass.
+//	 * EAuditableJavaClass, br.xtool.core.representation.EUmlStereotype)
+//	 */
+//	@Override
+//	public void visit(EAuditableJavaClass auditableClass, PlantStereotypeRepresentation umlStereotype) {
+//
+//	}
+//
+//	/*
+//	 * (non-Javadoc)
+//	 * 
+//	 * @see
+//	 * br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaClass.
+//	 * ECacheableJavaClass, br.xtool.core.representation.EUmlStereotype)
+//	 */
+//	@Override
+//	public void visit(ECacheableJavaClass cacheableClass, PlantStereotypeRepresentation umlStereotype) {
+//
+//	}
+//
+//	/*
+//	 * (non-Javadoc)
+//	 * 
+//	 * @see
+//	 * br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaClass.
+//	 * EIndexedJavaClass, br.xtool.core.representation.EUmlStereotype)
+//	 */
+//	@Override
+//	public void visit(EIndexedJavaClass indexedClass, PlantStereotypeRepresentation umlStereotype) {
+//
+//	}
+//
+//	/*
+//	 * (non-Javadoc)
+//	 * 
+//	 * @see
+//	 * br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaClass.
+//	 * EViewJavaClass, br.xtool.core.representation.EUmlStereotype)
+//	 */
+//	@Override
+//	public void visit(EViewJavaClass viewClass, PlantStereotypeRepresentation umlStereotype) {
+//		viewClass.addAnnotation(Immutable.class);
+//	}
+//
+//	/*
+//	 * (non-Javadoc)
+//	 * 
+//	 * @see
+//	 * br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaClass.
+//	 * EReadOnlyJavaClass, br.xtool.core.representation.EUmlStereotype)
+//	 */
+//	@Override
+//	public void visit(EReadOnlyJavaClass readOnlyClass, PlantStereotypeRepresentation umlStereotype) {
+//		readOnlyClass.addAnnotation(Immutable.class);
+//	}
+//
+//	/*
+//	 * (non-Javadoc)
+//	 * 
+//	 * @see
+//	 * br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaClass.
+//	 * EVersionableJavaClass, br.xtool.core.representation.EUmlStereotype)
+//	 */
+//	@Override
+//	public void visit(EVersionableJavaClass versionableClass, PlantStereotypeRepresentation umlStereotype) {
+//		JavaFieldRepresentation javaField = versionableClass.addField("version");
+//		javaField.getRoasterField().setPrivate();
+//		javaField.getRoasterField().setType(Long.class);
+//		javaField.addAnnotation(Version.class);
+//	}
 
 	/*
 	 * (non-Javadoc)

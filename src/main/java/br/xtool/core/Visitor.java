@@ -4,24 +4,17 @@ import br.xtool.core.representation.plantuml.PlantClassFieldPropertyRepresentati
 import br.xtool.core.representation.plantuml.PlantClassFieldRepresentation;
 import br.xtool.core.representation.plantuml.PlantClassRepresentation;
 import br.xtool.core.representation.plantuml.PlantRelationshipRepresentation;
-import br.xtool.core.representation.plantuml.PlantStereotypeRepresentation;
 import br.xtool.core.representation.plantuml.PlantRelationshipRepresentation.PlantRelationshipAssociation;
 import br.xtool.core.representation.plantuml.PlantRelationshipRepresentation.PlantRelationshipComposition;
 import br.xtool.core.representation.springboot.JavaClassRepresentation;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation;
-import br.xtool.core.representation.springboot.JavaClassRepresentation.EAuditableJavaClass;
-import br.xtool.core.representation.springboot.JavaClassRepresentation.ECacheableJavaClass;
-import br.xtool.core.representation.springboot.JavaClassRepresentation.EIndexedJavaClass;
-import br.xtool.core.representation.springboot.JavaClassRepresentation.EReadOnlyJavaClass;
-import br.xtool.core.representation.springboot.JavaClassRepresentation.EVersionableJavaClass;
-import br.xtool.core.representation.springboot.JavaClassRepresentation.EViewJavaClass;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldBigDecimalType;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldBooleanType;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldByteType;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldEnumType;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldIntegerType;
-import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldLocalDateType;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldLocalDateTimeType;
+import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldLocalDateType;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldLongType;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldManyToManyType;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldManyToOneType;
@@ -45,47 +38,47 @@ public interface Visitor {
 	 */
 	void visit(JavaClassRepresentation javaClass, PlantClassRepresentation umlClass);
 
-	/**
-	 * 
-	 * @param umlStereotype
-	 */
-	void visit(JavaClassRepresentation javaClass, PlantStereotypeRepresentation umlStereotype);
-
-	/**
-	 * 
-	 * @param umlStereotype
-	 */
-	void visit(EAuditableJavaClass auditableClass, PlantStereotypeRepresentation umlStereotype);
-
-	/**
-	 * 
-	 * @param umlStereotype
-	 */
-	void visit(ECacheableJavaClass cacheableClass, PlantStereotypeRepresentation umlStereotype);
-
-	/**
-	 * 
-	 * @param umlStereotype
-	 */
-	void visit(EIndexedJavaClass indexedClass, PlantStereotypeRepresentation umlStereotype);
-
-	/**
-	 * 
-	 * @param umlStereotype
-	 */
-	void visit(EViewJavaClass viewClass, PlantStereotypeRepresentation umlStereotype);
-
-	/**
-	 * 
-	 * @param umlStereotype
-	 */
-	void visit(EReadOnlyJavaClass readOnlyClass, PlantStereotypeRepresentation umlStereotype);
-
-	/**
-	 * 
-	 * @param umlStereotype
-	 */
-	void visit(EVersionableJavaClass versionableClass, PlantStereotypeRepresentation umlStereotype);
+//	/**
+//	 * 
+//	 * @param umlStereotype
+//	 */
+//	void visit(JavaClassRepresentation javaClass, PlantStereotypeRepresentation umlStereotype);
+//
+//	/**
+//	 * 
+//	 * @param umlStereotype
+//	 */
+//	void visit(EAuditableJavaClass auditableClass, PlantStereotypeRepresentation umlStereotype);
+//
+//	/**
+//	 * 
+//	 * @param umlStereotype
+//	 */
+//	void visit(ECacheableJavaClass cacheableClass, PlantStereotypeRepresentation umlStereotype);
+//
+//	/**
+//	 * 
+//	 * @param umlStereotype
+//	 */
+//	void visit(EIndexedJavaClass indexedClass, PlantStereotypeRepresentation umlStereotype);
+//
+//	/**
+//	 * 
+//	 * @param umlStereotype
+//	 */
+//	void visit(EViewJavaClass viewClass, PlantStereotypeRepresentation umlStereotype);
+//
+//	/**
+//	 * 
+//	 * @param umlStereotype
+//	 */
+//	void visit(EReadOnlyJavaClass readOnlyClass, PlantStereotypeRepresentation umlStereotype);
+//
+//	/**
+//	 * 
+//	 * @param umlStereotype
+//	 */
+//	void visit(EVersionableJavaClass versionableClass, PlantStereotypeRepresentation umlStereotype);
 
 	/**
 	 * 

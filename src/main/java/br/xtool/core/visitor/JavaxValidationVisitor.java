@@ -10,24 +10,17 @@ import br.xtool.core.representation.plantuml.PlantClassFieldPropertyRepresentati
 import br.xtool.core.representation.plantuml.PlantClassFieldRepresentation;
 import br.xtool.core.representation.plantuml.PlantClassRepresentation;
 import br.xtool.core.representation.plantuml.PlantRelationshipRepresentation;
-import br.xtool.core.representation.plantuml.PlantStereotypeRepresentation;
 import br.xtool.core.representation.plantuml.PlantRelationshipRepresentation.PlantRelationshipAssociation;
 import br.xtool.core.representation.plantuml.PlantRelationshipRepresentation.PlantRelationshipComposition;
 import br.xtool.core.representation.springboot.JavaClassRepresentation;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation;
-import br.xtool.core.representation.springboot.JavaClassRepresentation.EAuditableJavaClass;
-import br.xtool.core.representation.springboot.JavaClassRepresentation.ECacheableJavaClass;
-import br.xtool.core.representation.springboot.JavaClassRepresentation.EIndexedJavaClass;
-import br.xtool.core.representation.springboot.JavaClassRepresentation.EReadOnlyJavaClass;
-import br.xtool.core.representation.springboot.JavaClassRepresentation.EVersionableJavaClass;
-import br.xtool.core.representation.springboot.JavaClassRepresentation.EViewJavaClass;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldBigDecimalType;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldBooleanType;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldByteType;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldEnumType;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldIntegerType;
-import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldLocalDateType;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldLocalDateTimeType;
+import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldLocalDateType;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldLongType;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldManyToManyType;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldManyToOneType;
@@ -56,84 +49,11 @@ public class JavaxValidationVisitor implements Visitor {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaClass,
-	 * br.xtool.core.representation.EUmlStereotype)
-	 */
-	@Override
-	public void visit(JavaClassRepresentation javaClass, PlantStereotypeRepresentation umlStereotype) {
-
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaClass.
-	 * EAuditableJavaClass, br.xtool.core.representation.EUmlStereotype)
-	 */
-	@Override
-	public void visit(EAuditableJavaClass auditableClass, PlantStereotypeRepresentation umlStereotype) {
-
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaClass.
-	 * ECacheableJavaClass, br.xtool.core.representation.EUmlStereotype)
-	 */
-	@Override
-	public void visit(ECacheableJavaClass cacheableClass, PlantStereotypeRepresentation umlStereotype) {
-
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaClass.
-	 * EIndexedJavaClass, br.xtool.core.representation.EUmlStereotype)
-	 */
-	@Override
-	public void visit(EIndexedJavaClass indexedClass, PlantStereotypeRepresentation umlStereotype) {
-
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaClass.
-	 * EViewJavaClass, br.xtool.core.representation.EUmlStereotype)
-	 */
-	@Override
-	public void visit(EViewJavaClass viewClass, PlantStereotypeRepresentation umlStereotype) {
-
-	}
-
-	@Override
-	public void visit(EReadOnlyJavaClass readOnlyClass, PlantStereotypeRepresentation umlStereotype) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void visit(EVersionableJavaClass versionableClass, PlantStereotypeRepresentation umlStereotype) {
-		// TODO Auto-generated method stub
-
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
 	 * br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField,
 	 * br.xtool.core.representation.EUmlField)
 	 */
 	@Override
-	public void visit(JavaFieldRepresentation javaField, PlantClassFieldRepresentation umlField) {
-	}
+	public void visit(JavaFieldRepresentation javaField, PlantClassFieldRepresentation umlField) {}
 
 	@Override
 	public void visit(JavaFieldStringType stringField, PlantClassFieldRepresentation umlField) {

@@ -7,24 +7,17 @@ import br.xtool.core.representation.plantuml.PlantClassFieldPropertyRepresentati
 import br.xtool.core.representation.plantuml.PlantClassFieldRepresentation;
 import br.xtool.core.representation.plantuml.PlantClassRepresentation;
 import br.xtool.core.representation.plantuml.PlantRelationshipRepresentation;
-import br.xtool.core.representation.plantuml.PlantStereotypeRepresentation;
 import br.xtool.core.representation.plantuml.PlantRelationshipRepresentation.PlantRelationshipAssociation;
 import br.xtool.core.representation.plantuml.PlantRelationshipRepresentation.PlantRelationshipComposition;
 import br.xtool.core.representation.springboot.JavaClassRepresentation;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation;
-import br.xtool.core.representation.springboot.JavaClassRepresentation.EAuditableJavaClass;
-import br.xtool.core.representation.springboot.JavaClassRepresentation.ECacheableJavaClass;
-import br.xtool.core.representation.springboot.JavaClassRepresentation.EIndexedJavaClass;
-import br.xtool.core.representation.springboot.JavaClassRepresentation.EReadOnlyJavaClass;
-import br.xtool.core.representation.springboot.JavaClassRepresentation.EVersionableJavaClass;
-import br.xtool.core.representation.springboot.JavaClassRepresentation.EViewJavaClass;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldBigDecimalType;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldBooleanType;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldByteType;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldEnumType;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldIntegerType;
-import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldLocalDateType;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldLocalDateTimeType;
+import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldLocalDateType;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldLongType;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldManyToManyType;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldManyToOneType;
@@ -50,40 +43,6 @@ public class LombokVisitor implements Visitor {
 //		javaClass.addEqualsAndHashCodeAnnotation("id");
 		javaClass.addToStringAnnotation("id");
 		umlClass.getTaggedValueAsArray("EqualsAndHashCode.of").ifPresent(tagValues -> javaClass.addAnnotation(EqualsAndHashCode.class).setStringArrayValue("of", tagValues));
-	}
-
-	@Override
-	public void visit(JavaClassRepresentation javaClass, PlantStereotypeRepresentation umlStereotype) {
-
-	}
-
-	@Override
-	public void visit(EAuditableJavaClass auditableClass, PlantStereotypeRepresentation umlStereotype) {
-
-	}
-
-	@Override
-	public void visit(ECacheableJavaClass cacheableClass, PlantStereotypeRepresentation umlStereotype) {
-
-	}
-
-	@Override
-	public void visit(EIndexedJavaClass indexedClass, PlantStereotypeRepresentation umlStereotype) {
-
-	}
-
-	@Override
-	public void visit(EViewJavaClass viewClass, PlantStereotypeRepresentation umlStereotype) {
-
-	}
-
-	@Override
-	public void visit(EReadOnlyJavaClass readOnlyClass, PlantStereotypeRepresentation umlStereotype) {
-
-	}
-
-	@Override
-	public void visit(EVersionableJavaClass versionableClass, PlantStereotypeRepresentation umlStereotype) {
 	}
 
 	@Override
@@ -135,7 +94,7 @@ public class LombokVisitor implements Visitor {
 	public void visit(JavaFieldLocalDateTimeType localDateTimeField, PlantClassFieldRepresentation umlField) {
 
 	}
-	
+
 	@Override
 	public void visit(JavaFieldEnumType enumField, PlantClassFieldRepresentation umlField) {
 
