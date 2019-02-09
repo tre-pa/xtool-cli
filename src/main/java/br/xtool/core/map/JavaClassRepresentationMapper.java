@@ -57,18 +57,12 @@ public class JavaClassRepresentationMapper implements Function<PlantClassReprese
 
 	private void visit(JavaClassRepresentation javaClass, PlantStereotypeRepresentation stereotype) {
 		this.visitors.forEach(visitor -> {
-			if (stereotype.getStereotypeType().equals(StereotypeType.AUDITABLE))
-				visitor.visit(new EAuditableJavaClassImpl(javaClass), stereotype);
-			if (stereotype.getStereotypeType().equals(StereotypeType.CACHEABLE))
-				visitor.visit(new ECacheableJavaClassImpl(javaClass), stereotype);
-			if (stereotype.getStereotypeType().equals(StereotypeType.INDEXED))
-				visitor.visit(new EIndexedJavaClassImpl(javaClass), stereotype);
-			if (stereotype.getStereotypeType().equals(StereotypeType.VIEW))
-				visitor.visit(new EViewJavaClassImpl(javaClass), stereotype);
-			if (stereotype.getStereotypeType().equals(StereotypeType.READ_ONLY))
-				visitor.visit(new EReadOnlyJavaClassImpl(javaClass), stereotype);
-			if (stereotype.getStereotypeType().equals(StereotypeType.VERSIONABLE))
-				visitor.visit(new EVersionableJavaClassImpl(javaClass), stereotype);
+			if (stereotype.getStereotypeType().equals(StereotypeType.AUDITABLE)) visitor.visit(new EAuditableJavaClassImpl(javaClass), stereotype);
+			if (stereotype.getStereotypeType().equals(StereotypeType.CACHEABLE)) visitor.visit(new ECacheableJavaClassImpl(javaClass), stereotype);
+			if (stereotype.getStereotypeType().equals(StereotypeType.INDEXED)) visitor.visit(new EIndexedJavaClassImpl(javaClass), stereotype);
+			if (stereotype.getStereotypeType().equals(StereotypeType.VIEW)) visitor.visit(new EViewJavaClassImpl(javaClass), stereotype);
+			if (stereotype.getStereotypeType().equals(StereotypeType.READ_ONLY)) visitor.visit(new EReadOnlyJavaClassImpl(javaClass), stereotype);
+			if (stereotype.getStereotypeType().equals(StereotypeType.VERSIONABLE)) visitor.visit(new EVersionableJavaClassImpl(javaClass), stereotype);
 		});
 	}
 
