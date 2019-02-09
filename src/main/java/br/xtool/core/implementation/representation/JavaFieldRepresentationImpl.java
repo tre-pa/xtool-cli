@@ -244,27 +244,27 @@ public class JavaFieldRepresentationImpl implements JavaFieldRepresentation {
 		return this.getName().compareTo(o.getName());
 	}
 
-	public static class EStringFieldImpl extends JavaFieldRepresentationImpl implements EStringField {
+	public static class EStringFieldImpl extends JavaFieldRepresentationImpl implements JavaFieldStringType {
 		public EStringFieldImpl(JavaFieldRepresentation javaField) {
 			super(javaField.getJavaClass(), javaField.getRoasterField());
 		}
 	}
 
-	public static class EBooleanFieldImpl extends JavaFieldRepresentationImpl implements EBooleanField {
+	public static class EBooleanFieldImpl extends JavaFieldRepresentationImpl implements JavaFieldBooleanType {
 		public EBooleanFieldImpl(JavaFieldRepresentation javaField) {
 			super(javaField.getJavaClass(), javaField.getRoasterField());
 		}
 
 	}
 
-	public static class ELongFieldImpl extends JavaFieldRepresentationImpl implements ELongField {
+	public static class ELongFieldImpl extends JavaFieldRepresentationImpl implements JavaFieldLongType {
 		public ELongFieldImpl(JavaFieldRepresentation javaField) {
 			super(javaField.getJavaClass(), javaField.getRoasterField());
 		}
 
 	}
 
-	public static class EIntegerFieldImpl extends JavaFieldRepresentationImpl implements EIntegerField {
+	public static class EIntegerFieldImpl extends JavaFieldRepresentationImpl implements JavaFieldIntegerType {
 		public EIntegerFieldImpl(JavaFieldRepresentation javaField) {
 			super(javaField.getJavaClass(), javaField.getRoasterField());
 		}
@@ -278,77 +278,77 @@ public class JavaFieldRepresentationImpl implements JavaFieldRepresentation {
 
 	}
 
-	public static class EBigDecimalFieldImpl extends JavaFieldRepresentationImpl implements EBigDecimalField {
+	public static class EBigDecimalFieldImpl extends JavaFieldRepresentationImpl implements JavaFieldBigDecimalType {
 		public EBigDecimalFieldImpl(JavaFieldRepresentation javaField) {
 			super(javaField.getJavaClass(), javaField.getRoasterField());
 		}
 
 	}
 
-	public static class ELocalDateFieldImpl extends JavaFieldRepresentationImpl implements ELocalDateField {
+	public static class ELocalDateFieldImpl extends JavaFieldRepresentationImpl implements JavaFieldLocalDateType {
 		public ELocalDateFieldImpl(JavaFieldRepresentation javaField) {
 			super(javaField.getJavaClass(), javaField.getRoasterField());
 		}
 
 	}
 
-	public static class ELocalDateTimeFieldImpl extends JavaFieldRepresentationImpl implements ELocalDateTimeField {
+	public static class ELocalDateTimeFieldImpl extends JavaFieldRepresentationImpl implements JavaFieldLocalDateTimeType {
 		public ELocalDateTimeFieldImpl(JavaFieldRepresentation javaField) {
 			super(javaField.getJavaClass(), javaField.getRoasterField());
 		}
 
 	}
 
-	public static class EENumFieldImpl extends JavaFieldRepresentationImpl implements EEnumField {
+	public static class EENumFieldImpl extends JavaFieldRepresentationImpl implements JavaFieldEnumType {
 		public EENumFieldImpl(JavaFieldRepresentation javaField) {
 			super(javaField.getJavaClass(), javaField.getRoasterField());
 		}
 
 	}
 
-	public static class ENotNullFieldImpl extends JavaFieldRepresentationImpl implements ENotNullField {
+	public static class ENotNullFieldImpl extends JavaFieldRepresentationImpl implements JavaFieldNotNullType {
 		public ENotNullFieldImpl(JavaFieldRepresentation javaField) {
 			super(javaField.getJavaClass(), javaField.getRoasterField());
 		}
 
 	}
 
-	public static class ETransientFieldImpl extends JavaFieldRepresentationImpl implements ETransientField {
+	public static class ETransientFieldImpl extends JavaFieldRepresentationImpl implements JavaFieldTransientType {
 		public ETransientFieldImpl(JavaFieldRepresentation javaField) {
 			super(javaField.getJavaClass(), javaField.getRoasterField());
 		}
 
 	}
 
-	public static class EUniqueFieldImpl extends JavaFieldRepresentationImpl implements EUniqueField {
+	public static class EUniqueFieldImpl extends JavaFieldRepresentationImpl implements JavaFieldUniqueType {
 		public EUniqueFieldImpl(JavaFieldRepresentation javaField) {
 			super(javaField.getJavaClass(), javaField.getRoasterField());
 		}
 
 	}
 
-	public static class EOneToOneFieldImpl extends JavaFieldRepresentationImpl implements EOneToOneField {
+	public static class EOneToOneFieldImpl extends JavaFieldRepresentationImpl implements JavaFieldOneToOneType {
 		public EOneToOneFieldImpl(JavaFieldRepresentation javaField) {
 			super(javaField.getJavaClass(), javaField.getRoasterField());
 		}
 
 	}
 
-	public static class EOneToManyFieldImpl extends JavaFieldRepresentationImpl implements EOneToManyField {
+	public static class EOneToManyFieldImpl extends JavaFieldRepresentationImpl implements JavaFieldOneToManyType {
 		public EOneToManyFieldImpl(JavaFieldRepresentation javaField) {
 			super(javaField.getJavaClass(), javaField.getRoasterField());
 		}
 
 	}
 
-	public static class EManyToOneFieldImpl extends JavaFieldRepresentationImpl implements EManyToOneField {
+	public static class EManyToOneFieldImpl extends JavaFieldRepresentationImpl implements JavaFieldManyToOneType {
 		public EManyToOneFieldImpl(JavaFieldRepresentation javaField) {
 			super(javaField.getJavaClass(), javaField.getRoasterField());
 		}
 
 	}
 
-	public static class EManyToManyFieldImpl extends JavaFieldRepresentationImpl implements EManyToManyField {
+	public static class EManyToManyFieldImpl extends JavaFieldRepresentationImpl implements JavaFieldManyToManyType {
 		public EManyToManyFieldImpl(JavaFieldRepresentation javaField) {
 			super(javaField.getJavaClass(), javaField.getRoasterField());
 		}

@@ -109,68 +109,36 @@ public interface JavaFieldRepresentation extends Comparable<JavaFieldRepresentat
 	@Deprecated
 	JavaAnnotationRepresentation<JavaClassSource> addSequenceGeneratorAnnotation();
 
-	@Deprecated
-	interface EStringField extends JavaFieldRepresentation {
-	}
+	interface JavaFieldStringType extends JavaFieldRepresentation {}
 
-	@Deprecated
-	interface EBooleanField extends JavaFieldRepresentation {
-	}
+	interface JavaFieldBooleanType extends JavaFieldRepresentation {}
 
-	@Deprecated
-	interface ELongField extends JavaFieldRepresentation {
-	}
+	interface JavaFieldLongType extends JavaFieldRepresentation {}
 
-	@Deprecated
-	interface EIntegerField extends JavaFieldRepresentation {
-	}
+	interface JavaFieldIntegerType extends JavaFieldRepresentation {}
 
-	@Deprecated
-	interface EByteField extends JavaFieldRepresentation {
-	}
+	interface JavaFieldByteType extends JavaFieldRepresentation {}
 
-	@Deprecated
-	interface EBigDecimalField extends JavaFieldRepresentation {
-	}
+	interface JavaFieldBigDecimalType extends JavaFieldRepresentation {}
 
-	@Deprecated
-	interface ELocalDateField extends JavaFieldRepresentation {
-	}
+	interface JavaFieldLocalDateType extends JavaFieldRepresentation {}
 
-	@Deprecated
-	interface ELocalDateTimeField extends JavaFieldRepresentation {
-	}
+	interface JavaFieldLocalDateTimeType extends JavaFieldRepresentation {}
 
-	@Deprecated
-	interface EEnumField extends JavaFieldRepresentation {
-	}
+	interface JavaFieldEnumType extends JavaFieldRepresentation {}
 
-	@Deprecated
-	interface ENotNullField extends JavaFieldRepresentation {
-	}
+	interface JavaFieldNotNullType extends JavaFieldRepresentation {}
 
-	@Deprecated
-	interface ETransientField extends JavaFieldRepresentation {
-	}
+	interface JavaFieldTransientType extends JavaFieldRepresentation {}
 
-	@Deprecated
-	interface EUniqueField extends JavaFieldRepresentation {
-	}
+	interface JavaFieldUniqueType extends JavaFieldRepresentation {}
 
-	@Deprecated
-	interface EOneToOneField extends JavaFieldRepresentation {
-	}
+	interface JavaFieldOneToOneType extends JavaFieldRepresentation {}
 
-	@Deprecated
-	interface EOneToManyField extends JavaFieldRepresentation {
-	}
+	interface JavaFieldOneToManyType extends JavaFieldRepresentation {}
 
-	@Deprecated
-	interface EManyToOneField extends JavaFieldRepresentation {
-	}
+	interface JavaFieldManyToOneType extends JavaFieldRepresentation {}
 
-	@Deprecated
-	interface EManyToManyField extends JavaFieldRepresentation {
-	}
+	interface JavaFieldManyToManyType extends JavaFieldRepresentation {}
 
 }

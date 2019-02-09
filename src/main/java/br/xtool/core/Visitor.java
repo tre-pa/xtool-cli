@@ -5,8 +5,8 @@ import br.xtool.core.representation.plantuml.PlantClassFieldRepresentation;
 import br.xtool.core.representation.plantuml.PlantClassRepresentation;
 import br.xtool.core.representation.plantuml.PlantRelationshipRepresentation;
 import br.xtool.core.representation.plantuml.PlantStereotypeRepresentation;
-import br.xtool.core.representation.plantuml.PlantRelationshipRepresentation.EAssociation;
-import br.xtool.core.representation.plantuml.PlantRelationshipRepresentation.EComposition;
+import br.xtool.core.representation.plantuml.PlantRelationshipRepresentation.PlantRelationshipAssociation;
+import br.xtool.core.representation.plantuml.PlantRelationshipRepresentation.PlantRelationshipComposition;
 import br.xtool.core.representation.springboot.JavaClassRepresentation;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation;
 import br.xtool.core.representation.springboot.JavaClassRepresentation.EAuditableJavaClass;
@@ -15,22 +15,22 @@ import br.xtool.core.representation.springboot.JavaClassRepresentation.EIndexedJ
 import br.xtool.core.representation.springboot.JavaClassRepresentation.EReadOnlyJavaClass;
 import br.xtool.core.representation.springboot.JavaClassRepresentation.EVersionableJavaClass;
 import br.xtool.core.representation.springboot.JavaClassRepresentation.EViewJavaClass;
-import br.xtool.core.representation.springboot.JavaFieldRepresentation.EBigDecimalField;
-import br.xtool.core.representation.springboot.JavaFieldRepresentation.EBooleanField;
-import br.xtool.core.representation.springboot.JavaFieldRepresentation.EByteField;
-import br.xtool.core.representation.springboot.JavaFieldRepresentation.EEnumField;
-import br.xtool.core.representation.springboot.JavaFieldRepresentation.EIntegerField;
-import br.xtool.core.representation.springboot.JavaFieldRepresentation.ELocalDateField;
-import br.xtool.core.representation.springboot.JavaFieldRepresentation.ELocalDateTimeField;
-import br.xtool.core.representation.springboot.JavaFieldRepresentation.ELongField;
-import br.xtool.core.representation.springboot.JavaFieldRepresentation.EManyToManyField;
-import br.xtool.core.representation.springboot.JavaFieldRepresentation.EManyToOneField;
-import br.xtool.core.representation.springboot.JavaFieldRepresentation.ENotNullField;
-import br.xtool.core.representation.springboot.JavaFieldRepresentation.EOneToManyField;
-import br.xtool.core.representation.springboot.JavaFieldRepresentation.EOneToOneField;
-import br.xtool.core.representation.springboot.JavaFieldRepresentation.EStringField;
-import br.xtool.core.representation.springboot.JavaFieldRepresentation.ETransientField;
-import br.xtool.core.representation.springboot.JavaFieldRepresentation.EUniqueField;
+import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldBigDecimalType;
+import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldBooleanType;
+import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldByteType;
+import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldEnumType;
+import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldIntegerType;
+import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldLocalDateType;
+import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldLocalDateTimeType;
+import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldLongType;
+import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldManyToManyType;
+import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldManyToOneType;
+import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldNotNullType;
+import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldOneToManyType;
+import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldOneToOneType;
+import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldStringType;
+import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldTransientType;
+import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldUniqueType;
 
 /**
  * 
@@ -98,84 +98,84 @@ public interface Visitor {
 	 * @param stringField
 	 * @param umlField
 	 */
-	void visit(EStringField stringField, PlantClassFieldRepresentation umlField);
+	void visit(JavaFieldStringType stringField, PlantClassFieldRepresentation umlField);
 
 	/**
 	 * 
 	 * @param booleanField
 	 * @param umlField
 	 */
-	void visit(EBooleanField booleanField, PlantClassFieldRepresentation umlField);
+	void visit(JavaFieldBooleanType booleanField, PlantClassFieldRepresentation umlField);
 
 	/**
 	 * 
 	 * @param longField
 	 * @param umlField
 	 */
-	void visit(ELongField longField, PlantClassFieldRepresentation umlField);
+	void visit(JavaFieldLongType longField, PlantClassFieldRepresentation umlField);
 
 	/**
 	 * 
 	 * @param integerField
 	 * @param umlField
 	 */
-	void visit(EIntegerField integerField, PlantClassFieldRepresentation umlField);
+	void visit(JavaFieldIntegerType integerField, PlantClassFieldRepresentation umlField);
 
 	/**
 	 * 
 	 * @param byteField
 	 * @param umlField
 	 */
-	void visit(EByteField byteField, PlantClassFieldRepresentation umlField);
+	void visit(JavaFieldByteType byteField, PlantClassFieldRepresentation umlField);
 
 	/**
 	 * 
 	 * @param bigDecimalField
 	 * @param umlField
 	 */
-	void visit(EBigDecimalField bigDecimalField, PlantClassFieldRepresentation umlField);
+	void visit(JavaFieldBigDecimalType bigDecimalField, PlantClassFieldRepresentation umlField);
 
 	/**
 	 * 
 	 * @param localDateField
 	 * @param umlField
 	 */
-	void visit(ELocalDateField localDateField, PlantClassFieldRepresentation umlField);
+	void visit(JavaFieldLocalDateType localDateField, PlantClassFieldRepresentation umlField);
 
 	/**
 	 * 
 	 * @param localDateTimeField
 	 * @param umlField
 	 */
-	void visit(ELocalDateTimeField localDateTimeField, PlantClassFieldRepresentation umlField);
+	void visit(JavaFieldLocalDateTimeType localDateTimeField, PlantClassFieldRepresentation umlField);
 	
 	/**
 	 * 
 	 * @param enumField
 	 * @param umlField
 	 */
-	void visit(EEnumField enumField, PlantClassFieldRepresentation umlField);
+	void visit(JavaFieldEnumType enumField, PlantClassFieldRepresentation umlField);
 
 	/**
 	 * 
 	 * @param notNullField
 	 * @param property
 	 */
-	void visit(ENotNullField notNullField, PlantClassFieldPropertyRepresentation property);
+	void visit(JavaFieldNotNullType notNullField, PlantClassFieldPropertyRepresentation property);
 
 	/**
 	 * 
 	 * @param transientField
 	 * @param property
 	 */
-	void visit(ETransientField transientField, PlantClassFieldPropertyRepresentation property);
+	void visit(JavaFieldTransientType transientField, PlantClassFieldPropertyRepresentation property);
 
 	/**
 	 * 
 	 * @param uniqueField
 	 * @param property
 	 */
-	void visit(EUniqueField uniqueField, PlantClassFieldPropertyRepresentation property);
+	void visit(JavaFieldUniqueType uniqueField, PlantClassFieldPropertyRepresentation property);
 
 	/**
 	 * 
@@ -194,48 +194,48 @@ public interface Visitor {
 	 * @param oneToOneField
 	 * @param association
 	 */
-	void visit(EOneToOneField oneToOneField, EAssociation association);
+	void visit(JavaFieldOneToOneType oneToOneField, PlantRelationshipAssociation association);
 
 	/**
 	 * 
 	 * @param oneToManyField
 	 * @param association
 	 */
-	void visit(EOneToManyField oneToManyField, EAssociation association);
+	void visit(JavaFieldOneToManyType oneToManyField, PlantRelationshipAssociation association);
 
 	/**
 	 * 
 	 * @param manyToOneField
 	 * @param association
 	 */
-	void visit(EManyToOneField manyToOneField, EAssociation association);
+	void visit(JavaFieldManyToOneType manyToOneField, PlantRelationshipAssociation association);
 
 	/**
 	 * 
 	 * @param manyToManyField
 	 * @param association
 	 */
-	void visit(EManyToManyField manyToManyField, EAssociation association);
+	void visit(JavaFieldManyToManyType manyToManyField, PlantRelationshipAssociation association);
 
 	/**
 	 * 
 	 * @param oneToOneField
 	 * @param composition
 	 */
-	void visit(EOneToOneField oneToOneField, EComposition composition);
+	void visit(JavaFieldOneToOneType oneToOneField, PlantRelationshipComposition composition);
 
 	/**
 	 * 
 	 * @param oneToManyField
 	 * @param composition
 	 */
-	void visit(EOneToManyField oneToManyField, EComposition composition);
+	void visit(JavaFieldOneToManyType oneToManyField, PlantRelationshipComposition composition);
 
 	/**
 	 * 
 	 * @param manyToOneField
 	 * @param composition
 	 */
-	void visit(EManyToOneField manyToOneField, EComposition composition);
+	void visit(JavaFieldManyToOneType manyToOneField, PlantRelationshipComposition composition);
 
 }

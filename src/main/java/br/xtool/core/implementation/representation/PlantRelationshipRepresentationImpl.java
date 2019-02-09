@@ -171,13 +171,13 @@ public class PlantRelationshipRepresentationImpl implements PlantRelationshipRep
 		return this.getSourceMultiplicity().isToMany() && this.getTargetMultiplicity().isToMany();
 	}
 
-	public static class EAssociationImpl extends PlantRelationshipRepresentationImpl implements EAssociation {
+	public static class EAssociationImpl extends PlantRelationshipRepresentationImpl implements PlantRelationshipAssociation {
 		public EAssociationImpl(PlantRelationshipRepresentation umlRelationship) {
 			super(umlRelationship.getSourceClass(), umlRelationship.getTargetClass(), umlRelationship.getLink(), umlRelationship.getSourceQualifier(), umlRelationship.getTargetQualifier());
 		}
 	}
 
-	public static class ECompositionImpl extends PlantRelationshipRepresentationImpl implements EComposition {
+	public static class ECompositionImpl extends PlantRelationshipRepresentationImpl implements PlantRelationshipComposition {
 		public ECompositionImpl(PlantRelationshipRepresentation umlRelationship) {
 			super(umlRelationship.getSourceClass(), umlRelationship.getTargetClass(), umlRelationship.getLink(), umlRelationship.getSourceQualifier(), umlRelationship.getTargetQualifier());
 		}
