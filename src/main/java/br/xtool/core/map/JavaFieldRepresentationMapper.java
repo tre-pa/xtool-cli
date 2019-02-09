@@ -61,33 +61,21 @@ public class JavaFieldRepresentationMapper implements BiFunction<JavaClassRepres
 	private void visit(JavaFieldRepresentation javaField, PlantClassFieldRepresentation umlField) {
 		this.visitors.forEach(visitor -> {
 			visitor.visit(javaField, umlField);
-			if (javaField.getType().isType(String.class))
-				visitor.visit(new EStringFieldImpl(javaField), umlField);
-			if (javaField.getType().isType(Boolean.class))
-				visitor.visit(new EBooleanFieldImpl(javaField), umlField);
-			if (javaField.getType().isType(Long.class))
-				visitor.visit(new ELongFieldImpl(javaField), umlField);
-			if (javaField.getType().isType(Integer.class))
-				visitor.visit(new EIntegerFieldImpl(javaField), umlField);
-			if (javaField.getType().isType(Byte.class))
-				visitor.visit(new EByteFieldImpl(javaField), umlField);
-			if (javaField.getType().isType(BigDecimal.class))
-				visitor.visit(new EBigDecimalFieldImpl(javaField), umlField);
-			if (javaField.getType().isType(LocalDate.class))
-				visitor.visit(new ELocalDateFieldImpl(javaField), umlField);
-			if (javaField.getType().isType(LocalDateTime.class))
-				visitor.visit(new ELocalDateTimeFieldImpl(javaField), umlField);
-			if (umlField.isEnum())
-				visitor.visit(new EENumFieldImpl(javaField), umlField);
+			if (javaField.getType().isType(String.class)) visitor.visit(new EStringFieldImpl(javaField), umlField);
+			if (javaField.getType().isType(Boolean.class)) visitor.visit(new EBooleanFieldImpl(javaField), umlField);
+			if (javaField.getType().isType(Long.class)) visitor.visit(new ELongFieldImpl(javaField), umlField);
+			if (javaField.getType().isType(Integer.class)) visitor.visit(new EIntegerFieldImpl(javaField), umlField);
+			if (javaField.getType().isType(Byte.class)) visitor.visit(new EByteFieldImpl(javaField), umlField);
+			if (javaField.getType().isType(BigDecimal.class)) visitor.visit(new EBigDecimalFieldImpl(javaField), umlField);
+			if (javaField.getType().isType(LocalDate.class)) visitor.visit(new ELocalDateFieldImpl(javaField), umlField);
+			if (javaField.getType().isType(LocalDateTime.class)) visitor.visit(new ELocalDateTimeFieldImpl(javaField), umlField);
+			if (umlField.isEnum()) visitor.visit(new EENumFieldImpl(javaField), umlField);
 		});
 		this.visitors.forEach(visitor -> umlField.getProperties().forEach(property -> {
 			visitor.visit(javaField, property);
-			if (property.getFieldProperty().equals(FieldPropertyType.NOTNULL))
-				visitor.visit(new ENotNullFieldImpl(javaField), property);
-			if (property.getFieldProperty().equals(FieldPropertyType.UNIQUE))
-				visitor.visit(new EUniqueFieldImpl(javaField), property);
-			if (property.getFieldProperty().equals(FieldPropertyType.TRANSIENT))
-				visitor.visit(new ETransientFieldImpl(javaField), property);
+			if (property.getFieldProperty().equals(FieldPropertyType.NOTNULL)) visitor.visit(new ENotNullFieldImpl(javaField), property);
+			if (property.getFieldProperty().equals(FieldPropertyType.UNIQUE)) visitor.visit(new EUniqueFieldImpl(javaField), property);
+			if (property.getFieldProperty().equals(FieldPropertyType.TRANSIENT)) visitor.visit(new ETransientFieldImpl(javaField), property);
 		}));
 	}
 
