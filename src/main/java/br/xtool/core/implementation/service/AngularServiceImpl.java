@@ -83,7 +83,7 @@ public class AngularServiceImpl implements AngularService {
 	 * springboot.EntityRepresentation)
 	 */
 	@Override
-	public NgEntityRepresentation createNgEntity(EntityRepresentation entity) {
+	public NgEntityRepresentation genNgEntity(EntityRepresentation entity) {
 		SpringBootProjectRepresentation springBootProject = this.workspace.getWorkingProject(SpringBootProjectRepresentation.class);
 		NgProjectRepresentation ngProject = springBootProject.getAssociatedAngularProject()
 				.orElseThrow(() -> new IllegalArgumentException("Não há nenhum projeto Angular associado ao projeto: " + springBootProject.getName()));
@@ -104,7 +104,7 @@ public class AngularServiceImpl implements AngularService {
 		Path ngEntityPath = destinationPath.resolve(NgClassRepresentation.genFileName(entity.getName())).resolve(entity.getName().concat(".ts"));
 		NgEntityRepresentation ngEntity = new NgEntityRepresentationImpl(ngEntityPath);
 
-		entity.getAttributes().stream().filter(EntityAttributeRepresentation::isEnumField).map(EntityAttributeRepresentation::getEnum).map(Optional::get).forEach(this::createNgEnum);
+		entity.getAttributes().stream().filter(EntityAttributeRepresentation::isEnumField).map(EntityAttributeRepresentation::getEnum).map(Optional::get).forEach(this::genNgEnum);
 		return ngEntity;
 	}
 
@@ -116,7 +116,7 @@ public class AngularServiceImpl implements AngularService {
 	 * springboot.JavaEnumRepresentation)
 	 */
 	@Override
-	public NgEnumRepresentation createNgEnum(JavaEnumRepresentation javaEnum) {
+	public NgEnumRepresentation genNgEnum(JavaEnumRepresentation javaEnum) {
 		SpringBootProjectRepresentation springBootProject = this.workspace.getWorkingProject(SpringBootProjectRepresentation.class);
 		NgProjectRepresentation ngProject = springBootProject.getAssociatedAngularProject()
 				.orElseThrow(() -> new IllegalArgumentException("Não há nenhum projeto Angular associado ao projeto: " + springBootProject.getName()));

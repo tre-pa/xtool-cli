@@ -17,7 +17,7 @@ public interface AngularService {
 	 * @param entity    classe Jpa
 	 * @return classe Typescript
 	 */
-	NgEntityRepresentation createNgEntity(EntityRepresentation entity);
+	NgEntityRepresentation genNgEntity(EntityRepresentation entity);
 
 	/**
 	 * 
@@ -25,7 +25,7 @@ public interface AngularService {
 	 * @param javaEnum
 	 * @return
 	 */
-	NgEnumRepresentation createNgEnum(JavaEnumRepresentation javaEnum);
+	NgEnumRepresentation genNgEnum(JavaEnumRepresentation javaEnum);
 
 	/**
 	 * Cria uma nova classe Typescript de dominio em src/app/domain

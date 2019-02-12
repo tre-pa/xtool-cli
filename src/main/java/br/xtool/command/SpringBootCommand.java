@@ -119,7 +119,7 @@ public class SpringBootCommand {
 	@ShellMethodAvailability("availabilitySpringBootCommand")
 	public void genNgEntities() {
 		SpringBootProjectRepresentation project = this.workspace.getWorkingProject(SpringBootProjectRepresentation.class);
-		project.getEntities().stream().forEach(angularService::createNgEntity);
+		project.getEntities().stream().forEach(angularService::genNgEntity);
 	}
 
 	/**
