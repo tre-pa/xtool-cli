@@ -67,15 +67,15 @@ public class JpaVisitor implements Visitor {
 	 * br.xtool.core.representation.EUmlClass)
 	 */
 	@Override
-	public void visit(JavaClassRepresentation javaClass, PlantClassRepresentation umlClass) {
+	public void visit(JavaClassRepresentation javaClass, PlantClassRepresentation plantClass) {
 		javaClass.addAnnotation(Entity.class);
-		if (umlClass.getStereotypes().stream()
+		if (plantClass.getStereotypes().stream()
 				.noneMatch(st -> st.getStereotypeType().equals(StereotypeType.READ_ONLY) || st.getStereotypeType().equals(StereotypeType.VIEW))) {
 			javaClass.addAnnotation(DynamicInsert.class);
 			javaClass.addAnnotation(DynamicUpdate.class);
 		}
-		umlClass.getTaggedValue("Table.name").ifPresent(tagValue -> javaClass.addAnnotation(Table.class).setStringValue("name", tagValue));
-		umlClass.getTaggedValue("Table.schema").ifPresent(tagValue -> javaClass.addAnnotation(Table.class).setStringValue("schema", tagValue));
+		plantClass.getTaggedValue("Table.name").ifPresent(tagValue -> javaClass.addAnnotation(Table.class).setStringValue("name", tagValue));
+		plantClass.getTaggedValue("Table.schema").ifPresent(tagValue -> javaClass.addAnnotation(Table.class).setStringValue("schema", tagValue));
 		javaClass.addAnnotation(JsonInclude.class).setEnumArrayValue(JsonInclude.Include.NON_EMPTY);
 	}
 

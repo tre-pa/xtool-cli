@@ -34,64 +34,22 @@ public interface Visitor {
 
 	/**
 	 * 
-	 * @param umlClass
+	 * @param plantClass
 	 */
-	void visit(JavaClassRepresentation javaClass, PlantClassRepresentation umlClass);
-
-//	/**
-//	 * 
-//	 * @param umlStereotype
-//	 */
-//	void visit(JavaClassRepresentation javaClass, PlantStereotypeRepresentation umlStereotype);
-//
-//	/**
-//	 * 
-//	 * @param umlStereotype
-//	 */
-//	void visit(EAuditableJavaClass auditableClass, PlantStereotypeRepresentation umlStereotype);
-//
-//	/**
-//	 * 
-//	 * @param umlStereotype
-//	 */
-//	void visit(ECacheableJavaClass cacheableClass, PlantStereotypeRepresentation umlStereotype);
-//
-//	/**
-//	 * 
-//	 * @param umlStereotype
-//	 */
-//	void visit(EIndexedJavaClass indexedClass, PlantStereotypeRepresentation umlStereotype);
-//
-//	/**
-//	 * 
-//	 * @param umlStereotype
-//	 */
-//	void visit(EViewJavaClass viewClass, PlantStereotypeRepresentation umlStereotype);
-//
-//	/**
-//	 * 
-//	 * @param umlStereotype
-//	 */
-//	void visit(EReadOnlyJavaClass readOnlyClass, PlantStereotypeRepresentation umlStereotype);
-//
-//	/**
-//	 * 
-//	 * @param umlStereotype
-//	 */
-//	void visit(EVersionableJavaClass versionableClass, PlantStereotypeRepresentation umlStereotype);
+	void visit(JavaClassRepresentation javaClass, PlantClassRepresentation plantClass);
 
 	/**
 	 * 
-	 * @param umlField
+	 * @param plantField
 	 */
-	void visit(JavaFieldRepresentation javaField, PlantClassFieldRepresentation umlField);
+	void visit(JavaFieldRepresentation javaField, PlantClassFieldRepresentation plantField);
 
 	/**
 	 * 
 	 * @param stringField
-	 * @param umlField
+	 * @param plantField
 	 */
-	void visit(JavaFieldStringType stringField, PlantClassFieldRepresentation umlField);
+	void visit(JavaFieldStringType stringField, PlantClassFieldRepresentation plantField);
 
 	/**
 	 * 
@@ -141,7 +99,7 @@ public interface Visitor {
 	 * @param umlField
 	 */
 	void visit(JavaFieldLocalDateTimeType localDateTimeField, PlantClassFieldRepresentation umlField);
-	
+
 	/**
 	 * 
 	 * @param enumField
