@@ -1,4 +1,4 @@
-package br.xtool.core.util;
+package br.xtool.core.helper;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -16,7 +16,7 @@ import org.jboss.forge.roaster.model.source.JavaInterfaceSource;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class RoasterUtil {
+public class RoasterHelper {
 
 	public static Optional<JavaUnit> loadJavaUnit(File javaFile) {
 		try {

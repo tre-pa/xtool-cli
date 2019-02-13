@@ -5,11 +5,11 @@ import org.jboss.forge.roaster.model.source.MethodSource;
 import org.springframework.data.jpa.domain.Specification;
 
 import br.xtool.core.JavaTemplate;
+import br.xtool.core.helper.RoasterHelper;
 import br.xtool.core.implementation.representation.SpecificationRepresentationImpl;
 import br.xtool.core.representation.springboot.EntityRepresentation;
 import br.xtool.core.representation.springboot.SpecificationRepresentation;
 import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
-import br.xtool.core.util.RoasterUtil;
 
 public class SpecificationTemplates {
 	
@@ -21,7 +21,7 @@ public class SpecificationTemplates {
 	 */
 	public static SpecificationRepresentation newSpecificationRepresentation(SpringBootProjectRepresentation springBootProject, EntityRepresentation entity) {
 		String specificationName = entity.getName().concat("Specification");
-		SpecificationRepresentation specification = new SpecificationRepresentationImpl(springBootProject, RoasterUtil.createJavaClassSource(specificationName));
+		SpecificationRepresentation specification = new SpecificationRepresentationImpl(springBootProject, RoasterHelper.createJavaClassSource(specificationName));
 		specification.getRoasterJavaClass().setPackage(springBootProject.getRootPackage().getName().concat(".repository").concat(".specification"));
 		specification.getRoasterJavaClass().addImport(entity.getQualifiedName());
 		specification.getRoasterJavaClass().addImport(springBootProject.getRootPackage().getName().concat(".groovy.qy.QySpecification"));

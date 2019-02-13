@@ -19,6 +19,7 @@ import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.jboss.forge.roaster.model.source.JavaEnumSource;
 import org.jboss.forge.roaster.model.source.JavaInterfaceSource;
 
+import br.xtool.core.helper.RoasterHelper;
 import br.xtool.core.representation.ProjectRepresentation;
 import br.xtool.core.representation.angular.NgProjectRepresentation;
 import br.xtool.core.representation.plantuml.PlantClassDiagramRepresentation;
@@ -35,7 +36,6 @@ import br.xtool.core.representation.springboot.RestClassRepresentation;
 import br.xtool.core.representation.springboot.ServiceClassRepresentation;
 import br.xtool.core.representation.springboot.SpecificationRepresentation;
 import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
-import br.xtool.core.util.RoasterUtil;
 import lombok.SneakyThrows;
 
 /**
@@ -277,7 +277,7 @@ public class SpringBootProjectRepresentationImpl extends ProjectRepresentationIm
 			this.javaUnits = this.listAllFiles().stream()
 				.filter(path -> path.toString().endsWith(".java"))
 				.map(Path::toFile)
-				.map(RoasterUtil::loadJavaUnit)
+				.map(RoasterHelper::loadJavaUnit)
 				.filter(Optional::isPresent)
 				.map(Optional::get)
 				.collect(Collectors.toList());

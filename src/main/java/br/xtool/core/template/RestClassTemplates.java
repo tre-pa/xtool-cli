@@ -24,13 +24,13 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.xtool.core.JavaTemplate;
+import br.xtool.core.helper.InflectorHelper;
+import br.xtool.core.helper.RoasterHelper;
 import br.xtool.core.implementation.representation.RestClassRepresentationImpl;
 import br.xtool.core.representation.springboot.JavaMethodRepresentation;
 import br.xtool.core.representation.springboot.RepositoryRepresentation;
 import br.xtool.core.representation.springboot.RestClassRepresentation;
 import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
-import br.xtool.core.util.Inflector;
-import br.xtool.core.util.RoasterUtil;
 import lombok.extern.slf4j.Slf4j;
 import strman.Strman;
 
@@ -38,7 +38,7 @@ public class RestClassTemplates {
 	
 	public static RestClassRepresentation newRestClassRepresentation(SpringBootProjectRepresentation bootProject, RepositoryRepresentation repository) {
 		String restName = repository.getTargetEntity().getName().concat("Rest");
-		RestClassRepresentation rest = new RestClassRepresentationImpl(bootProject, RoasterUtil.createJavaClassSource(restName));
+		RestClassRepresentation rest = new RestClassRepresentationImpl(bootProject, RoasterHelper.createJavaClassSource(restName));
 		rest.getRoasterJavaClass().setPackage(bootProject.getRootPackage().getName().concat(".rest"));
 		rest.getRoasterJavaClass().addAnnotation(Slf4j.class);
 //		rest.getRoasterJavaClass().addImport(Autowired.class);
@@ -46,7 +46,7 @@ public class RestClassTemplates {
 		rest.getRoasterJavaClass().addAnnotation(RestController.class);
 		// @formatter:off
 		rest.getRoasterJavaClass().addAnnotation(RequestMapping.class)
-			.setStringValue(String.format("api/%s",Inflector.getInstance().pluralize(Strman.toKebabCase(repository.getTargetEntity().getName()))));
+			.setStringValue(String.format("api/%s",InflectorHelper.getInstance().pluralize(Strman.toKebabCase(repository.getTargetEntity().getName()))));
 //		rest.getRoasterJavaClass().addField()
 //			.setPrivate()
 //			.setName(repository.getInstanceName())

@@ -9,17 +9,17 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import br.xtool.core.helper.RoasterHelper;
 import br.xtool.core.implementation.representation.RepositoryRepresentationImpl;
 import br.xtool.core.representation.springboot.EntityRepresentation;
 import br.xtool.core.representation.springboot.RepositoryRepresentation;
 import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
-import br.xtool.core.util.RoasterUtil;
 
 public class RepositoryTemplates {
 	
 	public static RepositoryRepresentation newRepositoryRepresentation(SpringBootProjectRepresentation springBootProject, EntityRepresentation entity) {
 		String repositoryName = entity.getName().concat("Repository");
-		RepositoryRepresentation repository = new RepositoryRepresentationImpl(springBootProject, RoasterUtil.createJavaInterface(repositoryName));
+		RepositoryRepresentation repository = new RepositoryRepresentationImpl(springBootProject, RoasterHelper.createJavaInterface(repositoryName));
 		repository.getRoasterInterface().setPackage(springBootProject.getRootPackage().getName().concat(".repository"));
 		repository.getRoasterInterface().addImport(JpaRepository.class);
 		repository.getRoasterInterface().addImport(JpaSpecificationExecutor.class);

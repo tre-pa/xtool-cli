@@ -1,4 +1,4 @@
-package br.xtool.core.util;
+package br.xtool.core.helper;
 
 import static java.util.regex.Pattern.CASE_INSENSITIVE;
 import static java.util.regex.Pattern.compile;
@@ -12,7 +12,7 @@ import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Inflector {
+public class InflectorHelper {
 	private final Collection<String> uncountable = new ArrayList<String>();
 
 	private final Collection<Rule> singular = new ArrayList<Rule>();
@@ -21,10 +21,10 @@ public class Inflector {
 
 	private final Collection<Rule> plural = new ArrayList<Rule>();
 
-	private static final ThreadLocal<Map<String, Inflector>> INFLECTORS = new ThreadLocal<Map<String, Inflector>>() {
-		private final Map<String, Inflector> map = new HashMap<String, Inflector>();
+	private static final ThreadLocal<Map<String, InflectorHelper>> INFLECTORS = new ThreadLocal<Map<String, InflectorHelper>>() {
+		private final Map<String, InflectorHelper> map = new HashMap<String, InflectorHelper>();
 		{
-			final Inflector inflector = new Inflector();
+			final InflectorHelper inflector = new InflectorHelper();
 
 			inflector.addSingular("^([a-zA-z]*)ais$/i", "\1al");
 			inflector.addSingular("/^([a-zA-z]*)eis$/i", "\1el");
@@ -53,7 +53,7 @@ public class Inflector {
 		}
 
 		@Override
-		public Map<String, Inflector> get() {
+		public Map<String, InflectorHelper> get() {
 			return this.map;
 		}
 	};
@@ -157,17 +157,17 @@ public class Inflector {
 		}
 	}
 
-	public static void addLocale(final String locale, Inflector inflector) {
+	public static void addLocale(final String locale, InflectorHelper inflector) {
 		INFLECTORS.get().put(locale, inflector);
 	}
 
-	public static Inflector getInstance() {
+	public static InflectorHelper getInstance() {
 		String locale = "pt_BR";
-		final Inflector inflector;
+		final InflectorHelper inflector;
 		if (INFLECTORS.get().containsKey(locale)) {
 			inflector = INFLECTORS.get().get(locale);
 		} else {
-			inflector = new Inflector();
+			inflector = new InflectorHelper();
 			INFLECTORS.get().put(locale, inflector);
 		}
 		return inflector;

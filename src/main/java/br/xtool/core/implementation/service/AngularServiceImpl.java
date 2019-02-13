@@ -15,6 +15,7 @@ import br.xtool.core.ConsoleLog;
 import br.xtool.core.FS;
 import br.xtool.core.Shell;
 import br.xtool.core.Workspace;
+import br.xtool.core.helper.InflectorHelper;
 import br.xtool.core.implementation.representation.NgEntityRepresentationImpl;
 import br.xtool.core.implementation.representation.NgEnumRepresentationImpl;
 import br.xtool.core.implementation.representation.NgServiceRepresentationImpl;
@@ -28,7 +29,6 @@ import br.xtool.core.representation.springboot.EntityAttributeRepresentation;
 import br.xtool.core.representation.springboot.EntityRepresentation;
 import br.xtool.core.representation.springboot.JavaEnumRepresentation;
 import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
-import br.xtool.core.util.Inflector;
 import br.xtool.service.AngularService;
 import strman.Strman;
 
@@ -158,7 +158,7 @@ public class AngularServiceImpl implements AngularService {
 				put("entityFileName", NgClassRepresentation.genFileName(entity.getName()));
 				put("entityClassName", entity.getName());
 				put("entity", entity);
-				put("entityApiName", Inflector.getInstance().pluralize(Strman.toKebabCase(entity.getName())));
+				put("entityApiName", InflectorHelper.getInstance().pluralize(Strman.toKebabCase(entity.getName())));
 				put("typescriptTypeMap", NgClassRepresentation.typescriptTypeMap());
 			}
 		};

@@ -3,10 +3,10 @@ package br.xtool.core.implementation.representation;
 import org.apache.commons.lang3.StringUtils;
 
 import br.xtool.core.representation.plantuml.PlantNavigabilityRepresentation;
+import br.xtool.core.helper.InflectorHelper;
 import br.xtool.core.representation.plantuml.PlantClassRepresentation;
 import br.xtool.core.representation.plantuml.PlantMultiplicityRepresentation;
 import br.xtool.core.representation.plantuml.PlantRelationshipRepresentation;
-import br.xtool.core.util.Inflector;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkArrow;
 import net.sourceforge.plantuml.cucadiagram.LinkDecor;
@@ -72,7 +72,7 @@ public class PlantRelationshipRepresentationImpl implements PlantRelationshipRep
 	@Override
 	public String getSourceRole() {
 		if (this.getSourceMultiplicity().isToMany()) {
-			return Inflector.getInstance().pluralize(StringUtils.uncapitalize(this.getTargetClass().getName()));
+			return InflectorHelper.getInstance().pluralize(StringUtils.uncapitalize(this.getTargetClass().getName()));
 		}
 		return StringUtils.uncapitalize(this.getTargetClass().getName());
 	}
@@ -105,7 +105,7 @@ public class PlantRelationshipRepresentationImpl implements PlantRelationshipRep
 	@Override
 	public String getTargetRole() {
 		if (this.getTargetMultiplicity().isToMany()) {
-			return Inflector.getInstance().pluralize(StringUtils.uncapitalize(this.getSourceClass().getName()));
+			return InflectorHelper.getInstance().pluralize(StringUtils.uncapitalize(this.getSourceClass().getName()));
 		}
 		return StringUtils.uncapitalize(this.getSourceClass().getName());
 	}

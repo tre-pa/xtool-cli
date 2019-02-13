@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import br.xtool.core.Visitor;
+import br.xtool.core.helper.RoasterHelper;
 import br.xtool.core.implementation.representation.JavaFieldRepresentationImpl.EBigDecimalFieldImpl;
 import br.xtool.core.implementation.representation.JavaFieldRepresentationImpl.EBooleanFieldImpl;
 import br.xtool.core.implementation.representation.JavaFieldRepresentationImpl.EByteFieldImpl;
@@ -26,7 +27,6 @@ import br.xtool.core.representation.plantuml.PlantClassFieldPropertyRepresentati
 import br.xtool.core.representation.plantuml.PlantClassFieldRepresentation;
 import br.xtool.core.representation.springboot.JavaClassRepresentation;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation;
-import br.xtool.core.util.RoasterUtil;
 
 /**
  * Transforma um atributo UML do diagrama de classe em um EJavaField.
@@ -44,7 +44,7 @@ public class JavaFieldRepresentationMapper implements BiFunction<JavaClassRepres
 	@Override
 	public JavaFieldRepresentation apply(JavaClassRepresentation javaClass, PlantClassFieldRepresentation umlField) {
 		JavaFieldRepresentation javaField = javaClass.addField(umlField.getName());
-		RoasterUtil.addImport(javaField.getRoasterField().getOrigin(), umlField.getType().getClassName());
+		RoasterHelper.addImport(javaField.getRoasterField().getOrigin(), umlField.getType().getClassName());
 		// @formatter:off
 		javaField.getRoasterField()
 			.setName(umlField.getName())

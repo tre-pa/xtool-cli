@@ -9,11 +9,11 @@ import org.springframework.stereotype.Component;
 
 import br.xtool.core.Visitor;
 import br.xtool.core.Workspace;
+import br.xtool.core.helper.RoasterHelper;
 import br.xtool.core.implementation.representation.JavaClassRepresentationImpl;
 import br.xtool.core.representation.plantuml.PlantClassRepresentation;
 import br.xtool.core.representation.springboot.JavaClassRepresentation;
 import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
-import br.xtool.core.util.RoasterUtil;
 
 /**
  * Transforma uma classe UML em um EJavaClass.
@@ -40,7 +40,7 @@ public class JavaClassRepresentationMapper implements Function<PlantClassReprese
 				.map(javaUnit -> javaUnit.<JavaClassSource>getGoverningType())
 				.map(javaClassSource -> new JavaClassRepresentationImpl(springBootProject, javaClassSource))
 				.findFirst()
-				.orElseGet(() -> new JavaClassRepresentationImpl(springBootProject,RoasterUtil.createJavaClassSource(umlClass.getUmlPackage().getName(),umlClass.getName())));
+				.orElseGet(() -> new JavaClassRepresentationImpl(springBootProject,RoasterHelper.createJavaClassSource(umlClass.getUmlPackage().getName(),umlClass.getName())));
 		// @formatter:on
 		this.visitors.forEach(visitor -> visitor.visit(javaClass, umlClass));
 //		umlClass.getStereotypes().stream().forEach(stereotype -> this.visit(javaClass, stereotype));

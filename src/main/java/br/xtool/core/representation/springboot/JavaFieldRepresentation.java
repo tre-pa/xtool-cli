@@ -89,10 +89,10 @@ public interface JavaFieldRepresentation extends Comparable<JavaFieldRepresentat
 	 */
 	SortedSet<JavaAnnotationRepresentation<JavaClassSource>> getAnnotations();
 
+	FieldSource<JavaClassSource> getRoasterField();
+
 	@Deprecated
 	JavaAnnotationRepresentation<JavaClassSource> addAnnotation(Class<? extends Annotation> type);
-
-	FieldSource<JavaClassSource> getRoasterField();
 
 	@Deprecated
 	JavaAnnotationRepresentation<JavaClassSource> addSizeAnnotation(Integer min, Integer max);
@@ -109,36 +109,52 @@ public interface JavaFieldRepresentation extends Comparable<JavaFieldRepresentat
 	@Deprecated
 	JavaAnnotationRepresentation<JavaClassSource> addSequenceGeneratorAnnotation();
 
-	interface JavaFieldStringType extends JavaFieldRepresentation {}
+	interface JavaFieldStringType extends JavaFieldRepresentation {
+	}
 
-	interface JavaFieldBooleanType extends JavaFieldRepresentation {}
+	interface JavaFieldBooleanType extends JavaFieldRepresentation {
+	}
 
-	interface JavaFieldLongType extends JavaFieldRepresentation {}
+	interface JavaFieldLongType extends JavaFieldRepresentation {
+	}
 
-	interface JavaFieldIntegerType extends JavaFieldRepresentation {}
+	interface JavaFieldIntegerType extends JavaFieldRepresentation {
+	}
 
-	interface JavaFieldByteType extends JavaFieldRepresentation {}
+	interface JavaFieldByteType extends JavaFieldRepresentation {
+	}
 
-	interface JavaFieldBigDecimalType extends JavaFieldRepresentation {}
+	interface JavaFieldBigDecimalType extends JavaFieldRepresentation {
+	}
 
-	interface JavaFieldLocalDateType extends JavaFieldRepresentation {}
+	interface JavaFieldLocalDateType extends JavaFieldRepresentation {
+	}
 
-	interface JavaFieldLocalDateTimeType extends JavaFieldRepresentation {}
+	interface JavaFieldLocalDateTimeType extends JavaFieldRepresentation {
+	}
 
-	interface JavaFieldEnumType extends JavaFieldRepresentation {}
+	interface JavaFieldEnumType extends JavaFieldRepresentation {
+	}
 
-	interface JavaFieldNotNullType extends JavaFieldRepresentation {}
+	interface JavaFieldNotNullType extends JavaFieldRepresentation {
+	}
 
-	interface JavaFieldTransientType extends JavaFieldRepresentation {}
+	interface JavaFieldTransientType extends JavaFieldRepresentation {
+	}
 
-	interface JavaFieldUniqueType extends JavaFieldRepresentation {}
+	interface JavaFieldUniqueType extends JavaFieldRepresentation {
+	}
 
-	interface JavaFieldOneToOneType extends JavaFieldRepresentation {}
+	interface JavaFieldOneToOneType extends JavaFieldRepresentation {
+	}
 
-	interface JavaFieldOneToManyType extends JavaFieldRepresentation {}
+	interface JavaFieldOneToManyType extends JavaFieldRepresentation {
+	}
 
-	interface JavaFieldManyToOneType extends JavaFieldRepresentation {}
+	interface JavaFieldManyToOneType extends JavaFieldRepresentation {
+	}
 
-	interface JavaFieldManyToManyType extends JavaFieldRepresentation {}
+	interface JavaFieldManyToManyType extends JavaFieldRepresentation {
+	}
 
 }

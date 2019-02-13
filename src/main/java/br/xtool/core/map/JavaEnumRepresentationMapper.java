@@ -7,11 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import br.xtool.core.Workspace;
+import br.xtool.core.helper.RoasterHelper;
 import br.xtool.core.implementation.representation.JavaEnumRepresentationImpl;
 import br.xtool.core.representation.plantuml.PlantEnumRepresentation;
 import br.xtool.core.representation.springboot.JavaEnumRepresentation;
 import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
-import br.xtool.core.util.RoasterUtil;
 
 /**
  * Transforma um enum UML do diagrama de classe em um EJavaEnum.
@@ -35,7 +35,7 @@ public class JavaEnumRepresentationMapper implements Function<PlantEnumRepresent
 				.map(javaUnit -> javaUnit.<JavaEnumSource>getGoverningType())
 				.map(javaEnumSource -> new JavaEnumRepresentationImpl(springBootProject, javaEnumSource))
 				.findFirst()
-				.orElseGet(() -> new JavaEnumRepresentationImpl(springBootProject,RoasterUtil.createJavaEnumSource(plantEnum.getUmlPackage().getName(),plantEnum.getName())));
+				.orElseGet(() -> new JavaEnumRepresentationImpl(springBootProject,RoasterHelper.createJavaEnumSource(plantEnum.getUmlPackage().getName(),plantEnum.getName())));
 		plantEnum.getValues().stream()
 			.filter(value -> !javaEnum.getConstants().contains(value))
 			.forEach(value -> javaEnum.getRoasterEnum().addEnumConstant(value));
