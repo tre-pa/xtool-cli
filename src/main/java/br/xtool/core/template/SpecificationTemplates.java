@@ -5,7 +5,7 @@ import org.jboss.forge.roaster.model.source.MethodSource;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
-import br.xtool.core.JavaTemplate;
+import br.xtool.core.TemplateBuilder;
 import br.xtool.core.helper.RoasterHelper;
 import br.xtool.core.implementation.representation.SpecificationRepresentationImpl;
 import br.xtool.core.representation.springboot.EntityRepresentation;
@@ -48,10 +48,11 @@ public class SpecificationTemplates {
 			method.setReturnType(String.format("Specification<%s>", specification.getTargetEntity().getName()));
 			method.addParameter("QyFilter", "filter");
 			// @formatter:off
-			method.setBody(JavaTemplate.from(""
-					+ " return (root, cq, cb) -> {" + 
-					"                return filter.toPredicate({{target_name}}.class, root, cq, cb);"
-					+ " };")
+			method.setBody(
+					TemplateBuilder.builder()
+						.from("return (root, cq, cb) -> {")
+						.from("		return filter.toPredicate({{target_name}}.class, root, cq, cb);")
+						.from("};")
 					.put("target_name", specification.getTargetEntity().getName())
 					.build());
 			// @formatter:on

@@ -3,7 +3,7 @@ package br.xtool.core.template;
 import org.hibernate.annotations.Immutable;
 import org.springframework.stereotype.Component;
 
-import br.xtool.core.JavaTemplate;
+import br.xtool.core.TemplateBuilder;
 import br.xtool.core.representation.plantuml.PlantRelationshipRepresentation;
 import br.xtool.core.representation.springboot.JavaClassRepresentation;
 
@@ -21,9 +21,9 @@ public class EntityTemplates {
 			String methodName = String.format("add%s", relationship.getTargetClass().getName());
 			if (!javaClass.getRoasterJavaClass().hasMethodSignature(methodName, relationship.getTargetClass().getName())) {
 			// @formatter:off
-			CharSequence methodBody = JavaTemplate
-					.from("this.{{source_role}}.add({{target_class_instance_name}});"
-						+ "{{target_class_instance_name}}.set{{source_class_name}}(this);")
+			CharSequence methodBody = TemplateBuilder.builder()
+					.from("this.{{source_role}}.add({{target_class_instance_name}});")
+					.from("{{target_class_instance_name}}.set{{source_class_name}}(this);")
 					.put("source_role", relationship.getSourceRole())
 					.put("target_class_instance_name", relationship.getTargetClass().getInstanceName())
 					.put("source_class_name", relationship.getSourceClass().getName())
@@ -51,9 +51,9 @@ public class EntityTemplates {
 			String methodName = String.format("remove%s", relationship.getTargetClass().getName());
 			if (!javaClass.getRoasterJavaClass().hasMethodSignature(methodName, relationship.getTargetClass().getName())) {
 			// @formatter:off
-			CharSequence methodBody = JavaTemplate
-					.from("this.{{source_role}}.remove({{target_class_instance_name}});"
-						+ "{{target_class_instance_name}}.set{{source_class_name}}(this);")
+			CharSequence methodBody = TemplateBuilder.builder()
+					.from("this.{{source_role}}.remove({{target_class_instance_name}});")
+					.from("{{target_class_instance_name}}.set{{source_class_name}}(this);")
 					.put("source_role", relationship.getSourceRole())
 					.put("target_class_instance_name", relationship.getTargetClass().getInstanceName())
 					.put("source_class_name", relationship.getSourceClass().getName())
