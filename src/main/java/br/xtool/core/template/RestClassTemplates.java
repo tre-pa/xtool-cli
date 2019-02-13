@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.CacheControl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,9 +35,10 @@ import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 import lombok.extern.slf4j.Slf4j;
 import strman.Strman;
 
+@Component
 public class RestClassTemplates {
-	
-	public static RestClassRepresentation newRestClassRepresentation(SpringBootProjectRepresentation bootProject, RepositoryRepresentation repository) {
+
+	public RestClassRepresentation newRestClassRepresentation(SpringBootProjectRepresentation bootProject, RepositoryRepresentation repository) {
 		String restName = repository.getTargetEntity().getName().concat("Rest");
 		RestClassRepresentation rest = new RestClassRepresentationImpl(bootProject, RoasterHelper.createJavaClassSource(restName));
 		rest.getRoasterJavaClass().setPackage(bootProject.getRootPackage().getName().concat(".rest"));
@@ -53,7 +55,7 @@ public class RestClassTemplates {
 //			.setType(repository)
 //			.addAnnotation(Autowired.class);
 		// @formatter:on
-		
+
 		// Suporte a classe QyRest
 		rest.getRoasterJavaClass().addImport(bootProject.getRootPackage().getName().concat(".groovy.qy.QyRest"));
 		rest.getRoasterJavaClass().addImport(repository.getTargetEntity().getQualifiedName());
@@ -75,7 +77,7 @@ public class RestClassTemplates {
 	 * @param rest
 	 * @param repository
 	 */
-	public static void genInsertMethod(RestClassRepresentation rest, RepositoryRepresentation repository) {
+	public void genInsertMethod(RestClassRepresentation rest, RepositoryRepresentation repository) {
 		if (!repository.getTargetEntity().hasAnnotation(Immutable.class)) {
 			if (!rest.getRoasterJavaClass().hasMethodSignature("insert", repository.getTargetEntity().getName())) {
 				rest.getRoasterJavaClass().addImport(repository.getTargetEntity().getQualifiedName());
@@ -121,7 +123,7 @@ public class RestClassTemplates {
 	 * @param rest
 	 * @param repository
 	 */
-	public static void genUpdateMethod(RestClassRepresentation rest, RepositoryRepresentation repository) {
+	public void genUpdateMethod(RestClassRepresentation rest, RepositoryRepresentation repository) {
 		if (!repository.getTargetEntity().hasAnnotation(Immutable.class)) {
 			if (!rest.getRoasterJavaClass().hasMethodSignature("update", Long.class.getSimpleName(), repository.getTargetEntity().getName())) {
 				rest.getRoasterJavaClass().addImport(repository.getTargetEntity().getQualifiedName());
@@ -175,7 +177,7 @@ public class RestClassTemplates {
 	 * @param rest
 	 * @param repository
 	 */
-	public static void genDeleteMethod(RestClassRepresentation rest, RepositoryRepresentation repository) {
+	public void genDeleteMethod(RestClassRepresentation rest, RepositoryRepresentation repository) {
 		if (!repository.getTargetEntity().hasAnnotation(Immutable.class)) {
 			if (!rest.getRoasterJavaClass().hasMethodSignature("delete", Long.class.getSimpleName())) {
 				rest.getRoasterJavaClass().addImport(repository.getTargetEntity().getQualifiedName());
@@ -222,7 +224,7 @@ public class RestClassTemplates {
 	 * @param rest
 	 * @param repository
 	 */
-	public static void genFindById(RestClassRepresentation rest, RepositoryRepresentation repository) {
+	public void genFindById(RestClassRepresentation rest, RepositoryRepresentation repository) {
 		if (!rest.getRoasterJavaClass().hasMethodSignature("findById", Long.class.getSimpleName())) {
 			rest.getRoasterJavaClass().addImport(repository.getTargetEntity().getQualifiedName());
 			rest.getRoasterJavaClass().addImport(EntityNotFoundException.class);
@@ -260,7 +262,7 @@ public class RestClassTemplates {
 		}
 	}
 
-	public static void genFindAll(RestClassRepresentation rest, RepositoryRepresentation repository) {
+	public void genFindAll(RestClassRepresentation rest, RepositoryRepresentation repository) {
 		if (!rest.getRoasterJavaClass().hasMethodSignature("findAll", Pageable.class)) {
 			rest.getRoasterJavaClass().addImport(repository.getTargetEntity().getQualifiedName());
 			rest.getRoasterJavaClass().addImport(Pageable.class);
@@ -303,8 +305,8 @@ public class RestClassTemplates {
 			// @formatter:on
 		}
 	}
-	
-	public static void genFilter(RestClassRepresentation rest, RepositoryRepresentation repository) {
+
+	public void genFilter(RestClassRepresentation rest, RepositoryRepresentation repository) {
 		if (!rest.getRoasterJavaClass().hasMethodSignature("filter", "Pageable", "QyFilter")) {
 			rest.getRoasterJavaClass().addImport(repository.getTargetEntity().getQualifiedName());
 			rest.getRoasterJavaClass().addImport(Pageable.class);
@@ -350,8 +352,8 @@ public class RestClassTemplates {
 			// @formatter:on
 		}
 	}
-	
-	public static void genCount(RestClassRepresentation rest, RepositoryRepresentation repository) {
+
+	public void genCount(RestClassRepresentation rest, RepositoryRepresentation repository) {
 		if (!rest.getRoasterJavaClass().hasMethodSignature("count")) {
 			JavaMethodRepresentation<JavaClassSource> method = rest.addMethod("count");
 			method.getRoasterMethod().setPublic();

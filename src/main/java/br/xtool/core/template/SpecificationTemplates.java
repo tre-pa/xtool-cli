@@ -3,6 +3,7 @@ package br.xtool.core.template;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.jboss.forge.roaster.model.source.MethodSource;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.stereotype.Component;
 
 import br.xtool.core.JavaTemplate;
 import br.xtool.core.helper.RoasterHelper;
@@ -11,15 +12,16 @@ import br.xtool.core.representation.springboot.EntityRepresentation;
 import br.xtool.core.representation.springboot.SpecificationRepresentation;
 import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 
+@Component
 public class SpecificationTemplates {
-	
+
 	/**
 	 * 
 	 * @param springBootProject
 	 * @param entity
 	 * @return
 	 */
-	public static SpecificationRepresentation newSpecificationRepresentation(SpringBootProjectRepresentation springBootProject, EntityRepresentation entity) {
+	public SpecificationRepresentation newSpecificationRepresentation(SpringBootProjectRepresentation springBootProject, EntityRepresentation entity) {
 		String specificationName = entity.getName().concat("Specification");
 		SpecificationRepresentation specification = new SpecificationRepresentationImpl(springBootProject, RoasterHelper.createJavaClassSource(specificationName));
 		specification.getRoasterJavaClass().setPackage(springBootProject.getRootPackage().getName().concat(".repository").concat(".specification"));
@@ -35,7 +37,7 @@ public class SpecificationTemplates {
 	 * @param specification
 	 * @param attribute
 	 */
-	public static void genFilterSpecfication(SpecificationRepresentation specification) {
+	public void genFilterSpecfication(SpecificationRepresentation specification) {
 		if (!specification.getRoasterJavaClass().hasMethodSignature("filter")) {
 			MethodSource<JavaClassSource> method = specification.getRoasterJavaClass().addMethod();
 			specification.getRoasterJavaClass().addImport(Specification.class);

@@ -1,11 +1,13 @@
 package br.xtool.core.template;
 
 import org.hibernate.annotations.Immutable;
+import org.springframework.stereotype.Component;
 
 import br.xtool.core.JavaTemplate;
 import br.xtool.core.representation.plantuml.PlantRelationshipRepresentation;
 import br.xtool.core.representation.springboot.JavaClassRepresentation;
 
+@Component
 public class EntityTemplates {
 
 	/**
@@ -14,7 +16,7 @@ public class EntityTemplates {
 	 * @param javaClass
 	 * @param relationship
 	 */
-	public static <T extends PlantRelationshipRepresentation> void genAddListMethodRelationship(JavaClassRepresentation javaClass, T relationship) {
+	public <T extends PlantRelationshipRepresentation> void genAddListMethodRelationship(JavaClassRepresentation javaClass, T relationship) {
 		if (!javaClass.hasAnnotation(Immutable.class)) {
 			String methodName = String.format("add%s", relationship.getTargetClass().getName());
 			if (!javaClass.getRoasterJavaClass().hasMethodSignature(methodName, relationship.getTargetClass().getName())) {
@@ -44,7 +46,7 @@ public class EntityTemplates {
 	 * @param javaClass
 	 * @param relationship
 	 */
-	public static <T extends PlantRelationshipRepresentation> void genRemoveListMethodRelationship(JavaClassRepresentation javaClass, T relationship) {
+	public <T extends PlantRelationshipRepresentation> void genRemoveListMethodRelationship(JavaClassRepresentation javaClass, T relationship) {
 		if (!javaClass.hasAnnotation(Immutable.class)) {
 			String methodName = String.format("remove%s", relationship.getTargetClass().getName());
 			if (!javaClass.getRoasterJavaClass().hasMethodSignature(methodName, relationship.getTargetClass().getName())) {

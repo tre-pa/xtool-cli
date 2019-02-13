@@ -60,6 +60,18 @@ public class SpringBootServiceImpl implements SpringBootService {
 	@Autowired
 	private ApplicationContext appCtx;
 
+	@Autowired
+	private RepositoryTemplates repositoryTemplates;
+
+	@Autowired
+	private RestClassTemplates restClassTemplates;
+
+	@Autowired
+	private ServiceClassTemplates serviceClassTemplates;
+
+	@Autowired
+	private SpecificationTemplates specificationTemplates;
+
 	/**
 	 * Cria uma nova aplicação Spring Boot.
 	 * 
@@ -129,7 +141,7 @@ public class SpringBootServiceImpl implements SpringBootService {
 		RepositoryRepresentation repository = springBootProject.getRepositories().stream()
 				.filter(pRepository -> pRepository.getName().equals(repositoryName))
 				.findFirst()
-				.orElseGet(() -> RepositoryTemplates.newRepositoryRepresentation(springBootProject, entity));
+				.orElseGet(() -> repositoryTemplates.newRepositoryRepresentation(springBootProject, entity));
 		// @formatter:on
 		this.save(repository);
 		return repository;
@@ -149,7 +161,7 @@ public class SpringBootServiceImpl implements SpringBootService {
 		SpecificationRepresentation specification = springBootProject.getSpecifications().stream()
 				.filter(pSpecification -> pSpecification.getName().equals(specificationName))
 				.findFirst()
-				.orElseGet(() -> SpecificationTemplates.newSpecificationRepresentation(springBootProject, entity));
+				.orElseGet(() -> specificationTemplates.newSpecificationRepresentation(springBootProject, entity));
 		this.save(specification);
 		return specification;
 	}
@@ -169,7 +181,7 @@ public class SpringBootServiceImpl implements SpringBootService {
 		ServiceClassRepresentation serviceClass = springBootProject.getServices().stream()
 				.filter(service -> service.getName().equals(serviceName))
 				.findFirst()
-				.orElseGet(() -> ServiceClassTemplates.newServiceClassRepresentation(springBootProject, repository));
+				.orElseGet(() -> serviceClassTemplates.newServiceClassRepresentation(springBootProject, repository));
 		this.save(serviceClass);
 		return serviceClass;
 	}
@@ -189,7 +201,7 @@ public class SpringBootServiceImpl implements SpringBootService {
 		RestClassRepresentation restClass = springBootProject.getRests().stream()
 				.filter(rest -> rest.getName().equals(restName))
 				.findFirst()
-				.orElseGet(() -> RestClassTemplates.newRestClassRepresentation(springBootProject, repository));
+				.orElseGet(() -> restClassTemplates.newRestClassRepresentation(springBootProject, repository));
 		// @formatter:on
 		this.save(restClass);
 		return restClass;
@@ -238,8 +250,7 @@ public class SpringBootServiceImpl implements SpringBootService {
 	@SneakyThrows
 	private void save(JavaTypeRepresentation<?> javaType) {
 		Path javaPath = javaType.getProject().getMainSourceFolder().getPath().resolve(javaType.getJavaPackage().getDir()).resolve(String.format("%s.java", javaType.getName()));
-		if (Files.notExists(javaPath.getParent()))
-			Files.createDirectories(javaPath.getParent());
+		if (Files.notExists(javaPath.getParent())) Files.createDirectories(javaPath.getParent());
 		Properties prefs = new Properties();
 		prefs.setProperty(JavaCore.COMPILER_SOURCE, CompilerOptions.VERSION_1_8);
 		prefs.setProperty(JavaCore.COMPILER_COMPLIANCE, CompilerOptions.VERSION_1_8);

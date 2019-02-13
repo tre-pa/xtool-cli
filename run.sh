@@ -32,4 +32,4 @@ fi
 
 echo "Iniciando xtool... Aguarde."
 
-mvn spring-boot:run -Dworkspace=$1
+mvn spring-boot:run -Dworkspace=$1 -DskipTests

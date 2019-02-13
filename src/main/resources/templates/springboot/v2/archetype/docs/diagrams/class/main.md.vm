@@ -1,12 +1,23 @@
 ```plantuml
 
+/' Pacote com as delcarações de classes do plantuml (http://plantuml.com/class-diagram) 
+
+   package "${rootPackage.name}.domain" <<Frame>> {
+      class Pessoa {
+      	- id: Long
+      	- nome: String
+      }		
+   }	
+'/
 package "${rootPackage.name}.domain" <<Frame>> {
 
 }
 
-/' Declarar os Enums no pacote abaixo e utilizá-los como atributos das classes, sem relacionamentos '/
+/' Pacote com as declaraões dos tipos Enums do sistema '/
 package "${rootPackage.name}.domain.enums" <<Frame>>{
 
 }
+
+' Relacionamentos entre entidades '/
 
 ```

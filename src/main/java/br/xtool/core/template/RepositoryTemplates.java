@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import br.xtool.core.helper.RoasterHelper;
@@ -15,28 +16,28 @@ import br.xtool.core.representation.springboot.EntityRepresentation;
 import br.xtool.core.representation.springboot.RepositoryRepresentation;
 import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 
+@Component
 public class RepositoryTemplates {
-	
-	public static RepositoryRepresentation newRepositoryRepresentation(SpringBootProjectRepresentation springBootProject, EntityRepresentation entity) {
+
+	public RepositoryRepresentation newRepositoryRepresentation(SpringBootProjectRepresentation springBootProject, EntityRepresentation entity) {
 		String repositoryName = entity.getName().concat("Repository");
 		RepositoryRepresentation repository = new RepositoryRepresentationImpl(springBootProject, RoasterHelper.createJavaInterface(repositoryName));
 		repository.getRoasterInterface().setPackage(springBootProject.getRootPackage().getName().concat(".repository"));
 		repository.getRoasterInterface().addImport(JpaRepository.class);
 		repository.getRoasterInterface().addImport(JpaSpecificationExecutor.class);
 		repository.getRoasterInterface().addImport(entity.getQualifiedName());
-		repository.getRoasterInterface()
-				.addInterface(JpaRepository.class.getSimpleName().concat("<").concat(entity.getName()).concat(",").concat("Long").concat(">"));
+		repository.getRoasterInterface().addInterface(JpaRepository.class.getSimpleName().concat("<").concat(entity.getName()).concat(",").concat("Long").concat(">"));
 		repository.getRoasterInterface().addInterface(JpaSpecificationExecutor.class.getSimpleName().concat("<").concat(entity.getName()).concat(">"));
 		repository.getRoasterInterface().addAnnotation(Repository.class);
-		
-		//Suporte a classe Qy
+
+		// Suporte a classe Qy
 		repository.getRoasterInterface().addImport(springBootProject.getRootPackage().getName().concat(".groovy.qy.jpa.QyRepository"));
 		repository.getRoasterInterface().addInterface("QyRepository<".concat(entity.getName()).concat(">"));
-		
+
 		return repository;
 	}
 
-	public static void genFindAllEntities(RepositoryRepresentation repository) {
+	public void genFindAllEntities(RepositoryRepresentation repository) {
 		if (!repository.getRoasterInterface().hasMethodSignature("findAllEntities", Pageable.class.getSimpleName())) {
 			repository.getRoasterInterface().addImport(Query.class);
 			repository.getRoasterInterface().addImport(repository.getTargetProjection().getQualifiedName());

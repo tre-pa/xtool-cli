@@ -53,7 +53,6 @@ import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaField
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldStringType;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldTransientType;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldUniqueType;
-import br.xtool.core.template.EntityTemplates;
 import lombok.val;
 
 @Component
@@ -69,8 +68,7 @@ public class JpaVisitor implements Visitor {
 	@Override
 	public void visit(JavaClassRepresentation javaClass, PlantClassRepresentation plantClass) {
 		javaClass.addAnnotation(Entity.class);
-		if (plantClass.getStereotypes().stream()
-				.noneMatch(st -> st.getStereotypeType().equals(StereotypeType.READ_ONLY) || st.getStereotypeType().equals(StereotypeType.VIEW))) {
+		if (plantClass.getStereotypes().stream().noneMatch(st -> st.getStereotypeType().equals(StereotypeType.READ_ONLY) || st.getStereotypeType().equals(StereotypeType.VIEW))) {
 			javaClass.addAnnotation(DynamicInsert.class);
 			javaClass.addAnnotation(DynamicUpdate.class);
 		}
@@ -376,8 +374,7 @@ public class JpaVisitor implements Visitor {
 		val annOneToOne = oneToOneField.addAnnotation(OneToOne.class);
 		annOneToOne.setEnumValue("fetch", FetchType.LAZY);
 		oneToOneField.addAnnotation(Fetch.class).setEnumValue(FetchMode.JOIN);
-		if (!association.getSourceMultiplicity().isOptional())
-			annOneToOne.setLiteralValue("optional", "false");
+		if (!association.getSourceMultiplicity().isOptional()) annOneToOne.setLiteralValue("optional", "false");
 		// Bidirecional
 		if (!association.isSourceClassOwner() && association.getNavigability().isBidirectional()) {
 			annOneToOne.setStringValue("mappedBy", association.getTargetRole());
@@ -401,7 +398,7 @@ public class JpaVisitor implements Visitor {
 		// Bidirecional
 		if (association.getNavigability().isBidirectional()) {
 			annOneToMany.setStringValue("mappedBy", association.getTargetRole());
-			EntityTemplates.genAddListMethodRelationship(oneToManyField.getJavaClass(), association);
+//			EntityTemplates.genAddListMethodRelationship(oneToManyField.getJavaClass(), association);
 			// @formatter:off
 			// add
 //			oneToManyField.getJavaClass().addMethod(String.format("add%s", association.getTargetClass().getName()))
@@ -414,7 +411,7 @@ public class JpaVisitor implements Visitor {
 //							association.getSourceClass().getName()))
 //					.addParameter(association.getTargetClass().getName(), association.getTargetClass().getInstanceName());
 			// remove
-			EntityTemplates.genRemoveListMethodRelationship(oneToManyField.getJavaClass(), association);
+//			EntityTemplates.genRemoveListMethodRelationship(oneToManyField.getJavaClass(), association);
 //			oneToManyField.getJavaClass().addMethod(String.format("remove%s", association.getTargetClass().getName()))
 //			.getRoasterMethod()
 //				.setReturnTypeVoid()
@@ -443,8 +440,7 @@ public class JpaVisitor implements Visitor {
 		val ann = manyToOneField.addAnnotation(ManyToOne.class);
 		ann.setEnumValue("fetch", FetchType.LAZY);
 		manyToOneField.addAnnotation(Fetch.class).setEnumValue(FetchMode.JOIN);
-		if (!association.getSourceMultiplicity().isOptional())
-			ann.setLiteralValue("optional", "false");
+		if (!association.getSourceMultiplicity().isOptional()) ann.setLiteralValue("optional", "false");
 	}
 
 	/*
@@ -500,7 +496,7 @@ public class JpaVisitor implements Visitor {
 			annOneToMany.setStringValue("mappedBy", composition.getTargetRole());
 			// @formatter:off
 			// add
-			EntityTemplates.genAddListMethodRelationship(oneToManyField.getJavaClass(), composition);
+//			EntityTemplates.genAddListMethodRelationship(oneToManyField.getJavaClass(), composition);
 //			oneToManyField.getJavaClass().addMethod(String.format("add%s", composition.getTargetClass().getName()))
 //				.getRoasterMethod()
 //					.setReturnTypeVoid()
@@ -511,7 +507,7 @@ public class JpaVisitor implements Visitor {
 //							composition.getSourceClass().getName()))
 //					.addParameter(composition.getTargetClass().getName(), composition.getTargetClass().getInstanceName());
 			// remove
-			EntityTemplates.genRemoveListMethodRelationship(oneToManyField.getJavaClass(), composition);
+//			EntityTemplates.genRemoveListMethodRelationship(oneToManyField.getJavaClass(), composition);
 //			oneToManyField.getJavaClass().addMethod(String.format("remove%s", composition.getTargetClass().getName()))
 //			.getRoasterMethod()
 //				.setReturnTypeVoid()
@@ -539,8 +535,7 @@ public class JpaVisitor implements Visitor {
 	public void visit(JavaFieldManyToOneType manyToOneField, PlantRelationshipComposition composition) {
 		manyToOneField.addAnnotation(Fetch.class).setEnumValue(FetchMode.JOIN);
 		val ann = manyToOneField.addAnnotation(ManyToOne.class);
-		if (!composition.getSourceMultiplicity().isOptional())
-			ann.setLiteralValue("optional", "false");
+		if (!composition.getSourceMultiplicity().isOptional()) ann.setLiteralValue("optional", "false");
 	}
 
 }
