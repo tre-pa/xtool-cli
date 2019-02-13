@@ -147,11 +147,13 @@ export class KeycloakService {
         let permisionScopes: string [] = []; 
         
         jwtDecode(rpt).authorization.permissions.forEach(permission => {
-          permission.scopes.forEach(scope => {
-            permisionScopes.push(permission.rsname + ":" + scope);
-          });
+          if(permission.scopes){
+            permission.scopes.forEach(scope => {
+              permisionScopes.push(permission.rsname + ":" + scope);
+            });
+          }
         });
-        
+
         resolve(permisionScopes);
       });
     });
