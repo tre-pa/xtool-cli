@@ -22,8 +22,8 @@ public class EntityTemplates {
 			if (!javaClass.getRoasterJavaClass().hasMethodSignature(methodName, relationship.getTargetClass().getName())) {
 			// @formatter:off
 			CharSequence methodBody = TemplateBuilder.builder()
-					.fromTpl("this.{{source_role}}.add({{target_class_instance_name}});")
-					.fromTpl("{{target_class_instance_name}}.set{{source_class_name}}(this);")
+					.tpl("this.{{source_role}}.add({{target_class_instance_name}});")
+					.tpl("{{target_class_instance_name}}.set{{source_class_name}}(this);")
 					.put("source_role", relationship.getSourceRole())
 					.put("target_class_instance_name", relationship.getTargetClass().getInstanceName())
 					.put("source_class_name", relationship.getSourceClass().getName())
@@ -52,8 +52,8 @@ public class EntityTemplates {
 			if (!javaClass.getRoasterJavaClass().hasMethodSignature(methodName, relationship.getTargetClass().getName())) {
 			// @formatter:off
 			CharSequence methodBody = TemplateBuilder.builder()
-					.fromTpl("this.{{source_role}}.remove({{target_class_instance_name}});")
-					.fromTpl("{{target_class_instance_name}}.set{{source_class_name}}(this);")
+					.tpl("this.{{source_role}}.remove({{target_class_instance_name}});")
+					.tpl("{{target_class_instance_name}}.set{{source_class_name}}(this);")
 					.put("source_role", relationship.getSourceRole())
 					.put("target_class_instance_name", relationship.getTargetClass().getInstanceName())
 					.put("source_class_name", relationship.getSourceClass().getName())

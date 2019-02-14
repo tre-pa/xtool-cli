@@ -50,9 +50,9 @@ public class SpecificationTemplates {
 			// @formatter:off
 			method.setBody(
 					TemplateBuilder.builder()
-						.fromTpl("return (root, cq, cb) -> {")
-						.fromTpl("		return filter.toPredicate({{target_name}}.class, root, cq, cb);")
-						.fromTpl("};")
+						.tpl("return (root, cq, cb) -> {")
+						.tpl("		return filter.toPredicate({{target_name}}.class, root, cq, cb);")
+						.tpl("};")
 					.put("target_name", specification.getTargetEntity().getName())
 					.build());
 			// @formatter:on

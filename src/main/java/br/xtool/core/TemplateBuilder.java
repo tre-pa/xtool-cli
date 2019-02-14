@@ -20,7 +20,7 @@ public abstract class TemplateBuilder {
 			this.model = JtwigModel.newModel();
 		}
 
-		public TemplateBuilderBuilder fromTpl(String template) {
+		public TemplateBuilderBuilder tpl(String template) {
 			this.template.append(template);
 			return this;
 		}
