@@ -38,7 +38,7 @@ public class EntityAttributeRepresentationImpl extends JavaFieldRepresentationIm
 	 * @see br.xtool.core.representation.EJpaAttribute#isJpaTransient()
 	 */
 	@Override
-	public boolean isJpaTransient() {
+	public boolean isJpaTransientField() {
 		return this.getRoasterField().hasAnnotation(Transient.class);
 	}
 
@@ -48,8 +48,19 @@ public class EntityAttributeRepresentationImpl extends JavaFieldRepresentationIm
 	 * @see br.xtool.core.representation.EJpaAttribute#isLob()
 	 */
 	@Override
-	public boolean isLob() {
+	public boolean isLobField() {
 		return this.getRoasterField().hasAnnotation(Lob.class);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.xtool.core.representation.springboot.EntityAttributeRepresentation#
+	 * isRelationshipField()
+	 */
+	@Override
+	public boolean isRelationshipField() {
+		return this.getRelationship().isPresent();
 	}
 
 	/*

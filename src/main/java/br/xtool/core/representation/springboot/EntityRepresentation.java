@@ -27,6 +27,7 @@ public interface EntityRepresentation extends JavaClassRepresentation {
 	 * 
 	 * @return
 	 */
+	@Deprecated
 	Collection<EntityAttributeRepresentation> getSimpleAttributes();
 
 	/**
@@ -34,6 +35,7 @@ public interface EntityRepresentation extends JavaClassRepresentation {
 	 * 
 	 * @return
 	 */
+	@Deprecated
 	Collection<EntityAttributeRepresentation> getRelationshipAttributes();
 
 	/**
@@ -41,6 +43,7 @@ public interface EntityRepresentation extends JavaClassRepresentation {
 	 * 
 	 * @return
 	 */
+	@Deprecated
 	Collection<EntityAttributeRepresentation> getToManyRelationshipAttributes();
 
 	/**
@@ -48,6 +51,7 @@ public interface EntityRepresentation extends JavaClassRepresentation {
 	 * 
 	 * @return
 	 */
+	@Deprecated
 	Collection<EntityAttributeRepresentation> getToOneRelationshipAttributes();
 
 	/**
@@ -55,6 +59,7 @@ public interface EntityRepresentation extends JavaClassRepresentation {
 	 * 
 	 * @return
 	 */
+	@Deprecated
 	Collection<EntityAttributeRepresentation> getEnumAttributes();
 
 	/**

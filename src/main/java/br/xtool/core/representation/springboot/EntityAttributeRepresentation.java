@@ -3,7 +3,7 @@ package br.xtool.core.representation.springboot;
 import java.util.Optional;
 
 /**
- * Representação de um atributo java JPA.
+ * Representação de um atributo de uma entidade JPA.
  * 
  * @author jcruz
  *
@@ -15,16 +15,14 @@ public interface EntityAttributeRepresentation extends JavaFieldRepresentation {
 	 * 
 	 * @return
 	 */
-	boolean isJpaTransient();
+	boolean isJpaTransientField();
 
 	/**
 	 * Retorna se o atributo é do tipo Lob.
 	 * 
 	 * @return
 	 */
-	boolean isLob();
-
-	// Optional<EJpaEntity> getGenericType();
+	boolean isLobField();
 
 	/**
 	 * Retorna o relacionamento JPA.
