@@ -97,7 +97,7 @@ public class RestClassTemplates {
 				// @formatter:off
 				method.getRoasterMethod().setBody(
 					TemplateBuilder.builder()
-						.from("return {{repository_instance_name}}.save({{target_instance_name}});")
+						.fromTpl("return {{repository_instance_name}}.save({{target_instance_name}});")
 						.put("repository_instance_name", repository.getInstanceName())
 						.put("target_instance_name", repository.getTargetEntity().getInstanceName())
 					.build());
@@ -108,7 +108,7 @@ public class RestClassTemplates {
 				JavaDocSource<MethodSource<JavaClassSource>> javaDoc = method.getRoasterMethod().getJavaDoc();
 				javaDoc.setText(
 						TemplateBuilder.builder()
-						.from("Cria um(a) novo(a) {{target_name}}")
+						.fromTpl("Cria um(a) novo(a) {{target_name}}")
 						.put("target_name", repository.getTargetEntity().getName())
 						.build()); 
 				javaDoc.addTagValue("@param", repository.getTargetEntity().getInstanceName());
@@ -149,8 +149,8 @@ public class RestClassTemplates {
 			rest.getRoasterJavaClass().addImport(EntityNotFoundException.class);
 			method.getRoasterMethod().setBody(
 					TemplateBuilder.builder()
-						.from("	if (!{{repository_instance_name}}.existsById(id)) throw new EntityNotFoundException(\"Entidade {{target_name}} não encontrada.\");")
-						.from(" return {{repository_instance_name}}.save({{target_instance_name}});")
+						.fromTpl("	if (!{{repository_instance_name}}.existsById(id)) throw new EntityNotFoundException(\"Entidade {{target_name}} não encontrada.\");")
+						.fromTpl(" return {{repository_instance_name}}.save({{target_instance_name}});")
 						.put("repository_instance_name", repository.getInstanceName())
 						.put("target_instance_name", repository.getTargetEntity().getInstanceName())
 						.put("target_name", repository.getTargetEntity().getName())
@@ -162,7 +162,7 @@ public class RestClassTemplates {
 			JavaDocSource<MethodSource<JavaClassSource>> javaDoc = method.getRoasterMethod().getJavaDoc();
 			javaDoc.setText(
 					TemplateBuilder.builder()
-					.from("Atualiza um(a) {{target_name}}")
+					.fromTpl("Atualiza um(a) {{target_name}}")
 					.put("target_name", repository.getTargetEntity().getName())
 					.build()); 
 			javaDoc.addTagValue("@param", repository.getTargetEntity().getInstanceName());
@@ -200,8 +200,8 @@ public class RestClassTemplates {
 			rest.getRoasterJavaClass().addImport(EntityNotFoundException.class);
 			method.getRoasterMethod().setBody(
 					TemplateBuilder.builder()
-						.from("	if (!{{repository_instance_name}}.existsById(id)) throw new EntityNotFoundException(\"Entidade {{target_name}} não encontrada.\");")
-						.from(" {{repository_instance_name}}.deleteById(id);")
+						.fromTpl("	if (!{{repository_instance_name}}.existsById(id)) throw new EntityNotFoundException(\"Entidade {{target_name}} não encontrada.\");")
+						.fromTpl(" {{repository_instance_name}}.deleteById(id);")
 						.put("repository_instance_name", repository.getInstanceName())
 						.put("target_instance_name", repository.getTargetEntity().getInstanceName())
 						.put("target_name", repository.getTargetEntity().getName())
@@ -212,7 +212,7 @@ public class RestClassTemplates {
 			JavaDocSource<MethodSource<JavaClassSource>> javaDoc = method.getRoasterMethod().getJavaDoc();
 			javaDoc.setText(
 					TemplateBuilder.builder()
-					.from("Deleta um(a) {{target_name}}")
+					.fromTpl("Deleta um(a) {{target_name}}")
 					.put("target_name", repository.getTargetEntity().getName())
 					.build()); 
 			javaDoc.addTagValue("@param",  "id");
@@ -244,7 +244,7 @@ public class RestClassTemplates {
 				.addAnnotation(PathVariable.class);
 			method.getRoasterMethod().setBody(
 					TemplateBuilder.builder()
-						.from(" return {{repository_instance_name}}.findById(id).orElseThrow(() -> new EntityNotFoundException(\"Registro de Material não encontrado.\"));")
+						.fromTpl(" return {{repository_instance_name}}.findById(id).orElseThrow(() -> new EntityNotFoundException(\"Registro de Material não encontrado.\"));")
 						.put("repository_instance_name", repository.getInstanceName())
 						.put("target_instance_name", repository.getTargetEntity().getInstanceName())
 						.put("target_name", repository.getTargetEntity().getName())
@@ -255,7 +255,7 @@ public class RestClassTemplates {
 			JavaDocSource<MethodSource<JavaClassSource>> javaDoc = method.getRoasterMethod().getJavaDoc();
 			javaDoc.setText(
 					TemplateBuilder.builder()
-						.from("Retorna um(a) {{target_name}}")
+						.fromTpl("Retorna um(a) {{target_name}}")
 						.put("target_name", repository.getTargetEntity().getName())
 						.build()); 
 			javaDoc.addTagValue("@param", "id");
@@ -284,12 +284,12 @@ public class RestClassTemplates {
 				.addParameter(Pageable.class.getSimpleName(), "pageable");
 			method.getRoasterMethod().setBody(
 					TemplateBuilder.builder()
-						.from("	// @formatter:off\n")
-						.from("	return ResponseEntity\n")
-						.from("			.ok()\n")
-						.from( "			.cacheControl(CacheControl.maxAge(10, TimeUnit.SECONDS))\n")
-						.from("			.body({{repository_instance_name}}.findAll(pageable));\n")
-						.from("	// @formatter:on ")
+						.fromTpl("	// @formatter:off\n")
+						.fromTpl("	return ResponseEntity\n")
+						.fromTpl("			.ok()\n")
+						.fromTpl( "			.cacheControl(CacheControl.maxAge(10, TimeUnit.SECONDS))\n")
+						.fromTpl("			.body({{repository_instance_name}}.findAll(pageable));\n")
+						.fromTpl("	// @formatter:on ")
 						.put("repository_instance_name", repository.getInstanceName())
 						.put("target_instance_name", repository.getTargetEntity().getInstanceName())
 						.put("target_name", repository.getTargetEntity().getName())
@@ -300,7 +300,7 @@ public class RestClassTemplates {
 			JavaDocSource<MethodSource<JavaClassSource>> javaDoc = method.getRoasterMethod().getJavaDoc();
 			javaDoc.setText(
 					TemplateBuilder.builder()
-					.from("Retorna uma lista paginada de {{target_name}}")
+					.fromTpl("Retorna uma lista paginada de {{target_name}}")
 					.put("target_name", repository.getTargetEntity().getName())
 					.build()); 
 			javaDoc.addTagValue("@return", "Lista de entidades gerenciadas.");
@@ -331,11 +331,11 @@ public class RestClassTemplates {
 				.addAnnotation(RequestBody.class);
 			method.getRoasterMethod().setBody(
 					TemplateBuilder.builder()
-						.from("	// @formatter:off")
-						.from("	return ResponseEntity")
-						.from("			.ok()\n")
-						.from("			.body({{repository_instance_name}}.findAll({{specification_name}}.filter(filter), pageable));")
-						.from("	// @formatter:on ")
+						.fromTpl("	// @formatter:off")
+						.fromTpl("	return ResponseEntity")
+						.fromTpl("			.ok()\n")
+						.fromTpl("			.body({{repository_instance_name}}.findAll({{specification_name}}.filter(filter), pageable));")
+						.fromTpl("	// @formatter:on ")
 						.put("repository_instance_name", repository.getInstanceName())
 						.put("target_instance_name", repository.getTargetEntity().getInstanceName())
 						.put("specification_name", repository.getTargetSpecification().getName())
@@ -347,7 +347,7 @@ public class RestClassTemplates {
 			JavaDocSource<MethodSource<JavaClassSource>> javaDoc = method.getRoasterMethod().getJavaDoc();
 			javaDoc.setText(
 					TemplateBuilder.builder()
-						.from("Retorna uma lista paginada filtrada de {{target_name}}")
+						.fromTpl("Retorna uma lista paginada filtrada de {{target_name}}")
 						.put("target_name", repository.getTargetEntity().getName())
 						.build()); 
 			javaDoc.addTagValue("@return", "Lista de entidades gerenciadas.");
@@ -366,7 +366,7 @@ public class RestClassTemplates {
 			method.getRoasterMethod().setReturnType(long.class);
 			method.getRoasterMethod().setBody(
 					TemplateBuilder.builder()
-						.from("	return {{repository_instance_name}}.count(); ")
+						.fromTpl("	return {{repository_instance_name}}.count(); ")
 						.put("repository_instance_name", repository.getInstanceName())
 					.build());
 			// @formatter:on
