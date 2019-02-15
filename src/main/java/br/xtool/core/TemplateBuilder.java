@@ -1,5 +1,8 @@
 package br.xtool.core;
 
+import java.util.Collection;
+import java.util.function.BiConsumer;
+
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 
@@ -21,7 +24,26 @@ public abstract class TemplateBuilder {
 		}
 
 		public TemplateBuilderBuilder tpl(String template) {
-			this.template.append(template);
+			this.template.append(template.concat("\n"));
+			return this;
+		}
+
+		public <T> TemplateBuilderBuilder tplIf(boolean predicate, String tpl) {
+			TemplateBuilderBuilder builder = TemplateBuilder.builder();
+			if (predicate) {
+				builder.model = this.model;
+				this.tpl(builder.tpl(tpl).build());
+			}
+			return this;
+		}
+
+		public <T, C extends Collection<T>> TemplateBuilderBuilder tplFor(C collection, BiConsumer<TemplateBuilderBuilder, T> biConsumer) {
+			collection.forEach(item -> {
+				TemplateBuilderBuilder builder = TemplateBuilder.builder();
+				builder.put("it", item);
+				biConsumer.accept(builder, item);
+				this.tpl(builder.build());
+			});
 			return this;
 		}
 
