@@ -13,12 +13,14 @@ import org.jboss.forge.roaster.model.source.JavaEnumSource;
 public interface JavaEnumRepresentation extends JavaTypeRepresentation<JavaEnumSource> {
 
 	/**
+	 * Retorna a lista de constantes do enum
 	 * 
 	 * @return
 	 */
 	Collection<String> getConstants();
 
 	/**
+	 * Retorna o objeto Roaster
 	 * 
 	 * @return
 	 */
