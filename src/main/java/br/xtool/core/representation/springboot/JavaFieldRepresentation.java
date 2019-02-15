@@ -41,6 +41,27 @@ public interface JavaFieldRepresentation extends Comparable<JavaFieldRepresentat
 	boolean isCollectionField();
 
 	/**
+	 * Verifica se o atributo é uma String.
+	 * 
+	 * @return
+	 */
+	boolean isStringField();
+
+	/**
+	 * Verifica se o atributo é um número.
+	 * 
+	 * @return
+	 */
+	boolean isNumberField();
+
+	/**
+	 * Verifica se o atributo é uma data
+	 * 
+	 * @return
+	 */
+	boolean isTemporalField();
+
+	/**
 	 * Verifica se o atributo é estático.
 	 * 
 	 * @return
@@ -109,52 +130,36 @@ public interface JavaFieldRepresentation extends Comparable<JavaFieldRepresentat
 	@Deprecated
 	JavaAnnotationRepresentation<JavaClassSource> addSequenceGeneratorAnnotation();
 
-	interface JavaFieldStringType extends JavaFieldRepresentation {
-	}
+	interface JavaFieldStringType extends JavaFieldRepresentation {}
 
-	interface JavaFieldBooleanType extends JavaFieldRepresentation {
-	}
+	interface JavaFieldBooleanType extends JavaFieldRepresentation {}
 
-	interface JavaFieldLongType extends JavaFieldRepresentation {
-	}
+	interface JavaFieldLongType extends JavaFieldRepresentation {}
 
-	interface JavaFieldIntegerType extends JavaFieldRepresentation {
-	}
+	interface JavaFieldIntegerType extends JavaFieldRepresentation {}
 
-	interface JavaFieldByteType extends JavaFieldRepresentation {
-	}
+	interface JavaFieldByteType extends JavaFieldRepresentation {}
 
-	interface JavaFieldBigDecimalType extends JavaFieldRepresentation {
-	}
+	interface JavaFieldBigDecimalType extends JavaFieldRepresentation {}
 
-	interface JavaFieldLocalDateType extends JavaFieldRepresentation {
-	}
+	interface JavaFieldLocalDateType extends JavaFieldRepresentation {}
 
-	interface JavaFieldLocalDateTimeType extends JavaFieldRepresentation {
-	}
+	interface JavaFieldLocalDateTimeType extends JavaFieldRepresentation {}
 
-	interface JavaFieldEnumType extends JavaFieldRepresentation {
-	}
+	interface JavaFieldEnumType extends JavaFieldRepresentation {}
 
-	interface JavaFieldNotNullType extends JavaFieldRepresentation {
-	}
+	interface JavaFieldNotNullType extends JavaFieldRepresentation {}
 
-	interface JavaFieldTransientType extends JavaFieldRepresentation {
-	}
+	interface JavaFieldTransientType extends JavaFieldRepresentation {}
 
-	interface JavaFieldUniqueType extends JavaFieldRepresentation {
-	}
+	interface JavaFieldUniqueType extends JavaFieldRepresentation {}
 
-	interface JavaFieldOneToOneType extends JavaFieldRepresentation {
-	}
+	interface JavaFieldOneToOneType extends JavaFieldRepresentation {}
 
-	interface JavaFieldOneToManyType extends JavaFieldRepresentation {
-	}
+	interface JavaFieldOneToManyType extends JavaFieldRepresentation {}
 
-	interface JavaFieldManyToOneType extends JavaFieldRepresentation {
-	}
+	interface JavaFieldManyToOneType extends JavaFieldRepresentation {}
 
-	interface JavaFieldManyToManyType extends JavaFieldRepresentation {
-	}
+	interface JavaFieldManyToManyType extends JavaFieldRepresentation {}
 
 }

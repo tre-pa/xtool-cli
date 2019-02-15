@@ -1,9 +1,16 @@
 package br.xtool.core.implementation.representation;
 
 import java.lang.annotation.Annotation;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
@@ -91,7 +98,38 @@ public class JavaFieldRepresentationImpl implements JavaFieldRepresentation {
 	 */
 	@Override
 	public boolean isCollectionField() {
-		return this.fieldSource.getType().isType(List.class);
+		return this.fieldSource.getType().isType(List.class) || this.getType().isType(Set.class) || this.getType().isType(Collection.class);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.xtool.core.representation.springboot.JavaFieldRepresentation#isStringField ()
+	 */
+	@Override
+	public boolean isStringField() {
+		return this.getType().isType(String.class);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.xtool.core.representation.springboot.JavaFieldRepresentation#isNumberField()
+	 */
+	@Override
+	public boolean isNumberField() {
+		return this.getType().isType(Long.class) || this.getType().isType(Integer.class) || this.getType().isType(Short.class) || this.getType().isType(BigDecimal.class)
+				|| this.getType().isType(BigInteger.class) || this.getType().isType(Byte.class) || this.getType().isType(Float.class) || this.getType().isType(Double.class);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.xtool.core.representation.springboot.JavaFieldRepresentation#isTemporalField()
+	 */
+	@Override
+	public boolean isTemporalField() {
+		return this.getType().isType(Date.class) || this.getType().isType(java.sql.Date.class) || this.getType().isType(LocalDate.class) || this.getType().isType(LocalDateTime.class);
 	}
 
 	/**
@@ -164,9 +202,7 @@ public class JavaFieldRepresentationImpl implements JavaFieldRepresentation {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * br.xtool.core.representation.EJavaField#addSizeAnnotation(java.lang.Integer,
-	 * java.lang.Integer)
+	 * @see br.xtool.core.representation.EJavaField#addSizeAnnotation(java.lang.Integer, java.lang.Integer)
 	 */
 	@Override
 	public JavaAnnotationRepresentation<JavaClassSource> addSizeAnnotation(Integer min, Integer max) {
@@ -179,9 +215,7 @@ public class JavaFieldRepresentationImpl implements JavaFieldRepresentation {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * br.xtool.core.representation.EJavaField#addBatchSizeAnnotation(java.lang.
-	 * Integer)
+	 * @see br.xtool.core.representation.EJavaField#addBatchSizeAnnotation(java.lang. Integer)
 	 */
 	@Override
 	public JavaAnnotationRepresentation<JavaClassSource> addBatchSizeAnnotation(Integer size) {
@@ -193,8 +227,7 @@ public class JavaFieldRepresentationImpl implements JavaFieldRepresentation {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see br.xtool.core.representation.EJavaField#addLazyCollectionAnnotation(org.
-	 * hibernate.annotations.LazyCollectionOption)
+	 * @see br.xtool.core.representation.EJavaField#addLazyCollectionAnnotation(org. hibernate.annotations.LazyCollectionOption)
 	 */
 	@Override
 	public JavaAnnotationRepresentation<JavaClassSource> addLazyCollectionAnnotation(LazyCollectionOption lazyCollectionOption) {
@@ -206,9 +239,7 @@ public class JavaFieldRepresentationImpl implements JavaFieldRepresentation {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * br.xtool.core.representation.EJavaField#addGeneratedValueAnnotation(javax.
-	 * persistence.GenerationType)
+	 * @see br.xtool.core.representation.EJavaField#addGeneratedValueAnnotation(javax. persistence.GenerationType)
 	 */
 	@Override
 	public JavaAnnotationRepresentation<JavaClassSource> addGeneratedValueAnnotation(GenerationType generationType) {
