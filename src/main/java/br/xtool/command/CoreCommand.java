@@ -14,6 +14,7 @@ import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 
 import br.xtool.XtoolCliApplication;
+import br.xtool.core.Shell;
 import br.xtool.core.Workspace;
 import br.xtool.core.provider.ProjectRepresentationValueProvider;
 import br.xtool.core.representation.ProjectRepresentation;
@@ -38,6 +39,9 @@ public class CoreCommand {
 
 	@Autowired
 	private Workspace workspace;
+
+	@Autowired
+	private Shell shell;
 
 	/**
 	 * Gera uma aplicação Spring Boot e Angular integrada.
@@ -105,6 +109,11 @@ public class CoreCommand {
 	@ShellMethod(value = "Define o projeto de trabalho atual", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
 	public void use(@ShellOption(help = "Nome do projeto do workspace", valueProvider = ProjectRepresentationValueProvider.class) ProjectRepresentation project) {
 		this.workspace.setWorkingProject(project);
+	}
+
+	@ShellMethod(value = "Hello", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
+	public void hello() {
+		this.shell.runScript("hello");
 	}
 
 }

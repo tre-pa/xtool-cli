@@ -1,6 +1,7 @@
 package br.xtool.core.implementation;
 
 import java.io.StringWriter;
+import java.lang.ProcessBuilder.Redirect;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
@@ -50,6 +51,16 @@ public class ShellImpl implements Shell {
 		processBuilder.inheritIO();
 		Process process = processBuilder.start();
 		return process.waitFor();
+	}
+
+	@Override
+	@SneakyThrows
+	public int runScript(String name) {
+		ProcessBuilder pb = new ProcessBuilder(System.getProperty("user.dir").concat("/src/main/resources/scripts/".concat(name).concat(".sh")));
+		pb.redirectOutput(Redirect.INHERIT);
+		Process process = pb.start();
+//		Process process = Runtime.getRuntime().exec();
+		return 0;
 	}
 
 }
