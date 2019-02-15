@@ -52,6 +52,7 @@ export class ReportDetailComponent implements OnInit {
         this.report = report;
       });
     this.reportStore = new QyStore<Report>(this.httpClient, '/jreport', {
+      key: null,
       endpoints: {
         load: `/jreport/${this.idReport}/datasource`
       }
