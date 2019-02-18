@@ -4,8 +4,6 @@ import java.lang.annotation.Annotation;
 import java.util.Optional;
 import java.util.SortedSet;
 
-import javax.persistence.GenerationType;
-
 import org.hibernate.annotations.LazyCollectionOption;
 import org.jboss.forge.roaster.model.Type;
 import org.jboss.forge.roaster.model.source.FieldSource;
@@ -177,6 +175,7 @@ public interface JavaFieldRepresentation extends Comparable<JavaFieldRepresentat
 
 	JavaAnnotationRepresentation<JavaClassSource> addAnnotation(Class<? extends Annotation> type);
 
+//
 	@Deprecated
 	JavaAnnotationRepresentation<JavaClassSource> addSizeAnnotation(Integer min, Integer max);
 
@@ -185,39 +184,39 @@ public interface JavaFieldRepresentation extends Comparable<JavaFieldRepresentat
 
 	@Deprecated
 	JavaAnnotationRepresentation<JavaClassSource> addLazyCollectionAnnotation(LazyCollectionOption lazyCollectionOption);
+//
+//	@Deprecated
+//	JavaAnnotationRepresentation<JavaClassSource> addGeneratedValueAnnotation(GenerationType generationType);
+//
+//	@Deprecated
+//	JavaAnnotationRepresentation<JavaClassSource> addSequenceGeneratorAnnotation();
 
-	@Deprecated
-	JavaAnnotationRepresentation<JavaClassSource> addGeneratedValueAnnotation(GenerationType generationType);
-
-	@Deprecated
-	JavaAnnotationRepresentation<JavaClassSource> addSequenceGeneratorAnnotation();
-
-	@Deprecated
-	interface JavaFieldStringType extends JavaFieldRepresentation {}
-
-	@Deprecated
-	interface JavaFieldBooleanType extends JavaFieldRepresentation {}
-
-	@Deprecated
-	interface JavaFieldLongType extends JavaFieldRepresentation {}
-
-	@Deprecated
-	interface JavaFieldIntegerType extends JavaFieldRepresentation {}
-
-	@Deprecated
-	interface JavaFieldByteType extends JavaFieldRepresentation {}
-
-	@Deprecated
-	interface JavaFieldBigDecimalType extends JavaFieldRepresentation {}
-
-	@Deprecated
-	interface JavaFieldLocalDateType extends JavaFieldRepresentation {}
-
-	@Deprecated
-	interface JavaFieldLocalDateTimeType extends JavaFieldRepresentation {}
-
-	@Deprecated
-	interface JavaFieldEnumType extends JavaFieldRepresentation {}
+//	@Deprecated
+//	interface JavaFieldStringType extends JavaFieldRepresentation {}
+//
+//	@Deprecated
+//	interface JavaFieldBooleanType extends JavaFieldRepresentation {}
+//
+//	@Deprecated
+//	interface JavaFieldLongType extends JavaFieldRepresentation {}
+//
+//	@Deprecated
+//	interface JavaFieldIntegerType extends JavaFieldRepresentation {}
+//
+//	@Deprecated
+//	interface JavaFieldByteType extends JavaFieldRepresentation {}
+//
+//	@Deprecated
+//	interface JavaFieldBigDecimalType extends JavaFieldRepresentation {}
+//
+//	@Deprecated
+//	interface JavaFieldLocalDateType extends JavaFieldRepresentation {}
+//
+//	@Deprecated
+//	interface JavaFieldLocalDateTimeType extends JavaFieldRepresentation {}
+//
+//	@Deprecated
+//	interface JavaFieldEnumType extends JavaFieldRepresentation {}
 
 	@Deprecated
 	interface JavaFieldNotNullType extends JavaFieldRepresentation {}

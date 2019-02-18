@@ -15,9 +15,6 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.BatchSize;
@@ -28,7 +25,6 @@ import org.jboss.forge.roaster.model.source.FieldSource;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.jboss.forge.roaster.model.util.Types;
 
-import br.xtool.core.representation.springboot.EntityRepresentation;
 import br.xtool.core.representation.springboot.JavaAnnotationRepresentation;
 import br.xtool.core.representation.springboot.JavaClassRepresentation;
 import br.xtool.core.representation.springboot.JavaEnumRepresentation;
@@ -244,11 +240,11 @@ public class JavaFieldRepresentationImpl implements JavaFieldRepresentation {
 		// @formatter:on
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see br.xtool.core.representation.EJavaField#addSizeAnnotation(java.lang.Integer, java.lang.Integer)
-	 */
+//	/*
+//	 * (non-Javadoc)
+//	 * 
+//	 * @see br.xtool.core.representation.EJavaField#addSizeAnnotation(java.lang.Integer, java.lang.Integer)
+//	 */
 	@Override
 	public JavaAnnotationRepresentation<JavaClassSource> addSizeAnnotation(Integer min, Integer max) {
 		JavaAnnotationRepresentation<JavaClassSource> ann = this.addAnnotation(Size.class);
@@ -281,34 +277,34 @@ public class JavaFieldRepresentationImpl implements JavaFieldRepresentation {
 		return ann;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see br.xtool.core.representation.EJavaField#addGeneratedValueAnnotation(javax. persistence.GenerationType)
-	 */
-	@Override
-	public JavaAnnotationRepresentation<JavaClassSource> addGeneratedValueAnnotation(GenerationType generationType) {
-		JavaAnnotationRepresentation<JavaClassSource> ann = this.addAnnotation(GeneratedValue.class);
-		ann.setEnumValue("strategy", GenerationType.SEQUENCE).setStringValue("generator", EntityRepresentation.genDBSequenceName(this.getJavaClass().getName()));
-		return ann;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see br.xtool.core.representation.EJavaField#addSequenceGeneratorAnnotation()
-	 */
-	@Override
-	public JavaAnnotationRepresentation<JavaClassSource> addSequenceGeneratorAnnotation() {
-		JavaAnnotationRepresentation<JavaClassSource> ann = this.addAnnotation(SequenceGenerator.class);
-		// @formatter:off
-		ann.setLiteralValue("initialValue", "1")
-			.setLiteralValue("allocationSize", "1")
-			.setStringValue("name", EntityRepresentation.genDBSequenceName(this.getJavaClass().getName()))
-			.setStringValue("sequenceName", EntityRepresentation.genDBSequenceName(this.getJavaClass().getName()));
-		// @formatter:on
-		return ann;
-	}
+//	/*
+//	 * (non-Javadoc)
+//	 * 
+//	 * @see br.xtool.core.representation.EJavaField#addGeneratedValueAnnotation(javax. persistence.GenerationType)
+//	 */
+//	@Override
+//	public JavaAnnotationRepresentation<JavaClassSource> addGeneratedValueAnnotation(GenerationType generationType) {
+//		JavaAnnotationRepresentation<JavaClassSource> ann = this.addAnnotation(GeneratedValue.class);
+//		ann.setEnumValue("strategy", GenerationType.SEQUENCE).setStringValue("generator", EntityRepresentation.genDBSequenceName(this.getJavaClass().getName()));
+//		return ann;
+//	}
+//
+//	/*
+//	 * (non-Javadoc)
+//	 * 
+//	 * @see br.xtool.core.representation.EJavaField#addSequenceGeneratorAnnotation()
+//	 */
+//	@Override
+//	public JavaAnnotationRepresentation<JavaClassSource> addSequenceGeneratorAnnotation() {
+//		JavaAnnotationRepresentation<JavaClassSource> ann = this.addAnnotation(SequenceGenerator.class);
+//		// @formatter:off
+//		ann.setLiteralValue("initialValue", "1")
+//			.setLiteralValue("allocationSize", "1")
+//			.setStringValue("name", EntityRepresentation.genDBSequenceName(this.getJavaClass().getName()))
+//			.setStringValue("sequenceName", EntityRepresentation.genDBSequenceName(this.getJavaClass().getName()));
+//		// @formatter:on
+//		return ann;
+//	}
 
 	/*
 	 * (non-Javadoc)
@@ -318,68 +314,6 @@ public class JavaFieldRepresentationImpl implements JavaFieldRepresentation {
 	@Override
 	public int compareTo(JavaFieldRepresentation o) {
 		return this.getName().compareTo(o.getName());
-	}
-
-	public static class EStringFieldImpl extends JavaFieldRepresentationImpl implements JavaFieldStringType {
-		public EStringFieldImpl(JavaFieldRepresentation javaField) {
-			super(javaField.getJavaClass(), javaField.getRoasterField());
-		}
-	}
-
-	public static class EBooleanFieldImpl extends JavaFieldRepresentationImpl implements JavaFieldBooleanType {
-		public EBooleanFieldImpl(JavaFieldRepresentation javaField) {
-			super(javaField.getJavaClass(), javaField.getRoasterField());
-		}
-
-	}
-
-	public static class ELongFieldImpl extends JavaFieldRepresentationImpl implements JavaFieldLongType {
-		public ELongFieldImpl(JavaFieldRepresentation javaField) {
-			super(javaField.getJavaClass(), javaField.getRoasterField());
-		}
-
-	}
-
-	public static class EIntegerFieldImpl extends JavaFieldRepresentationImpl implements JavaFieldIntegerType {
-		public EIntegerFieldImpl(JavaFieldRepresentation javaField) {
-			super(javaField.getJavaClass(), javaField.getRoasterField());
-		}
-
-	}
-
-	public static class EByteFieldImpl extends JavaFieldRepresentationImpl implements JavaFieldRepresentation {
-		public EByteFieldImpl(JavaFieldRepresentation javaField) {
-			super(javaField.getJavaClass(), javaField.getRoasterField());
-		}
-
-	}
-
-	public static class EBigDecimalFieldImpl extends JavaFieldRepresentationImpl implements JavaFieldBigDecimalType {
-		public EBigDecimalFieldImpl(JavaFieldRepresentation javaField) {
-			super(javaField.getJavaClass(), javaField.getRoasterField());
-		}
-
-	}
-
-	public static class ELocalDateFieldImpl extends JavaFieldRepresentationImpl implements JavaFieldLocalDateType {
-		public ELocalDateFieldImpl(JavaFieldRepresentation javaField) {
-			super(javaField.getJavaClass(), javaField.getRoasterField());
-		}
-
-	}
-
-	public static class ELocalDateTimeFieldImpl extends JavaFieldRepresentationImpl implements JavaFieldLocalDateTimeType {
-		public ELocalDateTimeFieldImpl(JavaFieldRepresentation javaField) {
-			super(javaField.getJavaClass(), javaField.getRoasterField());
-		}
-
-	}
-
-	public static class EENumFieldImpl extends JavaFieldRepresentationImpl implements JavaFieldEnumType {
-		public EENumFieldImpl(JavaFieldRepresentation javaField) {
-			super(javaField.getJavaClass(), javaField.getRoasterField());
-		}
-
 	}
 
 	public static class ENotNullFieldImpl extends JavaFieldRepresentationImpl implements JavaFieldNotNullType {

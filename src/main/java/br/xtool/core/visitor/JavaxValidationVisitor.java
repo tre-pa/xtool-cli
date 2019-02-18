@@ -134,7 +134,7 @@ public class JavaxValidationVisitor implements Visitor {
 	@Override
 	public void visit(JavaFieldRepresentation javaField, PlantRelationshipRepresentation umlRelationship) {
 		if (umlRelationship.getSourceMultiplicity().isToMany() && !umlRelationship.getSourceMultiplicity().isOptional()) {
-			javaField.addSizeAnnotation(1, null);
+//			javaField.addSizeAnnotation(1, null);
 		}
 	}
 
