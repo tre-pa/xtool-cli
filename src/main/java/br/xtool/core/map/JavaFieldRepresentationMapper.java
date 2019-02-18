@@ -30,16 +30,16 @@ public class JavaFieldRepresentationMapper implements BiFunction<JavaClassRepres
 	private Set<Visitor> visitors;
 
 	@Override
-	public JavaFieldRepresentation apply(JavaClassRepresentation javaClass, PlantClassFieldRepresentation umlField) {
-		JavaFieldRepresentation javaField = javaClass.addField(umlField.getName());
-		RoasterHelper.addImport(javaField.getRoasterField().getOrigin(), umlField.getType().getClassName());
+	public JavaFieldRepresentation apply(JavaClassRepresentation javaClass, PlantClassFieldRepresentation plantField) {
+		JavaFieldRepresentation javaField = javaClass.addField(plantField.getName());
+		RoasterHelper.addImport(javaField.getRoasterField().getOrigin(), plantField.getType().getClassName());
 		// @formatter:off
 		javaField.getRoasterField()
-			.setName(umlField.getName())
+			.setName(plantField.getName())
 			.setPrivate()
-			.setType(umlField.getType().getJavaName());
+			.setType(plantField.getType().getJavaName());
 		// @formatter:on
-		this.visit(javaField, umlField);
+		this.visit(javaField, plantField);
 		return javaField;
 	}
 
