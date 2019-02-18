@@ -111,9 +111,9 @@ public class CoreCommand {
 		this.workspace.setWorkingProject(project);
 	}
 
-	@ShellMethod(value = "Hello", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
-	public void hello() {
-		this.shell.runScript("hello");
-	}
+//	@ShellMethod(value = "Hello", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
+//	public void hello() {
+//		this.shell.runScript("hello");
+//	}
 
 }
