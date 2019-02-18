@@ -26,7 +26,6 @@ public interface JavaAnnotationRepresentation<T extends JavaSource<T>> extends C
 
 	boolean isNormal();
 
-	@Deprecated
 	AnnotationSource<T> getRoasterAnnotation();
 
 	@Deprecated

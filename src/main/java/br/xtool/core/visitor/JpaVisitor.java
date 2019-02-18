@@ -6,14 +6,15 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -37,20 +38,11 @@ import br.xtool.core.representation.plantuml.PlantStereotypeRepresentation.Stere
 import br.xtool.core.representation.springboot.EntityRepresentation;
 import br.xtool.core.representation.springboot.JavaClassRepresentation;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation;
-import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldBigDecimalType;
-import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldBooleanType;
-import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldByteType;
-import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldEnumType;
-import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldIntegerType;
-import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldLocalDateTimeType;
-import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldLocalDateType;
-import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldLongType;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldManyToManyType;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldManyToOneType;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldNotNullType;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldOneToManyType;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldOneToOneType;
-import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldStringType;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldTransientType;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldUniqueType;
 import lombok.val;
@@ -61,9 +53,7 @@ public class JpaVisitor implements Visitor {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaClass,
-	 * br.xtool.core.representation.EUmlClass)
+	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaClass, br.xtool.core.representation.EUmlClass)
 	 */
 	@Override
 	public void visit(JavaClassRepresentation javaClass, PlantClassRepresentation plantClass) {
@@ -167,155 +157,164 @@ public class JpaVisitor implements Visitor {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField,
-	 * br.xtool.core.representation.EUmlField)
+	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField, br.xtool.core.representation.EUmlField)
 	 */
 	@Override
-	public void visit(JavaFieldRepresentation javaField, PlantClassFieldRepresentation umlField) {
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField.
-	 * EStringField, br.xtool.core.representation.EUmlField)
-	 */
-	@Override
-	public void visit(JavaFieldStringType stringField, PlantClassFieldRepresentation umlField) {
-		val annColumn = stringField.addAnnotation(Column.class);
-		annColumn.setLiteralValue("length", String.valueOf(umlField.getMaxArrayLength().orElse(255)));
-		umlField.getTaggedValue("column.name").ifPresent(tagValue -> annColumn.setStringValue("name", tagValue));
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField.
-	 * EBooleanField, br.xtool.core.representation.EUmlField)
-	 */
-	@Override
-	public void visit(JavaFieldBooleanType booleanField, PlantClassFieldRepresentation umlField) {
-		val annColumn = booleanField.addAnnotation(Column.class);
-		umlField.getTaggedValue("column.name").ifPresent(tagValue -> annColumn.setStringValue("name", tagValue));
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField.
-	 * ELongField, br.xtool.core.representation.EUmlField)
-	 */
-	@Override
-	public void visit(JavaFieldLongType longField, PlantClassFieldRepresentation umlField) {
-		if (umlField.isId()) {
-			longField.addAnnotation(Id.class);
+	public void visit(JavaFieldRepresentation javaField, PlantClassFieldRepresentation plantField) {
+		val annColumn = javaField.addAnnotation(Column.class);
+		plantField.getTaggedValue("column.name").ifPresent(tagValue -> annColumn.getRoasterAnnotation().setStringValue("name", tagValue));
+		if (javaField.isStringField()) {
 			// @formatter:off
-			val annColumn = longField.addAnnotation(Column.class)
-				.setLiteralValue("updatable", "false")
-				.setLiteralValue("nullable", "false");
+				annColumn.getRoasterAnnotation()
+					.setLiteralValue("length", String.valueOf(plantField.getMaxArrayLength().orElse(255)));
+				// @formatter:on
+		} else if (javaField.isLongField()) {
+			if (plantField.isId()) {
+				javaField.addAnnotation(Id.class);
+				// @formatter:off
+					annColumn.getRoasterAnnotation()
+						.setLiteralValue("updatable", "false")
+						.setLiteralValue("nullable", "false");
+					javaField.addAnnotation(GeneratedValue.class).getRoasterAnnotation()
+						.setEnumValue("strategy", GenerationType.SEQUENCE)
+						.setStringValue("generator", EntityRepresentation.genDBSequenceName(javaField.getJavaClass().getName()));
+					javaField.addAnnotation(SequenceGenerator.class).getRoasterAnnotation()
+						.setLiteralValue("initialValue", "1")
+						.setLiteralValue("allocationSize", "1")
+						.setStringValue("name", EntityRepresentation.genDBSequenceName(javaField.getJavaClass().getName()))
+						.setStringValue("sequenceName", EntityRepresentation.genDBSequenceName(javaField.getJavaClass().getName()));
+					// @formatter:on
+			}
+		} else if (javaField.isEnumField()) {
+			// @formatter:off
+			javaField.addAnnotation(Enumerated.class).getRoasterAnnotation()
+				.setEnumValue(EnumType.STRING)
+				.setEnumValue(EnumType.STRING);
+			annColumn.getRoasterAnnotation().setLiteralValue("nullable", "false");
 			// @formatter:on
-			umlField.getTaggedValue("column.name").ifPresent(tagValue -> annColumn.setStringValue("name", tagValue));
-			longField.addGeneratedValueAnnotation(GenerationType.SEQUENCE);
-			longField.addSequenceGeneratorAnnotation();
-			return;
-
 		}
-		longField.addAnnotation(Column.class);
 	}
+
+//	/*
+//	 * (non-Javadoc)
+//	 * 
+//	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField. EStringField, br.xtool.core.representation.EUmlField)
+//	 */
+////	@Override
+////	public void visit(JavaFieldStringType stringField, PlantClassFieldRepresentation umlField) {
+////		val annColumn = stringField.addAnnotation(Column.class);
+////		annColumn.setLiteralValue("length", String.valueOf(umlField.getMaxArrayLength().orElse(255)));
+////		umlField.getTaggedValue("column.name").ifPresent(tagValue -> annColumn.setStringValue("name", tagValue));
+////	}
+
+//	/*
+//	 * (non-Javadoc)
+//	 * 
+//	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField. EBooleanField, br.xtool.core.representation.EUmlField)
+//	 */
+//	@Override
+//	public void visit(JavaFieldBooleanType booleanField, PlantClassFieldRepresentation umlField) {
+//		val annColumn = booleanField.addAnnotation(Column.class);
+//		umlField.getTaggedValue("column.name").ifPresent(tagValue -> annColumn.setStringValue("name", tagValue));
+//	}
+
+//	/*
+//	 * (non-Javadoc)
+//	 * 
+//	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField. ELongField, br.xtool.core.representation.EUmlField)
+//	 */
+//	@Override
+//	public void visit(JavaFieldLongType longField, PlantClassFieldRepresentation umlField) {
+//		if (umlField.isId()) {
+//			longField.addAnnotation(Id.class);
+//			// @formatter:off
+//			val annColumn = longField.addAnnotation(Column.class)
+//				.setLiteralValue("updatable", "false")
+//				.setLiteralValue("nullable", "false");
+//			// @formatter:on
+//			umlField.getTaggedValue("column.name").ifPresent(tagValue -> annColumn.setStringValue("name", tagValue));
+//			longField.addGeneratedValueAnnotation(GenerationType.SEQUENCE);
+//			longField.addSequenceGeneratorAnnotation();
+//			return;
+//
+//		}
+//		longField.addAnnotation(Column.class);
+//	}
+
+//	/*
+//	 * (non-Javadoc)
+//	 * 
+//	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField. EIntegerField, br.xtool.core.representation.EUmlField)
+//	 */
+//	@Override
+//	public void visit(JavaFieldIntegerType integerField, PlantClassFieldRepresentation umlField) {
+//		val annColumn = integerField.addAnnotation(Column.class);
+//		umlField.getTaggedValue("column.name").ifPresent(tagValue -> annColumn.setStringValue("name", tagValue));
+//	}
+
+//	/*
+//	 * (non-Javadoc)
+//	 * 
+//	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField. EByteField, br.xtool.core.representation.EUmlField)
+//	 */
+//	@Override
+//	public void visit(JavaFieldByteType byteField, PlantClassFieldRepresentation umlField) {
+//		val annColumn = byteField.addAnnotation(Lob.class);
+//		umlField.getTaggedValue("column.name").ifPresent(tagValue -> annColumn.setStringValue("name", tagValue));
+//	}
+
+//	/*
+//	 * (non-Javadoc)
+//	 * 
+//	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField. EBigDecimalField, br.xtool.core.representation.EUmlField)
+//	 */
+//	@Override
+//	public void visit(JavaFieldBigDecimalType bigDecimalField, PlantClassFieldRepresentation umlField) {
+//		val annColumn = bigDecimalField.addAnnotation(Column.class);
+//		umlField.getTaggedValue("column.name").ifPresent(tagValue -> annColumn.setStringValue("name", tagValue));
+//	}
+
+//	/*
+//	 * (non-Javadoc)
+//	 * 
+//	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField. ELocalDateField, br.xtool.core.representation.EUmlField)
+//	 */
+//	@Override
+//	public void visit(JavaFieldLocalDateType localDateField, PlantClassFieldRepresentation umlField) {
+//		val annColumn = localDateField.addAnnotation(Column.class);
+//		umlField.getTaggedValue("column.name").ifPresent(tagValue -> annColumn.setStringValue("name", tagValue));
+//	}
+
+//	/*
+//	 * (non-Javadoc)
+//	 * 
+//	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField. ELocalDateTimeField, br.xtool.core.representation.EUmlField)
+//	 */
+//	@Override
+//	public void visit(JavaFieldLocalDateTimeType localDateTimeField, PlantClassFieldRepresentation umlField) {
+//		val annColumn = localDateTimeField.addAnnotation(Column.class);
+//		umlField.getTaggedValue("column.name").ifPresent(tagValue -> annColumn.setStringValue("name", tagValue));
+//	}
+
+//	@Override
+//	public void visit(JavaFieldEnumType enumField, PlantClassFieldRepresentation umlField) {
+//		val annEnum = enumField.addAnnotation(Enumerated.class).setEnumValue(EnumType.STRING);
+//		annEnum.setEnumValue(EnumType.STRING);
+//		enumField.addAnnotation(Column.class).setLiteralValue("nullable", "false");
+//	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField.
-	 * EIntegerField, br.xtool.core.representation.EUmlField)
+	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField, br.xtool.core.representation.EUmlFieldProperty)
 	 */
 	@Override
-	public void visit(JavaFieldIntegerType integerField, PlantClassFieldRepresentation umlField) {
-		val annColumn = integerField.addAnnotation(Column.class);
-		umlField.getTaggedValue("column.name").ifPresent(tagValue -> annColumn.setStringValue("name", tagValue));
-	}
+	public void visit(JavaFieldRepresentation javaField, PlantClassFieldPropertyRepresentation umlFieldProperty) {}
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField.
-	 * EByteField, br.xtool.core.representation.EUmlField)
-	 */
-	@Override
-	public void visit(JavaFieldByteType byteField, PlantClassFieldRepresentation umlField) {
-		val annColumn = byteField.addAnnotation(Lob.class);
-		umlField.getTaggedValue("column.name").ifPresent(tagValue -> annColumn.setStringValue("name", tagValue));
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField.
-	 * EBigDecimalField, br.xtool.core.representation.EUmlField)
-	 */
-	@Override
-	public void visit(JavaFieldBigDecimalType bigDecimalField, PlantClassFieldRepresentation umlField) {
-		val annColumn = bigDecimalField.addAnnotation(Column.class);
-		umlField.getTaggedValue("column.name").ifPresent(tagValue -> annColumn.setStringValue("name", tagValue));
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField.
-	 * ELocalDateField, br.xtool.core.representation.EUmlField)
-	 */
-	@Override
-	public void visit(JavaFieldLocalDateType localDateField, PlantClassFieldRepresentation umlField) {
-		val annColumn = localDateField.addAnnotation(Column.class);
-		umlField.getTaggedValue("column.name").ifPresent(tagValue -> annColumn.setStringValue("name", tagValue));
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField.
-	 * ELocalDateTimeField, br.xtool.core.representation.EUmlField)
-	 */
-	@Override
-	public void visit(JavaFieldLocalDateTimeType localDateTimeField, PlantClassFieldRepresentation umlField) {
-		val annColumn = localDateTimeField.addAnnotation(Column.class);
-		umlField.getTaggedValue("column.name").ifPresent(tagValue -> annColumn.setStringValue("name", tagValue));
-	}
-
-	@Override
-	public void visit(JavaFieldEnumType enumField, PlantClassFieldRepresentation umlField) {
-		val annEnum = enumField.addAnnotation(Enumerated.class).setEnumValue(EnumType.STRING);
-		annEnum.setEnumValue(EnumType.STRING);
-		enumField.addAnnotation(Column.class).setLiteralValue("nullable", "false");
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField,
-	 * br.xtool.core.representation.EUmlFieldProperty)
-	 */
-	@Override
-	public void visit(JavaFieldRepresentation javaField, PlantClassFieldPropertyRepresentation umlFieldProperty) {
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField.
-	 * ENotNullField, br.xtool.core.representation.EUmlFieldProperty)
+	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField. ENotNullField, br.xtool.core.representation.EUmlFieldProperty)
 	 */
 	@Override
 	public void visit(JavaFieldNotNullType notNullField, PlantClassFieldPropertyRepresentation property) {
@@ -326,9 +325,7 @@ public class JpaVisitor implements Visitor {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField.
-	 * ETransientField, br.xtool.core.representation.EUmlFieldProperty)
+	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField. ETransientField, br.xtool.core.representation.EUmlFieldProperty)
 	 */
 	@Override
 	public void visit(JavaFieldTransientType transientField, PlantClassFieldPropertyRepresentation property) {
@@ -339,9 +336,7 @@ public class JpaVisitor implements Visitor {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField.
-	 * EUniqueField, br.xtool.core.representation.EUmlFieldProperty)
+	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField. EUniqueField, br.xtool.core.representation.EUmlFieldProperty)
 	 */
 	@Override
 	public void visit(JavaFieldUniqueType uniqueField, PlantClassFieldPropertyRepresentation property) {
@@ -351,9 +346,7 @@ public class JpaVisitor implements Visitor {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField,
-	 * br.xtool.core.representation.EUmlRelationship)
+	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField, br.xtool.core.representation.EUmlRelationship)
 	 */
 	@Override
 	public void visit(JavaFieldRepresentation javaField, PlantRelationshipRepresentation umlRelationship) {
@@ -365,9 +358,7 @@ public class JpaVisitor implements Visitor {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField.
-	 * EOneToOneField, br.xtool.core.representation.EUmlRelationship.EAssociation)
+	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField. EOneToOneField, br.xtool.core.representation.EUmlRelationship.EAssociation)
 	 */
 	@Override
 	public void visit(JavaFieldOneToOneType oneToOneField, PlantRelationshipAssociation association) {
@@ -386,9 +377,7 @@ public class JpaVisitor implements Visitor {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField.
-	 * EOneToManyField, br.xtool.core.representation.EUmlRelationship.EAssociation)
+	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField. EOneToManyField, br.xtool.core.representation.EUmlRelationship.EAssociation)
 	 */
 	@Override
 	public void visit(JavaFieldOneToManyType oneToManyField, PlantRelationshipAssociation association) {
@@ -431,9 +420,7 @@ public class JpaVisitor implements Visitor {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField.
-	 * EManyToOneField, br.xtool.core.representation.EUmlRelationship.EAssociation)
+	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField. EManyToOneField, br.xtool.core.representation.EUmlRelationship.EAssociation)
 	 */
 	@Override
 	public void visit(JavaFieldManyToOneType manyToOneField, PlantRelationshipAssociation association) {
@@ -446,9 +433,7 @@ public class JpaVisitor implements Visitor {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField.
-	 * EManyToManyField, br.xtool.core.representation.EUmlRelationship.EAssociation)
+	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField. EManyToManyField, br.xtool.core.representation.EUmlRelationship.EAssociation)
 	 */
 	@Override
 	public void visit(JavaFieldManyToManyType manyToManyField, PlantRelationshipAssociation association) {
@@ -464,9 +449,7 @@ public class JpaVisitor implements Visitor {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField.
-	 * EOneToOneField, br.xtool.core.representation.EUmlRelationship.EComposition)
+	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField. EOneToOneField, br.xtool.core.representation.EUmlRelationship.EComposition)
 	 */
 	@Override
 	public void visit(JavaFieldOneToOneType oneToOneField, PlantRelationshipComposition composition) {
@@ -480,9 +463,7 @@ public class JpaVisitor implements Visitor {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField.
-	 * EOneToManyField, br.xtool.core.representation.EUmlRelationship.EComposition)
+	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField. EOneToManyField, br.xtool.core.representation.EUmlRelationship.EComposition)
 	 */
 	@Override
 	public void visit(JavaFieldOneToManyType oneToManyField, PlantRelationshipComposition composition) {
@@ -527,9 +508,7 @@ public class JpaVisitor implements Visitor {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField.
-	 * EManyToOneField, br.xtool.core.representation.EUmlRelationship.EComposition)
+	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField. EManyToOneField, br.xtool.core.representation.EUmlRelationship.EComposition)
 	 */
 	@Override
 	public void visit(JavaFieldManyToOneType manyToOneField, PlantRelationshipComposition composition) {

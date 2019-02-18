@@ -11,20 +11,11 @@ import br.xtool.core.representation.plantuml.PlantRelationshipRepresentation.Pla
 import br.xtool.core.representation.plantuml.PlantRelationshipRepresentation.PlantRelationshipComposition;
 import br.xtool.core.representation.springboot.JavaClassRepresentation;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation;
-import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldBigDecimalType;
-import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldBooleanType;
-import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldByteType;
-import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldEnumType;
-import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldIntegerType;
-import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldLocalDateTimeType;
-import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldLocalDateType;
-import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldLongType;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldManyToManyType;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldManyToOneType;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldNotNullType;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldOneToManyType;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldOneToOneType;
-import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldStringType;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldTransientType;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldUniqueType;
 import lombok.EqualsAndHashCode;
@@ -55,50 +46,50 @@ public class LombokVisitor implements Visitor {
 
 	}
 
-	@Override
-	public void visit(JavaFieldStringType stringField, PlantClassFieldRepresentation umlField) {
+//	@Override
+//	public void visit(JavaFieldStringType stringField, PlantClassFieldRepresentation umlField) {
+//
+//	}
 
-	}
+//	@Override
+//	public void visit(JavaFieldBooleanType booleanField, PlantClassFieldRepresentation umlField) {
+//
+//	}
 
-	@Override
-	public void visit(JavaFieldBooleanType booleanField, PlantClassFieldRepresentation umlField) {
+//	@Override
+//	public void visit(JavaFieldLongType longField, PlantClassFieldRepresentation umlField) {
+//
+//	}
 
-	}
+//	@Override
+//	public void visit(JavaFieldIntegerType integerField, PlantClassFieldRepresentation umlField) {
+//
+//	}
 
-	@Override
-	public void visit(JavaFieldLongType longField, PlantClassFieldRepresentation umlField) {
+//	@Override
+//	public void visit(JavaFieldByteType byteField, PlantClassFieldRepresentation umlField) {
+//
+//	}
 
-	}
+//	@Override
+//	public void visit(JavaFieldBigDecimalType bigDecimalField, PlantClassFieldRepresentation umlField) {
+//
+//	}
 
-	@Override
-	public void visit(JavaFieldIntegerType integerField, PlantClassFieldRepresentation umlField) {
+//	@Override
+//	public void visit(JavaFieldLocalDateType localDateField, PlantClassFieldRepresentation umlField) {
+//
+//	}
 
-	}
+//	@Override
+//	public void visit(JavaFieldLocalDateTimeType localDateTimeField, PlantClassFieldRepresentation umlField) {
+//
+//	}
 
-	@Override
-	public void visit(JavaFieldByteType byteField, PlantClassFieldRepresentation umlField) {
-
-	}
-
-	@Override
-	public void visit(JavaFieldBigDecimalType bigDecimalField, PlantClassFieldRepresentation umlField) {
-
-	}
-
-	@Override
-	public void visit(JavaFieldLocalDateType localDateField, PlantClassFieldRepresentation umlField) {
-
-	}
-
-	@Override
-	public void visit(JavaFieldLocalDateTimeType localDateTimeField, PlantClassFieldRepresentation umlField) {
-
-	}
-
-	@Override
-	public void visit(JavaFieldEnumType enumField, PlantClassFieldRepresentation umlField) {
-
-	}
+//	@Override
+//	public void visit(JavaFieldEnumType enumField, PlantClassFieldRepresentation umlField) {
+//
+//	}
 
 	@Override
 	public void visit(JavaFieldNotNullType notNullField, PlantClassFieldPropertyRepresentation property) {

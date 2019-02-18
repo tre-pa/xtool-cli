@@ -132,6 +132,51 @@ public class JavaFieldRepresentationImpl implements JavaFieldRepresentation {
 		return this.getType().isType(Date.class) || this.getType().isType(java.sql.Date.class) || this.getType().isType(LocalDate.class) || this.getType().isType(LocalDateTime.class);
 	}
 
+	@Override
+	public boolean isBooleanField() {
+		return this.getType().isType(Boolean.class);
+	}
+
+	@Override
+	public boolean isLongField() {
+		return this.getType().isType(Long.class);
+	}
+
+	@Override
+	public boolean isIntegerField() {
+		return this.getType().isType(Integer.class);
+	}
+
+	@Override
+	public boolean isByteField() {
+		return this.getType().isType(Byte.class);
+	}
+
+	@Override
+	public boolean isBigDecimalField() {
+		return this.getType().isType(BigDecimal.class);
+	}
+
+	@Override
+	public boolean isLocalDate() {
+		return this.getType().isType(LocalDate.class);
+	}
+
+	@Override
+	public boolean isLocalDateTime() {
+		return this.getType().isType(LocalDateTime.class);
+	}
+
+	@Override
+	public boolean isNotNullField() {
+		return false;
+	}
+
+	@Override
+	public boolean isUniqueField() {
+		return false;
+	}
+
 	/**
 	 * Verifica se o atributo é static.
 	 * 
