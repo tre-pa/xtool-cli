@@ -90,12 +90,12 @@ public class JpaVisitor implements Visitor {
 						.setLiteralValue("nullable", "false");
 					attr.addAnnotation(GeneratedValue.class).getRoasterAnnotation()
 						.setEnumValue("strategy", GenerationType.SEQUENCE)
-						.setStringValue("generator", EntityRepresentation.genDBSequenceName(attr.getJavaClass().getName()));
+						.setStringValue("generator", attr.getEntity().asDatabaseSequenceName());
 					attr.addAnnotation(SequenceGenerator.class).getRoasterAnnotation()
 						.setLiteralValue("initialValue", "1")
 						.setLiteralValue("allocationSize", "1")
-						.setStringValue("name", EntityRepresentation.genDBSequenceName(attr.getJavaClass().getName()))
-						.setStringValue("sequenceName", EntityRepresentation.genDBSequenceName(attr.getJavaClass().getName()));
+						.setStringValue("name", attr.getEntity().asDatabaseSequenceName())
+						.setStringValue("sequenceName", attr.getEntity().asDatabaseSequenceName());
 					// @formatter:on
 			}
 		} else if (attr.isEnumField()) {

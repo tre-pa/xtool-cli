@@ -9,6 +9,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import org.apache.commons.lang3.StringUtils;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 
 import br.xtool.core.representation.springboot.EntityAttributeRepresentation;
@@ -18,6 +19,7 @@ import br.xtool.core.representation.springboot.RestClassRepresentation;
 import br.xtool.core.representation.springboot.ServiceClassRepresentation;
 import br.xtool.core.representation.springboot.SpecificationRepresentation;
 import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
+import strman.Strman;
 
 /**
  * Classe que representa um entidade JPA
@@ -142,6 +144,33 @@ public class EntityRepresentationImpl extends JavaClassRepresentationImpl implem
 		return this.getProject().getRests().stream()
 				.filter(rest -> rest.getName().equals(this.getName().concat("Rest")))
 				.findFirst();
+		// @formatter:on
+	}
+
+	@Override
+	public String asDatabaseTableName() {
+		// @formatter:off
+		return StringUtils.abbreviate(
+				StringUtils.upperCase(
+						Strman.toSnakeCase(this.getName())), "", 30);
+		// @formatter:on
+	}
+
+	@Override
+	public String asDatabaseSequenceName() {
+		// @formatter:off
+		return StringUtils.abbreviate(
+				StringUtils.upperCase(
+				"SEQ_" + Strman.toSnakeCase(this.getName())), "", 30);
+		// @formatter:on
+	}
+
+	@Override
+	public String asDatabaseFkName() {
+		// @formatter:off
+		return StringUtils.abbreviate(
+				StringUtils.upperCase(
+				Strman.toSnakeCase(this.getName())), "", 30) + "_ID";
 		// @formatter:on
 	}
 

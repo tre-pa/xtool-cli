@@ -32,6 +32,11 @@ public class EntityAttributeRepresentationImpl extends JavaFieldRepresentationIm
 		this.entitySource = entitySource;
 	}
 
+	@Override
+	public EntityRepresentation getEntity() {
+		return entitySource;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -55,8 +60,7 @@ public class EntityAttributeRepresentationImpl extends JavaFieldRepresentationIm
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see br.xtool.core.representation.springboot.EntityAttributeRepresentation#
-	 * isRelationshipField()
+	 * @see br.xtool.core.representation.springboot.EntityAttributeRepresentation# isRelationshipField()
 	 */
 	@Override
 	public boolean isRelationshipField() {

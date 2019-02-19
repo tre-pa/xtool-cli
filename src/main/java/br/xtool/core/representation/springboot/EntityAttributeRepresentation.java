@@ -10,6 +10,8 @@ import java.util.Optional;
  */
 public interface EntityAttributeRepresentation extends JavaFieldRepresentation {
 
+	EntityRepresentation getEntity();
+
 	/**
 	 * Retorna se o atributo é do tipo JPA transient.
 	 * 
