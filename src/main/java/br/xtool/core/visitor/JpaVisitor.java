@@ -111,13 +111,13 @@ public class JpaVisitor implements Visitor {
 	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField, br.xtool.core.representation.EUmlFieldProperty)
 	 */
 	@Override
-	public void visit(JavaFieldRepresentation javaField, PlantClassFieldPropertyRepresentation plantProperty) {
+	public void visit(EntityAttributeRepresentation attr, PlantClassFieldPropertyRepresentation plantProperty) {
 		if (plantProperty.isNotNull()) {
-			javaField.addAnnotation(Column.class).getRoasterAnnotation().setLiteralValue("nullable", "false");
+			attr.addAnnotation(Column.class).getRoasterAnnotation().setLiteralValue("nullable", "false");
 		} else if (plantProperty.isUnique()) {
-			javaField.addAnnotation(Column.class).getRoasterAnnotation().setLiteralValue("unique", "true");
+			attr.addAnnotation(Column.class).getRoasterAnnotation().setLiteralValue("unique", "true");
 		} else if (plantProperty.isTransient()) {
-			javaField.addAnnotation(Transient.class);
+			attr.addAnnotation(Transient.class);
 		}
 	}
 
@@ -128,9 +128,9 @@ public class JpaVisitor implements Visitor {
 	 */
 	@Override
 	public void visit(JavaFieldRepresentation javaField, PlantRelationshipRepresentation umlRelationship) {
-		if (javaField.getEnum().isPresent()) {
-			javaField.addAnnotation(Enumerated.class).setEnumValue(EnumType.STRING);
-		}
+//		if (javaField.getEnum().isPresent()) {
+//			javaField.addAnnotation(Enumerated.class).setEnumValue(EnumType.STRING);
+//		}
 	}
 
 	/*

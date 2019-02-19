@@ -11,6 +11,7 @@ import br.xtool.core.helper.RoasterHelper;
 import br.xtool.core.implementation.representation.EntityAttributeRepresentationImpl;
 import br.xtool.core.implementation.representation.EntityRepresentationImpl;
 import br.xtool.core.representation.plantuml.PlantClassFieldRepresentation;
+import br.xtool.core.representation.springboot.EntityAttributeRepresentation;
 import br.xtool.core.representation.springboot.EntityRepresentation;
 import br.xtool.core.representation.springboot.JavaClassRepresentation;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation;
@@ -49,8 +50,9 @@ public class JavaFieldRepresentationMapper implements BiFunction<JavaClassRepres
 	private void visit(JavaFieldRepresentation javaField, PlantClassFieldRepresentation plantField) {
 		SpringBootProjectRepresentation project = javaField.getJavaClass().getProject();
 		EntityRepresentation entity = new EntityRepresentationImpl(project, javaField.getJavaClass().getRoasterJavaClass());
-		this.visitors.forEach(visitor -> visitor.visit(new EntityAttributeRepresentationImpl(project, entity, javaField.getRoasterField()), plantField));
-		this.visitors.forEach(visitor -> plantField.getProperties().forEach(plantFieldProperty -> visitor.visit(javaField, plantFieldProperty)));
+		EntityAttributeRepresentation attribute = new EntityAttributeRepresentationImpl(project, entity, javaField.getRoasterField());
+		this.visitors.forEach(visitor -> visitor.visit(attribute, plantField));
+		this.visitors.forEach(visitor -> plantField.getProperties().forEach(plantFieldProperty -> visitor.visit(attribute, plantFieldProperty)));
 	}
 
 }

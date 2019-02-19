@@ -35,9 +35,9 @@ public interface Visitor {
 
 	/**
 	 * 
-	 * @param umlFieldProperty
+	 * @param plantFieldProperty
 	 */
-	void visit(JavaFieldRepresentation javaField, PlantClassFieldPropertyRepresentation umlFieldProperty);
+	void visit(EntityAttributeRepresentation attribute, PlantClassFieldPropertyRepresentation plantFieldProperty);
 
 	/**
 	 * 

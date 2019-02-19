@@ -54,7 +54,7 @@ public class JavaxValidationVisitor implements Visitor {
 	}
 
 	@Override
-	public void visit(JavaFieldRepresentation javaField, PlantClassFieldPropertyRepresentation umlFieldProperty) {
+	public void visit(EntityAttributeRepresentation attribute, PlantClassFieldPropertyRepresentation umlFieldProperty) {
 
 	}
 
