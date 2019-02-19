@@ -8,7 +8,6 @@ import br.xtool.core.representation.plantuml.PlantRelationshipRepresentation.Pla
 import br.xtool.core.representation.plantuml.PlantRelationshipRepresentation.PlantRelationshipComposition;
 import br.xtool.core.representation.springboot.EntityAttributeRepresentation;
 import br.xtool.core.representation.springboot.EntityRepresentation;
-import br.xtool.core.representation.springboot.JavaFieldRepresentation;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldManyToManyType;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldManyToOneType;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldOneToManyType;
@@ -43,21 +42,7 @@ public interface Visitor {
 	 * 
 	 * @param umlRelationship
 	 */
-	void visit(JavaFieldRepresentation javaField, PlantRelationshipRepresentation umlRelationship);
-
-	/**
-	 * 
-	 * @param oneToOneField
-	 * @param association
-	 */
-	void visit(JavaFieldOneToOneType oneToOneField, PlantRelationshipAssociation association);
-
-	/**
-	 * 
-	 * @param oneToManyField
-	 * @param association
-	 */
-	void visit(JavaFieldOneToManyType oneToManyField, PlantRelationshipAssociation association);
+	void visit(EntityAttributeRepresentation attribute, PlantRelationshipRepresentation umlRelationship);
 
 	/**
 	 * 

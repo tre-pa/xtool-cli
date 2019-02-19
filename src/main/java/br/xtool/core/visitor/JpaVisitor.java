@@ -18,10 +18,12 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.stereotype.Component;
 
@@ -37,7 +39,6 @@ import br.xtool.core.representation.plantuml.PlantRelationshipRepresentation.Pla
 import br.xtool.core.representation.plantuml.PlantStereotypeRepresentation.StereotypeType;
 import br.xtool.core.representation.springboot.EntityAttributeRepresentation;
 import br.xtool.core.representation.springboot.EntityRepresentation;
-import br.xtool.core.representation.springboot.JavaFieldRepresentation;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldManyToManyType;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldManyToOneType;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldOneToManyType;
@@ -127,71 +128,30 @@ public class JpaVisitor implements Visitor {
 	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField, br.xtool.core.representation.EUmlRelationship)
 	 */
 	@Override
-	public void visit(JavaFieldRepresentation javaField, PlantRelationshipRepresentation umlRelationship) {
-//		if (javaField.getEnum().isPresent()) {
-//			javaField.addAnnotation(Enumerated.class).setEnumValue(EnumType.STRING);
-//		}
-	}
+	public void visit(EntityAttributeRepresentation attr, PlantRelationshipRepresentation plantRelationship) {
+		if (plantRelationship.isAssociation()) {
+			if (plantRelationship.isOneToOne()) {
+				val annOneToOne = attr.addAnnotation(OneToOne.class);
+				annOneToOne.getRoasterAnnotation().setEnumValue("fetch", FetchType.LAZY);
+				attr.addAnnotation(Fetch.class).getRoasterAnnotation().setEnumValue(FetchMode.JOIN);
+				if (!plantRelationship.getSourceMultiplicity().isOptional()) annOneToOne.getRoasterAnnotation().setLiteralValue("optional", "false");
+				// Bidirecional
+				if (!plantRelationship.isSourceClassOwner() && plantRelationship.getNavigability().isBidirectional()) {
+					annOneToOne.getRoasterAnnotation().setStringValue("mappedBy", plantRelationship.getTargetRole());
+				} else {
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField. EOneToOneField, br.xtool.core.representation.EUmlRelationship.EAssociation)
-	 */
-	@Override
-	public void visit(JavaFieldOneToOneType oneToOneField, PlantRelationshipAssociation association) {
-		val annOneToOne = oneToOneField.addAnnotation(OneToOne.class);
-		annOneToOne.setEnumValue("fetch", FetchType.LAZY);
-		oneToOneField.addAnnotation(Fetch.class).setEnumValue(FetchMode.JOIN);
-		if (!association.getSourceMultiplicity().isOptional()) annOneToOne.setLiteralValue("optional", "false");
-		// Bidirecional
-		if (!association.isSourceClassOwner() && association.getNavigability().isBidirectional()) {
-			annOneToOne.setStringValue("mappedBy", association.getTargetRole());
-		} else {
-
-		}
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField. EOneToManyField, br.xtool.core.representation.EUmlRelationship.EAssociation)
-	 */
-	@Override
-	public void visit(JavaFieldOneToManyType oneToManyField, PlantRelationshipAssociation association) {
-		oneToManyField.addBatchSizeAnnotation(10);
-		oneToManyField.addLazyCollectionAnnotation(LazyCollectionOption.EXTRA);
-		val annOneToMany = oneToManyField.addAnnotation(OneToMany.class);
-		// Bidirecional
-		if (association.getNavigability().isBidirectional()) {
-			annOneToMany.setStringValue("mappedBy", association.getTargetRole());
-//			EntityTemplates.genAddListMethodRelationship(oneToManyField.getJavaClass(), association);
-			// @formatter:off
-			// add
-//			oneToManyField.getJavaClass().addMethod(String.format("add%s", association.getTargetClass().getName()))
-//				.getRoasterMethod()
-//					.setReturnTypeVoid()
-//					.setBody(String.format("this.%s.add(%s); %s.set%s(this);", 
-//							association.getSourceRole(), 
-//							association.getTargetClass().getInstanceName(), 
-//							association.getTargetClass().getInstanceName(),
-//							association.getSourceClass().getName()))
-//					.addParameter(association.getTargetClass().getName(), association.getTargetClass().getInstanceName());
-			// remove
-//			EntityTemplates.genRemoveListMethodRelationship(oneToManyField.getJavaClass(), association);
-//			oneToManyField.getJavaClass().addMethod(String.format("remove%s", association.getTargetClass().getName()))
-//			.getRoasterMethod()
-//				.setReturnTypeVoid()
-//				.setBody(String.format("this.%s.remove(%s); %s.set%s(null);", 
-//						association.getSourceRole(), 
-//						association.getTargetClass().getInstanceName(), 
-//						association.getTargetClass().getInstanceName(),
-//						association.getSourceClass().getName()))
-//				.addParameter(association.getTargetClass().getName(), association.getTargetClass().getInstanceName());
-		// @formatter:on
-		} else {
-			val annJoinColumn = oneToManyField.addAnnotation(JoinColumn.class);
-			annJoinColumn.setStringValue("name", EntityRepresentation.genFKName(association.getTargetClass().getName()));
+				}
+			} else if (plantRelationship.isOneToMany()) {
+				attr.addAnnotation(BatchSize.class).getRoasterAnnotation().setLiteralValue("size", String.valueOf(10));
+				attr.addAnnotation(LazyCollection.class).getRoasterAnnotation().setEnumValue(LazyCollectionOption.EXTRA);
+				val annOneToMany = attr.addAnnotation(OneToMany.class);
+				// Bidirecional
+				if (plantRelationship.getNavigability().isBidirectional()) {
+					annOneToMany.getRoasterAnnotation().setStringValue("mappedBy", plantRelationship.getTargetRole());
+				} else {
+					attr.addAnnotation(JoinColumn.class).getRoasterAnnotation().setStringValue("name", EntityRepresentation.genFKName(plantRelationship.getTargetClass().getName()));
+				}
+			}
 		}
 	}
 

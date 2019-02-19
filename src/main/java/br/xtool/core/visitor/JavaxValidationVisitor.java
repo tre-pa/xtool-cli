@@ -15,7 +15,6 @@ import br.xtool.core.representation.plantuml.PlantRelationshipRepresentation.Pla
 import br.xtool.core.representation.plantuml.PlantRelationshipRepresentation.PlantRelationshipComposition;
 import br.xtool.core.representation.springboot.EntityAttributeRepresentation;
 import br.xtool.core.representation.springboot.EntityRepresentation;
-import br.xtool.core.representation.springboot.JavaFieldRepresentation;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldManyToManyType;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldManyToOneType;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldOneToManyType;
@@ -59,20 +58,11 @@ public class JavaxValidationVisitor implements Visitor {
 	}
 
 	@Override
-	public void visit(JavaFieldRepresentation javaField, PlantRelationshipRepresentation umlRelationship) {
+	public void visit(EntityAttributeRepresentation attribute, PlantRelationshipRepresentation umlRelationship) {
 		if (umlRelationship.getSourceMultiplicity().isToMany() && !umlRelationship.getSourceMultiplicity().isOptional()) {
-//			javaField.addSizeAnnotation(1, null);
+			var ann = attribute.getRoasterField().addAnnotation(Size.class);
+			ann.setLiteralValue("min", String.valueOf(1));
 		}
-	}
-
-	@Override
-	public void visit(JavaFieldOneToOneType oneToOneField, PlantRelationshipAssociation association) {
-
-	}
-
-	@Override
-	public void visit(JavaFieldOneToManyType oneToManyField, PlantRelationshipAssociation association) {
-
 	}
 
 	@Override

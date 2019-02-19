@@ -11,7 +11,6 @@ import br.xtool.core.representation.plantuml.PlantRelationshipRepresentation.Pla
 import br.xtool.core.representation.plantuml.PlantRelationshipRepresentation.PlantRelationshipComposition;
 import br.xtool.core.representation.springboot.EntityAttributeRepresentation;
 import br.xtool.core.representation.springboot.EntityRepresentation;
-import br.xtool.core.representation.springboot.JavaFieldRepresentation;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldManyToManyType;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldManyToOneType;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldOneToManyType;
@@ -45,17 +44,8 @@ public class LombokVisitor implements Visitor {
 	}
 
 	@Override
-	public void visit(JavaFieldRepresentation javaField, PlantRelationshipRepresentation umlRelationship) {
-
-	}
-
-	@Override
-	public void visit(JavaFieldOneToOneType oneToOneField, PlantRelationshipAssociation association) {
-
-	}
-
-	@Override
-	public void visit(JavaFieldOneToManyType oneToManyField, PlantRelationshipAssociation association) {
+	public void visit(EntityAttributeRepresentation attribute, PlantRelationshipRepresentation umlRelationship) {
+		// TODO Auto-generated method stub
 
 	}
 
