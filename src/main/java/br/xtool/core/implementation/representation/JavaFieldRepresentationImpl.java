@@ -316,26 +316,26 @@ public class JavaFieldRepresentationImpl implements JavaFieldRepresentation {
 		return this.getName().compareTo(o.getName());
 	}
 
-	public static class ENotNullFieldImpl extends JavaFieldRepresentationImpl implements JavaFieldNotNullType {
-		public ENotNullFieldImpl(JavaFieldRepresentation javaField) {
-			super(javaField.getJavaClass(), javaField.getRoasterField());
-		}
-
-	}
-
-	public static class ETransientFieldImpl extends JavaFieldRepresentationImpl implements JavaFieldTransientType {
-		public ETransientFieldImpl(JavaFieldRepresentation javaField) {
-			super(javaField.getJavaClass(), javaField.getRoasterField());
-		}
-
-	}
-
-	public static class EUniqueFieldImpl extends JavaFieldRepresentationImpl implements JavaFieldUniqueType {
-		public EUniqueFieldImpl(JavaFieldRepresentation javaField) {
-			super(javaField.getJavaClass(), javaField.getRoasterField());
-		}
-
-	}
+//	public static class ENotNullFieldImpl extends JavaFieldRepresentationImpl implements JavaFieldNotNullType {
+//		public ENotNullFieldImpl(JavaFieldRepresentation javaField) {
+//			super(javaField.getJavaClass(), javaField.getRoasterField());
+//		}
+//
+//	}
+//
+//	public static class ETransientFieldImpl extends JavaFieldRepresentationImpl implements JavaFieldTransientType {
+//		public ETransientFieldImpl(JavaFieldRepresentation javaField) {
+//			super(javaField.getJavaClass(), javaField.getRoasterField());
+//		}
+//
+//	}
+//
+//	public static class EUniqueFieldImpl extends JavaFieldRepresentationImpl implements JavaFieldUniqueType {
+//		public EUniqueFieldImpl(JavaFieldRepresentation javaField) {
+//			super(javaField.getJavaClass(), javaField.getRoasterField());
+//		}
+//
+//	}
 
 	public static class EOneToOneFieldImpl extends JavaFieldRepresentationImpl implements JavaFieldOneToOneType {
 		public EOneToOneFieldImpl(JavaFieldRepresentation javaField) {

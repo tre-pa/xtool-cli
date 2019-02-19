@@ -196,14 +196,14 @@ public interface JavaFieldRepresentation extends Comparable<JavaFieldRepresentat
 	@Deprecated
 	JavaAnnotationRepresentation<JavaClassSource> addLazyCollectionAnnotation(LazyCollectionOption lazyCollectionOption);
 
-	@Deprecated
-	interface JavaFieldNotNullType extends JavaFieldRepresentation {}
-
-	@Deprecated
-	interface JavaFieldTransientType extends JavaFieldRepresentation {}
-
-	@Deprecated
-	interface JavaFieldUniqueType extends JavaFieldRepresentation {}
+//	@Deprecated
+//	interface JavaFieldNotNullType extends JavaFieldRepresentation {}
+//
+//	@Deprecated
+//	interface JavaFieldTransientType extends JavaFieldRepresentation {}
+//
+//	@Deprecated
+//	interface JavaFieldUniqueType extends JavaFieldRepresentation {}
 
 	@Deprecated
 	interface JavaFieldOneToOneType extends JavaFieldRepresentation {}

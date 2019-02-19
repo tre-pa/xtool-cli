@@ -18,11 +18,8 @@ import br.xtool.core.representation.springboot.EntityRepresentation;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldManyToManyType;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldManyToOneType;
-import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldNotNullType;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldOneToManyType;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldOneToOneType;
-import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldTransientType;
-import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldUniqueType;
 import lombok.experimental.var;
 
 @Component
@@ -60,21 +57,21 @@ public class JavaxValidationVisitor implements Visitor {
 	public void visit(JavaFieldRepresentation javaField, PlantClassFieldPropertyRepresentation umlFieldProperty) {
 
 	}
-
-	@Override
-	public void visit(JavaFieldNotNullType notNullField, PlantClassFieldPropertyRepresentation property) {
-
-	}
-
-	@Override
-	public void visit(JavaFieldTransientType notNullField, PlantClassFieldPropertyRepresentation property) {
-
-	}
-
-	@Override
-	public void visit(JavaFieldUniqueType notNullField, PlantClassFieldPropertyRepresentation property) {
-
-	}
+//
+//	@Override
+//	public void visit(JavaFieldNotNullType notNullField, PlantClassFieldPropertyRepresentation property) {
+//
+//	}
+//
+//	@Override
+//	public void visit(JavaFieldTransientType notNullField, PlantClassFieldPropertyRepresentation property) {
+//
+//	}
+//
+//	@Override
+//	public void visit(JavaFieldUniqueType notNullField, PlantClassFieldPropertyRepresentation property) {
+//
+//	}
 
 	@Override
 	public void visit(JavaFieldRepresentation javaField, PlantRelationshipRepresentation umlRelationship) {

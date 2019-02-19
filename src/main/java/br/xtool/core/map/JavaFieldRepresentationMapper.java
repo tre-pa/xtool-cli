@@ -10,10 +10,6 @@ import br.xtool.core.Visitor;
 import br.xtool.core.helper.RoasterHelper;
 import br.xtool.core.implementation.representation.EntityAttributeRepresentationImpl;
 import br.xtool.core.implementation.representation.EntityRepresentationImpl;
-import br.xtool.core.implementation.representation.JavaFieldRepresentationImpl.ENotNullFieldImpl;
-import br.xtool.core.implementation.representation.JavaFieldRepresentationImpl.ETransientFieldImpl;
-import br.xtool.core.implementation.representation.JavaFieldRepresentationImpl.EUniqueFieldImpl;
-import br.xtool.core.representation.plantuml.PlantClassFieldPropertyRepresentation.FieldPropertyType;
 import br.xtool.core.representation.plantuml.PlantClassFieldRepresentation;
 import br.xtool.core.representation.springboot.EntityRepresentation;
 import br.xtool.core.representation.springboot.JavaClassRepresentation;
@@ -54,12 +50,7 @@ public class JavaFieldRepresentationMapper implements BiFunction<JavaClassRepres
 		SpringBootProjectRepresentation project = javaField.getJavaClass().getProject();
 		EntityRepresentation entity = new EntityRepresentationImpl(project, javaField.getJavaClass().getRoasterJavaClass());
 		this.visitors.forEach(visitor -> visitor.visit(new EntityAttributeRepresentationImpl(project, entity, javaField.getRoasterField()), plantField));
-		this.visitors.forEach(visitor -> plantField.getProperties().forEach(plantFieldProperty -> {
-			visitor.visit(javaField, plantFieldProperty);
-			if (plantFieldProperty.getFieldProperty().equals(FieldPropertyType.NOTNULL)) visitor.visit(new ENotNullFieldImpl(javaField), plantFieldProperty);
-			if (plantFieldProperty.getFieldProperty().equals(FieldPropertyType.UNIQUE)) visitor.visit(new EUniqueFieldImpl(javaField), plantFieldProperty);
-			if (plantFieldProperty.getFieldProperty().equals(FieldPropertyType.TRANSIENT)) visitor.visit(new ETransientFieldImpl(javaField), plantFieldProperty);
-		}));
+		this.visitors.forEach(visitor -> plantField.getProperties().forEach(plantFieldProperty -> visitor.visit(javaField, plantFieldProperty)));
 	}
 
 }

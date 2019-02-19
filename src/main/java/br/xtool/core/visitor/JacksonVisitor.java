@@ -16,11 +16,8 @@ import br.xtool.core.representation.springboot.EntityRepresentation;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldManyToManyType;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldManyToOneType;
-import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldNotNullType;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldOneToManyType;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldOneToOneType;
-import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldTransientType;
-import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldUniqueType;
 import lombok.val;
 
 @Component
@@ -41,23 +38,23 @@ public class JacksonVisitor implements Visitor {
 
 	}
 
-	@Override
-	public void visit(JavaFieldNotNullType notNullField, PlantClassFieldPropertyRepresentation property) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void visit(JavaFieldTransientType notNullField, PlantClassFieldPropertyRepresentation property) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void visit(JavaFieldUniqueType notNullField, PlantClassFieldPropertyRepresentation property) {
-		// TODO Auto-generated method stub
-
-	}
+//	@Override
+//	public void visit(JavaFieldNotNullType notNullField, PlantClassFieldPropertyRepresentation property) {
+//		// TODO Auto-generated method stub
+//
+//	}
+//
+//	@Override
+//	public void visit(JavaFieldTransientType notNullField, PlantClassFieldPropertyRepresentation property) {
+//		// TODO Auto-generated method stub
+//
+//	}
+//
+//	@Override
+//	public void visit(JavaFieldUniqueType notNullField, PlantClassFieldPropertyRepresentation property) {
+//		// TODO Auto-generated method stub
+//
+//	}
 
 	@Override
 	public void visit(JavaFieldRepresentation javaField, PlantRelationshipRepresentation umlRelationship) {

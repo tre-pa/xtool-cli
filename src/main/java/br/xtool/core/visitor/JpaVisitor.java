@@ -40,11 +40,8 @@ import br.xtool.core.representation.springboot.EntityRepresentation;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldManyToManyType;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldManyToOneType;
-import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldNotNullType;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldOneToManyType;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldOneToOneType;
-import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldTransientType;
-import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldUniqueType;
 import lombok.val;
 
 @Component
@@ -114,39 +111,47 @@ public class JpaVisitor implements Visitor {
 	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField, br.xtool.core.representation.EUmlFieldProperty)
 	 */
 	@Override
-	public void visit(JavaFieldRepresentation javaField, PlantClassFieldPropertyRepresentation umlFieldProperty) {}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField. ENotNullField, br.xtool.core.representation.EUmlFieldProperty)
-	 */
-	@Override
-	public void visit(JavaFieldNotNullType notNullField, PlantClassFieldPropertyRepresentation property) {
-		notNullField.addAnnotation(Column.class).setLiteralValue("nullable", "false");
-
+	public void visit(JavaFieldRepresentation javaField, PlantClassFieldPropertyRepresentation plantProperty) {
+		if (plantProperty.isNotNull()) {
+			javaField.addAnnotation(Column.class).getRoasterAnnotation().setLiteralValue("nullable", "false");
+		} else if (plantProperty.isUnique()) {
+			javaField.addAnnotation(Column.class).getRoasterAnnotation().setLiteralValue("unique", "true");
+		} else if (plantProperty.isTransient()) {
+			javaField.addAnnotation(Transient.class);
+		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField. ETransientField, br.xtool.core.representation.EUmlFieldProperty)
-	 */
-	@Override
-	public void visit(JavaFieldTransientType transientField, PlantClassFieldPropertyRepresentation property) {
-		transientField.addAnnotation(Transient.class);
-
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField. EUniqueField, br.xtool.core.representation.EUmlFieldProperty)
-	 */
-	@Override
-	public void visit(JavaFieldUniqueType uniqueField, PlantClassFieldPropertyRepresentation property) {
-		uniqueField.addAnnotation(Column.class).setLiteralValue("unique", "true");
-	}
+//	/*
+//	 * (non-Javadoc)
+//	 * 
+//	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField. ENotNullField, br.xtool.core.representation.EUmlFieldProperty)
+//	 */
+//	@Override
+//	public void visit(JavaFieldNotNullType notNullField, PlantClassFieldPropertyRepresentation property) {
+//		notNullField.addAnnotation(Column.class).setLiteralValue("nullable", "false");
+//
+//	}
+//
+//	/*
+//	 * (non-Javadoc)
+//	 * 
+//	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField. ETransientField, br.xtool.core.representation.EUmlFieldProperty)
+//	 */
+//	@Override
+//	public void visit(JavaFieldTransientType transientField, PlantClassFieldPropertyRepresentation property) {
+//		transientField.addAnnotation(Transient.class);
+//
+//	}
+//
+//	/*
+//	 * (non-Javadoc)
+//	 * 
+//	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField. EUniqueField, br.xtool.core.representation.EUmlFieldProperty)
+//	 */
+//	@Override
+//	public void visit(JavaFieldUniqueType uniqueField, PlantClassFieldPropertyRepresentation property) {
+//		uniqueField.addAnnotation(Column.class).setLiteralValue("unique", "true");
+//	}
 
 	/*
 	 * (non-Javadoc)
