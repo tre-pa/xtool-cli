@@ -58,59 +58,6 @@ public class JavaxValidationVisitor implements Visitor {
 
 	}
 
-//	@Override
-//	public void visit(JavaFieldStringType stringField, PlantClassFieldRepresentation umlField) {
-//		// @formatter:off
-//		stringField.addSizeAnnotation(
-//				umlField.getMinArrayLength().orElse(null), 
-//				umlField.getMaxArrayLength().orElse(255));
-//		// @formatter:on
-//	}
-
-//	@Override
-//	public void visit(JavaFieldBooleanType booleanField, PlantClassFieldRepresentation umlField) {
-//
-//	}
-
-//	@Override
-//	public void visit(JavaFieldLongType longField, PlantClassFieldRepresentation umlField) {
-//		umlField.getMinArrayLength().ifPresent(minValue -> longField.addAnnotation(Min.class).setLiteralValue(String.valueOf(minValue)));
-//		umlField.getMaxArrayLength().ifPresent(maxValue -> longField.addAnnotation(Max.class).setLiteralValue(String.valueOf(maxValue)));
-//	}
-
-//	@Override
-//	public void visit(JavaFieldIntegerType integerField, PlantClassFieldRepresentation umlField) {
-//		umlField.getMinArrayLength().ifPresent(minValue -> integerField.addAnnotation(Min.class).setLiteralValue(String.valueOf(minValue)));
-//		umlField.getMaxArrayLength().ifPresent(maxValue -> integerField.addAnnotation(Max.class).setLiteralValue(String.valueOf(maxValue)));
-//	}
-
-//	@Override
-//	public void visit(JavaFieldByteType byteField, PlantClassFieldRepresentation umlField) {
-//
-//	}
-
-//	@Override
-//	public void visit(JavaFieldBigDecimalType bigDecimalField, PlantClassFieldRepresentation umlField) {
-//		umlField.getMinArrayLength().ifPresent(minValue -> bigDecimalField.addAnnotation(Min.class).setLiteralValue(String.valueOf(minValue)));
-//		umlField.getMaxArrayLength().ifPresent(maxValue -> bigDecimalField.addAnnotation(Max.class).setLiteralValue(String.valueOf(maxValue)));
-//	}
-
-//	@Override
-//	public void visit(JavaFieldLocalDateType localDateField, PlantClassFieldRepresentation umlField) {
-//
-//	}
-
-//	@Override
-//	public void visit(JavaFieldLocalDateTimeType localDateTimeField, PlantClassFieldRepresentation umlField) {
-//
-//	}
-
-//	@Override
-//	public void visit(JavaFieldEnumType enumField, PlantClassFieldRepresentation umlField) {
-//		// TODO Auto-generated method stub
-//
-//	}
-
 	@Override
 	public void visit(JavaFieldRepresentation javaField, PlantClassFieldPropertyRepresentation umlFieldProperty) {
 

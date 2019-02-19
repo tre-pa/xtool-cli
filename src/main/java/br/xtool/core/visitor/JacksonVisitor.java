@@ -40,52 +40,6 @@ public class JacksonVisitor implements Visitor {
 
 	}
 
-//	@Override
-//	public void visit(JavaFieldStringType stringField, PlantClassFieldRepresentation umlField) {
-//
-//	}
-
-//	@Override
-//	public void visit(JavaFieldBooleanType booleanField, PlantClassFieldRepresentation umlField) {
-//
-//	}
-
-//	@Override
-//	public void visit(JavaFieldLongType longField, PlantClassFieldRepresentation umlField) {
-//
-//	}
-
-//	@Override
-//	public void visit(JavaFieldIntegerType integerField, PlantClassFieldRepresentation umlField) {
-//
-//	}
-
-//	@Override
-//	public void visit(JavaFieldByteType byteField, PlantClassFieldRepresentation umlField) {
-//
-//	}
-
-//	@Override
-//	public void visit(JavaFieldBigDecimalType bigDecimalField, PlantClassFieldRepresentation umlField) {
-//
-//	}
-
-//	@Override
-//	public void visit(JavaFieldLocalDateType localDateField, PlantClassFieldRepresentation umlField) {
-//
-//	}
-
-//	@Override
-//	public void visit(JavaFieldLocalDateTimeType localDateTimeField, PlantClassFieldRepresentation umlField) {
-//
-//	}
-
-//	@Override
-//	public void visit(JavaFieldEnumType enumField, PlantClassFieldRepresentation umlField) {
-//		// TODO Auto-generated method stub
-//
-//	}
-
 	@Override
 	public void visit(JavaFieldNotNullType notNullField, PlantClassFieldPropertyRepresentation property) {
 		// TODO Auto-generated method stub
