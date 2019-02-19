@@ -171,9 +171,20 @@ public interface JavaFieldRepresentation extends Comparable<JavaFieldRepresentat
 	 */
 	SortedSet<JavaAnnotationRepresentation<JavaClassSource>> getAnnotations();
 
-	FieldSource<JavaClassSource> getRoasterField();
-
+	/**
+	 * Adiciona uma nova annotation ao atributo. Caso já exista retorna a referencia.
+	 * 
+	 * @param type
+	 * @return
+	 */
 	JavaAnnotationRepresentation<JavaClassSource> addAnnotation(Class<? extends Annotation> type);
+
+	/**
+	 * Retorna a objeto Roaster do atributo.
+	 * 
+	 * @return
+	 */
+	FieldSource<JavaClassSource> getRoasterField();
 
 //
 	@Deprecated

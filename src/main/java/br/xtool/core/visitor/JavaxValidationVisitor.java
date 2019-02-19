@@ -47,12 +47,9 @@ public class JavaxValidationVisitor implements Visitor {
 	public void visit(EntityAttributeRepresentation attr, PlantClassFieldRepresentation plantField) {
 		if (attr.isStringField()) {
 			var ann = attr.getRoasterField().addAnnotation(Size.class);
-			plantField.getMinArrayLength().ifPresent(v -> ann.setLiteralValue("min", String.valueOf(v)));
 			ann.setLiteralValue("max", String.valueOf(plantField.getMaxArrayLength().orElse(255)));
+			plantField.getMinArrayLength().ifPresent(v -> ann.setLiteralValue("min", String.valueOf(v)));
 		} else if (attr.isNumberField()) {
-			plantField.getMinArrayLength().ifPresent(minValue -> attr.addAnnotation(Min.class).getRoasterAnnotation().setLiteralValue(String.valueOf(minValue)));
-			plantField.getMaxArrayLength().ifPresent(maxValue -> attr.addAnnotation(Max.class).getRoasterAnnotation().setLiteralValue(String.valueOf(maxValue)));
-		} else if (attr.isBigDecimalField()) {
 			plantField.getMinArrayLength().ifPresent(minValue -> attr.addAnnotation(Min.class).getRoasterAnnotation().setLiteralValue(String.valueOf(minValue)));
 			plantField.getMaxArrayLength().ifPresent(maxValue -> attr.addAnnotation(Max.class).getRoasterAnnotation().setLiteralValue(String.valueOf(maxValue)));
 		}
