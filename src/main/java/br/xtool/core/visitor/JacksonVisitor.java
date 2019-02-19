@@ -9,15 +9,8 @@ import br.xtool.core.representation.plantuml.PlantClassFieldPropertyRepresentati
 import br.xtool.core.representation.plantuml.PlantClassFieldRepresentation;
 import br.xtool.core.representation.plantuml.PlantClassRepresentation;
 import br.xtool.core.representation.plantuml.PlantRelationshipRepresentation;
-import br.xtool.core.representation.plantuml.PlantRelationshipRepresentation.PlantRelationshipAssociation;
-import br.xtool.core.representation.plantuml.PlantRelationshipRepresentation.PlantRelationshipComposition;
 import br.xtool.core.representation.springboot.EntityAttributeRepresentation;
 import br.xtool.core.representation.springboot.EntityRepresentation;
-import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldManyToManyType;
-import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldManyToOneType;
-import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldOneToManyType;
-import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldOneToOneType;
-import lombok.val;
 
 @Component
 public class JacksonVisitor implements Visitor {
@@ -46,35 +39,12 @@ public class JacksonVisitor implements Visitor {
 				.toArray(String[]::new);
 		// @formatter:on
 		if (relationships.length > 0) {
-			val ann = attribute.addAnnotation(JsonIgnoreProperties.class);
-			ann.getRoasterAnnotation().setLiteralValue("allowSetters", "true");
-			ann.getRoasterAnnotation().setStringArrayValue("value", relationships);
+			// @formatter:off
+			attribute.addAnnotation(JsonIgnoreProperties.class).getRoasterAnnotation()
+				.setLiteralValue("allowSetters", "true")
+				.setStringArrayValue("value", relationships);
+			// @formatter:on
 		}
-	}
-
-	@Override
-	public void visit(JavaFieldManyToOneType manyToOneField, PlantRelationshipAssociation association) {
-
-	}
-
-	@Override
-	public void visit(JavaFieldManyToManyType manyToManyField, PlantRelationshipAssociation association) {
-
-	}
-
-	@Override
-	public void visit(JavaFieldOneToOneType oneToOneField, PlantRelationshipComposition composition) {
-
-	}
-
-	@Override
-	public void visit(JavaFieldOneToManyType oneToManyField, PlantRelationshipComposition composition) {
-
-	}
-
-	@Override
-	public void visit(JavaFieldManyToOneType manyToOneField, PlantRelationshipComposition composition) {
-
 	}
 
 }

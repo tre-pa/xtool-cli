@@ -11,14 +11,8 @@ import br.xtool.core.representation.plantuml.PlantClassFieldPropertyRepresentati
 import br.xtool.core.representation.plantuml.PlantClassFieldRepresentation;
 import br.xtool.core.representation.plantuml.PlantClassRepresentation;
 import br.xtool.core.representation.plantuml.PlantRelationshipRepresentation;
-import br.xtool.core.representation.plantuml.PlantRelationshipRepresentation.PlantRelationshipAssociation;
-import br.xtool.core.representation.plantuml.PlantRelationshipRepresentation.PlantRelationshipComposition;
 import br.xtool.core.representation.springboot.EntityAttributeRepresentation;
 import br.xtool.core.representation.springboot.EntityRepresentation;
-import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldManyToManyType;
-import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldManyToOneType;
-import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldOneToManyType;
-import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldOneToOneType;
 import lombok.experimental.var;
 
 @Component
@@ -46,8 +40,16 @@ public class JavaxValidationVisitor implements Visitor {
 			ann.setLiteralValue("max", String.valueOf(plantField.getMaxArrayLength().orElse(255)));
 			plantField.getMinArrayLength().ifPresent(v -> ann.setLiteralValue("min", String.valueOf(v)));
 		} else if (attr.isNumberField()) {
-			plantField.getMinArrayLength().ifPresent(minValue -> attr.addAnnotation(Min.class).getRoasterAnnotation().setLiteralValue(String.valueOf(minValue)));
-			plantField.getMaxArrayLength().ifPresent(maxValue -> attr.addAnnotation(Max.class).getRoasterAnnotation().setLiteralValue(String.valueOf(maxValue)));
+			// @formatter:off
+			plantField.getMinArrayLength().ifPresent(minValue -> 
+				attr.addAnnotation(Min.class)
+					.getRoasterAnnotation()
+					.setLiteralValue(String.valueOf(minValue)));
+			plantField.getMaxArrayLength().ifPresent(maxValue -> 
+				attr.addAnnotation(Max.class)
+					.getRoasterAnnotation()
+					.setLiteralValue(String.valueOf(maxValue)));
+			// @formatter:on
 		}
 
 	}
@@ -60,34 +62,11 @@ public class JavaxValidationVisitor implements Visitor {
 	@Override
 	public void visit(EntityAttributeRepresentation attribute, PlantRelationshipRepresentation umlRelationship) {
 		if (umlRelationship.getSourceMultiplicity().isToMany() && !umlRelationship.getSourceMultiplicity().isOptional()) {
-			var ann = attribute.getRoasterField().addAnnotation(Size.class);
-			ann.setLiteralValue("min", String.valueOf(1));
+			// @formatter:off
+			attribute.getRoasterField().addAnnotation(Size.class)
+				.setLiteralValue("min", String.valueOf(1));
+			// @formatter:on
 		}
-	}
-
-	@Override
-	public void visit(JavaFieldManyToOneType manyToOneField, PlantRelationshipAssociation association) {
-
-	}
-
-	@Override
-	public void visit(JavaFieldManyToManyType manyToManyField, PlantRelationshipAssociation association) {
-
-	}
-
-	@Override
-	public void visit(JavaFieldOneToOneType oneToOneField, PlantRelationshipComposition composition) {
-
-	}
-
-	@Override
-	public void visit(JavaFieldOneToManyType oneToManyField, PlantRelationshipComposition composition) {
-
-	}
-
-	@Override
-	public void visit(JavaFieldManyToOneType manyToOneField, PlantRelationshipComposition composition) {
-
 	}
 
 }
