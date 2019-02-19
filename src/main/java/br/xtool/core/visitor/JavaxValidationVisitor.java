@@ -13,6 +13,7 @@ import br.xtool.core.representation.plantuml.PlantClassRepresentation;
 import br.xtool.core.representation.plantuml.PlantRelationshipRepresentation;
 import br.xtool.core.representation.plantuml.PlantRelationshipRepresentation.PlantRelationshipAssociation;
 import br.xtool.core.representation.plantuml.PlantRelationshipRepresentation.PlantRelationshipComposition;
+import br.xtool.core.representation.springboot.EntityAttributeRepresentation;
 import br.xtool.core.representation.springboot.EntityRepresentation;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldManyToManyType;
@@ -43,17 +44,17 @@ public class JavaxValidationVisitor implements Visitor {
 	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField, br.xtool.core.representation.EUmlField)
 	 */
 	@Override
-	public void visit(JavaFieldRepresentation javaField, PlantClassFieldRepresentation plantField) {
-		if (javaField.isStringField()) {
-			var ann = javaField.getRoasterField().addAnnotation(Size.class);
+	public void visit(EntityAttributeRepresentation attr, PlantClassFieldRepresentation plantField) {
+		if (attr.isStringField()) {
+			var ann = attr.getRoasterField().addAnnotation(Size.class);
 			plantField.getMinArrayLength().ifPresent(v -> ann.setLiteralValue("min", String.valueOf(v)));
 			ann.setLiteralValue("max", String.valueOf(plantField.getMaxArrayLength().orElse(255)));
-		} else if (javaField.isNumberField()) {
-			plantField.getMinArrayLength().ifPresent(minValue -> javaField.addAnnotation(Min.class).getRoasterAnnotation().setLiteralValue(String.valueOf(minValue)));
-			plantField.getMaxArrayLength().ifPresent(maxValue -> javaField.addAnnotation(Max.class).getRoasterAnnotation().setLiteralValue(String.valueOf(maxValue)));
-		} else if (javaField.isBigDecimalField()) {
-			plantField.getMinArrayLength().ifPresent(minValue -> javaField.addAnnotation(Min.class).getRoasterAnnotation().setLiteralValue(String.valueOf(minValue)));
-			plantField.getMaxArrayLength().ifPresent(maxValue -> javaField.addAnnotation(Max.class).getRoasterAnnotation().setLiteralValue(String.valueOf(maxValue)));
+		} else if (attr.isNumberField()) {
+			plantField.getMinArrayLength().ifPresent(minValue -> attr.addAnnotation(Min.class).getRoasterAnnotation().setLiteralValue(String.valueOf(minValue)));
+			plantField.getMaxArrayLength().ifPresent(maxValue -> attr.addAnnotation(Max.class).getRoasterAnnotation().setLiteralValue(String.valueOf(maxValue)));
+		} else if (attr.isBigDecimalField()) {
+			plantField.getMinArrayLength().ifPresent(minValue -> attr.addAnnotation(Min.class).getRoasterAnnotation().setLiteralValue(String.valueOf(minValue)));
+			plantField.getMaxArrayLength().ifPresent(maxValue -> attr.addAnnotation(Max.class).getRoasterAnnotation().setLiteralValue(String.valueOf(maxValue)));
 		}
 
 	}

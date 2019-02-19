@@ -35,6 +35,7 @@ import br.xtool.core.representation.plantuml.PlantRelationshipRepresentation;
 import br.xtool.core.representation.plantuml.PlantRelationshipRepresentation.PlantRelationshipAssociation;
 import br.xtool.core.representation.plantuml.PlantRelationshipRepresentation.PlantRelationshipComposition;
 import br.xtool.core.representation.plantuml.PlantStereotypeRepresentation.StereotypeType;
+import br.xtool.core.representation.springboot.EntityAttributeRepresentation;
 import br.xtool.core.representation.springboot.EntityRepresentation;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldManyToManyType;
@@ -72,34 +73,34 @@ public class JpaVisitor implements Visitor {
 	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField, br.xtool.core.representation.EUmlField)
 	 */
 	@Override
-	public void visit(JavaFieldRepresentation javaField, PlantClassFieldRepresentation plantField) {
-		val annColumn = javaField.addAnnotation(Column.class);
+	public void visit(EntityAttributeRepresentation attr, PlantClassFieldRepresentation plantField) {
+		val annColumn = attr.addAnnotation(Column.class);
 		plantField.getTaggedValue("column.name").ifPresent(tagValue -> annColumn.getRoasterAnnotation().setStringValue("name", tagValue));
-		if (javaField.isStringField()) {
+		if (attr.isStringField()) {
 			// @formatter:off
 				annColumn.getRoasterAnnotation()
 					.setLiteralValue("length", String.valueOf(plantField.getMaxArrayLength().orElse(255)));
 				// @formatter:on
-		} else if (javaField.isLongField()) {
+		} else if (attr.isLongField()) {
 			if (plantField.isId()) {
-				javaField.addAnnotation(Id.class);
+				attr.addAnnotation(Id.class);
 				// @formatter:off
 					annColumn.getRoasterAnnotation()
 						.setLiteralValue("updatable", "false")
 						.setLiteralValue("nullable", "false");
-					javaField.addAnnotation(GeneratedValue.class).getRoasterAnnotation()
+					attr.addAnnotation(GeneratedValue.class).getRoasterAnnotation()
 						.setEnumValue("strategy", GenerationType.SEQUENCE)
-						.setStringValue("generator", EntityRepresentation.genDBSequenceName(javaField.getJavaClass().getName()));
-					javaField.addAnnotation(SequenceGenerator.class).getRoasterAnnotation()
+						.setStringValue("generator", EntityRepresentation.genDBSequenceName(attr.getJavaClass().getName()));
+					attr.addAnnotation(SequenceGenerator.class).getRoasterAnnotation()
 						.setLiteralValue("initialValue", "1")
 						.setLiteralValue("allocationSize", "1")
-						.setStringValue("name", EntityRepresentation.genDBSequenceName(javaField.getJavaClass().getName()))
-						.setStringValue("sequenceName", EntityRepresentation.genDBSequenceName(javaField.getJavaClass().getName()));
+						.setStringValue("name", EntityRepresentation.genDBSequenceName(attr.getJavaClass().getName()))
+						.setStringValue("sequenceName", EntityRepresentation.genDBSequenceName(attr.getJavaClass().getName()));
 					// @formatter:on
 			}
-		} else if (javaField.isEnumField()) {
+		} else if (attr.isEnumField()) {
 			// @formatter:off
-			javaField.addAnnotation(Enumerated.class).getRoasterAnnotation()
+			attr.addAnnotation(Enumerated.class).getRoasterAnnotation()
 				.setEnumValue(EnumType.STRING)
 				.setEnumValue(EnumType.STRING);
 			annColumn.getRoasterAnnotation().setLiteralValue("nullable", "false");

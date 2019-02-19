@@ -11,6 +11,7 @@ import br.xtool.core.representation.plantuml.PlantClassRepresentation;
 import br.xtool.core.representation.plantuml.PlantRelationshipRepresentation;
 import br.xtool.core.representation.plantuml.PlantRelationshipRepresentation.PlantRelationshipAssociation;
 import br.xtool.core.representation.plantuml.PlantRelationshipRepresentation.PlantRelationshipComposition;
+import br.xtool.core.representation.springboot.EntityAttributeRepresentation;
 import br.xtool.core.representation.springboot.EntityRepresentation;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldManyToManyType;
@@ -31,7 +32,7 @@ public class JacksonVisitor implements Visitor {
 	}
 
 	@Override
-	public void visit(JavaFieldRepresentation javaField, PlantClassFieldRepresentation umlField) {
+	public void visit(EntityAttributeRepresentation attribute, PlantClassFieldRepresentation umlField) {
 
 	}
 
