@@ -44,21 +44,6 @@ public class LombokVisitor implements Visitor {
 
 	}
 
-//	@Override
-//	public void visit(JavaFieldNotNullType notNullField, PlantClassFieldPropertyRepresentation property) {
-//
-//	}
-//
-//	@Override
-//	public void visit(JavaFieldTransientType notNullField, PlantClassFieldPropertyRepresentation property) {
-//
-//	}
-//
-//	@Override
-//	public void visit(JavaFieldUniqueType notNullField, PlantClassFieldPropertyRepresentation property) {
-//
-//	}
-
 	@Override
 	public void visit(JavaFieldRepresentation javaField, PlantRelationshipRepresentation umlRelationship) {
 

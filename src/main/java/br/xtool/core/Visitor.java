@@ -33,27 +33,6 @@ public interface Visitor {
 	 */
 	void visit(EntityAttributeRepresentation attribute, PlantClassFieldRepresentation plantField);
 
-//	/**
-//	 * 
-//	 * @param notNullField
-//	 * @param property
-//	 */
-//	void visit(JavaFieldNotNullType notNullField, PlantClassFieldPropertyRepresentation property);
-//
-//	/**
-//	 * 
-//	 * @param transientField
-//	 * @param property
-//	 */
-//	void visit(JavaFieldTransientType transientField, PlantClassFieldPropertyRepresentation property);
-//
-//	/**
-//	 * 
-//	 * @param uniqueField
-//	 * @param property
-//	 */
-//	void visit(JavaFieldUniqueType uniqueField, PlantClassFieldPropertyRepresentation property);
-
 	/**
 	 * 
 	 * @param umlFieldProperty

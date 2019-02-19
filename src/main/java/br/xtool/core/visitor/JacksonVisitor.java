@@ -38,24 +38,6 @@ public class JacksonVisitor implements Visitor {
 
 	}
 
-//	@Override
-//	public void visit(JavaFieldNotNullType notNullField, PlantClassFieldPropertyRepresentation property) {
-//		// TODO Auto-generated method stub
-//
-//	}
-//
-//	@Override
-//	public void visit(JavaFieldTransientType notNullField, PlantClassFieldPropertyRepresentation property) {
-//		// TODO Auto-generated method stub
-//
-//	}
-//
-//	@Override
-//	public void visit(JavaFieldUniqueType notNullField, PlantClassFieldPropertyRepresentation property) {
-//		// TODO Auto-generated method stub
-//
-//	}
-
 	@Override
 	public void visit(JavaFieldRepresentation javaField, PlantRelationshipRepresentation umlRelationship) {
 		// javaField.getRelationship().get().getTargetClass().getJavaFields();

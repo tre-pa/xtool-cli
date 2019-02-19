@@ -121,38 +121,6 @@ public class JpaVisitor implements Visitor {
 		}
 	}
 
-//	/*
-//	 * (non-Javadoc)
-//	 * 
-//	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField. ENotNullField, br.xtool.core.representation.EUmlFieldProperty)
-//	 */
-//	@Override
-//	public void visit(JavaFieldNotNullType notNullField, PlantClassFieldPropertyRepresentation property) {
-//		notNullField.addAnnotation(Column.class).setLiteralValue("nullable", "false");
-//
-//	}
-//
-//	/*
-//	 * (non-Javadoc)
-//	 * 
-//	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField. ETransientField, br.xtool.core.representation.EUmlFieldProperty)
-//	 */
-//	@Override
-//	public void visit(JavaFieldTransientType transientField, PlantClassFieldPropertyRepresentation property) {
-//		transientField.addAnnotation(Transient.class);
-//
-//	}
-//
-//	/*
-//	 * (non-Javadoc)
-//	 * 
-//	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaField. EUniqueField, br.xtool.core.representation.EUmlFieldProperty)
-//	 */
-//	@Override
-//	public void visit(JavaFieldUniqueType uniqueField, PlantClassFieldPropertyRepresentation property) {
-//		uniqueField.addAnnotation(Column.class).setLiteralValue("unique", "true");
-//	}
-
 	/*
 	 * (non-Javadoc)
 	 * 
