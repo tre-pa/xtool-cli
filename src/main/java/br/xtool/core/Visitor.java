@@ -6,7 +6,7 @@ import br.xtool.core.representation.plantuml.PlantClassRepresentation;
 import br.xtool.core.representation.plantuml.PlantRelationshipRepresentation;
 import br.xtool.core.representation.plantuml.PlantRelationshipRepresentation.PlantRelationshipAssociation;
 import br.xtool.core.representation.plantuml.PlantRelationshipRepresentation.PlantRelationshipComposition;
-import br.xtool.core.representation.springboot.JavaClassRepresentation;
+import br.xtool.core.representation.springboot.EntityRepresentation;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldManyToManyType;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldManyToOneType;
@@ -27,7 +27,7 @@ public interface Visitor {
 	 * 
 	 * @param plantClass
 	 */
-	void visit(JavaClassRepresentation javaClass, PlantClassRepresentation plantClass);
+	void visit(EntityRepresentation entity, PlantClassRepresentation plantClass);
 
 	/**
 	 * 

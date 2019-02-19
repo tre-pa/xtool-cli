@@ -9,7 +9,7 @@ import br.xtool.core.representation.plantuml.PlantClassRepresentation;
 import br.xtool.core.representation.plantuml.PlantRelationshipRepresentation;
 import br.xtool.core.representation.plantuml.PlantRelationshipRepresentation.PlantRelationshipAssociation;
 import br.xtool.core.representation.plantuml.PlantRelationshipRepresentation.PlantRelationshipComposition;
-import br.xtool.core.representation.springboot.JavaClassRepresentation;
+import br.xtool.core.representation.springboot.EntityRepresentation;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldManyToManyType;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldManyToOneType;
@@ -27,13 +27,13 @@ import lombok.Setter;
 public class LombokVisitor implements Visitor {
 
 	@Override
-	public void visit(JavaClassRepresentation javaClass, PlantClassRepresentation umlClass) {
-		javaClass.addAnnotation(Getter.class);
-		javaClass.addAnnotation(Setter.class);
-		javaClass.addAnnotation(NoArgsConstructor.class);
+	public void visit(EntityRepresentation entity, PlantClassRepresentation umlClass) {
+		entity.addAnnotation(Getter.class);
+		entity.addAnnotation(Setter.class);
+		entity.addAnnotation(NoArgsConstructor.class);
 //		javaClass.addEqualsAndHashCodeAnnotation("id");
-		javaClass.addToStringAnnotation("id");
-		umlClass.getTaggedValueAsArray("EqualsAndHashCode.of").ifPresent(tagValues -> javaClass.addAnnotation(EqualsAndHashCode.class).setStringArrayValue("of", tagValues));
+		entity.addToStringAnnotation("id");
+		umlClass.getTaggedValueAsArray("EqualsAndHashCode.of").ifPresent(tagValues -> entity.addAnnotation(EqualsAndHashCode.class).setStringArrayValue("of", tagValues));
 	}
 
 	@Override

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import br.xtool.core.Visitor;
 import br.xtool.core.Workspace;
 import br.xtool.core.helper.RoasterHelper;
+import br.xtool.core.implementation.representation.EntityRepresentationImpl;
 import br.xtool.core.implementation.representation.JavaClassRepresentationImpl;
 import br.xtool.core.representation.plantuml.PlantClassRepresentation;
 import br.xtool.core.representation.springboot.JavaClassRepresentation;
@@ -42,7 +43,7 @@ public class JavaClassRepresentationMapper implements Function<PlantClassReprese
 				.findFirst()
 				.orElseGet(() -> new JavaClassRepresentationImpl(springBootProject,RoasterHelper.createJavaClassSource(umlClass.getUmlPackage().getName(),umlClass.getName())));
 		// @formatter:on
-		this.visitors.forEach(visitor -> visitor.visit(javaClass, umlClass));
+		this.visitors.forEach(visitor -> visitor.visit(new EntityRepresentationImpl(springBootProject, javaClass.getRoasterJavaClass()), umlClass));
 //		umlClass.getStereotypes().stream().forEach(stereotype -> this.visit(javaClass, stereotype));
 		return javaClass;
 	}

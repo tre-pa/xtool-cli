@@ -36,7 +36,6 @@ import br.xtool.core.representation.plantuml.PlantRelationshipRepresentation.Pla
 import br.xtool.core.representation.plantuml.PlantRelationshipRepresentation.PlantRelationshipComposition;
 import br.xtool.core.representation.plantuml.PlantStereotypeRepresentation.StereotypeType;
 import br.xtool.core.representation.springboot.EntityRepresentation;
-import br.xtool.core.representation.springboot.JavaClassRepresentation;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldManyToManyType;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation.JavaFieldManyToOneType;
@@ -56,15 +55,15 @@ public class JpaVisitor implements Visitor {
 	 * @see br.xtool.core.visitor.Visitor#visit(br.xtool.core.representation.EJavaClass, br.xtool.core.representation.EUmlClass)
 	 */
 	@Override
-	public void visit(JavaClassRepresentation javaClass, PlantClassRepresentation plantClass) {
-		javaClass.addAnnotation(Entity.class);
+	public void visit(EntityRepresentation entity, PlantClassRepresentation plantClass) {
+		entity.addAnnotation(Entity.class);
 		if (plantClass.getStereotypes().stream().noneMatch(st -> st.getStereotypeType().equals(StereotypeType.READ_ONLY) || st.getStereotypeType().equals(StereotypeType.VIEW))) {
-			javaClass.addAnnotation(DynamicInsert.class);
-			javaClass.addAnnotation(DynamicUpdate.class);
+			entity.addAnnotation(DynamicInsert.class);
+			entity.addAnnotation(DynamicUpdate.class);
 		}
-		plantClass.getTaggedValue("Table.name").ifPresent(tagValue -> javaClass.addAnnotation(Table.class).setStringValue("name", tagValue));
-		plantClass.getTaggedValue("Table.schema").ifPresent(tagValue -> javaClass.addAnnotation(Table.class).setStringValue("schema", tagValue));
-		javaClass.addAnnotation(JsonInclude.class).setEnumArrayValue(JsonInclude.Include.NON_EMPTY);
+		plantClass.getTaggedValue("Table.name").ifPresent(tagValue -> entity.addAnnotation(Table.class).setStringValue("name", tagValue));
+		plantClass.getTaggedValue("Table.schema").ifPresent(tagValue -> entity.addAnnotation(Table.class).setStringValue("schema", tagValue));
+		entity.addAnnotation(JsonInclude.class).setEnumArrayValue(JsonInclude.Include.NON_EMPTY);
 	}
 
 	/*
