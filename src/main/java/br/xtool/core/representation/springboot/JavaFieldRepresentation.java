@@ -184,39 +184,6 @@ public interface JavaFieldRepresentation extends Comparable<JavaFieldRepresentat
 
 	@Deprecated
 	JavaAnnotationRepresentation<JavaClassSource> addLazyCollectionAnnotation(LazyCollectionOption lazyCollectionOption);
-//
-//	@Deprecated
-//	JavaAnnotationRepresentation<JavaClassSource> addGeneratedValueAnnotation(GenerationType generationType);
-//
-//	@Deprecated
-//	JavaAnnotationRepresentation<JavaClassSource> addSequenceGeneratorAnnotation();
-
-//	@Deprecated
-//	interface JavaFieldStringType extends JavaFieldRepresentation {}
-//
-//	@Deprecated
-//	interface JavaFieldBooleanType extends JavaFieldRepresentation {}
-//
-//	@Deprecated
-//	interface JavaFieldLongType extends JavaFieldRepresentation {}
-//
-//	@Deprecated
-//	interface JavaFieldIntegerType extends JavaFieldRepresentation {}
-//
-//	@Deprecated
-//	interface JavaFieldByteType extends JavaFieldRepresentation {}
-//
-//	@Deprecated
-//	interface JavaFieldBigDecimalType extends JavaFieldRepresentation {}
-//
-//	@Deprecated
-//	interface JavaFieldLocalDateType extends JavaFieldRepresentation {}
-//
-//	@Deprecated
-//	interface JavaFieldLocalDateTimeType extends JavaFieldRepresentation {}
-//
-//	@Deprecated
-//	interface JavaFieldEnumType extends JavaFieldRepresentation {}
 
 	@Deprecated
 	interface JavaFieldNotNullType extends JavaFieldRepresentation {}

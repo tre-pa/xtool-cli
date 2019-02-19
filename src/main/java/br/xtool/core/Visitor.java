@@ -36,69 +36,6 @@ public interface Visitor {
 	 */
 	void visit(EntityAttributeRepresentation attribute, PlantClassFieldRepresentation plantField);
 
-//	/**
-//	 * 
-//	 * @param stringField
-//	 * @param plantField
-//	 */
-//	void visit(JavaFieldStringType stringField, PlantClassFieldRepresentation plantField);
-
-//	/**
-//	 * 
-//	 * @param booleanField
-//	 * @param umlField
-//	 */
-//	void visit(JavaFieldBooleanType booleanField, PlantClassFieldRepresentation umlField);
-
-//	/**
-//	 * 
-//	 * @param longField
-//	 * @param umlField
-//	 */
-//	void visit(JavaFieldLongType longField, PlantClassFieldRepresentation umlField);
-
-//	/**
-//	 * 
-//	 * @param integerField
-//	 * @param umlField
-//	 */
-//	void visit(JavaFieldIntegerType integerField, PlantClassFieldRepresentation umlField);
-//
-//	/**
-//	 * 
-//	 * @param byteField
-//	 * @param umlField
-//	 */
-//	void visit(JavaFieldByteType byteField, PlantClassFieldRepresentation umlField);
-
-//	/**
-//	 * 
-//	 * @param bigDecimalField
-//	 * @param umlField
-//	 */
-//	void visit(JavaFieldBigDecimalType bigDecimalField, PlantClassFieldRepresentation umlField);
-
-//	/**
-//	 * 
-//	 * @param localDateField
-//	 * @param umlField
-//	 */
-//	void visit(JavaFieldLocalDateType localDateField, PlantClassFieldRepresentation umlField);
-
-//	/**
-//	 * 
-//	 * @param localDateTimeField
-//	 * @param umlField
-//	 */
-//	void visit(JavaFieldLocalDateTimeType localDateTimeField, PlantClassFieldRepresentation umlField);
-
-//	/**
-//	 * 
-//	 * @param enumField
-//	 * @param umlField
-//	 */
-//	void visit(JavaFieldEnumType enumField, PlantClassFieldRepresentation umlField);
-
 	/**
 	 * 
 	 * @param notNullField
