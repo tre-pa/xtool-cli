@@ -8,9 +8,9 @@ import java.util.function.BiFunction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import br.xtool.core.Visitor;
 import br.xtool.core.implementation.representation.EntityAttributeRepresentationImpl;
 import br.xtool.core.implementation.representation.EntityRepresentationImpl;
+import br.xtool.core.implementation.visitor.EntityRelationshipVisitor;
 import br.xtool.core.representation.plantuml.PlantRelationshipRepresentation;
 import br.xtool.core.representation.springboot.EntityAttributeRepresentation;
 import br.xtool.core.representation.springboot.EntityRepresentation;
@@ -28,7 +28,7 @@ import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 public class JavaRelationshipRepresentationMapper implements BiFunction<JavaClassRepresentation, PlantRelationshipRepresentation, JavaFieldRepresentation> {
 
 	@Autowired
-	private Set<Visitor> visitors;
+	private Set<EntityRelationshipVisitor> visitors;
 
 	@Override
 	public JavaFieldRepresentation apply(JavaClassRepresentation javaClass, PlantRelationshipRepresentation umlRelationship) {

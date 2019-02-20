@@ -19,7 +19,7 @@ import br.xtool.core.visitor.FieldVisitor;
 import lombok.val;
 
 @Component
-public class AttributeVisitor implements FieldVisitor {
+public class EntityAttributeVisitor implements FieldVisitor {
 
 	@Override
 	public void visit(EntityAttributeRepresentation attr, PlantClassFieldRepresentation plantField) {
