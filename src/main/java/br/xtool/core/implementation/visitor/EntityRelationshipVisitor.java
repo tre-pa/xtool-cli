@@ -1,5 +1,7 @@
 package br.xtool.core.implementation.visitor;
 
+import javax.validation.constraints.Size;
+
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -14,6 +16,16 @@ public class EntityRelationshipVisitor implements RelationshipVisitor {
 	@Override
 	public void visit(EntityAttributeRepresentation attribute, PlantRelationshipRepresentation plantRelationship) {
 		addJsonIgnorePropertiesAnnotation(attribute, plantRelationship);
+		addSizeAnnotation(attribute, plantRelationship);
+	}
+
+	private void addSizeAnnotation(EntityAttributeRepresentation attribute, PlantRelationshipRepresentation plantRelationship) {
+		if (plantRelationship.getSourceMultiplicity().isToMany() && !plantRelationship.getSourceMultiplicity().isOptional()) {
+			// @formatter:off
+			attribute.getRoasterField().addAnnotation(Size.class)
+				.setLiteralValue("min", String.valueOf(1));
+			// @formatter:on
+		}
 	}
 
 	private void addJsonIgnorePropertiesAnnotation(EntityAttributeRepresentation attribute, PlantRelationshipRepresentation plantRelationship) {
