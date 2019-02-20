@@ -105,8 +105,4 @@ public interface PlantRelationshipRepresentation {
 
 	boolean isManyToMany();
 
-	interface PlantRelationshipAssociation extends PlantRelationshipRepresentation {}
-
-	interface PlantRelationshipComposition extends PlantRelationshipRepresentation {}
-
 }

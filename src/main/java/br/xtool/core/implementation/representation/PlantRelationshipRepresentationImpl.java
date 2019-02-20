@@ -2,10 +2,10 @@ package br.xtool.core.implementation.representation;
 
 import org.apache.commons.lang3.StringUtils;
 
-import br.xtool.core.representation.plantuml.PlantNavigabilityRepresentation;
 import br.xtool.core.helper.InflectorHelper;
 import br.xtool.core.representation.plantuml.PlantClassRepresentation;
 import br.xtool.core.representation.plantuml.PlantMultiplicityRepresentation;
+import br.xtool.core.representation.plantuml.PlantNavigabilityRepresentation;
 import br.xtool.core.representation.plantuml.PlantRelationshipRepresentation;
 import net.sourceforge.plantuml.cucadiagram.Link;
 import net.sourceforge.plantuml.cucadiagram.LinkArrow;
@@ -35,6 +35,7 @@ public class PlantRelationshipRepresentationImpl implements PlantRelationshipRep
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.xtool.core.representation.EUmlRelationship#getSourceQualifier()
 	 */
 	@Override
@@ -44,6 +45,7 @@ public class PlantRelationshipRepresentationImpl implements PlantRelationshipRep
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.xtool.core.representation.EUmlRelationship#getTargetQualifier()
 	 */
 	@Override
@@ -53,6 +55,7 @@ public class PlantRelationshipRepresentationImpl implements PlantRelationshipRep
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.xtool.core.representation.EUmlRelationship#getNavigability()
 	 */
 	@Override
@@ -62,6 +65,7 @@ public class PlantRelationshipRepresentationImpl implements PlantRelationshipRep
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.xtool.core.representation.EUmlRelationship#getSourceClass()
 	 */
 	@Override
@@ -79,6 +83,7 @@ public class PlantRelationshipRepresentationImpl implements PlantRelationshipRep
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.xtool.core.representation.EUmlRelationship#isSourceClassOwner()
 	 */
 	@Override
@@ -91,6 +96,7 @@ public class PlantRelationshipRepresentationImpl implements PlantRelationshipRep
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.xtool.core.representation.EUmlRelationship#getTargetClass()
 	 */
 	@Override
@@ -100,6 +106,7 @@ public class PlantRelationshipRepresentationImpl implements PlantRelationshipRep
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.xtool.core.representation.EUmlRelationship#getTargetRole()
 	 */
 	@Override
@@ -112,6 +119,7 @@ public class PlantRelationshipRepresentationImpl implements PlantRelationshipRep
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.xtool.core.representation.EUmlRelationship#getSourceMutiplicity()
 	 */
 	@Override
@@ -121,6 +129,7 @@ public class PlantRelationshipRepresentationImpl implements PlantRelationshipRep
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.xtool.core.representation.EUmlRelationship#getTargetMultiplicity()
 	 */
 	@Override
@@ -130,6 +139,7 @@ public class PlantRelationshipRepresentationImpl implements PlantRelationshipRep
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.xtool.core.representation.EUmlRelationship#isAssociation()
 	 */
 	@Override
@@ -144,6 +154,7 @@ public class PlantRelationshipRepresentationImpl implements PlantRelationshipRep
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.xtool.core.representation.EUmlRelationship#isComposition()
 	 */
 	@Override
@@ -169,18 +180,6 @@ public class PlantRelationshipRepresentationImpl implements PlantRelationshipRep
 	@Override
 	public boolean isManyToMany() {
 		return this.getSourceMultiplicity().isToMany() && this.getTargetMultiplicity().isToMany();
-	}
-
-	public static class EAssociationImpl extends PlantRelationshipRepresentationImpl implements PlantRelationshipAssociation {
-		public EAssociationImpl(PlantRelationshipRepresentation umlRelationship) {
-			super(umlRelationship.getSourceClass(), umlRelationship.getTargetClass(), umlRelationship.getLink(), umlRelationship.getSourceQualifier(), umlRelationship.getTargetQualifier());
-		}
-	}
-
-	public static class ECompositionImpl extends PlantRelationshipRepresentationImpl implements PlantRelationshipComposition {
-		public ECompositionImpl(PlantRelationshipRepresentation umlRelationship) {
-			super(umlRelationship.getSourceClass(), umlRelationship.getTargetClass(), umlRelationship.getLink(), umlRelationship.getSourceQualifier(), umlRelationship.getTargetQualifier());
-		}
 	}
 
 }
