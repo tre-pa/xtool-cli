@@ -13,7 +13,7 @@ import br.xtool.core.representation.plantuml.PlantClassRepresentation;
 import br.xtool.core.representation.plantuml.PlantRelationshipRepresentation;
 import br.xtool.core.representation.springboot.EntityAttributeRepresentation;
 import br.xtool.core.representation.springboot.EntityRepresentation;
-import lombok.experimental.var;
+import lombok.val;
 
 @Component
 public class JavaxValidationVisitor implements Visitor {
@@ -36,7 +36,7 @@ public class JavaxValidationVisitor implements Visitor {
 	@Override
 	public void visit(EntityAttributeRepresentation attr, PlantClassFieldRepresentation plantField) {
 		if (attr.isStringField()) {
-			var ann = attr.getRoasterField().addAnnotation(Size.class);
+			val ann = attr.getRoasterField().addAnnotation(Size.class);
 			ann.setLiteralValue("max", String.valueOf(plantField.getMaxArrayLength().orElse(255)));
 			plantField.getMinArrayLength().ifPresent(v -> ann.setLiteralValue("min", String.valueOf(v)));
 		} else if (attr.isNumberField()) {
