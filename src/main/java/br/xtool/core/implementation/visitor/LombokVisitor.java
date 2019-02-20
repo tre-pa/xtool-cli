@@ -1,8 +1,6 @@
-package br.xtool.core.visitor;
+package br.xtool.core.implementation.visitor;
 
 import org.springframework.stereotype.Component;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import br.xtool.core.Visitor;
 import br.xtool.core.representation.plantuml.PlantClassFieldPropertyRepresentation;
@@ -13,11 +11,23 @@ import br.xtool.core.representation.springboot.EntityAttributeRepresentation;
 import br.xtool.core.representation.springboot.EntityRepresentation;
 
 @Component
-public class JacksonVisitor implements Visitor {
+public class LombokVisitor implements Visitor {
 
 	@Override
 	public void visit(EntityRepresentation entity, PlantClassRepresentation umlClass) {
-
+//		entity.addAnnotation(Getter.class);
+//		entity.addAnnotation(Setter.class);
+//		entity.addAnnotation(NoArgsConstructor.class);
+//		// @formatter:off
+//		umlClass.getTaggedValueAsArray("ToString.of").ifPresent(tagValues -> entity
+//				.addAnnotation(ToString.class)
+//				.getRoasterAnnotation()
+//				.setStringArrayValue("of", tagValues));
+//		umlClass.getTaggedValueAsArray("EqualsAndHashCode.of").ifPresent(tagValues -> entity
+//				.addAnnotation(EqualsAndHashCode.class)
+//				.getRoasterAnnotation()
+//				.setStringArrayValue("of", tagValues));
+//		// @formatter:on
 	}
 
 	@Override
@@ -31,20 +41,8 @@ public class JacksonVisitor implements Visitor {
 	}
 
 	@Override
-	public void visit(EntityAttributeRepresentation attribute, PlantRelationshipRepresentation plantRelationship) {
-		// javaField.getRelationship().get().getTargetClass().getJavaFields();
-		// @formatter:off
-		String[] relationships = plantRelationship.getTargetClass().getRelationships().stream()
-				.map(relationship -> relationship.getSourceRole())
-				.toArray(String[]::new);
-		// @formatter:on
-		if (relationships.length > 0) {
-			// @formatter:off
-			attribute.addAnnotation(JsonIgnoreProperties.class).getRoasterAnnotation()
-				.setLiteralValue("allowSetters", "true")
-				.setStringArrayValue("value", relationships);
-			// @formatter:on
-		}
+	public void visit(EntityAttributeRepresentation attribute, PlantRelationshipRepresentation umlRelationship) {
+
 	}
 
 }

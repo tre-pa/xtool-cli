@@ -1,8 +1,7 @@
-package br.xtool.core.visitor;
+package br.xtool.core.implementation.visitor;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
@@ -15,26 +14,20 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.hibernate.annotations.BatchSize;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.stereotype.Component;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-
 import br.xtool.core.Visitor;
 import br.xtool.core.representation.plantuml.PlantClassFieldPropertyRepresentation;
 import br.xtool.core.representation.plantuml.PlantClassFieldRepresentation;
 import br.xtool.core.representation.plantuml.PlantClassRepresentation;
 import br.xtool.core.representation.plantuml.PlantRelationshipRepresentation;
-import br.xtool.core.representation.plantuml.PlantStereotypeRepresentation.StereotypeType;
 import br.xtool.core.representation.springboot.EntityAttributeRepresentation;
 import br.xtool.core.representation.springboot.EntityRepresentation;
 import lombok.val;
@@ -49,24 +42,24 @@ public class JpaVisitor implements Visitor {
 	 */
 	@Override
 	public void visit(EntityRepresentation entity, PlantClassRepresentation plantClass) {
-		entity.addAnnotation(Entity.class);
-		if (plantClass.getStereotypes().stream().noneMatch(st -> st.getStereotypeType().equals(StereotypeType.READ_ONLY) || st.getStereotypeType().equals(StereotypeType.VIEW))) {
-			entity.addAnnotation(DynamicInsert.class);
-			entity.addAnnotation(DynamicUpdate.class);
-		}
-		// @formatter:off
-		plantClass.getTaggedValue("Table.name").ifPresent(tagValue ->
-			entity.addAnnotation(Table.class)
-				.getRoasterAnnotation()
-				.setStringValue("name", tagValue));
-		plantClass.getTaggedValue("Table.schema").ifPresent(tagValue -> 
-			entity.addAnnotation(Table.class)
-				.getRoasterAnnotation()
-				.setStringValue("schema", tagValue));
-		entity.addAnnotation(JsonInclude.class)
-			.getRoasterAnnotation()
-			.setEnumArrayValue(JsonInclude.Include.NON_EMPTY);
-		// @formatter:on
+//		entity.addAnnotation(Entity.class);
+//		if (plantClass.getStereotypes().stream().noneMatch(st -> st.getStereotypeType().equals(StereotypeType.READ_ONLY) || st.getStereotypeType().equals(StereotypeType.VIEW))) {
+//			entity.addAnnotation(DynamicInsert.class);
+//			entity.addAnnotation(DynamicUpdate.class);
+//		}
+//		// @formatter:off
+//		plantClass.getTaggedValue("Table.name").ifPresent(tagValue ->
+//			entity.addAnnotation(Table.class)
+//				.getRoasterAnnotation()
+//				.setStringValue("name", tagValue));
+//		plantClass.getTaggedValue("Table.schema").ifPresent(tagValue -> 
+//			entity.addAnnotation(Table.class)
+//				.getRoasterAnnotation()
+//				.setStringValue("schema", tagValue));
+//		entity.addAnnotation(JsonInclude.class)
+//			.getRoasterAnnotation()
+//			.setEnumArrayValue(JsonInclude.Include.NON_EMPTY);
+//		// @formatter:on
 	}
 
 	/*

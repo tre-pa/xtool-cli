@@ -1,4 +1,4 @@
-package br.xtool.core.visitor;
+package br.xtool.core.implementation.visitor;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
