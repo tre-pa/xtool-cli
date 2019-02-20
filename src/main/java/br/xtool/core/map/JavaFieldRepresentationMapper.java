@@ -6,7 +6,6 @@ import java.util.function.BiFunction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import br.xtool.core.Visitor;
 import br.xtool.core.helper.RoasterHelper;
 import br.xtool.core.implementation.representation.EntityAttributeRepresentationImpl;
 import br.xtool.core.implementation.representation.EntityRepresentationImpl;
@@ -16,6 +15,7 @@ import br.xtool.core.representation.springboot.EntityRepresentation;
 import br.xtool.core.representation.springboot.JavaClassRepresentation;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation;
 import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
+import br.xtool.core.visitor.FieldVisitor;
 
 /**
  * Transforma um atributo UML do diagrama de classe em um EJavaField.
@@ -28,7 +28,7 @@ import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 public class JavaFieldRepresentationMapper implements BiFunction<JavaClassRepresentation, PlantClassFieldRepresentation, JavaFieldRepresentation> {
 
 	@Autowired
-	private Set<Visitor> visitors;
+	private Set<FieldVisitor> fieldVisitors;
 
 	@Override
 	public JavaFieldRepresentation apply(JavaClassRepresentation javaClass, PlantClassFieldRepresentation plantField) {
@@ -51,8 +51,8 @@ public class JavaFieldRepresentationMapper implements BiFunction<JavaClassRepres
 		SpringBootProjectRepresentation project = javaField.getJavaClass().getProject();
 		EntityRepresentation entity = new EntityRepresentationImpl(project, javaField.getJavaClass().getRoasterJavaClass());
 		EntityAttributeRepresentation attribute = new EntityAttributeRepresentationImpl(project, entity, javaField.getRoasterField());
-		this.visitors.forEach(visitor -> visitor.visit(attribute, plantField));
-		this.visitors.forEach(visitor -> plantField.getProperties().forEach(plantFieldProperty -> visitor.visit(attribute, plantFieldProperty)));
+		this.fieldVisitors.forEach(visitor -> visitor.visit(attribute, plantField));
+//		this.fieldVisitors.forEach(visitor -> plantField.getProperties().forEach(plantFieldProperty -> visitor.visit(attribute, plantFieldProperty)));
 	}
 
 }

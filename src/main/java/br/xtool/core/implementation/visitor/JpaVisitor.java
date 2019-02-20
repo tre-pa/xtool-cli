@@ -2,18 +2,12 @@ package br.xtool.core.implementation.visitor;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Transient;
 
 import org.hibernate.annotations.BatchSize;
@@ -69,41 +63,41 @@ public class JpaVisitor implements Visitor {
 	 */
 	@Override
 	public void visit(EntityAttributeRepresentation attr, PlantClassFieldRepresentation plantField) {
-		val annColumn = attr.addAnnotation(Column.class);
-		plantField.getTaggedValue("column.name").ifPresent(tagValue -> annColumn.getRoasterAnnotation().setStringValue("name", tagValue));
-		if (attr.isStringField()) {
-			// @formatter:off
-				annColumn.getRoasterAnnotation()
-					.setLiteralValue("length", String.valueOf(plantField.getMaxArrayLength().orElse(255)));
-				// @formatter:on
-		} else if (attr.isLongField()) {
-			if (plantField.isId()) {
-				attr.addAnnotation(Id.class);
-				// @formatter:off
-					annColumn.getRoasterAnnotation()
-						.setLiteralValue("updatable", "false")
-						.setLiteralValue("nullable", "false");
-					attr.addAnnotation(GeneratedValue.class).getRoasterAnnotation()
-						.setEnumValue("strategy", GenerationType.SEQUENCE)
-						.setStringValue("generator", attr.getEntity().asDatabaseSequenceName());
-					attr.addAnnotation(SequenceGenerator.class).getRoasterAnnotation()
-						.setLiteralValue("initialValue", "1")
-						.setLiteralValue("allocationSize", "1")
-						.setStringValue("name", attr.getEntity().asDatabaseSequenceName())
-						.setStringValue("sequenceName", attr.getEntity().asDatabaseSequenceName());
-					// @formatter:on
-			}
-		} else if (attr.isEnumField()) {
-			// @formatter:off
-			attr.addAnnotation(Enumerated.class)
-				.getRoasterAnnotation()
-				.setEnumValue(EnumType.STRING)
-				.setEnumValue(EnumType.STRING);
-			annColumn
-				.getRoasterAnnotation()
-				.setLiteralValue("nullable", "false");
-			// @formatter:on
-		}
+//		val annColumn = attr.addAnnotation(Column.class);
+//		plantField.getTaggedValue("column.name").ifPresent(tagValue -> annColumn.getRoasterAnnotation().setStringValue("name", tagValue));
+//		if (attr.isStringField()) {
+//			// @formatter:off
+//				annColumn.getRoasterAnnotation()
+//					.setLiteralValue("length", String.valueOf(plantField.getMaxArrayLength().orElse(255)));
+//				// @formatter:on
+//		} else if (attr.isLongField()) {
+//			if (plantField.isId()) {
+//				attr.addAnnotation(Id.class);
+//				// @formatter:off
+//					annColumn.getRoasterAnnotation()
+//						.setLiteralValue("updatable", "false")
+//						.setLiteralValue("nullable", "false");
+//					attr.addAnnotation(GeneratedValue.class).getRoasterAnnotation()
+//						.setEnumValue("strategy", GenerationType.SEQUENCE)
+//						.setStringValue("generator", attr.getEntity().asDatabaseSequenceName());
+//					attr.addAnnotation(SequenceGenerator.class).getRoasterAnnotation()
+//						.setLiteralValue("initialValue", "1")
+//						.setLiteralValue("allocationSize", "1")
+//						.setStringValue("name", attr.getEntity().asDatabaseSequenceName())
+//						.setStringValue("sequenceName", attr.getEntity().asDatabaseSequenceName());
+//					// @formatter:on
+//			}
+//		} else if (attr.isEnumField()) {
+//			// @formatter:off
+//			attr.addAnnotation(Enumerated.class)
+//				.getRoasterAnnotation()
+//				.setEnumValue(EnumType.STRING)
+//				.setEnumValue(EnumType.STRING);
+//			annColumn
+//				.getRoasterAnnotation()
+//				.setLiteralValue("nullable", "false");
+//			// @formatter:on
+//		}
 	}
 
 	/*
