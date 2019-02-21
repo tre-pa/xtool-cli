@@ -17,7 +17,7 @@ import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 import br.xtool.core.visitor.ClassVisitor;
 
 /**
- * Transforma uma classe UML em um EJavaClass.
+ * Transforma uma classe UML (PlantUML) em um EJavaClass.
  * 
  * @author jcruz
  *

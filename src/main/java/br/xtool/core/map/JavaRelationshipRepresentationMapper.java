@@ -19,7 +19,7 @@ import br.xtool.core.representation.springboot.JavaFieldRepresentation;
 import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 
 /**
- * Transforma um relacionamento UML em um EJavaField.
+ * Transforma um relacionamento UML (PlantUML) em um EJavaField.
  * 
  * @author jcruz
  *
@@ -31,30 +31,30 @@ public class JavaRelationshipRepresentationMapper implements BiFunction<JavaClas
 	private Set<EntityRelationshipVisitor> visitors;
 
 	@Override
-	public JavaFieldRepresentation apply(JavaClassRepresentation javaClass, PlantRelationshipRepresentation umlRelationship) {
-		JavaFieldRepresentation javaField = javaClass.addField(umlRelationship.getSourceRole());
-		if (umlRelationship.getSourceMultiplicity().isToMany()) {
+	public JavaFieldRepresentation apply(JavaClassRepresentation javaClass, PlantRelationshipRepresentation plantRelationship) {
+		JavaFieldRepresentation javaField = javaClass.addField(plantRelationship.getSourceRole());
+		if (plantRelationship.getSourceMultiplicity().isToMany()) {
 			// @formatter:off
 			javaField.getRoasterField().getOrigin().addImport(List.class);
 			javaField.getRoasterField().getOrigin().addImport(ArrayList.class);
-			javaField.getRoasterField().getOrigin().addImport(umlRelationship.getTargetClass().getQualifiedName());
+			javaField.getRoasterField().getOrigin().addImport(plantRelationship.getTargetClass().getQualifiedName());
 			javaField.getRoasterField()
 					.setPrivate()
-					.setName(umlRelationship.getSourceRole())
-					.setType(String.format("List<%s>", umlRelationship.getTargetClass().getName()))
+					.setName(plantRelationship.getSourceRole())
+					.setType(String.format("List<%s>", plantRelationship.getTargetClass().getName()))
 					.setLiteralInitializer("new ArrayList<>()");
 			// @formatter:on
-			this.visit(javaField, umlRelationship);
+			this.visit(javaField, plantRelationship);
 			return javaField;
 		}
-		javaField.getRoasterField().getOrigin().addImport(umlRelationship.getTargetClass().getQualifiedName());
+		javaField.getRoasterField().getOrigin().addImport(plantRelationship.getTargetClass().getQualifiedName());
 		// @formatter:off
 		javaField.getRoasterField()
 				.setPrivate()
-				.setName(umlRelationship.getSourceRole())
-				.setType(umlRelationship.getTargetClass().getName());
+				.setName(plantRelationship.getSourceRole())
+				.setType(plantRelationship.getTargetClass().getName());
 		// @formatter:on
-		this.visit(javaField, umlRelationship);
+		this.visit(javaField, plantRelationship);
 		return javaField;
 	}
 

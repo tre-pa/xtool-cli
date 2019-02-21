@@ -18,12 +18,11 @@ import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 import br.xtool.core.visitor.FieldVisitor;
 
 /**
- * Transforma um atributo UML do diagrama de classe em um EJavaField.
+ * Transforma um atributo UML (PlantUML) do diagrama de classe em um EJavaField.
  * 
  * @author jcruz
  *
  */
-//@AllArgsConstructor
 @Component
 public class JavaFieldRepresentationMapper implements BiFunction<JavaClassRepresentation, PlantClassFieldRepresentation, JavaFieldRepresentation> {
 
