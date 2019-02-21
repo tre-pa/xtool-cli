@@ -59,6 +59,11 @@ public class JavaFieldRepresentationImpl implements JavaFieldRepresentation {
 	}
 
 	@Override
+	public boolean isSimpleField() {
+		return !this.isRelationshipField() || !this.isCollectionField() || !this.isEnumField();
+	}
+
+	@Override
 	public Optional<JavaEnumRepresentation> getEnum() {
 		// @formatter:off
 		return this.getJavaClass().getProject().getEnums().stream()

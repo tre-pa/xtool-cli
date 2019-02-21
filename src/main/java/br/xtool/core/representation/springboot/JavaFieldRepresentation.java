@@ -32,6 +32,13 @@ public interface JavaFieldRepresentation extends Comparable<JavaFieldRepresentat
 	Type<JavaClassSource> getType();
 
 	/**
+	 * Verifica se o atribito é simples (Number, String, Boolean, LocalDate, LocalDateTime)
+	 * 
+	 * @return
+	 */
+	boolean isSimpleField();
+
+	/**
 	 * Verifica se o atributo é uma coleção (Tipo List ou Set)
 	 * 
 	 * @return
