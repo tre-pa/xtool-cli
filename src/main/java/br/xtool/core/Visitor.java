@@ -12,6 +12,7 @@ import br.xtool.core.representation.springboot.EntityRepresentation;
  * @author jcruz
  *
  */
+@Deprecated
 public interface Visitor {
 
 	/**
