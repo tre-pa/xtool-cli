@@ -3,10 +3,6 @@ package br.xtool.core.representation.springboot;
 import java.util.Collection;
 import java.util.Optional;
 
-import org.apache.commons.lang3.StringUtils;
-
-import strman.Strman;
-
 /**
  * Representação de uma entidade java JPA.
  * 
@@ -110,17 +106,4 @@ public interface EntityRepresentation extends JavaClassRepresentation {
 	 */
 	String asDatabaseFkName();
 
-	/**
-	 * 
-	 * @param name
-	 * @return
-	 */
-	@Deprecated
-	public static String genFKName(String name) {
-		// @formatter:off
-		return StringUtils.abbreviate(
-				StringUtils.upperCase(
-				Strman.toSnakeCase(name)), "", 30) + "_ID";
-		// @formatter:on
-	}
 }
