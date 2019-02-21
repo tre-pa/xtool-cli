@@ -10,13 +10,13 @@ import org.springframework.stereotype.Component;
 
 import br.xtool.core.implementation.representation.EntityAttributeRepresentationImpl;
 import br.xtool.core.implementation.representation.EntityRepresentationImpl;
-import br.xtool.core.implementation.visitor.EntityRelationshipVisitor;
 import br.xtool.core.representation.plantuml.PlantRelationshipRepresentation;
 import br.xtool.core.representation.springboot.EntityAttributeRepresentation;
 import br.xtool.core.representation.springboot.EntityRepresentation;
 import br.xtool.core.representation.springboot.JavaClassRepresentation;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation;
 import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
+import br.xtool.core.visitor.RelationshipVisitor;
 
 /**
  * Transforma um relacionamento UML (PlantUML) em um EJavaField.
@@ -28,7 +28,7 @@ import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 public class JavaRelationshipRepresentationMapper implements BiFunction<JavaClassRepresentation, PlantRelationshipRepresentation, JavaFieldRepresentation> {
 
 	@Autowired
-	private Set<EntityRelationshipVisitor> visitors;
+	private Set<RelationshipVisitor> visitors;
 
 	@Override
 	public JavaFieldRepresentation apply(JavaClassRepresentation javaClass, PlantRelationshipRepresentation plantRelationship) {
@@ -58,11 +58,11 @@ public class JavaRelationshipRepresentationMapper implements BiFunction<JavaClas
 		return javaField;
 	}
 
-	private void visit(JavaFieldRepresentation javaField, PlantRelationshipRepresentation umlRelationship) {
+	private void visit(JavaFieldRepresentation javaField, PlantRelationshipRepresentation plantRelationship) {
 		SpringBootProjectRepresentation project = javaField.getJavaClass().getProject();
 		EntityRepresentation entity = new EntityRepresentationImpl(project, javaField.getJavaClass().getRoasterJavaClass());
 		EntityAttributeRepresentation attribute = new EntityAttributeRepresentationImpl(project, entity, javaField.getRoasterField());
-		this.visitors.forEach(visitor -> visitor.visit(attribute, umlRelationship));
+		this.visitors.forEach(visitor -> visitor.visit(attribute, plantRelationship));
 	}
 
 }
