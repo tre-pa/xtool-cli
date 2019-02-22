@@ -1,14 +1,19 @@
 package br.xtool.core.implementation.representation;
 
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.function.Function;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+
+import org.apache.commons.lang3.StringUtils;
 
 import br.xtool.core.representation.ProjectRepresentation;
 import br.xtool.core.representation.angular.NgClassRepresentation;
@@ -20,6 +25,7 @@ import br.xtool.core.representation.angular.NgPackageRepresentation;
 import br.xtool.core.representation.angular.NgPageRepresentation;
 import br.xtool.core.representation.angular.NgProjectRepresentation;
 import br.xtool.core.representation.angular.NgServiceRepresentation;
+import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 import lombok.Getter;
 
 @Getter
@@ -210,16 +216,26 @@ public class NgProjectRepresentationImpl extends ProjectRepresentationImpl imple
 	}
 
 	@Override
+	public Optional<SpringBootProjectRepresentation> getAssociatedSpringBootProject() {
+		String springBootPath = this.getPath().toString().concat("-service");
+		if (StringUtils.isNotEmpty(springBootPath)) {
+			if (Files.exists(Paths.get(springBootPath))) {
+				if (SpringBootProjectRepresentation.isValid(Paths.get(springBootPath))) {
+					return Optional.of(new SpringBootProjectRepresentationImpl(Paths.get(springBootPath)));
+				}
+			}
+		}
+		return Optional.empty();
+	}
+
+	@Override
 	public Version getProjectVersion() {
 		Pattern v5pattern = Pattern.compile("[\\^~]?5\\.2\\.\\d");
 		Pattern v6pattern = Pattern.compile("[\\^~]?6\\.\\d\\.\\d");
 		Pattern v7pattern = Pattern.compile("[\\^~]?7\\.\\d\\.\\d");
-		if (v5pattern.matcher(getFrameworkVersion()).matches())
-			return Version.V5;
-		if (v6pattern.matcher(getFrameworkVersion()).matches())
-			return Version.V6;
-		if (v7pattern.matcher(getFrameworkVersion()).matches())
-			return Version.V7;
+		if (v5pattern.matcher(getFrameworkVersion()).matches()) return Version.V5;
+		if (v6pattern.matcher(getFrameworkVersion()).matches()) return Version.V6;
+		if (v7pattern.matcher(getFrameworkVersion()).matches()) return Version.V7;
 		return Version.NONE;
 	}
 

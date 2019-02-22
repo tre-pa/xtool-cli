@@ -12,6 +12,7 @@ import org.springframework.shell.standard.ValueProviderSupport;
 import org.springframework.stereotype.Component;
 
 import br.xtool.core.Workspace;
+import br.xtool.core.representation.angular.NgProjectRepresentation;
 import br.xtool.core.representation.springboot.EntityRepresentation;
 import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 
@@ -30,6 +31,14 @@ public class EntityRepresentationValueProvider extends ValueProviderSupport {
 					.map(EntityRepresentation::getName)
 					.map(CompletionProposal::new)
 					.collect(Collectors.toList());
+		} else if(this.workspace.getWorkingProject() instanceof NgProjectRepresentation) {
+			NgProjectRepresentation project = NgProjectRepresentation.class.cast(this.workspace.getWorkingProject());
+			if(project.getAssociatedSpringBootProject().isPresent()) {
+				return project.getAssociatedSpringBootProject().get().getEntities().stream()
+						.map(EntityRepresentation::getName)
+						.map(CompletionProposal::new)
+						.collect(Collectors.toList());
+			}
 		}
 		return new ArrayList<>();
 		// @formatter:on

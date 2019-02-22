@@ -8,6 +8,7 @@ import java.util.SortedSet;
 
 import br.xtool.core.implementation.representation.NgPackageRepresentationImpl;
 import br.xtool.core.representation.ProjectRepresentation;
+import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -112,6 +113,8 @@ public interface NgProjectRepresentation extends ProjectRepresentation {
 
 	// @Override
 	// public String getMainDir();
+
+	Optional<SpringBootProjectRepresentation> getAssociatedSpringBootProject();
 
 	@Override
 	public void refresh();
