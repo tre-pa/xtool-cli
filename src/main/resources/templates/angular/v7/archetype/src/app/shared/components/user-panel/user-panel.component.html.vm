@@ -17,7 +17,7 @@
     <div *dxTemplate="let item of 'item'"
       [ngClass]="{ 'user-info': item.text === 'userinfo'}">
       <div *ngIf="item.text === 'userinfo'; else defaultItemTemplate">
-        <p class="user-name">{{ userInfo?.name }}</p>
+        <p class="user-name">{{ userInfo?.name || userInfo?.preferred_username }}</p>
         <p class="user-email"
           title="userInfo?.email">{{ userInfo?.email }}</p>
       </div>

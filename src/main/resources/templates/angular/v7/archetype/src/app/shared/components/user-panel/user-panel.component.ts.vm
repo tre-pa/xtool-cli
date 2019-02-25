@@ -51,7 +51,9 @@ export class UserPanelComponent implements OnInit {
   }
 
   getInitials(): string {
-    let aaa: string[] = this.userInfo.name.split(' ');
+    let aaa: string[] = []
+    if (this.userInfo.name) aaa = this.userInfo.name.split(' ');
+    else aaa = [this.userInfo.preferred_username];
     return aaa[0].charAt(0) + aaa[aaa.length - 1].charAt(0);
   }
 
