@@ -3,10 +3,6 @@ package br.xtool.core.representation.springboot;
 import java.util.Collection;
 import java.util.Optional;
 
-import org.apache.commons.lang3.StringUtils;
-
-import strman.Strman;
-
 /**
  * Representação de uma entidade java JPA.
  * 
@@ -91,47 +87,23 @@ public interface EntityRepresentation extends JavaClassRepresentation {
 	Optional<RestClassRepresentation> getAssociatedRestClass();
 
 	/**
-	 * Retorna um nome válido de uma tabela do banco de dados com no máximo 30
-	 * carateres (Limite do oracle).
+	 * Retorna um nome válido de uma tabela do banco de dados com no máximo 30 carateres (Limite do oracle).
 	 * 
-	 * @param name
 	 * @return
 	 */
-	@Deprecated
-	static String genDBTableName(String name) {
-		// @formatter:off
-		return StringUtils.abbreviate(
-				StringUtils.upperCase(
-						Strman.toSnakeCase(name)), "", 30);
-		// @formatter:on
-	}
+	String asDatabaseTableName();
 
 	/**
 	 * Retorna um nome válido de sequence do banco de dados.
 	 * 
-	 * @param name
 	 * @return
 	 */
-	@Deprecated
-	public static String genDBSequenceName(String name) {
-		// @formatter:off
-		return StringUtils.abbreviate(
-				StringUtils.upperCase(
-				"SEQ_" + Strman.toSnakeCase(name)), "", 30);
-		// @formatter:on
-	}
+	String asDatabaseSequenceName();
 
 	/**
 	 * 
-	 * @param name
 	 * @return
 	 */
-	@Deprecated
-	public static String genFKName(String name) {
-		// @formatter:off
-		return StringUtils.abbreviate(
-				StringUtils.upperCase(
-				Strman.toSnakeCase(name)), "", 30) + "_ID";
-		// @formatter:on
-	}
+	String asDatabaseFkName();
+
 }

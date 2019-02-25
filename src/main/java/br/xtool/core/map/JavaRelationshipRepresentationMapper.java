@@ -8,19 +8,18 @@ import java.util.function.BiFunction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import br.xtool.core.Visitor;
-import br.xtool.core.implementation.representation.JavaFieldRepresentationImpl.EManyToManyFieldImpl;
-import br.xtool.core.implementation.representation.JavaFieldRepresentationImpl.EManyToOneFieldImpl;
-import br.xtool.core.implementation.representation.JavaFieldRepresentationImpl.EOneToManyFieldImpl;
-import br.xtool.core.implementation.representation.JavaFieldRepresentationImpl.EOneToOneFieldImpl;
-import br.xtool.core.implementation.representation.PlantRelationshipRepresentationImpl.EAssociationImpl;
-import br.xtool.core.implementation.representation.PlantRelationshipRepresentationImpl.ECompositionImpl;
+import br.xtool.core.implementation.representation.EntityAttributeRepresentationImpl;
+import br.xtool.core.implementation.representation.EntityRepresentationImpl;
 import br.xtool.core.representation.plantuml.PlantRelationshipRepresentation;
+import br.xtool.core.representation.springboot.EntityAttributeRepresentation;
+import br.xtool.core.representation.springboot.EntityRepresentation;
 import br.xtool.core.representation.springboot.JavaClassRepresentation;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation;
+import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
+import br.xtool.core.visitor.RelationshipVisitor;
 
 /**
- * Transforma um relacionamento UML em um EJavaField.
+ * Transforma um relacionamento UML (PlantUML) em um EJavaField.
  * 
  * @author jcruz
  *
@@ -29,49 +28,41 @@ import br.xtool.core.representation.springboot.JavaFieldRepresentation;
 public class JavaRelationshipRepresentationMapper implements BiFunction<JavaClassRepresentation, PlantRelationshipRepresentation, JavaFieldRepresentation> {
 
 	@Autowired
-	private Set<Visitor> visitors;
+	private Set<RelationshipVisitor> visitors;
 
 	@Override
-	public JavaFieldRepresentation apply(JavaClassRepresentation javaClass, PlantRelationshipRepresentation umlRelationship) {
-		JavaFieldRepresentation javaField = javaClass.addField(umlRelationship.getSourceRole());
-		if (umlRelationship.getSourceMultiplicity().isToMany()) {
+	public JavaFieldRepresentation apply(JavaClassRepresentation javaClass, PlantRelationshipRepresentation plantRelationship) {
+		JavaFieldRepresentation javaField = javaClass.addField(plantRelationship.getSourceRole());
+		if (plantRelationship.getSourceMultiplicity().isToMany()) {
 			// @formatter:off
 			javaField.getRoasterField().getOrigin().addImport(List.class);
 			javaField.getRoasterField().getOrigin().addImport(ArrayList.class);
-			javaField.getRoasterField().getOrigin().addImport(umlRelationship.getTargetClass().getQualifiedName());
+			javaField.getRoasterField().getOrigin().addImport(plantRelationship.getTargetClass().getQualifiedName());
 			javaField.getRoasterField()
 					.setPrivate()
-					.setName(umlRelationship.getSourceRole())
-					.setType(String.format("List<%s>", umlRelationship.getTargetClass().getName()))
+					.setName(plantRelationship.getSourceRole())
+					.setType(String.format("List<%s>", plantRelationship.getTargetClass().getName()))
 					.setLiteralInitializer("new ArrayList<>()");
 			// @formatter:on
-			this.visit(javaField, umlRelationship);
+			this.visit(javaField, plantRelationship);
 			return javaField;
 		}
-		javaField.getRoasterField().getOrigin().addImport(umlRelationship.getTargetClass().getQualifiedName());
+		javaField.getRoasterField().getOrigin().addImport(plantRelationship.getTargetClass().getQualifiedName());
 		// @formatter:off
 		javaField.getRoasterField()
 				.setPrivate()
-				.setName(umlRelationship.getSourceRole())
-				.setType(umlRelationship.getTargetClass().getName());
+				.setName(plantRelationship.getSourceRole())
+				.setType(plantRelationship.getTargetClass().getName());
 		// @formatter:on
-		this.visit(javaField, umlRelationship);
+		this.visit(javaField, plantRelationship);
 		return javaField;
 	}
 
-	private void visit(JavaFieldRepresentation javaField, PlantRelationshipRepresentation umlRelationship) {
-		this.visitors.forEach(visitor -> {
-			visitor.visit(javaField, umlRelationship);
-			if (!javaField.getEnum().isPresent()) {
-				if (umlRelationship.isOneToOne() && umlRelationship.isAssociation()) visitor.visit(new EOneToOneFieldImpl(javaField), new EAssociationImpl(umlRelationship));
-				if (umlRelationship.isOneToMany() && umlRelationship.isAssociation()) visitor.visit(new EOneToManyFieldImpl(javaField), new EAssociationImpl(umlRelationship));
-				if (umlRelationship.isManyToOne() && umlRelationship.isAssociation()) visitor.visit(new EManyToOneFieldImpl(javaField), new EAssociationImpl(umlRelationship));
-				if (umlRelationship.isManyToMany() && umlRelationship.isAssociation()) visitor.visit(new EManyToManyFieldImpl(javaField), new EAssociationImpl(umlRelationship));
-				if (umlRelationship.isOneToOne() && umlRelationship.isComposition()) visitor.visit(new EOneToOneFieldImpl(javaField), new ECompositionImpl(umlRelationship));
-				if (umlRelationship.isOneToMany() && umlRelationship.isComposition()) visitor.visit(new EOneToManyFieldImpl(javaField), new ECompositionImpl(umlRelationship));
-				if (umlRelationship.isManyToOne() && umlRelationship.isComposition()) visitor.visit(new EManyToOneFieldImpl(javaField), new ECompositionImpl(umlRelationship));
-			}
-		});
+	private void visit(JavaFieldRepresentation javaField, PlantRelationshipRepresentation plantRelationship) {
+		SpringBootProjectRepresentation project = javaField.getJavaClass().getProject();
+		EntityRepresentation entity = new EntityRepresentationImpl(project, javaField.getJavaClass().getRoasterJavaClass());
+		EntityAttributeRepresentation attribute = new EntityAttributeRepresentationImpl(project, entity, javaField.getRoasterField());
+		this.visitors.forEach(visitor -> visitor.visit(attribute, plantRelationship));
 	}
 
 }

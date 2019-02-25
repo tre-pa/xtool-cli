@@ -4,8 +4,6 @@ import java.lang.annotation.Annotation;
 import java.util.Optional;
 import java.util.SortedSet;
 
-import javax.persistence.GenerationType;
-
 import org.hibernate.annotations.LazyCollectionOption;
 import org.jboss.forge.roaster.model.Type;
 import org.jboss.forge.roaster.model.source.FieldSource;
@@ -34,6 +32,13 @@ public interface JavaFieldRepresentation extends Comparable<JavaFieldRepresentat
 	Type<JavaClassSource> getType();
 
 	/**
+	 * Verifica se o atribito é simples (Number, String, Boolean, LocalDate, LocalDateTime)
+	 * 
+	 * @return
+	 */
+	boolean isSimpleField();
+
+	/**
 	 * Verifica se o atributo é uma coleção (Tipo List ou Set)
 	 * 
 	 * @return
@@ -48,11 +53,60 @@ public interface JavaFieldRepresentation extends Comparable<JavaFieldRepresentat
 	boolean isStringField();
 
 	/**
-	 * Verifica se o atributo é um número.
+	 * Verifica se o atributo é um Boolean.
+	 * 
+	 * @return
+	 */
+	boolean isBooleanField();
+
+	/**
+	 * Verifica se o atributo é um Long
+	 * 
+	 * @return
+	 */
+	boolean isLongField();
+
+	/**
+	 * Verifica se o atributo é um Integer.
+	 * 
+	 * @return
+	 */
+	boolean isIntegerField();
+
+	/**
+	 * Verifica se o atributo é um Byte.
+	 * 
+	 * @return
+	 */
+	boolean isByteField();
+
+	/**
+	 * Verifica se o atributo é um BigDecimal.
+	 * 
+	 * @return
+	 */
+	boolean isBigDecimalField();
+
+	/**
+	 * Verifica se o atributo é um número (Long, Integer, Short, Byte, BigiDecimal)
 	 * 
 	 * @return
 	 */
 	boolean isNumberField();
+
+	/**
+	 * Verifica se o atributo é um LocalDate
+	 * 
+	 * @return
+	 */
+	boolean isLocalDate();
+
+	/**
+	 * Verifica se o atributo é um LocalDateTime
+	 * 
+	 * @return
+	 */
+	boolean isLocalDateTime();
 
 	/**
 	 * Verifica se o atributo é uma data
@@ -74,6 +128,20 @@ public interface JavaFieldRepresentation extends Comparable<JavaFieldRepresentat
 	 * @return
 	 */
 	boolean isEnumField();
+
+	/**
+	 * Verifica se o atributo é NotNull
+	 * 
+	 * @return
+	 */
+	boolean isNotNullField();
+
+	/**
+	 * Verifica se o atributo é Unique.
+	 * 
+	 * @return
+	 */
+	boolean isUniqueField();
 
 	/**
 	 * Verifica se o atributo é um relacionamento.
@@ -110,11 +178,22 @@ public interface JavaFieldRepresentation extends Comparable<JavaFieldRepresentat
 	 */
 	SortedSet<JavaAnnotationRepresentation<JavaClassSource>> getAnnotations();
 
-	FieldSource<JavaClassSource> getRoasterField();
-
-	@Deprecated
+	/**
+	 * Adiciona uma nova annotation ao atributo. Caso já exista retorna a referencia.
+	 * 
+	 * @param type
+	 * @return
+	 */
 	JavaAnnotationRepresentation<JavaClassSource> addAnnotation(Class<? extends Annotation> type);
 
+	/**
+	 * Retorna a objeto Roaster do atributo.
+	 * 
+	 * @return
+	 */
+	FieldSource<JavaClassSource> getRoasterField();
+
+//
 	@Deprecated
 	JavaAnnotationRepresentation<JavaClassSource> addSizeAnnotation(Integer min, Integer max);
 
@@ -124,42 +203,25 @@ public interface JavaFieldRepresentation extends Comparable<JavaFieldRepresentat
 	@Deprecated
 	JavaAnnotationRepresentation<JavaClassSource> addLazyCollectionAnnotation(LazyCollectionOption lazyCollectionOption);
 
-	@Deprecated
-	JavaAnnotationRepresentation<JavaClassSource> addGeneratedValueAnnotation(GenerationType generationType);
+//	@Deprecated
+//	interface JavaFieldNotNullType extends JavaFieldRepresentation {}
+//
+//	@Deprecated
+//	interface JavaFieldTransientType extends JavaFieldRepresentation {}
+//
+//	@Deprecated
+//	interface JavaFieldUniqueType extends JavaFieldRepresentation {}
 
 	@Deprecated
-	JavaAnnotationRepresentation<JavaClassSource> addSequenceGeneratorAnnotation();
-
-	interface JavaFieldStringType extends JavaFieldRepresentation {}
-
-	interface JavaFieldBooleanType extends JavaFieldRepresentation {}
-
-	interface JavaFieldLongType extends JavaFieldRepresentation {}
-
-	interface JavaFieldIntegerType extends JavaFieldRepresentation {}
-
-	interface JavaFieldByteType extends JavaFieldRepresentation {}
-
-	interface JavaFieldBigDecimalType extends JavaFieldRepresentation {}
-
-	interface JavaFieldLocalDateType extends JavaFieldRepresentation {}
-
-	interface JavaFieldLocalDateTimeType extends JavaFieldRepresentation {}
-
-	interface JavaFieldEnumType extends JavaFieldRepresentation {}
-
-	interface JavaFieldNotNullType extends JavaFieldRepresentation {}
-
-	interface JavaFieldTransientType extends JavaFieldRepresentation {}
-
-	interface JavaFieldUniqueType extends JavaFieldRepresentation {}
-
 	interface JavaFieldOneToOneType extends JavaFieldRepresentation {}
 
+	@Deprecated
 	interface JavaFieldOneToManyType extends JavaFieldRepresentation {}
 
+	@Deprecated
 	interface JavaFieldManyToOneType extends JavaFieldRepresentation {}
 
+	@Deprecated
 	interface JavaFieldManyToManyType extends JavaFieldRepresentation {}
 
 }

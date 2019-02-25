@@ -47,4 +47,12 @@ public interface Shell {
 	 */
 	public int runCmd(Path path, String command, Map<String, Object> vars);
 
+	/**
+	 * Executa um arquivo shell do diretório src/main/resources/scripts
+	 * 
+	 * @param path
+	 * @return
+	 */
+	public int runScript(String name);
+
 }

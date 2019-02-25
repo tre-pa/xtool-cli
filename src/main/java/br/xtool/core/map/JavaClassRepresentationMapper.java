@@ -7,16 +7,17 @@ import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import br.xtool.core.Visitor;
 import br.xtool.core.Workspace;
 import br.xtool.core.helper.RoasterHelper;
+import br.xtool.core.implementation.representation.EntityRepresentationImpl;
 import br.xtool.core.implementation.representation.JavaClassRepresentationImpl;
 import br.xtool.core.representation.plantuml.PlantClassRepresentation;
 import br.xtool.core.representation.springboot.JavaClassRepresentation;
 import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
+import br.xtool.core.visitor.ClassVisitor;
 
 /**
- * Transforma uma classe UML em um EJavaClass.
+ * Transforma uma classe UML (PlantUML) em um EJavaClass.
  * 
  * @author jcruz
  *
@@ -28,34 +29,22 @@ public class JavaClassRepresentationMapper implements Function<PlantClassReprese
 	private Workspace workspace;
 
 	@Autowired
-	private Set<Visitor> visitors;
+	private Set<ClassVisitor> classVisitors;
 
 	@Override
-	public JavaClassRepresentation apply(PlantClassRepresentation umlClass) {
+	public JavaClassRepresentation apply(PlantClassRepresentation plnatClass) {
 		SpringBootProjectRepresentation springBootProject = this.workspace.getWorkingProject(SpringBootProjectRepresentation.class);
 		// @formatter:off
 		JavaClassRepresentation javaClass = springBootProject.getRoasterJavaUnits().stream()
 				.filter(javaUnit -> javaUnit.getGoverningType().isClass())
-				.filter(javaUnit -> javaUnit.getGoverningType().getName().equals(umlClass.getName()))
+				.filter(javaUnit -> javaUnit.getGoverningType().getName().equals(plnatClass.getName()))
 				.map(javaUnit -> javaUnit.<JavaClassSource>getGoverningType())
 				.map(javaClassSource -> new JavaClassRepresentationImpl(springBootProject, javaClassSource))
 				.findFirst()
-				.orElseGet(() -> new JavaClassRepresentationImpl(springBootProject,RoasterHelper.createJavaClassSource(umlClass.getUmlPackage().getName(),umlClass.getName())));
+				.orElseGet(() -> new JavaClassRepresentationImpl(springBootProject,RoasterHelper.createJavaClassSource(plnatClass.getUmlPackage().getName(),plnatClass.getName())));
 		// @formatter:on
-		this.visitors.forEach(visitor -> visitor.visit(javaClass, umlClass));
-//		umlClass.getStereotypes().stream().forEach(stereotype -> this.visit(javaClass, stereotype));
+		this.classVisitors.forEach(visitor -> visitor.visit(new EntityRepresentationImpl(springBootProject, javaClass.getRoasterJavaClass()), plnatClass));
 		return javaClass;
 	}
-
-//	private void visit(JavaClassRepresentation javaClass, PlantStereotypeRepresentation stereotype) {
-//		this.visitors.forEach(visitor -> {
-//			if (stereotype.getStereotypeType().equals(StereotypeType.AUDITABLE)) visitor.visit(new EAuditableJavaClassImpl(javaClass), stereotype);
-//			if (stereotype.getStereotypeType().equals(StereotypeType.CACHEABLE)) visitor.visit(new ECacheableJavaClassImpl(javaClass), stereotype);
-//			if (stereotype.getStereotypeType().equals(StereotypeType.INDEXED)) visitor.visit(new EIndexedJavaClassImpl(javaClass), stereotype);
-//			if (stereotype.getStereotypeType().equals(StereotypeType.VIEW)) visitor.visit(new EViewJavaClassImpl(javaClass), stereotype);
-//			if (stereotype.getStereotypeType().equals(StereotypeType.READ_ONLY)) visitor.visit(new EReadOnlyJavaClassImpl(javaClass), stereotype);
-//			if (stereotype.getStereotypeType().equals(StereotypeType.VERSIONABLE)) visitor.visit(new EVersionableJavaClassImpl(javaClass), stereotype);
-//		});
-//	}
 
 }
