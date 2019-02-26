@@ -205,13 +205,8 @@ public class AngularServiceImpl implements AngularService {
 			{
 				put("Strman", Strman.class);
 				put("StringUtils", StringUtils.class);
-//				put("entityFileName", entityFileName);
-//				put("entityTsFileName", Strman.toKebabCase(entity.getInstanceName()));
-//				put("entityFolderName", entityFolderName);
-//				put("entityClassName", entity.getName());
 				put("entity", entity);
 				put("title", InflectorHelper.getInstance().pluralize(entity.getName()));
-				put("entityApiName", InflectorHelper.getInstance().pluralize(Strman.toKebabCase(entity.getName())));
 				put("typescriptTypeMap", NgClassRepresentation.typescriptTypeMap());
 			}
 		};

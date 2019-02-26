@@ -1,0 +1,32 @@
+<h2>{{ id ? 'Edição de' : 'Nova' }} Pessoa</h2>
+<div class="dx-card content-block">
+  <form autocomplete="off"
+    (submit)="save($event)">
+    <dx-form id="form"
+      [formData]="${entity.instanceName}"
+      [showOptionalMark]="true"
+      [showValidationSummary]="true"
+      optionalMark="<span title='campo opcional'><i>(opcional)</i></span>"
+      requiredMark="<span title='campo obrigatório'>*</span>">
+      <dxi-item itemType="group" colCount="2">
+
+      
+      <dxi-item itemType="group"
+        colCount="2"
+        [colCountByScreen]="{ xs: 2 }">
+        <dxi-item itemType="button"
+          horizontalAlignment="left"
+          [buttonOptions]="{
+            text: 'Cancelar',
+            onClick: back
+          }"></dxi-item>
+        <dxi-item itemType="button"
+          [buttonOptions]="{
+            text: 'Salvar',
+            type : 'success',
+            useSubmitBehavior: true
+          }"></dxi-item>
+      </dxi-item>
+    </dx-form>
+  </form>
+</div>

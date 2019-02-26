@@ -7,8 +7,8 @@ import DataSource from 'devextreme/data/data_source';
 import { QyStore } from 'src/app/shared/qy/qy-store';
 
 @Component({
-  selector: 'app-${entityFileName}',
-  templateUrl: './${entityFileName}.component.html',
+  selector: 'app-${entity.tsFileName}',
+  templateUrl: './${entity.tsFileName}.component.html',
   styles: []
 })
 export class ${entity.name}ListComponent implements OnInit {
@@ -27,7 +27,7 @@ export class ${entity.name}ListComponent implements OnInit {
     this.title.setTitle('${title}');
     this.initHeaderFilters();
     this.${entity.instanceName}DataSource = new DataSource({
-      store: new QyStore(this.httpClient, '/${entityApiName}')
+      store: new QyStore(this.httpClient, '/${entity.apiName}')
     });
   }
 

@@ -63,6 +63,11 @@ public class JavaClassRepresentationImpl implements JavaClassRepresentation {
 		return StringUtils.uncapitalize(Strman.toKebabCase(this.getName()));
 	}
 
+	@Override
+	public String getApiName() {
+		return InflectorHelper.getInstance().pluralize(Strman.toKebabCase(this.getName()));
+	}
+
 	/**
 	 * Nome da classe
 	 * 

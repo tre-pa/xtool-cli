@@ -60,6 +60,13 @@ public interface JavaClassRepresentation extends Comparable<JavaClassRepresentat
 	String getTsFileName();
 
 	/**
+	 * Retorna o nome no formato de API Rest.
+	 * 
+	 * @return
+	 */
+	String getApiName();
+
+	/**
 	 * 
 	 * @return
 	 */

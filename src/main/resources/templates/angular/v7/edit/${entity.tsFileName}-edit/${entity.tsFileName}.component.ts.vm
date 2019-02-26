@@ -1,0 +1,71 @@
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { Title } from '@angular/platform-browser';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import DataSource from 'devextreme/data/data_source';
+
+import { QyStore } from 'src/app/shared/qy/qy-store';
+import { ${entity.name}Service } from 'src/app/service/${entity.tsFileName}.service';
+import { ${entity.name} } from 'src/app/domain/${entity.tsFileName}';
+
+@Component({
+  selector: 'app-${entity.tsFileName}',
+  templateUrl: './${entity.tsFileName}-edit.component.html',
+  styles: []
+})
+export class ${entity.name}EditComponent implements OnInit, OnDestroy {
+
+  id: number;
+  ${entity.instanceName}: ${entity.name};
+
+  destroy$: Subject<boolean> = new Subject<boolean>();
+
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private ${entity.instanceName}Service: ${entity.name}Service,
+    private httpClient: HttpClient,
+    private router: Router,
+    private title: Title
+  ) { }
+
+  ngOnInit() {
+    this.processPessoa();
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next(true);
+    this.destroy$.unsubscribe();
+  }
+
+  private process${entity.name}() {
+    this.id = +this.activatedRoute.snapshot.params['id'];
+    if (this.id && !isNaN(this.id)) this.edit();
+    else this.create();
+  }
+
+  private create() {
+    this.title.setTitle('Nova ${entity.name}');
+    this.${entity.instanceName} = new ${entity.name}();
+  }
+
+  private edit() {
+    this.title.setTitle('Edição de ${entity.name}');
+    this.${entity.instanceName}Service.findById(this.id)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(${entity.instanceName} => this.${entity.instanceName} = ${entity.instanceName});
+  }
+
+  back = () => {
+    this.router.navigate(['${entity.apiName}']);
+  }
+
+  save(event) {
+    this.${entity.instanceName}Service.save(this.${entity.instanceName})
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((${entity.instanceName}) => this.router.navigate(['${entity.apiName}', ${entity.instanceName}.id]));
+    event.preventDefault();
+  }
+
+}
