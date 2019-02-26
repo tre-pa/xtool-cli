@@ -1,4 +1,8 @@
 ```plantuml
+page 2x2
+skinparam defaultFontName Trebuchet MS
+skinparam ClassBackgroundColor<<View>> LightCyan
+skinparam ClassBackgroundColor<<Embeddable>> WhiteSmoke
 
 /' Pacote com as delcarações de classes do plantuml (http://plantuml.com/class-diagram) 
 
