@@ -164,6 +164,7 @@ public class AngularServiceImpl implements AngularService {
 		NgProjectRepresentation ngProject = genNgAssociatedProject();
 
 		String entityFileName = NgClassRepresentation.genFileName(entity.getName()).concat("-list");
+		String entityFolderName = Strman.toKebabCase(entity.getInstanceName());
 
 		Map<String, Object> vars = new HashMap<String, Object>() {
 			private static final long serialVersionUID = 1L;
@@ -171,6 +172,7 @@ public class AngularServiceImpl implements AngularService {
 				put("Strman", Strman.class);
 				put("StringUtils", StringUtils.class);
 				put("entityFileName", entityFileName);
+				put("entityFolderName", entityFolderName);
 				put("entityClassName", entity.getName());
 				put("entity", entity);
 				put("title", InflectorHelper.getInstance().pluralize(entity.getName()));
@@ -179,7 +181,7 @@ public class AngularServiceImpl implements AngularService {
 			}
 		};
 		Path resourcePath = Paths.get("angular").resolve(ngProject.getProjectVersion().getName()).resolve("list");
-		Path destinationPath = ngModule.getPath().getParent().resolve(entityFileName);
+		Path destinationPath = ngModule.getPath().getParent().resolve(entityFolderName);
 
 		this.fs.copy(resourcePath, vars, destinationPath);
 	}
