@@ -32,7 +32,7 @@ export class ${entity.name}ListComponent implements OnInit {
   }
 
   create() {
-    this.router.navigate(['${entityApiName}', 'edit']);
+    this.router.navigate(['${entity.pluralInstanceName}', 'edit']);
   }
 
   nullableDisplayText(data): string {
@@ -40,12 +40,12 @@ export class ${entity.name}ListComponent implements OnInit {
   }
 
   edit = (event) => {
-    this.router.navigate(['${entityApiName}', 'edit', event.row.data.id]);
+    this.router.navigate(['${entity.pluralInstanceName}', 'edit', event.row.data.id]);
     event.event.preventDefault();
   }
 
   detail = (event) => {
-    this.router.navigate(['${entityApiName}', event.row.data.id]);
+    this.router.navigate(['${entity.pluralInstanceName}', event.row.data.id]);
     event.event.preventDefault();
   }
 

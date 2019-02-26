@@ -15,6 +15,7 @@ import org.jboss.forge.roaster.model.SyntaxError;
 import org.jboss.forge.roaster.model.Visibility;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 
+import br.xtool.core.helper.InflectorHelper;
 import br.xtool.core.representation.springboot.JavaAnnotationRepresentation;
 import br.xtool.core.representation.springboot.JavaClassRepresentation;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation;
@@ -39,6 +40,16 @@ public class JavaClassRepresentationImpl implements JavaClassRepresentation {
 	@Override
 	public SpringBootProjectRepresentation getProject() {
 		return this.project;
+	}
+
+	@Override
+	public String getPluralName() {
+		return InflectorHelper.getInstance().pluralize(this.getName());
+	}
+
+	@Override
+	public String getPluralInstanceName() {
+		return StringUtils.uncapitalize(InflectorHelper.getInstance().pluralize(this.getName()));
 	}
 
 	@Override
@@ -79,8 +90,7 @@ public class JavaClassRepresentationImpl implements JavaClassRepresentation {
 	/**
 	 * Verifica se a entidade possui a annotation
 	 * 
-	 * @param name
-	 *            Nome da annotation
+	 * @param name Nome da annotation
 	 * @return
 	 */
 	@Override
@@ -163,15 +173,16 @@ public class JavaClassRepresentationImpl implements JavaClassRepresentation {
 		return this.javaClassSource;
 	}
 
-	//	@Override
-	//	public EJavaAnnotation<JavaClassSource> addTableAnnotation() {
-	//		EJavaAnnotation<JavaClassSource> ann = this.addAnnotation(Table.class);
-	//		ann.setStringValue("name", EJpaEntity.genDBTableName(this.getName()));
-	//		return ann;
-	//	}
+	// @Override
+	// public EJavaAnnotation<JavaClassSource> addTableAnnotation() {
+	// EJavaAnnotation<JavaClassSource> ann = this.addAnnotation(Table.class);
+	// ann.setStringValue("name", EJpaEntity.genDBTableName(this.getName()));
+	// return ann;
+	// }
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.xtool.core.representation.EJavaClass#addToString(java.lang.String[])
 	 */
 	@Override
@@ -183,6 +194,7 @@ public class JavaClassRepresentationImpl implements JavaClassRepresentation {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.xtool.core.representation.EJavaClass#addEqualsAndHashCode(java.lang.String[])
 	 */
 	@Override

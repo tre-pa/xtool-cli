@@ -6,6 +6,9 @@
       class Pessoa {
       	- id: Long
       	- nome: String
+      	-- tagged values --
+      	 <b>@table.name</b>: CR_PESSOA
+      	 <b>@plural</b>: Pessoas
       }		
    }	
 '/

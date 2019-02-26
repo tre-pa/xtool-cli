@@ -32,6 +32,11 @@ public class EntityVisitor implements ClassVisitor {
 		AddNoArgsConstructorAnnotation(entity);
 		addToStringAnnotation(entity, plantClass);
 		addEqualsAndHashCodeAnnotation(entity, plantClass);
+		addPluralClassName(entity, plantClass);
+	}
+
+	private void addPluralClassName(EntityRepresentation entity, PlantClassRepresentation plantClass) {
+		plantClass.getTaggedValue("plural").ifPresent(tagValue -> entity.getRoasterJavaClass().getJavaDoc().addTagValue("@plural", tagValue));
 	}
 
 	private void addEqualsAndHashCodeAnnotation(EntityRepresentation entity, PlantClassRepresentation plantClass) {
