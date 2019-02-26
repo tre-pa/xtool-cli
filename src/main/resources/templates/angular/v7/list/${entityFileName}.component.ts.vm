@@ -1,0 +1,79 @@
+import { PessoaType } from './../../../domain/pessoa-type';
+import {
+  Component,
+  OnInit
+} from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
+import DataSource from 'devextreme/data/data_source';
+
+import { QyStore } from 'src/app/shared/qy/qy-store';
+import { Zona } from 'src/app/domain/core/zona';
+import { Unidade } from 'src/app/domain/core/unidade';
+
+@Component({
+  selector: 'app-${entityFileName}',
+  templateUrl: './${entityFileName}.component.html',
+  styles: []
+})
+export class PessoaListComponent implements OnInit {
+
+  pageSize: number = 5;
+
+  pessoaDataSource: DataSource;
+
+  zonaHeaderFilter: any;
+  unidadeHeaderFilter: any;
+  pessoaTypeHeaderFilter: any;
+
+  constructor(
+    private httpClient: HttpClient,
+    private router: Router,
+    private title: Title
+  ) { }
+
+  ngOnInit() {
+    this.title.setTitle('Pessoas');
+    this.initHeaderFilters();
+    this.pessoaDataSource = new DataSource({
+      store: new QyStore(this.httpClient, '/pessoas')
+    });
+  }
+
+  create() {
+    this.router.navigate(['pessoas', 'edit']);
+  }
+
+  nullableDisplayText(data): string {
+    return data.value || '-';
+  }
+
+  edit = (event) => {
+    this.router.navigate(['pessoas', 'edit', event.row.data.id]);
+    event.event.preventDefault();
+  }
+
+  detail = (event) => {
+    this.router.navigate(['pessoas', event.row.data.id]);
+    event.event.preventDefault();
+  }
+
+  private initHeaderFilters() {
+    
+  }
+
+  onToolbarPreparing(toolbar) {
+    toolbar.items.unshift({
+      location: 'before',
+      widget: 'dxButton',
+      options: {
+        text: 'Nova',
+        stylingMode: 'contained',
+        type: 'success',
+        onClick: () => this.create()
+      }
+    });
+  }
+
+}

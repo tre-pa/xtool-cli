@@ -16,8 +16,10 @@ import org.springframework.shell.standard.ShellOption;
 import br.xtool.XtoolCliApplication;
 import br.xtool.core.Workspace;
 import br.xtool.core.provider.EntityRepresentationValueProvider;
+import br.xtool.core.provider.NgModuleRepresentationValueProvider;
 import br.xtool.core.provider.PlantClassDiagramRepresentationValueProvider;
 import br.xtool.core.representation.ProjectRepresentation;
+import br.xtool.core.representation.angular.NgModuleRepresentation;
 import br.xtool.core.representation.plantuml.PlantClassDiagramRepresentation;
 import br.xtool.core.representation.springboot.EntityRepresentation;
 import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
@@ -138,6 +140,13 @@ public class SpringBootCommand {
 			return;
 		}
 		angularService.genNgService(entity);
+	}
+
+	@ShellMethod(key = "gen:ng-list", value = "Gera uma lista ", group = XtoolCliApplication.SPRINGBOOT_COMMAND_GROUP)
+	@ShellMethodAvailability("availabilitySpringBootCommand")
+	public void genNgList(@ShellOption(help = "Entidade JPA", valueProvider = EntityRepresentationValueProvider.class) EntityRepresentation entity,
+			@ShellOption(help = "Módulo Angular", valueProvider = NgModuleRepresentationValueProvider.class) NgModuleRepresentation ngModule) {
+		this.angularService.genNgList(entity, ngModule);
 	}
 
 	@ShellMethod(key = "show:class-diagram", value = "Exibe o diagrama de classe do projeto", group = XtoolCliApplication.SPRINGBOOT_COMMAND_GROUP)

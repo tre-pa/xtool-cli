@@ -111,7 +111,6 @@ public class NgProjectRepresentationImpl extends ProjectRepresentationImpl imple
 	public SortedSet<NgModuleRepresentation> getNgModules() {
 		// @formatter:off
 		return this.getNgClasses().values().stream()
-				.filter(ngClass -> !ngClass.getFileName().endsWith(NgProjectRepresentation.ArtifactyType.ROUTING_MODULE.getExt()))
 				.filter(ngClass -> ngClass.getFileName().endsWith(NgProjectRepresentation.ArtifactyType.MODULE.getExt()))
 				.map(ngClass -> new NgModuleRepresentationImpl(ngClass.getPath()))
 				.collect(Collectors.toCollection(TreeSet::new));

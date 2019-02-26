@@ -23,6 +23,7 @@ import br.xtool.core.representation.ProjectRepresentation;
 import br.xtool.core.representation.angular.NgClassRepresentation;
 import br.xtool.core.representation.angular.NgEntityRepresentation;
 import br.xtool.core.representation.angular.NgEnumRepresentation;
+import br.xtool.core.representation.angular.NgModuleRepresentation;
 import br.xtool.core.representation.angular.NgProjectRepresentation;
 import br.xtool.core.representation.angular.NgServiceRepresentation;
 import br.xtool.core.representation.springboot.EntityAttributeRepresentation;
@@ -48,8 +49,7 @@ public class AngularServiceImpl implements AngularService {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see br.xtool.service.AngularService#newApp(java.lang.String,
-	 * java.lang.String)
+	 * @see br.xtool.service.AngularService#newApp(java.lang.String, java.lang.String)
 	 */
 	@Override
 	public void newApp(String name, String version) {
@@ -78,15 +78,11 @@ public class AngularServiceImpl implements AngularService {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * br.xtool.service.AngularService#createNgEntity(br.xtool.core.representation.
-	 * springboot.EntityRepresentation)
+	 * @see br.xtool.service.AngularService#createNgEntity(br.xtool.core.representation. springboot.EntityRepresentation)
 	 */
 	@Override
 	public NgEntityRepresentation genNgEntity(EntityRepresentation entity) {
-		SpringBootProjectRepresentation springBootProject = this.workspace.getWorkingProject(SpringBootProjectRepresentation.class);
-		NgProjectRepresentation ngProject = springBootProject.getAssociatedAngularProject()
-				.orElseThrow(() -> new IllegalArgumentException("Não há nenhum projeto Angular associado ao projeto: " + springBootProject.getName()));
+		NgProjectRepresentation ngProject = genNgAssociatedProject();
 		Map<String, Object> vars = new HashMap<String, Object>() {
 			private static final long serialVersionUID = 1L;
 			{
@@ -111,15 +107,11 @@ public class AngularServiceImpl implements AngularService {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * br.xtool.service.AngularService#createNgEnum(br.xtool.core.representation.
-	 * springboot.JavaEnumRepresentation)
+	 * @see br.xtool.service.AngularService#createNgEnum(br.xtool.core.representation. springboot.JavaEnumRepresentation)
 	 */
 	@Override
 	public NgEnumRepresentation genNgEnum(JavaEnumRepresentation javaEnum) {
-		SpringBootProjectRepresentation springBootProject = this.workspace.getWorkingProject(SpringBootProjectRepresentation.class);
-		NgProjectRepresentation ngProject = springBootProject.getAssociatedAngularProject()
-				.orElseThrow(() -> new IllegalArgumentException("Não há nenhum projeto Angular associado ao projeto: " + springBootProject.getName()));
+		NgProjectRepresentation ngProject = genNgAssociatedProject();
 		Map<String, Object> vars = new HashMap<String, Object>() {
 			private static final long serialVersionUID = 1L;
 			{
@@ -142,15 +134,11 @@ public class AngularServiceImpl implements AngularService {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * br.xtool.service.AngularService#genNgService(br.xtool.core.representation.
-	 * springboot.EntityRepresentation)
+	 * @see br.xtool.service.AngularService#genNgService(br.xtool.core.representation. springboot.EntityRepresentation)
 	 */
 	@Override
 	public NgServiceRepresentation genNgService(EntityRepresentation entity) {
-		SpringBootProjectRepresentation springBootProject = this.workspace.getWorkingProject(SpringBootProjectRepresentation.class);
-		NgProjectRepresentation ngProject = springBootProject.getAssociatedAngularProject()
-				.orElseThrow(() -> new IllegalArgumentException("Não há nenhum projeto Angular associado ao projeto: " + springBootProject.getName()));
+		NgProjectRepresentation ngProject = genNgAssociatedProject();
 		Map<String, Object> vars = new HashMap<String, Object>() {
 			private static final long serialVersionUID = 1L;
 			{
@@ -170,4 +158,35 @@ public class AngularServiceImpl implements AngularService {
 		NgServiceRepresentation ngService = new NgServiceRepresentationImpl(ngServicePath);
 		return ngService;
 	}
+
+	@Override
+	public void genNgList(EntityRepresentation entity, NgModuleRepresentation ngModule) {
+		NgProjectRepresentation ngProject = genNgAssociatedProject();
+
+		String entityFileName = NgClassRepresentation.genFileName(entity.getName()).concat("-list");
+
+		Map<String, Object> vars = new HashMap<String, Object>() {
+			private static final long serialVersionUID = 1L;
+			{
+				put("Strman", Strman.class);
+				put("entityFileName", entityFileName);
+				put("entityClassName", entity.getName());
+				put("entity", entity);
+				put("entityApiName", InflectorHelper.getInstance().pluralize(Strman.toKebabCase(entity.getName())));
+				put("typescriptTypeMap", NgClassRepresentation.typescriptTypeMap());
+			}
+		};
+		Path resourcePath = Paths.get("angular").resolve(ngProject.getProjectVersion().getName()).resolve("list");
+		Path destinationPath = ngModule.getPath().getParent().resolve(entityFileName);
+
+		this.fs.copy(resourcePath, vars, destinationPath);
+	}
+
+	private NgProjectRepresentation genNgAssociatedProject() {
+		SpringBootProjectRepresentation springBootProject = this.workspace.getWorkingProject(SpringBootProjectRepresentation.class);
+		NgProjectRepresentation ngProject = springBootProject.getAssociatedAngularProject()
+				.orElseThrow(() -> new IllegalArgumentException("Não há nenhum projeto Angular associado ao projeto: " + springBootProject.getName()));
+		return ngProject;
+	}
+
 }
