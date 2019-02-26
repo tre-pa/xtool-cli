@@ -169,9 +169,11 @@ public class AngularServiceImpl implements AngularService {
 			private static final long serialVersionUID = 1L;
 			{
 				put("Strman", Strman.class);
+				put("StringUtils", StringUtils.class);
 				put("entityFileName", entityFileName);
 				put("entityClassName", entity.getName());
 				put("entity", entity);
+				put("title", InflectorHelper.getInstance().pluralize(entity.getName()));
 				put("entityApiName", InflectorHelper.getInstance().pluralize(Strman.toKebabCase(entity.getName())));
 				put("typescriptTypeMap", NgClassRepresentation.typescriptTypeMap());
 			}

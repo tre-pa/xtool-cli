@@ -1,31 +1,21 @@
-import { PessoaType } from './../../../domain/pessoa-type';
-import {
-  Component,
-  OnInit
-} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import DataSource from 'devextreme/data/data_source';
 
 import { QyStore } from 'src/app/shared/qy/qy-store';
-import { Zona } from 'src/app/domain/core/zona';
-import { Unidade } from 'src/app/domain/core/unidade';
 
 @Component({
-  selector: 'app-${entityFileName}',
-  templateUrl: './${entityFileName}.component.html',
+  selector: 'app-${entity.instanceName}-list',
+  templateUrl: './${entity.instanceName}-list.component.html',
   styles: []
 })
-export class PessoaListComponent implements OnInit {
+export class ${entity.name}ListComponent implements OnInit {
 
   pageSize: number = 5;
 
-  pessoaDataSource: DataSource;
-
-  zonaHeaderFilter: any;
-  unidadeHeaderFilter: any;
-  pessoaTypeHeaderFilter: any;
+  ${entity.instanceName}DataSource: DataSource;
 
   constructor(
     private httpClient: HttpClient,
@@ -34,15 +24,15 @@ export class PessoaListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.title.setTitle('Pessoas');
+    this.title.setTitle('${title}');
     this.initHeaderFilters();
-    this.pessoaDataSource = new DataSource({
-      store: new QyStore(this.httpClient, '/pessoas')
+    this.${entity.instanceName}DataSource = new DataSource({
+      store: new QyStore(this.httpClient, '/${entityApiName}')
     });
   }
 
   create() {
-    this.router.navigate(['pessoas', 'edit']);
+    this.router.navigate(['${entityApiName}', 'edit']);
   }
 
   nullableDisplayText(data): string {
@@ -50,12 +40,12 @@ export class PessoaListComponent implements OnInit {
   }
 
   edit = (event) => {
-    this.router.navigate(['pessoas', 'edit', event.row.data.id]);
+    this.router.navigate(['${entityApiName}', 'edit', event.row.data.id]);
     event.event.preventDefault();
   }
 
   detail = (event) => {
-    this.router.navigate(['pessoas', event.row.data.id]);
+    this.router.navigate(['${entityApiName}', event.row.data.id]);
     event.event.preventDefault();
   }
 

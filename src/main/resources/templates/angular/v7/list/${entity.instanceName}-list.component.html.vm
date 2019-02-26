@@ -1,6 +1,6 @@
-<h2>Pessoas</h2>
-<dx-data-grid id="gridContainer"
-  [dataSource]="pessoaDataSource"
+<h2>${entity.name}</h2>
+<dx-data-grid id="${entity.instanceName}GridContainer"
+  [dataSource]="${entity.instanceName}DataSource"
   [allowColumnReordering]="true"
   [allowColumnResizing]="true"
   [wordWrapEnabled]="true"
@@ -13,9 +13,11 @@
   columnResizingMode="widget"
   width="100%"
   (onToolbarPreparing)="onToolbarPreparing($event.toolbarOptions)">
+  <!--
   <dxo-state-storing [enabled]="true"
     type="localStorage"
-    storageKey="pessoa-list-storage"></dxo-state-storing>
+    storageKey="${entity.instanceName}-list-storage"></dxo-state-storing>
+  !-->
   <dxo-column-chooser [enabled]="true"
     mode="select"
     height="350"
@@ -30,6 +32,7 @@
   <dxo-header-filter [visible]="true"></dxo-header-filter>
   <dxo-search-panel [visible]="true"
     [width]="300"></dxo-search-panel>
+    
   <!-- COLUMNS -->
   <!-- ZONA -->
   <dxi-column dataField="zona.sigla"
@@ -85,6 +88,7 @@
     [visible]="false"
     [allowFiltering]="false"
     [customizeText]="nullableDisplayText"></dxi-column>
+    
   <!-- BUTTONS -->
   <dxi-column type="buttons"
     [fixed]="true"
