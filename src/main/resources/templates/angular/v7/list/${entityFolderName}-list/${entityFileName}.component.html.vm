@@ -37,7 +37,7 @@
   #foreach($attribute in $entity.simpleAttributes)
   <dxi-column 
   	dataField="${attribute.name}"
-    caption="${attribute.name}"
+    caption="${attribute.label}"
     [allowFiltering]="false"></dxi-column>
   #end  
   

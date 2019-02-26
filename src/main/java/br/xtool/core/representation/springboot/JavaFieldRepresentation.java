@@ -25,6 +25,13 @@ public interface JavaFieldRepresentation extends Comparable<JavaFieldRepresentat
 	String getName();
 
 	/**
+	 * Retorna o label do projeto.
+	 * 
+	 * @return
+	 */
+	String getLabel();
+
+	/**
 	 * Retorna o tipo do atributo.
 	 * 
 	 * @return

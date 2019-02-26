@@ -29,6 +29,7 @@ public class EntityAttributeVisitor implements FieldVisitor {
 		addIdAnnotation(attr, plantField);
 		addColumnAnnotation(attr, plantField);
 		addEnumeratedAnnotation(attr);
+		plantField.getTaggedValue("label").ifPresent(tagValue -> attr.getRoasterField().getJavaDoc().addTagValue("@label", tagValue));
 	}
 
 	private void addColumnAnnotation(EntityAttributeRepresentation attr, PlantClassFieldRepresentation plantField) {

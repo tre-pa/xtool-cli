@@ -43,4 +43,12 @@ public interface AngularService {
 	 * @param entity Classe JPA.
 	 */
 	void genNgList(EntityRepresentation entity, NgModuleRepresentation ngModule);
+
+	/**
+	 * Cria um componente de Detail.
+	 * 
+	 * @param entity
+	 * @param ngModule
+	 */
+	void genNgDetail(EntityRepresentation entity, NgModuleRepresentation ngModule);
 }

@@ -149,6 +149,13 @@ public class SpringBootCommand {
 		this.angularService.genNgList(entity, ngModule);
 	}
 
+	@ShellMethod(key = "gen:ng-detail", value = "Gera um compoente de Detail ", group = XtoolCliApplication.SPRINGBOOT_COMMAND_GROUP)
+	@ShellMethodAvailability("availabilitySpringBootCommand")
+	public void genNgDetail(@ShellOption(help = "Entidade JPA", valueProvider = EntityRepresentationValueProvider.class) EntityRepresentation entity,
+			@ShellOption(help = "Módulo Angular", valueProvider = NgModuleRepresentationValueProvider.class) NgModuleRepresentation ngModule) {
+		this.angularService.genNgDetail(entity, ngModule);
+	}
+
 	@ShellMethod(key = "show:class-diagram", value = "Exibe o diagrama de classe do projeto", group = XtoolCliApplication.SPRINGBOOT_COMMAND_GROUP)
 	@ShellMethodAvailability("availabilitySpringBootCommand")
 	public void showClassDiagram(

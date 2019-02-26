@@ -1,0 +1,21 @@
+<h2 fxLayout="row"
+  fxLayoutAlign="space-between center">
+  Detalhes da Pessoa
+  <dx-button text="Excluir"
+    type="default"
+    (onClick)="confirmDelete()"></dx-button>
+</h2>
+<div class="dx-card content-block">
+  #foreach($attribute in $entity.simpleAttributes)	
+  	 <p><b>${attribute.label}: </b>{{ ${entity.instanceName}?.${attribute.name} }}</p>
+  #end
+  <div fxLayout="row"
+    fxLayoutAlign="space-between center">
+    <dx-button text="Editar"
+      type="success"
+      style="margin-right: 10px;"
+      (onClick)="edit()"></dx-button>
+    <dx-button text="Voltar"
+      (onClick)="back()"></dx-button>
+  </div>
+</div>
