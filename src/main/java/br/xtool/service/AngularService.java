@@ -51,4 +51,12 @@ public interface AngularService {
 	 * @param ngModule
 	 */
 	void genNgDetail(EntityRepresentation entity, NgModuleRepresentation ngModule);
+
+	/**
+	 * Cria um componente de Edit para uma entidade.
+	 * 
+	 * @param entity
+	 * @param ngModule
+	 */
+	void genNgEdit(EntityRepresentation entity, NgModuleRepresentation ngModule);
 }

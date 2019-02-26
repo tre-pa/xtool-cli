@@ -1,0 +1,71 @@
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { Title } from '@angular/platform-browser';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import DataSource from 'devextreme/data/data_source';
+
+import { QyStore } from 'src/app/shared/qy/qy-store';
+import { ${entity.name}Service } from 'src/app/service/${entityTsFileName}.service';
+import { ${entity.name} } from 'src/app/domain/${entityTsFileName}';
+
+@Component({
+  selector: 'app-pessoa-edit',
+  templateUrl: './pessoa-edit.component.html',
+  styleUrls: ['./pessoa-edit.component.scss']
+})
+export class PessoaEditComponent implements OnInit, OnDestroy {
+
+  idPessoa: number;
+  pessoa: Pessoa;
+
+  destroy$: Subject<boolean> = new Subject<boolean>();
+
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private ${entity.instanceName}Service: ${entity.name}Service,
+    private httpClient: HttpClient,
+    private router: Router,
+    private title: Title
+  ) { }
+
+  ngOnInit() {
+    this.processPessoa();
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next(true);
+    this.destroy$.unsubscribe();
+  }
+
+  private processPessoa() {
+    this.idPessoa = +this.activatedRoute.snapshot.params['idPessoa'];
+    if (this.idPessoa && !isNaN(this.idPessoa)) this.edit();
+    else this.create();
+  }
+
+  private create() {
+    this.title.setTitle('Nova Pessoa');
+    this.pessoa = new Pessoa();
+  }
+
+  private edit() {
+    this.title.setTitle('Edição de Pessoa');
+    this.pessoaService.findById(this.idPessoa)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(pessoa => this.pessoa = pessoa);
+  }
+
+  back = () => {
+    this.router.navigate(['pessoas']);
+  }
+
+  save(event) {
+    this.pessoaService.save(this.pessoa)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((pessoa) => this.router.navigate(['pessoas', pessoa.id]));
+    event.preventDefault();
+  }
+
+}

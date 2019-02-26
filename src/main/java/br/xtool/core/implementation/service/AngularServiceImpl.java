@@ -49,7 +49,8 @@ public class AngularServiceImpl implements AngularService {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see br.xtool.service.AngularService#newApp(java.lang.String, java.lang.String)
+	 * @see br.xtool.service.AngularService#newApp(java.lang.String,
+	 * java.lang.String)
 	 */
 	@Override
 	public void newApp(String name, String version) {
@@ -78,7 +79,9 @@ public class AngularServiceImpl implements AngularService {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see br.xtool.service.AngularService#createNgEntity(br.xtool.core.representation. springboot.EntityRepresentation)
+	 * @see
+	 * br.xtool.service.AngularService#createNgEntity(br.xtool.core.representation.
+	 * springboot.EntityRepresentation)
 	 */
 	@Override
 	public NgEntityRepresentation genNgEntity(EntityRepresentation entity) {
@@ -107,7 +110,9 @@ public class AngularServiceImpl implements AngularService {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see br.xtool.service.AngularService#createNgEnum(br.xtool.core.representation. springboot.JavaEnumRepresentation)
+	 * @see
+	 * br.xtool.service.AngularService#createNgEnum(br.xtool.core.representation.
+	 * springboot.JavaEnumRepresentation)
 	 */
 	@Override
 	public NgEnumRepresentation genNgEnum(JavaEnumRepresentation javaEnum) {
@@ -134,7 +139,9 @@ public class AngularServiceImpl implements AngularService {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see br.xtool.service.AngularService#genNgService(br.xtool.core.representation. springboot.EntityRepresentation)
+	 * @see
+	 * br.xtool.service.AngularService#genNgService(br.xtool.core.representation.
+	 * springboot.EntityRepresentation)
 	 */
 	@Override
 	public NgServiceRepresentation genNgService(EntityRepresentation entity) {
@@ -190,7 +197,36 @@ public class AngularServiceImpl implements AngularService {
 	public void genNgDetail(EntityRepresentation entity, NgModuleRepresentation ngModule) {
 		NgProjectRepresentation ngProject = genNgAssociatedProject();
 
-		String entityFileName = NgClassRepresentation.genFileName(entity.getName()).concat("-detail");
+//		String entityFileName = NgClassRepresentation.genFileName(entity.getName()).concat("-detail");
+//		String entityFolderName = Strman.toKebabCase(entity.getInstanceName());
+
+		Map<String, Object> vars = new HashMap<String, Object>() {
+			private static final long serialVersionUID = 1L;
+			{
+				put("Strman", Strman.class);
+				put("StringUtils", StringUtils.class);
+//				put("entityFileName", entityFileName);
+//				put("entityTsFileName", Strman.toKebabCase(entity.getInstanceName()));
+//				put("entityFolderName", entityFolderName);
+//				put("entityClassName", entity.getName());
+				put("entity", entity);
+				put("title", InflectorHelper.getInstance().pluralize(entity.getName()));
+				put("entityApiName", InflectorHelper.getInstance().pluralize(Strman.toKebabCase(entity.getName())));
+				put("typescriptTypeMap", NgClassRepresentation.typescriptTypeMap());
+			}
+		};
+		Path resourcePath = Paths.get("angular").resolve(ngProject.getProjectVersion().getName()).resolve("detail");
+		Path destinationPath = ngModule.getPath().getParent().resolve(entity.getTsFileName());
+
+		this.fs.copy(resourcePath, vars, destinationPath);
+
+	}
+
+	@Override
+	public void genNgEdit(EntityRepresentation entity, NgModuleRepresentation ngModule) {
+		NgProjectRepresentation ngProject = genNgAssociatedProject();
+
+		String entityFileName = NgClassRepresentation.genFileName(entity.getName()).concat("-edit");
 		String entityFolderName = Strman.toKebabCase(entity.getInstanceName());
 
 		Map<String, Object> vars = new HashMap<String, Object>() {
@@ -208,7 +244,7 @@ public class AngularServiceImpl implements AngularService {
 				put("typescriptTypeMap", NgClassRepresentation.typescriptTypeMap());
 			}
 		};
-		Path resourcePath = Paths.get("angular").resolve(ngProject.getProjectVersion().getName()).resolve("detail");
+		Path resourcePath = Paths.get("angular").resolve(ngProject.getProjectVersion().getName()).resolve("edit");
 		Path destinationPath = ngModule.getPath().getParent().resolve(entityFolderName);
 
 		this.fs.copy(resourcePath, vars, destinationPath);

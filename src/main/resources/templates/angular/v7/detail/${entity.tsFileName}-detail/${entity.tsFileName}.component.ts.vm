@@ -6,12 +6,12 @@ import { takeUntil } from 'rxjs/operators';
 import { confirm } from 'devextreme/ui/dialog';
 import notify from 'devextreme/ui/notify';
 
-import { ${entity.name}Service } from 'src/app/service/${entityTsFileName}.service';
-import { ${entity.name} } from 'src/app/domain/${entityTsFileName}';
+import { ${entity.name}Service } from 'src/app/service/${entity.tsFileName}.service';
+import { ${entity.name} } from 'src/app/domain/${entity.tsFileName}';
 
 @Component({
-  selector: 'app-${entityFileName}',
-  templateUrl: './${entityFileName}.component.html',
+  selector: 'app-${entity.tsFileName}',
+  templateUrl: './${entity.tsFileName}.component.html',
   styles: []
 })
 export class ${entity.name}DetailComponent implements OnInit, OnDestroy {

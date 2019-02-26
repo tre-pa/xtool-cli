@@ -53,6 +53,13 @@ public interface JavaClassRepresentation extends Comparable<JavaClassRepresentat
 	String getQualifiedName();
 
 	/**
+	 * Retorna o nome no formato de arquivo TypeScript.
+	 * 
+	 * @return
+	 */
+	String getTsFileName();
+
+	/**
 	 * 
 	 * @return
 	 */

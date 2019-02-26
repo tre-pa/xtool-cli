@@ -24,6 +24,7 @@ import br.xtool.core.representation.springboot.JavaPackageRepresentation;
 import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import strman.Strman;
 
 public class JavaClassRepresentationImpl implements JavaClassRepresentation {
 
@@ -55,6 +56,11 @@ public class JavaClassRepresentationImpl implements JavaClassRepresentation {
 	@Override
 	public String getInstanceName() {
 		return StringUtils.uncapitalize(this.getName());
+	}
+
+	@Override
+	public String getTsFileName() {
+		return StringUtils.uncapitalize(Strman.toKebabCase(this.getName()));
 	}
 
 	/**
@@ -195,7 +201,9 @@ public class JavaClassRepresentationImpl implements JavaClassRepresentation {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see br.xtool.core.representation.EJavaClass#addEqualsAndHashCode(java.lang.String[])
+	 * @see
+	 * br.xtool.core.representation.EJavaClass#addEqualsAndHashCode(java.lang.String
+	 * [])
 	 */
 	@Override
 	public JavaAnnotationRepresentation<JavaClassSource> addEqualsAndHashCodeAnnotation(String... attributes) {
