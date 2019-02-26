@@ -35,10 +35,12 @@
     
   <!-- COLUMNS -->
   #foreach($attribute in $entity.simpleAttributes)
-  <dxi-column dataField="${attribute.name}"
-     caption="${attribute.name}"
-     [allowFiltering]="false"></dxi-column>
+  <dxi-column 
+  	dataField="${attribute.name}"
+    caption="${attribute.name}"
+    [allowFiltering]="false"></dxi-column>
   #end  
+  
   <!-- BUTTONS -->
   <dxi-column type="buttons"
     [fixed]="true"

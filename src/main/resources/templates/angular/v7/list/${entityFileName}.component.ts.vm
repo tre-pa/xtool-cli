@@ -35,10 +35,6 @@ export class ${entity.name}ListComponent implements OnInit {
     this.router.navigate(['${entity.pluralInstanceName}', 'edit']);
   }
 
-  nullableDisplayText(data): string {
-    return data.value || '-';
-  }
-
   edit = (event) => {
     this.router.navigate(['${entity.pluralInstanceName}', 'edit', event.row.data.id]);
     event.event.preventDefault();
