@@ -32,16 +32,16 @@ export class ${entity.name}ListComponent implements OnInit {
   }
 
   create() {
-    this.router.navigate(['${entity.pluralInstanceName}', 'edit']);
+    this.router.navigate(['${entity.apiName}', 'edit']);
   }
 
   edit = (event) => {
-    this.router.navigate(['${entity.pluralInstanceName}', 'edit', event.row.data.id]);
+    this.router.navigate(['${entity.apiName}', 'edit', event.row.data.id]);
     event.event.preventDefault();
   }
 
   detail = (event) => {
-    this.router.navigate(['${entity.pluralInstanceName}', event.row.data.id]);
+    this.router.navigate(['${entity.apiName}', event.row.data.id]);
     event.event.preventDefault();
   }
 
