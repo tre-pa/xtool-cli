@@ -7,8 +7,8 @@ import DataSource from 'devextreme/data/data_source';
 import { QyStore } from 'src/app/shared/qy/qy-store';
 
 @Component({
-  selector: 'app-${entity.instanceName}-list',
-  templateUrl: './${entity.instanceName}-list.component.html',
+  selector: 'app-${entityFileName}',
+  templateUrl: './${entityFileName}.component.html',
   styles: []
 })
 export class ${entity.name}ListComponent implements OnInit {
