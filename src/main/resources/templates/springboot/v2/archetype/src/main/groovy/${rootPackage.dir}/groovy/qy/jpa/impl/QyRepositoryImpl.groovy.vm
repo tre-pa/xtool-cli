@@ -37,6 +37,9 @@ class QyRepositoryImpl<T> implements QyRepository<T>{
 	Map operations = [:]
 
 	T type
+	
+	@Autowired
+	private ApplicationContext applicationContext
 
 	@PostConstruct
 	protected void init() {
@@ -50,7 +53,8 @@ class QyRepositoryImpl<T> implements QyRepository<T>{
 	@Override
 	public QyPage<T> findAll(Class<T> entityClass, Pageable pageable, QyProjectable projectable, Class<? extends QySpecification<T>> specificationClass, QyPayload payload) {
 		if(payload?.filterable) {
-			QySpecification<T>  specification = specificationClass.getDeclaredConstructor().newInstance();
+			//QySpecification<T>  specification = specificationClass.getDeclaredConstructor().newInstance();
+			QySpecification<T>  specification = applicationContext.getBean(specificationClass)
 			Specification<T> finalSpec = specification.fixedSpecification().and(specification.variableSpecification(entityClass, payload.filterable))
 			if(projectable?.fields) return this.findAllWithProjection(entityClass, pageable, projectable, finalSpec, payload.aggregables)
 			return this.findAllWithoutProjection(entityClass, pageable, finalSpec, payload.aggregables)
