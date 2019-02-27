@@ -55,7 +55,14 @@ public class JavaFieldRepresentationImpl implements JavaFieldRepresentation {
 
 	@Override
 	public String getLabel() {
-		return this.fieldSource.getName();
+		// @formatter:off
+		return this.fieldSource.getJavaDoc().getTags()
+			.stream()
+			.filter(docTag -> docTag.getName().equals("@label"))
+			.map(docTag -> docTag.getValue())
+			.findAny()
+			.orElse(this.fieldSource.getName());
+		// @formatter:on
 	}
 
 	@Override

@@ -27,7 +27,9 @@ public abstract class TemplateBuilder {
 		}
 
 		public TemplateBuilderBuilder tpl(String template, int tabs) {
-			this.template.append(StringUtils.repeat("\t", tabs).concat(template.concat("\n")));
+			if (!StringUtils.isBlank(template)) {
+				this.template.append(StringUtils.repeat("\t", tabs).concat(template.concat("\n")));
+			}
 			return this;
 		}
 

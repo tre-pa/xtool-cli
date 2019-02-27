@@ -24,7 +24,7 @@ public class NgEditTemplates {
 					.tpl("<dxi-item dataField=\"{{attr.name}}\"",1)
 					.tpl("  [editorOptions]=\"{ hint: 'Digite o {{attr.label}}' }\">",3)
 					.tpl("  <dxo-label text=\"{{attr.label}}\"></dxo-label>",3)
-					.tpl(	addRequiredValidation(attr),5)
+					.tpl(	addRequiredValidation(attr),4)
 					.tpl("</dxi-item>",3)
 					.put("attr", attr)
 					.build());

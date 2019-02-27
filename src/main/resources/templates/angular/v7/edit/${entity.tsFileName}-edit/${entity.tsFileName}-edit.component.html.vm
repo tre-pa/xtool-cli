@@ -1,4 +1,4 @@
-<h2>{{ id ? 'Edição de' : 'Nova' }} Pessoa</h2>
+<h2>{{ id ? 'Edição de' : 'Nova' }} ${entity.name}</h2>
 <div class="dx-card content-block">
   <form autocomplete="off"
     (submit)="save($event)">

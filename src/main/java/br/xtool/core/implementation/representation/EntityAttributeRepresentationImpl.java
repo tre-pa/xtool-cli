@@ -1,11 +1,13 @@
 package br.xtool.core.implementation.representation;
 
+import java.util.Objects;
 import java.util.Optional;
 
 import javax.persistence.Column;
 import javax.persistence.Lob;
 import javax.persistence.Transient;
 
+import org.jboss.forge.roaster.model.source.AnnotationSource;
 import org.jboss.forge.roaster.model.source.FieldSource;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.jboss.forge.roaster.model.util.Types;
@@ -76,7 +78,10 @@ public class EntityAttributeRepresentationImpl extends JavaFieldRepresentationIm
 	@Override
 	public boolean isRequired() {
 		if (this.getRoasterField().hasAnnotation(Column.class)) {
-			return this.getRoasterField().getAnnotation(Column.class).getLiteralValue("nullable").equals("false");
+			AnnotationSource<JavaClassSource> annColumn = this.getRoasterField().getAnnotation(Column.class);
+			if (Objects.nonNull(annColumn.getLiteralValue("nullable"))) {
+				return annColumn.getLiteralValue("nullable").equals("false");
+			}
 		}
 		return false;
 	}
