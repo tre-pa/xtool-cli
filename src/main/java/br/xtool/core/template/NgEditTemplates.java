@@ -25,6 +25,7 @@ public class NgEditTemplates {
 					.tpl("  [editorOptions]=\"{ hint: 'Digite o {{attr.label}}' }\">",3)
 					.tpl("  <dxo-label text=\"{{attr.label}}\"></dxo-label>",3)
 					.tpl(	addRequiredValidation(attr),4)
+					.tpl(	addStringLengthValidation(attr),4)
 					.tpl("</dxi-item>",3)
 					.put("attr", attr)
 					.build());
@@ -37,5 +38,14 @@ public class NgEditTemplates {
 			return "<dxi-validation-rule type=\"required\"></dxi-validation-rule>";
 		}
 		return "";
+	}
+
+	private String addStringLengthValidation(EntityAttributeRepresentation attr) {
+		// @formatter:off
+		return TemplateBuilder.builder()
+				.tpl("<dxi-validation-rule type=\"stringLength\" max=\"{{ max }}\"></dxi-validation-rule>")
+				.put("max", attr.getColumnLength())
+				.build();
+		// @formatter:on
 	}
 }

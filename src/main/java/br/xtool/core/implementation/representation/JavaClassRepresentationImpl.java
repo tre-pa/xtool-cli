@@ -45,12 +45,19 @@ public class JavaClassRepresentationImpl implements JavaClassRepresentation {
 
 	@Override
 	public String getPluralName() {
-		return InflectorHelper.getInstance().pluralize(this.getName());
+		// @formatter:off
+		return this.getJavaDoc().getTags()
+			.stream()
+			.filter(docTag -> docTag.getName().equals("@plural"))
+			.map(docTag -> docTag.getValue())
+			.findAny()
+			.orElse(InflectorHelper.getInstance().pluralize(this.getName()));
+		// @formatter:on
 	}
 
 	@Override
 	public String getPluralInstanceName() {
-		return StringUtils.uncapitalize(InflectorHelper.getInstance().pluralize(this.getName()));
+		return StringUtils.uncapitalize(this.getPluralName());
 	}
 
 	@Override
@@ -206,9 +213,7 @@ public class JavaClassRepresentationImpl implements JavaClassRepresentation {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * br.xtool.core.representation.EJavaClass#addEqualsAndHashCode(java.lang.String
-	 * [])
+	 * @see br.xtool.core.representation.EJavaClass#addEqualsAndHashCode(java.lang.String [])
 	 */
 	@Override
 	public JavaAnnotationRepresentation<JavaClassSource> addEqualsAndHashCodeAnnotation(String... attributes) {

@@ -34,6 +34,13 @@ public interface EntityAttributeRepresentation extends JavaFieldRepresentation {
 	boolean isRequired();
 
 	/**
+	 * Retorna o tamanho máximo da String.
+	 * 
+	 * @return
+	 */
+	Integer getColumnLength();
+
+	/**
 	 * Retorna o relacionamento JPA.
 	 * 
 	 * @return

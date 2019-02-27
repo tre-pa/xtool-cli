@@ -115,4 +115,16 @@ public class EntityAttributeRepresentationImpl extends JavaFieldRepresentationIm
 		// @formatter:on
 	}
 
+	@Override
+	public Integer getColumnLength() {
+		if (this.getRoasterField().hasAnnotation(Column.class)) {
+			// @formatter:off
+			Optional.ofNullable(this.getRoasterField().getAnnotation(Column.class).getLiteralValue("length"))
+				.map(Integer::valueOf)
+				.orElse(255);
+			// @formatter:on
+		}
+		return 255;
+	}
+
 }
