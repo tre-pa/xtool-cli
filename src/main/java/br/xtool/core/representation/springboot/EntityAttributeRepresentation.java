@@ -27,6 +27,13 @@ public interface EntityAttributeRepresentation extends JavaFieldRepresentation {
 	boolean isLobField();
 
 	/**
+	 * Verifica se o atributo é requerido.
+	 * 
+	 * @return
+	 */
+	boolean isRequired();
+
+	/**
 	 * Retorna o relacionamento JPA.
 	 * 
 	 * @return

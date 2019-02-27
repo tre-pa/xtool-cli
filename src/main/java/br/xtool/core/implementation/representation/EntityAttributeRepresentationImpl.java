@@ -2,6 +2,7 @@ package br.xtool.core.implementation.representation;
 
 import java.util.Optional;
 
+import javax.persistence.Column;
 import javax.persistence.Lob;
 import javax.persistence.Transient;
 
@@ -65,6 +66,19 @@ public class EntityAttributeRepresentationImpl extends JavaFieldRepresentationIm
 	@Override
 	public boolean isRelationshipField() {
 		return this.getRelationship().isPresent();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.xtool.core.representation.springboot.EntityAttributeRepresentation#isRequired()
+	 */
+	@Override
+	public boolean isRequired() {
+		if (this.getRoasterField().hasAnnotation(Column.class)) {
+			return this.getRoasterField().getAnnotation(Column.class).getLiteralValue("nullable").equals("false");
+		}
+		return false;
 	}
 
 	/*

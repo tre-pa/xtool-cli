@@ -31,7 +31,7 @@ export class ${entity.name}EditComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.processPessoa();
+    this.process${entity.name}();
   }
 
   ngOnDestroy() {
