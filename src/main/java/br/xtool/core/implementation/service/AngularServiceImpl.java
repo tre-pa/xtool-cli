@@ -8,6 +8,7 @@ import java.util.Optional;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +31,7 @@ import br.xtool.core.representation.springboot.EntityAttributeRepresentation;
 import br.xtool.core.representation.springboot.EntityRepresentation;
 import br.xtool.core.representation.springboot.JavaEnumRepresentation;
 import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
+import br.xtool.core.template.NgEditTemplates;
 import br.xtool.service.AngularService;
 import strman.Strman;
 
@@ -46,11 +48,13 @@ public class AngularServiceImpl implements AngularService {
 	@Autowired
 	private FS fs;
 
+	@Autowired
+	private ApplicationContext appCtx;
+
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see br.xtool.service.AngularService#newApp(java.lang.String,
-	 * java.lang.String)
+	 * @see br.xtool.service.AngularService#newApp(java.lang.String, java.lang.String)
 	 */
 	@Override
 	public void newApp(String name, String version) {
@@ -79,9 +83,7 @@ public class AngularServiceImpl implements AngularService {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * br.xtool.service.AngularService#createNgEntity(br.xtool.core.representation.
-	 * springboot.EntityRepresentation)
+	 * @see br.xtool.service.AngularService#createNgEntity(br.xtool.core.representation. springboot.EntityRepresentation)
 	 */
 	@Override
 	public NgEntityRepresentation genNgEntity(EntityRepresentation entity) {
@@ -110,9 +112,7 @@ public class AngularServiceImpl implements AngularService {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * br.xtool.service.AngularService#createNgEnum(br.xtool.core.representation.
-	 * springboot.JavaEnumRepresentation)
+	 * @see br.xtool.service.AngularService#createNgEnum(br.xtool.core.representation. springboot.JavaEnumRepresentation)
 	 */
 	@Override
 	public NgEnumRepresentation genNgEnum(JavaEnumRepresentation javaEnum) {
@@ -139,9 +139,7 @@ public class AngularServiceImpl implements AngularService {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * br.xtool.service.AngularService#genNgService(br.xtool.core.representation.
-	 * springboot.EntityRepresentation)
+	 * @see br.xtool.service.AngularService#genNgService(br.xtool.core.representation. springboot.EntityRepresentation)
 	 */
 	@Override
 	public NgServiceRepresentation genNgService(EntityRepresentation entity) {
@@ -229,6 +227,7 @@ public class AngularServiceImpl implements AngularService {
 			{
 				put("Strman", Strman.class);
 				put("StringUtils", StringUtils.class);
+				put("ngEditTemplates", appCtx.getBean(NgEditTemplates.class));
 				put("entityFileName", entityFileName);
 				put("entityTsFileName", Strman.toKebabCase(entity.getInstanceName()));
 				put("entityFolderName", entityFolderName);

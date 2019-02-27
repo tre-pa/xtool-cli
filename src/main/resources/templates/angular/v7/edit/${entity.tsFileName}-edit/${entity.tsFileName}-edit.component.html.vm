@@ -10,15 +10,7 @@
       requiredMark="<span title='campo obrigatório'>*</span>">
       <dxi-item itemType="group" colCount="2">
 
-	  #foreach($attr in $entity.attributes)
-	  ## Atributos do Tipo String
-	  #if($attr.stringField)
-      <dxi-item dataField="${attr.name}"
-	      [editorOptions]="{ hint: 'Digite o ${attr.label}' }">
-	      <dxo-label text="${attr.label}"></dxo-label>
-      </dxi-item>
-	  #end
-	  #end
+	  ${ngEditTemplates.createHtmlAttributesDecl($entity)}
       
       <dxi-item itemType="group"
         colCount="2"
