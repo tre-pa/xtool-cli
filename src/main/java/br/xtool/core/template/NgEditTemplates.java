@@ -13,6 +13,7 @@ public class NgEditTemplates {
 		StringBuilder sb = new StringBuilder();
 		for (EntityAttributeRepresentation attr : entity.getAttributes()) {
 			addHtmlStringFieldDecl(sb, attr);
+			addHtmlTemporalFieldDecl(sb, attr);
 		}
 		return sb.toString();
 	}
@@ -30,6 +31,29 @@ public class NgEditTemplates {
 					.tpl("  <dxo-label text=\"{{attr.label}}\"></dxo-label>",3)
 					.tpl(	addHtmlRequiredValidation(attr),4)
 					.tpl(	addHtmlStringLengthValidation(attr),4)
+					.tpl("</dxi-item>",3)
+					.put("attr", attr)
+					.build());
+			// @formatter:on
+		}
+	}
+	
+	private void addHtmlTemporalFieldDecl(StringBuilder sb, EntityAttributeRepresentation attr) {
+		if(attr.isTemporalField()) {
+			// @formatter:off
+			sb.append(TemplateBuilder.builder()
+					.tpl("<!-- {{attr.label}} !-->",1)
+					.tpl("<dxi-item dataField=\"{{attr.name}}\"",3)
+					.tpl("	editorType=\"dxDateBox\"",3)
+					.tpl("  [editorOptions]=\"{  ",3)
+					.tpl("	  type: 'datetime',",4)
+					.tpl("	  width: '100%',",4)
+					.tpl("	  useMaskBehavior: true,",4)
+					.tpl("	  openOnFieldClick: true,",4)
+					.tpl(" 	  hint: 'Selecione a {{attr.label}}' ", 4)
+					.tpl("  }\">",3)
+					.tpl("  <dxo-label text=\"{{attr.label}}\"></dxo-label>",3)
+					.tpl(	addHtmlRequiredValidation(attr),4)
 					.tpl("</dxi-item>",3)
 					.put("attr", attr)
 					.build());
