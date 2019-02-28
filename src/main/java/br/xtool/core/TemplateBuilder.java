@@ -22,7 +22,9 @@ public abstract class TemplateBuilder {
 		}
 
 		public TemplateBuilderBuilder tpl(String template) {
-			this.template.append(template.concat("\n"));
+			if (!StringUtils.isBlank(template)) {
+				this.template.append(template.concat("\n"));
+			}
 			return this;
 		}
 
@@ -33,14 +35,23 @@ public abstract class TemplateBuilder {
 			return this;
 		}
 
-//		public <T> TemplateBuilderBuilder tplIf(boolean predicate, String tpl) {
-//			TemplateBuilderBuilder builder = TemplateBuilder.builder();
-//			if (predicate) {
-//				builder.model = this.model;
-//				this.tpl(builder.tpl(tpl).build());
-//			}
-//			return this;
-//		}
+		public <T> TemplateBuilderBuilder tplIf(boolean predicate, String tpl) {
+			TemplateBuilderBuilder builder = TemplateBuilder.builder();
+			if (predicate) {
+				builder.model = this.model;
+				this.tpl(builder.tpl(tpl).build());
+			}
+			return this;
+		}
+
+		public <T> TemplateBuilderBuilder tplIf(boolean predicate, String tpl, int tabs) {
+			TemplateBuilderBuilder builder = TemplateBuilder.builder();
+			if (predicate) {
+				builder.model = this.model;
+				this.tpl(builder.tpl(tpl).build(), tabs);
+			}
+			return this;
+		}
 
 //		public <T, C extends Collection<T>> TemplateBuilderBuilder tplFor(C collection, BiConsumer<TemplateBuilderBuilder, T> biConsumer) {
 //			collection.forEach(item -> {

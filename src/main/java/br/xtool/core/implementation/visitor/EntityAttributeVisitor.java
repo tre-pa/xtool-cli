@@ -29,6 +29,16 @@ public class EntityAttributeVisitor implements FieldVisitor {
 		addIdAnnotation(attr, plantField);
 		addColumnAnnotation(attr, plantField);
 		addEnumeratedAnnotation(attr);
+		addLabelTag(attr, plantField);
+		addMaskTag(attr, plantField);
+
+	}
+
+	private void addMaskTag(EntityAttributeRepresentation attr, PlantClassFieldRepresentation plantField) {
+		plantField.getTaggedValue("mask").ifPresent(tagValue -> attr.getRoasterField().getJavaDoc().addTagValue("@mask", tagValue));
+	}
+
+	private void addLabelTag(EntityAttributeRepresentation attr, PlantClassFieldRepresentation plantField) {
 		plantField.getTaggedValue("label").ifPresent(tagValue -> attr.getRoasterField().getJavaDoc().addTagValue("@label", tagValue));
 	}
 
