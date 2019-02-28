@@ -2,15 +2,21 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { CrudService } from 'src/app/shared/crud.service';
-import { ${entityClassName} } from 'src/app/domain/${entityFileName}';
+import { ${entity.name} } from 'src/app/domain/${entityFileName}';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ${entityClassName}Service extends CrudService<${entityClassName}> {
+export class ${entity.name}Service extends CrudService<${entity.name}> {
 
   constructor(private http: HttpClient) {
-    super(http, '/${entityApiName}');
+    super(http, '/${entity.apiName}');
+  }
+  
+  save(${entity.instanceName}: ${entity.name}): Observable<${entity.name}> {
+    return ${entity.instanceName}.id ?
+      this.update(${entity.instanceName}.id, ${entity.instanceName}) :
+      this.insert(${entity.instanceName});
   }
 
 }
