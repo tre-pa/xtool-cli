@@ -240,7 +240,7 @@ public class AngularServiceImpl implements AngularService {
 		};
 		Path resourcePath = Paths.get("angular").resolve(ngProject.getProjectVersion().getName()).resolve("edit");
 		Path destinationPath = ngModule.getPath().getParent().resolve(entityFolderName);
-
+		
 		this.fs.copy(resourcePath, vars, destinationPath);
 
 	}

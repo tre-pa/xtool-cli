@@ -144,6 +144,7 @@ public class SpringBootServiceImpl implements SpringBootService {
 				.orElseGet(() -> repositoryTemplates.newRepositoryRepresentation(springBootProject, entity));
 		// @formatter:on
 		this.save(repository);
+		springBootProject.refresh();
 		return repository;
 	}
 
@@ -183,6 +184,7 @@ public class SpringBootServiceImpl implements SpringBootService {
 				.findFirst()
 				.orElseGet(() -> serviceClassTemplates.newServiceClassRepresentation(springBootProject, repository));
 		this.save(serviceClass);
+		springBootProject.refresh();
 		return serviceClass;
 	}
 
@@ -204,6 +206,7 @@ public class SpringBootServiceImpl implements SpringBootService {
 				.orElseGet(() -> restClassTemplates.newRestClassRepresentation(springBootProject, repository));
 		// @formatter:on
 		this.save(restClass);
+		springBootProject.refresh();
 		return restClass;
 	}
 

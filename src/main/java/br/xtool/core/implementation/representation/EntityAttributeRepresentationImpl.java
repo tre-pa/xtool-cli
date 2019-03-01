@@ -63,7 +63,8 @@ public class EntityAttributeRepresentationImpl extends JavaFieldRepresentationIm
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see br.xtool.core.representation.springboot.EntityAttributeRepresentation# isRelationshipField()
+	 * @see br.xtool.core.representation.springboot.EntityAttributeRepresentation#
+	 * isRelationshipField()
 	 */
 	@Override
 	public boolean isRelationshipField() {
@@ -73,7 +74,8 @@ public class EntityAttributeRepresentationImpl extends JavaFieldRepresentationIm
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see br.xtool.core.representation.springboot.EntityAttributeRepresentation#isRequired()
+	 * @see br.xtool.core.representation.springboot.EntityAttributeRepresentation#
+	 * isRequired()
 	 */
 	@Override
 	public boolean isRequired() {
@@ -125,6 +127,17 @@ public class EntityAttributeRepresentationImpl extends JavaFieldRepresentationIm
 			// @formatter:on
 		}
 		return 255;
+	}
+
+	@Override
+	public Optional<String> getMask() {
+		// @formatter:off
+		return this.fieldSource.getJavaDoc().getTags()
+			.stream()
+			.filter(docTag -> docTag.getName().equals("@mask"))
+			.map(docTag -> docTag.getValue())
+			.findAny();
+		// @formatter:on
 	}
 
 }

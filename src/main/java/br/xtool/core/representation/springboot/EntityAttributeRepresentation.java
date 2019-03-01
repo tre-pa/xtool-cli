@@ -41,6 +41,13 @@ public interface EntityAttributeRepresentation extends JavaFieldRepresentation {
 	Integer getColumnLength();
 
 	/**
+	 * Retorna a mascara aplicável ao atributo se houver.
+	 * 
+	 * @return
+	 */
+	Optional<String> getMask();
+
+	/**
 	 * Retorna o relacionamento JPA.
 	 * 
 	 * @return
