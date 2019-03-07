@@ -32,6 +32,7 @@ import br.xtool.core.representation.springboot.EntityRepresentation;
 import br.xtool.core.representation.springboot.JavaEnumRepresentation;
 import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 import br.xtool.core.template.NgEditTemplates;
+import br.xtool.core.template.NgListTemplates;
 import br.xtool.service.AngularService;
 import strman.Strman;
 
@@ -176,6 +177,7 @@ public class AngularServiceImpl implements AngularService {
 			{
 				put("Strman", Strman.class);
 				put("StringUtils", StringUtils.class);
+				put("ngListTemplates", appCtx.getBean(NgListTemplates.class));
 				put("entityFileName", entityFileName);
 				put("entityFolderName", entityFolderName);
 				put("entityClassName", entity.getName());
@@ -240,7 +242,7 @@ public class AngularServiceImpl implements AngularService {
 		};
 		Path resourcePath = Paths.get("angular").resolve(ngProject.getProjectVersion().getName()).resolve("edit");
 		Path destinationPath = ngModule.getPath().getParent().resolve(entityFolderName);
-		
+
 		this.fs.copy(resourcePath, vars, destinationPath);
 
 	}
