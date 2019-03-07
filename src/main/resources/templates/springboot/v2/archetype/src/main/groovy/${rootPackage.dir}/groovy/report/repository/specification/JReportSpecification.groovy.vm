@@ -3,6 +3,9 @@ package ${rootPackage.name}.groovy.report.repository.specification
 import ${rootPackage.name}.groovy.qy.QySpecification
 import ${rootPackage.name}.groovy.report.domain.JReport
 
+import org.springframework.stereotype.Component;
+
+@Component
 class JReportSpecification extends QySpecification<JReport> {
 
 }
