@@ -1,37 +1,42 @@
 package ${rootPackage.name}.groovy.qy.filter;
+import ${rootPackage.name}.groovy.qy.QyAttributePath
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.CriteriaBuilder
+import javax.persistence.criteria.CriteriaQuery
+import javax.persistence.criteria.Path
+import javax.persistence.criteria.Predicate
+import javax.persistence.criteria.Root
+
 
 class QyNotEqualsToPredicate extends QyPredicate {
 
 	@Override
 	String toSql() {
-		if (isBoolean()) return this.dataField + " = " + ((boolean) this.value ? 0 : 1);
-		if (getValue().equals("@null")) return this.getDataField() + " is not null ";
-		if (getValue().equals("@notnull")) return this.getDataField() + " is null ";
-		this.getDataField() + " <> " + this.surroundSingleQuotes(this.getValue());
+		if (isBoolean()) return this.dataField + " = " + ((boolean) this.value ? 0 : 1)
+		if (getValue().equals("@null")) return this.getDataField() + " is not null "
+		if (getValue().equals("@notnull")) return this.getDataField() + " is null "
+		this.getDataField() + " <> " + this.surroundSingleQuotes(this.getValue())
 	}
 
 	@Override
 	String toJpql() {
-		if (isBoolean()) return this.getDataField() + " is " + !(boolean) this.getValue();
-		if (getValue().equals("@null")) return this.getDataField() + " is not null ";
-		if (getValue().equals("@notnull")) return this.getDataField() + " is null ";
-		this.getDataField() + " <> " + this.surroundSingleQuotes(this.getValue());
+		if (isBoolean()) return this.getDataField() + " is " + !(boolean) this.getValue()
+		if (getValue().equals("@null")) return this.getDataField() + " is not null "
+		if (getValue().equals("@notnull")) return this.getDataField() + " is null "
+		this.getDataField() + " <> " + this.surroundSingleQuotes(this.getValue())
 	}
 
 	@Override
-	<T> Predicate toPredicate(Class<T> clazz, Root<T> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
-		Class<?> dataFieldType = getDataType(clazz, this.getDataField());
-		if (dataFieldType == Boolean.class && (boolean) this.getValue() == true) return cb.isFalse(root.get(this.getDataField()));
-		if (dataFieldType == Boolean.class && (boolean) this.getValue() == false) return cb.isTrue(root.get(this.getDataField()));
-		if (getValue() as String == "@notnull") return cb.isNull(root.get(this.getDataField()));
-		if (getValue() as String == "@null") return cb.isNotNull(root.get(this.getDataField()));
-		if (dataFieldType.isEnum()) return cb.notEqual(root.get(this.dataField), Enum.valueOf(dataFieldType, this.value))
-		cb.notEqual(root.get(this.getDataField()), this.getValue());
-	}
+	<T> Predicate toPredicate(Class<T> clazz, Root<T> root, CriteriaQuery<?> cq, CriteriaBuilder cb, Map paths) {
+		QyAttributePath qyAttr = paths.get(this.dataField)
+		Class<?> dataFieldType = qyAttr ? qyAttr.fieldType : getDataType(clazz, this.dataField)
+		Path path = qyAttr ? qyAttr.map.apply(root): root.get(this.dataField)
 
+		if (dataFieldType == Boolean.class && (boolean) this.getValue() == true) return cb.isFalse(path)
+		if (dataFieldType == Boolean.class && (boolean) this.getValue() == false) return cb.isTrue(path)
+		if (getValue() as String == "@notnull") return cb.isNull(path)
+		if (getValue() as String == "@null") return cb.isNotNull(path)
+		if (dataFieldType.isEnum()) return cb.notEqual(path, Enum.valueOf(dataFieldType, this.value))
+		cb.notEqual(root.get(this.getDataField()), this.getValue())
+	}
 }

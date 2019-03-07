@@ -1,0 +1,29 @@
+package ${rootPackage.name}.groovy.qy
+
+import java.util.function.Function
+
+import javax.persistence.criteria.Path
+import javax.persistence.criteria.Root
+
+import lombok.ToString
+
+
+/**
+ * Classe com o mapeamento do tipo de atributo com o path jpa.
+ * 
+ * @author jcruz
+ *
+ */
+@ToString
+class QyAttributePath {
+
+	/**
+	 * Tipo do atributo
+	 */
+	Class<?> fieldType
+
+	/**
+	 * Path JPA.
+	 */
+	Function<Root<?>, Path> map
+}

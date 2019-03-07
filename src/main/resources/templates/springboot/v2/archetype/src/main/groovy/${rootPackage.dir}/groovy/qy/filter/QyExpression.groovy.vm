@@ -1,13 +1,13 @@
 package ${rootPackage.name}.groovy.qy.filter;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.CriteriaBuilder
+import javax.persistence.criteria.CriteriaQuery
+import javax.persistence.criteria.Predicate
+import javax.persistence.criteria.Root
 
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
+import com.fasterxml.jackson.annotation.JsonSubTypes
+import com.fasterxml.jackson.annotation.JsonTypeInfo
+import com.fasterxml.jackson.annotation.JsonSubTypes.Type
 
 /**
  * Classe base dos predicados de comparação e operadores lógicos (AND,OR).
@@ -31,12 +31,13 @@ import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 ])
 // @formatter:on
 abstract class QyExpression {
-	String type;
+	String type
 
-	abstract String toSql();
+	abstract String toSql()
 
-	abstract String toJpql();
+	abstract String toJpql()
 
-	abstract <T> Predicate toPredicate(Class<T> clazz, Root<T> root, CriteriaQuery<?> cq, CriteriaBuilder cb);
+	abstract <T> Predicate toPredicate(Class<T> clazz, Root<T> root, CriteriaQuery<?> cq, CriteriaBuilder cb, Map attrTable)
 
 }
+

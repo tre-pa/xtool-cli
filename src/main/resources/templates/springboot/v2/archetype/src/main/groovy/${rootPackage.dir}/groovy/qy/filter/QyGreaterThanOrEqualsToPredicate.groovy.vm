@@ -1,12 +1,15 @@
 package ${rootPackage.name}.groovy.qy.filter;
+import ${rootPackage.name}.groovy.qy.QyAttributePath
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.time.LocalDate
+import java.time.LocalDateTime
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.CriteriaBuilder
+import javax.persistence.criteria.CriteriaQuery
+import javax.persistence.criteria.Path
+import javax.persistence.criteria.Predicate
+import javax.persistence.criteria.Root
+
 
 /**
  * 
@@ -17,24 +20,26 @@ class QyGreaterThanOrEqualsToPredicate extends QyPredicate {
 
 	@Override
 	String toSql() {
-		this.dataField + " >= " + this.surroundSingleQuotes(this.value);
+		this.dataField + " >= " + this.surroundSingleQuotes(this.value)
 	}
 
 	@Override
 	String toJpql() {
-		this.dataField + " >= " + this.surroundSingleQuotes(this.value);
+		this.dataField + " >= " + this.surroundSingleQuotes(this.value)
 	}
 
 	@Override
-	<T> Predicate toPredicate(Class<T> clazz, Root<T> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
-		Class<?> dataFieldType = getDataType(clazz, this.dataField);
-		if (dataFieldType == LocalDate.class) return cb.greaterThanOrEqualTo(root.get(this.dataField), LocalDate.parse((String) this.value));
-		if (dataFieldType == LocalDateTime.class) return cb.greaterThanOrEqualTo(root.get(this.dataField), LocalDateTime.parse((String) this.value));
-		if (dataFieldType == Long.class) return cb.ge(root.get(this.dataField), (Number) this.value);
-		if (dataFieldType == Integer.class) return cb.ge(root.get(this.dataField), (Number) this.value);
-		if (dataFieldType == Short.class) return cb.ge(root.get(this.dataField), (Number) this.value);
-		if (dataFieldType == BigDecimal.class) return cb.ge(root.get(this.dataField), new BigDecimal(String.valueOf(this.value)));
-		throw new IllegalArgumentException(String.format("Não foi possível montar um predicado para o campo '%s' com o tipo '>='", this.dataField));
-	}
+	<T> Predicate toPredicate(Class<T> clazz, Root<T> root, CriteriaQuery<?> cq, CriteriaBuilder cb, Map paths) {
+		QyAttributePath qyAttr = paths.get(this.dataField)
+		Class<?> dataFieldType = qyAttr ? qyAttr.fieldType : getDataType(clazz, this.dataField)
+		Path path = qyAttr ? qyAttr.map.apply(root): root.get(this.dataField)
 
+		if (dataFieldType == LocalDate.class) return cb.greaterThanOrEqualTo(path, LocalDate.parse((String) this.value))
+		if (dataFieldType == LocalDateTime.class) return cb.greaterThanOrEqualTo(rpath, LocalDateTime.parse((String) this.value))
+		if (dataFieldType == Long.class) return cb.ge(path, (Number) this.value)
+		if (dataFieldType == Integer.class) return cb.ge(path, (Number) this.value)
+		if (dataFieldType == Short.class) return cb.ge(path, (Number) this.value)
+		if (dataFieldType == BigDecimal.class) return cb.ge(path, new BigDecimal(String.valueOf(this.value)))
+		throw new IllegalArgumentException(String.format("Não foi possível montar um predicado para o campo '%s' com o tipo '>='", this.dataField))
+	}
 }

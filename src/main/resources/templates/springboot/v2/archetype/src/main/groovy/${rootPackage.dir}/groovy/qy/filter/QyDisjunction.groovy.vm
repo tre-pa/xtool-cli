@@ -1,13 +1,13 @@
 package ${rootPackage.name}.groovy.qy.filter;
-
-import java.util.stream.Collectors;
-
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
-
 import ${rootPackage.name}.groovy.qy.QyFilterable
+
+import java.util.stream.Collectors
+
+import javax.persistence.criteria.CriteriaBuilder
+import javax.persistence.criteria.CriteriaQuery
+import javax.persistence.criteria.Predicate
+import javax.persistence.criteria.Root
+
 
 /**
  * Classe que representa uma operação OR.
@@ -19,19 +19,18 @@ class QyDisjunction extends QyFilterable {
 
 	@Override
 	String toSql() {
-		String[] delimiter = this.predicates.size() > 1 ? [ "(", ")" ] : [ " ", " " ];
-		this.predicates.stream().map { it.toSql() }.collect((Collectors.joining(" or ", delimiter[0], delimiter[1])));
+		String[] delimiter = this.predicates.size() > 1 ? ["(", ")"]: [" ", " "]
+		this.predicates.stream().map { it.toSql() }.collect((Collectors.joining(" or ", delimiter[0], delimiter[1])))
 	}
 
 	@Override
 	String toJpql() {
-		String[] delimiter = this.predicates.size() > 1 ? [ "(", ")" ] : [ " ", " " ];
-		this.predicates.stream().map { it.toSql() }.collect((Collectors.joining(" or ", delimiter[0], delimiter[1])));
+		String[] delimiter = this.predicates.size() > 1 ? ["(", ")"]: [" ", " "]
+		this.predicates.stream().map { it.toSql() }.collect((Collectors.joining(" or ", delimiter[0], delimiter[1])))
 	}
 
 	@Override
-	<T> Predicate toPredicate(Class<T> clazz, Root<T> root, CriteriaQuery<?> cq, CriteriaBuilder cb) {
-		cb.or(this.predicates.stream().map { it.toPredicate(clazz, root, cq, cb) }.toList() as Predicate[]);
+	<T> Predicate toPredicate(Class<T> clazz, Root<T> root, CriteriaQuery<?> cq, CriteriaBuilder cb, Map paths) {
+		cb.or(this.predicates.stream().map { it.toPredicate(clazz, root, cq, cb, paths) }.toList() as Predicate[])
 	}
-
 }
