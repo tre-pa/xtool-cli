@@ -8,7 +8,7 @@ import { QyStore } from 'src/app/shared/qy/qy-store';
 
 @Component({
   selector: 'app-${entity.tsFileName}',
-  templateUrl: './${entity.tsFileName}.component.html',
+  templateUrl: './${entity.tsFileName}-list.component.html',
   styles: []
 })
 export class ${entity.name}ListComponent implements OnInit {

@@ -11,7 +11,7 @@ import { ${entity.name} } from 'src/app/domain/${entity.tsFileName}';
 
 @Component({
   selector: 'app-${entity.tsFileName}',
-  templateUrl: './${entity.tsFileName}.component.html',
+  templateUrl: './${entity.tsFileName}-detail.component.html',
   styles: []
 })
 export class ${entity.name}DetailComponent implements OnInit, OnDestroy {
