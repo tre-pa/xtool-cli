@@ -11,6 +11,8 @@
       <dxi-item itemType="group" colCount="2">
 
 	  ${ngEditTemplates.createHtmlAttributesDecl($entity)}
+	  
+      </dxi-item>
       
       <dxi-item itemType="group"
         colCount="2"

@@ -43,7 +43,7 @@ public class NgListTemplates {
 					.tpl("  caption=\"{{ attr.label }}\"",3)
 					.tpl("  dataType=\"date\"",3)
 					.tpl("  format=\"dd/MM/yyyy\"",3)
-					.tpl("  [allowHeaderFiltering]=\"false\"",3)
+					.tpl("  [allowHeaderFiltering]=\"false\">",3)
 					.tpl("</dxi-column>",3)
 					.put("attr", attr)
 					.build());
