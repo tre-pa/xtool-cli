@@ -6,9 +6,8 @@
     (onClick)="confirmDelete()"></dx-button>
 </h2>
 <div class="dx-card content-block">
-  #foreach($attribute in $entity.simpleAttributes)	
-  	 <p><b>${attribute.label}: </b>{{ ${entity.instanceName}?.${attribute.name} }}</p>
-  #end
+  ${ngDetailTemplates.createHtmlAttributesDecl($entity)}
+  
   <div fxLayout="row"
     fxLayoutAlign="space-between center">
     <dx-button text="Editar"

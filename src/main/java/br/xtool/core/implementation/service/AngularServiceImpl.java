@@ -31,6 +31,7 @@ import br.xtool.core.representation.springboot.EntityAttributeRepresentation;
 import br.xtool.core.representation.springboot.EntityRepresentation;
 import br.xtool.core.representation.springboot.JavaEnumRepresentation;
 import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
+import br.xtool.core.template.NgDetailTemplates;
 import br.xtool.core.template.NgEditTemplates;
 import br.xtool.core.template.NgListTemplates;
 import br.xtool.service.AngularService;
@@ -205,6 +206,7 @@ public class AngularServiceImpl implements AngularService {
 			{
 				put("Strman", Strman.class);
 				put("StringUtils", StringUtils.class);
+				put("ngDetailTemplates", appCtx.getBean(NgDetailTemplates.class));
 				put("entity", entity);
 				put("title", InflectorHelper.getInstance().pluralize(entity.getName()));
 				put("typescriptTypeMap", NgClassRepresentation.typescriptTypeMap());
