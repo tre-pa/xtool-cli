@@ -17,20 +17,20 @@ export class ${entity.name}ListComponent implements OnInit {
 
   ${entity.instanceName}DataSource: DataSource;
   
-  ${entity.instanceName}QyStore: QyStore;
+  ${entity.instanceName}QyStore: QyStore<${entity.name}>;
 
   constructor(
     private httpClient: HttpClient,
     private router: Router,
     private title: Title) { 
-  	${entity.instanceName}QyStore = new QyStore(this.httpClient, '/${entity.apiName}');
+  	this.${entity.instanceName}QyStore = new QyStore(this.httpClient, '/${entity.apiName}');
   }
 
   ngOnInit() {
     this.title.setTitle('${title}');
     this.initHeaderFilters();
     this.${entity.instanceName}DataSource = new DataSource({
-      store: ${entity.instanceName}QyStore
+      store: this.${entity.instanceName}QyStore
     });
   }
 
