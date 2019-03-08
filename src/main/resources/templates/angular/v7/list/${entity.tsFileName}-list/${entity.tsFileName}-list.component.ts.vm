@@ -5,6 +5,7 @@ import { Title } from '@angular/platform-browser';
 import DataSource from 'devextreme/data/data_source';
 
 import { QyStore } from 'src/app/shared/qy/qy-store';
+import { ${entity.name} } from 'src/app/domain/${entity.tsFileName}';
 
 @Component({
   selector: 'app-${entity.tsFileName}',
