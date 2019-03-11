@@ -43,6 +43,8 @@ public class RestClassTemplates {
 		RestClassRepresentation rest = new RestClassRepresentationImpl(bootProject, RoasterHelper.createJavaClassSource(restName));
 		rest.getRoasterJavaClass().setPackage(bootProject.getRootPackage().getName().concat(".rest"));
 		rest.getRoasterJavaClass().addAnnotation(Slf4j.class);
+		rest.getRoasterJavaClass().addAnnotation(SuppressWarnings.class)
+			.setStringValue("unused");
 //		rest.getRoasterJavaClass().addImport(Autowired.class);
 //		rest.getRoasterJavaClass().addImport(repository.getQualifiedName());
 		rest.getRoasterJavaClass().addAnnotation(RestController.class);
