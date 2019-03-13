@@ -28,6 +28,7 @@ public class SpecificationTemplates {
 		specification.getRoasterJavaClass().addImport(entity.getQualifiedName());
 		specification.getRoasterJavaClass().addImport(springBootProject.getRootPackage().getName().concat(".groovy.qy.QySpecification"));
 		specification.getRoasterJavaClass().setSuperType("QySpecification<".concat(entity.getName()).concat(">"));
+		specification.getRoasterJavaClass().addAnnotation(Component.class);
 		return specification;
 	}
 
