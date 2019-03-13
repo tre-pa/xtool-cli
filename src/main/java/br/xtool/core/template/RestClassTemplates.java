@@ -43,14 +43,13 @@ public class RestClassTemplates {
 		RestClassRepresentation rest = new RestClassRepresentationImpl(bootProject, RoasterHelper.createJavaClassSource(restName));
 		rest.getRoasterJavaClass().setPackage(bootProject.getRootPackage().getName().concat(".rest"));
 		rest.getRoasterJavaClass().addAnnotation(Slf4j.class);
-		rest.getRoasterJavaClass().addAnnotation(SuppressWarnings.class)
-			.setStringValue("unused");
 //		rest.getRoasterJavaClass().addImport(Autowired.class);
 //		rest.getRoasterJavaClass().addImport(repository.getQualifiedName());
 		rest.getRoasterJavaClass().addAnnotation(RestController.class);
 		// @formatter:off
 		rest.getRoasterJavaClass().addAnnotation(RequestMapping.class)
 			.setStringValue(String.format("api/%s",InflectorHelper.getInstance().pluralize(Strman.toKebabCase(repository.getTargetEntity().getName()))));
+		rest.getRoasterJavaClass().addAnnotation(SuppressWarnings.class).setStringValue("unused");
 //		rest.getRoasterJavaClass().addField()
 //			.setPrivate()
 //			.setName(repository.getInstanceName())
