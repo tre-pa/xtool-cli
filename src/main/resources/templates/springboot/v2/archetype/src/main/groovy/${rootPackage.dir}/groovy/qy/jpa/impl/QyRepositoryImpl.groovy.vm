@@ -25,6 +25,10 @@ import ${rootPackage.name}.groovy.qy.QyProjectable
 import ${rootPackage.name}.groovy.qy.QySpecification
 import ${rootPackage.name}.groovy.qy.jpa.QyRepository
 import groovy.util.logging.Slf4j
+import ${rootPackage.name}.groovy.qy.QyAttributePath
+import javax.persistence.criteria.Path
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.context.ApplicationContext
 
 @Slf4j
 @Repository
