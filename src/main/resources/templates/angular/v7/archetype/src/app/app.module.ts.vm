@@ -1,8 +1,9 @@
 import { NgxPermissionsModule } from 'ngx-permissions';
-import { NgModule, APP_INITIALIZER } from '@angular/core';
+import { NgModule, APP_INITIALIZER, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SecuredHttpInterceptor } from './security/secured-http-interceptor';
+import { ErrorHandlerException } from './error-handling/error-handler-exception';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -53,6 +54,10 @@ export function kcFactory(securityService: SecurityService) {
       provide: HTTP_INTERCEPTORS,
       useClass: SecuredHttpInterceptor,
       multi: true
+    },
+    {
+      provide: ErrorHandler,
+      useClass: ErrorHandlerException,
     },
     {
       provide: APP_INITIALIZER,
