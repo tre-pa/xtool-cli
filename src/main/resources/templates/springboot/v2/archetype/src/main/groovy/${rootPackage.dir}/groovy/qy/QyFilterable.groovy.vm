@@ -1,7 +1,7 @@
 package ${rootPackage.name}.groovy.qy;
 import ${rootPackage.name}.groovy.qy.filter.QyExpression
 
-iimport java.util.stream.Collectors
+import java.util.stream.Collectors
 
 import javax.persistence.criteria.CriteriaBuilder
 import javax.persistence.criteria.CriteriaQuery

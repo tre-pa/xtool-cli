@@ -1,6 +1,6 @@
 package ${rootPackage.name}.groovy.qy
 
-i
+
 import java.util.function.Function
 
 import javax.annotation.PostConstruct
