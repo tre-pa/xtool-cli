@@ -1,3 +1,7 @@
 export const environment = {
-  production: true
+  production: true,
+  urlbase: "/${projectName}-service/api",
+  keycloak_installation: { url: 'http://acesso.tre-pa.jus.br/auth', realm: 'TRE-PA', clientId: "${projectName}" },
+  keycloak_redirect_uri: "/${projectName}",
+  keycloak_clientId_sboot: "${projectName}-service",
 };

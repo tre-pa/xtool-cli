@@ -1,9 +1,11 @@
+import { SecurityService } from './../../../security/security.service';
 import {
   EventEmitter,
   Component,
   NgModule,
   Output,
-  Input
+  Input,
+  OnInit
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -21,7 +23,7 @@ import { UserPanelModule } from '../user-panel/user-panel.component';
   styleUrls: ['./header.component.scss']
 })
 
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
 
   @Output()
   menuToggle = new EventEmitter<boolean>();
@@ -32,16 +34,19 @@ export class HeaderComponent {
   @Input()
   toolbarTitle: string;
 
+  isDeveloper: boolean = false;
+
   showLoginPopup = false;
   isUserAuthorized = true;
-  userMenuItems = [
+  userMenuItems: any = [
     {
       text: 'userinfo',
       closeMenuOnClick: false
     },
     {
       text: 'Dev Area',
-      icon: 'coffee'
+      icon: 'coffee',
+      isHidden: false
     },
     {
       text: 'Logout',
@@ -51,8 +56,18 @@ export class HeaderComponent {
 
   constructor(
     private router: Router,
-    private keycloakService: KeycloakService
-  ) { }
+    private securityService: SecurityService
+  ) {
+    
+   }
+
+  ngOnInit(): void {
+    this.isDeveloper = this.securityService.hasRealmRole("DEVELOPER");
+    if(!this.isDeveloper){
+      this.userMenuItems[1].isHidden = true;
+    }
+    console.log(this.securityService.getTokenParsed())
+  }
 
   toggleMenu = () => {
     this.menuToggle.emit();
@@ -69,7 +84,7 @@ export class HeaderComponent {
 
   onUserMenuItemClick(item) {
     if (item === this.userMenuItems[1]) this.router.navigate(['/dev-area']);
-    if (item === this.userMenuItems[2]) this.keycloakService.logout();
+    if (item === this.userMenuItems[2]) this.securityService.logout();
   }
 }
 

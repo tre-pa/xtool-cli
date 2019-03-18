@@ -28,19 +28,28 @@ library.add(fas);
 })
 export class UserPanelComponent implements OnInit {
 
-  @Input()
-  menuItems: any;
-
+  private _menuItems: any;
+  
   @Input()
   menuMode: string;
-
+  
   @Output()
   itemClick: EventEmitter<any> = new EventEmitter<any>();
-
+  
   userInfo: UserInfo;
-
+  
   colors = ['#2196F3', '#32c787', '#00BCD4', '#ff5652',
-    '#ffc107', '#ff85af', '#FF9800', '#39bbb0'];
+  '#ffc107', '#ff85af', '#FF9800', '#39bbb0'];
+  
+  
+  get menuItems(): any {
+    return this._menuItems;
+  }
+  
+  @Input()// Detectar mudanças na váriavel
+  set menuItems(menuItems: any) {
+    this._menuItems = menuItems;
+  }
 
   constructor(
     private securityService: SecurityService

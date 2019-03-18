@@ -141,10 +141,23 @@ export class KeycloakService {
   }
   
   public getPermisionScopes():Promise<string[]>{
+    let permisionScopes: string [] = []; 
+
+    if(this.getTokenParsed().realm_access){
+      this.getTokenParsed().realm_access.roles.forEach(role => {
+        permisionScopes.push(role);
+      });
+    }
+
+    if(this.getTokenParsed().resource_access[environment.keycloak_clientId_sboot].roles){
+      this.getTokenParsed().resource_access[environment.keycloak_clientId_sboot].roles.forEach(role => {
+        permisionScopes.push(role);
+      });
+    }
+
     return new Promise((resolve)=>{
       this.authorization.entitlement(environment.keycloak_clientId_sboot).then(rpt=>{
         
-        let permisionScopes: string [] = []; 
         
         jwtDecode(rpt).authorization.permissions.forEach(permission => {
           if(permission.scopes){
