@@ -1,4 +1,4 @@
-```plantuml
+@startuml
 page 2x2
 skinparam defaultFontName Trebuchet MS
 skinparam ClassBackgroundColor<<View>> LightCyan
@@ -27,4 +27,4 @@ package "${rootPackage.name}.domain.enums" <<Frame>>{
 
 ' Relacionamentos entre entidades '/
 
-```
+@enduml
