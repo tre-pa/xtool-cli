@@ -15,9 +15,9 @@ spring.datasource.driver-class-name=${OB}DB_DRIVER:org.h2.Driver${CB}
 spring.datasource.username=${OB}DB_USERNAME:sa${CB}
 spring.datasource.password=${OB}DB_PASSWORD${CB}
 spring.datasource.sqlScriptEncoding=UTF-8
-#spring.h2.console.path=/h2
-#spring.h2.console.enabled=true
-#spring.jpa.properties.hibernate.format_sql=true
+spring.h2.console.path=/h2
+spring.h2.console.enabled=true
+spring.jpa.properties.hibernate.format_sql=true
 spring.jpa.hibernate.ddl-auto=update
 spring.jpa.hibernate.use-new-id-generator-mappings=true
 
@@ -50,6 +50,8 @@ keycloak.ssl-required=external
 keycloak.use-resource-role-mappings=true
 keycloak.bearer-only=true
 
+keycloak.policy-enforcer-config.paths[0].path=/h2/*
+keycloak.policy-enforcer-config.paths[0].enforcement-mode=DISABLED
 keycloak.securityConstraints[0].authRoles[0]=USER
 keycloak.securityConstraints[0].securityCollections[0].name=protected
 keycloak.securityConstraints[0].securityCollections[0].patterns[0]=/api/*
@@ -57,6 +59,4 @@ keycloak.policy-enforcer-config.enforcement-mode=ENFORCING
 keycloak.policy-enforcer-config.http-method-as-scope=true
 
 
-keycloak.policy-enforcer-config.paths[0].path=/h2/*
-keycloak.policy-enforcer-config.paths[0].enforcement-mode=disabled
 
