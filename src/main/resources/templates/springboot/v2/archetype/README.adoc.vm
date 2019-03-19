@@ -1,0 +1,84 @@
+= Guia Para Montagem e Configuração de Ambiente de Desenvolvimento
+:toc:
+:toc-title: Índice
+:sectnums:
+:source-highlighter: coderay
+
+== Configuração do Ambiente de Desenvolvimento 
+
+=== Instalação do Groovy no Eclipse
+
+https://github.com/groovy/groovy-eclipse/wiki
+
+[width="100%",cols="41%,59%",options="header",]
+|=======================================================================
+|Versão do Eclipse |Plugin
+|4.9 (2018-09) |http://dist.springsource.org/release/GRECLIPSE/e4.9
+
+|4.8 (Photon) |http://dist.springsource.org/release/GRECLIPSE/e4.8
+
+|4.7 (Oxygen) |http://dist.springsource.org/release/GRECLIPSE/e4.7
+
+|4.6 (Neon) |http://dist.springsource.org/release/GRECLIPSE/e4.6
+
+|4.5 (Mars) |http://dist.springsource.org/release/GRECLIPSE/e4.5
+
+|4.4 (Luna) |http://dist.springsource.org/release/GRECLIPSE/e4.4
+
+|4.3 (Kepler) |http://dist.springsource.org/release/GRECLIPSE/e4.3
+
+|4.3j8 (Kepler with Java 8 patch)
+|http://dist.springsource.org/release/GRECLIPSE/e4.3-j8
+
+|4.2 and 3.8 (Juno) |http://dist.springsource.org/release/GRECLIPSE/e4.2
+
+|3.7 (Indigo) |http://dist.springsource.org/release/GRECLIPSE/e3.7
+|=======================================================================
+=== Instalção do Lombok
+
+**Introdução ao Lombok**
+
+O Projeto Lombok é uma biblioteca java que retira a verbosidade do código, sem a necessidade de criar método getter ou equals novamente, com uma anotação sua classe tem um construtor com todos os recursos.
+
+
+**1.** Para Instalar o Lombok baixe a versão do lombok1.18.6.jar, que está no link http://repo.tre-pa.jus.br/downloads/
+
+**2.** Após ter baixado o jar do lombok é necessário executá-lo com o seguinte comando no terminal java -jar lombok.jar, em seguida irá aparecer um modal que pedirá para você selecionar o local de onde está instalada sua IDE Sts/Eclipse.
+
+image::docs/assets/lombok.png[200,1095]
+
+=== Instalação de Plugins
+
+**1.** Instalação do Plugin Editor Asciidoc no STS/Eclipse.
+
+No STS/Eclipse entre na marketplace da IDE e pesquise pelo nome Asccidoctor Editor e siga o processo de instalação.
+----
+Asciidoctor Editor
+----
+
+**2.** Instalação do Plugin PlantUml no STS/Eclipse.
+
+ No STS/Eclipse entre na marketplace da IDE e pesquise pelo nome PlantUML plugin Editor e siga o processo de instalação.
+
+----
+PlantUML plugin
+----
+
+Caso queira saber mais sobre a biblioteca acesse o site oficial: http://plantuml.com/ 
+
+ 
+=== Instalação do Keycloak
+
+=== Acesso no H2
+
+*TODO*
+
+Snippet de código para requisições via Postman
+
+== Instalação do Oracle XE
+
+*TODO*
+
+== Iniciando aplicação em modo local
+
+*TODO*
