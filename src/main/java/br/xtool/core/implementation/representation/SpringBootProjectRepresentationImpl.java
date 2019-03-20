@@ -316,7 +316,7 @@ public class SpringBootProjectRepresentationImpl extends ProjectRepresentationIm
 	 */
 	@Override
 	public PlantClassDiagramRepresentation getMainDomainClassDiagram() {
-		return PlantClassDiagramRepresentationImpl.of(this.getPath().resolve("docs/diagrams/class/main.md"));
+		return PlantClassDiagramRepresentationImpl.of(this.getPath().resolve("docs/diagrams/class/main.plantuml"));
 	}
 	
 	/*

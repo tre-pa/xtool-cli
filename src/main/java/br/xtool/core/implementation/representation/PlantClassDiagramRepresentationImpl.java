@@ -71,7 +71,7 @@ public class PlantClassDiagramRepresentationImpl implements PlantClassDiagramRep
 	@SneakyThrows
 	public byte[] getPng() {
 		String diagram = new String(Files.readAllBytes(path));
-		SourceStringReader reader = new SourceStringReader(diagram.replace("```plantuml", "@startuml").replace("```", "@enduml"));
+		SourceStringReader reader = new SourceStringReader(diagram);
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
 		reader.generateImage(os);
 		return os.toByteArray();
@@ -83,7 +83,7 @@ public class PlantClassDiagramRepresentationImpl implements PlantClassDiagramRep
 			throw new IllegalArgumentException("Diagrama de classe não encontrado");
 		// String diagram = FileUtils.readFileToString(new File(path), "UTF-8");
 		String diagram = new String(Files.readAllBytes(path));
-		SourceStringReader reader = new SourceStringReader(diagram.replace("```plantuml", "@startuml").replace("```", "@enduml"));
+		SourceStringReader reader = new SourceStringReader(diagram);
 		// @formatter:off
 		ClassDiagram classDiagram = reader.getBlocks().stream()
 				.map(BlockUml::getDiagram)
