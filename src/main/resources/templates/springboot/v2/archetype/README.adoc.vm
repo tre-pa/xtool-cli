@@ -45,7 +45,7 @@ O Projeto Lombok é uma biblioteca java que retira a verbosidade do código, sem
 
 **2.** Após ter baixado o jar do lombok é necessário executá-lo com o seguinte comando no terminal java -jar lombok.jar, em seguida irá aparecer um modal que pedirá para você selecionar o local de onde está instalada sua IDE Sts/Eclipse.
 
-image::docs/assets/lombok.png[200,1095]
+image::docs/assets/lombok.png[200,1095] 
 
 === Instalação de Plugins
 
@@ -67,9 +67,79 @@ PlantUML plugin
 Caso queira saber mais sobre a biblioteca acesse o site oficial: http://plantuml.com/ 
 
  
-=== Instalação do Keycloak
+== Instalação do Keycloak
 
-=== Acesso no H2
+**1.** Baixa do site do https://www.keycloak.org/downloads.html[keycloak] 
+
+image::docs/assets/keycloak-localhost.png[] 
+
+**2.** Descompactar
+
+cd /opt
+sudo tar xvfz ~/Downloads/keycloak-4.8.3.Final.tar.gz
+
+**3.** Alterar a porta do Keycloak editando o arquivo standalone.xml
+
+[source, sh]
+----
+sudo gedit /opt/keycloak-4.8.3.Final/standalone/configuration/standalone.xml
+----
+
+Alterar a linha de definição do offset de 
+
+[source, sh]
+----
+<socket-binding-group name="standard-sockets" default-interface="public" port-offset="${jboss.socket.binding.port-offset:0}">
+----
+
+Para:
+
+[source, sh]
+----
+<socket-binding-group name="standard-sockets" default-interface="public" port-offset="${jboss.socket.binding.port-offset:5}">
+----
+
+**4.** Iniciar o keycloak 
+
+[source, sh]
+----
+/opt/keycloak-4.8.3.Final/bin/standalone.sh &
+---- 
+
+**5.** Acessar no navegador localhost:8085/auth
+
+[source, sh]
+----
+usuario:admin
+senha:admin
+----
+
+=== IMPORTANDO APLICAÇÃO NO KEYCLOAK
+
+**1.** Criar o Realm TRE-PA
+
+image::docs/assets/realm.png[200,1095] 
+
+
+**2.** Em Roles, vai em Add Role, para criar a role DEVELOPER
+
+image::docs/assets/role.png[200,1095] 
+
+**3.** Em Clients vai em Create, para importar o arquivo do service
+
+image::docs/assets/clients.png[200,1095] 
+
+**4.**  Clica no client criado (service), na aba Role criar o usuário USER, em Add Role
+
+image::docs/assets/add-role-user.png[200,1095]
+
+**5.**  Em Clients vai em Create, para importar o arquivo do angular
+
+**6.** Clica no client criado (angular) , na aba Scope, mover a role DEVELOPER para Assigned Roles
+
+image::docs/assets/client-angular.png[200,1095]
+
+== Acesso no H2
 
 *TODO*
 
