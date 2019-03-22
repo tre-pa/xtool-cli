@@ -16,12 +16,15 @@ Spring Shell. A ferramenta é baseada em linha de comando.
 
 == Pré-Requisito
 
+* Java 8
+* Maven
+* Graphviz
 
 === Instalação do Maven com https://sdkman.io/install[SdkMan]
 
 **Introdução**
 
-O SdkMan é uma ferramenta para facilitar a instalação de certas ferramentas como por exemplo maven ou java etc.
+O SdkMan é uma ferramenta para facilitar a instalação de certas bibliotecas como por exemplo maven ou java etc.
 
 **1.** Primeiro é necessario instalar o SdkMan em sua maquina para isso instale da seguinte forma.
 
@@ -42,6 +45,8 @@ Por fim, execute o seguinte trecho de código para garantir que a instalação s
 ----
 sdk version
 ----
+
+
 
 **2.** Feito isso você pode instalar o maven com o seguinte comando:
 
@@ -79,6 +84,9 @@ sdk java 8.0.201-oracle // Instalação da versão especifica
 
 ----
 
+IMPORTANT: É de extrema importância que o java 8 seja instalado com o sdkman para facilitar as configurações de ambiente. 
+
+
 *3.* Rodar o projeto com comando `run.sh` indicando o diretório de
 workspace (_na maioria dos casos ~/git/_):
 
@@ -86,6 +94,8 @@ workspace (_na maioria dos casos ~/git/_):
 ----
 $ ./run.sh ~/git/
 ----
+
+
 
 *4.* Após rodar a aplicação o prompt da ferramenta será exibido.
 
