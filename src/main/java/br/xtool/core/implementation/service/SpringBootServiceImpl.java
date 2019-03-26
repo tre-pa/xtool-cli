@@ -6,6 +6,7 @@ import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
+import java.util.UUID;
 
 import org.apache.commons.lang3.StringUtils;
 import org.eclipse.jdt.core.JavaCore;
@@ -83,6 +84,7 @@ public class SpringBootServiceImpl implements SpringBootService {
 		vars.put("projectName", genProjectName(name));
 		vars.put("baseClassName", genBaseClassName(name));
 		vars.put("rootPackage", genRootPackage(name));
+		vars.put("clientSecret", UUID.randomUUID());
 		// @formatter:off
 		SpringBootProjectRepresentation bootProject = this.workspace.createProject(
 				ProjectRepresentation.Type.SPRINGBOOT, 
