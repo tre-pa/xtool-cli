@@ -1,4 +1,5 @@
-= Guia Para Montagem e Configuração de Ambiente de Desenvolvimento
+#set ($DS = "$")
+= ${projectDesc}
 :toc:
 :toc-title: Índice
 :sectnums:
@@ -71,7 +72,7 @@ Caso queira saber mais sobre a biblioteca acesse o site oficial: http://plantuml
 
 **1.** Baixa do site do https://www.keycloak.org/downloads.html[keycloak] 
 
-image::docs/assets/keycloak-localhost.png[] 
+image::docs/assets/keycloak-localhost.png[200,1095] 
 
 **2.** Descompactar
 
@@ -150,21 +151,22 @@ Após ter criado a sua aplicação você precisará de um banco de dados para re
 [source,sh]
 -----
 
-locahost:8080/${projectName}-service/h2/*
+locahost:8080/${projectName}-service/h2/
 
 ----- 
  
-**2.** Após a instalação você verá a tela de gredêciais nessa parte você deve substituir as seguintes configurações:
+**2.** Após a instalação você verá a tela de gredêciais nessa parte você deve substituir as configurações descrita abaixo pelas que estão no arquivo `${projectName}/src/main/resources/application.properties`
+
+image::docs/assets/h2.png[200,1095]
 
 [source,sh]
 ----
-
-
+JDBC URL:
+User Name:
+Password: 
 ----
 
-IMPORTANT: Caso não venha uma senha definida no projeto você pode mudar no application.properties onde fica todas as configurações da aplicação.
-
-
+IMPORTANT: Caso não venha uma senha definida no projeto você pode criar uma com padrão usamos `sa`.
 
 
 == Iniciando aplicação em modo local
