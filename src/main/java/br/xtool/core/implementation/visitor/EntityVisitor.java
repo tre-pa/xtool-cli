@@ -41,7 +41,7 @@ public class EntityVisitor implements ClassVisitor {
 
 	private void addEqualsAndHashCodeAnnotation(EntityRepresentation entity, PlantClassRepresentation plantClass) {
 		// @formatter:off
-		plantClass.getTaggedValueAsArray("EqualsAndHashCode.of").ifPresent(tagValues -> entity
+		plantClass.getTaggedValueAsArray("equalsAndHashCode.of").ifPresent(tagValues -> entity
 				.addAnnotation(EqualsAndHashCode.class)
 				.getRoasterAnnotation()
 				.setStringArrayValue("of", tagValues));
@@ -50,7 +50,7 @@ public class EntityVisitor implements ClassVisitor {
 
 	private void addToStringAnnotation(EntityRepresentation entity, PlantClassRepresentation plantClass) {
 		// @formatter:off
-		plantClass.getTaggedValueAsArray("ToString.of").ifPresent(tagValues -> entity
+		plantClass.getTaggedValueAsArray("toString.of").ifPresent(tagValues -> entity
 				.addAnnotation(ToString.class)
 				.getRoasterAnnotation()
 				.setStringArrayValue("of", tagValues));
@@ -72,11 +72,11 @@ public class EntityVisitor implements ClassVisitor {
 
 	private void addTableAnnotation(EntityRepresentation entity, PlantClassRepresentation plantClass) {
 		// @formatter:off
-		plantClass.getTaggedValue("Table.name").ifPresent(tagValue ->
+		plantClass.getTaggedValue("table.name").ifPresent(tagValue ->
 			entity.addAnnotation(Table.class)
 				.getRoasterAnnotation()
 				.setStringValue("name", tagValue));
-		plantClass.getTaggedValue("Table.schema").ifPresent(tagValue -> 
+		plantClass.getTaggedValue("table.schema").ifPresent(tagValue -> 
 			entity.addAnnotation(Table.class)
 				.getRoasterAnnotation()
 				.setStringValue("schema", tagValue));
