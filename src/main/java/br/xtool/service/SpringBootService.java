@@ -15,7 +15,7 @@ public interface SpringBootService {
 	 * 
 	 * @param name Nome do projeto Spring Boot.
 	 */
-	void newApp(String name, String version);
+	void newApp(String name, String description, String version);
 
 	/**
 	 * 

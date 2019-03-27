@@ -79,12 +79,13 @@ public class SpringBootServiceImpl implements SpringBootService {
 	 * @param name Nome do projeto Spring Boot.
 	 */
 	@Override
-	public void newApp(String name, String version) {
+	public void newApp(String name, String description , String version) {
 		Map<String, Object> vars = new HashMap<String, Object>();
 		vars.put("projectName", genProjectName(name));
 		vars.put("baseClassName", genBaseClassName(name));
 		vars.put("rootPackage", genRootPackage(name));
 		vars.put("clientSecret", UUID.randomUUID());
+		vars.put("projectDesc", description);
 		// @formatter:off
 		SpringBootProjectRepresentation bootProject = this.workspace.createProject(
 				ProjectRepresentation.Type.SPRINGBOOT, 

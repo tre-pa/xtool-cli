@@ -10,7 +10,7 @@
 	<packaging>jar</packaging>
 
 	<name>${projectName}</name>
-	<description>${projectName}</description>
+	<description>${projectDesc}</description>
 	
 	<parent>
 		<groupId>org.springframework.boot</groupId>
