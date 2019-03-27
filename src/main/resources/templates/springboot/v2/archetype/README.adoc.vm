@@ -53,17 +53,15 @@ image::docs/assets/lombok.png[200,1095]
 **1.** Instalação do Plugin Editor Asciidoc no STS/Eclipse.
 
 No STS/Eclipse entre na marketplace da IDE e pesquise pelo nome Asccidoctor Editor e siga o processo de instalação.
-----
-Asciidoctor Editor
-----
+
+image::docs/assets/asciidoctor-editor.png[200,1095] 
 
 **2.** Instalação do Plugin PlantUml no STS/Eclipse.
 
  No STS/Eclipse entre na marketplace da IDE e pesquise pelo nome PlantUML plugin Editor e siga o processo de instalação.
 
-----
-PlantUML plugin
-----
+
+image::docs/assets/plantuml-editor.png[200,1095] 
 
 Caso queira saber mais sobre a biblioteca acesse o site oficial: http://plantuml.com/ 
 
