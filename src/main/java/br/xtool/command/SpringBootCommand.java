@@ -51,7 +51,7 @@ public class SpringBootCommand {
 	 * 
 	 * @param plantClass
 	 */
-	@ShellMethod(key = "gen:entities", value = "Gera as classes Jpa do diagrama", group = XtoolCliApplication.SPRINGBOOT_COMMAND_GROUP)
+	@ShellMethod(key = "gen:entities", value = "Gera as classes Jpa provenientes do diagrama de classe principal (main.plantuml)", group = XtoolCliApplication.SPRINGBOOT_COMMAND_GROUP)
 	@ShellMethodAvailability("availabilitySpringBootCommand")
 	public void genEntities() {
 		SpringBootProjectRepresentation project = this.workspace.getWorkingProject(SpringBootProjectRepresentation.class);
@@ -117,7 +117,7 @@ public class SpringBootCommand {
 	 * 
 	 * @param plantClass
 	 */
-	@ShellMethod(key = "gen:ng-entities", value = "Gera as classes Typescript do diagrama no prpojeto Angular", group = XtoolCliApplication.SPRINGBOOT_COMMAND_GROUP)
+	@ShellMethod(key = "gen:ng-entities", value = "Gera as classes Typescript do diagrama no projeto Angular", group = XtoolCliApplication.SPRINGBOOT_COMMAND_GROUP)
 	@ShellMethodAvailability("availabilitySpringBootCommand")
 	public void genNgEntities() {
 		SpringBootProjectRepresentation project = this.workspace.getWorkingProject(SpringBootProjectRepresentation.class);
@@ -144,42 +144,40 @@ public class SpringBootCommand {
 
 	@ShellMethod(key = "gen:ng-list", value = "Gera um componente de lista angular para a entidade JPA", group = XtoolCliApplication.SPRINGBOOT_COMMAND_GROUP)
 	@ShellMethodAvailability("availabilitySpringBootCommand")
-	public void genNgList(@ShellOption(help = "Entidade JPA", valueProvider = EntityRepresentationValueProvider.class) EntityRepresentation entity,
+	public void genNgList(
+	// @formatter:off
+			@ShellOption(help = "Entidade JPA", valueProvider = EntityRepresentationValueProvider.class) EntityRepresentation entity,
 			@ShellOption(help = "Módulo Angular", valueProvider = NgModuleRepresentationValueProvider.class) NgModuleRepresentation ngModule) {
+	// @formatter:on
 		this.angularService.genNgList(entity, ngModule);
 	}
 
 	@ShellMethod(key = "gen:ng-detail", value = "Gera um componente de detail para a entidade JPA", group = XtoolCliApplication.SPRINGBOOT_COMMAND_GROUP)
 	@ShellMethodAvailability("availabilitySpringBootCommand")
-	public void genNgDetail(@ShellOption(help = "Entidade JPA", valueProvider = EntityRepresentationValueProvider.class) EntityRepresentation entity,
+	public void genNgDetail(
+	// @formatter:off
+			@ShellOption(help = "Entidade JPA", valueProvider = EntityRepresentationValueProvider.class) EntityRepresentation entity,
 			@ShellOption(help = "Módulo Angular", valueProvider = NgModuleRepresentationValueProvider.class) NgModuleRepresentation ngModule) {
+	// @formatter:on
 		this.angularService.genNgDetail(entity, ngModule);
 	}
-	
+
 	@ShellMethod(key = "gen:ng-edit", value = "Gera um componente de edit para a entidade JPA", group = XtoolCliApplication.SPRINGBOOT_COMMAND_GROUP)
 	@ShellMethodAvailability("availabilitySpringBootCommand")
-	public void genNgEdit(@ShellOption(help = "Entidade JPA", valueProvider = EntityRepresentationValueProvider.class) EntityRepresentation entity,
+	public void genNgEdit(
+	// @formatter:off
+			@ShellOption(help = "Entidade JPA", valueProvider = EntityRepresentationValueProvider.class) EntityRepresentation entity,
 			@ShellOption(help = "Módulo Angular", valueProvider = NgModuleRepresentationValueProvider.class) NgModuleRepresentation ngModule) {
+	// @formatter:on
 		this.angularService.genNgEdit(entity, ngModule);
 	}
 
-	@ShellMethod(key = "show:class-diagram", value = "Exibe o diagrama de classe do projeto", group = XtoolCliApplication.SPRINGBOOT_COMMAND_GROUP)
-	@ShellMethodAvailability("availabilitySpringBootCommand")
-	public void showClassDiagram(
-			@ShellOption(help = "Nome do arquivo de diagrama do projeto", valueProvider = PlantClassDiagramRepresentationValueProvider.class, defaultValue = "main.md") PlantClassDiagramRepresentation diagram) {
-		ShowClassDiagramView guiView = appCtx.getBean(ShowClassDiagramView.class);
-		SwingUtilities.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				guiView.showDialog(diagram);
-			}
-		});
-
-	}
-
+	/*
+	 * Define a regra para disponibilidade de comandos.
+	 */
 	protected Availability availabilitySpringBootCommand() throws IOException {
 		return this.workspace.getWorkingProject().getProjectType().equals(ProjectRepresentation.Type.SPRINGBOOT) ? Availability.available()
-				: Availability.unavailable("O diretório de trabalho não é um projeto maven válido. Use o comando cd para alterar o diretório de trabalho.");
+				: Availability.unavailable("O diretório de trabalho não é um projeto 'Spring Boot' válido. Use o comando 'use' para alterar o projeto de trabalho.");
 	}
 
 }
