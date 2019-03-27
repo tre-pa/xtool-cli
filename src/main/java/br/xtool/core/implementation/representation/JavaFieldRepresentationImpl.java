@@ -117,7 +117,9 @@ public class JavaFieldRepresentationImpl implements JavaFieldRepresentation {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see br.xtool.core.representation.springboot.JavaFieldRepresentation#isStringField ()
+	 * @see
+	 * br.xtool.core.representation.springboot.JavaFieldRepresentation#isStringField
+	 * ()
 	 */
 	@Override
 	public boolean isStringField() {
@@ -127,22 +129,27 @@ public class JavaFieldRepresentationImpl implements JavaFieldRepresentation {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see br.xtool.core.representation.springboot.JavaFieldRepresentation#isNumberField()
+	 * @see
+	 * br.xtool.core.representation.springboot.JavaFieldRepresentation#isNumberField
+	 * ()
 	 */
 	@Override
 	public boolean isNumberField() {
 		return this.getType().isType(Long.class) || this.getType().isType(Integer.class) || this.getType().isType(Short.class) || this.getType().isType(BigDecimal.class)
-				|| this.getType().isType(BigInteger.class) || this.getType().isType(Byte.class) || this.getType().isType(Float.class) || this.getType().isType(Double.class);
+				|| this.getType().isType(BigInteger.class) || this.getType().isType(Byte.class) || this.getType().isType(Float.class)
+				|| this.getType().isType(Double.class);
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see br.xtool.core.representation.springboot.JavaFieldRepresentation#isTemporalField()
+	 * @see br.xtool.core.representation.springboot.JavaFieldRepresentation#
+	 * isTemporalField()
 	 */
 	@Override
 	public boolean isTemporalField() {
-		return this.getType().isType(Date.class) || this.getType().isType(java.sql.Date.class) || this.getType().isType(LocalDate.class) || this.getType().isType(LocalDateTime.class);
+		return this.getType().isType(Date.class) || this.getType().isType(java.sql.Date.class) || this.getType().isType(LocalDate.class)
+				|| this.getType().isType(LocalDateTime.class);
 	}
 
 	@Override
@@ -265,15 +272,19 @@ public class JavaFieldRepresentationImpl implements JavaFieldRepresentation {
 	@Override
 	public JavaAnnotationRepresentation<JavaClassSource> addSizeAnnotation(Integer min, Integer max) {
 		JavaAnnotationRepresentation<JavaClassSource> ann = this.addAnnotation(Size.class);
-		if (Objects.nonNull(min)) ann.setLiteralValue("min", String.valueOf(min));
-		if (Objects.nonNull(max)) ann.setLiteralValue("max", String.valueOf(max));
+		if (Objects.nonNull(min))
+			ann.setLiteralValue("min", String.valueOf(min));
+		if (Objects.nonNull(max))
+			ann.setLiteralValue("max", String.valueOf(max));
 		return ann;
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see br.xtool.core.representation.EJavaField#addBatchSizeAnnotation(java.lang. Integer)
+	 * @see
+	 * br.xtool.core.representation.EJavaField#addBatchSizeAnnotation(java.lang.
+	 * Integer)
 	 */
 	@Override
 	public JavaAnnotationRepresentation<JavaClassSource> addBatchSizeAnnotation(Integer size) {
@@ -285,7 +296,8 @@ public class JavaFieldRepresentationImpl implements JavaFieldRepresentation {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see br.xtool.core.representation.EJavaField#addLazyCollectionAnnotation(org. hibernate.annotations.LazyCollectionOption)
+	 * @see br.xtool.core.representation.EJavaField#addLazyCollectionAnnotation(org.
+	 * hibernate.annotations.LazyCollectionOption)
 	 */
 	@Override
 	public JavaAnnotationRepresentation<JavaClassSource> addLazyCollectionAnnotation(LazyCollectionOption lazyCollectionOption) {
@@ -293,35 +305,6 @@ public class JavaFieldRepresentationImpl implements JavaFieldRepresentation {
 		ann.setEnumValue(lazyCollectionOption);
 		return ann;
 	}
-
-//	/*
-//	 * (non-Javadoc)
-//	 * 
-//	 * @see br.xtool.core.representation.EJavaField#addGeneratedValueAnnotation(javax. persistence.GenerationType)
-//	 */
-//	@Override
-//	public JavaAnnotationRepresentation<JavaClassSource> addGeneratedValueAnnotation(GenerationType generationType) {
-//		JavaAnnotationRepresentation<JavaClassSource> ann = this.addAnnotation(GeneratedValue.class);
-//		ann.setEnumValue("strategy", GenerationType.SEQUENCE).setStringValue("generator", EntityRepresentation.genDBSequenceName(this.getJavaClass().getName()));
-//		return ann;
-//	}
-//
-//	/*
-//	 * (non-Javadoc)
-//	 * 
-//	 * @see br.xtool.core.representation.EJavaField#addSequenceGeneratorAnnotation()
-//	 */
-//	@Override
-//	public JavaAnnotationRepresentation<JavaClassSource> addSequenceGeneratorAnnotation() {
-//		JavaAnnotationRepresentation<JavaClassSource> ann = this.addAnnotation(SequenceGenerator.class);
-//		// @formatter:off
-//		ann.setLiteralValue("initialValue", "1")
-//			.setLiteralValue("allocationSize", "1")
-//			.setStringValue("name", EntityRepresentation.genDBSequenceName(this.getJavaClass().getName()))
-//			.setStringValue("sequenceName", EntityRepresentation.genDBSequenceName(this.getJavaClass().getName()));
-//		// @formatter:on
-//		return ann;
-//	}
 
 	/*
 	 * (non-Javadoc)
@@ -331,55 +314,6 @@ public class JavaFieldRepresentationImpl implements JavaFieldRepresentation {
 	@Override
 	public int compareTo(JavaFieldRepresentation o) {
 		return this.getName().compareTo(o.getName());
-	}
-
-//	public static class ENotNullFieldImpl extends JavaFieldRepresentationImpl implements JavaFieldNotNullType {
-//		public ENotNullFieldImpl(JavaFieldRepresentation javaField) {
-//			super(javaField.getJavaClass(), javaField.getRoasterField());
-//		}
-//
-//	}
-//
-//	public static class ETransientFieldImpl extends JavaFieldRepresentationImpl implements JavaFieldTransientType {
-//		public ETransientFieldImpl(JavaFieldRepresentation javaField) {
-//			super(javaField.getJavaClass(), javaField.getRoasterField());
-//		}
-//
-//	}
-//
-//	public static class EUniqueFieldImpl extends JavaFieldRepresentationImpl implements JavaFieldUniqueType {
-//		public EUniqueFieldImpl(JavaFieldRepresentation javaField) {
-//			super(javaField.getJavaClass(), javaField.getRoasterField());
-//		}
-//
-//	}
-
-	public static class EOneToOneFieldImpl extends JavaFieldRepresentationImpl implements JavaFieldOneToOneType {
-		public EOneToOneFieldImpl(JavaFieldRepresentation javaField) {
-			super(javaField.getJavaClass(), javaField.getRoasterField());
-		}
-
-	}
-
-	public static class EOneToManyFieldImpl extends JavaFieldRepresentationImpl implements JavaFieldOneToManyType {
-		public EOneToManyFieldImpl(JavaFieldRepresentation javaField) {
-			super(javaField.getJavaClass(), javaField.getRoasterField());
-		}
-
-	}
-
-	public static class EManyToOneFieldImpl extends JavaFieldRepresentationImpl implements JavaFieldManyToOneType {
-		public EManyToOneFieldImpl(JavaFieldRepresentation javaField) {
-			super(javaField.getJavaClass(), javaField.getRoasterField());
-		}
-
-	}
-
-	public static class EManyToManyFieldImpl extends JavaFieldRepresentationImpl implements JavaFieldManyToManyType {
-		public EManyToManyFieldImpl(JavaFieldRepresentation javaField) {
-			super(javaField.getJavaClass(), javaField.getRoasterField());
-		}
-
 	}
 
 }
