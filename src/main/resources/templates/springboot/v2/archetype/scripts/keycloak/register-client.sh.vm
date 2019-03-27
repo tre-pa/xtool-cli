@@ -36,7 +36,7 @@ check_jq() {
 		echo "======================================================================================================"
 		echo " Instale o 'jq' com seu gerenciador de pacotes. No fedora: "
 		echo " 	${DS} sudo dnf install jq "
-		echo " Execute o script novamente após a instalação."
+		echo " ${__RED__}Execute o script novamente após a instalação.${__NORMAl__}"
 		echo "======================================================================================================"
 		echo ""
 		exit 0
