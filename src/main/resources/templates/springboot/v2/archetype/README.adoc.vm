@@ -114,40 +114,58 @@ usuario:admin
 senha:admin
 ----
 
-=== IMPORTANDO APLICAÇÃO NO KEYCLOAK
 
-**1.** Criar o Realm TRE-PA
+=== Registrando a aplicação no keycloak em ambiente local
 
-image::docs/assets/realm.png[200,1095] 
+Para registrar a aplicação como __client__ no keycloak juntamente com as opções de autorização siga com os procedimentos abaixo: 
+
+IMPORTANT: Para a correta execução do script é necessário que a instalação do *keycloak-4.8.3.Final* esteja localizada em `${DS}HOME/opt/` e a o serviço do keycloak na porta `8085`.
+
+. Abrir o terminal do linux. 
+
+. Entrar na raiz do projeto *${projectName}* e executar o comando para tornar o script *scripts/keycloak/register-client.sh* executável: `$ chmod +x scripts/keycloak/register-client.sh`
+
+. Executar o script: `$ ./scripts/keycloak/register-client.sh`
+
+. No navegador web, logar na interface de administração do keycloak (http://localhost:8085/auth).
+
+. Ir em menu:Clients[${projectName} > Authorization > Settings > Import > Select file]
+
+. Selecionar o arquivo localizado em: `${projectName}/src/main/resources/client-authz-config.json`
+
+. Clicar em *Import*.
+
+Após os procedimentos acima a aplicação ${projectName} estará com seu registro de segurança no keycloak efetivado.
 
 
-**2.** Em Roles, vai em Add Role, para criar a role DEVELOPER
-
-image::docs/assets/role.png[200,1095] 
-
-**3.** Em Clients vai em Create, para importar o arquivo do service
-
-image::docs/assets/clients.png[200,1095] 
-
-**4.**  Clica no client criado (service), na aba Role criar o usuário USER, em Add Role
-
-image::docs/assets/add-role-user.png[200,1095]
-
-**5.**  Em Clients vai em Create, para importar o arquivo do angular
-
-**6.** Clica no client criado (angular) , na aba Scope, mover a role DEVELOPER para Assigned Roles
-
-image::docs/assets/client-angular.png[200,1095]
 
 == Acesso no H2
 
-*TODO*
+**Introdução**
 
-Snippet de código para requisições via Postman
+Após ter criado a sua aplicação você precisará de um banco de dados para realizar teste, para isso é recomendado utilizar o banco H2.
 
-== Instalação do Oracle XE
+**1.** Para acessar o banco h2 é necessário que aplicação esteja rodando, para acessar a url aonde o banco fica localizado. Existe um padrão para acessa-la.
 
-*TODO*
+[source,sh]
+-----
+
+locahost:8080/${projectName}-service/h2/*
+
+----- 
+ 
+**2.** Após a instalação você verá a tela de gredêciais nessa parte você deve substituir as seguintes configurações:
+
+[source,sh]
+----
+
+
+----
+
+IMPORTANT: Caso não venha uma senha definida no projeto você pode mudar no application.properties onde fica todas as configurações da aplicação.
+
+
+
 
 == Iniciando aplicação em modo local
 
