@@ -4,16 +4,11 @@
     (submit)="save($event)">
     <dx-form id="form"
       [formData]="${entity.instanceName}"
-      [showOptionalMark]="true"
       [showValidationSummary]="true"
-      optionalMark="<span title='campo opcional'><i>(opcional)</i></span>"
       requiredMark="<span title='campo obrigatório'>*</span>">
       <dxi-item itemType="group" colCount="2">
-
-	  ${ngEditTemplates.createHtmlAttributesDecl($entity)}
-	  
+      ${ngEditTemplates.createHtmlAttributesDecl($entity)}
       </dxi-item>
-      
       <dxi-item itemType="group"
         colCount="2"
         [colCountByScreen]="{ xs: 2 }">
@@ -27,7 +22,8 @@
           [buttonOptions]="{
             text: 'Salvar',
             type : 'success',
-            useSubmitBehavior: true
+            useSubmitBehavior: true,
+            disabled: saveSub && !saveSub.closed
           }"></dxi-item>
       </dxi-item>
     </dx-form>

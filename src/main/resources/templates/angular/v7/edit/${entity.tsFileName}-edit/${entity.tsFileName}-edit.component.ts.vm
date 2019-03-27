@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Title } from '@angular/platform-browser';
-import { Subject } from 'rxjs';
+import { Subscription, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import DataSource from 'devextreme/data/data_source';
 
@@ -21,6 +21,8 @@ export class ${entity.name}EditComponent implements OnInit, OnDestroy {
   ${entity.instanceName}: ${entity.name};
 
   destroy$: Subject<boolean> = new Subject<boolean>();
+
+  saveSub: Subscription;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -62,10 +64,10 @@ export class ${entity.name}EditComponent implements OnInit, OnDestroy {
   }
 
   save(event) {
-    this.${entity.instanceName}Service.save(this.${entity.instanceName})
+    event.preventDefault();
+    this.saveSub = this.${entity.instanceName}Service.save(this.${entity.instanceName})
       .pipe(takeUntil(this.destroy$))
       .subscribe((${entity.instanceName}) => this.router.navigate(['${entity.apiName}', ${entity.instanceName}.id]));
-    event.preventDefault();
   }
 
 }
