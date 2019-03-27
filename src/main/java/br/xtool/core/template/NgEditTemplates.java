@@ -6,9 +6,25 @@ import br.xtool.core.TemplateBuilder;
 import br.xtool.core.representation.springboot.EntityAttributeRepresentation;
 import br.xtool.core.representation.springboot.EntityRepresentation;
 
+/**
+ * Classe com os fragmentos de template do componente de edição do Angular. A
+ * classe é injetada no arquivo de template
+ * src/main/resources/templates/angular/v7/edit/${entity.tsFileName}-edit/${entity.tsFileName}-edit.component.html.vm
+ * 
+ * 
+ * @author jcruz
+ *
+ */
 @Component
 public class NgEditTemplates {
 
+	/**
+	 * Itera sobre todos os atributos da entidade para a geração do fragmento de
+	 * código HTML de edição de acordo com o tipo de dado do atributo.
+	 * 
+	 * @param entity Entidade JPA.
+	 * @return Fragmento do componente de edição.
+	 */
 	public String createHtmlAttributesDecl(EntityRepresentation entity) {
 		StringBuilder sb = new StringBuilder();
 		for (EntityAttributeRepresentation attr : entity.getAttributes()) {
@@ -18,7 +34,13 @@ public class NgEditTemplates {
 		return sb.toString();
 	}
 
-	private void addHtmlStringFieldDecl(StringBuilder sb, EntityAttributeRepresentation attr) {
+	/**
+	 * Gera o fragmento de código HTML para atributos do tipo String.
+	 * 
+	 * @param sb   Instância de StringBuilder
+	 * @param attr Atributo da entidade JPA.
+	 */
+	public void addHtmlStringFieldDecl(StringBuilder sb, EntityAttributeRepresentation attr) {
 		if (attr.isStringField()) {
 			// @formatter:off
 			sb.append(TemplateBuilder.builder()
@@ -37,9 +59,16 @@ public class NgEditTemplates {
 			// @formatter:on
 		}
 	}
-	
-	private void addHtmlTemporalFieldDecl(StringBuilder sb, EntityAttributeRepresentation attr) {
-		if(attr.isTemporalField()) {
+
+	/**
+	 * Gera o fragmento de código HTML para atributos do tipo Temporal (Date,
+	 * LocalDate, LocalDateTime ou java.sql.Date)
+	 * 
+	 * @param sb   Instância de StringBuilder
+	 * @param attr Atributo da entidade JPA.
+	 */
+	public void addHtmlTemporalFieldDecl(StringBuilder sb, EntityAttributeRepresentation attr) {
+		if (attr.isTemporalField()) {
 			// @formatter:off
 			sb.append(TemplateBuilder.builder()
 					.tpl("<!-- {{attr.label}} !-->",1)
@@ -60,9 +89,16 @@ public class NgEditTemplates {
 			// @formatter:on
 		}
 	}
-	
-	private String addHtmlStringMask(EntityAttributeRepresentation attr)  {
-		if(attr.getMask().isPresent()) {
+
+	/**
+	 * Verifica se o atributo JPA está marcado com máscara e gera o framento de
+	 * código HTML refletindo a máscara.
+	 * 
+	 * @param attr
+	 * @return Framento com código HTML de máscara ou String vazia.
+	 */
+	public String addHtmlStringMask(EntityAttributeRepresentation attr) {
+		if (attr.getMask().isPresent()) {
 			// @formatter:off
 			return TemplateBuilder.builder()
 					.tpl("mask: '{{ mask }}',",6)
@@ -75,11 +111,26 @@ public class NgEditTemplates {
 		return "";
 	}
 
-	private String addHtmlRequiredValidation(EntityAttributeRepresentation attr) {
+	/**
+	 * Verifica se o atributo é marcado como requerido e retorna o fragmento de
+	 * código HTML de validação do tipo 'required'.
+	 * 
+	 * @param attr Atributo da entidade JPA.
+	 * @return Framento de código HTML de validação do tipo 'required' ou String
+	 *         vazia.
+	 */
+	public String addHtmlRequiredValidation(EntityAttributeRepresentation attr) {
 		return attr.isRequired() ? "<dxi-validation-rule type=\"required\"></dxi-validation-rule>" : "";
 	}
 
-	private String addHtmlStringLengthValidation(EntityAttributeRepresentation attr) {
+	/**
+	 * Retorna o fragmento de código HTML de validação de tamanho para atributo do
+	 * tipo String.
+	 * 
+	 * @param attr Atributo de entidade JPA.
+	 * @return Fragmento de código HTML de validação de tamanho.
+	 */
+	public String addHtmlStringLengthValidation(EntityAttributeRepresentation attr) {
 		// @formatter:off
 		return TemplateBuilder.builder()
 				.tpl("<dxi-validation-rule type=\"stringLength\" max=\"{{ max }}\"></dxi-validation-rule>")
