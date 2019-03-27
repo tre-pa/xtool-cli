@@ -4,6 +4,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 import javax.persistence.Column;
+import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.Transient;
 
@@ -29,7 +30,8 @@ public class EntityAttributeRepresentationImpl extends JavaFieldRepresentationIm
 
 	private EntityRepresentation entitySource;
 
-	public EntityAttributeRepresentationImpl(SpringBootProjectRepresentation springBootProject, EntityRepresentation entitySource, FieldSource<JavaClassSource> fieldSource) {
+	public EntityAttributeRepresentationImpl(SpringBootProjectRepresentation springBootProject, EntityRepresentation entitySource,
+			FieldSource<JavaClassSource> fieldSource) {
 		super(entitySource, fieldSource);
 		this.springBootProject = springBootProject;
 		this.entitySource = entitySource;
@@ -38,6 +40,15 @@ public class EntityAttributeRepresentationImpl extends JavaFieldRepresentationIm
 	@Override
 	public EntityRepresentation getEntity() {
 		return entitySource;
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.springboot.EntityAttributeRepresentation#isId()
+	 */
+	@Override
+	public boolean isId() {
+		return this.getRoasterField().hasAnnotation(Id.class);
 	}
 
 	/*
@@ -95,7 +106,8 @@ public class EntityAttributeRepresentationImpl extends JavaFieldRepresentationIm
 	 */
 	@Override
 	public Optional<JpaRelationshipRepresentation> getJpaRelationship() {
-		if (this.isEnumField()) return Optional.empty();
+		if (this.isEnumField())
+			return Optional.empty();
 		if (this.isCollectionField()) {
 			String entityName = Types.getGenericsTypeParameter(this.getType().getQualifiedNameWithGenerics());
 			// @formatter:off
