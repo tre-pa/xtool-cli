@@ -191,13 +191,6 @@ public class JavaClassRepresentationImpl implements JavaClassRepresentation {
 		return this.javaClassSource;
 	}
 
-	// @Override
-	// public EJavaAnnotation<JavaClassSource> addTableAnnotation() {
-	// EJavaAnnotation<JavaClassSource> ann = this.addAnnotation(Table.class);
-	// ann.setStringValue("name", EJpaEntity.genDBTableName(this.getName()));
-	// return ann;
-	// }
-
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -345,42 +338,6 @@ public class JavaClassRepresentationImpl implements JavaClassRepresentation {
 	@Override
 	public Visibility getVisibility() {
 		return this.getRoasterJavaClass().getVisibility();
-	}
-
-	public static class EAuditableJavaClassImpl extends JavaClassRepresentationImpl implements EAuditableJavaClass {
-		public EAuditableJavaClassImpl(JavaClassRepresentation javaClass) {
-			super(javaClass.getProject(), javaClass.getRoasterJavaClass());
-		}
-	}
-
-	public static class ECacheableJavaClassImpl extends JavaClassRepresentationImpl implements ECacheableJavaClass {
-		public ECacheableJavaClassImpl(JavaClassRepresentation javaClass) {
-			super(javaClass.getProject(), javaClass.getRoasterJavaClass());
-		}
-	}
-
-	public static class EIndexedJavaClassImpl extends JavaClassRepresentationImpl implements EIndexedJavaClass {
-		public EIndexedJavaClassImpl(JavaClassRepresentation javaClass) {
-			super(javaClass.getProject(), javaClass.getRoasterJavaClass());
-		}
-	}
-
-	public static class EViewJavaClassImpl extends JavaClassRepresentationImpl implements EViewJavaClass {
-		public EViewJavaClassImpl(JavaClassRepresentation javaClass) {
-			super(javaClass.getProject(), javaClass.getRoasterJavaClass());
-		}
-	}
-
-	public static class EReadOnlyJavaClassImpl extends JavaClassRepresentationImpl implements EReadOnlyJavaClass {
-		public EReadOnlyJavaClassImpl(JavaClassRepresentation javaClass) {
-			super(javaClass.getProject(), javaClass.getRoasterJavaClass());
-		}
-	}
-
-	public static class EVersionableJavaClassImpl extends JavaClassRepresentationImpl implements EVersionableJavaClass {
-		public EVersionableJavaClassImpl(JavaClassRepresentation javaClass) {
-			super(javaClass.getProject(), javaClass.getRoasterJavaClass());
-		}
 	}
 
 }
