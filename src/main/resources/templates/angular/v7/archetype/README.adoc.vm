@@ -11,18 +11,12 @@ Para registrar a aplicação como __client__ no keycloak juntamente com as opç�
 
 IMPORTANT: Para a correta execução do script é necessário que a instalação do *keycloak-4.8.3.Final* esteja localizada em `${DS}HOME/opt/` e a o serviço do keycloak na porta `8085`.
 
+. Proceder primeiramente com o registro da aplicação Spring Boot (backend) associada ao projeto.
+
 . Abrir o terminal do linux. 
 
 . Entrar na raiz do projeto *${projectName}* e executar o comando para tornar o script *scripts/keycloak/register-client.sh* executável: `$ chmod +x scripts/keycloak/register-client.sh`
 
 . Executar o script: `$ ./scripts/keycloak/register-client.sh`
-
-. No navegador web, logar na interface de administração do keycloak (http://localhost:8085/auth).
-
-. Ir em menu:Clients[${projectName} > Authorization > Settings > Import > Select file]
-
-. Selecionar o arquivo localizado em: `${projectName}/src/main/resources/client-authz-config.json`
-
-. Clicar em *Import*.
 
 Após os procedimentos acima a aplicação ${projectName} estará com seu registro de segurança no keycloak efetivado.
