@@ -16,6 +16,7 @@ skinparam ClassBackgroundColor<<Embeddable>> WhiteSmoke
       }		
    }	
 '/
+
 package "${rootPackage.name}.domain" <<Frame>> {
 
 }

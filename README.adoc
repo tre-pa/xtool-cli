@@ -1,0 +1,147 @@
+= Ferramenta xtool-cli
+:toc:
+:toc-title: Índice
+:sectnums:
+:source-highlighter: coderay
+
+== Introdução
+
+Ferramenta de Produtividade para Desenvolvimento de Aplicações Angular e
+Spring Boot. O projeto é baseado no Spring Shell e é 100% java.
+
+== Utilização
+
+A ferrament `xtool-cli` é um projeto Spring Boot utilizando a biblioteca
+Spring Shell. A ferramenta é baseada em linha de comando.
+
+== Pré-Requisito
+
+* Java 8
+* Maven
+* Graphviz
+
+=== Instalação do Maven com https://sdkman.io/install[SdkMan]
+
+**Introdução**
+
+O SdkMan é uma ferramenta para facilitar a instalação de certas bibliotecas como por exemplo maven ou java etc.
+
+**1.** Primeiro é necessario instalar o SdkMan em sua maquina para isso instale da seguinte forma.
+
+[source,sh]
+----
+ curl -s "https://get.sdkman.io" | bash
+----
+
+Siga as instruções na tela para concluir a instalação. Em seguida, abra um novo terminal ou digite:
+
+----
+source "$HOME/.sdkman/bin/sdkman-init.sh"
+----
+
+Por fim, execute o seguinte trecho de código para garantir que a instalação seja bem-sucedida:
+
+[source,sh]
+----
+sdk version
+----
+
+
+
+**2.** Feito isso você pode instalar o maven com o seguinte comando:
+
+----
+sdk install maven
+----
+
+=== Instalção Graphviz  
+
+**1.** Para exibição dos diagrama de classe:
+
+[source,sh]
+----
+$ sudo dnf install graphviz
+----
+
+*2.* Clone o projeto
+
+[source,sh]
+----
+$ git clone git@git.tre-pa.jus.br:sds/support/xtool-cli.git
+$ cd xtool-cli
+----
+
+=== Instalação do Java 8 com SdkMan
+
+*2.* Para rodar o projeto se faz necessária a instalação de uma JDK,
+utilizando o baixo:
+
+[source,sh]
+----
+sdk list java // Para ver as versões do java disponiveis
+
+sdk java 8.0.201-oracle // Instalação da versão especifica
+
+----
+
+IMPORTANT: É de extrema importância que o java 8 seja instalado com o sdkman para facilitar as configurações de ambiente. 
+
+
+*3.* Rodar o projeto com comando `run.sh` indicando o diretório de
+workspace (_na maioria dos casos ~/git/_):
+
+[source,sh]
+----
+$ ./run.sh ~/git/
+----
+
+
+
+*4.* Após rodar a aplicação o prompt da ferramenta será exibido.
+
+[source,sh]
+----
+Bem vindo a ferramenta xtool
+O diretório de trabalho atual é: /home/jcruz/git
+Digite help para ver as opções de comandos.
+xtool ~ 
+----
+
+*1.* Para visualizar os comando disponéveis digitar no prompt o comando
+`help`:
+
+[source,sh]
+----
+xtool ~ help
+----
+
+*2.* Para visualizar o help de um comando específico digitar:
+
+[source,sh]
+----
+xtool ~ help NOME_COMANDO
+----
+
+== Criando projeto Spring Boot 2.x
+
+Para criar um novo projeto Spring Boot 2.x digitar o comando abaixo:
+
+[source,sh]
+----
+xtool ~ new:springboot NOME_PROJETO
+----
+
+O archetype do projeto spring boot v1 está localizado no diretório
+`src/main/resources/templates/springboot/v2/archetype` do projeto
+`xtool-cli`.
+
+== Criando projeto Angular 7.x
+
+[source,sh]
+----
+xtool ~ new:angular NOME_PROJETO
+----
+
+O archetype do projeto angular v7 está localizado no diretório
+`src/main/resources/templates/angular/v7/archetype` do projeto
+`xtool-cli`.
