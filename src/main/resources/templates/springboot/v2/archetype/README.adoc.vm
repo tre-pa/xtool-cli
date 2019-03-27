@@ -3,7 +3,7 @@
 :toc:
 :toc-title: Índice
 :sectnums:
-:source-highlighter: coderay
+:experimental:
 
 == Configuração do Ambiente de Desenvolvimento 
 
@@ -168,7 +168,3 @@ Password:
 
 IMPORTANT: Caso não venha uma senha definida no projeto você pode criar uma com padrão usamos `sa`.
 
-
-== Iniciando aplicação em modo local
-
-*TODO*

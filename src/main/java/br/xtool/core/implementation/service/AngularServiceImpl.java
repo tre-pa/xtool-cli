@@ -59,11 +59,12 @@ public class AngularServiceImpl implements AngularService {
 	 * @see br.xtool.service.AngularService#newApp(java.lang.String, java.lang.String)
 	 */
 	@Override
-	public void newApp(String name, String version) {
+	public void newApp(String name, String description ,String version) {
 		Map<String, Object> vars = new HashMap<String, Object>() {
 			private static final long serialVersionUID = 1L;
 			{
 				put("projectName", name);
+				put("projectDesc", description);
 			}
 		};
 		// @formatter:off

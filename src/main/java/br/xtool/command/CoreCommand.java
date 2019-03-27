@@ -49,10 +49,15 @@ public class CoreCommand {
 	 * @param name Nome da aplicação.
 	 */
 	@ShellMethod(key = "new:app", value = "Novo projeto Spring Boot e Angular", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
-	public void newApp(@ShellOption(help = "Nome do projeto") String name, @ShellOption(help = "Versão da aplicação SpringBoot", defaultValue = "v2", value = "--springboot-version") String sbversion,
+	public void newApp(
+	// @formatter:off
+			@ShellOption(help = "Nome do projeto") String name,
+			@ShellOption(help = "Descrição do projeto (Usar aspas duplas caso possua espaços em branco)") String description,
+			@ShellOption(help = "Versão da aplicação SpringBoot", defaultValue = "v2", value = "--springboot-version") String sbversion,
 			@ShellOption(help = "Versão da aplicação Angular", defaultValue = "v7", value = "--angular-version") String ngversion) {
-		springBootService.newApp(name, sbversion);
-		angularService.newApp(name, ngversion);
+	// @formatter:on
+		springBootService.newApp(name, description, sbversion);
+		angularService.newApp(name, description, ngversion);
 	}
 
 	/**
@@ -61,8 +66,13 @@ public class CoreCommand {
 	 * @param name Nome do Projeto Spring Boot
 	 */
 	@ShellMethod(key = "new:springboot", value = "Novo projeto Spring Boot v2", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
-	public void newAppSringBoot(@ShellOption(help = "Nome do projeto") String name, @ShellOption(help = "Versão da aplicação", defaultValue = "v2") String version) {
-		springBootService.newApp(name, version);
+	public void newAppSringBoot(
+	// @formatter:off
+			@ShellOption(help = "Nome do projeto") String name, 
+			@ShellOption(help = "Descrição do projeto (Usar aspas duplas caso possua espaços em branco)") String description,
+			@ShellOption(help = "Versão da aplicação", defaultValue = "v2") String version) {
+	// @formatter:on
+		springBootService.newApp(name, description, version);
 	}
 
 	/**
@@ -72,8 +82,13 @@ public class CoreCommand {
 	 * @throws IOException
 	 */
 	@ShellMethod(key = "new:angular", value = "Novo projeto Angular 7.x", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
-	public void newAppAngular(@ShellOption(help = "Nome do projeto") String name, @ShellOption(help = "Versão da aplicação", defaultValue = "v7") String version) throws IOException {
-		angularService.newApp(name, version);
+	public void newAppAngular(
+	// @formatter:off
+			@ShellOption(help = "Nome do projeto") String name,
+			@ShellOption(help = "Descrição do projeto (Usar aspas duplas caso possua espaços em branco)") String description,
+			@ShellOption(help = "Versão da aplicação", defaultValue = "v7") String version) throws IOException {
+	// @formatter:on
+		angularService.newApp(name, description, version);
 	}
 
 	/**

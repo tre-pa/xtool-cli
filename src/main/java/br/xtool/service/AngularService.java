@@ -9,7 +9,7 @@ import br.xtool.core.representation.springboot.JavaEnumRepresentation;
 
 public interface AngularService {
 
-	void newApp(String name, String version);
+	void newApp(String name, String descrition,  String version);
 
 	/**
 	 * Cria uma nova classe Typescript de dominio em src/app/domain
