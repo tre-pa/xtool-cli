@@ -70,9 +70,7 @@ Caso queira saber mais sobre a biblioteca acesse o site oficial: http://plantuml
  
 == Instalação do Keycloak
 
-**1.** Baixa do site do https://www.keycloak.org/downloads.html[keycloak] 
-
-image::docs/assets/keycloak-localhost.png[200,1095] 
+**1.** Baixa o http://repo.tre-pa.jus.br/downloads/keycloak-4.8.3.Final.zip[keycloak]
 
 **2.** Descompactar
 
@@ -90,14 +88,14 @@ Alterar a linha de definição do offset de
 
 [source, sh]
 ----
-<socket-binding-group name="standard-sockets" default-interface="public" port-offset="${jboss.socket.binding.port-offset:0}">
+<socket-binding-group name="standard-sockets" default-interface="public" port-offset="{$DS}{jboss.socket.binding.port-offset:0}">
 ----
 
 Para:
 
 [source, sh]
 ----
-<socket-binding-group name="standard-sockets" default-interface="public" port-offset="${jboss.socket.binding.port-offset:5}">
+<socket-binding-group name="standard-sockets" default-interface="public" port-offset="{$DS}{jboss.socket.binding.port-offset:5}">
 ----
 
 **4.** Iniciar o keycloak 
