@@ -87,7 +87,7 @@ public class PlantClassFieldRepresentationImpl implements PlantClassFieldReprese
 	 */
 	@Override
 	public boolean isId() {
-		return this.hasProperty(FieldPropertyType.ID);
+		return this.getProperty(FieldPropertyType.ID).isPresent();
 	}
 
 	@Override
@@ -199,8 +199,7 @@ public class PlantClassFieldRepresentationImpl implements PlantClassFieldReprese
 		if (this.hasMultiplicity()) {
 			String[] arrayMultiplicity = Strman.between(memberType(), "[", "]");
 			String multiplicityValue = StringUtils.join(arrayMultiplicity);
-			if (NumberUtils.isDigits(multiplicityValue))
-				return Optional.of(Integer.parseInt(multiplicityValue));
+			if (NumberUtils.isDigits(multiplicityValue)) return Optional.of(Integer.parseInt(multiplicityValue));
 			Matcher matcher = Pattern.compile("\\d*\\.\\.(\\d*)").matcher(multiplicityValue);
 			if (matcher.find()) {
 				Integer max = Integer.parseInt(matcher.group(1));
@@ -210,15 +209,14 @@ public class PlantClassFieldRepresentationImpl implements PlantClassFieldReprese
 		return Optional.empty();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see br.xtool.core.representation.EUmlField#hasProperty(br.xtool.core.
-	 * representation.EUmlFieldProperty.FieldPropertyType)
-	 */
 	@Override
-	public boolean hasProperty(FieldPropertyType property) {
-		return this.getProperties().stream().anyMatch(prop -> prop.getFieldProperty().equals(property));
+	public Optional<PlantClassFieldPropertyRepresentation> getProperty(FieldPropertyType type) {
+		// @formatter:off
+		return this.getProperties().stream()
+				.peek(property -> System.out.println("Field: "+ property.getField().getName()  +" Property: "+property.getFieldProperty()))
+				.filter(property -> property.getFieldProperty().equals(type))
+				.findAny();
+		// @formatter:on
 	}
 
 	/*
@@ -231,19 +229,14 @@ public class PlantClassFieldRepresentationImpl implements PlantClassFieldReprese
 		return !this.getProperties().isEmpty();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see br.xtool.core.representation.EUmlField#getProperties()
-	 */
-	@Override
-	public Set<PlantClassFieldPropertyRepresentation> getProperties() {
+	private Set<PlantClassFieldPropertyRepresentation> getProperties() {
 		if (Strman.containsAll(memberType(), new String[] { "{", "}" })) {
 			String[] propertiesBlock = Strman.between(memberType(), "{", "}");
 			String[] propertiesItens = StringUtils.split(StringUtils.join(propertiesBlock), ",");
 			if (propertiesItens.length > 1) {
 				// @formatter:off
 				return Stream.of(propertiesItens)
+					.map(StringUtils::trim)
 					.map(item -> new PlantClassFieldPropertyRepresentationImpl(this, item))
 					.collect(Collectors.toSet());
 				// @formatter:on

@@ -1,7 +1,6 @@
 package br.xtool.core.representation.plantuml;
 
 import java.util.Optional;
-import java.util.Set;
 
 import br.xtool.core.representation.plantuml.PlantClassFieldPropertyRepresentation.FieldPropertyType;
 import lombok.AllArgsConstructor;
@@ -144,19 +143,12 @@ public interface PlantClassFieldRepresentation {
 	boolean hasProperties();
 
 	/**
-	 * 
-	 * Retorna a lista de properties do atributo.
-	 * 
-	 * @return
-	 */
-	Set<PlantClassFieldPropertyRepresentation> getProperties();
-
-	/**
+	 * Retorna uma property do atributo.
 	 * 
 	 * @param name
 	 * @return
 	 */
-	boolean hasProperty(FieldPropertyType propertyType);
+	Optional<PlantClassFieldPropertyRepresentation> getProperty(FieldPropertyType type);
 
 	/**
 	 * 
