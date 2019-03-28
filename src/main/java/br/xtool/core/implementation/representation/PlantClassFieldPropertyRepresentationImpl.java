@@ -20,6 +20,7 @@ public class PlantClassFieldPropertyRepresentationImpl implements PlantClassFiel
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.xtool.core.representation.EUmlFieldProperty#getFieldProperty()
 	 */
 	@Override
@@ -38,11 +39,17 @@ public class PlantClassFieldPropertyRepresentationImpl implements PlantClassFiel
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.xtool.core.representation.EUmlFieldProperty#getField()
 	 */
 	@Override
 	public PlantClassFieldRepresentation getField() {
 		return this.field;
+	}
+
+	@Override
+	public boolean isId() {
+		return getFieldProperty().equals(FieldPropertyType.ID);
 	}
 
 	@Override
@@ -53,11 +60,6 @@ public class PlantClassFieldPropertyRepresentationImpl implements PlantClassFiel
 	@Override
 	public boolean isUnique() {
 		return getFieldProperty().equals(FieldPropertyType.UNIQUE);
-	}
-
-	@Override
-	public boolean isTransient() {
-		return getFieldProperty().equals(FieldPropertyType.TRANSIENT);
 	}
 
 }

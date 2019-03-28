@@ -14,7 +14,7 @@ import br.xtool.core.representation.springboot.JavaEnumRepresentation;
 import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 
 /**
- * Transforma um enum UML (PlantUML) do diagrama de classe em um EJavaEnum.
+ * Transforma um enum UML (PlantUML) do diagrama de classe em um JavaEnumRepresentation.
  * 
  * @author jcruz
  *

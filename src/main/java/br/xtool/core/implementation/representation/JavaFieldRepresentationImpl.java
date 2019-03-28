@@ -136,8 +136,7 @@ public class JavaFieldRepresentationImpl implements JavaFieldRepresentation {
 	@Override
 	public boolean isNumberField() {
 		return this.getType().isType(Long.class) || this.getType().isType(Integer.class) || this.getType().isType(Short.class) || this.getType().isType(BigDecimal.class)
-				|| this.getType().isType(BigInteger.class) || this.getType().isType(Byte.class) || this.getType().isType(Float.class)
-				|| this.getType().isType(Double.class);
+				|| this.getType().isType(BigInteger.class) || this.getType().isType(Byte.class) || this.getType().isType(Float.class) || this.getType().isType(Double.class);
 	}
 
 	/*
@@ -148,8 +147,7 @@ public class JavaFieldRepresentationImpl implements JavaFieldRepresentation {
 	 */
 	@Override
 	public boolean isTemporalField() {
-		return this.getType().isType(Date.class) || this.getType().isType(java.sql.Date.class) || this.getType().isType(LocalDate.class)
-				|| this.getType().isType(LocalDateTime.class);
+		return this.getType().isType(Date.class) || this.getType().isType(java.sql.Date.class) || this.getType().isType(LocalDate.class) || this.getType().isType(LocalDateTime.class);
 	}
 
 	@Override
@@ -262,48 +260,6 @@ public class JavaFieldRepresentationImpl implements JavaFieldRepresentation {
 				.map(JavaRelationshipRepresentation.class::cast)
 				.findFirst();
 		// @formatter:on
-	}
-
-//	/*
-//	 * (non-Javadoc)
-//	 * 
-//	 * @see br.xtool.core.representation.EJavaField#addSizeAnnotation(java.lang.Integer, java.lang.Integer)
-//	 */
-	@Override
-	public JavaAnnotationRepresentation<JavaClassSource> addSizeAnnotation(Integer min, Integer max) {
-		JavaAnnotationRepresentation<JavaClassSource> ann = this.addAnnotation(Size.class);
-		if (Objects.nonNull(min))
-			ann.setLiteralValue("min", String.valueOf(min));
-		if (Objects.nonNull(max))
-			ann.setLiteralValue("max", String.valueOf(max));
-		return ann;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * br.xtool.core.representation.EJavaField#addBatchSizeAnnotation(java.lang.
-	 * Integer)
-	 */
-	@Override
-	public JavaAnnotationRepresentation<JavaClassSource> addBatchSizeAnnotation(Integer size) {
-		JavaAnnotationRepresentation<JavaClassSource> ann = this.addAnnotation(BatchSize.class);
-		ann.setLiteralValue("size", String.valueOf(size));
-		return ann;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see br.xtool.core.representation.EJavaField#addLazyCollectionAnnotation(org.
-	 * hibernate.annotations.LazyCollectionOption)
-	 */
-	@Override
-	public JavaAnnotationRepresentation<JavaClassSource> addLazyCollectionAnnotation(LazyCollectionOption lazyCollectionOption) {
-		JavaAnnotationRepresentation<JavaClassSource> ann = this.addAnnotation(LazyCollection.class);
-		ann.setEnumValue(lazyCollectionOption);
-		return ann;
 	}
 
 	/*

@@ -5,9 +5,11 @@ import java.util.Optional;
 import java.util.SortedSet;
 
 import org.hibernate.annotations.LazyCollectionOption;
+import org.jboss.forge.roaster.model.JavaDocTag;
 import org.jboss.forge.roaster.model.Type;
 import org.jboss.forge.roaster.model.source.FieldSource;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
+import org.jboss.forge.roaster.model.source.JavaDocSource;
 
 /**
  * Representação de um atributo de uma classe java.
@@ -39,7 +41,8 @@ public interface JavaFieldRepresentation extends Comparable<JavaFieldRepresentat
 	Type<JavaClassSource> getType();
 
 	/**
-	 * Verifica se o atribito é simples (Number, String, Boolean, LocalDate, LocalDateTime)
+	 * Verifica se o atribito é simples (Number, String, Boolean, LocalDate,
+	 * LocalDateTime)
 	 * 
 	 * @return
 	 */
@@ -186,7 +189,8 @@ public interface JavaFieldRepresentation extends Comparable<JavaFieldRepresentat
 	SortedSet<JavaAnnotationRepresentation<JavaClassSource>> getAnnotations();
 
 	/**
-	 * Adiciona uma nova annotation ao atributo. Caso já exista retorna a referencia.
+	 * Adiciona uma nova annotation ao atributo. Caso já exista retorna a
+	 * referencia.
 	 * 
 	 * @param type
 	 * @return
@@ -199,36 +203,5 @@ public interface JavaFieldRepresentation extends Comparable<JavaFieldRepresentat
 	 * @return
 	 */
 	FieldSource<JavaClassSource> getRoasterField();
-
-//
-	@Deprecated
-	JavaAnnotationRepresentation<JavaClassSource> addSizeAnnotation(Integer min, Integer max);
-
-	@Deprecated
-	JavaAnnotationRepresentation<JavaClassSource> addBatchSizeAnnotation(Integer size);
-
-	@Deprecated
-	JavaAnnotationRepresentation<JavaClassSource> addLazyCollectionAnnotation(LazyCollectionOption lazyCollectionOption);
-
-//	@Deprecated
-//	interface JavaFieldNotNullType extends JavaFieldRepresentation {}
-//
-//	@Deprecated
-//	interface JavaFieldTransientType extends JavaFieldRepresentation {}
-//
-//	@Deprecated
-//	interface JavaFieldUniqueType extends JavaFieldRepresentation {}
-
-	@Deprecated
-	interface JavaFieldOneToOneType extends JavaFieldRepresentation {}
-
-	@Deprecated
-	interface JavaFieldOneToManyType extends JavaFieldRepresentation {}
-
-	@Deprecated
-	interface JavaFieldManyToOneType extends JavaFieldRepresentation {}
-
-	@Deprecated
-	interface JavaFieldManyToManyType extends JavaFieldRepresentation {}
 
 }

@@ -46,7 +46,7 @@ public class EntityAttributeVisitor implements FieldVisitor {
 		val annColumn = attr.addAnnotation(Column.class);
 		plantField.getTaggedValue("column.name").ifPresent(tagValue -> annColumn.getRoasterAnnotation().setStringValue("name", tagValue));
 		if (attr.isStringField()) {
-			annColumn.getRoasterAnnotation().setLiteralValue("length", String.valueOf(plantField.getMaxArrayLength().orElse(255)));
+			annColumn.getRoasterAnnotation().setLiteralValue("length", String.valueOf(plantField.getUpperBoundMultiplicity().orElse(255)));
 		}
 	}
 
@@ -88,7 +88,7 @@ public class EntityAttributeVisitor implements FieldVisitor {
 	private void addMaxAnnotation(EntityAttributeRepresentation attr, PlantClassFieldRepresentation plantField) {
 		if (attr.isNumberField()) {
 			// @formatter:off
-			plantField.getMaxArrayLength().ifPresent(maxValue -> 
+			plantField.getUpperBoundMultiplicity().ifPresent(maxValue -> 
 				attr.addAnnotation(Max.class)
 					.getRoasterAnnotation()
 					.setLiteralValue(String.valueOf(maxValue)));
@@ -99,7 +99,7 @@ public class EntityAttributeVisitor implements FieldVisitor {
 	private void addMinAnnotation(EntityAttributeRepresentation attr, PlantClassFieldRepresentation plantField) {
 		if (attr.isNumberField()) {
 			// @formatter:off
-			plantField.getMinArrayLength().ifPresent(minValue -> 
+			plantField.getLowerBoundMultiplicity().ifPresent(minValue -> 
 				attr.addAnnotation(Min.class)
 					.getRoasterAnnotation()
 					.setLiteralValue(String.valueOf(minValue)));
@@ -110,9 +110,9 @@ public class EntityAttributeVisitor implements FieldVisitor {
 
 	private void addSizeAnnotation(EntityAttributeRepresentation attr, PlantClassFieldRepresentation plantField) {
 		if (attr.isStringField()) {
-			val ann = attr.getRoasterField().addAnnotation(Size.class);
-			ann.setLiteralValue("max", String.valueOf(plantField.getMaxArrayLength().orElse(255)));
-			plantField.getMinArrayLength().ifPresent(v -> ann.setLiteralValue("min", String.valueOf(v)));
+			val ann = attr.addAnnotation(Size.class);
+			ann.getRoasterAnnotation().setLiteralValue("max", String.valueOf(plantField.getUpperBoundMultiplicity().orElse(255)));
+			plantField.getLowerBoundMultiplicity().ifPresent(v -> ann.getRoasterAnnotation().setLiteralValue("min", String.valueOf(v)));
 		}
 	}
 
