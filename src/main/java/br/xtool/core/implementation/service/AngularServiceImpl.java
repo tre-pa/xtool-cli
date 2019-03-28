@@ -76,9 +76,11 @@ public class AngularServiceImpl implements AngularService {
 		// @formatter:on
 		ConsoleLog.print(ConsoleLog.cyan("\t-- npm install --"));
 		this.shellService.runCmd(project.getPath(), "npm i && code .", vars);
-		this.shellService.runCmd(project.getPath(), "git init");
-		this.shellService.runCmd(project.getPath(), "git add .");
-		this.shellService.runCmd(project.getPath(), "git commit -m \"Inicial commit\" ");
+		this.shellService.runCmd(project.getPath(), "git init > /dev/null 2>&1");
+		this.shellService.runCmd(project.getPath(), "git add . > /dev/null 2>&1");
+		this.shellService.runCmd(project.getPath(), "git commit -m \"Inicial commit\" > /dev/null 2>&1");
+		this.shellService.runCmd(project.getPath(), "chmod +x scripts/keycloak/register-client.sh");
+		ConsoleLog.print(ConsoleLog.cyan("\t-- Commit inicial realizado no git. --"));
 
 		this.workspace.setWorkingProject(project);
 	}

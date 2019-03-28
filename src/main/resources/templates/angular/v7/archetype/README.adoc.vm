@@ -15,8 +15,6 @@ IMPORTANT: Para a correta execução do script é necessário que a instalação
 
 . Abrir o terminal do linux. 
 
-. Entrar na raiz do projeto *${projectName}* e executar o comando para tornar o script *scripts/keycloak/register-client.sh* executável: `$ chmod +x scripts/keycloak/register-client.sh`
-
-. Executar o script: `$ ./scripts/keycloak/register-client.sh`
+. Entrar na raiz do projeto *${projectName}* e executar o script: `./scripts/keycloak/register-client.sh`
 
 Após os procedimentos acima a aplicação ${projectName} estará com seu registro de segurança no keycloak efetivado.

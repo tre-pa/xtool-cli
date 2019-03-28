@@ -95,9 +95,11 @@ public class SpringBootServiceImpl implements SpringBootService {
 		// @formatter:on
 
 		this.workspace.setWorkingProject(bootProject);
-		this.shellService.runCmd(bootProject.getPath(), "git init");
-		this.shellService.runCmd(bootProject.getPath(), "git add .");
-		this.shellService.runCmd(bootProject.getPath(), "git commit -m \"Inicial commit\" ");
+		this.shellService.runCmd(bootProject.getPath(), "git init > /dev/null 2>&1 ");
+		this.shellService.runCmd(bootProject.getPath(), "git add . > /dev/null 2>&1");
+		this.shellService.runCmd(bootProject.getPath(), "git commit -m \"Inicial commit\" > /dev/null 2>&1 ");
+		this.shellService.runCmd(bootProject.getPath(), "chmod +x scripts/keycloak/register-client.sh");
+		ConsoleLog.print(ConsoleLog.cyan("\t-- Commit inicial realizado no git. --"));
 	}
 
 	/*
