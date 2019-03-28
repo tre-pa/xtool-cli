@@ -1,15 +1,14 @@
 package br.xtool.core.representation.plantuml;
 
-import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 
 import br.xtool.core.representation.plantuml.PlantClassFieldPropertyRepresentation.FieldPropertyType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 
 /**
- * Representação de um campo de uma classe do diagrama de classe UML.
+ * Representação de um atributo de uma classe do diagrama de classe UML.
  * 
  * @author jcruz
  *
@@ -45,12 +44,11 @@ public interface PlantClassFieldRepresentation {
 	boolean isLong();
 
 	/**
-	 * Retorna se o atributo é do tipo array de bytes.
+	 * Retorna se o atributo é do tipo Byte.
 	 * 
 	 * @return
 	 */
-	@Deprecated
-	boolean isByteArray();
+	boolean isByte();
 
 	/**
 	 * Retorna se o atributo é do tipo Boolean.
@@ -88,6 +86,13 @@ public interface PlantClassFieldRepresentation {
 	boolean isBigDecimal();
 
 	/**
+	 * Retorna se o atributo é do tipo BigInteger.
+	 * 
+	 * @return
+	 */
+	boolean isBigInteger();
+
+	/**
 	 * Retorna se o atributo é do tipo String.
 	 * 
 	 * @return
@@ -95,12 +100,17 @@ public interface PlantClassFieldRepresentation {
 	boolean isString();
 
 	/**
-	 * Retorna se o atributo é um array.
+	 * Verifica se o atributo possui multiplicidade.
 	 * 
 	 * @return
 	 */
-	boolean isArray();
+	boolean hasMultiplicity();
 
+	/**
+	 * Retorna se o atributo é um Enum.
+	 * 
+	 * @return
+	 */
 	boolean isEnum();
 
 	/**
@@ -108,42 +118,37 @@ public interface PlantClassFieldRepresentation {
 	 * 
 	 * @return
 	 */
-	Optional<PlantEnumRepresentation> getEnumRepresentation();
+	Optional<PlantEnumRepresentation> getPlantEnumRepresentation();
 
 	/**
-	 * Retorna o valor mínimo do attributo array.
+	 * Retorna o limite inferior da multiplicidade do atributo.
 	 * 
 	 * @return
 	 */
-	Optional<Integer> getMinArrayLength();
+	Optional<Integer> getLowerBoundMultiplicity();
 
 	/**
-	 * Retorna o valor máximo do atributo array.
+	 * Retorna o limite superior da multiplicidade do atributo.
 	 * 
 	 * @return
 	 */
-	Optional<Integer> getMaxArrayLength();
+	Optional<Integer> getUpperBoundMultiplicity();
 
 	/**
+	 * 
+	 * Verifica se a atributo possui properties.
 	 * 
 	 * @return
 	 */
 	boolean hasProperties();
 
 	/**
-	 * 
-	 * @return
-	 */
-	Set<PlantClassFieldPropertyRepresentation> getProperties();
-
-	/**
+	 * Retorna uma property do atributo.
 	 * 
 	 * @param name
 	 * @return
 	 */
-	boolean hasProperty(FieldPropertyType propertyType);
-
-	Map<String, String> getTaggedValues();
+	Optional<PlantClassFieldPropertyRepresentation> getProperty(FieldPropertyType type);
 
 	/**
 	 * 
@@ -152,10 +157,13 @@ public interface PlantClassFieldRepresentation {
 	 */
 	Optional<String> getTaggedValue(String key);
 
+	/**
+	 * Retorna o array de String de uma Tagged Value.
+	 * 
+	 * @param key
+	 * @return
+	 */
 	Optional<String[]> getTaggedValues(String key);
-
-	// @Deprecated
-	// EJavaField convertToJavaField(EJavaClass javaClass);
 
 	@AllArgsConstructor
 	@Getter
@@ -163,6 +171,7 @@ public interface PlantClassFieldRepresentation {
 		// @formatter:off
 		LONG("Long", ""), 
 		BIGDECIMAL("BigDecimal", "java.math.BigDecimal"),
+		BIGINTEGER("BigInteger", "java.math.BigInteger"),
 		INTEGER("Integer", ""), 
 		STRING("String", ""), 
 		BYTE("byte", ""), 
@@ -171,16 +180,10 @@ public interface PlantClassFieldRepresentation {
 		LOCALDATETIME("LocalDateTime", "java.time.LocalDateTime"), 
 		DATE("Date", "java.util.Date"),
 		ENUM("", "");
+		@Setter
 		private String javaName;
+		@Setter
 		private String className;
-		// @formatter:on
-		public void setJavaName(String javaName) {
-			this.javaName = javaName;
-		}
-
-		public void setClassName(String className) {
-			this.className = className;
-		}
 	}
 
 }

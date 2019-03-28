@@ -111,20 +111,14 @@ public class SpringBootServiceImpl implements SpringBootService {
 	public EntityRepresentation genEntity(PlantClassRepresentation plantClass) {
 		SpringBootProjectRepresentation springBootProject = this.workspace.getWorkingProject(SpringBootProjectRepresentation.class);
 		JavaClassRepresentation javaClass = appCtx.getBean(JavaClassRepresentationMapper.class).apply(plantClass);
-		plantClass.getRelationships().stream().forEach(plantRelationship -> appCtx.getBean(JavaRelationshipRepresentationMapper.class).apply(javaClass, plantRelationship));
 		plantClass.getFields().stream().filter(PlantClassFieldRepresentation::isEnum).forEach(plantClassField -> {
-			JavaEnumRepresentation javaEnum = appCtx.getBean(JavaEnumRepresentationMapper.class).apply(plantClassField.getEnumRepresentation().get());
+			JavaEnumRepresentation javaEnum = appCtx.getBean(JavaEnumRepresentationMapper.class).apply(plantClassField.getPlantEnumRepresentation().get());
 			save(javaEnum);
 		});
-		springBootProject.refresh();
 		plantClass.getFields().stream().forEach(plantField -> appCtx.getBean(JavaFieldRepresentationMapper.class).apply(javaClass, plantField));
+		plantClass.getRelationships().stream().forEach(plantRelationship -> appCtx.getBean(JavaRelationshipRepresentationMapper.class).apply(javaClass, plantRelationship));
 		save(javaClass);
-//		// Gera as classes dos relacionamento associados a classe.
-//		plantClass.getRelationships().stream().forEach(plantRelationship -> {
-//			if (springBootProject.getEntities().stream().noneMatch(entity -> entity.getName().equals(plantRelationship.getTargetClass().getName()))) {
-//				genEntity(plantRelationship.getTargetClass());
-//			}
-//		});
+
 		springBootProject.refresh();
 		return new EntityRepresentationImpl(springBootProject, javaClass.getRoasterJavaClass());
 	}

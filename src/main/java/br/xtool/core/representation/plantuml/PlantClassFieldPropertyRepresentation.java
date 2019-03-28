@@ -9,9 +9,9 @@ public interface PlantClassFieldPropertyRepresentation {
 	@Getter
 	enum FieldPropertyType {
 		// @formatter:off
+		ID("id"),
 		NOTNULL("notnull"), 
-		UNIQUE("unique"),
-		TRANSIENT("transient");
+		UNIQUE("unique");
 		// @formatter:on
 		private String property;
 
@@ -26,10 +26,10 @@ public interface PlantClassFieldPropertyRepresentation {
 	 */
 	PlantClassFieldRepresentation getField();
 
+	boolean isId();
+
 	boolean isNotNull();
 
 	boolean isUnique();
-
-	boolean isTransient();
 
 }

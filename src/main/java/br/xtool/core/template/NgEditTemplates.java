@@ -28,10 +28,57 @@ public class NgEditTemplates {
 	public String createHtmlAttributesDecl(EntityRepresentation entity) {
 		StringBuilder sb = new StringBuilder();
 		for (EntityAttributeRepresentation attr : entity.getAttributes()) {
+			addHtmlBooleanFieldDecl(sb, attr);
+			addHtmlNumberFieldDecl(sb, attr);
 			addHtmlStringFieldDecl(sb, attr);
 			addHtmlTemporalFieldDecl(sb, attr);
 		}
 		return sb.toString();
+	}
+
+	/**
+	 * Gera o fragmento de código HTML para atributos do tipo Boolean.
+	 * 
+	 * @param sb   Instância de StringBuilder
+	 * @param attr Atributo da entidade JPA.
+	 */
+	public void addHtmlBooleanFieldDecl(StringBuilder sb, EntityAttributeRepresentation attr) {
+		if (attr.isBooleanField()) {
+			// @formatter:off
+			sb.append(TemplateBuilder.builder()
+					.tpl("<!-- {{attr.label}} -->",1)
+					.tpl("<dxi-item dataField=\"{{attr.name}}\"",3)
+					.tpl("  editorType=\"dxCheckBox\"",3)
+					.tpl("  [editorOptions]=\"{ text: '{{attr.label}}' }\">",3)
+					.tpl("  <dxo-label text=\" \"></dxo-label>",3)
+					.tpl("</dxi-item>",3)
+					.put("attr", attr)
+					.build());
+			// @formatter:on
+		}
+	}
+
+	/**
+	 * Gera o fragmento de código HTML para atributos do tipo Number (Integer, Long, BigInteger...).
+	 * 
+	 * @param sb   Instância de StringBuilder
+	 * @param attr Atributo da entidade JPA.
+	 */
+	public void addHtmlNumberFieldDecl(StringBuilder sb, EntityAttributeRepresentation attr) {
+		if (attr.isNumberField()) {
+			// @formatter:off
+			sb.append(TemplateBuilder.builder()
+					.tpl("<!-- {{attr.label}} -->",1)
+					.tpl("<dxi-item dataField=\"{{attr.name}}\"",3)
+					.tpl("  editorType=\"dxNumberBox\"",3)
+					.tpl("  [editorOptions]=\"{ hint: 'Digite o {{attr.label}}' }\">",3)
+					.tpl("  <dxo-label text=\"{{attr.label}}\"></dxo-label>",3)
+					.tpl(	addHtmlRequiredValidation(attr),4)
+					.tpl("</dxi-item>",3)
+					.put("attr", attr)
+					.build());
+			// @formatter:on
+		}
 	}
 
 	/**
@@ -44,11 +91,11 @@ public class NgEditTemplates {
 		if (attr.isStringField()) {
 			// @formatter:off
 			sb.append(TemplateBuilder.builder()
-					.tpl("<!-- {{attr.label}} !-->",1)
+					.tpl("<!-- {{attr.label}} -->",1)
 					.tpl("<dxi-item dataField=\"{{attr.name}}\"",3)
-					.tpl("  [editorOptions]=\"{  ",3)
+					.tpl("  [editorOptions]=\"{",3)
 					.tpl( 	  addHtmlStringMask(attr))
-					.tpl(" 	  hint: 'Digite o {{attr.label}}' ", 4)
+					.tpl(" 	  hint: 'Digite o {{attr.label}}'", 4)
 					.tpl("  }\">",3)
 					.tpl("  <dxo-label text=\"{{attr.label}}\"></dxo-label>",3)
 					.tpl(	addHtmlRequiredValidation(attr),4)
@@ -71,15 +118,15 @@ public class NgEditTemplates {
 		if (attr.isTemporalField()) {
 			// @formatter:off
 			sb.append(TemplateBuilder.builder()
-					.tpl("<!-- {{attr.label}} !-->",1)
+					.tpl("<!-- {{attr.label}} -->",1)
 					.tpl("<dxi-item dataField=\"{{attr.name}}\"",3)
 					.tpl("	editorType=\"dxDateBox\"",3)
-					.tpl("  [editorOptions]=\"{  ",3)
+					.tpl("  [editorOptions]=\"{",3)
 					.tpl("	  type: 'datetime',",4)
 					.tpl("	  width: '100%',",4)
 					.tpl("	  useMaskBehavior: true,",4)
 					.tpl("	  openOnFieldClick: true,",4)
-					.tpl(" 	  hint: 'Selecione a {{attr.label}}' ", 4)
+					.tpl(" 	  hint: 'Selecione a {{attr.label}}'", 4)
 					.tpl("  }\">",3)
 					.tpl("  <dxo-label text=\"{{attr.label}}\"></dxo-label>",3)
 					.tpl(	addHtmlRequiredValidation(attr),4)

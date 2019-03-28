@@ -69,7 +69,7 @@ public class PlantClassFieldRepresentationImpl implements PlantClassFieldReprese
 			fieldType.setClassName(plantEnum.getUmlPackage().getName().concat(".").concat(plantEnum.getName()));
 			return fieldType;
 		}
-		if (this.isArray()) {
+		if (this.hasMultiplicity()) {
 			String type = StringUtils.substring(this.memberType(), 0, StringUtils.indexOf(this.memberType(), "[")).trim();
 			return FieldType.valueOf(StringUtils.upperCase(type));
 		}
@@ -87,18 +87,17 @@ public class PlantClassFieldRepresentationImpl implements PlantClassFieldReprese
 	 */
 	@Override
 	public boolean isId() {
-		return StringUtils.equalsIgnoreCase(this.getName(), "id");
+		return this.getProperty(FieldPropertyType.ID).isPresent();
 	}
 
 	@Override
 	public boolean isLong() {
-		return this.getType().equals(FieldType.LONG) && !this.isId();
+		return this.getType().equals(FieldType.LONG);
 	}
 
 	@Override
-	@Deprecated
-	public boolean isByteArray() {
-		return getType().equals(FieldType.BYTE) && this.isArray();
+	public boolean isByte() {
+		return getType().equals(FieldType.BYTE);
 	}
 
 	@Override
@@ -127,18 +126,13 @@ public class PlantClassFieldRepresentationImpl implements PlantClassFieldReprese
 	}
 
 	@Override
-	public boolean isString() {
-		return getType().equals(FieldType.STRING);
+	public boolean isBigInteger() {
+		return getType().equals(FieldType.BIGINTEGER);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see br.xtool.core.representation.EUmlField#isArray()
-	 */
 	@Override
-	public boolean isArray() {
-		return Strman.containsAll(memberType(), new String[] { "[", "]" });
+	public boolean isString() {
+		return getType().equals(FieldType.STRING);
 	}
 
 	/*
@@ -150,13 +144,25 @@ public class PlantClassFieldRepresentationImpl implements PlantClassFieldReprese
 	public boolean isEnum() {
 		return this.classDiagram.getEnums().stream().anyMatch(plantEnum -> plantEnum.getName().equals(this.memberType()));
 	}
-	
+
 	/*
 	 * (non-Javadoc)
-	 * @see br.xtool.core.representation.PlantFieldRepresentation#getEnumRepresentation()
+	 * 
+	 * @see br.xtool.core.representation.EUmlField#isArray()
 	 */
 	@Override
-	public Optional<PlantEnumRepresentation> getEnumRepresentation() {
+	public boolean hasMultiplicity() {
+		return Strman.containsAll(memberType(), new String[] { "[", "]" });
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * br.xtool.core.representation.PlantFieldRepresentation#getEnumRepresentation()
+	 */
+	@Override
+	public Optional<PlantEnumRepresentation> getPlantEnumRepresentation() {
 		// @formatter:off
 		return this.classDiagram.getEnums().stream()
 				.filter(plantEnum -> plantEnum.getName().equals(this.getType().getJavaName()))
@@ -170,8 +176,8 @@ public class PlantClassFieldRepresentationImpl implements PlantClassFieldReprese
 	 * @see br.xtool.core.representation.EUmlField#getMinArrayLength()
 	 */
 	@Override
-	public Optional<Integer> getMinArrayLength() {
-		if (this.isArray()) {
+	public Optional<Integer> getLowerBoundMultiplicity() {
+		if (this.hasMultiplicity()) {
 			Pattern arrayRangePattern = Pattern.compile("(\\d*)\\.\\.\\d*");
 			String[] arrayMultiplicity = Strman.between(memberType(), "[", "]");
 			Matcher matcher = arrayRangePattern.matcher(StringUtils.join(arrayMultiplicity));
@@ -189,8 +195,8 @@ public class PlantClassFieldRepresentationImpl implements PlantClassFieldReprese
 	 * @see br.xtool.core.representation.EUmlField#getMaxArrayLength()
 	 */
 	@Override
-	public Optional<Integer> getMaxArrayLength() {
-		if (this.isArray()) {
+	public Optional<Integer> getUpperBoundMultiplicity() {
+		if (this.hasMultiplicity()) {
 			String[] arrayMultiplicity = Strman.between(memberType(), "[", "]");
 			String multiplicityValue = StringUtils.join(arrayMultiplicity);
 			if (NumberUtils.isDigits(multiplicityValue)) return Optional.of(Integer.parseInt(multiplicityValue));
@@ -203,15 +209,13 @@ public class PlantClassFieldRepresentationImpl implements PlantClassFieldReprese
 		return Optional.empty();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see br.xtool.core.representation.EUmlField#hasProperty(br.xtool.core.
-	 * representation.EUmlFieldProperty.FieldPropertyType)
-	 */
 	@Override
-	public boolean hasProperty(FieldPropertyType property) {
-		return this.getProperties().stream().anyMatch(prop -> prop.getFieldProperty().equals(property));
+	public Optional<PlantClassFieldPropertyRepresentation> getProperty(FieldPropertyType type) {
+		// @formatter:off
+		return this.getProperties().stream()
+				.filter(property -> property.getFieldProperty().equals(type))
+				.findAny();
+		// @formatter:on
 	}
 
 	/*
@@ -224,19 +228,14 @@ public class PlantClassFieldRepresentationImpl implements PlantClassFieldReprese
 		return !this.getProperties().isEmpty();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see br.xtool.core.representation.EUmlField#getProperties()
-	 */
-	@Override
-	public Set<PlantClassFieldPropertyRepresentation> getProperties() {
+	private Set<PlantClassFieldPropertyRepresentation> getProperties() {
 		if (Strman.containsAll(memberType(), new String[] { "{", "}" })) {
 			String[] propertiesBlock = Strman.between(memberType(), "{", "}");
 			String[] propertiesItens = StringUtils.split(StringUtils.join(propertiesBlock), ",");
 			if (propertiesItens.length > 1) {
 				// @formatter:off
 				return Stream.of(propertiesItens)
+					.map(StringUtils::trim)
 					.map(item -> new PlantClassFieldPropertyRepresentationImpl(this, item))
 					.collect(Collectors.toSet());
 				// @formatter:on
@@ -251,8 +250,7 @@ public class PlantClassFieldRepresentationImpl implements PlantClassFieldReprese
 	 * 
 	 * @see br.xtool.core.representation.EUmlField#getTaggedValues()
 	 */
-	@Override
-	public Map<String, String> getTaggedValues() {
+	private Map<String, String> getTaggedValues() {
 		// @formatter:off
 		return this.taggedValues.entrySet().stream()
 				.filter(map -> map.getKey().startsWith(String.format("@%s",this.getName())))

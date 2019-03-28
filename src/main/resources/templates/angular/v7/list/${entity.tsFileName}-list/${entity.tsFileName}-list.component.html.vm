@@ -1,28 +1,26 @@
-<h2>${entity.name}</h2>
+<h2>${entity.name} ({{ count }})</h2>
 <dx-data-grid id="${entity.instanceName}GridContainer"
   [dataSource]="${entity.instanceName}DataSource"
   [allowColumnReordering]="true"
   [allowColumnResizing]="true"
   [wordWrapEnabled]="true"
-  [showBorders]="true"
-  [showRowLines]="true"
   [cellHintEnabled]="true"
-  [columnAutoWidth]="true"
-  [showColumnLines]="false"
   [remoteOperations]="true"
-  columnResizingMode="widget"
-  width="100%"
   (onToolbarPreparing)="onToolbarPreparing($event.toolbarOptions)">
-  <!--
-  <dxo-state-storing [enabled]="true"
-    type="localStorage"
-    storageKey="${entity.instanceName}-list-storage"></dxo-state-storing>
-  !-->
-  <dxo-column-chooser [enabled]="true"
+  <!-- Para ter scroll horizontal (muitas colunas) se aconselha
+    usar essas propriedades abaixo na tag dx-data-grid e usar
+    também o dxo-column-chooser assim como o dxo-column-fixing -->
+  <!-- [columnAutoWidth]="true"
+	columnResizingMode="widget"
+	width="100%" -->
+  <!-- <dxo-column-chooser [enabled]="true"
     mode="select"
     height="350"
     width="300"></dxo-column-chooser>
-  <dxo-column-fixing [enabled]="true"></dxo-column-fixing>
+  <dxo-column-fixing [enabled]="true"></dxo-column-fixing> -->
+  <!-- <dxo-state-storing [enabled]="true"
+    type="localStorage"
+    storageKey="contrato-list-storage"></dxo-state-storing> -->
   <dxo-sorting mode="multiple"></dxo-sorting>
   <dxo-paging [pageSize]="pageSize"></dxo-paging>
   <dxo-pager [allowedPageSizes]="[pageSize]"
@@ -32,23 +30,35 @@
   <dxo-header-filter [visible]="true"></dxo-header-filter>
   <dxo-search-panel [visible]="true"
     [width]="300"></dxo-search-panel>
-    
   <!-- COLUMNS -->
   ${ngListTemplates.createHtmlAttributesDecl($entity)}
-  
   <!-- BUTTONS -->
   <dxi-column type="buttons"
-    [fixed]="true"
+    cellTemplate="buttonsTemplate"
     [allowResizing]="false"
-    [showInColumnChooser]="false"
-    [buttons]="[{
-      icon: 'edit',
-      hint: 'Editar',
-      onClick: edit
-    },{
-      icon: 'chevronnext',
-      hint: 'Ver Detalhes',
-      onClick: detail
-    }]">
+    [allowReordering]="false"
+    [showInColumnChooser]="false">
+    <div *dxTemplate="let data of 'buttonsTemplate'"
+			fxLayout="row"
+			fxLayoutAlign="space-between center">
+			<dx-button icon="edit"
+				hint="Editar"
+				(onClick)="edit(data.data.id)">
+			</dx-button>
+			<dx-button icon="trash"
+				hint="Excluir"
+				(onClick)="confirmDelete(data.data)">
+			</dx-button>
+			<dx-button icon="chevronnext"
+				hint="Ver Detalhes"
+				(onClick)="detail(data.data.id)">
+			</dx-button>
+		</div>
   </dxi-column>
+	<!-- SUMMARY -->
+	<dxo-summary>
+		<dxi-total-item column="id"
+			summaryType="count"></dxi-total-item>
+    ${ngListTemplates.createHtmlTotalItemsSummaryDecl($entity)}
+	</dxo-summary>
 </dx-data-grid>

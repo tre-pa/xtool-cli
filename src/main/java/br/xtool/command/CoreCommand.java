@@ -48,7 +48,7 @@ public class CoreCommand {
 	 * 
 	 * @param name Nome da aplicação.
 	 */
-	@ShellMethod(key = "new:app", value = "Novo projeto Spring Boot e Angular", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
+	@ShellMethod(key = "new:app", value = "Gera um novo projeto Spring Boot e Angular", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
 	public void newApp(
 	// @formatter:off
 			@ShellOption(help = "Nome do projeto") String name,
@@ -65,7 +65,7 @@ public class CoreCommand {
 	 * 
 	 * @param name Nome do Projeto Spring Boot
 	 */
-	@ShellMethod(key = "new:springboot", value = "Novo projeto Spring Boot v2", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
+	@ShellMethod(key = "new:springboot", value = "Gera um novo projeto Spring Boot", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
 	public void newAppSringBoot(
 	// @formatter:off
 			@ShellOption(help = "Nome do projeto") String name, 
@@ -81,7 +81,7 @@ public class CoreCommand {
 	 * @param qualifier
 	 * @throws IOException
 	 */
-	@ShellMethod(key = "new:angular", value = "Novo projeto Angular 7.x", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
+	@ShellMethod(key = "new:angular", value = "Gera um novo projeto Angular 7.x", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
 	public void newAppAngular(
 	// @formatter:off
 			@ShellOption(help = "Nome do projeto") String name,
@@ -95,7 +95,7 @@ public class CoreCommand {
 	 * Exibe os projetos disponíveis no workspace atual.
 	 * 
 	 */
-	@ShellMethod(key = { "list:projects" }, value = "Exibe os projetos do workspace", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
+	@ShellMethod(key = { "list:projects" }, value = "Lista todos os projetos do workspace", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
 	public void run() {
 		Consumer<ProjectRepresentation> prettyPrintProject = (project) -> {
 			StringBuilder sb = new StringBuilder();
