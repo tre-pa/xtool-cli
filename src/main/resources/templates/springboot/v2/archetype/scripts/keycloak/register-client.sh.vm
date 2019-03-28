@@ -152,6 +152,11 @@ create_client_roles() {
 	done
 }
 
+import_authz_alert() {
+	echo ""
+	echo -e "${__BLINK__}${__RED__} IMPORTANTE: ${__NORMAL__} Leia as instruções no README.adoc do projeto com os procedimentos de importação das configuração de autorização. "
+}
+
 echo -e "${DS}{__BLUE__}Iniciando o registro da aplicação Spring Boot ${DS}{__NORMAL__}${DS}{__BG_BLUE__}${DS}KC_CLIENT_ID${DS}{__NORMAL__}${DS}{__BLUE__} no Keycloak...${DS}{__NORMAL__}\n"
 check_jq
 change_dir
@@ -160,4 +165,5 @@ check_realm
 create_client
 create_realm_roles
 create_client_roles
-echo -e "${DS}{__BLUE__}Registro da aplicação '${DS}KC_CLIENT_ID' finalizado com sucesso!${DS}{__NORMAL__}"
+echo -e "${__BLUE__}Registro parcial da aplicação '$KC_CLIENT_ID' realizado com sucesso!${__NORMAL__}"
+import_authz_alert
