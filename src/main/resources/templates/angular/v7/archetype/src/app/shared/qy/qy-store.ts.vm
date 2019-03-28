@@ -155,7 +155,7 @@ export class QyStore<T> extends CustomStore {
   private updateStoreVariables(loadOptions: LoadOptions, aggregations?: QyAggregation[]): void {
     this.sortParams = loadOptions.sort ? this.paramFromSort(loadOptions.sort) : null;
     this.filter = loadOptions.filter ? QyFilter.of(loadOptions.filter).qyFilterable : null;
-    this.aggregations = aggregations;
+    if (loadOptions.totalSummary) this.aggregations = aggregations;
     this.onLoad.emit();
   }
 
