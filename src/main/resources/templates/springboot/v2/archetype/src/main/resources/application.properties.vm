@@ -13,7 +13,7 @@ spring.jackson.serialization.WRITE_DATES_AS_TIMESTAMPS=false
 spring.datasource.url=${OB}DB_URL:jdbc:h2:./target/db/${projectName};DB_CLOSE_ON_EXIT=FALSE${CB}
 spring.datasource.driver-class-name=${OB}DB_DRIVER:org.h2.Driver${CB}
 spring.datasource.username=${OB}DB_USERNAME:sa${CB}
-spring.datasource.password=${OB}DB_PASSWORD${CB}
+spring.datasource.password=${OB}DB_PASSWORD:${CB}
 spring.datasource.sqlScriptEncoding=UTF-8
 spring.h2.console.path=/h2
 spring.h2.console.enabled=true

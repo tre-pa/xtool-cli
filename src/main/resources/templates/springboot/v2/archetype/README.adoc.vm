@@ -140,7 +140,7 @@ no arquivo *src/main/resources/application.properties*, no item *spring.datasour
 [source,sh]
 -----
 
-locahost:8080/${projectName}/h2/
+localhost:8080/${projectName}/h2/
 
 ----- 
  
