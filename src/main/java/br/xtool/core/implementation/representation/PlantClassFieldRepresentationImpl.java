@@ -213,7 +213,6 @@ public class PlantClassFieldRepresentationImpl implements PlantClassFieldReprese
 	public Optional<PlantClassFieldPropertyRepresentation> getProperty(FieldPropertyType type) {
 		// @formatter:off
 		return this.getProperties().stream()
-				.peek(property -> System.out.println("Field: "+ property.getField().getName()  +" Property: "+property.getFieldProperty()))
 				.filter(property -> property.getFieldProperty().equals(type))
 				.findAny();
 		// @formatter:on
