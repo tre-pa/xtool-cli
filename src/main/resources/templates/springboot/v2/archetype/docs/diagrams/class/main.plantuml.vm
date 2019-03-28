@@ -12,8 +12,8 @@ skinparam ClassBackgroundColor<<Embeddable>> WhiteSmoke
 
    package "br.jus.tre_pa.app2.domain" <<Frame>> {
       class Pessoa {
-      	- id: Long
-      	- nome: String
+      	- id: Long {id}
+      	- nome: String[64]
       	- dtNasc: LocalDateTime
       	- pessoaType: PessoaType
       	-- tagged values --
