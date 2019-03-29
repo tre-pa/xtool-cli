@@ -42,7 +42,7 @@ export class ${entity.name}EditComponent implements OnInit, OnDestroy {
   }
 
   private process${entity.name}() {
-    this.id = +this.activatedRoute.snapshot.params['id'];
+    this.id = +this.activatedRoute.snapshot.params['id${entity.name}'];
     if (this.id && !isNaN(this.id)) this.edit();
     else this.create();
   }
