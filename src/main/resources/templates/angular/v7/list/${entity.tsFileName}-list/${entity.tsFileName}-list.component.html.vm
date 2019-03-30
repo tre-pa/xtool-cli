@@ -3,6 +3,7 @@
   [dataSource]="${entity.instanceName}DataSource"
   [allowColumnReordering]="true"
   [allowColumnResizing]="true"
+  [columnAutoWidth]="true"
   [wordWrapEnabled]="true"
   [cellHintEnabled]="true"
   [remoteOperations]="true"
@@ -10,8 +11,7 @@
   <!-- Para ter scroll horizontal (muitas colunas) se aconselha
     usar essas propriedades abaixo na tag dx-data-grid e usar
     também o dxo-column-chooser assim como o dxo-column-fixing -->
-  <!-- [columnAutoWidth]="true"
-	columnResizingMode="widget"
+  <!-- columnResizingMode="widget"
 	width="100%" -->
   <!-- <dxo-column-chooser [enabled]="true"
     mode="select"
