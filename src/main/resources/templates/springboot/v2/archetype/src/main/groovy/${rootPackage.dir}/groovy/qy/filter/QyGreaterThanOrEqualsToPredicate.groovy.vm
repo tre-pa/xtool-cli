@@ -35,7 +35,7 @@ class QyGreaterThanOrEqualsToPredicate extends QyPredicate {
 		Path path = qyAttr ? qyAttr.map.apply(root): root.get(this.dataField)
 
 		if (dataFieldType == LocalDate.class) return cb.greaterThanOrEqualTo(path, LocalDate.parse((String) this.value))
-		if (dataFieldType == LocalDateTime.class) return cb.greaterThanOrEqualTo(rpath, LocalDateTime.parse((String) this.value))
+		if (dataFieldType == LocalDateTime.class) return cb.greaterThanOrEqualTo(path, LocalDateTime.parse((String) this.value))
 		if (dataFieldType == Long.class) return cb.ge(path, (Number) this.value)
 		if (dataFieldType == Integer.class) return cb.ge(path, (Number) this.value)
 		if (dataFieldType == Short.class) return cb.ge(path, (Number) this.value)
