@@ -47,11 +47,6 @@
         margin-bottom: 20px;
     }
 
-    ::ng-deep h2, ::ng-deep .content-block, .footer {
-        margin-left: 40px;
-        margin-right: 40px;
-    }
-
     ::ng-deep .dx-card {
         padding: 20px;
     }
@@ -73,13 +68,6 @@
 }
 
 .screen-x-small {
-    .content {
-        ::ng-deep h2, ::ng-deep .content-block, .footer {
-            margin-left: 20px;
-            margin-right: 20px;
-        }
-    }
-
     #navigation-header {
         padding-left: 20px;
     }

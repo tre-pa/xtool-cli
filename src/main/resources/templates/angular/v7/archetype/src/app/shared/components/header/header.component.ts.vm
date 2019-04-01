@@ -14,7 +14,6 @@ import { DxButtonModule } from 'devextreme-angular/ui/button';
 import { DxPopupModule } from 'devextreme-angular/ui/popup';
 
 import { KeycloakService } from './../../../security/keycloak/keycloak.service';
-import { LoginFormModule } from '../login-form/login-form.component';
 import { UserPanelModule } from '../user-panel/user-panel.component';
 
 @Component({
@@ -36,8 +35,8 @@ export class HeaderComponent implements OnInit {
 
   isDeveloper: boolean = false;
 
-  showLoginPopup = false;
   isUserAuthorized = true;
+
   userMenuItems: any = [
     {
       text: 'userinfo',
@@ -73,12 +72,7 @@ export class HeaderComponent implements OnInit {
     this.menuToggle.emit();
   }
 
-  onShowLoginPopup = () => {
-    this.showLoginPopup = true;
-  }
-
   onLoginClick(args) {
-    this.showLoginPopup = false;
     this.isUserAuthorized = true;
   }
 
@@ -90,7 +84,6 @@ export class HeaderComponent implements OnInit {
 
 @NgModule({
   imports: [
-    LoginFormModule,
     UserPanelModule,
     DxToolbarModule,
     DxButtonModule,

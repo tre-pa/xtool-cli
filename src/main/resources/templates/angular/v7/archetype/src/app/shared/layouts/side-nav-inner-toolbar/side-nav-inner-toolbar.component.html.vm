@@ -43,10 +43,6 @@
                 <div class="content">
                     <ng-content></ng-content>
                 </div>
-
-                <div class="footer">
-                    <ng-content select="app-footer"></ng-content>
-                </div>
             </dx-scroll-view>
         </div>
     </dx-drawer>
