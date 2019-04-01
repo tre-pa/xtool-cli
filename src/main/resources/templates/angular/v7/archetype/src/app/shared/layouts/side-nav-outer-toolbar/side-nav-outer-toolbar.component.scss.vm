@@ -36,6 +36,11 @@ app-header {
         margin-bottom: 20px;
     }
 
+    ::ng-deep h2, ::ng-deep .content-block {
+        margin-left: 40px;
+        margin-right: 40px;
+    }
+
     ::ng-deep .dx-card {
         padding: 20px;
     }
@@ -53,5 +58,14 @@ app-header {
         margin-right: 0;
         border-right: 0;
         border-left: 0;
+    }
+}
+
+.screen-x-small {
+    .content {
+        ::ng-deep h2, ::ng-deep .content-block {
+            margin-left: 20px;
+            margin-right: 20px;
+        }
     }
 }
