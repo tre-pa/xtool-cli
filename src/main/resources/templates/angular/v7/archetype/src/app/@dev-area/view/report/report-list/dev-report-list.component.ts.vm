@@ -11,8 +11,7 @@ import { Report } from 'src/app/domain/report';
 
 @Component({
   selector: 'app-dev-report-list',
-  templateUrl: './dev-report-list.component.html',
-  styleUrls: ['./dev-report-list.component.scss']
+  templateUrl: './dev-report-list.component.html'
 })
 export class DevReportListComponent implements OnInit {
 

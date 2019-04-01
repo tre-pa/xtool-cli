@@ -1,4 +1,0 @@
-<app-side-nav-outer-toolbar toolbarTitle="${projectDesc}"
-  [menuItems]="navigation">
-  <router-outlet></router-outlet>
-</app-side-nav-outer-toolbar>

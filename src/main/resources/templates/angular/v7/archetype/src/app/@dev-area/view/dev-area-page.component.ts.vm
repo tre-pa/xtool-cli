@@ -1,15 +1,25 @@
 import { Component, OnInit } from '@angular/core';
 
-import { navigation } from '../dev-area-navigation';
-
 @Component({
   selector: 'app-dev-area-page',
-  templateUrl: './dev-area-page.component.html',
-  styleUrls: ['./dev-area-page.component.scss']
+  template: `
+    <app-side-nav-outer-toolbar toolbarTitle="Publicador - Dev Area"
+      [menuItems]="navigation">
+      <router-outlet></router-outlet>
+    </app-side-nav-outer-toolbar>
+  `
 })
 export class DevAreaPageComponent implements OnInit {
 
-  navigation = navigation;
+  navigation = [{
+    text: 'Voltar',
+    path: '/home',
+    icon: 'revert'
+  }, {
+    text: 'Gerência de Relatórios',
+    path: '/dev-area/report',
+    icon: 'doc'
+  }];
 
   constructor() { }
 

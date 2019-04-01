@@ -17,8 +17,7 @@ import { Report } from 'src/app/domain/report';
 
 @Component({
   selector: 'app-report-detail',
-  templateUrl: './report-detail.component.html',
-  styleUrls: ['./report-detail.component.scss']
+  templateUrl: './report-detail.component.html'
 })
 export class ReportDetailComponent implements OnInit {
 

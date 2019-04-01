@@ -13,8 +13,7 @@ import { Report } from 'src/app/domain/report';
 
 @Component({
   selector: 'app-report-list',
-  templateUrl: './report-list.component.html',
-  styleUrls: ['./report-list.component.scss']
+  templateUrl: './report-list.component.html'
 })
 export class ReportListComponent implements OnInit {
 

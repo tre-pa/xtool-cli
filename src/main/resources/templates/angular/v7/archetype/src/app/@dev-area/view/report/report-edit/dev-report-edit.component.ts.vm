@@ -16,8 +16,7 @@ import { Report } from 'src/app/domain/report';
 
 @Component({
   selector: 'app-dev-report-edit',
-  templateUrl: './dev-report-edit.component.html',
-  styleUrls: ['./dev-report-edit.component.scss']
+  templateUrl: './dev-report-edit.component.html'
 })
 export class DevReportEditComponent implements OnInit {
 

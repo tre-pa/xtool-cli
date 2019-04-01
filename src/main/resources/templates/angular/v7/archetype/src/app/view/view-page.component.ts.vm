@@ -1,15 +1,25 @@
 import { Component, OnInit } from '@angular/core';
 
-import { navigation } from 'src/app/app-navigation';
-
 @Component({
   selector: 'app-view-page',
-  templateUrl: './view-page.component.html',
-  styleUrls: ['./view-page.component.scss']
+  template: `
+    <app-side-nav-outer-toolbar toolbarTitle="Publicador"
+      [menuItems]="navigation">
+      <router-outlet></router-outlet>
+    </app-side-nav-outer-toolbar>
+  `
 })
 export class ViewPageComponent implements OnInit {
 
-  navigation = navigation;
+  navigation = [{
+    text: 'Home',
+    path: '/home',
+    icon: 'home'
+  }, {
+    text: 'Relatorios',
+    path: '/relatorios',
+    icon: 'doc'
+  }];
 
   constructor() { }
 

@@ -1,9 +1,0 @@
-export const navigation = [{
-  text: 'Voltar',
-  path: '/home',
-  icon: 'revert'
-}, {
-  text: 'Gerência de Relatórios',
-  path: '/dev-area/report',
-  icon: 'doc'
-}];
