@@ -1,5 +1,5 @@
 import { QyAggregable } from './qy-aggregable';
-import { QyFilterable } from './qy-filter';
+import { QyFilterable } from './filter/qy-filterable';
 
 /**
  * Payload usado como body no request de load do QyStore, ou na

@@ -8,7 +8,7 @@ import * as _ from 'lodash';
 
 import { environment } from 'src/environments/environment';
 import { CrudService } from 'src/app/shared/crud.service';
-import { QyFilterable } from 'src/app/shared/qy/qy-filter';
+import { QyFilterable } from 'src/app/shared/qy/filter/qy-filterable';
 import { Report } from 'src/app/domain/report';
 import { Subscription } from 'rxjs';
 
