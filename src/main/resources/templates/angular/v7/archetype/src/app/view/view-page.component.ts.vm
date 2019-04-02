@@ -18,7 +18,7 @@ export class ViewPageComponent implements OnInit {
   }, {
     text: 'Relatorios',
     path: '/relatorios',
-    icon: 'doc'
+    icon: 'file-alt'
   }];
 
   constructor() { }

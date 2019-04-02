@@ -1,5 +1,22 @@
 @import "../../../../themes/generated/variables.additional.scss";
 
+.icon-container {
+    width: 24px !important;
+    min-width: 24px !important;
+    max-width: 24px !important;
+    height: 24px !important;
+    text-align: center !important;
+
+    .ng-fa-icon {
+        font-size: 20px !important;
+    }
+}
+
+.side-nav-text {
+    font-size: 15px !important;
+    margin-left: 18px !important;
+}
+
 :host {
     display: block;
     height: 100%;

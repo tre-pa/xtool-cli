@@ -14,11 +14,11 @@ export class DevAreaPageComponent implements OnInit {
   navigation = [{
     text: 'Voltar',
     path: '/home',
-    icon: 'revert'
+    icon: 'arrow-left'
   }, {
     text: 'Gerência de Relatórios',
     path: '/dev-area/report',
-    icon: 'doc'
+    icon: 'file-alt'
   }];
 
   constructor() { }

@@ -11,10 +11,19 @@ import {
   Input
 } from '@angular/core';
 import { Router } from '@angular/router';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { DxTemplateModule } from 'devextreme-angular/core/template';
 import {
   DxTreeViewComponent,
   DxTreeViewModule
 } from 'devextreme-angular/ui/tree-view';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { fas } from '@fortawesome/free-solid-svg-icons';
+
+import { SecurityService } from 'src/app/security/security.service';
+
+library.add(fas);
 
 @Component({
   selector: 'app-side-navigation-menu',
@@ -38,6 +47,7 @@ export class SideNavigationMenuComponent implements OnInit, OnDestroy {
   }
 
   private _compactMode = false;
+
   @Input()
   get compactMode() {
     return this._compactMode;
@@ -48,16 +58,30 @@ export class SideNavigationMenuComponent implements OnInit, OnDestroy {
   }
 
   constructor(
+    private securityService: SecurityService,
     private router: Router
   ) { }
 
   ngOnInit(): void {
     let matchItem = this.getPathMatchItem(this.items, this.router.url.split('?')[0]);
     if (matchItem) matchItem['selected'] = true;
+
+    this.filterByRolePermission();
   }
 
   ngOnDestroy(): void {
     this.deselectAll(this.menu.items);
+  }
+
+  filterByRolePermission(){
+    let itensPerimissions: any[] = [];
+
+    this.items.forEach(item=>{
+      if(this.securityService.hasResourceRole(item.role) || this.securityService.hasRealmRole(item.role))
+        itensPerimissions.push(item);
+      
+      this.items = itensPerimissions;
+    });
   }
 
   private getPathMatchItem(items: any[], url: string): any {
@@ -112,7 +136,12 @@ export class SideNavigationMenuComponent implements OnInit, OnDestroy {
 }
 
 @NgModule({
-  imports: [DxTreeViewModule],
+  imports: [
+    FontAwesomeModule,
+    FlexLayoutModule,
+    DxTemplateModule,
+    DxTreeViewModule
+  ],
   declarations: [SideNavigationMenuComponent],
   exports: [SideNavigationMenuComponent]
 })
