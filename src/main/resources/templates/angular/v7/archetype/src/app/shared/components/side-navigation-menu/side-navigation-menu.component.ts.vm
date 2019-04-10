@@ -66,22 +66,31 @@ export class SideNavigationMenuComponent implements OnInit, OnDestroy {
     let matchItem = this.getPathMatchItem(this.items, this.router.url.split('?')[0]);
     if (matchItem) matchItem['selected'] = true;
 
-    this.filterByRolePermission();
+    this.filterItemsByRolePermission();
   }
 
   ngOnDestroy(): void {
     this.deselectAll(this.menu.items);
   }
 
-  filterByRolePermission(){
-    let itensPerimissions: any[] = [];
+  private filterItemsByRolePermission() {
+    this.items = this.items.filter(item => this.userIsAllowed(item.require));
+  }
 
-    this.items.forEach(item=>{
-      if(this.securityService.hasResourceRole(item.role) || this.securityService.hasRealmRole(item.role))
-        itensPerimissions.push(item);
-      
-      this.items = itensPerimissions;
-    });
+  private userIsAllowed(require: string | string[]): boolean {
+    if (!require) return true;
+    if (require instanceof Array) {
+      for (const r of require)
+        if (this.userHasRole(r))
+          return true;
+      return false;
+    } else {
+      return this.userHasRole(require);
+    }
+  }
+
+  private userHasRole(role: string): boolean {
+    return this.securityService.hasResourceRole(role) || this.securityService.hasRealmRole(role)
   }
 
   private getPathMatchItem(items: any[], url: string): any {
