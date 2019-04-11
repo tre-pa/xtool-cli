@@ -17,11 +17,11 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import ar.com.fdvs.dj.core.DynamicJasperHelper
 import ar.com.fdvs.dj.core.layout.ClassicLayoutManager
 import ar.com.fdvs.dj.domain.DynamicReport
-import ${rootPackage.name}.groovy.qy.QyAggregation
-import ${rootPackage.name}.groovy.qy.QyFilterable
-import ${rootPackage.name}.groovy.qy.QyPage
-import ${rootPackage.name}.groovy.qy.QyPayload
-import ${rootPackage.name}.groovy.qy.sql.QySqlContext
+import ${rootPackage.name}.groovy.jii.JiiAggregation
+import ${rootPackage.name}.groovy.jii.JiiFilterable
+import ${rootPackage.name}.groovy.jii.JiiPage
+import ${rootPackage.name}.groovy.jii.JiiPayload
+import ${rootPackage.name}.groovy.jii.sql.JiiSqlContext
 import ${rootPackage.name}.groovy.report.JReportStyles
 import ${rootPackage.name}.groovy.report.domain.JReport
 import ${rootPackage.name}.groovy.report.repository.JReportRepository
@@ -43,7 +43,7 @@ class JReportService {
 	JReportRepository jreportRepository;
 
 	@Autowired
-	private QySqlContext qyContext;
+	private JiiSqlContext jiiContext;
 
 	/**
 	 * Salva um novo report.
@@ -77,15 +77,15 @@ class JReportService {
 	 * @param id
 	 * @return
 	 */
-	QyPage<Map<String, Object>> executeSQLPageable(String sql, Pageable pageable, QyPayload payload) {
-		Page<Map<String, Object>> page = qyContext.selectFrom(sql)
+	JiiPage<Map<String, Object>> executeSQLPageable(String sql, Pageable pageable, JiiPayload payload) {
+		Page<Map<String, Object>> page = jiiContext.selectFrom(sql)
 				.where(payload?.filterable)
 				.orderBy(pageable.sort)
 				.limit(pageable)
 				.fetchMaps()
-		List<QyAggregation> aggregations = this.executeSQLAgg(sql, payload);
-		qyContext.clear();
-		new QyPage(pagination: page, aggregations: aggregations);
+		List<JiiAggregation> aggregations = this.executeSQLAgg(sql, payload);
+		jiiContext.clear();
+		new JiiPage(pagination: page, aggregations: aggregations);
 	}
 
 	/**
@@ -94,24 +94,24 @@ class JReportService {
 	 * @param id
 	 * @return
 	 */
-	List<QyAggregation> executeSQLAgg(String sql, QyPayload payload) {
-		qyContext.aggregation(sql, payload);
+	List<JiiAggregation> executeSQLAgg(String sql, JiiPayload payload) {
+		jiiContext.aggregation(sql, payload);
 	}
 
-	private List<Map<String, Object>> executeSQL(String sql, Sort sort, QyFilterable filter) {
+	private List<Map<String, Object>> executeSQL(String sql, Sort sort, JiiFilterable filter) {
 		List<Map<String, Object>> list = [];
 		if (filter) {
-			list = qyContext.selectFrom(sql)
+			list = jiiContext.selectFrom(sql)
 					.where(filter)
 					.orderBy(sort)
 					.fetchMaps()
-			qyContext.clear();
+			jiiContext.clear();
 			return list;
 		}
-		list = qyContext.selectFrom(sql)
+		list = jiiContext.selectFrom(sql)
 				.orderBy(sort)
 				.fetchMaps()
-		qyContext.clear();
+		jiiContext.clear();
 		return list;
 	}
 
@@ -121,7 +121,7 @@ class JReportService {
 	 * @param id Id do Relatório.
 	 * 
 	 */
-	ByteArrayInputStream genGPDF(JReport jreport,Sort sort, QyFilterable filter) {
+	ByteArrayInputStream genGPDF(JReport jreport,Sort sort, JiiFilterable filter) {
 		Binding binding = new Binding();
 		binding.setProperty("report", new JsonSlurper().parseText(new ObjectMapper().writeValueAsString(jreport)));
 		binding.setProperty("jdbcTemplate", jdbcTemplate);

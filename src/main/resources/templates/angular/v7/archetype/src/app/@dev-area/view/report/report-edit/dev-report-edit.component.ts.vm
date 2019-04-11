@@ -11,7 +11,7 @@ import { Title } from '@angular/platform-browser';
 import DataSource from 'devextreme/data/data_source';
 
 import { DevReportService } from 'src/app/@dev-area/dev-report.service';
-import { QyStore } from 'src/app/shared/qy/qy-store';
+import { JiiStore } from 'src/app/shared/jii/jii-store';
 import { Report } from 'src/app/domain/report';
 
 @Component({
@@ -36,7 +36,7 @@ export class DevReportEditComponent implements OnInit {
   ngOnInit() {
     this.processReport();
     this.categoryDataSource = new DataSource({
-      store: new QyStore(this.httpClient, '/dev/jreport', {
+      store: new JiiStore(this.httpClient, '/dev/jreport', {
         key: null,
         endpoints: {
           load: `/dev/jreport/categories`

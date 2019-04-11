@@ -1,5 +1,0 @@
-package ${rootPackage.name}.groovy.qy.sql
-
-interface QySqlFetchStep {
-	List<Map<String, Object>> fetchMaps();
-}

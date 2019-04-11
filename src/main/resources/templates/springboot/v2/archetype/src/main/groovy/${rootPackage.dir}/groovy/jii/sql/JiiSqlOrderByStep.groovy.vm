@@ -1,0 +1,10 @@
+package ${rootPackage.name}.groovy.jii.sql;
+
+import org.springframework.data.domain.Sort;
+
+interface JiiSqlOrderByStep extends JiiSqlFetchStep {
+	
+	JiiSqlPaginationStep orderBy(String sortSql);
+	
+	JiiSqlPaginationStep orderBy(Sort sort);  
+}

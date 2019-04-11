@@ -1,0 +1,39 @@
+#set ($OB = "${")
+#set ($CB = "}")
+package ${rootPackage.name}.groovy.jii.filter;
+import ${rootPackage.name}.groovy.jii.JiiAttributePath
+
+import javax.persistence.criteria.CriteriaBuilder
+import javax.persistence.criteria.CriteriaQuery
+import javax.persistence.criteria.Path
+import javax.persistence.criteria.Predicate
+import javax.persistence.criteria.Root
+
+
+/**
+ * Classe que representa uma operação de like.
+ * 
+ * @author jcruz
+ *
+ */
+public class JiiContainsPredicate extends JiiPredicate {
+
+	@Override
+	public String toSql() {
+		"${this.dataField} like '%${this.value}%'"
+	}
+
+	@Override
+	public String toJpql() {
+		"${this.dataField} like '%${this.value}%'"
+	}
+
+	@Override
+	public <T> Predicate toPredicate(Class<T> clazz, Root<T> root, CriteriaQuery<?> cq, CriteriaBuilder cb, Map paths) {
+		JiiAttributePath jiiAttr = paths.get(this.dataField)
+		Class<?> dataFieldType = jiiAttr ? jiiAttr.fieldType : getDataType(clazz, this.dataField)
+		Path path = jiiAttr ? jiiAttr.map.apply(root): root.get(this.dataField)
+		if (dataFieldType == String.class) return cb.like(cb.upper(path), "%" + ((String) this.value).toUpperCase() + "%")
+		throw new IllegalArgumentException(String.format("Não foi possível montar um predicado para o campo '%s' com o tipo 'contains'", this.dataField))
+	}
+}

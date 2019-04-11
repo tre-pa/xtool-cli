@@ -57,13 +57,13 @@ public class RestClassTemplates {
 //			.addAnnotation(Autowired.class);
 		// @formatter:on
 
-		// Suporte a classe QyRest
-		rest.getRoasterJavaClass().addImport(bootProject.getRootPackage().getName().concat(".groovy.qy.QyRest"));
+		// Suporte a classe JiiRest
+		rest.getRoasterJavaClass().addImport(bootProject.getRootPackage().getName().concat(".groovy.jii.JiiRest"));
 		rest.getRoasterJavaClass().addImport(repository.getTargetEntity().getQualifiedName());
 		rest.getRoasterJavaClass().addImport(repository.getQualifiedName());
 		rest.getRoasterJavaClass().addImport(repository.getTargetSpecification().getQualifiedName());
 		// @formatter:off
-		rest.getRoasterJavaClass().setSuperType(String.format("QyRest<%s,Long,%s,%s>", 
+		rest.getRoasterJavaClass().setSuperType(String.format("JiiRest<%s,Long,%s,%s>", 
 				repository.getTargetEntity().getName(), 
 				repository.getTargetSpecification().getName(),
 				repository.getName()));
@@ -310,13 +310,13 @@ public class RestClassTemplates {
 	}
 
 	public void genFilter(RestClassRepresentation rest, RepositoryRepresentation repository) {
-		if (!rest.getRoasterJavaClass().hasMethodSignature("filter", "Pageable", "QyFilter")) {
+		if (!rest.getRoasterJavaClass().hasMethodSignature("filter", "Pageable", "JiiFilter")) {
 			rest.getRoasterJavaClass().addImport(repository.getTargetEntity().getQualifiedName());
 			rest.getRoasterJavaClass().addImport(Pageable.class);
 			rest.getRoasterJavaClass().addImport(ResponseEntity.class);
 			rest.getRoasterJavaClass().addImport(Page.class);
 			rest.getRoasterJavaClass().addImport(repository.getTargetSpecification().getQualifiedName());
-			rest.getRoasterJavaClass().addImport(repository.getProject().getRootPackage().getName().concat(".groovy.qy.filter.QyFilter"));
+			rest.getRoasterJavaClass().addImport(repository.getProject().getRootPackage().getName().concat(".groovy.jii.filter.JiiFilter"));
 
 			JavaMethodRepresentation<JavaClassSource> method = rest.addMethod("filter");
 			method.getRoasterMethod().setPublic();
@@ -328,7 +328,7 @@ public class RestClassTemplates {
 			method.getRoasterMethod()
 				.addParameter(Pageable.class.getSimpleName(), "pageable");
 			method.getRoasterMethod()
-				.addParameter("QyFilter", "filter")
+				.addParameter("JiiFilter", "filter")
 				.addAnnotation(RequestBody.class);
 			method.getRoasterMethod().setBody(
 					TemplateBuilder.builder()

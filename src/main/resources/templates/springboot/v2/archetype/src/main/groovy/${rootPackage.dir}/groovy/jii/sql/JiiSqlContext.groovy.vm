@@ -1,0 +1,15 @@
+package ${rootPackage.name}.groovy.jii.sql
+
+import ${rootPackage.name}.groovy.jii.JiiAggregable
+import ${rootPackage.name}.groovy.jii.JiiAggregation
+import ${rootPackage.name}.groovy.jii.JiiFilterable
+import ${rootPackage.name}.groovy.jii.JiiPayload
+
+interface JiiSqlContext {
+
+	JiiSqlWhereStep selectFrom(String sql)
+
+	List<JiiAggregation> aggregation(String sql, JiiPayload payload)
+	
+	void clear();
+}

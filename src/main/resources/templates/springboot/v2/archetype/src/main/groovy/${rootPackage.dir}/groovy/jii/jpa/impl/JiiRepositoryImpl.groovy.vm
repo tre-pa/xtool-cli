@@ -1,0 +1,139 @@
+package ${rootPackage.name}.groovy.jii.jpa.impl
+
+import static ${rootPackage.name}.groovy.jii.JiiAggregable.Operation.COUNT
+
+import javax.annotation.PostConstruct
+import javax.persistence.EntityManager
+import javax.persistence.PersistenceContext
+import javax.persistence.TypedQuery
+import javax.persistence.criteria.CriteriaBuilder
+import javax.persistence.criteria.CriteriaQuery
+import javax.persistence.criteria.Root
+
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageImpl
+import org.springframework.data.domain.Pageable
+import org.springframework.data.jpa.domain.Specification
+import org.springframework.stereotype.Repository
+import org.springframework.transaction.annotation.Transactional
+
+import ${rootPackage.name}.groovy.jii.JiiAggregable
+import ${rootPackage.name}.groovy.jii.JiiAggregation
+import ${rootPackage.name}.groovy.jii.JiiPage
+import ${rootPackage.name}.groovy.jii.JiiPayload
+import ${rootPackage.name}.groovy.jii.JiiProjectable
+import ${rootPackage.name}.groovy.jii.JiiSpecification
+import ${rootPackage.name}.groovy.jii.jpa.JiiRepository
+import groovy.util.logging.Slf4j
+import ${rootPackage.name}.groovy.jii.JiiAttributePath
+import javax.persistence.criteria.Path
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.context.ApplicationContext
+
+@Slf4j
+@Repository
+@Transactional(readOnly = true)
+class JiiRepositoryImpl<T> implements JiiRepository<T>{
+
+	@PersistenceContext
+	EntityManager entityManager
+
+	Map operations = [:]
+
+	@Autowired
+	private ApplicationContext applicationContext
+
+	@PostConstruct
+	protected void init() {
+		operations[JiiAggregable.Operation.COUNT] = { dataField, Root<T> root, CriteriaBuilder cb -> cb.count(root.get(dataField)) }
+		operations[JiiAggregable.Operation.SUM]   = { dataField, Root<T> root, CriteriaBuilder cb -> cb.sum(root.get(dataField)) }
+		operations[JiiAggregable.Operation.MIN]   = { dataField, Root<T> root, CriteriaBuilder cb -> cb.min(root.get(dataField)) }
+		operations[JiiAggregable.Operation.MAX]   = { dataField, Root<T> root, CriteriaBuilder cb -> cb.max(root.get(dataField)) }
+		operations[JiiAggregable.Operation.AVG]   = { dataField, Root<T> root, CriteriaBuilder cb -> cb.avg(root.get(dataField)) }
+	}
+
+	@Override
+	public JiiPage<T> findAll(Class<T> entityClass, Pageable pageable, JiiProjectable projectable, Class<? extends JiiSpecification<T>> specificationClass, JiiPayload payload) {
+		CriteriaBuilder cb = entityManager.criteriaBuilder
+		def cq = projectable?.fields ? cb.createQuery(Object[].class) : cb.createQuery(entityClass)
+		Root<T> root = cq.from(entityClass)
+		if(projectable?.fields) cq.select(cb.array(projectable.fields.collect { root.get(it) }))
+		Specification<T> spec = getSpecification(entityClass, specificationClass, payload)
+		this.prepareWhereDecl(root, cq, cb, spec)
+		this.prepareOrderByDecl(root, cq, cb, pageable, specificationClass)
+		TypedQuery<T> q = this.createQuery(cq, pageable)
+		JiiAggregation countAggregation = this.aggregationTemplate(entityClass, "id", spec, COUNT)
+
+		List<T> results = !projectable?.fields ? q.resultList : q.resultList.collect {
+			T entity = entityClass.getDeclaredConstructor().newInstance()
+			projectable.fields.eachWithIndex { field, idx -> entity[field] = it[idx] }
+			return entity
+		}
+
+		Page<T> page = new PageImpl(results, pageable, countAggregation.result as Long)
+		if(payload?.aggregables) return new JiiPage(pagination: page, aggregations: aggregation(entityClass, spec, payload?.aggregables))
+		return new JiiPage(pagination: page)
+	}
+
+	public List<JiiAggregation> aggregation(Class<T> entityClass, Specification<T> specification, JiiAggregable... aggregragables) {
+		aggregragables.collect { aggregationTemplate(entityClass, it.dataField, specification, it.operation) }
+	}
+
+	/*
+	 * Retorna a Specification associadas a entidade T. O retorna é a união entre os predicados da specification fixa (fixedSpecification) juntamente com os predicados das 
+	 * specification variável (variableSpecification).
+	 */
+	private Specification<T> getSpecification(Class<T> entityClass, Class<? extends JiiSpecification<T>> specificationClass, JiiPayload payload) {
+		if(payload?.filterable) {
+			JiiSpecification<T>  specification = applicationContext.getBean(specificationClass)
+			Specification<T> finalSpec = specification.fixedSpecification().and(specification.variableSpecification(entityClass, payload.filterable))
+		}
+	}
+
+	/*
+	 * Prepara a cláusula Where da consulta.
+	 */
+	private void prepareWhereDecl(Root<T> root, CriteriaQuery<T> cq, CriteriaBuilder cb, Specification<T> spec) {
+		if(spec && spec.toPredicate(root, cq, cb)) cq.where(spec.toPredicate(root, cq, cb))
+	}
+
+	/*
+	 * Prepara a cláusua Order By da consulta.
+	 */
+	private void prepareOrderByDecl(Root<T> root, CriteriaQuery<T> cq, CriteriaBuilder cb,Pageable pageable, Class<? extends JiiSpecification<T>> specificationClass) {
+		JiiSpecification<T>  specification = applicationContext.getBean(specificationClass)
+		if(pageable?.sort) cq.orderBy(pageable.sort.orders.collect {
+			JiiAttributePath jiiAttr = specification.paths.get(it.property)
+			Path path = jiiAttr ? jiiAttr.map.apply(root): root.get(it.property)
+			it.ascending ? cb.asc(path) : cb.desc(path)
+		})
+	}
+
+	private TypedQuery<T> createQuery(CriteriaQuery<T> cq, Pageable pageable) {
+		TypedQuery<T> q = entityManager.createQuery(cq)
+		if(pageable) {
+			q.setFirstResult(pageable.getPageNumber() * pageable.getPageSize())
+			q.setMaxResults(pageable.getPageSize())
+		}
+		return q
+	}
+
+	/**
+	 * Template para execução de operação de agregação
+	 * 
+	 * @param entityClass
+	 * @param dataField
+	 * @param spec
+	 * @param operation
+	 * @return
+	 */
+	private JiiAggregation aggregationTemplate(Class<T> entityClass, String dataField, Specification<T> spec, JiiAggregable.Operation operation) {
+		CriteriaBuilder cb = entityManager.criteriaBuilder
+		CriteriaQuery<T> cq = cb.createQuery(entityClass)
+		Root<T> root = cq.from(entityClass)
+		cq.select(operations[operation](dataField, root, cb))
+		if(spec && spec.toPredicate(root, cq, cb)) cq.where(spec.toPredicate(root, cq, cb))
+		TypedQuery query = entityManager.createQuery(cq)
+		return new JiiAggregation(dataField: dataField, result: query.getSingleResult(), operation: operation)
+	}
+}

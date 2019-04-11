@@ -1,0 +1,5 @@
+package ${rootPackage.name}.groovy.jii.sql
+
+interface JiiSqlFetchStep {
+	List<Map<String, Object>> fetchMaps();
+}

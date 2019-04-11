@@ -10,9 +10,9 @@ import { ActivatedRoute } from '@angular/router';
 import { DxDataGridComponent } from 'devextreme-angular/ui/data-grid';
 import { Subscription } from 'rxjs';
 
-import { QyAggregation } from 'src/app/shared/qy/qy-aggregation';
+import { JiiAggregation } from 'src/app/shared/jii/jii-aggregation';
 import { ReportService } from 'src/app/service/report.service';
-import { QyStore } from 'src/app/shared/qy/qy-store';
+import { JiiStore } from 'src/app/shared/jii/jii-store';
 import { Report } from 'src/app/domain/report';
 
 @Component({
@@ -26,9 +26,9 @@ export class ReportDetailComponent implements OnInit {
 
   idReport: number;
   report: Report;
-  aggregations: QyAggregation[];
+  aggregations: JiiAggregation[];
 
-  reportStore: QyStore<Report>;
+  reportStore: JiiStore<Report>;
 
   downloadSub: Subscription;
 
@@ -50,7 +50,7 @@ export class ReportDetailComponent implements OnInit {
           this.dataGrid[key] = report.grid.properties[key];
         this.report = report;
       });
-    this.reportStore = new QyStore<Report>(this.httpClient, '/jreport', {
+    this.reportStore = new JiiStore<Report>(this.httpClient, '/jreport', {
       key: null,
       endpoints: {
         load: `/jreport/${this.idReport}/datasource`

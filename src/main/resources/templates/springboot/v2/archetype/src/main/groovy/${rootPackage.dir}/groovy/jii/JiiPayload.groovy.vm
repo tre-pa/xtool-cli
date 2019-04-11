@@ -1,0 +1,12 @@
+package ${rootPackage.name}.groovy.jii
+
+import ${rootPackage.name}.groovy.jii.JiiFilterable.EmptyJiiFilterable
+import groovy.transform.ToString
+
+@ToString
+class JiiPayload {
+	
+	JiiFilterable filterable = new EmptyJiiFilterable();
+	
+	JiiAggregable[] aggregables;
+}

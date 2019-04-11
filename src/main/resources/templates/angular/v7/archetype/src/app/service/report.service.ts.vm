@@ -8,7 +8,7 @@ import * as _ from 'lodash';
 
 import { environment } from 'src/environments/environment';
 import { CrudService } from 'src/app/shared/crud.service';
-import { QyFilterable } from 'src/app/shared/qy/filter/qy-filterable';
+import { JiiFilterable } from 'src/app/shared/jii/filter/jii-filterable';
 import { Report } from 'src/app/domain/report';
 import { Subscription } from 'rxjs';
 
@@ -31,7 +31,7 @@ export class ReportService extends CrudService<Report> {
     };
   }
 
-  export(id: number, title: string, params?: string, filter?: QyFilterable): Subscription {
+  export(id: number, title: string, params?: string, filter?: JiiFilterable): Subscription {
     let url = `${OB}this.url${CB}/${OB}id${CB}/pdf`;
     return this.http.post(`${OB}url${CB}${OB}params ? `?${OB}params${CB}` : ''${CB}`, filter, {
       responseType: 'blob',

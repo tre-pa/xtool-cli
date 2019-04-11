@@ -1,0 +1,7 @@
+package ${rootPackage.name}.groovy.jii.sql;
+
+import org.springframework.data.domain.Pageable;
+
+interface JiiSqlPaginationStep extends JiiSqlFetchStep {
+	JiiSqlPageableSelectStep limit(Pageable pageable);
+}

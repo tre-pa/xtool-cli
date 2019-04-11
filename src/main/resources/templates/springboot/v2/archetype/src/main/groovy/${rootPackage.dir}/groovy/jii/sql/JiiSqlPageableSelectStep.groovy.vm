@@ -1,0 +1,8 @@
+package ${rootPackage.name}.groovy.jii.sql
+
+import org.springframework.data.domain.Page
+
+interface JiiSqlPageableSelectStep {
+
+	Page<List<Map<String, Object>>> fetchMaps();
+}

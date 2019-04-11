@@ -1,0 +1,18 @@
+package ${rootPackage.name}.groovy.jii.jpa
+
+import org.springframework.data.domain.Pageable
+import org.springframework.data.jpa.domain.Specification
+
+import ${rootPackage.name}.groovy.jii.JiiAggregable
+import ${rootPackage.name}.groovy.jii.JiiAggregation
+import ${rootPackage.name}.groovy.jii.JiiPage
+import ${rootPackage.name}.groovy.jii.JiiPayload
+import ${rootPackage.name}.groovy.jii.JiiProjectable
+import ${rootPackage.name}.groovy.jii.JiiSpecification
+
+interface JiiRepository<T> {
+
+	JiiPage<T> findAll(Class<T> entityClass, Pageable pageable, JiiProjectable projectable, Class<? extends JiiSpecification<T>> specificationClass, JiiPayload payload)
+
+	List<JiiAggregation> aggregation(Class<T> entityClass, Specification<T> specification, JiiAggregable... aggregables)
+}

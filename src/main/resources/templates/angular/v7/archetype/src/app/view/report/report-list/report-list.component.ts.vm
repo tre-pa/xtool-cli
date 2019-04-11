@@ -8,7 +8,7 @@ import { Title } from '@angular/platform-browser';
 import { Subscription } from 'rxjs';
 
 import { ReportService } from 'src/app/service/report.service';
-import { QyStore } from 'src/app/shared/qy/qy-store';
+import { JiiStore } from 'src/app/shared/jii/jii-store';
 import { Report } from 'src/app/domain/report';
 
 @Component({
@@ -17,7 +17,7 @@ import { Report } from 'src/app/domain/report';
 })
 export class ReportListComponent implements OnInit {
 
-  reportStore: QyStore<Report>;
+  reportStore: JiiStore<Report>;
 
   downloadSub: Subscription;
 
@@ -30,7 +30,7 @@ export class ReportListComponent implements OnInit {
 
   ngOnInit() {
     this.title.setTitle('Relatórios');
-    this.reportStore = new QyStore(this.httpClient, '/jreport');
+    this.reportStore = new JiiStore(this.httpClient, '/jreport');
   }
 
   navigate(route: string) {

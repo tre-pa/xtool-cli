@@ -26,8 +26,8 @@ public class SpecificationTemplates {
 		SpecificationRepresentation specification = new SpecificationRepresentationImpl(springBootProject, RoasterHelper.createJavaClassSource(specificationName));
 		specification.getRoasterJavaClass().setPackage(springBootProject.getRootPackage().getName().concat(".repository").concat(".specification"));
 		specification.getRoasterJavaClass().addImport(entity.getQualifiedName());
-		specification.getRoasterJavaClass().addImport(springBootProject.getRootPackage().getName().concat(".groovy.qy.QySpecification"));
-		specification.getRoasterJavaClass().setSuperType("QySpecification<".concat(entity.getName()).concat(">"));
+		specification.getRoasterJavaClass().addImport(springBootProject.getRootPackage().getName().concat(".groovy.jii.JiiSpecification"));
+		specification.getRoasterJavaClass().setSuperType("JiiSpecification<".concat(entity.getName()).concat(">"));
 		specification.getRoasterJavaClass().addAnnotation(Component.class);
 		return specification;
 	}
@@ -43,11 +43,11 @@ public class SpecificationTemplates {
 			MethodSource<JavaClassSource> method = specification.getRoasterJavaClass().addMethod();
 			specification.getRoasterJavaClass().addImport(Specification.class);
 			specification.getRoasterJavaClass().addImport(specification.getTargetEntity().getQualifiedName());
-			specification.getRoasterJavaClass().addImport(specification.getProject().getRootPackage().getName().concat(".groovy.qy.filter.QyFilter"));
+			specification.getRoasterJavaClass().addImport(specification.getProject().getRootPackage().getName().concat(".groovy.jii.filter.JiiFilter"));
 			method.setPublic().setStatic(true);
 			method.setName("filter");
 			method.setReturnType(String.format("Specification<%s>", specification.getTargetEntity().getName()));
-			method.addParameter("QyFilter", "filter");
+			method.addParameter("JiiFilter", "filter");
 			// @formatter:off
 			method.setBody(
 					TemplateBuilder.builder()

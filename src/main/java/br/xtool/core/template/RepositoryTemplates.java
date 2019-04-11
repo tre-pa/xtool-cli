@@ -30,9 +30,9 @@ public class RepositoryTemplates {
 		repository.getRoasterInterface().addInterface(JpaSpecificationExecutor.class.getSimpleName().concat("<").concat(entity.getName()).concat(">"));
 		repository.getRoasterInterface().addAnnotation(Repository.class);
 
-		// Suporte a classe Qy
-		repository.getRoasterInterface().addImport(springBootProject.getRootPackage().getName().concat(".groovy.qy.jpa.QyRepository"));
-		repository.getRoasterInterface().addInterface("QyRepository<".concat(entity.getName()).concat(">"));
+		// Suporte a classe Jii
+		repository.getRoasterInterface().addImport(springBootProject.getRootPackage().getName().concat(".groovy.jii.jpa.JiiRepository"));
+		repository.getRoasterInterface().addInterface("JiiRepository<".concat(entity.getName()).concat(">"));
 
 		return repository;
 	}

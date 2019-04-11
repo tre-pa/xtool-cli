@@ -1,0 +1,16 @@
+package ${rootPackage.name}.groovy.jii
+
+import org.springframework.data.domain.Page
+
+/**
+ * 
+ * @author jcruz
+ *
+ * @param <T>
+ */
+class JiiPage<T>  {
+
+	Page<T> pagination;
+
+	List<JiiAggregation> aggregations;
+}

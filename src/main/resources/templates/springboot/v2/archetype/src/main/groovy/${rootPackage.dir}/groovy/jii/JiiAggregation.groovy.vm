@@ -1,0 +1,17 @@
+package ${rootPackage.name}.groovy.jii
+
+import ${rootPackage.name}.groovy.jii.JiiAggregable.Operation
+
+/**
+ * 
+ * @author jcruz
+ *
+ */
+class JiiAggregation {
+
+	String dataField
+
+	Object result;
+	
+	Operation operation;
+}

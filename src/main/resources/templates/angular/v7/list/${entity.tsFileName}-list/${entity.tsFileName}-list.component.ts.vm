@@ -15,7 +15,7 @@ import DataSource from 'devextreme/data/data_source';
 import notify from 'devextreme/ui/notify';
 
 import { ${entity.name}Service } from 'src/app/service/${entity.tsFileName}.service';
-import { QyStore } from 'src/app/shared/qy/qy-store';
+import { JiiStore } from 'src/app/shared/jii/jii-store';
 import { ${entity.name} } from 'src/app/domain/${entity.tsFileName}';
 
 @Component({
@@ -31,7 +31,7 @@ export class ${entity.name}ListComponent implements OnInit, OnDestroy {
   pageSize: number = 20;
 
   ${entity.instanceName}DataSource: DataSource;
-  ${entity.instanceName}QyStore: QyStore<${entity.name}>;
+  ${entity.instanceName}JiiStore: JiiStore<${entity.name}>;
   count: number = 0;
 
   ${ngListTemplates.createHeaderFiltersDecl($entity)}
@@ -44,17 +44,17 @@ export class ${entity.name}ListComponent implements OnInit, OnDestroy {
     private router: Router,
     private title: Title
   ) {
-    this.${entity.instanceName}QyStore = new QyStore(this.httpClient, '/${entity.apiName}');
+    this.${entity.instanceName}JiiStore = new JiiStore(this.httpClient, '/${entity.apiName}');
   }
 
   ngOnInit() {
     this.title.setTitle('${title}');
     this.initHeaderFilters();
     this.${entity.instanceName}DataSource = new DataSource({
-      store: this.${entity.instanceName}QyStore
+      store: this.${entity.instanceName}JiiStore
     });
-    this.${entity.instanceName}QyStore.onLoad
-      .subscribe(() => this.count = this.${entity.instanceName}QyStore.getSummary('id', 'count')[0].result);
+    this.${entity.instanceName}JiiStore.onLoad
+      .subscribe(() => this.count = this.${entity.instanceName}JiiStore.getSummary('id', 'count')[0].result);
   }
 
   ngOnDestroy() {
