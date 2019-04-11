@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-dev-area-page',
   template: `
-    <app-side-nav-outer-toolbar toolbarTitle="Publicador - Dev Area"
+    <app-side-nav-outer-toolbar toolbarTitle="${projectDesc} - Dev Area"
       [menuItems]="navigation">
       <router-outlet></router-outlet>
     </app-side-nav-outer-toolbar>

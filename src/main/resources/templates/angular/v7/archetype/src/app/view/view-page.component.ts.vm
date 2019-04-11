@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-view-page',
   template: `
-    <app-side-nav-outer-toolbar toolbarTitle="Publicador"
+    <app-side-nav-outer-toolbar toolbarTitle="${projectDesc}"
       [menuItems]="navigation">
       <router-outlet></router-outlet>
     </app-side-nav-outer-toolbar>
