@@ -249,9 +249,11 @@ public class AngularServiceImpl implements AngularService {
 		};
 		Path resourcePath = Paths.get("angular").resolve(ngProject.getProjectVersion().getName()).resolve("detail");
 		Path destinationPath = ngModule.getPath().getParent().resolve(entity.getTsFileName());
+		Path componentPath = destinationPath.resolve(String.format("%s-detail", entity.getTsFileName()));
+
 
 		this.fs.copy(resourcePath, vars, destinationPath);
-		return new NgDetailRepresentationImpl(destinationPath);
+		return new NgDetailRepresentationImpl(componentPath);
 
 	}
 
@@ -286,9 +288,10 @@ public class AngularServiceImpl implements AngularService {
 		};
 		Path resourcePath = Paths.get("angular").resolve(ngProject.getProjectVersion().getName()).resolve("edit");
 		Path destinationPath = ngModule.getPath().getParent().resolve(entityFolderName);
+		Path componentPath = destinationPath.resolve(String.format("%s-edit", entity.getTsFileName()));
 
 		this.fs.copy(resourcePath, vars, destinationPath);
-		return new NgEditRepresentationImpl(destinationPath);
+		return new NgEditRepresentationImpl(componentPath);
 	}
 
 	/*

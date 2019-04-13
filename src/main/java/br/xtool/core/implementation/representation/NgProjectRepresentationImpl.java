@@ -172,7 +172,7 @@ public class NgProjectRepresentationImpl extends ProjectRepresentationImpl imple
 		// @formatter:off
 		return this.getNgClasses().values().stream()
 				.filter(ngClass -> ngClass.getTsFileName().endsWith(NgProjectRepresentation.ArtifactyType.EDIT.getExt()))
-				.map(ngClass -> new NgEditRepresentationImpl(ngClass.getPath()))
+				.map(ngClass -> new NgEditRepresentationImpl(ngClass.getPath().getParent()))
 				.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
 	}
@@ -187,7 +187,7 @@ public class NgProjectRepresentationImpl extends ProjectRepresentationImpl imple
 		// @formatter:off
 		return this.getNgClasses().values().stream()
 				.filter(ngClass -> ngClass.getTsFileName().endsWith(NgProjectRepresentation.ArtifactyType.DETAIL.getExt()))
-				.map(ngClass -> new NgDetailRepresentationImpl(ngClass.getPath()))
+				.map(ngClass -> new NgDetailRepresentationImpl(ngClass.getPath().getParent()))
 				.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
 	}
