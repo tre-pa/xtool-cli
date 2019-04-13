@@ -220,8 +220,9 @@ public class AngularServiceImpl implements AngularService {
 		
 		ngModule.getProject().refresh();
 		
-		addRoute(ngModule, NgRoute.of(ngList));
 		addComponent(ngModule, ngList);
+		addRoute(ngModule, NgRoute.of(ngList));
+		addImport(ngModule, ngList.getName());
 		
 		return ngList;
 	}
@@ -299,7 +300,6 @@ public class AngularServiceImpl implements AngularService {
 	 * 
 	 * @see br.xtool.service.AngularService#addRoute(br.xtool.core.representation.angular.NgModuleRepresentation, br.xtool.core.representation.angular.NgRoute)
 	 */
-	@Override
 	public void addRoute(NgModuleRepresentation module, NgRoute route) {
 		List<NgRoute> routes = module.getRoutes();
 		if (routes.get(0).getChildren().stream().noneMatch(pNgRoute -> pNgRoute.equals(route))) {
@@ -316,7 +316,6 @@ public class AngularServiceImpl implements AngularService {
 
 			String newContent = start.concat(JsonHelper.serialize(routes).replaceAll("\"", "'")).concat(end);
 			save(module, newContent);
-			addImport(module, route.getComponent());
 			return;
 		}
 		ConsoleLog.print(ConsoleLog.yellow(String.format("Componente '%s' já registrado em uma rota.", route.getComponent())));
@@ -328,8 +327,7 @@ public class AngularServiceImpl implements AngularService {
 	 * @see br.xtool.service.AngularService#addComponent(br.xtool.core.representation.angular.NgModuleRepresentation,
 	 * br.xtool.core.representation.angular.NgComponentRepresentation)
 	 */
-	@Override
-	public void addComponent(NgModuleRepresentation module, NgComponentRepresentation component) {
+	private void addComponent(NgModuleRepresentation module, NgComponentRepresentation component) {
 		List<String> declarations = new ArrayList<>(module.getModuleDeclarations());
 		if (!declarations.contains(component.getName())) {
 			declarations.add(component.getName());
@@ -345,7 +343,6 @@ public class AngularServiceImpl implements AngularService {
 			String end = content.substring(idxDeclarations.getRight(), content.length() - 1);
 			String newContent = start.concat("\n    ").concat(StringUtils.join(declarations, ",\n    ")).concat("\n  ").concat(end);
 			save(module, newContent);
-			addImport(module, component.getName());
 			return;
 		}
 		ConsoleLog.print(ConsoleLog.yellow(String.format("Componente '%s' já registrado no módulo.", component.getName())));
