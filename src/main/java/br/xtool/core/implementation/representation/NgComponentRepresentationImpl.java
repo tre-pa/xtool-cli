@@ -18,6 +18,11 @@ public class NgComponentRepresentationImpl extends NgClassRepresentationImpl imp
 	}
 
 	@Override
+	public String getRoutePath() {
+		return this.getTsFileName().replace("-component", "");
+	}
+
+	@Override
 	public NgHtmlTemplateRepresentation getNgHtmlTemplate() {
 		throw new UnsupportedOperationException();
 	}

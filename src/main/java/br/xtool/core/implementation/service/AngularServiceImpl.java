@@ -355,7 +355,6 @@ public class AngularServiceImpl implements AngularService {
 	private void addImport(NgModuleRepresentation module, String componentName) {
 		// @formatter:off
 		NgComponentRepresentation component = module.getProject().getNgComponents().stream()
-				.peek(ngC -> System.out.println(ngC.getName()))
 				.filter(ngC -> ngC.getName().equals(componentName))
 				.findAny()
 				.orElseThrow(() -> new IllegalArgumentException(String.format("NgComponent %s não encontrado.", componentName)));

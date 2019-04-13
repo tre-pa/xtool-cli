@@ -9,7 +9,6 @@ import com.fasterxml.jackson.annotation.JsonRawValue;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import strman.Strman;
 
 @Getter
 @Setter
@@ -50,10 +49,10 @@ public class NgRoute {
 		// @formatter:on
 	}
 
-	public static NgRoute of(NgComponentRepresentation ngComponent) {
+	public static NgRoute of(NgListRepresentation ngList) {
 		NgRoute route = new NgRoute();
-		route.path = Strman.toKebabCase(ngComponent.getName());
-		route.component = ngComponent.getName();
+		route.path = ngList.getRoutePath();
+		route.component = ngList.getName();
 		return route;
 	}
 
