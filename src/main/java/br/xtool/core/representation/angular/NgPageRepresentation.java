@@ -11,9 +11,14 @@ import strman.Strman;
  *
  */
 public interface NgPageRepresentation extends NgComponentRepresentation {
-	
+
 	public static final String NAVIGATION_PATTERN = "\\s*navigation\\s*=\\s*";
-	
+
+	/**
+	 * Retorna os itens de navegação (menu lateral) da página.
+	 * 
+	 * @return
+	 */
 	List<NgPageNavigationRepresentation> getNavigations();
 
 	/**

@@ -18,7 +18,11 @@ public class NgPageRepresentationImpl extends NgComponentRepresentationImpl impl
 	public NgPageRepresentationImpl(Path path) {
 		super(path);
 	}
-
+	
+	/*
+	 * (non-Javadoc)
+	 * @see br.xtool.core.representation.angular.NgPageRepresentation#getNavigations()
+	 */
 	@Override
 	public List<NgPageNavigationRepresentation> getNavigations() {
 		Pattern pattern = Pattern.compile(NgPageRepresentation.NAVIGATION_PATTERN);
