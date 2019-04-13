@@ -13,6 +13,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.jboss.forge.roaster.model.JavaUnit;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
@@ -329,6 +330,7 @@ public class SpringBootProjectRepresentationImpl extends ProjectRepresentationIm
 		try (Stream<Path> paths = Files.walk(this.getPath().resolve("docs/diagrams/class"))) {
 		    return paths
 		        .filter(Files::isRegularFile)
+		        .filter(p -> FilenameUtils.getExtension(p.toFile().getAbsolutePath()).equals("plantuml"))
 		        .map(PlantClassDiagramRepresentationImpl::of)
 		        .collect(Collectors.toList());
 		} 
