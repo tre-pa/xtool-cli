@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonRawValue;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import strman.Strman;
 
 @Getter
 @Setter
@@ -47,6 +48,13 @@ public class NgRoute {
 				+ (children != null ? "children=" + children + ", " : "") + (loadChildren != null ? "loadChildren=" + loadChildren + ", " : "")
 				+ (canActivate != null ? "canActivate=" + canActivate : "") + "]";
 		// @formatter:on
+	}
+
+	public static NgRoute of(NgComponentRepresentation ngComponent) {
+		NgRoute route = new NgRoute();
+		route.path = Strman.toKebabCase(ngComponent.getName());
+		route.component = ngComponent.getName();
+		return route;
 	}
 
 }

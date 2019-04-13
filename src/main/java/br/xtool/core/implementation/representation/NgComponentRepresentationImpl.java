@@ -13,12 +13,17 @@ public class NgComponentRepresentationImpl extends NgClassRepresentationImpl imp
 	}
 
 	@Override
+	public String getName() {
+		return super.getName().concat("Component");
+	}
+
+	@Override
 	public NgHtmlTemplateRepresentation getNgHtmlTemplate() {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public NgTsClassRepresentation getNgTsClass() {
-		throw new UnsupportedOperationException();
+		return new NgTsClassRepresentationImpl(this.getPath().resolve(String.format("%s.component.ts", this.getTsFileName())));
 	}
 }

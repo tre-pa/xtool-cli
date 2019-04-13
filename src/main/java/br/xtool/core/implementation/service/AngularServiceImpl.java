@@ -213,9 +213,17 @@ public class AngularServiceImpl implements AngularService {
 		};
 		Path resourcePath = Paths.get("angular").resolve(ngProject.getProjectVersion().getName()).resolve("list");
 		Path destinationPath = ngModule.getPath().getParent().resolve(entity.getTsFileName());
-
+		Path componentPath = destinationPath.resolve(String.format("%s-list", entity.getTsFileName()));
+		
 		this.fs.copy(resourcePath, vars, destinationPath);
-		return new NgListRepresentationImpl(destinationPath);
+		NgListRepresentation ngList = new NgListRepresentationImpl(componentPath);
+		
+		ngModule.getProject().refresh();
+		
+		addRoute(ngModule, NgRoute.of(ngList));
+		addComponent(ngModule, ngList);
+		
+		return ngList;
 	}
 
 	/*
@@ -344,6 +352,7 @@ public class AngularServiceImpl implements AngularService {
 	private void addImport(NgModuleRepresentation module, String componentName) {
 		// @formatter:off
 		NgComponentRepresentation component = module.getProject().getNgComponents().stream()
+				.peek(ngC -> System.out.println(ngC.getName()))
 				.filter(ngC -> ngC.getName().equals(componentName))
 				.findAny()
 				.orElseThrow(() -> new IllegalArgumentException(String.format("NgComponent %s não encontrado.", componentName)));
@@ -354,7 +363,7 @@ public class AngularServiceImpl implements AngularService {
 				.noneMatch(ngImportName -> ngImportName.equals(component.getName()))) {
 			// @formatter:on
 			List<String> lines = Files.readAllLines(module.getPath(), StandardCharsets.UTF_8);
-			Path importPath = module.getPath().getParent().relativize(component.getPath());
+			Path importPath = module.getPath().getParent().relativize(component.getNgTsClass().getPath());
 			// @formatter:off
 			String importContent = TemplateBuilder.builder()
 					.tpl("import { {{componentName}} } from './{{pathName}}';")

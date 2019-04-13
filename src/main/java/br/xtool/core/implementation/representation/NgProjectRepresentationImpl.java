@@ -127,7 +127,7 @@ public class NgProjectRepresentationImpl extends ProjectRepresentationImpl imple
 		// @formatter:off
 		return this.getNgClasses().values().stream()
 				.filter(ngClass -> ngClass.getTsFileName().endsWith(NgProjectRepresentation.ArtifactyType.COMPONENT.getExt()))
-				.map(ngClass -> new NgComponentRepresentationImpl(ngClass.getPath()))
+				.map(ngClass -> new NgComponentRepresentationImpl(ngClass.getPath().getParent()))
 				.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
 	}
