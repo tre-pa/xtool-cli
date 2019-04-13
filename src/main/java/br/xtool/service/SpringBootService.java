@@ -7,6 +7,7 @@ import br.xtool.core.representation.springboot.RepositoryRepresentation;
 import br.xtool.core.representation.springboot.RestClassRepresentation;
 import br.xtool.core.representation.springboot.ServiceClassRepresentation;
 import br.xtool.core.representation.springboot.SpecificationRepresentation;
+import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 
 public interface SpringBootService {
 
@@ -15,7 +16,7 @@ public interface SpringBootService {
 	 * 
 	 * @param name Nome do projeto Spring Boot.
 	 */
-	void newApp(String name, String description, String version);
+	SpringBootProjectRepresentation newApp(String name, String description, String version);
 
 	/**
 	 * 
