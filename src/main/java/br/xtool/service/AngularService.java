@@ -7,6 +7,7 @@ import br.xtool.core.representation.angular.NgEntityRepresentation;
 import br.xtool.core.representation.angular.NgEnumRepresentation;
 import br.xtool.core.representation.angular.NgListRepresentation;
 import br.xtool.core.representation.angular.NgModuleRepresentation;
+import br.xtool.core.representation.angular.NgPageRepresentation;
 import br.xtool.core.representation.angular.NgRoute;
 import br.xtool.core.representation.angular.NgServiceRepresentation;
 import br.xtool.core.representation.springboot.EntityRepresentation;
@@ -69,15 +70,23 @@ public interface AngularService {
 	 * Adiciona uma rota ao módulo.
 	 * 
 	 * @param module Módulo Angular
-	 * @param route Rota
+	 * @param route  Rota
 	 */
 	void addRoute(NgModuleRepresentation module, NgRoute route);
 
 	/**
 	 * Adiciona um componente ao módulo.
 	 * 
-	 * @param module Módulo Angular
+	 * @param module    Módulo Angular
 	 * @param component Componente Angular
 	 */
 	void addComponent(NgModuleRepresentation module, NgComponentRepresentation component);
+
+	/**
+	 * Adiciona a lista a navegação da página.
+	 * 
+	 * @param page Pagina Angular
+	 * @param list Componente de Listagem Angular.
+	 */
+	void addNavigation(NgPageRepresentation page, NgListRepresentation list);
 }
