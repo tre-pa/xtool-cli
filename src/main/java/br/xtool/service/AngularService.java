@@ -1,15 +1,20 @@
 package br.xtool.service;
 
+import br.xtool.core.representation.angular.NgComponentRepresentation;
+import br.xtool.core.representation.angular.NgDetailRepresentation;
+import br.xtool.core.representation.angular.NgEditRepresentation;
 import br.xtool.core.representation.angular.NgEntityRepresentation;
 import br.xtool.core.representation.angular.NgEnumRepresentation;
+import br.xtool.core.representation.angular.NgListRepresentation;
 import br.xtool.core.representation.angular.NgModuleRepresentation;
+import br.xtool.core.representation.angular.NgRoute;
 import br.xtool.core.representation.angular.NgServiceRepresentation;
 import br.xtool.core.representation.springboot.EntityRepresentation;
 import br.xtool.core.representation.springboot.JavaEnumRepresentation;
 
 public interface AngularService {
 
-	void newApp(String name, String descrition,  String version);
+	void newApp(String name, String descrition, String version);
 
 	/**
 	 * Cria uma nova classe Typescript de dominio em src/app/domain
@@ -42,7 +47,7 @@ public interface AngularService {
 	 * 
 	 * @param entity Classe JPA.
 	 */
-	void genNgList(EntityRepresentation entity, NgModuleRepresentation ngModule);
+	NgListRepresentation genNgList(EntityRepresentation entity, NgModuleRepresentation ngModule);
 
 	/**
 	 * Cria um componente de Detail.
@@ -50,7 +55,7 @@ public interface AngularService {
 	 * @param entity
 	 * @param ngModule
 	 */
-	void genNgDetail(EntityRepresentation entity, NgModuleRepresentation ngModule);
+	NgDetailRepresentation genNgDetail(EntityRepresentation entity, NgModuleRepresentation ngModule);
 
 	/**
 	 * Cria um componente de Edit para uma entidade.
@@ -58,5 +63,21 @@ public interface AngularService {
 	 * @param entity
 	 * @param ngModule
 	 */
-	void genNgEdit(EntityRepresentation entity, NgModuleRepresentation ngModule);
+	NgEditRepresentation genNgEdit(EntityRepresentation entity, NgModuleRepresentation ngModule);
+
+	/**
+	 * Adiciona uma rota ao módulo.
+	 * 
+	 * @param module Módulo Angular
+	 * @param route Rota
+	 */
+	void addRoute(NgModuleRepresentation module, NgRoute route);
+
+	/**
+	 * Adiciona um componente ao módulo.
+	 * 
+	 * @param module Módulo Angular
+	 * @param component Componente Angular
+	 */
+	void addComponent(NgModuleRepresentation module, NgComponentRepresentation component);
 }

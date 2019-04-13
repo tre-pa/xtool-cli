@@ -1,12 +1,20 @@
 package br.xtool.core.implementation.service;
 
+import java.io.BufferedWriter;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.regex.Pattern;
 
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Lazy;
@@ -15,17 +23,28 @@ import org.springframework.stereotype.Service;
 import br.xtool.core.ConsoleLog;
 import br.xtool.core.FS;
 import br.xtool.core.Shell;
+import br.xtool.core.TemplateBuilder;
 import br.xtool.core.Workspace;
 import br.xtool.core.helper.InflectorHelper;
+import br.xtool.core.helper.JsonHelper;
+import br.xtool.core.helper.StringHelper;
+import br.xtool.core.implementation.representation.NgDetailRepresentationImpl;
+import br.xtool.core.implementation.representation.NgEditRepresentationImpl;
 import br.xtool.core.implementation.representation.NgEntityRepresentationImpl;
 import br.xtool.core.implementation.representation.NgEnumRepresentationImpl;
+import br.xtool.core.implementation.representation.NgListRepresentationImpl;
 import br.xtool.core.implementation.representation.NgServiceRepresentationImpl;
 import br.xtool.core.representation.ProjectRepresentation;
 import br.xtool.core.representation.angular.NgClassRepresentation;
+import br.xtool.core.representation.angular.NgComponentRepresentation;
+import br.xtool.core.representation.angular.NgDetailRepresentation;
+import br.xtool.core.representation.angular.NgEditRepresentation;
 import br.xtool.core.representation.angular.NgEntityRepresentation;
 import br.xtool.core.representation.angular.NgEnumRepresentation;
+import br.xtool.core.representation.angular.NgListRepresentation;
 import br.xtool.core.representation.angular.NgModuleRepresentation;
 import br.xtool.core.representation.angular.NgProjectRepresentation;
+import br.xtool.core.representation.angular.NgRoute;
 import br.xtool.core.representation.angular.NgServiceRepresentation;
 import br.xtool.core.representation.springboot.EntityAttributeRepresentation;
 import br.xtool.core.representation.springboot.EntityRepresentation;
@@ -35,6 +54,7 @@ import br.xtool.core.template.NgDetailTemplates;
 import br.xtool.core.template.NgEditTemplates;
 import br.xtool.core.template.NgListTemplates;
 import br.xtool.service.AngularService;
+import lombok.SneakyThrows;
 import strman.Strman;
 
 @Service
@@ -59,7 +79,7 @@ public class AngularServiceImpl implements AngularService {
 	 * @see br.xtool.service.AngularService#newApp(java.lang.String, java.lang.String)
 	 */
 	@Override
-	public void newApp(String name, String description ,String version) {
+	public void newApp(String name, String description, String version) {
 		Map<String, Object> vars = new HashMap<String, Object>() {
 			private static final long serialVersionUID = 1L;
 			{
@@ -169,12 +189,15 @@ public class AngularServiceImpl implements AngularService {
 		return ngService;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.xtool.service.AngularService#genNgList(br.xtool.core.representation. springboot.EntityRepresentation,
+	 * br.xtool.core.representation.angular.NgModuleRepresentation)
+	 */
 	@Override
-	public void genNgList(EntityRepresentation entity, NgModuleRepresentation ngModule) {
+	public NgListRepresentation genNgList(EntityRepresentation entity, NgModuleRepresentation ngModule) {
 		NgProjectRepresentation ngProject = genNgAssociatedProject();
-
-//		String entityFileName = NgClassRepresentation.genFileName(entity.getName()).concat("-list");
-//		String entityFolderName = Strman.toKebabCase(entity.getInstanceName());
 
 		Map<String, Object> vars = new HashMap<String, Object>() {
 			private static final long serialVersionUID = 1L;
@@ -182,9 +205,6 @@ public class AngularServiceImpl implements AngularService {
 				put("Strman", Strman.class);
 				put("StringUtils", StringUtils.class);
 				put("ngListTemplates", appCtx.getBean(NgListTemplates.class));
-//				put("entityFileName", entityFileName);
-//				put("entityFolderName", entityFolderName);
-//				put("entityClassName", entity.getName());
 				put("entity", entity);
 				put("title", InflectorHelper.getInstance().pluralize(entity.getName()));
 				put("entityApiName", InflectorHelper.getInstance().pluralize(Strman.toKebabCase(entity.getName())));
@@ -195,14 +215,18 @@ public class AngularServiceImpl implements AngularService {
 		Path destinationPath = ngModule.getPath().getParent().resolve(entity.getTsFileName());
 
 		this.fs.copy(resourcePath, vars, destinationPath);
+		return new NgListRepresentationImpl(destinationPath);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.xtool.service.AngularService#genNgDetail(br.xtool.core.representation. springboot.EntityRepresentation,
+	 * br.xtool.core.representation.angular.NgModuleRepresentation)
+	 */
 	@Override
-	public void genNgDetail(EntityRepresentation entity, NgModuleRepresentation ngModule) {
+	public NgDetailRepresentation genNgDetail(EntityRepresentation entity, NgModuleRepresentation ngModule) {
 		NgProjectRepresentation ngProject = genNgAssociatedProject();
-
-//		String entityFileName = NgClassRepresentation.genFileName(entity.getName()).concat("-detail");
-//		String entityFolderName = Strman.toKebabCase(entity.getInstanceName());
 
 		Map<String, Object> vars = new HashMap<String, Object>() {
 			private static final long serialVersionUID = 1L;
@@ -219,11 +243,18 @@ public class AngularServiceImpl implements AngularService {
 		Path destinationPath = ngModule.getPath().getParent().resolve(entity.getTsFileName());
 
 		this.fs.copy(resourcePath, vars, destinationPath);
+		return new NgDetailRepresentationImpl(destinationPath);
 
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.xtool.service.AngularService#genNgEdit(br.xtool.core.representation. springboot.EntityRepresentation,
+	 * br.xtool.core.representation.angular.NgModuleRepresentation)
+	 */
 	@Override
-	public void genNgEdit(EntityRepresentation entity, NgModuleRepresentation ngModule) {
+	public NgEditRepresentation genNgEdit(EntityRepresentation entity, NgModuleRepresentation ngModule) {
 		NgProjectRepresentation ngProject = genNgAssociatedProject();
 
 		String entityFileName = NgClassRepresentation.genFileName(entity.getName()).concat("-edit");
@@ -249,7 +280,91 @@ public class AngularServiceImpl implements AngularService {
 		Path destinationPath = ngModule.getPath().getParent().resolve(entityFolderName);
 
 		this.fs.copy(resourcePath, vars, destinationPath);
+		return new NgEditRepresentationImpl(destinationPath);
+	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.xtool.service.AngularService#addRoute(br.xtool.core.representation.angular.NgModuleRepresentation, br.xtool.core.representation.angular.NgRoute)
+	 */
+	@Override
+	public void addRoute(NgModuleRepresentation module, NgRoute route) {
+		List<NgRoute> routes = module.getRoutes();
+		if (routes.get(0).getChildren().stream().noneMatch(pNgRoute -> pNgRoute.equals(route))) {
+			routes.get(0).getChildren().add(route);
+
+			String content = module.getTsFileContent();
+			Pattern pattern = Pattern.compile(NgModuleRepresentation.ROUTE_PATTERN);
+			Pair<Integer, Integer> idxRoute = StringHelper.indexOfPattern(pattern, content);
+			String startRouteArray = content.substring(idxRoute.getRight());
+			Pair<Integer, Integer> idxOfFirstArray = StringHelper.indexOfFirstArray(startRouteArray);
+
+			String start = content.substring(0, idxRoute.getRight());
+			String end = content.substring(idxRoute.getRight() + idxOfFirstArray.getRight(), content.length() - 1);
+
+			String newContent = start.concat(JsonHelper.serialize(routes).replaceAll("\"", "'")).concat(end);
+			save(module, newContent);
+			addImport(module, route.getComponent());
+			return;
+		}
+		ConsoleLog.print(ConsoleLog.yellow(String.format("Componente '%s' já registrado em uma rota.", route.getComponent())));
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.xtool.service.AngularService#addComponent(br.xtool.core.representation.angular.NgModuleRepresentation,
+	 * br.xtool.core.representation.angular.NgComponentRepresentation)
+	 */
+	@Override
+	public void addComponent(NgModuleRepresentation module, NgComponentRepresentation component) {
+		List<String> declarations = new ArrayList<>(module.getModuleDeclarations());
+		if (!declarations.contains(component.getName())) {
+			declarations.add(component.getName());
+			String content = module.getTsFileContent();
+
+			Pattern pattern = Pattern.compile(NgModuleRepresentation.DECLARATION_PATTERN);
+			int idx = StringHelper.indexOfPattern(pattern, content).getRight();
+			String startDeclarationArray = content.substring(idx);
+			Pair<Integer, Integer> idxOfFirstArray = StringHelper.indexOfFirstArray(startDeclarationArray);
+			Pair<Integer, Integer> idxDeclarations = Pair.of(idx + 1, idx + idxOfFirstArray.getRight() - 1);
+
+			String start = content.substring(0, idxDeclarations.getLeft());
+			String end = content.substring(idxDeclarations.getRight(), content.length() - 1);
+			String newContent = start.concat("\n    ").concat(StringUtils.join(declarations, ",\n    ")).concat("\n  ").concat(end);
+			save(module, newContent);
+			addImport(module, component.getName());
+			return;
+		}
+		ConsoleLog.print(ConsoleLog.yellow(String.format("Componente '%s' já registrado no módulo.", component.getName())));
+	}
+
+	@SneakyThrows
+	private void addImport(NgModuleRepresentation module, String componentName) {
+		// @formatter:off
+		NgComponentRepresentation component = module.getProject().getNgComponents().stream()
+				.filter(ngC -> ngC.getName().equals(componentName))
+				.findAny()
+				.orElseThrow(() -> new IllegalArgumentException(String.format("NgComponent %s não encontrado.", componentName)));
+		
+		if (module.getImports()
+				.stream()
+				.flatMap(ngImport -> ngImport.getItems().stream())
+				.noneMatch(ngImportName -> ngImportName.equals(component.getName()))) {
+			// @formatter:on
+			List<String> lines = Files.readAllLines(module.getPath(), StandardCharsets.UTF_8);
+			Path importPath = module.getPath().getParent().relativize(component.getPath());
+			// @formatter:off
+			String importContent = TemplateBuilder.builder()
+					.tpl("import { {{componentName}} } from './{{pathName}}';")
+					.put("componentName", component.getName())
+					.put("pathName", FilenameUtils.removeExtension(importPath.toString()))
+					.build();
+			// @formatter:on
+			lines.add(module.getImports().size(), importContent.trim());
+			save(module, StringUtils.join(lines, "\n"));
+		}
 	}
 
 	private NgProjectRepresentation genNgAssociatedProject() {
@@ -257,6 +372,14 @@ public class AngularServiceImpl implements AngularService {
 		NgProjectRepresentation ngProject = springBootProject.getAssociatedAngularProject()
 				.orElseThrow(() -> new IllegalArgumentException("Não há nenhum projeto Angular associado ao projeto: " + springBootProject.getName()));
 		return ngProject;
+	}
+
+	@SneakyThrows
+	private void save(NgModuleRepresentation module, String newContent) {
+		try (BufferedWriter writer = Files.newBufferedWriter(module.getPath())) {
+			writer.write(newContent);
+			writer.flush();
+		}
 	}
 
 }

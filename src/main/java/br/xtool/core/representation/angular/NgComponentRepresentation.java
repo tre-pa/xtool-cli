@@ -8,5 +8,17 @@ package br.xtool.core.representation.angular;
  */
 public interface NgComponentRepresentation extends NgClassRepresentation {
 
-	NgTemplateRepresentation getNgTemplate();
+	/**
+	 * Retorna o HTML template do component.
+	 * 
+	 * @return
+	 */
+	NgHtmlTemplateRepresentation getNgHtmlTemplate();
+
+	/**
+	 * Retorna a classe Ts do component.
+	 * 
+	 * @return
+	 */
+	NgTsClassRepresentation getNgTsClass();
 }

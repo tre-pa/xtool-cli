@@ -1,6 +1,5 @@
 package br.xtool.core.representation.angular;
 
-import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,13 +11,9 @@ import strman.Strman;
  * @author jcruz
  *
  */
-public interface NgClassRepresentation extends Comparable<NgClassRepresentation> {
-
-	Path getPath();
+public interface NgClassRepresentation extends NgTypeRepresentation, Comparable<NgClassRepresentation> {
 
 	String getName();
-
-	String getFileName();
 
 	/**
 	 * 
@@ -38,6 +33,7 @@ public interface NgClassRepresentation extends Comparable<NgClassRepresentation>
 				put("Integer", "number");
 				put("Short", "number");
 				put("BigDecimal", "number");
+				put("BigInteger", "number");
 				put("Boolean", "boolean");
 				put("String", "string");
 				put("Date", "Date");

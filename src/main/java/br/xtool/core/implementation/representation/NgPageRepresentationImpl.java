@@ -10,9 +10,5 @@ public class NgPageRepresentationImpl extends NgComponentRepresentationImpl impl
 		super(path);
 	}
 
-	@Override
-	public String toString() {
-		return "ENgPage [" + (getName() != null ? "name=" + getName() + ", " : "") + (getFileName() != null ? "fileName=" + getFileName() : "") + "]";
-	}
 
 }

@@ -8,7 +8,6 @@ import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import br.xtool.core.representation.angular.NgClassRepresentation;
-import lombok.Getter;
 
 /**
  * Representa uma classe Typescript de um projeto Angular.
@@ -16,14 +15,10 @@ import lombok.Getter;
  * @author jcruz
  *
  */
-public class NgClassRepresentationImpl implements NgClassRepresentation {
-
-	@Getter
-	private Path path;
+public class NgClassRepresentationImpl extends NgTypeRepresentationImpl implements NgClassRepresentation {
 
 	public NgClassRepresentationImpl(Path path) {
-		super();
-		this.path = path;
+		super(path);
 	}
 
 	@Override
@@ -33,11 +28,6 @@ public class NgClassRepresentationImpl implements NgClassRepresentation {
 			.map(StringUtils::capitalize)
 			.collect(Collectors.joining());
 		// @formatter:on
-	}
-
-	@Override
-	public String getFileName() {
-		return this.getPath().getFileName().toString();
 	}
 
 	@Override

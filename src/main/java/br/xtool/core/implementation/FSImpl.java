@@ -1,6 +1,7 @@
 package br.xtool.core.implementation;
 
 import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Collection;
@@ -80,7 +81,7 @@ public class FSImpl implements FS {
 
 	@SneakyThrows
 	private String readFileAsString(Path path) {
-		return new String(Files.readAllBytes(path));
+		return new String(Files.readAllBytes(path), StandardCharsets.UTF_8);
 	}
 
 	@SneakyThrows
