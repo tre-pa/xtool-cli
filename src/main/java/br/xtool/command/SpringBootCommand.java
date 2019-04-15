@@ -18,6 +18,7 @@ import br.xtool.core.provider.NgModuleRepresentationValueProvider;
 import br.xtool.core.provider.PlantClassDiagramRepresentationValueProvider;
 import br.xtool.core.representation.ProjectRepresentation;
 import br.xtool.core.representation.angular.NgModuleRepresentation;
+import br.xtool.core.representation.angular.NgProjectRepresentation;
 import br.xtool.core.representation.plantuml.PlantClassDiagramRepresentation;
 import br.xtool.core.representation.springboot.EntityRepresentation;
 import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
@@ -182,6 +183,16 @@ public class SpringBootCommand {
 		if (repositories) springBootService.printRepositories(project);
 		if (services) springBootService.printServices(project);
 		if (rests) springBootService.printRests(project);
+	}
+
+	@ShellMethod(key = "list:ng-artifacts", value = "Lista os artefatos do projeto Angular", group = XtoolCliApplication.SPRINGBOOT_COMMAND_GROUP)
+	@ShellMethodAvailability("availabilitySpringBootCommand")
+	public void listNgArtifacts(@ShellOption(help = "Componentes de listagem", arity = 0, defaultValue = "false") boolean ngLists) {
+		SpringBootProjectRepresentation project = this.workspace.getWorkingProject(SpringBootProjectRepresentation.class);
+		if (project.getAssociatedAngularProject().isPresent()) {
+			NgProjectRepresentation ngProject = project.getAssociatedAngularProject().get();
+			if (ngLists) angularService.printNgLists(ngProject);
+		}
 	}
 
 	/*

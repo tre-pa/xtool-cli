@@ -7,6 +7,7 @@ import br.xtool.core.representation.angular.NgEntityRepresentation;
 import br.xtool.core.representation.angular.NgEnumRepresentation;
 import br.xtool.core.representation.angular.NgListRepresentation;
 import br.xtool.core.representation.angular.NgModuleRepresentation;
+import br.xtool.core.representation.angular.NgProjectRepresentation;
 import br.xtool.core.representation.angular.NgRoute;
 import br.xtool.core.representation.angular.NgServiceRepresentation;
 import br.xtool.core.representation.springboot.EntityRepresentation;
@@ -66,17 +67,24 @@ public interface AngularService {
 	NgEditRepresentation genNgEdit(EntityRepresentation entity, NgModuleRepresentation ngModule);
 
 	/**
+	 * Imprime a lista de componentes de listagem angular.
+	 * 
+	 * @param project
+	 */
+	void printNgLists(NgProjectRepresentation project);
+
+	/**
 	 * Adiciona uma rota ao módulo.
 	 * 
 	 * @param module Módulo Angular
-	 * @param route Rota
+	 * @param route  Rota
 	 */
 	void addRoute(NgModuleRepresentation module, NgRoute route);
 
 	/**
 	 * Adiciona um componente ao módulo.
 	 * 
-	 * @param module Módulo Angular
+	 * @param module    Módulo Angular
 	 * @param component Componente Angular
 	 */
 	void addComponent(NgModuleRepresentation module, NgComponentRepresentation component);
