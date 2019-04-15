@@ -113,7 +113,7 @@ export class KeycloakService {
    * @param role 
    */
   public hasResourceRole(role: string): boolean {
-    return this.auth.authz.hasResourceRole(role, environment.keycloak_installation.clientId);
+    return this.auth.authz.hasResourceRole(role, environment.keycloak_clientId_sboot);
   }
 
   /**

@@ -16,10 +16,6 @@ export class UserPageComponent implements OnInit {
     path: '/home',
     icon: 'home'
   }, {
-    text: 'Pessoas',
-    path: '/pessoas',
-    icon: 'user'
-  }, {
     text: 'Relatorios',
     path: '/relatorios',
     icon: 'file-alt'
