@@ -128,7 +128,7 @@ abstract class JiiRest<T, ID, S extends JiiSpecification<T> ,R extends JpaReposi
 	 * @param projectable
 	 * @return
 	 */
-	@PostMapping("/all")
+	@PostMapping("/jii")
 	public ResponseEntity<JiiPage<T>> findAllEntities(@RequestBody(required = false) JiiPayload payload, Pageable pageable, JiiProjectable projectable) {
 		return ResponseEntity.ok(repository.findAll(entityClass, pageable, projectable, specificationClass, payload))
 	}
