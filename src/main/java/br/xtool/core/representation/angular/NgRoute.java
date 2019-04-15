@@ -49,10 +49,10 @@ public class NgRoute {
 		// @formatter:on
 	}
 
-	public static NgRoute of(NgListRepresentation ngList) {
+	public static NgRoute of(NgComponentRepresentation ngComponent) {
 		NgRoute route = new NgRoute();
-		route.path = ngList.getRoutePath();
-		route.component = ngList.getName();
+		route.path = ngComponent.getRoutePath();
+		route.component = ngComponent.getName();
 		return route;
 	}
 

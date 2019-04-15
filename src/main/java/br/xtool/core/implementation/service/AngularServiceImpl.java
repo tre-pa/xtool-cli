@@ -214,16 +214,16 @@ public class AngularServiceImpl implements AngularService {
 		Path resourcePath = Paths.get("angular").resolve(ngProject.getProjectVersion().getName()).resolve("list");
 		Path destinationPath = ngModule.getPath().getParent().resolve(entity.getTsFileName());
 		Path componentPath = destinationPath.resolve(String.format("%s-list", entity.getTsFileName()));
-		
+
 		this.fs.copy(resourcePath, vars, destinationPath);
 		NgListRepresentation ngList = new NgListRepresentationImpl(componentPath);
-		
+
 		ngModule.getProject().refresh();
-		
+
 		addComponent(ngModule, ngList);
 		addRoute(ngModule, NgRoute.of(ngList));
 		addImport(ngModule, ngList.getName());
-		
+
 		return ngList;
 	}
 
@@ -252,9 +252,16 @@ public class AngularServiceImpl implements AngularService {
 		Path destinationPath = ngModule.getPath().getParent().resolve(entity.getTsFileName());
 		Path componentPath = destinationPath.resolve(String.format("%s-detail", entity.getTsFileName()));
 
-
 		this.fs.copy(resourcePath, vars, destinationPath);
-		return new NgDetailRepresentationImpl(componentPath);
+		NgDetailRepresentation ngDetail = new NgDetailRepresentationImpl(componentPath);
+
+		ngModule.getProject().refresh();
+
+		addComponent(ngModule, ngDetail);
+		addRoute(ngModule, NgRoute.of(ngDetail));
+		addImport(ngModule, ngDetail.getName());
+
+		return ngDetail;
 
 	}
 
@@ -292,7 +299,15 @@ public class AngularServiceImpl implements AngularService {
 		Path componentPath = destinationPath.resolve(String.format("%s-edit", entity.getTsFileName()));
 
 		this.fs.copy(resourcePath, vars, destinationPath);
-		return new NgEditRepresentationImpl(componentPath);
+		NgEditRepresentation ngEdit = new NgEditRepresentationImpl(componentPath);
+		
+		ngModule.getProject().refresh();
+
+		addComponent(ngModule, ngEdit);
+		addRoute(ngModule, NgRoute.of(ngEdit));
+		addImport(ngModule, ngEdit.getName());
+
+		return ngEdit;
 	}
 
 	/*
@@ -377,7 +392,7 @@ public class AngularServiceImpl implements AngularService {
 
 	@Override
 	public void addNavigation(NgPageRepresentation page, NgListRepresentation list) {
-		
+
 	}
 
 	private NgProjectRepresentation genNgAssociatedProject() {
