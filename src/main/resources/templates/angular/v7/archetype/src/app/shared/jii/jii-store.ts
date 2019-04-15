@@ -46,6 +46,8 @@ export class JiiStore<T> extends CustomStore {
   filter: JiiFilterable;
   /** Agregações resultadas do último load do Store */
   aggregations: JiiAggregation[];
+  /** Quantidade total de elementos obtida no ultimo load */
+  totalElements: number;
 
   constructor(
     /** Usado para fazer as requisições ao servidor, e deve ser uma depenência injetada do Componente que instanciar o Store */
@@ -64,7 +66,10 @@ export class JiiStore<T> extends CustomStore {
       load: (loadOptions: LoadOptions) => {
         if (options.loadByGet) return http.get<Page<T>>(this.loadUrl(loadOptions, options, basePath))
           .toPromise()
-          .finally(() => this.updateStoreVariables(loadOptions))
+          .then((page: Page<T>) => {
+            this.updateStoreVariables(loadOptions, page);
+            return page;
+          })
           .then((page: Page<T>) => ({
             data: page.content,
             totalCount: page.totalElements
@@ -73,7 +78,7 @@ export class JiiStore<T> extends CustomStore {
         return http.post<JiiPage<T>>(this.loadUrl(loadOptions, options, basePath), this.payloadFromLoadOptions(loadOptions))
           .toPromise()
           .then((jiiPage: JiiPage<T>) => {
-            this.updateStoreVariables(loadOptions, jiiPage.aggregations);
+            this.updateStoreVariables(loadOptions, jiiPage);
             return jiiPage;
           })
           .then((jiiPage: JiiPage<T>) => ({
@@ -165,10 +170,15 @@ export class JiiStore<T> extends CustomStore {
    * @param loadOptions 
    * @param aggregations
    */
-  private updateStoreVariables(loadOptions: LoadOptions, aggregations?: JiiAggregation[]): void {
+  private updateStoreVariables(loadOptions: LoadOptions, page: JiiPage<T> | Page<T>): void {
     this.sortParams = loadOptions.sort ? this.paramFromSort(loadOptions.sort) : null;
     this.filter = loadOptions.filter ? JiiFilter.of(loadOptions.filter).jiiFilterable : null;
-    if (loadOptions.totalSummary) this.aggregations = aggregations;
+    if (page['pagination']) {
+      this.totalElements = page['pagination'].totalElements;
+      if (loadOptions.totalSummary) this.aggregations = page['aggregations'];
+    } else {
+      this.totalElements = page['totalElements'];
+    }
     this.onLoad.emit();
   }
 

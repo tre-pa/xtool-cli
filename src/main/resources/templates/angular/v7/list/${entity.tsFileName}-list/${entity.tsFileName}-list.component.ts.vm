@@ -54,7 +54,7 @@ export class ${entity.name}ListComponent implements OnInit, OnDestroy {
       store: this.${entity.instanceName}JiiStore
     });
     this.${entity.instanceName}JiiStore.onLoad
-      .subscribe(() => this.count = this.${entity.instanceName}JiiStore.getSummary('id', 'count')[0].result);
+      .subscribe(() => this.count = this.${entity.instanceName}JiiStore.totalElements);
   }
 
   ngOnDestroy() {
