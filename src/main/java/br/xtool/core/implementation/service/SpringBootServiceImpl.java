@@ -79,7 +79,7 @@ public class SpringBootServiceImpl implements SpringBootService {
 	 * @param name Nome do projeto Spring Boot.
 	 */
 	@Override
-	public SpringBootProjectRepresentation newApp(String name, String description , String version) {
+	public SpringBootProjectRepresentation newApp(String name, String description, String version) {
 		Map<String, Object> vars = new HashMap<String, Object>();
 		vars.put("projectName", genProjectName(name));
 		vars.put("baseClassName", genBaseClassName(name));
@@ -100,16 +100,14 @@ public class SpringBootServiceImpl implements SpringBootService {
 		this.shellService.runCmd(bootProject.getPath(), "git add . > /dev/null 2>&1");
 		this.shellService.runCmd(bootProject.getPath(), "git commit -m \"Inicial commit\" > /dev/null 2>&1 ");
 		ConsoleLog.print(ConsoleLog.cyan("\t-- Commit inicial realizado no git. --"));
-		
+
 		return bootProject;
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * br.xtool.service.SpringBootService#genEntity(br.xtool.core.representation.
-	 * plantuml.PlantClassRepresentation)
+	 * @see br.xtool.service.SpringBootService#genEntity(br.xtool.core.representation. plantuml.PlantClassRepresentation)
 	 */
 	@Override
 	public EntityRepresentation genEntity(PlantClassRepresentation plantClass) {
@@ -120,7 +118,8 @@ public class SpringBootServiceImpl implements SpringBootService {
 			save(javaEnum);
 		});
 		plantClass.getFields().stream().forEach(plantField -> appCtx.getBean(JavaFieldRepresentationMapper.class).apply(javaClass, plantField));
-		plantClass.getRelationships().stream().forEach(plantRelationship -> appCtx.getBean(JavaRelationshipRepresentationMapper.class).apply(javaClass, plantRelationship));
+		plantClass.getRelationships().stream()
+				.forEach(plantRelationship -> appCtx.getBean(JavaRelationshipRepresentationMapper.class).apply(javaClass, plantRelationship));
 		save(javaClass);
 
 		springBootProject.refresh();
@@ -130,9 +129,7 @@ public class SpringBootServiceImpl implements SpringBootService {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * br.xtool.service.SpringBootService#genRepository(br.xtool.core.representation
-	 * .springboot.EntityRepresentation)
+	 * @see br.xtool.service.SpringBootService#genRepository(br.xtool.core.representation .springboot.EntityRepresentation)
 	 */
 	@Override
 	public RepositoryRepresentation genRepository(EntityRepresentation entity) {
@@ -153,8 +150,7 @@ public class SpringBootServiceImpl implements SpringBootService {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see br.xtool.service.SpringBootService#genSpecification(br.xtool.core.
-	 * representation.springboot.EntityRepresentation)
+	 * @see br.xtool.service.SpringBootService#genSpecification(br.xtool.core. representation.springboot.EntityRepresentation)
 	 */
 	@Override
 	public SpecificationRepresentation genSpecification(EntityRepresentation entity) {
@@ -212,6 +208,47 @@ public class SpringBootServiceImpl implements SpringBootService {
 		return restClass;
 	}
 
+	@Override
+	public void printEntities(SpringBootProjectRepresentation project) {
+		ConsoleLog.print(ConsoleLog.cyan(String.format("-- Entidades(%d) --", project.getEntities().size())));
+		// @formatter:off
+		project.getEntities()
+			.stream()
+			.forEach(entity -> ConsoleLog.print(entity.getName()));
+		// @formatter:on
+	}
+
+	@Override
+	public void printRepositories(SpringBootProjectRepresentation project) {
+		ConsoleLog.print(ConsoleLog.cyan(String.format("-- Repositories(%d) --", project.getRepositories().size())));
+		// @formatter:off
+		project.getRepositories()
+			.stream()
+			.forEach(entity -> ConsoleLog.print(entity.getName()));
+		// @formatter:on
+
+	}
+
+	@Override
+	public void printServices(SpringBootProjectRepresentation project) {
+		ConsoleLog.print(ConsoleLog.cyan(String.format("-- Services(%d) --", project.getServices().size())));
+		// @formatter:off
+		project.getServices()
+			.stream()
+			.forEach(entity -> ConsoleLog.print(entity.getName()));
+		// @formatter:on
+	}
+
+	@Override
+	public void printRests(SpringBootProjectRepresentation project) {
+		ConsoleLog.print(ConsoleLog.cyan(String.format("-- Rests(%d) --", project.getRests().size())));
+		// @formatter:off
+		project.getRests()
+			.stream()
+			.forEach(entity -> ConsoleLog.print(entity.getName()));
+		// @formatter:on
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -248,13 +285,15 @@ public class SpringBootServiceImpl implements SpringBootService {
 	 */
 	@Override
 	public JavaPackageRepresentation genRootPackage(String projectName) {
-		String packageName = JavaPackageRepresentation.getDefaultPrefix().concat(".").concat(StringUtils.join(StringUtils.split(Strman.toKebabCase(projectName), "-"), "."));
+		String packageName = JavaPackageRepresentation.getDefaultPrefix().concat(".")
+				.concat(StringUtils.join(StringUtils.split(Strman.toKebabCase(projectName), "-"), "."));
 		return JavaPackageRepresentationImpl.of(packageName);
 	}
 
 	@SneakyThrows
 	private void save(JavaTypeRepresentation<?> javaType) {
-		Path javaPath = javaType.getProject().getMainSourceFolder().getPath().resolve(javaType.getJavaPackage().getDir()).resolve(String.format("%s.java", javaType.getName()));
+		Path javaPath = javaType.getProject().getMainSourceFolder().getPath().resolve(javaType.getJavaPackage().getDir())
+				.resolve(String.format("%s.java", javaType.getName()));
 		if (Files.notExists(javaPath.getParent())) Files.createDirectories(javaPath.getParent());
 		Properties prefs = new Properties();
 		prefs.setProperty(JavaCore.COMPILER_SOURCE, CompilerOptions.VERSION_1_8);

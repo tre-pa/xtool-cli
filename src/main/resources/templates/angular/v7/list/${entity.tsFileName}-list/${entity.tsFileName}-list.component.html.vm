@@ -57,8 +57,6 @@
   </dxi-column>
 	<!-- SUMMARY -->
 	<dxo-summary>
-		<dxi-total-item column="id"
-			summaryType="count"></dxi-total-item>
     ${ngListTemplates.createHtmlTotalItemsSummaryDecl($entity)}
 	</dxo-summary>
 </dx-data-grid>

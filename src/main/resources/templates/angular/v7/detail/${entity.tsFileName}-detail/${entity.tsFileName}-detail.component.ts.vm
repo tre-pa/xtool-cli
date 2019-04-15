@@ -30,7 +30,7 @@ export class ${entity.name}DetailComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.title.setTitle('Detalhes da ${entity.name}');
-    this.id = +this.activatedRoute.snapshot.params['id'];
+    this.id = +this.activatedRoute.snapshot.params['id${entity.name}'];
     this.${entity.instanceName}Service.findDetailById(this.id)
       .pipe(takeUntil(this.destroy$))
       .subscribe(${entity.instanceName} => this.${entity.instanceName} = ${entity.instanceName});

@@ -130,7 +130,8 @@ public class AngularServiceImpl implements AngularService {
 		Path ngEntityPath = destinationPath.resolve(NgClassRepresentation.genFileName(entity.getName())).resolve(entity.getName().concat(".ts"));
 		NgEntityRepresentation ngEntity = new NgEntityRepresentationImpl(ngEntityPath);
 
-		entity.getAttributes().stream().filter(EntityAttributeRepresentation::isEnumField).map(EntityAttributeRepresentation::getEnum).map(Optional::get).forEach(this::genNgEnum);
+		entity.getAttributes().stream().filter(EntityAttributeRepresentation::isEnumField).map(EntityAttributeRepresentation::getEnum).map(Optional::get)
+				.forEach(this::genNgEnum);
 		return ngEntity;
 	}
 
@@ -281,6 +282,16 @@ public class AngularServiceImpl implements AngularService {
 
 		this.fs.copy(resourcePath, vars, destinationPath);
 		return new NgEditRepresentationImpl(destinationPath);
+	}
+
+	@Override
+	public void printNgLists(NgProjectRepresentation project) {
+		ConsoleLog.print(ConsoleLog.cyan(String.format("-- Componentes List(%d) --", project.getNgLists().size())));
+		// @formatter:off
+		project.getNgLists()
+			.stream()
+			.forEach(entity -> ConsoleLog.print(entity.getName()));
+		// @formatter:on
 	}
 
 	/*

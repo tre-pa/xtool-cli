@@ -1,0 +1,68 @@
+<h2>{{ idReport ? 'Edição de' : 'Novo' }} Relatório{{ report?.title ? ' - ' + report.title : '' }}</h2>
+<div class="dx-card content-block">
+  <form *ngIf="report"
+    autocomplete="off"
+    (submit)="save($event)">
+    <dx-form id="form"
+      [formData]="report"
+      [showOptionalMark]="true"
+      [showValidationSummary]="true"
+      optionalMark="<span title='campo opcional'><i>(opcional)</i></span>"
+      requiredMark="<span title='campo obrigatório'>*</span>">
+      <dxi-item dataField="title">
+        <dxi-validation-rule type="required"></dxi-validation-rule>
+      </dxi-item>
+      <dxi-item dataField="subtitle"></dxi-item>
+      <dxi-item dataField="category"
+        editorType="dxSelectBox"
+        [editorOptions]="{
+          acceptCustomValue: true,
+          dataSource: categoryDataSource,
+          searchEnabled: true
+        }">
+        <dxi-validation-rule type="required"></dxi-validation-rule>
+      </dxi-item>
+      <dxi-item dataField="sql"
+        editorType="dxTextArea"
+        [editorOptions]="{ autoResizeEnabled: true }">
+        <dxi-validation-rule type="required"></dxi-validation-rule>
+      </dxi-item>
+      <dxi-item dataField="_grid"
+        editorType="dxTextArea"
+        [editorOptions]="{ autoResizeEnabled: true }"></dxi-item>
+      <dxi-item dataField="gpdf"
+        editorType="dxTextArea"
+        [editorOptions]="{ autoResizeEnabled: true }">
+      </dxi-item>
+      <dxi-item dataField="gexcel"
+        editorType="dxTextArea"
+        [editorOptions]="{ autoResizeEnabled: true }">
+      </dxi-item>
+      <dxi-item itemType="simple"
+        dataField="mngtOnly"
+        editorType="dxCheckBox"
+        [editorOptions]="{
+          text: 'Disponível apenas aos gerentes'
+        }">
+        <dxo-label [visible]="false">
+        </dxo-label>
+      </dxi-item>
+      <dxi-item itemType="simple"
+        dataField="printOnly"
+        editorType="dxCheckBox"
+        [editorOptions]="{
+          text: 'Disponível apenas para impressão'
+        }">
+        <dxo-label [visible]="false">
+        </dxo-label>
+      </dxi-item>
+      <dxi-item itemType="button"
+        horizontalAlignment="left"
+        [buttonOptions]="{
+          text: 'Salvar',
+          type : 'success',
+          useSubmitBehavior: true
+        }"></dxi-item>
+    </dx-form>
+  </form>
+</div>
