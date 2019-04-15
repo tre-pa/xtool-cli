@@ -5,17 +5,17 @@ import { NgxPermissionsGuard } from 'ngx-permissions';
 
 const routes: Routes = [
     {
-        path: 'dev-area',
-        loadChildren: './@dev-area/dev-area-routing.module#DevAreaRoutingModule',
+        path: 'report-mngt',
+        loadChildren: './view/@report/report-routing.module#ReportRoutingModule',
         canActivate: [NgxPermissionsGuard],
         data: {
             permissions: {
-                only: 'DEVELOPER',
+                only: 'REPORT_MANAGER',
                 redirectTo: '/'
             }
         }
     },
-    { path: '', loadChildren: './view/view-routing.module#ViewRoutingModule' },
+    { path: '', loadChildren: './view/user/user-routing.module#UserRoutingModule' },
 
     { path: '**', redirectTo: '' } // Rota padrão
 ]

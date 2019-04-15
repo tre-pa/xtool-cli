@@ -6,7 +6,7 @@ import { Subscription, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import DataSource from 'devextreme/data/data_source';
 
-import { JiiStore } from 'src/app/shared/jii/jii-store';
+import { JiiStore } from 'src/app/@core/jii/jii-store';
 import { ${entity.name}Service } from 'src/app/service/${entity.tsFileName}.service';
 import { ${entity.name} } from 'src/app/domain/${entity.tsFileName}';
 

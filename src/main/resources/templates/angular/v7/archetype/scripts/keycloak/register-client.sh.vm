@@ -16,8 +16,8 @@ KC_ADMIN_USER=admin
 KC_ADMIN_PASS=admin
 KC_CLIENT_ID=${projectName}
 KC_CLIENT_REDIRECT_URIS="http://localhost:4200/*" #Adicionar outras uris na string separando por vírgula.
-KC_REALM_ROLES=("DEVELOPER")
-KC_CLIENT_ROLES=("USER")
+KC_REALM_ROLES=()
+KC_CLIENT_ROLES=("USER" "REPORT_MANAGER")
 ##
 __NORMAL__="\e[0m\e[39m"
 __YELLOW__="\e[93m"

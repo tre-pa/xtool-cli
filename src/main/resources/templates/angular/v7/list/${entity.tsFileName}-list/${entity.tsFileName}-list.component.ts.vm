@@ -15,7 +15,7 @@ import DataSource from 'devextreme/data/data_source';
 import notify from 'devextreme/ui/notify';
 
 import { ${entity.name}Service } from 'src/app/service/${entity.tsFileName}.service';
-import { JiiStore } from 'src/app/shared/jii/jii-store';
+import { JiiStore } from 'src/app/@core/jii/jii-store';
 import { ${entity.name} } from 'src/app/domain/${entity.tsFileName}';
 
 @Component({
