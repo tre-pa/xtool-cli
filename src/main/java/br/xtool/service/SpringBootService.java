@@ -57,6 +57,34 @@ public interface SpringBootService {
 	RestClassRepresentation genRest(EntityRepresentation entity);
 
 	/**
+	 * Imprime a lista as entidades do projeto.
+	 * 
+	 * @return
+	 */
+	void printEntities(SpringBootProjectRepresentation project);
+
+	/**
+	 * Imprime a lista de Repositórios do projeto.
+	 * 
+	 * @param project
+	 */
+	void printRepositories(SpringBootProjectRepresentation project);
+
+	/**
+	 * Imprime a lista de Services do projeto.
+	 * 
+	 * @param project
+	 */
+	void printServices(SpringBootProjectRepresentation project);
+
+	/**
+	 * Imprime a lista de Rests do projeto.
+	 * 
+	 * @param project
+	 */
+	void printRests(SpringBootProjectRepresentation project);
+
+	/**
 	 * Gera um nome de projeto válido.
 	 * 
 	 * @param commomName

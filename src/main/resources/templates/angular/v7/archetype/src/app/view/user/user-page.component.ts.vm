@@ -1,0 +1,29 @@
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-user-page',
+  template: `
+    <app-side-nav-outer-toolbar toolbarTitle="${projectDesc}"
+      [menuItems]="navigation">
+      <router-outlet></router-outlet>
+    </app-side-nav-outer-toolbar>
+  `
+})
+export class UserPageComponent implements OnInit {
+
+  navigation = [{
+    text: 'Home',
+    path: '/home',
+    icon: 'home'
+  }, {
+    text: 'Relatorios',
+    path: '/relatorios',
+    icon: 'file-alt'
+  }];
+
+  constructor() { }
+
+  ngOnInit() {
+  }
+
+}

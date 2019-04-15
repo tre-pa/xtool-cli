@@ -98,6 +98,13 @@ public interface NgProjectRepresentation extends ProjectRepresentation {
 	SortedSet<NgPageRepresentation> getNgPages();
 
 	/**
+	 * Retorna os componente de lista do projeto.
+	 * 
+	 * @return
+	 */
+	SortedSet<NgListRepresentation> getNgLists();
+
+	/**
 	 * Retorna as classes edit do projeto.
 	 * 
 	 * @return

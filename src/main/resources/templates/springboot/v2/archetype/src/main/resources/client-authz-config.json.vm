@@ -26,12 +26,12 @@
       ]
     },
     {
-      "name": "dev-jreport",
+      "name": "mngt-jreport",
       "ownerManagedAccess": false,
-      "displayName": "Dev JReport",
+      "displayName": "Mngt JReport",
       "attributes": {},
       "uris": [
-        "/api/dev/jreport/*"
+        "/api/mngt/jreport/*"
       ],
       "scopes": [
         {
@@ -51,12 +51,12 @@
   ],
   "policies": [
     {
-      "name": "Developer User Policy",
+      "name": "Report Manager Policy",
       "type": "role",
       "logic": "POSITIVE",
       "decisionStrategy": "UNANIMOUS",
       "config": {
-        "roles": "[{\"id\":\"DEVELOPER\",\"required\":true},{\"id\":\"${projectName}/USER\",\"required\":true}]"
+        "roles": "[{\"id\":\"${projectName}/REPORT_MANAGER\",\"required\":true}]"
       }
     },
     {
@@ -79,13 +79,13 @@
       }
     },
     {
-      "name": "Dev JReport Permission",
+      "name": "Mngt JReport Permission",
       "type": "resource",
       "logic": "POSITIVE",
       "decisionStrategy": "UNANIMOUS",
       "config": {
-        "resources": "[\"dev-jreport\"]",
-        "applyPolicies": "[\"Developer User Policy\"]"
+        "resources": "[\"mngt-jreport\"]",
+        "applyPolicies": "[\"Report Manager Policy\"]"
       }
     }
   ],

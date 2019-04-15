@@ -311,6 +311,22 @@ public class AngularServiceImpl implements AngularService {
 		return ngEdit;
 	}
 
+	@Override
+	public void printNgLists(NgProjectRepresentation project) {
+		ConsoleLog.print(ConsoleLog.cyan(String.format("-- Componentes List(%d) --", project.getNgLists().size())));
+		// @formatter:off
+		project.getNgLists()
+			.stream()
+			.forEach(entity -> ConsoleLog.print(entity.getName()));
+		// @formatter:on
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see br.xtool.service.AngularService#addRoute(br.xtool.core.representation.angular.NgModuleRepresentation, br.xtool.core.representation.angular.NgRoute)
+	 */
+	@Override
 	public void addRoute(NgModuleRepresentation module, NgRoute route) {
 		List<NgRoute> routes = module.getRoutes();
 		if (routes.get(0).getChildren().stream().noneMatch(pNgRoute -> pNgRoute.equals(route))) {
