@@ -3,7 +3,8 @@ package br.xtool.core.implementation.representation;
 import java.nio.file.Path;
 
 import br.xtool.core.representation.angular.NgComponentRepresentation;
-import br.xtool.core.representation.angular.NgTemplateRepresentation;
+import br.xtool.core.representation.angular.NgHtmlTemplateRepresentation;
+import br.xtool.core.representation.angular.NgTsClassRepresentation;
 
 public class NgComponentRepresentationImpl extends NgClassRepresentationImpl implements NgComponentRepresentation {
 
@@ -12,13 +13,12 @@ public class NgComponentRepresentationImpl extends NgClassRepresentationImpl imp
 	}
 
 	@Override
-	public NgTemplateRepresentation getNgTemplate() {
+	public NgHtmlTemplateRepresentation getNgHtmlTemplate() {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public String toString() {
-		return "ENgComponent [" + (getName() != null ? "name=" + getName() + ", " : "") + (getFileName() != null ? "fileName=" + getFileName() : "") + "]";
-
+	public NgTsClassRepresentation getNgTsClass() {
+		throw new UnsupportedOperationException();
 	}
 }

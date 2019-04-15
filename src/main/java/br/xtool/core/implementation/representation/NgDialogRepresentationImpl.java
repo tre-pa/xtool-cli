@@ -10,9 +10,4 @@ public class NgDialogRepresentationImpl extends NgClassRepresentationImpl implem
 		super(path);
 	}
 
-	@Override
-	public String toString() {
-		return "ENgDialog [" + (getName() != null ? "name=" + getName() + ", " : "") + (getFileName() != null ? "fileName=" + getFileName() : "") + "]";
-	}
-
 }

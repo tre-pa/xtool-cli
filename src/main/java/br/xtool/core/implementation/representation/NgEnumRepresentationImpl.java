@@ -8,15 +8,11 @@ import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import br.xtool.core.representation.angular.NgEnumRepresentation;
-import lombok.Getter;
 
-public class NgEnumRepresentationImpl implements NgEnumRepresentation {
-	@Getter
-	private Path path;
+public class NgEnumRepresentationImpl extends NgTypeRepresentationImpl implements NgEnumRepresentation {
 
 	public NgEnumRepresentationImpl(Path path) {
-		super();
-		this.path = path;
+		super(path);
 	}
 
 	@Override
@@ -26,11 +22,6 @@ public class NgEnumRepresentationImpl implements NgEnumRepresentation {
 			.map(StringUtils::capitalize)
 			.collect(Collectors.joining());
 		// @formatter:on
-	}
-
-	@Override
-	public String getFileName() {
-		return this.getPath().getFileName().toString();
 	}
 
 	@Override

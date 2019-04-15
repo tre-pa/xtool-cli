@@ -10,8 +10,4 @@ public class NgServiceRepresentationImpl extends NgClassRepresentationImpl imple
 		super(path);
 	}
 
-	@Override
-	public String toString() {
-		return "ENgService [" + (getName() != null ? "name=" + getName() + ", " : "") + (getFileName() != null ? "fileName=" + getFileName() : "") + "]";
-	}
 }

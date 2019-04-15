@@ -1,12 +1,7 @@
 package br.xtool.core.representation.angular;
 
-import java.nio.file.Path;
-
-public interface NgEnumRepresentation extends Comparable<NgEnumRepresentation>{
-
-	Path getPath();
+public interface NgEnumRepresentation extends NgTypeRepresentation, Comparable<NgEnumRepresentation> {
 
 	String getName();
 
-	String getFileName();
 }

@@ -3,8 +3,6 @@ package br.xtool.command;
 import java.io.IOException;
 import java.util.Objects;
 
-import javax.swing.SwingUtilities;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.shell.Availability;
@@ -25,7 +23,6 @@ import br.xtool.core.representation.springboot.EntityRepresentation;
 import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 import br.xtool.service.AngularService;
 import br.xtool.service.SpringBootService;
-import br.xtool.view.ShowClassDiagramView;
 
 /**
  * Classe com os comandos Shell para Spring Boot.
@@ -51,11 +48,11 @@ public class SpringBootCommand {
 	 * 
 	 * @param plantClass
 	 */
-	@ShellMethod(key = "gen:entities", value = "Gera as classes Jpa provenientes do diagrama de classe principal (main.plantuml)", group = XtoolCliApplication.SPRINGBOOT_COMMAND_GROUP)
+	@ShellMethod(key = "gen:entities", value = "Gera as classes Jpa do diagrama de classe", group = XtoolCliApplication.SPRINGBOOT_COMMAND_GROUP)
 	@ShellMethodAvailability("availabilitySpringBootCommand")
-	public void genEntities() {
-		SpringBootProjectRepresentation project = this.workspace.getWorkingProject(SpringBootProjectRepresentation.class);
-		project.getMainDomainClassDiagram().getClasses().stream().forEach(springBootService::genEntity);
+	public void genEntities(
+			@ShellOption(value = "--diagram", help = "Diagrama de classe", valueProvider = PlantClassDiagramRepresentationValueProvider.class, defaultValue = "main.plantuml") PlantClassDiagramRepresentation plantClassDiagram) {
+		plantClassDiagram.getClasses().stream().forEach(springBootService::genEntity);
 	}
 
 	/**

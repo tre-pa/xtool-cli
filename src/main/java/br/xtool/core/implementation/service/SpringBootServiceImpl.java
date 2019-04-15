@@ -79,7 +79,7 @@ public class SpringBootServiceImpl implements SpringBootService {
 	 * @param name Nome do projeto Spring Boot.
 	 */
 	@Override
-	public void newApp(String name, String description , String version) {
+	public SpringBootProjectRepresentation newApp(String name, String description , String version) {
 		Map<String, Object> vars = new HashMap<String, Object>();
 		vars.put("projectName", genProjectName(name));
 		vars.put("baseClassName", genBaseClassName(name));
@@ -95,11 +95,13 @@ public class SpringBootServiceImpl implements SpringBootService {
 		// @formatter:on
 
 		this.workspace.setWorkingProject(bootProject);
+		this.shellService.runCmd(bootProject.getPath(), "chmod +x scripts/keycloak/register-client.sh");
 		this.shellService.runCmd(bootProject.getPath(), "git init > /dev/null 2>&1 ");
 		this.shellService.runCmd(bootProject.getPath(), "git add . > /dev/null 2>&1");
 		this.shellService.runCmd(bootProject.getPath(), "git commit -m \"Inicial commit\" > /dev/null 2>&1 ");
-		this.shellService.runCmd(bootProject.getPath(), "chmod +x scripts/keycloak/register-client.sh");
 		ConsoleLog.print(ConsoleLog.cyan("\t-- Commit inicial realizado no git. --"));
+		
+		return bootProject;
 	}
 
 	/*

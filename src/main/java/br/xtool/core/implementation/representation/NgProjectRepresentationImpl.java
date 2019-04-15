@@ -111,8 +111,8 @@ public class NgProjectRepresentationImpl extends ProjectRepresentationImpl imple
 	public SortedSet<NgModuleRepresentation> getNgModules() {
 		// @formatter:off
 		return this.getNgClasses().values().stream()
-				.filter(ngClass -> ngClass.getFileName().endsWith(NgProjectRepresentation.ArtifactyType.MODULE.getExt()))
-				.map(ngClass -> new NgModuleRepresentationImpl(ngClass.getPath()))
+				.filter(ngClass -> ngClass.getTsFileName().endsWith(NgProjectRepresentation.ArtifactyType.MODULE.getExt()))
+				.map(ngClass -> new NgModuleRepresentationImpl(this, ngClass.getPath()))
 				.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
 	}
@@ -126,7 +126,7 @@ public class NgProjectRepresentationImpl extends ProjectRepresentationImpl imple
 	public SortedSet<NgComponentRepresentation> getNgComponents() {
 		// @formatter:off
 		return this.getNgClasses().values().stream()
-				.filter(ngClass -> ngClass.getFileName().endsWith(NgProjectRepresentation.ArtifactyType.MODULE.getExt()))
+				.filter(ngClass -> ngClass.getTsFileName().endsWith(NgProjectRepresentation.ArtifactyType.COMPONENT.getExt()))
 				.map(ngClass -> new NgComponentRepresentationImpl(ngClass.getPath()))
 				.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
@@ -141,7 +141,7 @@ public class NgProjectRepresentationImpl extends ProjectRepresentationImpl imple
 	public SortedSet<NgServiceRepresentation> getNgServices() {
 		// @formatter:off
 		return this.getNgClasses().values().stream()
-				.filter(ngClass -> ngClass.getFileName().endsWith(NgProjectRepresentation.ArtifactyType.MODULE.getExt()))
+				.filter(ngClass -> ngClass.getTsFileName().endsWith(NgProjectRepresentation.ArtifactyType.SERVICE.getExt()))
 				.map(ngClass -> new NgServiceRepresentationImpl(ngClass.getPath()))
 				.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
@@ -156,7 +156,7 @@ public class NgProjectRepresentationImpl extends ProjectRepresentationImpl imple
 	public SortedSet<NgPageRepresentation> getNgPages() {
 		// @formatter:off
 		return this.getNgClasses().values().stream()
-				.filter(ngClass -> ngClass.getFileName().endsWith(NgProjectRepresentation.ArtifactyType.MODULE.getExt()))
+				.filter(ngClass -> ngClass.getTsFileName().endsWith(NgProjectRepresentation.ArtifactyType.PAGE.getExt()))
 				.map(ngClass -> new NgPageRepresentationImpl(ngClass.getPath()))
 				.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
@@ -171,7 +171,7 @@ public class NgProjectRepresentationImpl extends ProjectRepresentationImpl imple
 	public SortedSet<NgEditRepresentation> getNgEdits() {
 		// @formatter:off
 		return this.getNgClasses().values().stream()
-				.filter(ngClass -> ngClass.getFileName().endsWith(NgProjectRepresentation.ArtifactyType.MODULE.getExt()))
+				.filter(ngClass -> ngClass.getTsFileName().endsWith(NgProjectRepresentation.ArtifactyType.EDIT.getExt()))
 				.map(ngClass -> new NgEditRepresentationImpl(ngClass.getPath()))
 				.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
@@ -186,7 +186,7 @@ public class NgProjectRepresentationImpl extends ProjectRepresentationImpl imple
 	public SortedSet<NgDetailRepresentation> getNgDetails() {
 		// @formatter:off
 		return this.getNgClasses().values().stream()
-				.filter(ngClass -> ngClass.getFileName().endsWith(NgProjectRepresentation.ArtifactyType.MODULE.getExt()))
+				.filter(ngClass -> ngClass.getTsFileName().endsWith(NgProjectRepresentation.ArtifactyType.DETAIL.getExt()))
 				.map(ngClass -> new NgDetailRepresentationImpl(ngClass.getPath()))
 				.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
