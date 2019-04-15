@@ -41,8 +41,8 @@ import ${rootPackage.name}.groovy.report.types.JReportGrid
  *
  */
 @RestController
-@RequestMapping("/api/dev/jreport")
-class JReportDevRest extends JiiRest<JReport, Long, JReportSpecification, JReportRepository> {
+@RequestMapping("/api/mngt/jreport")
+class JReportMngtRest extends JiiRest<JReport, Long, JReportSpecification, JReportRepository> {
 
 	@Autowired
 	JReportService jreportService;

@@ -29,14 +29,14 @@ import groovy.transform.EqualsAndHashCode;
 @DynamicInsert
 @DynamicUpdate
 @EntityListeners(AuditingEntityListener.class)
-@Table(name = "DEV_JREPORT")
+@Table(name = "MNGT_JREPORT")
 @EqualsAndHashCode(includes="id")
 class JReport {
 
 	@Id
 	@Column(updatable = false, nullable = false)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_DEV_JREPORT")
-	@SequenceGenerator(initialValue = 1, allocationSize = 1, name = "SEQ_DEV_JREPORT", sequenceName = "SEQ_DEV_JREPORT")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_MNGT_JREPORT")
+	@SequenceGenerator(initialValue = 1, allocationSize = 1, name = "SEQ_MNGT_JREPORT", sequenceName = "SEQ_MNGT_JREPORT")
 	Long id;
 
 	/**
@@ -115,11 +115,11 @@ class JReport {
 	String category;
 
 	/**
-	 * Flag informando se o relatório está disponível apenas aos desenvolvedores.
+	 * Flag informando se o relatório está disponível apenas aos gerentes.
 	 * 
 	 */
 	@Column
-	boolean devOnly = true;
+	boolean mngtOnly = true;
 
 	/**
 	 * Flag informando se o relatório está disponível apenas para impressão.
