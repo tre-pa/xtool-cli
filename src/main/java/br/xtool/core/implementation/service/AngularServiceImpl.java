@@ -326,7 +326,6 @@ public class AngularServiceImpl implements AngularService {
 	 * 
 	 * @see br.xtool.service.AngularService#addRoute(br.xtool.core.representation.angular.NgModuleRepresentation, br.xtool.core.representation.angular.NgRoute)
 	 */
-	@Override
 	public void addRoute(NgModuleRepresentation module, NgRoute route) {
 		List<NgRoute> routes = module.getRoutes();
 		if (routes.get(0).getChildren().stream().noneMatch(pNgRoute -> pNgRoute.equals(route))) {
