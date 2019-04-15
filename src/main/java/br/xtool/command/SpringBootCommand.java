@@ -62,7 +62,8 @@ public class SpringBootCommand {
 	 */
 	@ShellMethod(key = "gen:repository", value = "Gera uma classe de Repository (JpaRepository) para entidade JPA em um projeto Spring Boot", group = XtoolCliApplication.SPRINGBOOT_COMMAND_GROUP)
 	@ShellMethodAvailability("availabilitySpringBootCommand")
-	public void genRepository(@ShellOption(help = "Entidade JPA", valueProvider = EntityRepresentationValueProvider.class, defaultValue = "") EntityRepresentation entity) {
+	public void genRepository(
+			@ShellOption(help = "Entidade JPA", valueProvider = EntityRepresentationValueProvider.class, defaultValue = "") EntityRepresentation entity) {
 		if (Objects.isNull(entity)) {
 			// @formatter:off
 			this.workspace.getWorkingProject(SpringBootProjectRepresentation.class).getEntities().stream()
@@ -128,7 +129,8 @@ public class SpringBootCommand {
 	 */
 	@ShellMethod(key = "gen:ng-service", value = "Gera uma classe Service Angular", group = XtoolCliApplication.SPRINGBOOT_COMMAND_GROUP)
 	@ShellMethodAvailability("availabilitySpringBootCommand")
-	public void genNgService(@ShellOption(help = "Entidade JPA", valueProvider = EntityRepresentationValueProvider.class, defaultValue = "") EntityRepresentation entity) {
+	public void genNgService(
+			@ShellOption(help = "Entidade JPA", valueProvider = EntityRepresentationValueProvider.class, defaultValue = "") EntityRepresentation entity) {
 		if (Objects.isNull(entity)) {
 			// @formatter:off
 			this.workspace.getWorkingProject(SpringBootProjectRepresentation.class).getEntities().stream()
@@ -167,6 +169,19 @@ public class SpringBootCommand {
 			@ShellOption(help = "Módulo Angular", valueProvider = NgModuleRepresentationValueProvider.class) NgModuleRepresentation ngModule) {
 	// @formatter:on
 		this.angularService.genNgEdit(entity, ngModule);
+	}
+
+	@ShellMethod(key = "list:artifacts", value = "Lista os artefatos do projeto Spring Boot", group = XtoolCliApplication.SPRINGBOOT_COMMAND_GROUP)
+	@ShellMethodAvailability("availabilitySpringBootCommand")
+	public void listArtifacts(@ShellOption(help = "Entidade JPA", arity = 0, defaultValue = "false") boolean entities,
+			@ShellOption(help = "Classes de Repositorio", arity = 0, defaultValue = "false") boolean repositories,
+			@ShellOption(help = "Classes de Service", arity = 0, defaultValue = "false") boolean services,
+			@ShellOption(help = "Classes de Rest", arity = 0, defaultValue = "false") boolean rests) {
+		SpringBootProjectRepresentation project = this.workspace.getWorkingProject(SpringBootProjectRepresentation.class);
+		if (entities) springBootService.printEntities(project);
+		if (repositories) springBootService.printRepositories(project);
+		if (services) springBootService.printServices(project);
+		if (rests) springBootService.printRests(project);
 	}
 
 	/*
