@@ -20,6 +20,7 @@ import br.xtool.core.representation.angular.NgClassRepresentation;
 import br.xtool.core.representation.angular.NgComponentRepresentation;
 import br.xtool.core.representation.angular.NgDetailRepresentation;
 import br.xtool.core.representation.angular.NgEditRepresentation;
+import br.xtool.core.representation.angular.NgListRepresentation;
 import br.xtool.core.representation.angular.NgModuleRepresentation;
 import br.xtool.core.representation.angular.NgPackageRepresentation;
 import br.xtool.core.representation.angular.NgPageRepresentation;
@@ -158,6 +159,16 @@ public class NgProjectRepresentationImpl extends ProjectRepresentationImpl imple
 		return this.getNgClasses().values().stream()
 				.filter(ngClass -> ngClass.getTsFileName().endsWith(NgProjectRepresentation.ArtifactyType.PAGE.getExt()))
 				.map(ngClass -> new NgPageRepresentationImpl(ngClass.getPath()))
+				.collect(Collectors.toCollection(TreeSet::new));
+		// @formatter:on
+	}
+
+	@Override
+	public SortedSet<NgListRepresentation> getNgLists() {
+		// @formatter:off
+		return this.getNgClasses().values().stream()
+				.filter(ngClass -> ngClass.getTsFileName().endsWith(NgProjectRepresentation.ArtifactyType.LIST.getExt()))
+				.map(ngClass -> new NgListRepresentationImpl(ngClass.getPath()))
 				.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
 	}
