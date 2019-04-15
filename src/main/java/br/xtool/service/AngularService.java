@@ -65,22 +65,6 @@ public interface AngularService {
 	NgEditRepresentation genNgEdit(EntityRepresentation entity, NgModuleRepresentation ngModule);
 
 	/**
-	 * Adiciona uma rota ao módulo.
-	 * 
-	 * @param module Módulo Angular
-	 * @param route  Rota
-	 */
-	//void addRoute(NgModuleRepresentation module, NgRoute route);
-
-	/**
-	 * Adiciona um componente ao módulo.
-	 * 
-	 * @param module    Módulo Angular
-	 * @param component Componente Angular
-	 */
-	//void addComponent(NgModuleRepresentation module, NgComponentRepresentation component);
-
-	/**
 	 * Adiciona a lista a navegação da página.
 	 * 
 	 * @param page Pagina Angular

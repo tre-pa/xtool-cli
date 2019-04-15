@@ -130,7 +130,8 @@ public class AngularServiceImpl implements AngularService {
 		Path ngEntityPath = destinationPath.resolve(NgClassRepresentation.genFileName(entity.getName())).resolve(entity.getName().concat(".ts"));
 		NgEntityRepresentation ngEntity = new NgEntityRepresentationImpl(ngEntityPath);
 
-		entity.getAttributes().stream().filter(EntityAttributeRepresentation::isEnumField).map(EntityAttributeRepresentation::getEnum).map(Optional::get).forEach(this::genNgEnum);
+		entity.getAttributes().stream().filter(EntityAttributeRepresentation::isEnumField).map(EntityAttributeRepresentation::getEnum).map(Optional::get)
+				.forEach(this::genNgEnum);
 		return ngEntity;
 	}
 
@@ -300,7 +301,7 @@ public class AngularServiceImpl implements AngularService {
 
 		this.fs.copy(resourcePath, vars, destinationPath);
 		NgEditRepresentation ngEdit = new NgEditRepresentationImpl(componentPath);
-		
+
 		ngModule.getProject().refresh();
 
 		addComponent(ngModule, ngEdit);
@@ -310,11 +311,6 @@ public class AngularServiceImpl implements AngularService {
 		return ngEdit;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see br.xtool.service.AngularService#addRoute(br.xtool.core.representation.angular.NgModuleRepresentation, br.xtool.core.representation.angular.NgRoute)
-	 */
 	public void addRoute(NgModuleRepresentation module, NgRoute route) {
 		List<NgRoute> routes = module.getRoutes();
 		if (routes.get(0).getChildren().stream().noneMatch(pNgRoute -> pNgRoute.equals(route))) {
@@ -336,12 +332,6 @@ public class AngularServiceImpl implements AngularService {
 		ConsoleLog.print(ConsoleLog.yellow(String.format("Componente '%s' já registrado em uma rota.", route.getComponent())));
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see br.xtool.service.AngularService#addComponent(br.xtool.core.representation.angular.NgModuleRepresentation,
-	 * br.xtool.core.representation.angular.NgComponentRepresentation)
-	 */
 	private void addComponent(NgModuleRepresentation module, NgComponentRepresentation component) {
 		List<String> declarations = new ArrayList<>(module.getModuleDeclarations());
 		if (!declarations.contains(component.getName())) {
