@@ -17,7 +17,7 @@ export class KeycloakService {
   auth: any = {};
 
   userInfo: UserInfo = new UserInfo();
-  
+
   authorization: any = {};
 
   private eventObservable = new Subject<KeycloakEnum>();
@@ -56,10 +56,10 @@ export class KeycloakService {
           this.auth.logoutUrl = keycloak.authServerUrl + `/realms`
             + `/${environment.keycloak_installation.realm}/protocol/openid-connect/logout`
             + `?redirect_uri=${window.location.origin}${environment.keycloak_redirect_uri}`;
-          
+
           this.auth.authz.loadUserInfo().success((userInfo) => this.userInfo = userInfo);
-          
-		  this.authorization = new KeycloakAuthorization(keycloak);
+
+          this.authorization = new KeycloakAuthorization(keycloak);
 
           this.getEvent();
 
@@ -136,31 +136,30 @@ export class KeycloakService {
     return this.eventObservable;
   }
 
-  public getTokenParsed(): any{
+  public getTokenParsed(): any {
     return this.auth.authz.tokenParsed
   }
-  
-  public getPermisionScopes():Promise<string[]>{
-    let permisionScopes: string [] = []; 
 
-    if(this.getTokenParsed().realm_access){
+  public getPermisionScopes(): Promise<string[]> {
+    let permisionScopes: string[] = [];
+
+    if (this.getTokenParsed().realm_access) {
       this.getTokenParsed().realm_access.roles.forEach(role => {
         permisionScopes.push(role);
       });
     }
 
-    if(this.getTokenParsed().resource_access[environment.keycloak_clientId_sboot].roles){
-      this.getTokenParsed().resource_access[environment.keycloak_clientId_sboot].roles.forEach(role => {
-        permisionScopes.push(role);
-      });
-    }
+    if (this.getTokenParsed().resource_access)
+      if (this.getTokenParsed().resource_access[environment.keycloak_clientId_sboot].roles) {
+        this.getTokenParsed().resource_access[environment.keycloak_clientId_sboot].roles.forEach(role => {
+          permisionScopes.push(role);
+        });
+      }
 
-    return new Promise((resolve)=>{
-      this.authorization.entitlement(environment.keycloak_clientId_sboot).then(rpt=>{
-        
-        
+    return new Promise((resolve) => {
+      this.authorization.entitlement(environment.keycloak_clientId_sboot).then(rpt => {
         jwtDecode(rpt).authorization.permissions.forEach(permission => {
-          if(permission.scopes){
+          if (permission.scopes) {
             permission.scopes.forEach(scope => {
               permisionScopes.push(permission.rsname + ":" + scope);
             });
@@ -171,5 +170,5 @@ export class KeycloakService {
       });
     });
   }
-  
+
 }
