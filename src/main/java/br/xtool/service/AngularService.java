@@ -7,6 +7,7 @@ import br.xtool.core.representation.angular.NgEntityRepresentation;
 import br.xtool.core.representation.angular.NgEnumRepresentation;
 import br.xtool.core.representation.angular.NgListRepresentation;
 import br.xtool.core.representation.angular.NgModuleRepresentation;
+import br.xtool.core.representation.angular.NgPageRepresentation;
 import br.xtool.core.representation.angular.NgProjectRepresentation;
 import br.xtool.core.representation.angular.NgRoute;
 import br.xtool.core.representation.angular.NgServiceRepresentation;
@@ -88,4 +89,12 @@ public interface AngularService {
 	 * @param component Componente Angular
 	 */
 	void addComponent(NgModuleRepresentation module, NgComponentRepresentation component);
+
+	/**
+	 * Adiciona a lista a navegação da página.
+	 * 
+	 * @param page Pagina Angular
+	 * @param list Componente de Listagem Angular.
+	 */
+	void addNavigation(NgPageRepresentation page, NgListRepresentation list);
 }

@@ -43,6 +43,7 @@ import br.xtool.core.representation.angular.NgEntityRepresentation;
 import br.xtool.core.representation.angular.NgEnumRepresentation;
 import br.xtool.core.representation.angular.NgListRepresentation;
 import br.xtool.core.representation.angular.NgModuleRepresentation;
+import br.xtool.core.representation.angular.NgPageRepresentation;
 import br.xtool.core.representation.angular.NgProjectRepresentation;
 import br.xtool.core.representation.angular.NgRoute;
 import br.xtool.core.representation.angular.NgServiceRepresentation;
@@ -375,6 +376,11 @@ public class AngularServiceImpl implements AngularService {
 			lines.add(module.getImports().size(), importContent.trim());
 			save(module, StringUtils.join(lines, "\n"));
 		}
+	}
+
+	@Override
+	public void addNavigation(NgPageRepresentation page, NgListRepresentation list) {
+		
 	}
 
 	private NgProjectRepresentation genNgAssociatedProject() {

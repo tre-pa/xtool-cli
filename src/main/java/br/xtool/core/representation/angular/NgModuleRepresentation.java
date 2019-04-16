@@ -1,6 +1,7 @@
 package br.xtool.core.representation.angular;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Representação de um módulo Angular
@@ -42,11 +43,10 @@ public interface NgModuleRepresentation extends NgClassRepresentation {
 	List<String> getModuleDeclarations();
 
 	/**
-	 * Adiciona um componente a declaração de módulos.
+	 * Retorna a Page associado ao módulo.
 	 * 
-	 * @param ngComponent
+	 * @return
 	 */
-	@Deprecated
-	void addComponent(NgComponentRepresentation ngComponent);
+	Optional<NgPageRepresentation> getAssociatedPage();
 
 }

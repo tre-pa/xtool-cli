@@ -5,10 +5,10 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -16,9 +16,9 @@ import com.google.common.base.Splitter;
 
 import br.xtool.core.helper.JsonHelper;
 import br.xtool.core.helper.StringHelper;
-import br.xtool.core.representation.angular.NgComponentRepresentation;
 import br.xtool.core.representation.angular.NgImportRepresentation;
 import br.xtool.core.representation.angular.NgModuleRepresentation;
+import br.xtool.core.representation.angular.NgPageRepresentation;
 import br.xtool.core.representation.angular.NgProjectRepresentation;
 import br.xtool.core.representation.angular.NgRoute;
 import lombok.SneakyThrows;
@@ -116,17 +116,15 @@ public class NgModuleRepresentationImpl extends NgClassRepresentationImpl implem
 	}
 
 	@Override
-	@SneakyThrows
-	public void addComponent(NgComponentRepresentation ngComponent) {
-		List<String> declarations = new ArrayList<>(this.getModuleDeclarations());
-		if (!declarations.contains(ngComponent.getName())) {
-			declarations.add(ngComponent.getName());
-			String content = this.getTsFileContent();
-			String start = content.substring(0, this.idxDeclarations.getLeft());
-			String end = content.substring(this.idxDeclarations.getRight(), content.length() - 1);
-			String newContent = start.concat("\n    ").concat(StringUtils.join(declarations, ",\n    ")).concat("\n  ").concat(end);
-//			addImport(newContent, ngComponent);
-		}
+	public Optional<NgPageRepresentation> getAssociatedPage() {
+		int idxSuffix = this.getTsFileName().indexOf("-routing.module.ts");
+		String modulePreffix = this.getTsFileName().substring(0, idxSuffix);
+		// @formatter:off
+		return this.getProject().getNgPages()
+				.stream()
+				.filter(ngPage -> ngPage.getTsFileName().equals(modulePreffix.concat("-page.component.ts")))
+				.findAny();
+		// @formatter:on
 	}
 
 }

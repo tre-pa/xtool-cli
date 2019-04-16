@@ -35,4 +35,10 @@ public class NgClassRepresentationImpl extends NgTypeRepresentationImpl implemen
 		return this.getName().compareTo(o.getName());
 	}
 
+	@Override
+	public String toString() {
+		return "NgClassRepresentationImpl [getName()=" + getName() + ", getPath()=" + getPath() + ", getTsFileName()=" + getTsFileName() + "]";
+	}
+	
+
 }
