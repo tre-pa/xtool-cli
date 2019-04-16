@@ -13,7 +13,19 @@ import strman.Strman;
  */
 public interface NgClassRepresentation extends NgTypeRepresentation, Comparable<NgClassRepresentation> {
 
+	/**
+	 * Retorna o nome da classe.
+	 * 
+	 * @return
+	 */
 	String getName();
+
+	/**
+	 * Retorna o nome de instância de classe.
+	 * 
+	 * @return
+	 */
+	String getInstanceName();
 
 	/**
 	 * 

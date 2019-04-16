@@ -1,6 +1,5 @@
 package br.xtool.service;
 
-import br.xtool.core.representation.angular.NgComponentRepresentation;
 import br.xtool.core.representation.angular.NgDetailRepresentation;
 import br.xtool.core.representation.angular.NgEditRepresentation;
 import br.xtool.core.representation.angular.NgEntityRepresentation;
@@ -9,7 +8,6 @@ import br.xtool.core.representation.angular.NgListRepresentation;
 import br.xtool.core.representation.angular.NgModuleRepresentation;
 import br.xtool.core.representation.angular.NgPageRepresentation;
 import br.xtool.core.representation.angular.NgProjectRepresentation;
-import br.xtool.core.representation.angular.NgRoute;
 import br.xtool.core.representation.angular.NgServiceRepresentation;
 import br.xtool.core.representation.springboot.EntityRepresentation;
 import br.xtool.core.representation.springboot.JavaEnumRepresentation;
@@ -73,22 +71,6 @@ public interface AngularService {
 	 * @param project
 	 */
 	void printNgLists(NgProjectRepresentation project);
-
-	/**
-	 * Adiciona uma rota ao módulo.
-	 * 
-	 * @param module Módulo Angular
-	 * @param route  Rota
-	 */
-	void addRoute(NgModuleRepresentation module, NgRoute route);
-
-	/**
-	 * Adiciona um componente ao módulo.
-	 * 
-	 * @param module    Módulo Angular
-	 * @param component Componente Angular
-	 */
-	void addComponent(NgModuleRepresentation module, NgComponentRepresentation component);
 
 	/**
 	 * Adiciona a lista a navegação da página.

@@ -9,6 +9,13 @@ package br.xtool.core.representation.angular;
 public interface NgComponentRepresentation extends NgClassRepresentation {
 
 	/**
+	 * Retorna a caminho na rota.
+	 * 
+	 * @return
+	 */
+	String getRoutePath();
+
+	/**
 	 * Retorna o HTML template do component.
 	 * 
 	 * @return

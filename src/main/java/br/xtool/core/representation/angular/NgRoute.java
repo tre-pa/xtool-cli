@@ -9,10 +9,12 @@ import com.fasterxml.jackson.annotation.JsonRawValue;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
 @EqualsAndHashCode(of = { "path", "component" })
+@ToString
 public class NgRoute {
 
 	private String path;
@@ -39,14 +41,11 @@ public class NgRoute {
 	@JsonInclude(JsonInclude.Include.NON_EMPTY)
 	private List<String> canActivate = new ArrayList<>();
 
-	@Override
-	public String toString() {
-		// @formatter:off
-		return "NgRoute [" + (path != null ? "path=" + path + ", " : "") + (redirectTo != null ? "redirectTo=" + redirectTo + ", " : "")
-				+ (pathMatch != null ? "pathMatch=" + pathMatch + ", " : "") + (component != null ? "component=" + component + ", " : "")
-				+ (children != null ? "children=" + children + ", " : "") + (loadChildren != null ? "loadChildren=" + loadChildren + ", " : "")
-				+ (canActivate != null ? "canActivate=" + canActivate : "") + "]";
-		// @formatter:on
+	public static NgRoute of(NgComponentRepresentation ngComponent) {
+		NgRoute route = new NgRoute();
+		route.path = ngComponent.getRoutePath();
+		route.component = ngComponent.getName();
+		return route;
 	}
 
 }
