@@ -2,7 +2,7 @@ ${AnsiColor.BRIGHT_GREEN}${AnsiStyle.BOLD}
 
           --------------------- 
           |   HELLO WORLD!    |
-          | ${AnsiColor.RED}SEARCH KNOWLEDGE!${AnsiColor.BRIGHT_GREEN} |
+          |  ${AnsiColor.RED}SEEK KNOWLEDGE!${AnsiColor.BRIGHT_GREEN}  |
           |/-------------------
           /
       .--.   |V|
