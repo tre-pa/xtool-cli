@@ -1,5 +1,5 @@
 package br.xtool.core.representation.angular;
 
-public interface NgTsClassRepresentation {
+public interface NgTsClassRepresentation extends NgClassRepresentation {
 
 }

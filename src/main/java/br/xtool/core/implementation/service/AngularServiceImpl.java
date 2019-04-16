@@ -214,9 +214,18 @@ public class AngularServiceImpl implements AngularService {
 		};
 		Path resourcePath = Paths.get("angular").resolve(ngProject.getProjectVersion().getName()).resolve("list");
 		Path destinationPath = ngModule.getPath().getParent().resolve(entity.getTsFileName());
+		Path componentPath = destinationPath.resolve(String.format("%s-list", entity.getTsFileName()));
 
 		this.fs.copy(resourcePath, vars, destinationPath);
-		return new NgListRepresentationImpl(destinationPath);
+		NgListRepresentation ngList = new NgListRepresentationImpl(componentPath);
+
+		ngModule.getProject().refresh();
+
+		addComponent(ngModule, ngList);
+		addRoute(ngModule, NgRoute.of(ngList));
+		addImport(ngModule, ngList.getName());
+
+		return ngList;
 	}
 
 	/*
@@ -242,9 +251,18 @@ public class AngularServiceImpl implements AngularService {
 		};
 		Path resourcePath = Paths.get("angular").resolve(ngProject.getProjectVersion().getName()).resolve("detail");
 		Path destinationPath = ngModule.getPath().getParent().resolve(entity.getTsFileName());
+		Path componentPath = destinationPath.resolve(String.format("%s-detail", entity.getTsFileName()));
 
 		this.fs.copy(resourcePath, vars, destinationPath);
-		return new NgDetailRepresentationImpl(destinationPath);
+		NgDetailRepresentation ngDetail = new NgDetailRepresentationImpl(componentPath);
+
+		ngModule.getProject().refresh();
+
+		addComponent(ngModule, ngDetail);
+		addRoute(ngModule, NgRoute.of(ngDetail));
+		addImport(ngModule, ngDetail.getName());
+
+		return ngDetail;
 
 	}
 
@@ -279,9 +297,18 @@ public class AngularServiceImpl implements AngularService {
 		};
 		Path resourcePath = Paths.get("angular").resolve(ngProject.getProjectVersion().getName()).resolve("edit");
 		Path destinationPath = ngModule.getPath().getParent().resolve(entityFolderName);
+		Path componentPath = destinationPath.resolve(String.format("%s-edit", entity.getTsFileName()));
 
 		this.fs.copy(resourcePath, vars, destinationPath);
-		return new NgEditRepresentationImpl(destinationPath);
+		NgEditRepresentation ngEdit = new NgEditRepresentationImpl(componentPath);
+
+		ngModule.getProject().refresh();
+
+		addComponent(ngModule, ngEdit);
+		addRoute(ngModule, NgRoute.of(ngEdit));
+		addImport(ngModule, ngEdit.getName());
+
+		return ngEdit;
 	}
 
 	@Override
@@ -299,7 +326,6 @@ public class AngularServiceImpl implements AngularService {
 	 * 
 	 * @see br.xtool.service.AngularService#addRoute(br.xtool.core.representation.angular.NgModuleRepresentation, br.xtool.core.representation.angular.NgRoute)
 	 */
-	@Override
 	public void addRoute(NgModuleRepresentation module, NgRoute route) {
 		List<NgRoute> routes = module.getRoutes();
 		if (routes.get(0).getChildren().stream().noneMatch(pNgRoute -> pNgRoute.equals(route))) {
@@ -316,20 +342,12 @@ public class AngularServiceImpl implements AngularService {
 
 			String newContent = start.concat(JsonHelper.serialize(routes).replaceAll("\"", "'")).concat(end);
 			save(module, newContent);
-			addImport(module, route.getComponent());
 			return;
 		}
 		ConsoleLog.print(ConsoleLog.yellow(String.format("Componente '%s' já registrado em uma rota.", route.getComponent())));
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see br.xtool.service.AngularService#addComponent(br.xtool.core.representation.angular.NgModuleRepresentation,
-	 * br.xtool.core.representation.angular.NgComponentRepresentation)
-	 */
-	@Override
-	public void addComponent(NgModuleRepresentation module, NgComponentRepresentation component) {
+	private void addComponent(NgModuleRepresentation module, NgComponentRepresentation component) {
 		List<String> declarations = new ArrayList<>(module.getModuleDeclarations());
 		if (!declarations.contains(component.getName())) {
 			declarations.add(component.getName());
@@ -345,7 +363,6 @@ public class AngularServiceImpl implements AngularService {
 			String end = content.substring(idxDeclarations.getRight(), content.length() - 1);
 			String newContent = start.concat("\n    ").concat(StringUtils.join(declarations, ",\n    ")).concat("\n  ").concat(end);
 			save(module, newContent);
-			addImport(module, component.getName());
 			return;
 		}
 		ConsoleLog.print(ConsoleLog.yellow(String.format("Componente '%s' já registrado no módulo.", component.getName())));
@@ -365,7 +382,7 @@ public class AngularServiceImpl implements AngularService {
 				.noneMatch(ngImportName -> ngImportName.equals(component.getName()))) {
 			// @formatter:on
 			List<String> lines = Files.readAllLines(module.getPath(), StandardCharsets.UTF_8);
-			Path importPath = module.getPath().getParent().relativize(component.getPath());
+			Path importPath = module.getPath().getParent().relativize(component.getNgTsClass().getPath());
 			// @formatter:off
 			String importContent = TemplateBuilder.builder()
 					.tpl("import { {{componentName}} } from './{{pathName}}';")
@@ -380,7 +397,7 @@ public class AngularServiceImpl implements AngularService {
 
 	@Override
 	public void addNavigation(NgPageRepresentation page, NgListRepresentation list) {
-		
+
 	}
 
 	private NgProjectRepresentation genNgAssociatedProject() {
