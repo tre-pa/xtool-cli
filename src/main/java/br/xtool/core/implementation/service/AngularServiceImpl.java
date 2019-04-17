@@ -227,16 +227,18 @@ public class AngularServiceImpl implements AngularService {
 		return ngList;
 	}
 
+	/*
+	 * Adicionar a rota do componente de listagem.
+	 */
 	private void addToRoute(NgModuleRepresentation ngModule, NgListRepresentation ngList) {
 		List<NgRoute> routes = ngModule.getRoutes();
 		String rootRoutePath = ngList.getPath().getParent().getFileName().toString();
-		NgRoute ngRoute = NgRoute.findByPath(ngModule, rootRoutePath)
-				.orElseGet(() -> {
-					NgRoute _ngRoute = new NgRoute();
-					_ngRoute.setPath(rootRoutePath);
-					routes.get(0).getChildren().add(_ngRoute);
-					return _ngRoute;
-				});
+		NgRoute ngRoute = NgRoute.findByPath(ngModule, rootRoutePath).orElseGet(() -> {
+			NgRoute tNgRoute = new NgRoute();
+			tNgRoute.setPath(rootRoutePath);
+			routes.get(0).getChildren().add(tNgRoute);
+			return tNgRoute;
+		});
 		NgRoute ngListRoute = new NgRoute();
 		ngListRoute.setPath("");
 		ngListRoute.setComponent(ngList.getName());
@@ -338,9 +340,7 @@ public class AngularServiceImpl implements AngularService {
 	}
 
 	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see br.xtool.service.AngularService#addRoute(br.xtool.core.representation.angular.NgModuleRepresentation, br.xtool.core.representation.angular.NgRoute)
+	 * Atualiza o array das rotas.
 	 */
 	private void updateRoute(NgModuleRepresentation ngModule, List<NgRoute> routes) {
 		String content = ngModule.getTsFileContent();
