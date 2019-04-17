@@ -2,6 +2,7 @@ package br.xtool.core.representation.angular;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonRawValue;
@@ -46,6 +47,15 @@ public class NgRoute {
 		route.path = ngComponent.getRoutePath();
 		route.component = ngComponent.getName();
 		return route;
+	}
+	
+	public static Optional<NgRoute> findByPath(NgModuleRepresentation ngModule, String path) {
+		// @formatter:off
+		return ngModule.getRoutes().stream()
+				.flatMap(ngRoute -> ngRoute.getChildren().stream())
+				.filter(ngRoute -> ngRoute.getPath().equals(path))
+				.findFirst();
+		// @formatter:on
 	}
 
 }
