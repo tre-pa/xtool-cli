@@ -1,6 +1,8 @@
 package br.xtool.core.representation.angular;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,7 +36,7 @@ public class NgRoute {
 	private String component;
 
 	@JsonInclude(JsonInclude.Include.NON_EMPTY)
-	private List<NgRoute> children = new ArrayList<>();
+	private Deque<NgRoute> children = new ArrayDeque<>();
 
 	@JsonInclude(JsonInclude.Include.NON_EMPTY)
 	private String loadChildren;
@@ -49,7 +51,7 @@ public class NgRoute {
 		return route;
 	}
 	
-	public static Optional<NgRoute> findByPath(NgModuleRepresentation ngModule, String path) {
+	public static Optional<NgRoute> hasPath(NgModuleRepresentation ngModule, String path) {
 		// @formatter:off
 		return ngModule.getRoutes().stream()
 				.flatMap(ngRoute -> ngRoute.getChildren().stream())

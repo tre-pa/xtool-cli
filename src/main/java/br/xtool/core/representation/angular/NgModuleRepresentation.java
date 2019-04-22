@@ -1,5 +1,6 @@
 package br.xtool.core.representation.angular;
 
+import java.util.Deque;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,7 +34,7 @@ public interface NgModuleRepresentation extends NgClassRepresentation {
 	 * 
 	 * @return
 	 */
-	List<NgRoute> getRoutes();
+	Deque<NgRoute> getRoutes();
 
 	/**
 	 * Lista de declarations do módulo.
@@ -48,5 +49,15 @@ public interface NgModuleRepresentation extends NgClassRepresentation {
 	 * @return
 	 */
 	Optional<NgPageRepresentation> getAssociatedPage();
+	
+	/**
+	 * Atualiza a rota do crud 
+	 * @param rootPath
+	 * @param ngRoute
+	 * @return
+	 */
+	<T extends NgComponentRepresentation> List<NgRoute> updateComponentRoute(String rootPath, T ngComponent);
+	
+	
 
 }
