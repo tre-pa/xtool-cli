@@ -3,6 +3,7 @@ package br.xtool.plantuml;
 import static org.junit.Assert.assertTrue;
 
 import java.nio.file.Paths;
+import java.util.Optional;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,6 +16,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import br.xtool.core.implementation.representation.PlantClassDiagramRepresentationImpl;
 import br.xtool.core.representation.plantuml.PlantClassDiagramRepresentation;
+import br.xtool.core.representation.plantuml.PlantClassRepresentation;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(properties = { ScriptShellApplicationRunner.SPRING_SHELL_SCRIPT_ENABLED + "=false",
@@ -24,10 +26,18 @@ public class GenPlantDiagramTestCase {
 	@Autowired
 	private Shell shell;
 
+	private PlantClassDiagramRepresentation diagram = PlantClassDiagramRepresentationImpl.of(Paths.get("src/test/java/br/xtool/plantuml/main.plantuml"));
+
 	@Test
 	public void count15ClassTest() throws Exception {
-		PlantClassDiagramRepresentation diagram = PlantClassDiagramRepresentationImpl.of(Paths.get("src/test/java/br/xtool/plantuml/main.plantuml"));
+//		PlantClassDiagramRepresentation diagram = PlantClassDiagramRepresentationImpl.of(Paths.get("src/test/java/br/xtool/plantuml/main.plantuml"));
 		assertTrue(diagram.getClasses().size() == 15);
+	}
+
+	@Test
+	public void findClassByNameTest() {
+		Optional<PlantClassRepresentation> clazz = diagram.findClassByName("Conexao");
+		assertTrue(clazz.isPresent());
 	}
 
 }

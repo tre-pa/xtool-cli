@@ -1,6 +1,7 @@
 package br.xtool.core.representation.plantuml;
 
 import java.nio.file.Path;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -38,6 +39,14 @@ public interface PlantClassDiagramRepresentation {
 	 * @return
 	 */
 	byte[] getPng();
+
+	/**
+	 * Retorna a classe do diagrama (se existir) pelo nome.
+	 * 
+	 * @param name
+	 * @return
+	 */
+	Optional<PlantClassRepresentation> findClassByName(String name);
 
 	// /**
 	// * Retorna os relacionamento UML.
