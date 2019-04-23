@@ -35,9 +35,22 @@ public class GenPlantDiagramTestCase {
 	}
 
 	@Test
-	public void findClassByNameTest() {
+	public void findClassConexaoByNameTest() {
 		Optional<PlantClassRepresentation> clazz = diagram.findClassByName("Conexao");
 		assertTrue(clazz.isPresent());
 	}
 
+	@Test
+	public void countRelationships() {
+		Optional<PlantClassRepresentation> clazz = diagram.findClassByName("ConfiguracaoKit");
+		if (clazz.isPresent()) {
+			System.out.println(String.format("Relacionamento de classe: %s", clazz.get().getName()));
+			// @formatter:off
+			clazz.get().getRelationships()
+				.stream()
+				.forEach(r -> System.out.println(String.format("Source: %s, Target: %s", r.getSourceClass().getName(), r.getTargetClass().getName())));
+			// @formatter:on
+			assertTrue(clazz.get().getRelationships().size() == 0);
+		}
+	}
 }
