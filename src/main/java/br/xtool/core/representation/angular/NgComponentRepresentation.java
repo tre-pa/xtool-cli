@@ -14,6 +14,12 @@ public interface NgComponentRepresentation extends NgClassRepresentation {
 	 * @return
 	 */
 	String getRoutePath();
+	
+	/**
+	 * 
+	 * @return
+	 */
+	NgRoute getDefaultRoute();
 
 	/**
 	 * Retorna o HTML template do component.

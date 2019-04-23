@@ -4,10 +4,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Deque;
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -16,6 +18,7 @@ import com.google.common.base.Splitter;
 
 import br.xtool.core.helper.JsonHelper;
 import br.xtool.core.helper.StringHelper;
+import br.xtool.core.representation.angular.NgComponentRepresentation;
 import br.xtool.core.representation.angular.NgImportRepresentation;
 import br.xtool.core.representation.angular.NgModuleRepresentation;
 import br.xtool.core.representation.angular.NgPageRepresentation;
@@ -66,7 +69,7 @@ public class NgModuleRepresentationImpl extends NgClassRepresentationImpl implem
 			Pattern pattern = Pattern.compile("import\\s*\\{([\\w\\,\\s]*)\\}\\s*from\\s*'([\\w@\\/\\-\\.]*)");
 			Matcher matcher = pattern.matcher(line);
 			if (matcher.find()) {
-				List<String> items = Arrays.asList(matcher.group(1).split("'"));
+				List<String> items = Arrays.asList(matcher.group(1).split("'")).stream().map(String::trim).collect(Collectors.toList());
 				String pathName = matcher.group(2);
 				ngImports.add(new NgImportImplRepresentation(items, pathName));
 			}
@@ -81,7 +84,7 @@ public class NgModuleRepresentationImpl extends NgClassRepresentationImpl implem
 	 */
 	@Override
 	@SneakyThrows
-	public List<NgRoute> getRoutes() {
+	public Deque<NgRoute> getRoutes() {
 		Pattern pattern = Pattern.compile(NgModuleRepresentation.ROUTE_PATTERN);
 		int idx = StringHelper.indexOfPattern(pattern, this.getTsFileContent()).getRight();
 		String startRouteArray = this.getTsFileContent().substring(idx);
@@ -91,7 +94,7 @@ public class NgModuleRepresentationImpl extends NgClassRepresentationImpl implem
 		strRoutes = strRoutes.replaceAll("component\\s*:\\s*(\\w+)", "component: '$1'");
 		strRoutes = strRoutes.replaceAll("canActivate\\s*:\\s*\\[(\\w+)\\]", "canActivate: ['$1']");
 
-		return JsonHelper.deserialize(strRoutes, new TypeReference<List<NgRoute>>() {});
+		return JsonHelper.deserialize(strRoutes, new TypeReference<Deque<NgRoute>>() {});
 	}
 
 	/*
@@ -126,5 +129,14 @@ public class NgModuleRepresentationImpl extends NgClassRepresentationImpl implem
 				.findAny();
 		// @formatter:on
 	}
+
+	@Override
+	public <T extends NgComponentRepresentation> List<NgRoute> updateComponentRoute(String rootPath, T ngComponent) {
+		Deque<NgRoute> routes = this.getRoutes();
+		
+		return null;
+	}
+	
+	
 
 }
