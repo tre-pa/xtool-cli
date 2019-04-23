@@ -379,4 +379,9 @@ public class PlantClassRepresentationImpl implements PlantClassRepresentation {
 		return null;
 	}
 
+	@Override
+	public String toString() {
+		return "PlantClassRepresentationImpl [" + (getName() != null ? "getName()=" + getName() : "") + "]";
+	}
+
 }

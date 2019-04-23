@@ -23,7 +23,8 @@ public class PlantRelationshipRepresentationImpl implements PlantRelationshipRep
 
 	private String targetQualifier;
 
-	public PlantRelationshipRepresentationImpl(PlantClassRepresentation sourceClass, PlantClassRepresentation targetClass, Link link, String sourceQualifer, String targetQualifier) {
+	public PlantRelationshipRepresentationImpl(PlantClassRepresentation sourceClass, PlantClassRepresentation targetClass, Link link, String sourceQualifer,
+			String targetQualifier) {
 		super();
 		this.sourceClass = sourceClass;
 		this.sourceQualifier = sourceQualifer;
@@ -180,6 +181,12 @@ public class PlantRelationshipRepresentationImpl implements PlantRelationshipRep
 	@Override
 	public boolean isManyToMany() {
 		return this.getSourceMultiplicity().isToMany() && this.getTargetMultiplicity().isToMany();
+	}
+
+	@Override
+	public String toString() {
+		return "PlantRelationshipRepresentationImpl [" + (sourceClass != null ? "sourceClass=" + sourceClass + ", " : "")
+				+ (targetClass != null ? "targetClass=" + targetClass : "") + "]";
 	}
 
 }

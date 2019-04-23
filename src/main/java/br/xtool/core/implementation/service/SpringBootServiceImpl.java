@@ -118,6 +118,13 @@ public class SpringBootServiceImpl implements SpringBootService {
 			save(javaEnum);
 		});
 		plantClass.getFields().stream().forEach(plantField -> appCtx.getBean(JavaFieldRepresentationMapper.class).apply(javaClass, plantField));
+
+//		System.out.println("\n\n");
+//		System.out.println(String.format("Classe %s, Quantidade de Relacionamentos: %d", plantClass.getName(), plantClass.getRelationships().size()));
+//		plantClass.getRelationships().forEach(r -> {
+//			System.out.println(String.format("Source: %s, Target: %s", r.getSourceClass().getName(), r.getTargetClass().getName()));
+//		});
+
 		plantClass.getRelationships().stream()
 				.forEach(plantRelationship -> appCtx.getBean(JavaRelationshipRepresentationMapper.class).apply(javaClass, plantRelationship));
 		save(javaClass);

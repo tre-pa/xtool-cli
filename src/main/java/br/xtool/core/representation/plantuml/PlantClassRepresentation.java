@@ -14,9 +14,9 @@ import org.jboss.forge.roaster.model.source.JavaClassSource;
  * @author jcruz
  *
  */
-public interface PlantClassRepresentation extends  JavaType<JavaClassSource> {
+public interface PlantClassRepresentation extends JavaType<JavaClassSource> {
 
-	/** 
+	/**
 	 * Retorna o nome da classe UML.
 	 * 
 	 * @return
@@ -44,6 +44,7 @@ public interface PlantClassRepresentation extends  JavaType<JavaClassSource> {
 	 * @return
 	 */
 	PlantPackageRepresentation getUmlPackage();
+
 	/**
 	 * Retorna o diagrama de classe.
 	 * 
@@ -65,6 +66,7 @@ public interface PlantClassRepresentation extends  JavaType<JavaClassSource> {
 	 */
 	Set<PlantStereotypeRepresentation> getStereotypes();
 
+	// FIXME Ajustar a função para suportar classes sem relacionamentos e herança.
 	/**
 	 * 
 	 * @return
