@@ -131,7 +131,8 @@ public class AngularServiceImpl implements AngularService {
 		Path ngEntityPath = destinationPath.resolve(NgClassRepresentation.genFileName(entity.getName())).resolve(entity.getName().concat(".ts"));
 		NgEntityRepresentation ngEntity = new NgEntityRepresentationImpl(ngEntityPath);
 
-		entity.getAttributes().stream().filter(EntityAttributeRepresentation::isEnumField).map(EntityAttributeRepresentation::getEnum).map(Optional::get).forEach(this::genNgEnum);
+		entity.getAttributes().stream().filter(EntityAttributeRepresentation::isEnumField).map(EntityAttributeRepresentation::getEnum).map(Optional::get)
+				.forEach(this::genNgEnum);
 		return ngEntity;
 	}
 
@@ -221,9 +222,9 @@ public class AngularServiceImpl implements AngularService {
 
 		ngModule.getProject().refresh();
 
-		addImport(ngModule, ngList.getName());
-		addToRoute(ngModule, ngList);
-		addComponent(ngModule, ngList);
+		// addImport(ngModule, ngList.getName());
+		// addToRoute(ngModule, ngList);
+		// addComponent(ngModule, ngList);
 
 		return ngList;
 	}
@@ -277,14 +278,14 @@ public class AngularServiceImpl implements AngularService {
 
 		ngModule.getProject().refresh();
 
-		addComponent(ngModule, ngDetail);
-		addToRoute(ngModule, ngDetail);
-		addImport(ngModule, ngDetail.getName());
+//		addComponent(ngModule, ngDetail);
+//		addToRoute(ngModule, ngDetail);
+//		addImport(ngModule, ngDetail.getName());
 
 		return ngDetail;
 
 	}
-	
+
 	/*
 	 * Adicionar a rota do componente de listagem.
 	 */
@@ -345,9 +346,9 @@ public class AngularServiceImpl implements AngularService {
 
 		ngModule.getProject().refresh();
 
-		addComponent(ngModule, ngEdit);
+//		addComponent(ngModule, ngEdit);
 //		updateRoute(ngModule, NgRoute.of(ngEdit));
-		addImport(ngModule, ngEdit.getName());
+//		addImport(ngModule, ngEdit.getName());
 
 		return ngEdit;
 	}
