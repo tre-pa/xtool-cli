@@ -32,6 +32,7 @@ import net.sourceforge.plantuml.classdiagram.ClassDiagram;
 import net.sourceforge.plantuml.cucadiagram.ILeaf;
 import net.sourceforge.plantuml.cucadiagram.LeafType;
 import net.sourceforge.plantuml.cucadiagram.Link;
+import net.sourceforge.plantuml.cucadiagram.LinkArrow;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
 import strman.Strman;
 
@@ -196,6 +197,7 @@ public class PlantClassRepresentationImpl implements PlantClassRepresentation {
 		Set<PlantRelationshipRepresentation> relationship1 = this.classDiagram.getEntityFactory().getLinks().stream()
 				.filter(link -> link.getEntity2().getEntityType().equals(LeafType.CLASS))
 				.filter(link -> link.getEntity1().getDisplay().asStringWithHiddenNewLine().equals(this.getName()))
+				.filter(link -> !link.getLinkArrow().equals(LinkArrow.NONE))
 				.map(link -> new PlantRelationshipRepresentationImpl(this, findPlantClassByName(link.getEntity2().getDisplay().asStringWithHiddenNewLine()), link, getEntity2Qualifier(link), getEntity1Qualifier(link)))
 				.collect(Collectors.toSet());
 		// @formatter:on
@@ -204,6 +206,7 @@ public class PlantClassRepresentationImpl implements PlantClassRepresentation {
 		Set<PlantRelationshipRepresentation> relationship2 = this.classDiagram.getEntityFactory().getLinks().stream()
 				.filter(link -> link.getEntity1().getEntityType().equals(LeafType.CLASS))
 				.filter(link -> link.getEntity2().getDisplay().asStringWithHiddenNewLine().equals(this.getName()))
+				.filter(link -> !link.getLinkArrow().equals(LinkArrow.NONE))
 				.map(link -> new PlantRelationshipRepresentationImpl(this, findPlantClassByName(link.getEntity1().getDisplay().asStringWithHiddenNewLine()), link, getEntity1Qualifier(link), getEntity2Qualifier(link)))
 				.collect(Collectors.toSet());
 		// @formatter:on

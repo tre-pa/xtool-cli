@@ -48,7 +48,7 @@ public class GenPlantDiagramTestCase {
 			// @formatter:off
 			clazz.get().getRelationships()
 				.stream()
-				.forEach(r -> System.out.println(String.format("Source: %s, Target: %s", r.getSourceClass().getName(), r.getTargetClass().getName())));
+				.forEach(r -> System.out.println(String.format("Source: %s, Target: %s, Link: %s", r.getSourceClass().getName(), r.getTargetClass().getName(), r.getLink().getLinkArrow().name())));
 			// @formatter:on
 			assertTrue(clazz.get().getRelationships().size() == 0);
 		}
