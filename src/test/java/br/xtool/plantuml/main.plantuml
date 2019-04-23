@@ -1,0 +1,225 @@
+/' Arquivo com diagrama de classe principal do projeto. 
+   Para visualizar o diagrama instale o plugin do eclipse, ver instrucões em: http://plantuml.com/eclipse '/
+   
+@startuml
+
+page 4x4
+skinparam defaultFontName Trebuchet MS
+skinparam ClassBackgroundColor<<View>> LightCyan
+skinparam ClassBackgroundColor<<Embeddable>> WhiteSmoke
+skinparam nodesep 10
+skinparam ranksep 10
+
+/'{notnull, unique}'/
+
+package "br.jus.tre_pa.jecmon.core.domain" <<Frame>> {
+    class AplicacaoInfo {
+        - id: Long {id}
+        - app_name: String
+        - app_version: String
+        - version: Long
+        -- tagged values --
+        <b>@Table.name</b>: aplicacao_info
+    }
+    class AplicacaoInfoExtras {
+        - id: Long {id}
+        - chave: String
+        - valor: String[32768]
+        - version: Long
+        -- tagged values --
+        <b>@Table.name</b>: aplicacao_info_extras
+    }
+    class Conexao {
+        - id: Long {id}
+        - inicio: LocalDate
+        - hashConexao: LocalDate
+        - enderecoExterno: String
+        - nextProbeType: Integer
+        - ativa: Boolean
+        - enderecoExterno: String
+        - recebidos: Integer
+        - enviados: Integer
+        - inicioSense: LocalDate
+        - enderecoVirtual: String
+        - version: Long
+        -- tagged values --
+        <b>@Table.name</b>: conexao
+    }
+    class Configuracao {
+        - id: Long {id}
+        - url_admin: String
+        - url_jecmon: String
+        - version: Long
+        -- tagged values --
+        <b>@Table.name</b>: configuracao
+    }
+    class ConfiguracaoKit {
+        - id: Long {id}
+        - escolherProvedorAleatorio: Boolean
+        - ulr_monitor: String
+        - url_navegador: String
+        - dns_host_query: String
+        - dns_server_check: String
+        - dns_host_value: String
+        - icmp_host_check: String
+        - confpwd: String
+        - ntp_interno: String
+        - ntp_externo: String
+        - time_zone: String
+        - ativa: Boolean
+        - version: Long
+        -- tagged values --
+        <b>@Table.name</b>: configuracao_kit
+    }
+    class InterfaceSense {
+        - id: Long {id}
+        - mgmt: String
+        - porta: Integer
+        - nome: String
+        - vpnid: Integer
+        - mode: String
+        - version: Long
+        -- tagged values --
+        <b>@Table.name</b>: interface_sense
+    }
+    class JecSense {
+        - id: Long {id}
+        - url: String
+        - hash_code: String
+        - data_registro: LocalDate
+        - version: Long
+        -- tagged values --
+        <b>@Table.name</b>: jec_sense
+    }
+    class Kit {
+        - id: Long {id}
+        - serialKit: String
+        - certificado: String
+        - commonName: String
+        - uf: String
+        - estaHomologado: Boolean
+        - oldStatus: Integer
+        - estadoNovaConfiguracao: Integer
+        - dataGeracao: LocalDate
+        - somenteSense: Boolean
+        - bloqueado: Boolean
+        - version: Long
+        -- tagged values --
+        <b>@Table.name</b>: kit
+    }
+    class Operador {
+        - id: Long {id}
+        - identificador: String
+        - version: Long
+        -- tagged values --
+        <b>@Table.name</b>: operador
+    }
+    class Parametro {
+        - id: Long {id}
+        - estado: String
+        - timeOutInSeconds: Integer
+        - padrao: Boolean
+        - statusPadrao: Integer
+        - version: Long
+        -- tagged values --
+        <b>@Table.name</b>: parametro
+    }
+    class Probe {
+        - id: Long {id}
+        - probe_raw: String
+        - certificate: String
+        - probe_type: Integer
+        - config_hash: String
+        - cpu_info: String
+        - conn_type: String
+        - ip: String
+        - mask: String
+        - ssid: String
+        - gateway: String
+        - dns: String
+        - kit_id: String
+        - kit_serial: String
+        - proxy: String
+        - provider_name: String
+        - provider_ip: String
+        - provider_port: String
+        - provider_protocol: String
+        - provider_type: String
+        - mac_address: String
+        - vpn_ip: String
+        - time: LocalDate
+        - version: Long
+        -- tagged values --
+        <b>@Table.name</b>: probe
+        <b>probe_raw.@Column.name</b>: raw
+    }
+    class Provedor {
+        - id: Long {id}
+        - nome: String
+        - ip_gateway: String
+        - porta: Integer
+        - tipo: String
+        - protocolo: String
+        - version: Long
+        -- tagged values --
+        <b>@Table.name</b>: provedor
+    }
+    class StatusConhecidos {
+        - id: Long {id}
+        - label: String
+        - background: String
+        - face: String
+        - numero: Integer
+        - ativo: Boolean
+        - version: Long
+        -- tagged values --
+        <b>@Table.name</b>: status_conhecidos
+    }
+    class Log {
+        - id: Long {id}
+        - sistema: String
+        - usuario: String
+        - operacao: String
+        - quando: LocalDate
+        - version: Long
+        -- tagged values --
+        <b>@Table.name</b>: log
+    }
+    class SistemaPainel {
+        - id: Long {id}
+        - nome: String
+        - email: String
+        - segredo: String
+        - tokenAcesso: String
+        - expiracaoToken: LocalDate
+        - version: Long
+        -- tagged values --
+        <b>@Table.name</b>: sistema_painel
+    }
+}
+
+AplicacaoInfo "0..*" <--> "1" Probe
+
+AplicacaoInfoExtras "0..*" <--> "1" AplicacaoInfo
+
+Conexao "0..*" <--> "0..1" Probe: ultimoProbeTipo0 >
+Conexao "0..*" <--> "0..1" Probe: ultimoProbeTipo2 >
+Conexao "0..*" <--> "0..1" Kit
+
+InterfaceSense "0..*" <--> "0..1" JecSense: sense >
+
+JecSense "0..*" <--> "0..1" Parametro
+
+Kit "0..*" <--> "0..1" Configuracao
+Kit "0..*" <--> "0..1" InterfaceSense
+Kit "0..*" <--> "0..1" Operador
+Kit "0..*" <--> "0..1" StatusConhecidos: status >
+Kit "0..*" <--> "0..1" Conexao: ultimaConexao >
+
+Probe "0..*" <--> "0..1" Conexao
+
+Provedor "0..*" <--> "0..1" Configuracao
+
+StatusConhecidos "0..*" <--> "1" Parametro
+
+@enduml

@@ -82,6 +82,8 @@ public interface PlantClassRepresentation extends JavaType<JavaClassSource> {
 
 	/**
 	 * 
+	 * Retorna o tagged value dado uma chave.
+	 * 
 	 * @param key
 	 * @return
 	 */

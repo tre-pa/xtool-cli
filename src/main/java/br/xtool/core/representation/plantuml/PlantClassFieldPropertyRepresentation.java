@@ -5,18 +5,6 @@ import lombok.Getter;
 
 public interface PlantClassFieldPropertyRepresentation {
 
-	@AllArgsConstructor
-	@Getter
-	enum FieldPropertyType {
-		// @formatter:off
-		ID("id"),
-		NOTNULL("notnull"), 
-		UNIQUE("unique");
-		// @formatter:on
-		private String property;
-
-	}
-
 	FieldPropertyType getFieldProperty();
 
 	/**
@@ -26,10 +14,36 @@ public interface PlantClassFieldPropertyRepresentation {
 	 */
 	PlantClassFieldRepresentation getField();
 
+	/**
+	 * Verifica se o atribudo é Id.
+	 * 
+	 * @return
+	 */
 	boolean isId();
 
+	/**
+	 * Verifica se o atributo é não nulo.
+	 * 
+	 * @return
+	 */
 	boolean isNotNull();
 
+	/**
+	 * Verifica se o atributo é único.
+	 * 
+	 * @return
+	 */
 	boolean isUnique();
 
+	@AllArgsConstructor
+	@Getter
+	// @formatter:off
+	enum FieldPropertyType {
+		ID("id"),
+		NOTNULL("notnull"), 
+		UNIQUE("unique");
+		private String property;
+		// @formatter:on
+
+	}
 }

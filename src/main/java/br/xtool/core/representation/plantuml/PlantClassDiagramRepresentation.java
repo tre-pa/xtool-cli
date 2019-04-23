@@ -26,9 +26,7 @@ public interface PlantClassDiagramRepresentation {
 	Set<PlantClassRepresentation> getClasses();
 
 	/**
-	 * Retorna a lista de enums do diagrama de classe UML. Os enums não são
-	 * associados diretamente as classes estes serão definidos como atributos de
-	 * classe.
+	 * Retorna a lista de enums do diagrama de classe UML. Os enums não são associados diretamente as classes estes serão definidos como atributos de classe.
 	 * 
 	 * @return
 	 */

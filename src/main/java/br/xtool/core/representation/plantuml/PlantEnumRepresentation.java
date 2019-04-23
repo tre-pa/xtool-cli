@@ -25,6 +25,7 @@ public interface PlantEnumRepresentation {
 	String getName();
 
 	/**
+	 * Retorna o nome de instância da classe. e.g. Name: Pessoa, InstanceName: pessoa.
 	 * 
 	 * @return
 	 */
