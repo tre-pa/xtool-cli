@@ -1,5 +1,9 @@
 #!/bin/bash
 
+__NORMAL__="\e[0m\e[39m"
+__YELLOW__="\e[93m"
+__RED__="\e[91m"
+
 echo "Buscando pelo maven..."
 if [ -z $(which mvn) ]; then
 	echo "Não encontrado."
@@ -24,9 +28,13 @@ if [ -z $(which git) ]; then
 	exit 0
 fi
 
-if [ -z $1 ];then
-	echo "É necessário definir o diretório de trabalho. ex:" 
-	echo "$ ./run.sh ~/git/ "  
+if [ ! -d "$1" ]; then
+    echo -e "${__RED__}"
+    echo -e "======================================================================================================"
+	echo -e "É necessário definir o diretório de trabalho. ex:" 
+	echo -e "$ ./run.sh ~/git/ "  
+    echo -e "======================================================================================================"
+    echo -e "${__NORMAL__}"
 	exit 1;
 fi
 

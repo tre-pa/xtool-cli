@@ -6,6 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -221,11 +222,30 @@ public class AngularServiceImpl implements AngularService {
 
 		ngModule.getProject().refresh();
 
-		addComponent(ngModule, ngList);
-		addRoute(ngModule, NgRoute.of(ngList));
-		addImport(ngModule, ngList.getName());
+		// addImport(ngModule, ngList.getName());
+		// addToRoute(ngModule, ngList);
+		// addComponent(ngModule, ngList);
 
 		return ngList;
+	}
+
+	/*
+	 * Adicionar a rota do componente de listagem.
+	 */
+	private void addToRoute(NgModuleRepresentation ngModule, NgListRepresentation ngList) {
+		Deque<NgRoute> routes = ngModule.getRoutes();
+		String rootRoutePath = ngList.getPath().getParent().getFileName().toString();
+		NgRoute ngRoute = NgRoute.hasPath(ngModule, rootRoutePath).orElseGet(() -> {
+			NgRoute tNgRoute = new NgRoute();
+			tNgRoute.setPath(rootRoutePath);
+			routes.getFirst().getChildren().add(tNgRoute);
+			return tNgRoute;
+		});
+		// Verifica se já existe um registro do componente na rota não permitindo o registro duplicado.
+		if (ngRoute.getChildren().stream().noneMatch(pNgRoute -> pNgRoute.getComponent().equals(ngList.getName()))) {
+			ngRoute.getChildren().add(ngList.getDefaultRoute());
+			updateRoute(ngModule, routes);
+		}
 	}
 
 	/*
@@ -258,12 +278,34 @@ public class AngularServiceImpl implements AngularService {
 
 		ngModule.getProject().refresh();
 
-		addComponent(ngModule, ngDetail);
-		addRoute(ngModule, NgRoute.of(ngDetail));
-		addImport(ngModule, ngDetail.getName());
+//		addComponent(ngModule, ngDetail);
+//		addToRoute(ngModule, ngDetail);
+//		addImport(ngModule, ngDetail.getName());
 
 		return ngDetail;
 
+	}
+
+	/*
+	 * Adicionar a rota do componente de listagem.
+	 */
+	private void addToRoute(NgModuleRepresentation ngModule, NgDetailRepresentation ngDetail) {
+		Deque<NgRoute> routes = ngModule.getRoutes();
+		String rootRoutePath = ngDetail.getPath().getParent().getFileName().toString();
+		NgRoute ngRoute = NgRoute.hasPath(ngModule, rootRoutePath).orElseGet(() -> {
+			NgRoute tNgRoute = new NgRoute();
+			tNgRoute.setPath(rootRoutePath);
+			routes.getFirst().getChildren().add(tNgRoute);
+			return tNgRoute;
+		});
+		// Verifica se já existe um registro do componente na rota não permitindo o registro duplicado.
+		if (ngRoute.getChildren().stream().noneMatch(pNgRoute -> pNgRoute.getComponent().equals(ngDetail.getName()))) {
+			NgRoute ngDetailRoute = new NgRoute();
+			ngDetailRoute.setPath(String.format(":id%s", ngDetail.getNgTsClass().getName()));
+			ngDetailRoute.setComponent(ngDetail.getName());
+			ngRoute.getChildren().addLast(ngDetailRoute);
+			updateRoute(ngModule, routes);
+		}
 	}
 
 	/*
@@ -304,9 +346,9 @@ public class AngularServiceImpl implements AngularService {
 
 		ngModule.getProject().refresh();
 
-		addComponent(ngModule, ngEdit);
-		addRoute(ngModule, NgRoute.of(ngEdit));
-		addImport(ngModule, ngEdit.getName());
+//		addComponent(ngModule, ngEdit);
+//		updateRoute(ngModule, NgRoute.of(ngEdit));
+//		addImport(ngModule, ngEdit.getName());
 
 		return ngEdit;
 	}
@@ -322,29 +364,20 @@ public class AngularServiceImpl implements AngularService {
 	}
 
 	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see br.xtool.service.AngularService#addRoute(br.xtool.core.representation.angular.NgModuleRepresentation, br.xtool.core.representation.angular.NgRoute)
+	 * Atualiza o array das rotas.
 	 */
-	public void addRoute(NgModuleRepresentation module, NgRoute route) {
-		List<NgRoute> routes = module.getRoutes();
-		if (routes.get(0).getChildren().stream().noneMatch(pNgRoute -> pNgRoute.equals(route))) {
-			routes.get(0).getChildren().add(route);
+	private void updateRoute(NgModuleRepresentation ngModule, Deque<NgRoute> routes) {
+		String content = ngModule.getTsFileContent();
+		Pattern pattern = Pattern.compile(NgModuleRepresentation.ROUTE_PATTERN);
+		Pair<Integer, Integer> idxRoute = StringHelper.indexOfPattern(pattern, content);
+		String startRouteArray = content.substring(idxRoute.getRight());
+		Pair<Integer, Integer> idxOfFirstArray = StringHelper.indexOfFirstArray(startRouteArray);
 
-			String content = module.getTsFileContent();
-			Pattern pattern = Pattern.compile(NgModuleRepresentation.ROUTE_PATTERN);
-			Pair<Integer, Integer> idxRoute = StringHelper.indexOfPattern(pattern, content);
-			String startRouteArray = content.substring(idxRoute.getRight());
-			Pair<Integer, Integer> idxOfFirstArray = StringHelper.indexOfFirstArray(startRouteArray);
+		String start = content.substring(0, idxRoute.getRight());
+		String end = content.substring(idxRoute.getRight() + idxOfFirstArray.getRight(), content.length() - 1);
 
-			String start = content.substring(0, idxRoute.getRight());
-			String end = content.substring(idxRoute.getRight() + idxOfFirstArray.getRight(), content.length() - 1);
-
-			String newContent = start.concat(JsonHelper.serialize(routes).replaceAll("\"", "'")).concat(end);
-			save(module, newContent);
-			return;
-		}
-		ConsoleLog.print(ConsoleLog.yellow(String.format("Componente '%s' já registrado em uma rota.", route.getComponent())));
+		String newContent = start.concat(JsonHelper.serialize(routes).replaceAll("\"", "'")).concat(end);
+		save(ngModule, newContent);
 	}
 
 	private void addComponent(NgModuleRepresentation module, NgComponentRepresentation component) {
@@ -365,7 +398,7 @@ public class AngularServiceImpl implements AngularService {
 			save(module, newContent);
 			return;
 		}
-		ConsoleLog.print(ConsoleLog.yellow(String.format("Componente '%s' já registrado no módulo.", component.getName())));
+//		ConsoleLog.print(ConsoleLog.yellow(String.format("Componente '%s' já registrado no módulo.", component.getName())));
 	}
 
 	@SneakyThrows

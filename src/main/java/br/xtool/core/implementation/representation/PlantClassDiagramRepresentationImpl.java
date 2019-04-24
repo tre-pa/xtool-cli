@@ -3,6 +3,7 @@ package br.xtool.core.implementation.representation;
 import java.io.ByteArrayOutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -77,10 +78,19 @@ public class PlantClassDiagramRepresentationImpl implements PlantClassDiagramRep
 		return os.toByteArray();
 	}
 
+	@Override
+	public Optional<PlantClassRepresentation> findClassByName(String name) {
+		// @formatter:off
+		return this.getClasses()
+				.parallelStream()
+				.filter(clazz -> clazz.getName().equals(name))
+				.findAny();
+		// @formatter:on
+	}
+
 	@SneakyThrows
 	public static PlantClassDiagramRepresentation of(Path path) {
-		if (Files.notExists(path))
-			throw new IllegalArgumentException("Diagrama de classe não encontrado");
+		if (Files.notExists(path)) throw new IllegalArgumentException("Diagrama de classe não encontrado");
 		// String diagram = FileUtils.readFileToString(new File(path), "UTF-8");
 		String diagram = new String(Files.readAllBytes(path));
 		SourceStringReader reader = new SourceStringReader(diagram);

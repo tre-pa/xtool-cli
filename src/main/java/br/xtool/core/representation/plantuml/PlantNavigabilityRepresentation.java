@@ -1,7 +1,7 @@
 package br.xtool.core.representation.plantuml;
 
 /**
- * Representação da naveganilidade no diagrama de classe.
+ * Representação da navegabilidade no diagrama de classe.
  * 
  * @author jcruz
  *

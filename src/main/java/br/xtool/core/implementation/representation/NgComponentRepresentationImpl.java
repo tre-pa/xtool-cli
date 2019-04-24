@@ -4,6 +4,7 @@ import java.nio.file.Path;
 
 import br.xtool.core.representation.angular.NgComponentRepresentation;
 import br.xtool.core.representation.angular.NgHtmlTemplateRepresentation;
+import br.xtool.core.representation.angular.NgRoute;
 import br.xtool.core.representation.angular.NgTsClassRepresentation;
 
 public class NgComponentRepresentationImpl extends NgClassRepresentationImpl implements NgComponentRepresentation {
@@ -31,4 +32,10 @@ public class NgComponentRepresentationImpl extends NgClassRepresentationImpl imp
 	public NgTsClassRepresentation getNgTsClass() {
 		return new NgTsClassRepresentationImpl(this.getPath().resolve(String.format("%s.component.ts", this.getTsFileName())));
 	}
+
+	@Override
+	public NgRoute getDefaultRoute() {
+		return new NgRoute();
+	}
+
 }
