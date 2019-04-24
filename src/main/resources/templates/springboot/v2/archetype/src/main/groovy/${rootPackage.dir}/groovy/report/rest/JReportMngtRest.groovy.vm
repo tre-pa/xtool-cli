@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.RestController
 import ${rootPackage.name}.groovy.jii.JiiRest
 import ${rootPackage.name}.groovy.report.domain.JReport
 import ${rootPackage.name}.groovy.report.repository.JReportRepository
-import ${rootPackage.name}.groovy.report.repository.specification.JReportSpecification
+import ${rootPackage.name}.groovy.report.repository.specification.JReportMngtSpecification
 import ${rootPackage.name}.groovy.report.service.JReportService
 import ${rootPackage.name}.groovy.report.types.JReportGrid
 
@@ -42,7 +42,7 @@ import ${rootPackage.name}.groovy.report.types.JReportGrid
  */
 @RestController
 @RequestMapping("/api/mngt/jreport")
-class JReportMngtRest extends JiiRest<JReport, Long, JReportSpecification, JReportRepository> {
+class JReportMngtRest extends JiiRest<JReport, Long, JReportMngtSpecification, JReportRepository> {
 
 	@Autowired
 	JReportService jreportService;
