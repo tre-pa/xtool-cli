@@ -1,11 +1,11 @@
+import { SecurityModule } from './security.module';
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 
-import { SecurityModule } from '../security.module';
-import { KeycloakEnum } from './keycloak.enum';
 import { environment } from 'src/environments/environment';
 import { UserInfo } from './user-info';
 import * as  jwtDecode from 'jwt-decode';
+import { NgxPermissionsService } from 'ngx-permissions';
 
 declare var Keycloak: any;
 
@@ -20,32 +20,38 @@ export class KeycloakService {
   
   authorization: any = {};
 
-  private eventObservable = new Subject<KeycloakEnum>();
+  constructor(private permissionsService: NgxPermissionsService) { }
 
-  constructor() { }
+  public async init(): Promise<any>{
+    //Inicializa o keycloak
+    const init = await this.start();
+
+    //seta permissões de permission do client
+    const initAuthz = await this.initKeycloakAuthorization();
+    const permissionsScopes = await this.getPermisionScopes();
+    permissionsScopes.forEach(ps => {
+      this.permissionsService.addPermission(ps);
+    });
+
+
+    return init;
+  }
 
   /**
    * Método de inicialização da segurança.
    * Inicializa o timer para atualização do token
    */
-  init(): Promise<any> {
+  private start(): Promise<any> {
     console.log('Keycloak init');
     let keycloak = Keycloak(environment.keycloak_installation);
 
     this.auth.loggedIn = false;
 
-    keycloak.onReady = () => { this.eventObservable.next(KeycloakEnum.READY) }
-    keycloak.onAuthSuccess = () => { this.eventObservable.next(KeycloakEnum.AUTH_SUCCESS) }
-    keycloak.onAuthError = () => { this.eventObservable.next(KeycloakEnum.AUTH_ERROR) }
-    keycloak.onAuthRefreshSuccess = () => { this.eventObservable.next(KeycloakEnum.AUTH_REFRESH_SUCCESS) }
-    keycloak.onAuthRefreshError = () => { this.eventObservable.next(KeycloakEnum.AUTH_REFRESH_ERROR) }
-    keycloak.onAuthLogout = () => { this.eventObservable.next(KeycloakEnum.AUTH_LOGOUT) }
     keycloak.onTokenExpired = () => {
       keycloak.updateToken(70).success(function (refreshed) {
       }).error(function () {
         console.error('Failed to refresh token');
       });
-      this.eventObservable.next(KeycloakEnum.TOKEN_EXPIRED);
     }
 
     return new Promise((resolve, reject) => {
@@ -59,10 +65,6 @@ export class KeycloakService {
           
           this.auth.authz.loadUserInfo().success((userInfo) => this.userInfo = userInfo);
           
-		  this.authorization = new KeycloakAuthorization(keycloak);
-
-          this.getEvent();
-
           resolve();
         })
         .error((err) => {
@@ -70,6 +72,16 @@ export class KeycloakService {
           reject();
         });
     });
+  }
+
+  private initKeycloakAuthorization(){
+    this.authorization = new KeycloakAuthorization(this.auth.authz);
+    console.log(this.authorization)
+    return new Promise((resolve)=>{
+      this.authorization.init().then(conf=>{
+        resolve()
+      });
+    })
   }
 
   /**
@@ -132,35 +144,18 @@ export class KeycloakService {
     return this.auth.authz.tokenParsed.groups;
   }
 
-  public getEvent(): Observable<KeycloakEnum> {
-    return this.eventObservable;
-  }
-
   public getTokenParsed(): any{
     return this.auth.authz.tokenParsed
   }
   
-  public getPermisionScopes():Promise<string[]>{
-    let permisionScopes: string [] = []; 
+  public getPermisionScopes(): Promise<string[]> {
+    let permisionScopes: string[] = [];
 
-    if(this.getTokenParsed().realm_access){
-      this.getTokenParsed().realm_access.roles.forEach(role => {
-        permisionScopes.push(role);
-      });
-    }
+    return new Promise((resolve) => {
+      this.authorization.entitlement(environment.keycloak_clientId_sboot).then(rpt => {
 
-    if(this.getTokenParsed().resource_access[environment.keycloak_clientId_sboot].roles){
-      this.getTokenParsed().resource_access[environment.keycloak_clientId_sboot].roles.forEach(role => {
-        permisionScopes.push(role);
-      });
-    }
-
-    return new Promise((resolve)=>{
-      this.authorization.entitlement(environment.keycloak_clientId_sboot).then(rpt=>{
-        
-        
         jwtDecode(rpt).authorization.permissions.forEach(permission => {
-          if(permission.scopes){
+          if (permission.scopes) {
             permission.scopes.forEach(scope => {
               permisionScopes.push(permission.rsname + ":" + scope);
             });
@@ -171,5 +166,21 @@ export class KeycloakService {
       });
     });
   }
+
+  public getRealmRoles() {
+    if (this.getTokenParsed().realm_access) {
+      return this.getTokenParsed().realm_access.roles;
+    }
+    return [];
+  }
+
+  public getResourceRoles() {
+    if (this.getTokenParsed().resource_access && this.getTokenParsed().resource_access[environment.keycloak_clientId_sboot]) {
+      return this.getTokenParsed().resource_access[environment.keycloak_clientId_sboot].roles;
+    }
+    return [];
+  }
+
+  public getPer
   
 }

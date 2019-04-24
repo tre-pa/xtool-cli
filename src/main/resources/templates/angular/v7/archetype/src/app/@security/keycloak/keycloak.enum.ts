@@ -1,9 +1,0 @@
-export enum KeycloakEnum {
-    READY,
-    AUTH_SUCCESS,
-    AUTH_ERROR,
-    AUTH_REFRESH_SUCCESS,
-    AUTH_REFRESH_ERROR,
-    AUTH_LOGOUT,
-    TOKEN_EXPIRED 
-}

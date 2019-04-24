@@ -1,4 +1,5 @@
-import { NgxPermissionsModule } from 'ngx-permissions';
+import { KeycloakService } from './@security/keycloak.service';
+import { NgxPermissionsModule, NgxPermissionsService } from 'ngx-permissions';
 import { NgModule, APP_INITIALIZER, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -8,8 +9,6 @@ import { ErrorHandlerException } from './shared/handlers/error-handling/error-ha
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { KeycloakService } from './@security/keycloak/keycloak.service';
-import { SecurityService } from './@security/security.service';
 
 import "devextreme/localization/globalize/number";
 import "devextreme/localization/globalize/date";
@@ -33,8 +32,8 @@ Globalize.loadMessages(require('devextreme/localization/messages/pt.json'));
 
 Globalize.locale('pt-BR')
 
-export function kcFactory(securityService: SecurityService) {
-  return () => securityService.init();
+export function kcFactory(keycloakService: KeycloakService) {
+  return () => keycloakService.init();
 }
 
 @NgModule({
@@ -48,7 +47,7 @@ export function kcFactory(securityService: SecurityService) {
     NgxPermissionsModule.forRoot()
   ],
   providers: [
-  	SecurityService,
+  	KeycloakService,
     KeycloakService,
     {
       provide: HTTP_INTERCEPTORS,
@@ -62,7 +61,7 @@ export function kcFactory(securityService: SecurityService) {
     {
       provide: APP_INITIALIZER,
       useFactory: kcFactory,
-      deps: [SecurityService, KeycloakService],
+      deps: [KeycloakService, NgxPermissionsService],
       multi: true
     }
   ],

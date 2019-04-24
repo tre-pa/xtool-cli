@@ -1,3 +1,4 @@
+import { KeycloakService } from './../../../@security/keycloak.service';
 import {
   EventEmitter,
   Component,
@@ -19,7 +20,6 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 
-import { SecurityService } from 'src/app/@security/security.service';
 
 library.add(fas);
 
@@ -56,7 +56,7 @@ export class SideNavigationMenuComponent implements OnInit, OnDestroy {
   }
 
   constructor(
-    private securityService: SecurityService,
+    private keycloakService: KeycloakService,
     private router: Router
   ) { }
 
@@ -88,7 +88,7 @@ export class SideNavigationMenuComponent implements OnInit, OnDestroy {
   }
 
   private userHasRole(role: string): boolean {
-    return this.securityService.hasResourceRole(role) || this.securityService.hasRealmRole(role)
+    return this.keycloakService.hasResourceRole(role) || this.keycloakService.hasRealmRole(role)
   }
 
   private getPathMatchItem(items: any[], url: string): any {

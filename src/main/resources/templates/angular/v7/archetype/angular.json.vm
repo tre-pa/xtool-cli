@@ -34,7 +34,7 @@
             ],
             "scripts": [
               "./node_modules/keycloak-js/dist/keycloak.min.js",
-              "./node_modules/keycloak-js/dist/keycloak-authz.min.js"
+              "src/app/@security/keycloak-authz.js"
             ]
           },
           "configurations": {

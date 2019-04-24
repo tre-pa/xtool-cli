@@ -18,9 +18,7 @@ import { SideNavOuterToolbarModule } from '../../shared/layouts/side-nav-outer-t
 import { ReportDetailComponent } from './report/report-detail/report-detail.component';
 import { ReportListComponent } from './report/report-list/report-list.component';
 import { UserPageComponent } from './user-page.component';
-import { KeycloakService } from '../../@security/keycloak/keycloak.service';
 import { HomeComponent } from './home/home.component';
-import { environment } from 'src/environments/environment';
 
 library.add(fas);
 
@@ -68,11 +66,4 @@ const routes: Routes = [
     HomeComponent
   ]
 })
-export class UserRoutingModule {
-  constructor(private keycloakService: KeycloakService, private permissionsService: NgxPermissionsService) {
-    this.keycloakService.getPermisionScopes().then(ps => {
-      this.permissionsService.loadPermissions(ps);
-    });
-
-  }
-}
+export class UserRoutingModule {}

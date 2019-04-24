@@ -1,3 +1,4 @@
+import { KeycloakService } from './../../../@security/keycloak.service';
 import {
   EventEmitter,
   Component,
@@ -17,9 +18,8 @@ import { DxPopupModule } from 'devextreme-angular/ui/popup';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
+import { UserInfo } from 'src/app/@security/user-info';
 
-import { SecurityService } from 'src/app/@security/security.service';
-import { UserInfo } from 'src/app/@security/keycloak/user-info';
 
 library.add(fas);
 
@@ -60,12 +60,12 @@ export class HeaderComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private securityService: SecurityService
+    private keycloakService: KeycloakService
   ) { }
 
   ngOnInit(): void {
-    this.userInfo = this.securityService.getUserInfo();
-    if (!this.securityService.hasResourceRole('REPORT_MANAGER')) {
+    this.userInfo = this.keycloakService.getUserInfo();
+    if (!this.keycloakService.hasResourceRole('REPORT_MANAGER')) {
       this.userMenuItems[1].isHidden = true;
     }
   }
@@ -80,7 +80,7 @@ export class HeaderComponent implements OnInit {
 
   onUserMenuItemClick(item) {
     if (item === this.userMenuItems[1]) this.router.navigate(['/report-mngt']);
-    if (item === this.userMenuItems[2]) this.securityService.logout();
+    if (item === this.userMenuItems[2]) this.keycloakService.logout();
   }
 
   getInitials(): string {

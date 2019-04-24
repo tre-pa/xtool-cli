@@ -1,5 +1,5 @@
+import { KeycloakService } from './keycloak.service';
 import { Observable } from 'rxjs';
-import { KeycloakService } from './keycloak/keycloak.service';
 import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpHandler, HttpRequest, HttpEvent, HttpResponse } from '@angular/common/http';
  
