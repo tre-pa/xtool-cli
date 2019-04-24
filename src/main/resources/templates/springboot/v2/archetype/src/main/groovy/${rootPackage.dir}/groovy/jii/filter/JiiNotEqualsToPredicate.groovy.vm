@@ -12,7 +12,7 @@ class JiiNotEqualsToPredicate extends JiiPredicate {
 
 	@Override
 	String toSql() {
-		if (isBoolean()) return this.dataField + " = " + ((boolean) this.value ? 0 : 1)
+		if (isBoolean()) return this.getDataField() + " = " + ((boolean) this.getValue() ? 0 : 1)
 		if (getValue().equals("@null")) return this.getDataField() + " is not null "
 		if (getValue().equals("@notnull")) return this.getDataField() + " is null "
 		this.getDataField() + " <> " + this.surroundSingleQuotes(this.getValue())
@@ -37,6 +37,6 @@ class JiiNotEqualsToPredicate extends JiiPredicate {
 		if (getValue() as String == "@notnull") return cb.isNull(path)
 		if (getValue() as String == "@null") return cb.isNotNull(path)
 		if (dataFieldType.isEnum()) return cb.notEqual(path, Enum.valueOf(dataFieldType, this.value))
-		cb.notEqual(root.get(this.getDataField()), this.getValue())
+		cb.notEqual(path, this.getValue())
 	}
 }
