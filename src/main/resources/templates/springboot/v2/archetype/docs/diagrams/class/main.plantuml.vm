@@ -6,6 +6,9 @@ page 2x2
 skinparam defaultFontName Trebuchet MS
 skinparam ClassBackgroundColor<<View>> LightCyan
 skinparam ClassBackgroundColor<<Embeddable>> WhiteSmoke
+skinparam nodesep 10
+skinparam ranksep 10
+/'left to right direction'/
 
 /' Pacote com as delcarações de classes do plantuml (http://plantuml.com/class-diagram) 
 
