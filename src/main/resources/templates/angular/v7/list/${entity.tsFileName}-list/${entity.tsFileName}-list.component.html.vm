@@ -1,4 +1,4 @@
-<h2>${entity.name} ({{ count }})</h2>
+<h2>${entity.name} ({{ count | number }})</h2>
 <dx-data-grid id="${entity.instanceName}GridContainer"
   [dataSource]="${entity.instanceName}DataSource"
   [allowColumnReordering]="true"
