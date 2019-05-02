@@ -148,11 +148,13 @@ export class JiiStore<T> extends CustomStore {
    */
   private filterableFromLoadOptions(loadOptions: LoadOptions): JiiFilterable {
     let searchExpr = loadOptions.searchExpr as string | string[],
-      searchOperation = loadOptions.searchOperation as '=' | '<>' | '>' | '>=' | '<' | '<=' | 'startswith' | 'endswith' | 'contains' | 'notcontains' | 'isblank' | 'isnotblank',
+      searchOperation = loadOptions.searchOperation,
       searchValue = loadOptions.searchValue,
-      filter = loadOptions.filter;
-    if (!filter && !searchExpr) return undefined;
-    return JiiFilter.of(filter).add(searchExpr, searchOperation, searchValue).jiiFilterable;
+      filter = loadOptions.filter,
+      newFilter: JiiFilter = new JiiFilter();
+    if (filter) newFilter.add(filter);
+    if (searchValue) newFilter.add(JiiFilter.build(searchExpr, searchOperation, searchValue));
+    return newFilter.jiiFilterable;
   }
 
   /**

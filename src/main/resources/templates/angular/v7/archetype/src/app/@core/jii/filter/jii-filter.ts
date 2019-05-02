@@ -34,36 +34,47 @@ export class JiiFilter {
   static of(dxFilter: any[]): JiiFilter {
     let jiiFilter = new JiiFilter();
     jiiFilter.dxFilter = dxFilter;
-    jiiFilter.jiiFilterable = parser4(parser3(parser2(parser1(dxFilter || []))));
+    jiiFilter.jiiFilterable = parser4(parser3(parser2(parser1(dxFilter))));
     return jiiFilter;
   }
 
   /**
-   * Adiciona à um filtro já existente um ou mais novos predicados
+   * Constrói um ou mais novos predicados
    * 
-   * @param filterAttr atributo ou lista de atributos
-   * @param filterOperation operação de comparação
-   * @param filterValue valor para comparação
+   * @param fields atributo ou lista de atributos para a comparação
+   * @param comparisonOperator operação de comparação
+   * @param values valor ou lista de valores para a comparação
+   */
+  static build(
+    fields: string | string[],
+    comparisonOperator: string,
+    values: any | any[]
+  ): any[] {
+    if ([null, undefined, []].includes(values) && !['isblank', 'isnotblank'].includes(comparisonOperator)) return;
+    fields = toAray(fields);
+    values = toAray(values);
+    checkOperator(comparisonOperator);
+    return filterComparisonBuilder(fields, comparisonOperator, values);
+  }
+
+  /**
+   * Adiciona à um filtro já existente um novo predicado
+   * 
+   * @param predicate predicado à ser adicionado
    * @param logicalOperator (default = 'and') operador lógico para união do filtro existente ao que está sendo adicionado
    */
   add(
-    filterAttr: string | string[],
-    filterOperation: '=' | '<>' | '>' | '>=' | '<' | '<=' | 'startswith' | 'endswith' | 'contains' | 'notcontains' | 'isblank' | 'isnotblank',
-    filterValue: any,
+    predicate: any[],
     logicalOperator: 'and' | 'or' = 'and'
-  ) {
-    if (!filterValue) return this;
-    if (this.dxFilter) {
-      this.dxFilter = [dxFilterBuilder(filterAttr, filterOperation, filterValue), logicalOperator, this.dxFilter];
-      this.jiiFilterable = parser4(parser3(parser2(parser1(this.dxFilter))));
-    } else {
-      this.dxFilter = dxFilterBuilder(filterAttr, filterOperation, filterValue);
-      this.jiiFilterable = parser4(parser3(parser2(parser1(this.dxFilter))));
-    }
+  ): JiiFilter {
+    if (!predicate) return this;
+    this.dxFilter = filterLogicalBuilder(predicate, logicalOperator, this.dxFilter);
+    this.jiiFilterable = parser4(parser3(parser2(parser1(this.dxFilter))));
     return this;
   }
 }
 
+let inputComparisonOperators = ['=', '<>', '>', '>=', '<', '<=', 'contains', 'notcontains', 'isblank', 'isnotblank'];
 let comparisonOperators = [['=', '<>', '>', '<', '>=', '<=', 'contains', 'notcontains', '@null', '@notnull'], ['<>', '=', '<=', '>=', '<', '>', 'notcontains', 'contains', '@notnull', '@null']];
 let logicalOperators = [['and', 'or'], ['or', 'and']];
 let isSimplePredicate = (p: JiiPredicate | any[]): boolean => { return p instanceof JiiPredicate; };
@@ -72,30 +83,44 @@ let isComparisonOperator = (op: string): boolean => { return !_.isEmpty(_.inters
 let isLogicalOperator = (op: string): boolean => { return !_.isEmpty(_.intersection([op], logicalOperators[0])); };
 let getComparisonOperator = (op: string, inverse: boolean = false): string => { return inverse ? comparisonOperators[1][comparisonOperators[0].indexOf(op)] : op; };
 let getLogicalOperator = (op: string, inverse: boolean = false): string => { return inverse ? logicalOperators[1][logicalOperators[0].indexOf(op)] : op; };
+let toAray = (x: any): any[] => { if (!(x instanceof Array)) return [x]; return x; }
+let checkOperator = (operator: string) => { if (!inputComparisonOperators.includes(operator)) throw new Error(`${operator} não é um comparador válido.`); }
 
 /**
- * Constrói um vetor de filtro à partir de um atributo ou uma lista de atributos, um operador de comparação e um valor.
+ * Constrói um vetor de filtro a partir de uma lista de campos, um operador de comparação e uma lista de valores.
  * 
- * @param filterAttr 
- * @param filterOperation 
- * @param filterValue 
+ * @param fields 
+ * @param operator 
+ * @param values 
  */
-let dxFilterBuilder = (
-  filterAttr: string | string[],
-  filterOperation: '=' | '<>' | '>' | '>=' | '<' | '<=' | 'startswith' | 'endswith' | 'contains' | 'notcontains' | 'isblank' | 'isnotblank',
-  filterValue: any
+let filterComparisonBuilder = (
+  fields: string[],
+  operator: string,
+  values: any[]
 ): any[] => {
-  if (filterAttr instanceof Array) {
-    let newFilter: any[] = [];
-    filterAttr.map(expr => [expr, filterOperation, filterValue])
-      .forEach(expr => {
-        newFilter.push(expr);
-        newFilter.push('or');
-      });
-    newFilter.pop();
-    return newFilter;
-  }
-  return [filterAttr, filterOperation, filterValue];
+  let newFilter: any[] = [];
+  fields.forEach(field => {
+    values.forEach(value => {
+      newFilter.push([field, operator, value]);
+      newFilter.push('or');
+    });
+  });
+  newFilter.pop();
+  return newFilter;
+}
+
+/**
+ * Constrói um novo vetor de filtro a partir de dois filtros e um operador lógico ('and' ou 'or')
+ * 
+ * @param left
+ * @param operator
+ * @param right
+ */
+let filterLogicalBuilder = (left: any[], operator: 'and' | 'or', right: any[]): any[] => {
+  if (!left && !right) return undefined;
+  if (!left) return right;
+  if (!right) return left;
+  return [left, operator, right];
 }
 
 let parser1 = (v: any[], inverse: boolean = false): any[] => {
