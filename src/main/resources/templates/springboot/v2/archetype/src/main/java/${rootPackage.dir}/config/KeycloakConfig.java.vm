@@ -1,4 +1,4 @@
-package ${rootPackage.name}.groovy.config;
+package br.jus.tre_pa.publicdocs2.groovy.config;
 
 import javax.servlet.http.HttpServletRequest;
 
