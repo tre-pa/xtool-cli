@@ -8,7 +8,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 
 @SpringBootApplication
-@EnableJpaRepositories({"br.jus.tre_pa.datafilter.jpa", "br.jus.tre_pa.groovy.teste.repository"})
 public class SpringBootApp implements CommandLineRunner {
 
 	public static void main(String[] args) {
