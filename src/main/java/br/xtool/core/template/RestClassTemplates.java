@@ -58,12 +58,12 @@ public class RestClassTemplates {
 		// @formatter:on
 
 		// Suporte a classe JiiRest
-		rest.getRoasterJavaClass().addImport(bootProject.getRootPackage().getName().concat(".groovy.jii.JiiRest"));
+		rest.getRoasterJavaClass().addImport("br.jus.tre_pa.jfilter.rest.AbstractCrudRest");
 		rest.getRoasterJavaClass().addImport(repository.getTargetEntity().getQualifiedName());
 		rest.getRoasterJavaClass().addImport(repository.getQualifiedName());
 		rest.getRoasterJavaClass().addImport(repository.getTargetSpecification().getQualifiedName());
 		// @formatter:off
-		rest.getRoasterJavaClass().setSuperType(String.format("JiiRest<%s,Long,%s,%s>", 
+		rest.getRoasterJavaClass().setSuperType(String.format("AbstractCrudRest<%s,Long,%s,%s>", 
 				repository.getTargetEntity().getName(), 
 				repository.getTargetSpecification().getName(),
 				repository.getName()));

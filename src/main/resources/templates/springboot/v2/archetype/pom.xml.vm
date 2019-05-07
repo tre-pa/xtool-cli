@@ -83,11 +83,10 @@
 
 		<!-- springboot-datafilter -->
 		<dependency>
-			<groupId>br.jus.tre_pa.datafilter</groupId>
-			<artifactId>springboot-data-filter</artifactId>
-			<version>0.0.5-SNAPSHOT</version>
+			<groupId>br.jus.tre_pa.jfilter</groupId>
+			<artifactId>springboot-jfilter</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
-
 		<!-- springboot-jreport -->
 		<dependency>
 			<groupId>br.jus.tre_pa.jreport</groupId>

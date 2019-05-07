@@ -26,8 +26,8 @@ public class SpecificationTemplates {
 		SpecificationRepresentation specification = new SpecificationRepresentationImpl(springBootProject, RoasterHelper.createJavaClassSource(specificationName));
 		specification.getRoasterJavaClass().setPackage(springBootProject.getRootPackage().getName().concat(".repository").concat(".specification"));
 		specification.getRoasterJavaClass().addImport(entity.getQualifiedName());
-		specification.getRoasterJavaClass().addImport(springBootProject.getRootPackage().getName().concat(".groovy.jii.JiiSpecification"));
-		specification.getRoasterJavaClass().setSuperType("JiiSpecification<".concat(entity.getName()).concat(">"));
+		specification.getRoasterJavaClass().addImport("br.jus.tre_pa.jfilter.jpa.AbstractSpecification");
+		specification.getRoasterJavaClass().setSuperType("AbstractSpecification<".concat(entity.getName()).concat(">"));
 		specification.getRoasterJavaClass().addAnnotation(Component.class);
 		return specification;
 	}
