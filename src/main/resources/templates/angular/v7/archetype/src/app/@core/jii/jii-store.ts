@@ -111,7 +111,7 @@ export class JiiStore<T> extends CustomStore {
   private loadUrl(loadOptions: LoadOptions, options: JiiStoreOptions, basePath: string): string {
     let params = this.paramsFromLoadOptions(loadOptions);
     if (options.loadByGet) return `${environment.urlbase}${options.endpoints.load || basePath}${params}`;
-    return `${environment.urlbase}${options.endpoints.load || `${basePath}/jii`}${params}`;
+    return `${environment.urlbase}${options.endpoints.load || `${basePath}/filter`}${params}`;
   }
 
   /**

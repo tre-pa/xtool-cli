@@ -1,8 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
 import { environment } from 'src/environments/environment';
+import { JiiPage } from './jii/jii-page';
+import { JiiPayload } from './jii/jii-payload';
 import { Page } from './page';
+
+
 
 /**
  * Classe abstrata com a implementação base das operações de crud;
@@ -69,6 +72,13 @@ export abstract class CrudService<T> {
    */
   public count(): Observable<number> {
     return this._http.get<number>(`${environment.urlbase}${this.apiContext}/_count`);
+  }
+  
+  /**
+   * Endpoint padrão para filtragem de dados.
+   */
+  public filter(sort: string, page: number = 0, size: number = 20, jiiPayload?: JiiPayload): Observable<JiiPage<T>> {
+    return this._http.post<JiiPage<T>>(`${environment.urlbase}${this.apiContext}/filter?sort=${sort}&page=${page}&size=${size}`, jiiPayload);
   }
 
 }

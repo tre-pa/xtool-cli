@@ -30,7 +30,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
-				<dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-jdbc</artifactId>
 		</dependency>
@@ -54,40 +54,10 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.codehaus.groovy</groupId>
-			<artifactId>groovy-all</artifactId>
-			<version>2.5.4</version>
-			<type>pom</type>
-		</dependency>
-		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
 		</dependency>
-		<!-- Dependencias de Relatórios (DynamicJasper) -->
-		<dependency>
-			<groupId>ar.com.fdvs</groupId>
-			<artifactId>DynamicJasper</artifactId>
-			<version>5.1.1</version>
-		</dependency>
-		<dependency>
-			<groupId>ar.com.fdvs</groupId>
-			<artifactId>DynamicJasper-core-fonts</artifactId>
-			<version>1.0</version>
-		</dependency>
-		<dependency>
-			<groupId>com.lowagie</groupId>
-			<artifactId>itext</artifactId>
-			<version>2.1.7.js6</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/src/main/resources/BOOT-INF/lib/itext-2.1.7.js6.jar</systemPath>
-		</dependency>
-		<dependency>
-			<groupId>org.olap4j</groupId>
-			<artifactId>olap4j</artifactId>
-			<version>0.9.7.309-JS-3</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/src/main/resources/BOOT-INF/lib/olap4j-0.9.7.309-JS-3.jar</systemPath>
-		</dependency>
+
 		<!-- Driver Oracle JDBC -->
 		<dependency>
 			<groupId>com.oracle</groupId>
@@ -96,22 +66,37 @@
 			<scope>system</scope>
 			<systemPath>${project.basedir}/src/main/resources/BOOT-INF/lib/ojdbc6-11.2.0.3.0.jar</systemPath>
 		</dependency>
-		
-		<!-- Devido a incompatibilidade com o Oracle 10c é necessário utilizar esta versão -->
+
+		<!-- Devido a incompatibilidade com o Oracle 10c é necessário utilizar 
+			esta versão -->
 		<dependency>
 			<groupId>org.flywaydb</groupId>
 			<artifactId>flyway-core</artifactId>
 			<version>4.2.0</version>
 		</dependency>
-		
+
 		<!-- KEYCLOAK -->
 		<dependency>
 			<groupId>org.keycloak</groupId>
 			<artifactId>keycloak-spring-boot-starter</artifactId>
 		</dependency>
 
+		<!-- springboot-datafilter -->
+		<dependency>
+			<groupId>br.jus.tre_pa.datafilter</groupId>
+			<artifactId>springboot-data-filter</artifactId>
+			<version>0.0.5-SNAPSHOT</version>
+		</dependency>
+
+		<!-- springboot-jreport -->
+		<dependency>
+			<groupId>br.jus.tre_pa.jreport</groupId>
+			<artifactId>springboot-jreport</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+
 	</dependencies>
-	
+
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
@@ -124,31 +109,24 @@
 		</dependencies>
 	</dependencyManagement>
 
+	<repositories>
+		<repository>
+			<id>mvn-repo</id>
+			<url>https://rawgit.com/tre-pa/m2/master</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+
 	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-			<!-- Plugin Maven para Groovy (src/main/groovy/) -->
-			<plugin>
-				<groupId>org.codehaus.gmavenplus</groupId>
-				<artifactId>gmavenplus-plugin</artifactId>
-				<version>1.6.2</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>addSources</goal>
-							<goal>addTestSources</goal>
-							<goal>generateStubs</goal>
-							<goal>compile</goal>
-							<goal>generateTestStubs</goal>
-							<goal>compileTests</goal>
-							<goal>removeStubs</goal>
-							<goal>removeTestStubs</goal>
-						</goals>
-					</execution>
-				</executions>
 			</plugin>
 		</plugins>
 	</build>
