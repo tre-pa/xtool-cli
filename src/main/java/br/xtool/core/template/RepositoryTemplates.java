@@ -31,8 +31,8 @@ public class RepositoryTemplates {
 		repository.getRoasterInterface().addAnnotation(Repository.class);
 
 		// Suporte a classe Jii
-		repository.getRoasterInterface().addImport("br.jus.tre_pa.jfilter.jpa.FilterRepository");
-		repository.getRoasterInterface().addInterface("FilterRepository<".concat(entity.getName()).concat(">"));
+		repository.getRoasterInterface().addImport("br.jus.tre_pa.jfilter.jpa.JFilterRepository");
+		repository.getRoasterInterface().addInterface("JFilterRepository<".concat(entity.getName()).concat(">"));
 
 		return repository;
 	}

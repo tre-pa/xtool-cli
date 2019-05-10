@@ -32,7 +32,6 @@ import br.xtool.core.representation.springboot.JavaMethodRepresentation;
 import br.xtool.core.representation.springboot.RepositoryRepresentation;
 import br.xtool.core.representation.springboot.RestClassRepresentation;
 import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
-import lombok.extern.slf4j.Slf4j;
 import strman.Strman;
 
 @Component
@@ -42,14 +41,13 @@ public class RestClassTemplates {
 		String restName = repository.getTargetEntity().getName().concat("Rest");
 		RestClassRepresentation rest = new RestClassRepresentationImpl(bootProject, RoasterHelper.createJavaClassSource(restName));
 		rest.getRoasterJavaClass().setPackage(bootProject.getRootPackage().getName().concat(".rest"));
-		rest.getRoasterJavaClass().addAnnotation(Slf4j.class);
+//		rest.getRoasterJavaClass().addAnnotation(Slf4j.class);
 //		rest.getRoasterJavaClass().addImport(Autowired.class);
 //		rest.getRoasterJavaClass().addImport(repository.getQualifiedName());
 		rest.getRoasterJavaClass().addAnnotation(RestController.class);
 		// @formatter:off
 		rest.getRoasterJavaClass().addAnnotation(RequestMapping.class)
 			.setStringValue(String.format("api/%s",InflectorHelper.getInstance().pluralize(Strman.toKebabCase(repository.getTargetEntity().getName()))));
-		rest.getRoasterJavaClass().addAnnotation(SuppressWarnings.class).setStringValue("unused");
 //		rest.getRoasterJavaClass().addField()
 //			.setPrivate()
 //			.setName(repository.getInstanceName())
