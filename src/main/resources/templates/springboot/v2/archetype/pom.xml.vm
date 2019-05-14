@@ -85,13 +85,13 @@
 		<dependency>
 			<groupId>br.jus.tre_pa.jfilter</groupId>
 			<artifactId>springboot-jfilter</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>1.0.0</version>
 		</dependency>
 		<!-- springboot-jreport -->
 		<dependency>
 			<groupId>br.jus.tre_pa.jreport</groupId>
 			<artifactId>springboot-jreport</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>1.0.0</version>
 		</dependency>
 
 	</dependencies>
