@@ -1,4 +1,4 @@
-package ${rootPackage.name}.groovy.config;
+package ${rootPackage.name}.config;
 
 import javax.servlet.http.HttpServletRequest;
 

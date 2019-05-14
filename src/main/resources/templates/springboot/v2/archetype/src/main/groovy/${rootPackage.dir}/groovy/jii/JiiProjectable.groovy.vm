@@ -1,5 +1,0 @@
-package ${rootPackage.name}.groovy.jii
-
-class JiiProjectable {
-	List<String> fields
-}
