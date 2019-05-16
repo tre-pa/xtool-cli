@@ -44,7 +44,7 @@ export class ${entity.name}ListComponent implements OnInit, OnDestroy {
     private router: Router,
     private title: Title
   ) {
-    this.${entity.instanceName}JiiStore = new JiiStore(this.httpClient, '/${entity.apiName}');
+    this.${entity.instanceName}JiiStore = new JiiStore(this.httpClient, '/${entity.apiPath}');
   }
 
   ngOnInit() {
@@ -63,15 +63,15 @@ export class ${entity.name}ListComponent implements OnInit, OnDestroy {
   }
 
   create() {
-    this.router.navigate(['${entity.apiName}', 'edit']);
+    this.router.navigate(['${entity.apiPath}', 'edit']);
   }
 
   edit(id: number) {
-    this.router.navigate(['${entity.apiName}', 'edit', id]);
+    this.router.navigate(['${entity.apiPath}', 'edit', id]);
   }
 
   detail(id: number) {
-    this.router.navigate(['${entity.apiName}', id]);
+    this.router.navigate(['${entity.apiPath}', id]);
   }
 
   confirmDelete(${entity.instanceName}: ${entity.name}) {

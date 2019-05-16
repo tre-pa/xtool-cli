@@ -42,7 +42,7 @@ export class ${entity.name}DetailComponent implements OnInit, OnDestroy {
   }
 
   edit() {
-    this.router.navigate(['${entity.pluralInstanceName}', 'edit', this.id]);
+    this.router.navigate(['${entity.apiPath}', 'edit', this.id]);
   }
 
   confirmDelete() {
@@ -64,7 +64,7 @@ export class ${entity.name}DetailComponent implements OnInit, OnDestroy {
   }
 
   back() {
-    this.router.navigate(['${entity.pluralInstanceName}']);
+    this.router.navigate(['${entity.apiPath}']);
   }
 
 }

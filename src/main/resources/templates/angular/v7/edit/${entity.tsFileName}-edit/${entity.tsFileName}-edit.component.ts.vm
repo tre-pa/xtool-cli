@@ -60,14 +60,14 @@ export class ${entity.name}EditComponent implements OnInit, OnDestroy {
   }
 
   back = () => {
-    this.router.navigate(['${entity.apiName}']);
+    this.router.navigate(['${entity.apiPath}']);
   }
 
   save(event) {
     event.preventDefault();
     this.saveSub = this.${entity.instanceName}Service.save(this.${entity.instanceName})
       .pipe(takeUntil(this.destroy$))
-      .subscribe((${entity.instanceName}) => this.router.navigate(['${entity.apiName}', ${entity.instanceName}.id]));
+      .subscribe((${entity.instanceName}) => this.router.navigate(['${entity.apiPath}', ${entity.instanceName}.id]));
   }
 
 }
