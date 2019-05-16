@@ -6,7 +6,6 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.function.Function;
@@ -237,16 +236,16 @@ public class NgProjectRepresentationImpl extends ProjectRepresentationImpl imple
 	}
 
 	@Override
-	public Optional<SpringBootProjectRepresentation> getAssociatedSpringBootProject() {
+	public SpringBootProjectRepresentation getTargetSpringBootProject() {
 		String springBootPath = this.getPath().toString().concat("-service");
 		if (StringUtils.isNotEmpty(springBootPath)) {
 			if (Files.exists(Paths.get(springBootPath))) {
 				if (SpringBootProjectRepresentation.isValid(Paths.get(springBootPath))) {
-					return Optional.of(new SpringBootProjectRepresentationImpl(Paths.get(springBootPath)));
+					return new SpringBootProjectRepresentationImpl(Paths.get(springBootPath));
 				}
 			}
 		}
-		return Optional.empty();
+		throw new IllegalArgumentException(String.format("Nenhum projeto Spring Boot associado ao projeto '%s'", this.getName()));
 	}
 
 	@Override

@@ -3,6 +3,8 @@ package br.xtool.core.representation.angular;
 import java.util.List;
 import java.util.Optional;
 
+import br.xtool.core.representation.springboot.EntityRepresentation;
+
 /**
  * Classe que representa um CRUD angular (List, Edit e Detail).
  *
@@ -10,6 +12,13 @@ import java.util.Optional;
  *
  */
 public interface NgCrudRepresentation {
+
+	/**
+	 * Retorna a entidade JPA alvo.
+	 * 
+	 * @return
+	 */
+	EntityRepresentation getTargetEntity();
 
 	/**
 	 * Retorna a representação do List.

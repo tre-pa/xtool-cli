@@ -129,7 +129,7 @@ public interface NgProjectRepresentation extends ProjectRepresentation {
 	// @Override
 	// public String getMainDir();
 
-	Optional<SpringBootProjectRepresentation> getAssociatedSpringBootProject();
+	SpringBootProjectRepresentation getTargetSpringBootProject();
 
 	@Override
 	public void refresh();

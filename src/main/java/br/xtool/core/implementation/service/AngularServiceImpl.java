@@ -211,13 +211,13 @@ public class AngularServiceImpl implements AngularService {
 			NgCrudRepresentation ngCrud = new NgCrudRepresentationImpl(ngModule, ngList, ngDetail, ngEdit);
 			this.addComponent(ngModule, ngCrud);
 			this.addToRoute(ngModule, ngCrud);
-			ngModule.getAssociatedPage().ifPresent(ngPage -> this.addNavigation(ngPage, ngList));
+			ngModule.getAssociatedPage().ifPresent(ngPage -> this.addNavigation(ngPage, ngCrud));
 			return ngCrud;
 		}
 		NgCrudRepresentation ngCrud = new NgCrudRepresentationImpl(ngModule, ngList, ngDetail);
 		this.addComponent(ngModule, ngCrud);
 		this.addToRoute(ngModule, ngCrud);
-		ngModule.getAssociatedPage().ifPresent(ngPage -> this.addNavigation(ngPage, ngList));
+		ngModule.getAssociatedPage().ifPresent(ngPage -> this.addNavigation(ngPage, ngCrud));
 		return ngCrud;
 	}
 
@@ -359,7 +359,7 @@ public class AngularServiceImpl implements AngularService {
 
 	private void addToRoute(NgModuleRepresentation ngModule, NgCrudRepresentation ngCrud) {
 		List<NgRoute> ngRoutes = ngModule.getRoutes();
-		String rootRoutePath = ngCrud.getList().getPath().getParent().getFileName().toString();
+		String rootRoutePath = ngCrud.getTargetEntity().getApiPath();
 		for (NgRoute r1 : ngRoutes) {
 			for (NgRoute r2 : r1.getChildren()) {
 				if (r2.getPath().equals(rootRoutePath)) {
@@ -423,12 +423,12 @@ public class AngularServiceImpl implements AngularService {
 	/*
 	 *
 	 */
-	private void addNavigation(NgPageRepresentation page, NgListRepresentation list) {
+	private void addNavigation(NgPageRepresentation page, NgCrudRepresentation ngCrud) {
 		List<NgPageNavigationRepresentation> navigations = new ArrayList<>(page.getNavigations());
 
 		NgPageNavigationRepresentation ngPageNavigation = new NgPageNavigationRepresentation();
-		ngPageNavigation.setText(list.getName().replace("ListComponent", ""));
-		ngPageNavigation.setPath("/" + list.getRoutePath().replace("-list", ""));
+		ngPageNavigation.setText(ngCrud.getTargetEntity().getName());
+		ngPageNavigation.setPath("/" + ngCrud.getTargetEntity().getApiPath());
 		ngPageNavigation.setIcon("file-alt");
 
 		navigations.add(ngPageNavigation);

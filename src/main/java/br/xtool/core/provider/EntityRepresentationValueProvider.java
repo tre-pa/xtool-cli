@@ -33,12 +33,10 @@ public class EntityRepresentationValueProvider extends ValueProviderSupport {
 					.collect(Collectors.toList());
 		} else if(this.workspace.getWorkingProject() instanceof NgProjectRepresentation) {
 			NgProjectRepresentation project = NgProjectRepresentation.class.cast(this.workspace.getWorkingProject());
-			if(project.getAssociatedSpringBootProject().isPresent()) {
-				return project.getAssociatedSpringBootProject().get().getEntities().stream()
-						.map(EntityRepresentation::getName)
-						.map(CompletionProposal::new)
-						.collect(Collectors.toList());
-			}
+			return project.getTargetSpringBootProject().getEntities().stream()
+					.map(EntityRepresentation::getName)
+					.map(CompletionProposal::new)
+					.collect(Collectors.toList());
 		}
 		return new ArrayList<>();
 		// @formatter:on

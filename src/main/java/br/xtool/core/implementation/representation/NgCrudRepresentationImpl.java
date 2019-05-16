@@ -10,6 +10,7 @@ import br.xtool.core.representation.angular.NgEditRepresentation;
 import br.xtool.core.representation.angular.NgListRepresentation;
 import br.xtool.core.representation.angular.NgModuleRepresentation;
 import br.xtool.core.representation.angular.NgRoute;
+import br.xtool.core.representation.springboot.EntityRepresentation;
 
 public class NgCrudRepresentationImpl implements NgCrudRepresentation {
 
@@ -35,6 +36,17 @@ public class NgCrudRepresentationImpl implements NgCrudRepresentation {
 		this.ngList = ngList;
 		this.ngDetail = ngDetail;
 		this.ngEdit = Optional.empty();
+	}
+
+	@Override
+	public EntityRepresentation getTargetEntity() {
+		// @formatter:off
+		return this.ngModule.getProject().getTargetSpringBootProject().getEntities()
+				.stream()
+				.filter(entity -> entity.getName().equals(this.getList().getName().replace("ListComponent", "")))
+				.findAny()
+				.orElseThrow(() -> new IllegalArgumentException(String.format("O componente '%s' não possui entidade JPA associada.", this.getList().getName())));
+		// @formatter:on
 	}
 
 	@Override
