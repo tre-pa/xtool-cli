@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+import br.xtool.core.helper.InflectorHelper;
 import br.xtool.core.representation.plantuml.PlantClassRepresentation;
 import br.xtool.core.representation.plantuml.PlantStereotypeRepresentation.StereotypeType;
 import br.xtool.core.representation.springboot.EntityRepresentation;
@@ -18,25 +19,32 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import strman.Strman;
 
 @Component
 public class EntityVisitor implements ClassVisitor {
 
 	@Override
 	public void visit(EntityRepresentation entity, PlantClassRepresentation plantClass) {
-		addEntityAnnotation(entity);
-		addDynamicAnnotation(entity, plantClass);
-		addTableAnnotation(entity, plantClass);
-		addJsonIncludeAnnotation(entity);
-		addAccessorsAnnotation(entity);
-		AddNoArgsConstructorAnnotation(entity);
-		addToStringAnnotation(entity, plantClass);
-		addEqualsAndHashCodeAnnotation(entity, plantClass);
-		addPluralClassName(entity, plantClass);
+		this.addEntityAnnotation(entity);
+		this.addDynamicAnnotation(entity, plantClass);
+		this.addTableAnnotation(entity, plantClass);
+		this.addJsonIncludeAnnotation(entity);
+		this.addAccessorsAnnotation(entity);
+		this.AddNoArgsConstructorAnnotation(entity);
+		this.addToStringAnnotation(entity, plantClass);
+		this.addEqualsAndHashCodeAnnotation(entity, plantClass);
+		this.addApiPath(entity, plantClass);
 	}
 
-	private void addPluralClassName(EntityRepresentation entity, PlantClassRepresentation plantClass) {
-		plantClass.getTaggedValue("plural").ifPresent(tagValue -> entity.getRoasterJavaClass().getJavaDoc().addTagValue("@plural", tagValue));
+	private void addApiPath(EntityRepresentation entity, PlantClassRepresentation plantClass) {
+		// @formatter:off
+		plantClass.getTaggedValue("api-path")
+			.map(tagValue -> entity.getRoasterJavaClass().getJavaDoc().addTagValue("@api-path", tagValue))
+			.orElseGet(() -> entity.getRoasterJavaClass().getJavaDoc().addTagValue("@api-path", InflectorHelper.getInstance().pluralize(Strman.toKebabCase(entity.getName()))));
+		// @formatter:on
+			
+//		plantClass.getTaggedValue("api-path").ifPresent(tagValue -> entity.getRoasterJavaClass().getJavaDoc().addTagValue("@api-path", tagValue));
 	}
 
 	private void addEqualsAndHashCodeAnnotation(EntityRepresentation entity, PlantClassRepresentation plantClass) {

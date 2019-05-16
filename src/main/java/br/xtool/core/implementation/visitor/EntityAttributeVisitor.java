@@ -24,14 +24,14 @@ public class EntityAttributeVisitor implements FieldVisitor {
 
 	@Override
 	public void visit(EntityAttributeRepresentation attr, PlantClassFieldRepresentation plantField) {
-		addSizeAnnotation(attr, plantField);
-		addMinAnnotation(attr, plantField);
-		addMaxAnnotation(attr, plantField);
-		addIdAnnotation(attr, plantField);
-		addColumnAnnotation(attr, plantField);
-		addEnumeratedAnnotation(attr);
-		addLabelTag(attr, plantField);
-		addMaskTag(attr, plantField);
+		this.addSizeAnnotation(attr, plantField);
+		this.addMinAnnotation(attr, plantField);
+		this.addMaxAnnotation(attr, plantField);
+		this.addIdAnnotation(attr, plantField);
+		this.addColumnAnnotation(attr, plantField);
+		this.addEnumeratedAnnotation(attr);
+		this.addLabelTag(attr, plantField);
+		this.addMaskTag(attr, plantField);
 	}
 
 	private void addMaskTag(EntityAttributeRepresentation attr, PlantClassFieldRepresentation plantField) {
@@ -39,7 +39,12 @@ public class EntityAttributeVisitor implements FieldVisitor {
 	}
 
 	private void addLabelTag(EntityAttributeRepresentation attr, PlantClassFieldRepresentation plantField) {
-		plantField.getTaggedValue("label").ifPresent(tagValue -> attr.getRoasterField().getJavaDoc().addTagValue("@label", tagValue));
+		// @formatter:off
+		plantField.getTaggedValue("label")
+			.map(tagValue -> attr.getRoasterField().getJavaDoc().addTagValue("@label", tagValue))
+			.orElseGet(() -> attr.getRoasterField().getJavaDoc().addTagValue("@label", attr.getName()));
+		// @formatter:on
+//		plantField.getTaggedValue("label").ifPresent(tagValue -> attr.getRoasterField().getJavaDoc().addTagValue("@label", tagValue));
 	}
 
 	private void addColumnAnnotation(EntityAttributeRepresentation attr, PlantClassFieldRepresentation plantField) {

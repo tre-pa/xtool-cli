@@ -45,23 +45,6 @@ public class JavaClassRepresentationImpl implements JavaClassRepresentation {
 	}
 
 	@Override
-	public String getPluralName() {
-		// @formatter:off
-		return this.getJavaDoc().getTags()
-				.stream()
-				.filter(docTag -> docTag.getName().equals("@plural"))
-				.map(docTag -> docTag.getValue())
-				.findAny()
-				.orElse(InflectorHelper.getInstance().pluralize(this.getName()));
-		// @formatter:on
-	}
-
-	@Override
-	public String getPluralInstanceName() {
-		return StringUtils.uncapitalize(this.getPluralName());
-	}
-
-	@Override
 	public String getInstanceName() {
 		return StringUtils.uncapitalize(this.getName());
 	}
@@ -72,8 +55,15 @@ public class JavaClassRepresentationImpl implements JavaClassRepresentation {
 	}
 
 	@Override
-	public String getApiName() {
-		return InflectorHelper.getInstance().pluralize(Strman.toKebabCase(this.getName()));
+	public String getApiPath() {
+		// @formatter:off
+		return this.getJavaDoc().getTags()
+				.stream()
+				.filter(docTag -> docTag.getName().equals("@api-path"))
+				.map(docTag -> docTag.getValue())
+				.findAny()
+				.orElse(InflectorHelper.getInstance().pluralize(Strman.toKebabCase(this.getName())));
+		// @formatter:on
 	}
 
 	/**

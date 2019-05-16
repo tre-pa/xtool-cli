@@ -16,20 +16,6 @@ import org.jboss.forge.roaster.model.source.JavaClassSource;
 public interface JavaClassRepresentation extends Comparable<JavaClassRepresentation>, JavaTypeRepresentation<JavaClassSource> {
 
 	/**
-	 * Retorna o nome no plural da classe.
-	 *
-	 * @return
-	 */
-	String getPluralName();
-
-	/**
-	 * Retorna o nome no plural de instância.
-	 *
-	 * @return
-	 */
-	String getPluralInstanceName();
-
-	/**
 	 * Retorna o nome de instância da classe.
 	 *
 	 * @return
@@ -64,7 +50,7 @@ public interface JavaClassRepresentation extends Comparable<JavaClassRepresentat
 	 *
 	 * @return
 	 */
-	String getApiName();
+	String getApiPath();
 
 	/**
 	 *
