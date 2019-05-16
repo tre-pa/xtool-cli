@@ -428,7 +428,7 @@ public class AngularServiceImpl implements AngularService {
 
 		NgPageNavigationRepresentation ngPageNavigation = new NgPageNavigationRepresentation();
 		ngPageNavigation.setText(list.getName().replace("ListComponent", ""));
-		ngPageNavigation.setPath("/" + list.getRoutePath());
+		ngPageNavigation.setPath("/" + list.getRoutePath().replace("-list", ""));
 		ngPageNavigation.setIcon("file-alt");
 
 		navigations.add(ngPageNavigation);
