@@ -6,10 +6,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Deque;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
@@ -21,6 +21,10 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.core.PrettyPrinter;
+import com.fasterxml.jackson.core.util.DefaultIndenter;
+import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
+
 import br.xtool.core.ConsoleLog;
 import br.xtool.core.FS;
 import br.xtool.core.Shell;
@@ -29,6 +33,7 @@ import br.xtool.core.Workspace;
 import br.xtool.core.helper.InflectorHelper;
 import br.xtool.core.helper.JsonHelper;
 import br.xtool.core.helper.StringHelper;
+import br.xtool.core.implementation.representation.NgCrudRepresentationImpl;
 import br.xtool.core.implementation.representation.NgDetailRepresentationImpl;
 import br.xtool.core.implementation.representation.NgEditRepresentationImpl;
 import br.xtool.core.implementation.representation.NgEntityRepresentationImpl;
@@ -38,12 +43,14 @@ import br.xtool.core.implementation.representation.NgServiceRepresentationImpl;
 import br.xtool.core.representation.ProjectRepresentation;
 import br.xtool.core.representation.angular.NgClassRepresentation;
 import br.xtool.core.representation.angular.NgComponentRepresentation;
+import br.xtool.core.representation.angular.NgCrudRepresentation;
 import br.xtool.core.representation.angular.NgDetailRepresentation;
 import br.xtool.core.representation.angular.NgEditRepresentation;
 import br.xtool.core.representation.angular.NgEntityRepresentation;
 import br.xtool.core.representation.angular.NgEnumRepresentation;
 import br.xtool.core.representation.angular.NgListRepresentation;
 import br.xtool.core.representation.angular.NgModuleRepresentation;
+import br.xtool.core.representation.angular.NgPageNavigationRepresentation;
 import br.xtool.core.representation.angular.NgPageRepresentation;
 import br.xtool.core.representation.angular.NgProjectRepresentation;
 import br.xtool.core.representation.angular.NgRoute;
@@ -77,7 +84,7 @@ public class AngularServiceImpl implements AngularService {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see br.xtool.service.AngularService#newApp(java.lang.String, java.lang.String)
 	 */
 	@Override
@@ -85,15 +92,15 @@ public class AngularServiceImpl implements AngularService {
 		Map<String, Object> vars = new HashMap<String, Object>() {
 			private static final long serialVersionUID = 1L;
 			{
-				put("projectName", name);
-				put("projectDesc", description);
+				this.put("projectName", name);
+				this.put("projectDesc", description);
 			}
 		};
 		// @formatter:off
 		NgProjectRepresentation project = this.workspace.createProject(
-				ProjectRepresentation.Type.ANGULAR, 
+				ProjectRepresentation.Type.ANGULAR,
 				version,
-				name, 
+				name,
 				vars);
 		// @formatter:on
 		ConsoleLog.print(ConsoleLog.cyan("\t-- npm install --"));
@@ -108,20 +115,20 @@ public class AngularServiceImpl implements AngularService {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see br.xtool.service.AngularService#createNgEntity(br.xtool.core.representation. springboot.EntityRepresentation)
 	 */
 	@Override
 	public NgEntityRepresentation genNgEntity(EntityRepresentation entity) {
-		NgProjectRepresentation ngProject = genNgAssociatedProject();
+		NgProjectRepresentation ngProject = this.genNgAssociatedProject();
 		Map<String, Object> vars = new HashMap<String, Object>() {
 			private static final long serialVersionUID = 1L;
 			{
-				put("Strman", Strman.class);
-				put("entityFileName", NgClassRepresentation.genFileName(entity.getName()));
-				put("entityClassName", entity.getName());
-				put("entity", entity);
-				put("typescriptTypeMap", NgClassRepresentation.typescriptTypeMap());
+				this.put("Strman", Strman.class);
+				this.put("entityFileName", NgClassRepresentation.genFileName(entity.getName()));
+				this.put("entityClassName", entity.getName());
+				this.put("entity", entity);
+				this.put("typescriptTypeMap", NgClassRepresentation.typescriptTypeMap());
 			}
 		};
 		Path resourcePath = Paths.get("angular").resolve(ngProject.getProjectVersion().getName()).resolve("domain");
@@ -131,27 +138,26 @@ public class AngularServiceImpl implements AngularService {
 		Path ngEntityPath = destinationPath.resolve(NgClassRepresentation.genFileName(entity.getName())).resolve(entity.getName().concat(".ts"));
 		NgEntityRepresentation ngEntity = new NgEntityRepresentationImpl(ngEntityPath);
 
-		entity.getAttributes().stream().filter(EntityAttributeRepresentation::isEnumField).map(EntityAttributeRepresentation::getEnum).map(Optional::get)
-				.forEach(this::genNgEnum);
+		entity.getAttributes().stream().filter(EntityAttributeRepresentation::isEnumField).map(EntityAttributeRepresentation::getEnum).map(Optional::get).forEach(this::genNgEnum);
 		return ngEntity;
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see br.xtool.service.AngularService#createNgEnum(br.xtool.core.representation. springboot.JavaEnumRepresentation)
 	 */
 	@Override
 	public NgEnumRepresentation genNgEnum(JavaEnumRepresentation javaEnum) {
-		NgProjectRepresentation ngProject = genNgAssociatedProject();
+		NgProjectRepresentation ngProject = this.genNgAssociatedProject();
 		Map<String, Object> vars = new HashMap<String, Object>() {
 			private static final long serialVersionUID = 1L;
 			{
-				put("Strman", Strman.class);
-				put("javaEnumFileName", NgClassRepresentation.genFileName(javaEnum.getName()));
-				put("javaEnumClassName", javaEnum.getName());
-				put("javaEnum", javaEnum);
-				put("javaEnumConstants", StringUtils.join(javaEnum.getConstants(), ","));
+				this.put("Strman", Strman.class);
+				this.put("javaEnumFileName", NgClassRepresentation.genFileName(javaEnum.getName()));
+				this.put("javaEnumClassName", javaEnum.getName());
+				this.put("javaEnum", javaEnum);
+				this.put("javaEnumConstants", StringUtils.join(javaEnum.getConstants(), ","));
 			}
 		};
 		Path resourcePath = Paths.get("angular").resolve(ngProject.getProjectVersion().getName()).resolve("enums");
@@ -165,21 +171,23 @@ public class AngularServiceImpl implements AngularService {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see br.xtool.service.AngularService#genNgService(br.xtool.core.representation. springboot.EntityRepresentation)
 	 */
 	@Override
 	public NgServiceRepresentation genNgService(EntityRepresentation entity) {
-		NgProjectRepresentation ngProject = genNgAssociatedProject();
+		entity.getAssociatedNgEntity().orElseGet(() -> this.genNgEntity(entity));
+
+		NgProjectRepresentation ngProject = this.genNgAssociatedProject();
 		Map<String, Object> vars = new HashMap<String, Object>() {
 			private static final long serialVersionUID = 1L;
 			{
-				put("Strman", Strman.class);
-				put("entityFileName", NgClassRepresentation.genFileName(entity.getName()));
-				put("entityClassName", entity.getName());
-				put("entity", entity);
-				put("entityApiName", InflectorHelper.getInstance().pluralize(Strman.toKebabCase(entity.getName())));
-				put("typescriptTypeMap", NgClassRepresentation.typescriptTypeMap());
+				this.put("Strman", Strman.class);
+				this.put("entityFileName", NgClassRepresentation.genFileName(entity.getName()));
+				this.put("entityClassName", entity.getName());
+				this.put("entity", entity);
+				this.put("entityApiName", InflectorHelper.getInstance().pluralize(Strman.toKebabCase(entity.getName())));
+				this.put("typescriptTypeMap", NgClassRepresentation.typescriptTypeMap());
 			}
 		};
 		Path resourcePath = Paths.get("angular").resolve(ngProject.getProjectVersion().getName()).resolve("service");
@@ -188,29 +196,50 @@ public class AngularServiceImpl implements AngularService {
 		this.fs.copy(resourcePath, vars, destinationPath);
 		Path ngServicePath = destinationPath.resolve(NgClassRepresentation.genFileName(entity.getName()).concat(".service")).resolve(entity.getName().concat(".ts"));
 		NgServiceRepresentation ngService = new NgServiceRepresentationImpl(ngServicePath);
+
 		return ngService;
+	}
+
+	@Override
+	public NgCrudRepresentation genNgCrud(EntityRepresentation entity, NgModuleRepresentation ngModule) {
+		entity.getAssociatedNgService().orElseGet(() -> this.genNgService(entity));
+
+		NgListRepresentation ngList = this.genNgList(entity, ngModule);
+		NgDetailRepresentation ngDetail = this.genNgDetail(entity, ngModule);
+		NgEditRepresentation ngEdit = entity.isImmutable() ? null : this.genNgEdit(entity, ngModule);
+		if (Objects.nonNull(ngEdit)) {
+			NgCrudRepresentation ngCrud = new NgCrudRepresentationImpl(ngModule, ngList, ngDetail, ngEdit);
+			this.addComponent(ngModule, ngCrud);
+			this.addToRoute(ngModule, ngCrud);
+			ngModule.getAssociatedPage().ifPresent(ngPage -> this.addNavigation(ngPage, ngList));
+			return ngCrud;
+		}
+		NgCrudRepresentation ngCrud = new NgCrudRepresentationImpl(ngModule, ngList, ngDetail);
+		this.addComponent(ngModule, ngCrud);
+		this.addToRoute(ngModule, ngCrud);
+		ngModule.getAssociatedPage().ifPresent(ngPage -> this.addNavigation(ngPage, ngList));
+		return ngCrud;
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see br.xtool.service.AngularService#genNgList(br.xtool.core.representation. springboot.EntityRepresentation,
 	 * br.xtool.core.representation.angular.NgModuleRepresentation)
 	 */
-	@Override
-	public NgListRepresentation genNgList(EntityRepresentation entity, NgModuleRepresentation ngModule) {
-		NgProjectRepresentation ngProject = genNgAssociatedProject();
+	private NgListRepresentation genNgList(EntityRepresentation entity, NgModuleRepresentation ngModule) {
+		NgProjectRepresentation ngProject = this.genNgAssociatedProject();
 
 		Map<String, Object> vars = new HashMap<String, Object>() {
 			private static final long serialVersionUID = 1L;
 			{
-				put("Strman", Strman.class);
-				put("StringUtils", StringUtils.class);
-				put("ngListTemplates", appCtx.getBean(NgListTemplates.class));
-				put("entity", entity);
-				put("title", InflectorHelper.getInstance().pluralize(entity.getName()));
-				put("entityApiName", InflectorHelper.getInstance().pluralize(Strman.toKebabCase(entity.getName())));
-				put("typescriptTypeMap", NgClassRepresentation.typescriptTypeMap());
+				this.put("Strman", Strman.class);
+				this.put("StringUtils", StringUtils.class);
+				this.put("ngListTemplates", AngularServiceImpl.this.appCtx.getBean(NgListTemplates.class));
+				this.put("entity", entity);
+				this.put("title", InflectorHelper.getInstance().pluralize(entity.getName()));
+				this.put("entityApiName", InflectorHelper.getInstance().pluralize(Strman.toKebabCase(entity.getName())));
+				this.put("typescriptTypeMap", NgClassRepresentation.typescriptTypeMap());
 			}
 		};
 		Path resourcePath = Paths.get("angular").resolve(ngProject.getProjectVersion().getName()).resolve("list");
@@ -222,51 +251,30 @@ public class AngularServiceImpl implements AngularService {
 
 		ngModule.getProject().refresh();
 
-		// addImport(ngModule, ngList.getName());
-		// addToRoute(ngModule, ngList);
-		// addComponent(ngModule, ngList);
+		// this.addComponent(ngModule, ngList);
+		this.addImport(ngModule, ngList.getName());
 
 		return ngList;
 	}
 
 	/*
-	 * Adicionar a rota do componente de listagem.
-	 */
-	private void addToRoute(NgModuleRepresentation ngModule, NgListRepresentation ngList) {
-		Deque<NgRoute> routes = ngModule.getRoutes();
-		String rootRoutePath = ngList.getPath().getParent().getFileName().toString();
-		NgRoute ngRoute = NgRoute.hasPath(ngModule, rootRoutePath).orElseGet(() -> {
-			NgRoute tNgRoute = new NgRoute();
-			tNgRoute.setPath(rootRoutePath);
-			routes.getFirst().getChildren().add(tNgRoute);
-			return tNgRoute;
-		});
-		// Verifica se já existe um registro do componente na rota não permitindo o registro duplicado.
-		if (ngRoute.getChildren().stream().noneMatch(pNgRoute -> pNgRoute.getComponent().equals(ngList.getName()))) {
-			ngRoute.getChildren().add(ngList.getDefaultRoute());
-			updateRoute(ngModule, routes);
-		}
-	}
-
-	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see br.xtool.service.AngularService#genNgDetail(br.xtool.core.representation. springboot.EntityRepresentation,
 	 * br.xtool.core.representation.angular.NgModuleRepresentation)
 	 */
-	@Override
-	public NgDetailRepresentation genNgDetail(EntityRepresentation entity, NgModuleRepresentation ngModule) {
-		NgProjectRepresentation ngProject = genNgAssociatedProject();
+	private NgDetailRepresentation genNgDetail(EntityRepresentation entity, NgModuleRepresentation ngModule) {
+		NgProjectRepresentation ngProject = this.genNgAssociatedProject();
 
 		Map<String, Object> vars = new HashMap<String, Object>() {
 			private static final long serialVersionUID = 1L;
 			{
-				put("Strman", Strman.class);
-				put("StringUtils", StringUtils.class);
-				put("ngDetailTemplates", appCtx.getBean(NgDetailTemplates.class));
-				put("entity", entity);
-				put("title", InflectorHelper.getInstance().pluralize(entity.getName()));
-				put("typescriptTypeMap", NgClassRepresentation.typescriptTypeMap());
+				this.put("Strman", Strman.class);
+				this.put("StringUtils", StringUtils.class);
+				this.put("ngDetailTemplates", AngularServiceImpl.this.appCtx.getBean(NgDetailTemplates.class));
+				this.put("entity", entity);
+				this.put("title", InflectorHelper.getInstance().pluralize(entity.getName()));
+				this.put("typescriptTypeMap", NgClassRepresentation.typescriptTypeMap());
 			}
 		};
 		Path resourcePath = Paths.get("angular").resolve(ngProject.getProjectVersion().getName()).resolve("detail");
@@ -278,45 +286,21 @@ public class AngularServiceImpl implements AngularService {
 
 		ngModule.getProject().refresh();
 
-//		addComponent(ngModule, ngDetail);
-//		addToRoute(ngModule, ngDetail);
-//		addImport(ngModule, ngDetail.getName());
+		// this.addComponent(ngModule, ngDetail);
+		this.addImport(ngModule, ngDetail.getName());
 
 		return ngDetail;
 
 	}
 
 	/*
-	 * Adicionar a rota do componente de listagem.
-	 */
-	private void addToRoute(NgModuleRepresentation ngModule, NgDetailRepresentation ngDetail) {
-		Deque<NgRoute> routes = ngModule.getRoutes();
-		String rootRoutePath = ngDetail.getPath().getParent().getFileName().toString();
-		NgRoute ngRoute = NgRoute.hasPath(ngModule, rootRoutePath).orElseGet(() -> {
-			NgRoute tNgRoute = new NgRoute();
-			tNgRoute.setPath(rootRoutePath);
-			routes.getFirst().getChildren().add(tNgRoute);
-			return tNgRoute;
-		});
-		// Verifica se já existe um registro do componente na rota não permitindo o registro duplicado.
-		if (ngRoute.getChildren().stream().noneMatch(pNgRoute -> pNgRoute.getComponent().equals(ngDetail.getName()))) {
-			NgRoute ngDetailRoute = new NgRoute();
-			ngDetailRoute.setPath(String.format(":id%s", ngDetail.getNgTsClass().getName()));
-			ngDetailRoute.setComponent(ngDetail.getName());
-			ngRoute.getChildren().addLast(ngDetailRoute);
-			updateRoute(ngModule, routes);
-		}
-	}
-
-	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see br.xtool.service.AngularService#genNgEdit(br.xtool.core.representation. springboot.EntityRepresentation,
 	 * br.xtool.core.representation.angular.NgModuleRepresentation)
 	 */
-	@Override
-	public NgEditRepresentation genNgEdit(EntityRepresentation entity, NgModuleRepresentation ngModule) {
-		NgProjectRepresentation ngProject = genNgAssociatedProject();
+	private NgEditRepresentation genNgEdit(EntityRepresentation entity, NgModuleRepresentation ngModule) {
+		NgProjectRepresentation ngProject = this.genNgAssociatedProject();
 
 		String entityFileName = NgClassRepresentation.genFileName(entity.getName()).concat("-edit");
 		String entityFolderName = Strman.toKebabCase(entity.getInstanceName());
@@ -324,17 +308,17 @@ public class AngularServiceImpl implements AngularService {
 		Map<String, Object> vars = new HashMap<String, Object>() {
 			private static final long serialVersionUID = 1L;
 			{
-				put("Strman", Strman.class);
-				put("StringUtils", StringUtils.class);
-				put("ngEditTemplates", appCtx.getBean(NgEditTemplates.class));
-				put("entityFileName", entityFileName);
-				put("entityTsFileName", Strman.toKebabCase(entity.getInstanceName()));
-				put("entityFolderName", entityFolderName);
-				put("entityClassName", entity.getName());
-				put("entity", entity);
-				put("title", InflectorHelper.getInstance().pluralize(entity.getName()));
-				put("entityApiName", InflectorHelper.getInstance().pluralize(Strman.toKebabCase(entity.getName())));
-				put("typescriptTypeMap", NgClassRepresentation.typescriptTypeMap());
+				this.put("Strman", Strman.class);
+				this.put("StringUtils", StringUtils.class);
+				this.put("ngEditTemplates", AngularServiceImpl.this.appCtx.getBean(NgEditTemplates.class));
+				this.put("entityFileName", entityFileName);
+				this.put("entityTsFileName", Strman.toKebabCase(entity.getInstanceName()));
+				this.put("entityFolderName", entityFolderName);
+				this.put("entityClassName", entity.getName());
+				this.put("entity", entity);
+				this.put("title", InflectorHelper.getInstance().pluralize(entity.getName()));
+				this.put("entityApiName", InflectorHelper.getInstance().pluralize(Strman.toKebabCase(entity.getName())));
+				this.put("typescriptTypeMap", NgClassRepresentation.typescriptTypeMap());
 			}
 		};
 		Path resourcePath = Paths.get("angular").resolve(ngProject.getProjectVersion().getName()).resolve("edit");
@@ -346,9 +330,8 @@ public class AngularServiceImpl implements AngularService {
 
 		ngModule.getProject().refresh();
 
-//		addComponent(ngModule, ngEdit);
-//		updateRoute(ngModule, NgRoute.of(ngEdit));
-//		addImport(ngModule, ngEdit.getName());
+		// this.addComponent(ngModule, ngEdit);
+		this.addImport(ngModule, ngEdit.getName());
 
 		return ngEdit;
 	}
@@ -363,10 +346,39 @@ public class AngularServiceImpl implements AngularService {
 		// @formatter:on
 	}
 
+	@Override
+	public void printNgEntities(NgProjectRepresentation project) {
+		ConsoleLog.print(ConsoleLog.cyan(String.format("-- Entities Angular(%d) --", project.getNgEntities().size())));
+		// @formatter:off
+		project.getNgEntities()
+			.stream()
+			.forEach(entity -> ConsoleLog.print(entity.getName()));
+		// @formatter:on
+
+	}
+
+	private void addToRoute(NgModuleRepresentation ngModule, NgCrudRepresentation ngCrud) {
+		List<NgRoute> ngRoutes = ngModule.getRoutes();
+		String rootRoutePath = ngCrud.getList().getPath().getParent().getFileName().toString();
+		for (NgRoute r1 : ngRoutes) {
+			for (NgRoute r2 : r1.getChildren()) {
+				if (r2.getPath().equals(rootRoutePath)) {
+					r2.setChildren(ngCrud.genRoute());
+					this.updateRoute(ngModule, ngRoutes);
+					return;
+				}
+			}
+		}
+		NgRoute rootRoute = new NgRoute(rootRoutePath);
+		rootRoute.setChildren(ngCrud.genRoute());
+		ngRoutes.get(0).getChildren().add(rootRoute);
+		this.updateRoute(ngModule, ngRoutes);
+	}
+
 	/*
 	 * Atualiza o array das rotas.
 	 */
-	private void updateRoute(NgModuleRepresentation ngModule, Deque<NgRoute> routes) {
+	private void updateRoute(NgModuleRepresentation ngModule, List<NgRoute> routes) {
 		String content = ngModule.getTsFileContent();
 		Pattern pattern = Pattern.compile(NgModuleRepresentation.ROUTE_PATTERN);
 		Pair<Integer, Integer> idxRoute = StringHelper.indexOfPattern(pattern, content);
@@ -374,31 +386,67 @@ public class AngularServiceImpl implements AngularService {
 		Pair<Integer, Integer> idxOfFirstArray = StringHelper.indexOfFirstArray(startRouteArray);
 
 		String start = content.substring(0, idxRoute.getRight());
-		String end = content.substring(idxRoute.getRight() + idxOfFirstArray.getRight(), content.length() - 1);
+		String end = content.substring(idxRoute.getRight() + idxOfFirstArray.getRight(), content.length());
 
-		String newContent = start.concat(JsonHelper.serialize(routes).replaceAll("\"", "'")).concat(end);
-		save(ngModule, newContent);
+		// @formatter:off
+		PrettyPrinter pp = new DefaultPrettyPrinter()
+				.withObjectIndenter(new DefaultIndenter("", " "))
+				.withArrayIndenter(new DefaultIndenter())
+				.withSpacesInObjectEntries();
+		// @formatter:on
+
+		String newContent = start.concat(JsonHelper.serialize(routes, pp).replaceAll("\"", "'")).concat(end);
+		this.save(ngModule, newContent);
 	}
 
-	private void addComponent(NgModuleRepresentation module, NgComponentRepresentation component) {
+	private void addComponent(NgModuleRepresentation module, NgCrudRepresentation ngCrud) {
 		List<String> declarations = new ArrayList<>(module.getModuleDeclarations());
-		if (!declarations.contains(component.getName())) {
-			declarations.add(component.getName());
-			String content = module.getTsFileContent();
+		declarations.add(ngCrud.getList().getName());
+		declarations.add(ngCrud.getDetail().getName());
+		ngCrud.getEdit().ifPresent(ngEdit -> declarations.add(ngEdit.getName()));
 
-			Pattern pattern = Pattern.compile(NgModuleRepresentation.DECLARATION_PATTERN);
-			int idx = StringHelper.indexOfPattern(pattern, content).getRight();
-			String startDeclarationArray = content.substring(idx);
-			Pair<Integer, Integer> idxOfFirstArray = StringHelper.indexOfFirstArray(startDeclarationArray);
-			Pair<Integer, Integer> idxDeclarations = Pair.of(idx + 1, idx + idxOfFirstArray.getRight() - 1);
+		String content = module.getTsFileContent();
 
-			String start = content.substring(0, idxDeclarations.getLeft());
-			String end = content.substring(idxDeclarations.getRight(), content.length() - 1);
-			String newContent = start.concat("\n    ").concat(StringUtils.join(declarations, ",\n    ")).concat("\n  ").concat(end);
-			save(module, newContent);
-			return;
-		}
-//		ConsoleLog.print(ConsoleLog.yellow(String.format("Componente '%s' já registrado no módulo.", component.getName())));
+		Pattern pattern = Pattern.compile(NgModuleRepresentation.DECLARATION_PATTERN);
+		int idx = StringHelper.indexOfPattern(pattern, content).getRight();
+		String startDeclarationArray = content.substring(idx);
+		Pair<Integer, Integer> idxOfFirstArray = StringHelper.indexOfFirstArray(startDeclarationArray);
+		Pair<Integer, Integer> idxDeclarations = Pair.of(idx + 1, idx + idxOfFirstArray.getRight() - 1);
+
+		String start = content.substring(0, idxDeclarations.getLeft());
+		String end = content.substring(idxDeclarations.getRight(), content.length());
+		String newContent = start.concat("\n    ").concat(StringUtils.join(declarations, ",\n    ")).concat("\n  ").concat(end);
+		this.save(module, newContent);
+		return;
+	}
+
+	/*
+	 *
+	 */
+	private void addNavigation(NgPageRepresentation page, NgListRepresentation list) {
+		List<NgPageNavigationRepresentation> navigations = new ArrayList<>(page.getNavigations());
+
+		NgPageNavigationRepresentation ngPageNavigation = new NgPageNavigationRepresentation();
+		ngPageNavigation.setText(list.getName().replace("ListComponent", ""));
+		ngPageNavigation.setPath("/" + list.getRoutePath());
+		ngPageNavigation.setIcon("file-alt");
+
+		navigations.add(ngPageNavigation);
+
+		String content = page.getTsFileContent();
+		Pattern pattern = Pattern.compile(NgPageRepresentation.NAVIGATION_PATTERN);
+		int idx = StringHelper.indexOfPattern(pattern, content).getRight();
+		String startNavigationArray = content.substring(idx);
+		Pair<Integer, Integer> idxOfFirstArray = StringHelper.indexOfFirstArray(startNavigationArray);
+		Pair<Integer, Integer> idxNavigations = Pair.of(idx, idx + idxOfFirstArray.getRight());
+
+		String start = content.substring(0, idxNavigations.getLeft());
+		String end = content.substring(idxNavigations.getRight(), content.length());
+		String newContent = start.concat(JsonHelper.serialize(navigations).replaceAll("\"", "'")).concat(end);
+
+		this.save(page, newContent);
+		return;
+
 	}
 
 	@SneakyThrows
@@ -408,7 +456,7 @@ public class AngularServiceImpl implements AngularService {
 				.filter(ngC -> ngC.getName().equals(componentName))
 				.findAny()
 				.orElseThrow(() -> new IllegalArgumentException(String.format("NgComponent %s não encontrado.", componentName)));
-		
+
 		if (module.getImports()
 				.stream()
 				.flatMap(ngImport -> ngImport.getItems().stream())
@@ -424,13 +472,8 @@ public class AngularServiceImpl implements AngularService {
 					.build();
 			// @formatter:on
 			lines.add(module.getImports().size(), importContent.trim());
-			save(module, StringUtils.join(lines, "\n"));
+			this.save(module, StringUtils.join(lines, "\n"));
 		}
-	}
-
-	@Override
-	public void addNavigation(NgPageRepresentation page, NgListRepresentation list) {
-
 	}
 
 	private NgProjectRepresentation genNgAssociatedProject() {
@@ -448,4 +491,11 @@ public class AngularServiceImpl implements AngularService {
 		}
 	}
 
+	@SneakyThrows
+	private void save(NgPageRepresentation page, String newContent) {
+		try (BufferedWriter writer = Files.newBufferedWriter(page.getPath())) {
+			writer.write(newContent);
+			writer.flush();
+		}
+	}
 }

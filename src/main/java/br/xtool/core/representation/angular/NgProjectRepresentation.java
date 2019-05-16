@@ -14,7 +14,7 @@ import lombok.Getter;
 
 /**
  * Representação de um projeto Angular.
- * 
+ *
  * @author jcruz
  *
  */
@@ -24,6 +24,7 @@ public interface NgProjectRepresentation extends ProjectRepresentation {
 	@Getter
 	enum ArtifactyType {
 		// @formatter:off
+		CLASS(".ts"),
 		MODULE(".module.ts"),
 		COMPONENT(".component.ts"),
 		SERVICE("-service.ts"),
@@ -40,25 +41,25 @@ public interface NgProjectRepresentation extends ProjectRepresentation {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	Path getAppPath();
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	Path getDomainPath();
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	Path getServicePath();
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	Path getViewPath();
@@ -70,50 +71,57 @@ public interface NgProjectRepresentation extends ProjectRepresentation {
 	NgPackageRepresentation getNgPackage();
 
 	/**
+	 * Retorna as classes de entidade do projeto.
+	 *
+	 * @return
+	 */
+	SortedSet<NgEntityRepresentation> getNgEntities();
+
+	/**
 	 * Retorna as classes modulos do projeto.
-	 * 
+	 *
 	 * @return
 	 */
 	SortedSet<NgModuleRepresentation> getNgModules();
 
 	/**
 	 * Retorna as classes components do projeto.
-	 * 
+	 *
 	 * @return
 	 */
 	SortedSet<NgComponentRepresentation> getNgComponents();
 
 	/**
 	 * Retorna as classes services do projeto.
-	 * 
+	 *
 	 * @return
 	 */
 	SortedSet<NgServiceRepresentation> getNgServices();
 
 	/**
 	 * Retorna as classes pages do projeto.
-	 * 
+	 *
 	 * @return
 	 */
 	SortedSet<NgPageRepresentation> getNgPages();
 
 	/**
 	 * Retorna os componente de lista do projeto.
-	 * 
+	 *
 	 * @return
 	 */
 	SortedSet<NgListRepresentation> getNgLists();
 
 	/**
 	 * Retorna as classes edit do projeto.
-	 * 
+	 *
 	 * @return
 	 */
 	SortedSet<NgEditRepresentation> getNgEdits();
 
 	/**
 	 * Retorna as classes details do projeto.
-	 * 
+	 *
 	 * @return
 	 */
 	SortedSet<NgDetailRepresentation> getNgDetails();
@@ -128,7 +136,7 @@ public interface NgProjectRepresentation extends ProjectRepresentation {
 
 	/**
 	 * Verifica se o path possui um projeto angular válido.
-	 * 
+	 *
 	 * @param path Caminho do projeto
 	 * @return
 	 */

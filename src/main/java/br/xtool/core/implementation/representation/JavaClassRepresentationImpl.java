@@ -9,6 +9,7 @@ import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
+import org.hibernate.annotations.Immutable;
 import org.jboss.forge.roaster.model.JavaDoc;
 import org.jboss.forge.roaster.model.JavaType;
 import org.jboss.forge.roaster.model.SyntaxError;
@@ -47,11 +48,11 @@ public class JavaClassRepresentationImpl implements JavaClassRepresentation {
 	public String getPluralName() {
 		// @formatter:off
 		return this.getJavaDoc().getTags()
-			.stream()
-			.filter(docTag -> docTag.getName().equals("@plural"))
-			.map(docTag -> docTag.getValue())
-			.findAny()
-			.orElse(InflectorHelper.getInstance().pluralize(this.getName()));
+				.stream()
+				.filter(docTag -> docTag.getName().equals("@plural"))
+				.map(docTag -> docTag.getValue())
+				.findAny()
+				.orElse(InflectorHelper.getInstance().pluralize(this.getName()));
 		// @formatter:on
 	}
 
@@ -77,7 +78,7 @@ public class JavaClassRepresentationImpl implements JavaClassRepresentation {
 
 	/**
 	 * Nome da classe
-	 * 
+	 *
 	 * @return
 	 */
 	@Override
@@ -87,7 +88,7 @@ public class JavaClassRepresentationImpl implements JavaClassRepresentation {
 
 	/**
 	 * Retorna o nome qualificado da classe: pacote+class
-	 * 
+	 *
 	 * @return
 	 */
 	@Override
@@ -97,7 +98,7 @@ public class JavaClassRepresentationImpl implements JavaClassRepresentation {
 
 	/**
 	 * Retorna o pacote da classe
-	 * 
+	 *
 	 * @return
 	 */
 	@Override
@@ -107,7 +108,7 @@ public class JavaClassRepresentationImpl implements JavaClassRepresentation {
 
 	/**
 	 * Verifica se a entidade possui a annotation
-	 * 
+	 *
 	 * @param name Nome da annotation
 	 * @return
 	 */
@@ -118,7 +119,7 @@ public class JavaClassRepresentationImpl implements JavaClassRepresentation {
 
 	/**
 	 * Retorna o caminho da classe no projeto.
-	 * 
+	 *
 	 * @return
 	 */
 	@Override
@@ -187,13 +188,18 @@ public class JavaClassRepresentationImpl implements JavaClassRepresentation {
 	}
 
 	@Override
+	public boolean isImmutable() {
+		return this.getRoasterJavaClass().hasAnnotation(Immutable.class);
+	}
+
+	@Override
 	public JavaClassSource getRoasterJavaClass() {
 		return this.javaClassSource;
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see br.xtool.core.representation.EJavaClass#addToString(java.lang.String[])
 	 */
 	@Override
@@ -205,7 +211,7 @@ public class JavaClassRepresentationImpl implements JavaClassRepresentation {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see br.xtool.core.representation.EJavaClass#addEqualsAndHashCode(java.lang.String [])
 	 */
 	@Override

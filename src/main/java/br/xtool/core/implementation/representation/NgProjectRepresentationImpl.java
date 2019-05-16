@@ -20,6 +20,7 @@ import br.xtool.core.representation.angular.NgClassRepresentation;
 import br.xtool.core.representation.angular.NgComponentRepresentation;
 import br.xtool.core.representation.angular.NgDetailRepresentation;
 import br.xtool.core.representation.angular.NgEditRepresentation;
+import br.xtool.core.representation.angular.NgEntityRepresentation;
 import br.xtool.core.representation.angular.NgListRepresentation;
 import br.xtool.core.representation.angular.NgModuleRepresentation;
 import br.xtool.core.representation.angular.NgPackageRepresentation;
@@ -40,7 +41,7 @@ public class NgProjectRepresentationImpl extends ProjectRepresentationImpl imple
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see br.xtool.core.representation.ENgProject#getAppPath()
 	 */
 	@Override
@@ -50,7 +51,7 @@ public class NgProjectRepresentationImpl extends ProjectRepresentationImpl imple
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see br.xtool.core.representation.ENgProject#getDomainPath()
 	 */
 	@Override
@@ -60,7 +61,7 @@ public class NgProjectRepresentationImpl extends ProjectRepresentationImpl imple
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see br.xtool.core.representation.ENgProject#getServicePath()
 	 */
 	@Override
@@ -70,12 +71,22 @@ public class NgProjectRepresentationImpl extends ProjectRepresentationImpl imple
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see br.xtool.core.representation.ENgProject#getViewPath()
 	 */
 	@Override
 	public Path getViewPath() {
 		return this.getPath().resolve("src/app/view");
+	}
+
+	@Override
+	public SortedSet<NgEntityRepresentation> getNgEntities() {
+		// @formatter:off
+		return this.getNgClasses().values().stream()
+				.filter(ngClass -> ngClass.getPath().getParent().endsWith("domain"))
+				.map(ngClass -> new NgEntityRepresentationImpl(ngClass.getPath()))
+				.collect(Collectors.toCollection(TreeSet::new));
+		// @formatter:on
 	}
 
 	@Override
@@ -105,7 +116,7 @@ public class NgProjectRepresentationImpl extends ProjectRepresentationImpl imple
 
 	/**
 	 * Retorna as classes modulos do projeto.
-	 * 
+	 *
 	 * @return
 	 */
 	@Override
@@ -120,7 +131,7 @@ public class NgProjectRepresentationImpl extends ProjectRepresentationImpl imple
 
 	/**
 	 * Retorna as classes components do projeto.
-	 * 
+	 *
 	 * @return
 	 */
 	@Override
@@ -135,7 +146,7 @@ public class NgProjectRepresentationImpl extends ProjectRepresentationImpl imple
 
 	/**
 	 * Retorna as classes services do projeto.
-	 * 
+	 *
 	 * @return
 	 */
 	@Override
@@ -150,7 +161,7 @@ public class NgProjectRepresentationImpl extends ProjectRepresentationImpl imple
 
 	/**
 	 * Retorna as classes pages do projeto.
-	 * 
+	 *
 	 * @return
 	 */
 	@Override
@@ -175,7 +186,7 @@ public class NgProjectRepresentationImpl extends ProjectRepresentationImpl imple
 
 	/**
 	 * Retorna as classes edit do projeto.
-	 * 
+	 *
 	 * @return
 	 */
 	@Override
@@ -190,7 +201,7 @@ public class NgProjectRepresentationImpl extends ProjectRepresentationImpl imple
 
 	/**
 	 * Retorna as classes details do projeto.
-	 * 
+	 *
 	 * @return
 	 */
 	@Override
@@ -207,9 +218,9 @@ public class NgProjectRepresentationImpl extends ProjectRepresentationImpl imple
 		if (Objects.isNull(this.ngClasses)) {
 			// @formatter:off
 			this.ngClasses = this.listAllFiles().stream()
-				.filter(path -> Arrays.asList(ArtifactyType.values()).stream().anyMatch(artifactType -> path.toString().endsWith(artifactType.getExt())))
-				.map(NgClassRepresentationImpl::new)
-				.collect(Collectors.toMap(ngClass -> ngClass.getPath().toString(), Function.identity()));
+					.filter(path -> Arrays.asList(ArtifactyType.values()).stream().anyMatch(artifactType -> path.toString().endsWith(artifactType.getExt())))
+					.map(NgClassRepresentationImpl::new)
+					.collect(Collectors.toMap(ngClass -> ngClass.getPath().toString(), Function.identity()));
 			// @formatter:on
 		}
 		return this.ngClasses;
@@ -243,9 +254,9 @@ public class NgProjectRepresentationImpl extends ProjectRepresentationImpl imple
 		Pattern v5pattern = Pattern.compile("[\\^~]?5\\.2\\.\\d");
 		Pattern v6pattern = Pattern.compile("[\\^~]?6\\.\\d\\.\\d");
 		Pattern v7pattern = Pattern.compile("[\\^~]?7\\.\\d\\.\\d");
-		if (v5pattern.matcher(getFrameworkVersion()).matches()) return Version.V5;
-		if (v6pattern.matcher(getFrameworkVersion()).matches()) return Version.V6;
-		if (v7pattern.matcher(getFrameworkVersion()).matches()) return Version.V7;
+		if (v5pattern.matcher(this.getFrameworkVersion()).matches()) return Version.V5;
+		if (v6pattern.matcher(this.getFrameworkVersion()).matches()) return Version.V6;
+		if (v7pattern.matcher(this.getFrameworkVersion()).matches()) return Version.V7;
 		return Version.NONE;
 	}
 

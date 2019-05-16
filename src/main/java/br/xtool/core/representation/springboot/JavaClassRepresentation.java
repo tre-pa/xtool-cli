@@ -9,7 +9,7 @@ import org.jboss.forge.roaster.model.source.JavaClassSource;
 
 /**
  * Representação de uma classe java.
- * 
+ *
  * @author jcruz
  *
  */
@@ -17,28 +17,28 @@ public interface JavaClassRepresentation extends Comparable<JavaClassRepresentat
 
 	/**
 	 * Retorna o nome no plural da classe.
-	 * 
+	 *
 	 * @return
 	 */
 	String getPluralName();
 
 	/**
 	 * Retorna o nome no plural de instância.
-	 * 
+	 *
 	 * @return
 	 */
 	String getPluralInstanceName();
 
 	/**
 	 * Retorna o nome de instância da classe.
-	 * 
+	 *
 	 * @return
 	 */
 	String getInstanceName();
 
 	/**
 	 * Retorna o nome da classe.
-	 * 
+	 *
 	 * @return
 	 */
 	@Override
@@ -46,7 +46,7 @@ public interface JavaClassRepresentation extends Comparable<JavaClassRepresentat
 
 	/**
 	 * Retorna o nome qualificado da classe.
-	 * 
+	 *
 	 * @return
 	 */
 	@Override
@@ -54,48 +54,48 @@ public interface JavaClassRepresentation extends Comparable<JavaClassRepresentat
 
 	/**
 	 * Retorna o nome no formato de arquivo TypeScript.
-	 * 
+	 *
 	 * @return
 	 */
 	String getTsFileName();
 
 	/**
 	 * Retorna o nome no formato de API Rest.
-	 * 
+	 *
 	 * @return
 	 */
 	String getApiName();
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	Path getPath();
 
 	/**
 	 * Retorna os atributos da classe.
-	 * 
+	 *
 	 * @return
 	 */
 	Collection<JavaFieldRepresentation> getJavaFields();
 
 	/**
 	 * Retorna os métodos da classe.
-	 * 
+	 *
 	 * @return
 	 */
 	SortedSet<JavaMethodRepresentation<JavaClassSource>> getJavaMethods();
 
 	/**
 	 * Retorna as annotations da classe.
-	 * 
+	 *
 	 * @return
 	 */
 	SortedSet<JavaAnnotationRepresentation<JavaClassSource>> getJavaAnnotations();
 
 	/**
 	 * Verifica se a classe possui a annotation.
-	 * 
+	 *
 	 * @param name
 	 * @return
 	 */
@@ -104,14 +104,14 @@ public interface JavaClassRepresentation extends Comparable<JavaClassRepresentat
 
 	/**
 	 * Retorna um atributo da classe. Caso não encontre cria um novo atributo.
-	 * 
+	 *
 	 * @param name
 	 * @return
 	 */
 	JavaFieldRepresentation addField(String name);
 
 	/**
-	 * 
+	 *
 	 * @param name
 	 * @return
 	 */
@@ -119,7 +119,7 @@ public interface JavaClassRepresentation extends Comparable<JavaClassRepresentat
 
 	/**
 	 * Adiciona uma annotation
-	 * 
+	 *
 	 * @param type
 	 * @return
 	 */
@@ -127,10 +127,17 @@ public interface JavaClassRepresentation extends Comparable<JavaClassRepresentat
 
 	/**
 	 * Retorna o objeto Roaster da classe.
-	 * 
+	 *
 	 * @return
 	 */
 	JavaClassSource getRoasterJavaClass();
+
+	/**
+	 * Verifica se a classe é imutável (Views, ou entidades sem edição)
+	 *
+	 * @return
+	 */
+	boolean isImmutable();
 
 	// EJavaAnnotation<JavaClassSource> addTableAnnotation();
 

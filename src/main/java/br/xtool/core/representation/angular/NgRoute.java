@@ -1,16 +1,14 @@
 package br.xtool.core.representation.angular;
 
-import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Deque;
 import java.util.List;
-import java.util.Optional;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonRawValue;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -18,6 +16,7 @@ import lombok.ToString;
 @Setter
 @EqualsAndHashCode(of = { "path", "component" })
 @ToString
+@NoArgsConstructor
 public class NgRoute {
 
 	private String path;
@@ -36,7 +35,7 @@ public class NgRoute {
 	private String component;
 
 	@JsonInclude(JsonInclude.Include.NON_EMPTY)
-	private Deque<NgRoute> children = new ArrayDeque<>();
+	private List<NgRoute> children = new ArrayList<>();
 
 	@JsonInclude(JsonInclude.Include.NON_EMPTY)
 	private String loadChildren;
@@ -44,20 +43,9 @@ public class NgRoute {
 	@JsonInclude(JsonInclude.Include.NON_EMPTY)
 	private List<String> canActivate = new ArrayList<>();
 
-	public static NgRoute of(NgComponentRepresentation ngComponent) {
-		NgRoute route = new NgRoute();
-		route.path = ngComponent.getRoutePath();
-		route.component = ngComponent.getName();
-		return route;
-	}
-	
-	public static Optional<NgRoute> hasPath(NgModuleRepresentation ngModule, String path) {
-		// @formatter:off
-		return ngModule.getRoutes().stream()
-				.flatMap(ngRoute -> ngRoute.getChildren().stream())
-				.filter(ngRoute -> ngRoute.getPath().equals(path))
-				.findFirst();
-		// @formatter:on
+	public NgRoute(String path) {
+		super();
+		this.path = path;
 	}
 
 }

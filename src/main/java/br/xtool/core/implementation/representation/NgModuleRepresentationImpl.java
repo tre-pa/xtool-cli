@@ -4,7 +4,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Deque;
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.Matcher;
@@ -28,7 +27,7 @@ import lombok.SneakyThrows;
 
 /**
  * Classe que representa um módulo Angular
- * 
+ *
  * @author jcruz
  *
  */
@@ -36,7 +35,7 @@ public class NgModuleRepresentationImpl extends NgClassRepresentationImpl implem
 
 	NgProjectRepresentation ngProject;
 
-//	private Pair<Integer, Integer> idxRoutes = Pair.of(-1, -1);
+	//	private Pair<Integer, Integer> idxRoutes = Pair.of(-1, -1);
 
 	private Pair<Integer, Integer> idxDeclarations = Pair.of(-1, -1);
 
@@ -47,7 +46,7 @@ public class NgModuleRepresentationImpl extends NgClassRepresentationImpl implem
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see br.xtool.core.representation.angular.NgModuleRepresentation#getProject()
 	 */
 	@Override
@@ -57,7 +56,7 @@ public class NgModuleRepresentationImpl extends NgClassRepresentationImpl implem
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see br.xtool.core.representation.angular.NgModuleRepresentation#getImports()
 	 */
 	@Override
@@ -79,12 +78,12 @@ public class NgModuleRepresentationImpl extends NgClassRepresentationImpl implem
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see br.xtool.core.representation.angular.NgModuleRepresentation#getRoutes()
 	 */
 	@Override
 	@SneakyThrows
-	public Deque<NgRoute> getRoutes() {
+	public List<NgRoute> getRoutes() {
 		Pattern pattern = Pattern.compile(NgModuleRepresentation.ROUTE_PATTERN);
 		int idx = StringHelper.indexOfPattern(pattern, this.getTsFileContent()).getRight();
 		String startRouteArray = this.getTsFileContent().substring(idx);
@@ -94,12 +93,12 @@ public class NgModuleRepresentationImpl extends NgClassRepresentationImpl implem
 		strRoutes = strRoutes.replaceAll("component\\s*:\\s*(\\w+)", "component: '$1'");
 		strRoutes = strRoutes.replaceAll("canActivate\\s*:\\s*\\[(\\w+)\\]", "canActivate: ['$1']");
 
-		return JsonHelper.deserialize(strRoutes, new TypeReference<Deque<NgRoute>>() {});
+		return JsonHelper.deserialize(strRoutes, new TypeReference<List<NgRoute>>() {});
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see br.xtool.core.representation.angular.NgModuleRepresentation# getModuleDeclarations()
 	 */
 	@Override
@@ -132,11 +131,11 @@ public class NgModuleRepresentationImpl extends NgClassRepresentationImpl implem
 
 	@Override
 	public <T extends NgComponentRepresentation> List<NgRoute> updateComponentRoute(String rootPath, T ngComponent) {
-		Deque<NgRoute> routes = this.getRoutes();
-		
+		List<NgRoute> routes = this.getRoutes();
+
 		return null;
 	}
-	
-	
+
+
 
 }

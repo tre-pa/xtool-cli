@@ -12,6 +12,9 @@ import javax.persistence.OneToOne;
 import org.apache.commons.lang3.StringUtils;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 
+import br.xtool.core.representation.angular.NgEntityRepresentation;
+import br.xtool.core.representation.angular.NgProjectRepresentation;
+import br.xtool.core.representation.angular.NgServiceRepresentation;
 import br.xtool.core.representation.springboot.EntityAttributeRepresentation;
 import br.xtool.core.representation.springboot.EntityRepresentation;
 import br.xtool.core.representation.springboot.RepositoryRepresentation;
@@ -23,7 +26,7 @@ import strman.Strman;
 
 /**
  * Classe que representa um entidade JPA
- * 
+ *
  * @author jcruz
  *
  */
@@ -36,22 +39,22 @@ public class EntityRepresentationImpl extends JavaClassRepresentationImpl implem
 
 	/**
 	 * Retorna os atributos da classe.
-	 * 
+	 *
 	 * @return
 	 */
 	@Override
 	public Collection<EntityAttributeRepresentation> getAttributes() {
 		// @formatter:off
 		return this.javaClassSource.getFields().stream()
-			.filter(fieldSource -> !fieldSource.isStatic())
-			.map(fieldSource -> new EntityAttributeRepresentationImpl(this.getProject(),this, fieldSource))
-			.collect(Collectors.toList());
+				.filter(fieldSource -> !fieldSource.isStatic())
+				.map(fieldSource -> new EntityAttributeRepresentationImpl(this.getProject(),this, fieldSource))
+				.collect(Collectors.toList());
 		// @formatter:on
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see br.xtool.core.representation.EJpaEntity#getSimpleAttributes()
 	 */
 	@Override
@@ -67,7 +70,7 @@ public class EntityRepresentationImpl extends JavaClassRepresentationImpl implem
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see br.xtool.core.representation.EJpaEntity#getRelationshipAttributes()
 	 */
 	@Override
@@ -81,7 +84,7 @@ public class EntityRepresentationImpl extends JavaClassRepresentationImpl implem
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see br.xtool.core.representation.EJpaEntity#getEnumAttributes()
 	 */
 	@Override
@@ -130,7 +133,7 @@ public class EntityRepresentationImpl extends JavaClassRepresentationImpl implem
 	}
 
 	@Override
-	public Optional<ServiceClassRepresentation> getAssociatedServiceClass() {
+	public Optional<ServiceClassRepresentation> getAssociatedService() {
 		// @formatter:off
 		return this.getProject().getServices().stream()
 				.filter(service -> service.getName().equals(this.getName().concat("Service")))
@@ -139,12 +142,38 @@ public class EntityRepresentationImpl extends JavaClassRepresentationImpl implem
 	}
 
 	@Override
-	public Optional<RestClassRepresentation> getAssociatedRestClass() {
+	public Optional<RestClassRepresentation> getAssociatedRest() {
 		// @formatter:off
 		return this.getProject().getRests().stream()
 				.filter(rest -> rest.getName().equals(this.getName().concat("Rest")))
 				.findFirst();
 		// @formatter:on
+	}
+
+	@Override
+	public Optional<NgEntityRepresentation> getAssociatedNgEntity() {
+		if (this.getProject().getAssociatedAngularProject().isPresent()) {
+			NgProjectRepresentation ngProject = this.getProject().getAssociatedAngularProject().get();
+			// @formatter:off
+			return ngProject.getNgEntities().stream()
+					.filter(ngEntity -> ngEntity.getName().equals(this.getName()))
+					.findAny();
+			// @formatter:on
+		}
+		return Optional.empty();
+	}
+
+	@Override
+	public Optional<NgServiceRepresentation> getAssociatedNgService() {
+		if (this.getProject().getAssociatedAngularProject().isPresent()) {
+			NgProjectRepresentation ngProject = this.getProject().getAssociatedAngularProject().get();
+			// @formatter:off
+			return ngProject.getNgServices().stream()
+					.filter(ngService -> ngService.getName().equals(this.getName().concat("Service")))
+					.findAny();
+			// @formatter:on
+		}
+		return Optional.empty();
 	}
 
 	@Override
@@ -161,7 +190,7 @@ public class EntityRepresentationImpl extends JavaClassRepresentationImpl implem
 		// @formatter:off
 		return StringUtils.abbreviate(
 				StringUtils.upperCase(
-				"SEQ_" + Strman.toSnakeCase(this.getName())), "", 30);
+						"SEQ_" + Strman.toSnakeCase(this.getName())), "", 30);
 		// @formatter:on
 	}
 
@@ -170,7 +199,7 @@ public class EntityRepresentationImpl extends JavaClassRepresentationImpl implem
 		// @formatter:off
 		return StringUtils.abbreviate(
 				StringUtils.upperCase(
-				Strman.toSnakeCase(this.getName())), "", 30) + "_ID";
+						Strman.toSnakeCase(this.getName())), "", 30) + "_ID";
 		// @formatter:on
 	}
 
