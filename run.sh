@@ -28,6 +28,18 @@ if [ -z $(which git) ]; then
 	exit 0
 fi
 
+echo "Buscando pelo npm..."
+if [ -z $(which npm) ]; then
+	echo "Não encontrado."
+	echo "======================================================================================================"
+	echo " Instale o npm com nvm (https://github.com/nvm-sh/nvm)."
+	echo ""
+	echo " Reinicie após a instalação do npm."
+	echo "======================================================================================================"
+	echo ""
+	exit 0
+fi
+
 if [ ! -d "$1" ]; then
     echo -e "${__RED__}"
     echo -e "======================================================================================================"
