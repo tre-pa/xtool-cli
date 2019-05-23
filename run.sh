@@ -28,6 +28,18 @@ if [ -z $(which git) ]; then
 	exit 0
 fi
 
+echo "Buscando pelo python..."
+if [ -z $(which git) ]; then
+	echo "Não encontrado."
+	echo "======================================================================================================"
+	echo " Instale o python com seu gerenciador de pacotes."
+	echo ""
+	echo " Reinicie após a instalação do python."
+	echo "======================================================================================================"
+	echo ""
+	exit 0
+fi
+
 echo "Buscando pelo npm..."
 if [ -z $(which npm) ]; then
 	echo "Não encontrado."
