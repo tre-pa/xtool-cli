@@ -17,7 +17,7 @@ import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
-import br.xtool.core.ConsoleLog;
+import br.xtool.core.CLog;
 import br.xtool.core.implementation.representation.PomDependencyRepresentationImpl.ScopeType;
 import br.xtool.core.representation.springboot.JavaPackageRepresentation;
 import br.xtool.core.representation.springboot.PomDependencyRepresentation;
@@ -128,7 +128,7 @@ public class PomRepresentationImpl implements PomRepresentation {
 		PomDependencyRepresentationImpl dependency = new PomDependencyRepresentationImpl(groupId, artifactId);
 		if (!hasArtifactId(dependency.getArtifactId())) {
 			this.pomDoc.getRootElement().getChild("dependencies", NAMESPACE).addContent(dependency.getAsDom());
-			ConsoleLog.print(ConsoleLog.bold(ConsoleLog.yellow("\t[~] ")), ConsoleLog.purple("Item: "), ConsoleLog.white("pom.xml"), ConsoleLog.gray(" -- "), ConsoleLog.gray(dependency.toString()));
+			CLog.print(CLog.bold(CLog.yellow("\t[~] ")), CLog.purple("Item: "), CLog.white("pom.xml"), CLog.gray(" -- "), CLog.gray(dependency.toString()));
 		}
 		return this;
 	}

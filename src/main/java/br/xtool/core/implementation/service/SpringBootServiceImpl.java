@@ -18,7 +18,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
-import br.xtool.core.ConsoleLog;
+import br.xtool.core.CLog;
 import br.xtool.core.Shell;
 import br.xtool.core.Workspace;
 import br.xtool.core.implementation.representation.EntityRepresentationImpl;
@@ -99,7 +99,7 @@ public class SpringBootServiceImpl implements SpringBootService {
 		this.shellService.runCmd(bootProject.getPath(), "git init > /dev/null 2>&1 ");
 		this.shellService.runCmd(bootProject.getPath(), "git add . > /dev/null 2>&1");
 		this.shellService.runCmd(bootProject.getPath(), "git commit -m \"Inicial commit\" > /dev/null 2>&1 ");
-		ConsoleLog.print(ConsoleLog.cyan("\t-- Commit inicial realizado no git. --"));
+		CLog.print(CLog.cyan("\t-- Commit inicial realizado no git. --"));
 
 		return bootProject;
 	}
@@ -111,6 +111,7 @@ public class SpringBootServiceImpl implements SpringBootService {
 	 */
 	@Override
 	public EntityRepresentation genEntity(PlantClassRepresentation plantClass) {
+		CLog.printv("- Iniciando geração da classe '", CLog.cyan(plantClass.getName()), "' do modelo de classe");
 		SpringBootProjectRepresentation springBootProject = this.workspace.getWorkingProject(SpringBootProjectRepresentation.class);
 		JavaClassRepresentation javaClass = appCtx.getBean(JavaClassRepresentationMapper.class).apply(plantClass);
 		plantClass.getFields().stream().filter(PlantClassFieldRepresentation::isEnum).forEach(plantClassField -> {
@@ -217,42 +218,42 @@ public class SpringBootServiceImpl implements SpringBootService {
 
 	@Override
 	public void printEntities(SpringBootProjectRepresentation project) {
-		ConsoleLog.print(ConsoleLog.cyan(String.format("-- Entidades(%d) --", project.getEntities().size())));
+		CLog.print(CLog.cyan(String.format("-- Entidades(%d) --", project.getEntities().size())));
 		// @formatter:off
 		project.getEntities()
 			.stream()
-			.forEach(entity -> ConsoleLog.print(entity.getName()));
+			.forEach(entity -> CLog.print(entity.getName()));
 		// @formatter:on
 	}
 
 	@Override
 	public void printRepositories(SpringBootProjectRepresentation project) {
-		ConsoleLog.print(ConsoleLog.cyan(String.format("-- Repositories(%d) --", project.getRepositories().size())));
+		CLog.print(CLog.cyan(String.format("-- Repositories(%d) --", project.getRepositories().size())));
 		// @formatter:off
 		project.getRepositories()
 			.stream()
-			.forEach(entity -> ConsoleLog.print(entity.getName()));
+			.forEach(entity -> CLog.print(entity.getName()));
 		// @formatter:on
 
 	}
 
 	@Override
 	public void printServices(SpringBootProjectRepresentation project) {
-		ConsoleLog.print(ConsoleLog.cyan(String.format("-- Services(%d) --", project.getServices().size())));
+		CLog.print(CLog.cyan(String.format("-- Services(%d) --", project.getServices().size())));
 		// @formatter:off
 		project.getServices()
 			.stream()
-			.forEach(entity -> ConsoleLog.print(entity.getName()));
+			.forEach(entity -> CLog.print(entity.getName()));
 		// @formatter:on
 	}
 
 	@Override
 	public void printRests(SpringBootProjectRepresentation project) {
-		ConsoleLog.print(ConsoleLog.cyan(String.format("-- Rests(%d) --", project.getRests().size())));
+		CLog.print(CLog.cyan(String.format("-- Rests(%d) --", project.getRests().size())));
 		// @formatter:off
 		project.getRests()
 			.stream()
-			.forEach(entity -> ConsoleLog.print(entity.getName()));
+			.forEach(entity -> CLog.print(entity.getName()));
 		// @formatter:on
 	}
 
@@ -316,7 +317,7 @@ public class SpringBootServiceImpl implements SpringBootService {
 			write.write(formatedJavaClassSource);
 			write.flush();
 			javaType.getProject().refresh();
-			ConsoleLog.print(ConsoleLog.cyan(" + "), ConsoleLog.white(javaType.getQualifiedName()));
+			CLog.print(CLog.cyan(" + "), CLog.white(javaType.getQualifiedName()));
 		}
 	}
 

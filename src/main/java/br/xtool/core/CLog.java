@@ -1,14 +1,15 @@
 package br.xtool.core;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.stereotype.Component;
 
-public class ConsoleLog {
-	
+public class CLog {
+
+	public static boolean verbose = false;
+
 	public static String bold(String text) {
 		return "\u001B[1m" + text + "\u001B[0m";
 	}
-	
+
 	public static String black(String text) {
 		return "\u001B[30m" + text + "\u001B[0m";
 	}
@@ -47,5 +48,14 @@ public class ConsoleLog {
 
 	public static void print(String... text) {
 		System.out.println(StringUtils.join(text));
+	}
+
+	/**
+	 * Print verboso.
+	 * 
+	 * @param text
+	 */
+	public static void printv(String... text) {
+		if (verbose) System.out.println(StringUtils.join(text));
 	}
 }

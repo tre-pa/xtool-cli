@@ -12,6 +12,7 @@ import org.springframework.shell.standard.ShellMethodAvailability;
 import org.springframework.shell.standard.ShellOption;
 
 import br.xtool.XtoolCliApplication;
+import br.xtool.core.CLog;
 import br.xtool.core.Workspace;
 import br.xtool.core.provider.EntityRepresentationValueProvider;
 import br.xtool.core.provider.PlantClassDiagramRepresentationValueProvider;
@@ -49,8 +50,11 @@ public class SpringBootCommand {
 	@ShellMethod(key = "gen:entities", value = "Gera as classes Jpa do diagrama de classe", group = XtoolCliApplication.SPRINGBOOT_COMMAND_GROUP)
 	@ShellMethodAvailability("availabilitySpringBootCommand")
 	public void genEntities(
-			@ShellOption(value = "--diagram", help = "Diagrama de classe", valueProvider = PlantClassDiagramRepresentationValueProvider.class, defaultValue = "main.plantuml") PlantClassDiagramRepresentation plantClassDiagram) {
+			@ShellOption(value = "--diagram", help = "Diagrama de classe", valueProvider = PlantClassDiagramRepresentationValueProvider.class, defaultValue = "main.plantuml") PlantClassDiagramRepresentation plantClassDiagram,
+			@ShellOption(value = "--verbose", help = "Modo verbose", defaultValue = "false") boolean verbose) {
+		CLog.verbose = verbose;
 		plantClassDiagram.getClasses().stream().forEach(springBootService::genEntity);
+		CLog.verbose = false;
 	}
 
 	/**
@@ -60,8 +64,7 @@ public class SpringBootCommand {
 	 */
 	@ShellMethod(key = "gen:repository", value = "Gera uma classe de Repository (JpaRepository) para entidade JPA em um projeto Spring Boot", group = XtoolCliApplication.SPRINGBOOT_COMMAND_GROUP)
 	@ShellMethodAvailability("availabilitySpringBootCommand")
-	public void genRepository(
-			@ShellOption(help = "Entidade JPA", valueProvider = EntityRepresentationValueProvider.class, defaultValue = "") EntityRepresentation entity) {
+	public void genRepository(@ShellOption(help = "Entidade JPA", valueProvider = EntityRepresentationValueProvider.class, defaultValue = "") EntityRepresentation entity) {
 		if (Objects.isNull(entity)) {
 			// @formatter:off
 			this.workspace.getWorkingProject(SpringBootProjectRepresentation.class).getEntities().stream()
@@ -173,8 +176,7 @@ public class SpringBootCommand {
 	@ShellMethodAvailability("availabilitySpringBootCommand")
 	public void listArtifacts(@ShellOption(help = "Entidade JPA", arity = 0, defaultValue = "false") boolean entities,
 			@ShellOption(help = "Classes de Repositorio", arity = 0, defaultValue = "false") boolean repositories,
-			@ShellOption(help = "Classes de Service", arity = 0, defaultValue = "false") boolean services,
-			@ShellOption(help = "Classes de Rest", arity = 0, defaultValue = "false") boolean rests) {
+			@ShellOption(help = "Classes de Service", arity = 0, defaultValue = "false") boolean services, @ShellOption(help = "Classes de Rest", arity = 0, defaultValue = "false") boolean rests) {
 		SpringBootProjectRepresentation project = this.workspace.getWorkingProject(SpringBootProjectRepresentation.class);
 		if (entities) springBootService.printEntities(project);
 		if (repositories) springBootService.printRepositories(project);

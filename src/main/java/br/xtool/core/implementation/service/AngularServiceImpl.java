@@ -25,7 +25,7 @@ import com.fasterxml.jackson.core.PrettyPrinter;
 import com.fasterxml.jackson.core.util.DefaultIndenter;
 import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 
-import br.xtool.core.ConsoleLog;
+import br.xtool.core.CLog;
 import br.xtool.core.FS;
 import br.xtool.core.Shell;
 import br.xtool.core.TemplateBuilder;
@@ -103,13 +103,13 @@ public class AngularServiceImpl implements AngularService {
 				name,
 				vars);
 		// @formatter:on
-		ConsoleLog.print(ConsoleLog.cyan("\t-- npm install --"));
+		CLog.print(CLog.cyan("\t-- npm install --"));
 		this.shellService.runCmd(project.getPath(), "npm i && code .", vars);
 		this.shellService.runCmd(project.getPath(), "chmod +x scripts/keycloak/register-client.sh");
 		this.shellService.runCmd(project.getPath(), "git init > /dev/null 2>&1");
 		this.shellService.runCmd(project.getPath(), "git add . > /dev/null 2>&1");
 		this.shellService.runCmd(project.getPath(), "git commit -m \"Inicial commit\" > /dev/null 2>&1");
-		ConsoleLog.print(ConsoleLog.cyan("\t-- Commit inicial realizado no git. --"));
+		CLog.print(CLog.cyan("\t-- Commit inicial realizado no git. --"));
 
 	}
 
@@ -338,21 +338,21 @@ public class AngularServiceImpl implements AngularService {
 
 	@Override
 	public void printNgLists(NgProjectRepresentation project) {
-		ConsoleLog.print(ConsoleLog.cyan(String.format("-- Componentes List(%d) --", project.getNgLists().size())));
+		CLog.print(CLog.cyan(String.format("-- Componentes List(%d) --", project.getNgLists().size())));
 		// @formatter:off
 		project.getNgLists()
 			.stream()
-			.forEach(entity -> ConsoleLog.print(entity.getName()));
+			.forEach(entity -> CLog.print(entity.getName()));
 		// @formatter:on
 	}
 
 	@Override
 	public void printNgEntities(NgProjectRepresentation project) {
-		ConsoleLog.print(ConsoleLog.cyan(String.format("-- Entities Angular(%d) --", project.getNgEntities().size())));
+		CLog.print(CLog.cyan(String.format("-- Entities Angular(%d) --", project.getNgEntities().size())));
 		// @formatter:off
 		project.getNgEntities()
 			.stream()
-			.forEach(entity -> ConsoleLog.print(entity.getName()));
+			.forEach(entity -> CLog.print(entity.getName()));
 		// @formatter:on
 
 	}

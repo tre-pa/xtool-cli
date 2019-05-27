@@ -1,11 +1,11 @@
 package br.xtool.core.implementation.representation;
 
-import static br.xtool.core.ConsoleLog.bold;
-import static br.xtool.core.ConsoleLog.gray;
-import static br.xtool.core.ConsoleLog.print;
-import static br.xtool.core.ConsoleLog.purple;
-import static br.xtool.core.ConsoleLog.white;
-import static br.xtool.core.ConsoleLog.yellow;
+import static br.xtool.core.CLog.bold;
+import static br.xtool.core.CLog.gray;
+import static br.xtool.core.CLog.print;
+import static br.xtool.core.CLog.purple;
+import static br.xtool.core.CLog.white;
+import static br.xtool.core.CLog.yellow;
 
 import java.nio.file.Files;
 import java.nio.file.Path;

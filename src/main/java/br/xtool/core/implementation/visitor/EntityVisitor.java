@@ -5,10 +5,12 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+import org.jboss.forge.roaster.model.JavaDocTag;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+import br.xtool.core.CLog;
 import br.xtool.core.helper.InflectorHelper;
 import br.xtool.core.representation.plantuml.PlantClassRepresentation;
 import br.xtool.core.representation.plantuml.PlantStereotypeRepresentation.StereotypeType;
@@ -43,8 +45,14 @@ public class EntityVisitor implements ClassVisitor {
 			.map(tagValue -> entity.getRoasterJavaClass().getJavaDoc().addTagValue("@api-path", tagValue))
 			.orElseGet(() -> entity.getRoasterJavaClass().getJavaDoc().addTagValue("@api-path", InflectorHelper.getInstance().pluralize(Strman.toKebabCase(entity.getName()))));
 		// @formatter:on
-			
-//		plantClass.getTaggedValue("api-path").ifPresent(tagValue -> entity.getRoasterJavaClass().getJavaDoc().addTagValue("@api-path", tagValue));
+		
+		// @formatter:off
+		CLog.printv(CLog.green("  > @api-path: "), entity.getRoasterJavaClass().getJavaDoc().getTags().stream()
+				.filter(javaDocTag -> javaDocTag.getName().equals("@api-path"))
+				.map(JavaDocTag::getValue)
+				.findFirst()
+				.orElse(""), "");
+		// @formatter:on
 	}
 
 	private void addEqualsAndHashCodeAnnotation(EntityRepresentation entity, PlantClassRepresentation plantClass) {
@@ -54,6 +62,7 @@ public class EntityVisitor implements ClassVisitor {
 				.getRoasterAnnotation()
 				.setStringArrayValue("of", tagValues));
 		// @formatter:on
+		
 	}
 
 	private void addToStringAnnotation(EntityRepresentation entity, PlantClassRepresentation plantClass) {
