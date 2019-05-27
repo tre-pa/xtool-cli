@@ -112,6 +112,7 @@ public class SpringBootServiceImpl implements SpringBootService {
 	@Override
 	public EntityRepresentation genEntity(PlantClassRepresentation plantClass) {
 		CLog.printv("- Iniciando geração da classe '", CLog.cyan(plantClass.getName()), "' do modelo de classe");
+
 		SpringBootProjectRepresentation springBootProject = this.workspace.getWorkingProject(SpringBootProjectRepresentation.class);
 		JavaClassRepresentation javaClass = appCtx.getBean(JavaClassRepresentationMapper.class).apply(plantClass);
 		plantClass.getFields().stream().filter(PlantClassFieldRepresentation::isEnum).forEach(plantClassField -> {
@@ -126,11 +127,11 @@ public class SpringBootServiceImpl implements SpringBootService {
 //			System.out.println(String.format("Source: %s, Target: %s", r.getSourceClass().getName(), r.getTargetClass().getName()));
 //		});
 
-		plantClass.getRelationships().stream()
-				.forEach(plantRelationship -> appCtx.getBean(JavaRelationshipRepresentationMapper.class).apply(javaClass, plantRelationship));
+		plantClass.getRelationships().stream().forEach(plantRelationship -> appCtx.getBean(JavaRelationshipRepresentationMapper.class).apply(javaClass, plantRelationship));
 		save(javaClass);
 
 		springBootProject.refresh();
+		CLog.printv("");
 		return new EntityRepresentationImpl(springBootProject, javaClass.getRoasterJavaClass());
 	}
 
@@ -293,15 +294,13 @@ public class SpringBootServiceImpl implements SpringBootService {
 	 */
 	@Override
 	public JavaPackageRepresentation genRootPackage(String projectName) {
-		String packageName = JavaPackageRepresentation.getDefaultPrefix().concat(".")
-				.concat(StringUtils.join(StringUtils.split(Strman.toKebabCase(projectName), "-"), "."));
+		String packageName = JavaPackageRepresentation.getDefaultPrefix().concat(".").concat(StringUtils.join(StringUtils.split(Strman.toKebabCase(projectName), "-"), "."));
 		return JavaPackageRepresentationImpl.of(packageName);
 	}
 
 	@SneakyThrows
 	private void save(JavaTypeRepresentation<?> javaType) {
-		Path javaPath = javaType.getProject().getMainSourceFolder().getPath().resolve(javaType.getJavaPackage().getDir())
-				.resolve(String.format("%s.java", javaType.getName()));
+		Path javaPath = javaType.getProject().getMainSourceFolder().getPath().resolve(javaType.getJavaPackage().getDir()).resolve(String.format("%s.java", javaType.getName()));
 		if (Files.notExists(javaPath.getParent())) Files.createDirectories(javaPath.getParent());
 		Properties prefs = new Properties();
 		prefs.setProperty(JavaCore.COMPILER_SOURCE, CompilerOptions.VERSION_1_8);

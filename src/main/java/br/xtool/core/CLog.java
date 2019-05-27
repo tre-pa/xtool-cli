@@ -2,6 +2,12 @@ package br.xtool.core;
 
 import org.apache.commons.lang3.StringUtils;
 
+/**
+ * Classe de log do Xtool.
+ * 
+ * @author jcruz
+ *
+ */
 public class CLog {
 
 	public static boolean verbose = false;
@@ -55,7 +61,8 @@ public class CLog {
 	 * 
 	 * @param text
 	 */
-	public static void printv(String... text) {
+	public static void printv(Object... text) {
 		if (verbose) System.out.println(StringUtils.join(text));
 	}
+
 }

@@ -3,6 +3,7 @@ package br.xtool.core.implementation.visitor;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.jboss.forge.roaster.model.JavaDocTag;
@@ -45,9 +46,9 @@ public class EntityVisitor implements ClassVisitor {
 			.map(tagValue -> entity.getRoasterJavaClass().getJavaDoc().addTagValue("@api-path", tagValue))
 			.orElseGet(() -> entity.getRoasterJavaClass().getJavaDoc().addTagValue("@api-path", InflectorHelper.getInstance().pluralize(Strman.toKebabCase(entity.getName()))));
 		// @formatter:on
-		
+
 		// @formatter:off
-		CLog.printv(CLog.green("  > @api-path: "), entity.getRoasterJavaClass().getJavaDoc().getTags().stream()
+		CLog.printv(CLog.green("> @api-path: "), entity.getRoasterJavaClass().getJavaDoc().getTags().stream()
 				.filter(javaDocTag -> javaDocTag.getName().equals("@api-path"))
 				.map(JavaDocTag::getValue)
 				.findFirst()
@@ -56,13 +57,17 @@ public class EntityVisitor implements ClassVisitor {
 	}
 
 	private void addEqualsAndHashCodeAnnotation(EntityRepresentation entity, PlantClassRepresentation plantClass) {
-		// @formatter:off
-		plantClass.getTaggedValueAsArray("equalsAndHashCode.of").ifPresent(tagValues -> entity
+
+		if (plantClass.getTaggedValueAsArray("equalsAndHashCode.of").isPresent()) {
+			String[] tagValues = plantClass.getTaggedValueAsArray("equalsAndHashCode.of").get();
+			// @formatter:off
+			entity
 				.addAnnotation(EqualsAndHashCode.class)
 				.getRoasterAnnotation()
-				.setStringArrayValue("of", tagValues));
-		// @formatter:on
-		
+				.setStringArrayValue("of", tagValues);
+			// @formatter:on
+			CLog.printv(CLog.green("> @EqualAndHashCode: "), "[", StringUtils.join(tagValues, ", "), "]");
+		}
 	}
 
 	private void addToStringAnnotation(EntityRepresentation entity, PlantClassRepresentation plantClass) {
