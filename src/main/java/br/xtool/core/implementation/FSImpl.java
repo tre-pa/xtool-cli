@@ -13,7 +13,7 @@ import org.apache.velocity.app.VelocityEngine;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.xtool.core.CLog;
+import br.xtool.core.Clog;
 import br.xtool.core.FS;
 import br.xtool.core.implementation.representation.ResourceRepresentationImpl;
 import br.xtool.core.representation.ProjectRepresentation;
@@ -92,7 +92,7 @@ public class FSImpl implements FS {
 		os.write(resource.read());
 		os.flush();
 		os.close();
-		CLog.print(CLog.green("[+] "), resource.getRelativePath().toString());
+		Clog.print(Clog.green("[+] "), resource.getRelativePath().toString());
 	}
 
 }

@@ -8,7 +8,7 @@ import org.apache.commons.lang3.StringUtils;
  * @author jcruz
  *
  */
-public class CLog {
+public class Clog {
 
 	public static boolean verbose = false;
 

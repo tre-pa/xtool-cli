@@ -1,8 +1,8 @@
 package br.xtool.command;
 
-import static br.xtool.core.CLog.cyan;
-import static br.xtool.core.CLog.print;
-import static br.xtool.core.CLog.white;
+import static br.xtool.core.Clog.cyan;
+import static br.xtool.core.Clog.print;
+import static br.xtool.core.Clog.white;
 
 import java.util.Optional;
 import java.util.function.Consumer;

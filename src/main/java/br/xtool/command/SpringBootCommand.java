@@ -12,7 +12,7 @@ import org.springframework.shell.standard.ShellMethodAvailability;
 import org.springframework.shell.standard.ShellOption;
 
 import br.xtool.XtoolCliApplication;
-import br.xtool.core.CLog;
+import br.xtool.core.Clog;
 import br.xtool.core.Workspace;
 import br.xtool.core.provider.EntityRepresentationValueProvider;
 import br.xtool.core.provider.PlantClassDiagramRepresentationValueProvider;
@@ -52,9 +52,9 @@ public class SpringBootCommand {
 	public void genEntities(
 			@ShellOption(value = "--diagram", help = "Diagrama de classe", valueProvider = PlantClassDiagramRepresentationValueProvider.class, defaultValue = "main.plantuml") PlantClassDiagramRepresentation plantClassDiagram,
 			@ShellOption(value = "--verbose", help = "Modo verbose", defaultValue = "false") boolean verbose) {
-		CLog.verbose = verbose;
+		Clog.verbose = verbose;
 		plantClassDiagram.getClasses().stream().forEach(springBootService::genEntity);
-		CLog.verbose = false;
+		Clog.verbose = false;
 	}
 
 	/**
