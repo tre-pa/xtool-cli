@@ -12,6 +12,12 @@ import br.xtool.core.representation.springboot.EntityAttributeRepresentation;
 import br.xtool.core.visitor.RelationshipVisitor;
 import lombok.val;
 
+/**
+ * Visitor dos relacionamentos de Associação ManyToMany
+ * 
+ * @author jcruz
+ *
+ */
 @Component
 public class EntityManyToManyAssociationVisitor implements RelationshipVisitor {
 

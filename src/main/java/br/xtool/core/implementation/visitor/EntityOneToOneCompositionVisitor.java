@@ -12,6 +12,12 @@ import br.xtool.core.representation.plantuml.PlantRelationshipRepresentation;
 import br.xtool.core.representation.springboot.EntityAttributeRepresentation;
 import br.xtool.core.visitor.RelationshipVisitor;
 
+/**
+ * Visitor de relacionamento de Composição OneToOne
+ * 
+ * @author jcruz
+ *
+ */
 @Component
 public class EntityOneToOneCompositionVisitor implements RelationshipVisitor {
 

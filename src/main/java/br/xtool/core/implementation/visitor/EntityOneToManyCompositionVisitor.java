@@ -16,6 +16,12 @@ import br.xtool.core.visitor.RelationshipVisitor;
 import lombok.val;
 import strman.Strman;
 
+/**
+ * Visitor de relacionamento de Composição OneToMany
+ * 
+ * @author jcruz
+ *
+ */
 @Component
 public class EntityOneToManyCompositionVisitor implements RelationshipVisitor {
 

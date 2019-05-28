@@ -12,6 +12,12 @@ import br.xtool.core.representation.springboot.EntityAttributeRepresentation;
 import br.xtool.core.visitor.RelationshipVisitor;
 import lombok.val;
 
+/**
+ * Visitor de relacionamento de Associação OneToOne
+ * 
+ * @author jcruz
+ *
+ */
 @Component
 public class EntityOneToOneAssociationVisitor implements RelationshipVisitor {
 
