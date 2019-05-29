@@ -1,6 +1,7 @@
 package br.xtool.core.representation.plantuml;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -71,7 +72,7 @@ public interface PlantClassRepresentation extends JavaType<JavaClassSource> {
 	 * 
 	 * @return
 	 */
-	Set<PlantRelationshipRepresentation> getRelationships();
+	List<PlantRelationshipRepresentation> getRelationships();
 
 	/**
 	 * Retorna os attributos chave/valor das notas associadas a classe.

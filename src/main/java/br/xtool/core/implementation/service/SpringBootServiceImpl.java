@@ -111,7 +111,7 @@ public class SpringBootServiceImpl implements SpringBootService {
 	 */
 	@Override
 	public EntityRepresentation genEntity(PlantClassRepresentation plantClass) {
-		Clog.printv(Clog.green("[CLASS] "), plantClass.getName());
+		Clog.printv(Clog.green("[CLASS] "), plantClass.getName(), " / ", plantClass.getRelationships().size(), " relationships");
 
 		SpringBootProjectRepresentation springBootProject = this.workspace.getWorkingProject(SpringBootProjectRepresentation.class);
 		JavaClassRepresentation javaClass = appCtx.getBean(JavaClassRepresentationMapper.class).apply(plantClass);
@@ -126,7 +126,7 @@ public class SpringBootServiceImpl implements SpringBootService {
 //		plantClass.getRelationships().forEach(r -> {
 //			System.out.println(String.format("Source: %s, Target: %s", r.getSourceClass().getName(), r.getTargetClass().getName()));
 //		});
-
+		
 		plantClass.getRelationships().stream().forEach(plantRelationship -> appCtx.getBean(JavaRelationshipRepresentationMapper.class).apply(javaClass, plantRelationship));
 		save(javaClass);
 

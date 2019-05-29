@@ -7,6 +7,7 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.stereotype.Component;
 
+import br.xtool.core.Clog;
 import br.xtool.core.representation.plantuml.PlantRelationshipRepresentation;
 import br.xtool.core.representation.springboot.EntityAttributeRepresentation;
 import br.xtool.core.visitor.RelationshipVisitor;
@@ -24,6 +25,7 @@ public class EntityManyToManyAssociationVisitor implements RelationshipVisitor {
 	@Override
 	public void visit(EntityAttributeRepresentation attr, PlantRelationshipRepresentation plantRelationship) {
 		if (plantRelationship.isAssociation() && plantRelationship.isManyToMany()) {
+			Clog.printv(" [ASSOCIATION] ");
 			addManyToManyAnnotation(attr, plantRelationship);
 			addBatchSizeAnnotation(attr);
 			addLazyCollectionAnnotation(attr);

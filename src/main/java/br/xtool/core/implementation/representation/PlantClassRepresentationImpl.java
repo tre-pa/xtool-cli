@@ -20,8 +20,9 @@ import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.jtwig.util.HtmlUtils;
 
 import com.google.common.base.Splitter;
-import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.ImmutableList;
 
+import br.xtool.core.Clog;
 import br.xtool.core.representation.plantuml.PlantClassDiagramRepresentation;
 import br.xtool.core.representation.plantuml.PlantClassFieldRepresentation;
 import br.xtool.core.representation.plantuml.PlantClassRepresentation;
@@ -191,27 +192,28 @@ public class PlantClassRepresentationImpl implements PlantClassRepresentation {
 	 * @see br.xtool.core.representation.EUmlClass#getRelationships()
 	 */
 	@Override
-	public Set<PlantRelationshipRepresentation> getRelationships() {
+	public List<PlantRelationshipRepresentation> getRelationships() {
 
 		// @formatter:off
-		Set<PlantRelationshipRepresentation> relationship1 = this.classDiagram.getEntityFactory().getLinks().stream()
+		Collection<PlantRelationshipRepresentation> relationship1 = this.classDiagram.getEntityFactory().getLinks().stream()
 				.filter(link -> link.getEntity2().getEntityType().equals(LeafType.CLASS))
 				.filter(link -> link.getEntity1().getDisplay().asStringWithHiddenNewLine().equals(this.getName()))
-				.filter(link -> !link.getLinkArrow().equals(LinkArrow.NONE))
 				.map(link -> new PlantRelationshipRepresentationImpl(this, findPlantClassByName(link.getEntity2().getDisplay().asStringWithHiddenNewLine()), link, getEntity2Qualifier(link), getEntity1Qualifier(link)))
-				.collect(Collectors.toSet());
+				.collect(Collectors.toList());
 		// @formatter:on
 
 		// @formatter:off
-		Set<PlantRelationshipRepresentation> relationship2 = this.classDiagram.getEntityFactory().getLinks().stream()
+		Collection<PlantRelationshipRepresentation> relationship2 = this.classDiagram.getEntityFactory().getLinks().stream()
 				.filter(link -> link.getEntity1().getEntityType().equals(LeafType.CLASS))
+				.peek(link -> System.out.println(link.getType()))
 				.filter(link -> link.getEntity2().getDisplay().asStringWithHiddenNewLine().equals(this.getName()))
-				.filter(link -> !link.getLinkArrow().equals(LinkArrow.NONE))
 				.map(link -> new PlantRelationshipRepresentationImpl(this, findPlantClassByName(link.getEntity1().getDisplay().asStringWithHiddenNewLine()), link, getEntity1Qualifier(link), getEntity2Qualifier(link)))
-				.collect(Collectors.toSet());
+				.collect(Collectors.toList());
 		// @formatter:on
 
-		return ImmutableSet.<PlantRelationshipRepresentation>builder().addAll(relationship1).addAll(relationship2).build();
+		Clog.printv("relationship1: ", relationship1.size(), " relationship2: ", relationship2.size());
+
+		return ImmutableList.<PlantRelationshipRepresentation>builder().addAll(relationship1).addAll(relationship2).build();
 	}
 
 	private PlantClassRepresentation findPlantClassByName(String name) {
