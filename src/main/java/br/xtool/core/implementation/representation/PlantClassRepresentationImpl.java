@@ -205,7 +205,6 @@ public class PlantClassRepresentationImpl implements PlantClassRepresentation {
 		// @formatter:off
 		Collection<PlantRelationshipRepresentation> relationship2 = this.classDiagram.getEntityFactory().getLinks().stream()
 				.filter(link -> link.getEntity1().getEntityType().equals(LeafType.CLASS))
-				.peek(link -> System.out.println(link.getType()))
 				.filter(link -> link.getEntity2().getDisplay().asStringWithHiddenNewLine().equals(this.getName()))
 				.map(link -> new PlantRelationshipRepresentationImpl(this, findPlantClassByName(link.getEntity1().getDisplay().asStringWithHiddenNewLine()), link, getEntity1Qualifier(link), getEntity2Qualifier(link)))
 				.collect(Collectors.toList());

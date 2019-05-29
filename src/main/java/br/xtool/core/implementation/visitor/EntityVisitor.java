@@ -94,10 +94,14 @@ public class EntityVisitor implements ClassVisitor {
 
 	private void addTableAnnotation(EntityRepresentation entity, PlantClassRepresentation plantClass) {
 		// @formatter:off
-		plantClass.getTaggedValue("table.name").ifPresent(tagValue ->
-			entity.addAnnotation(Table.class)
-				.getRoasterAnnotation()
-				.setStringValue("name", tagValue));
+		plantClass.getTaggedValue("table.name")
+			.map(tagValue ->
+				entity.addAnnotation(Table.class)
+					.getRoasterAnnotation()
+					.setStringValue("name", tagValue))
+			.orElse(entity.addAnnotation(Table.class)
+					.getRoasterAnnotation()
+					.setStringValue("name", Strman.toSnakeCase(entity.getName()).toUpperCase()));
 		plantClass.getTaggedValue("table.schema").ifPresent(tagValue -> 
 			entity.addAnnotation(Table.class)
 				.getRoasterAnnotation()
