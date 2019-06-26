@@ -1,4 +1,4 @@
-package br.xtool.command.provider;
+package br.xtool.command.provider.value;
 
 import java.util.List;
 import java.util.stream.Collectors;

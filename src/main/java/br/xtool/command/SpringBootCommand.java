@@ -12,8 +12,8 @@ import org.springframework.shell.standard.ShellMethodAvailability;
 import org.springframework.shell.standard.ShellOption;
 
 import br.xtool.XtoolCliApplication;
-import br.xtool.command.provider.EntityRepresentationValueProvider;
-import br.xtool.command.provider.PlantClassDiagramRepresentationValueProvider;
+import br.xtool.command.provider.value.EntityRepresentationValueProvider;
+import br.xtool.command.provider.value.PlantClassDiagramRepresentationValueProvider;
 import br.xtool.core.Clog;
 import br.xtool.core.Workspace;
 import br.xtool.core.representation.ProjectRepresentation;

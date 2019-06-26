@@ -1,4 +1,4 @@
-package br.xtool.command.provider;
+package br.xtool.command.provider.value;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,27 +12,27 @@ import org.springframework.shell.standard.ValueProviderSupport;
 import org.springframework.stereotype.Component;
 
 import br.xtool.core.Workspace;
-import br.xtool.core.representation.springboot.RepositoryRepresentation;
+import br.xtool.core.representation.plantuml.PlantClassRepresentation;
 import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 
 @Component
-public class RepositoryRepresentationValueProvider extends ValueProviderSupport {
+public class PlantClassRepresentationValueProvider extends ValueProviderSupport {
 
 	@Autowired
 	private Workspace workspace;
 
 	@Override
 	public List<CompletionProposal> complete(MethodParameter parameter, CompletionContext completionContext, String[] hints) {
-		if (this.workspace.getWorkingProject() instanceof SpringBootProjectRepresentation) {
+		// @formatter:off
+		if(this.workspace.getWorkingProject() instanceof SpringBootProjectRepresentation) {
 			SpringBootProjectRepresentation project = SpringBootProjectRepresentation.class.cast(this.workspace.getWorkingProject());
-			// @formatter:off
-			return project.getRepositories()
-				.stream().map(RepositoryRepresentation::getName)
-				.map(CompletionProposal::new)
-				.collect(Collectors.toList());
-			// @formatter:on
+			return project.getMainDomainClassDiagram().getClasses().stream()
+					.map(PlantClassRepresentation::getName)
+					.map(CompletionProposal::new)
+					.collect(Collectors.toList());
 		}
 		return new ArrayList<>();
+		// @formatter:on
 	}
 
 }
