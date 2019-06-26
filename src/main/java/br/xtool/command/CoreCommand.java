@@ -13,9 +13,9 @@ import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 
 import br.xtool.XtoolCliApplication;
+import br.xtool.command.provider.SpringBootProjectRepresentationValueProvider;
 import br.xtool.core.Shell;
 import br.xtool.core.Workspace;
-import br.xtool.core.provider.SpringBootProjectRepresentationValueProvider;
 import br.xtool.core.representation.ProjectRepresentation;
 import br.xtool.core.representation.angular.NgProjectRepresentation;
 import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;

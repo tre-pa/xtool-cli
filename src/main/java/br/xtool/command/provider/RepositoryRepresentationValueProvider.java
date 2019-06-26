@@ -1,4 +1,4 @@
-package br.xtool.core.provider;
+package br.xtool.command.provider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,24 +12,24 @@ import org.springframework.shell.standard.ValueProviderSupport;
 import org.springframework.stereotype.Component;
 
 import br.xtool.core.Workspace;
-import br.xtool.core.representation.angular.NgPageRepresentation;
-import br.xtool.core.representation.angular.NgProjectRepresentation;
+import br.xtool.core.representation.springboot.RepositoryRepresentation;
+import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 
 @Component
-public class NgPageRepresentationValueProvider extends ValueProviderSupport {
+public class RepositoryRepresentationValueProvider extends ValueProviderSupport {
 
 	@Autowired
 	private Workspace workspace;
 
 	@Override
 	public List<CompletionProposal> complete(MethodParameter parameter, CompletionContext completionContext, String[] hints) {
-		if (this.workspace.getWorkingProject() instanceof NgProjectRepresentation) {
-			NgProjectRepresentation project = NgProjectRepresentation.class.cast(this.workspace.getWorkingProject());
+		if (this.workspace.getWorkingProject() instanceof SpringBootProjectRepresentation) {
+			SpringBootProjectRepresentation project = SpringBootProjectRepresentation.class.cast(this.workspace.getWorkingProject());
 			// @formatter:off
-			return project.getNgPages().stream()
-					.map(NgPageRepresentation::getName)
-					.map(CompletionProposal::new)
-					.collect(Collectors.toList());
+			return project.getRepositories()
+				.stream().map(RepositoryRepresentation::getName)
+				.map(CompletionProposal::new)
+				.collect(Collectors.toList());
 			// @formatter:on
 		}
 		return new ArrayList<>();

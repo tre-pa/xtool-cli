@@ -1,4 +1,4 @@
-package br.xtool.core.provider;
+package br.xtool.command.provider;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package br.xtool.core.provider;
+package br.xtool.command.provider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,12 +12,12 @@ import org.springframework.shell.standard.ValueProviderSupport;
 import org.springframework.stereotype.Component;
 
 import br.xtool.core.Workspace;
-import br.xtool.core.representation.angular.NgComponentRepresentation;
+import br.xtool.core.representation.angular.NgModuleRepresentation;
 import br.xtool.core.representation.angular.NgProjectRepresentation;
 import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 
 @Component
-public class NgComponentRepresentationValueProvider extends ValueProviderSupport {
+public class NgModuleRepresentationValueProvider extends ValueProviderSupport {
 
 	@Autowired
 	private Workspace workspace;
@@ -33,8 +33,8 @@ public class NgComponentRepresentationValueProvider extends ValueProviderSupport
 			NgProjectRepresentation project = isNgProjectRepresentation ? 
 					NgProjectRepresentation.class.cast(this.workspace.getWorkingProject()) : 
 					SpringBootProjectRepresentation.class.cast(this.workspace.getWorkingProject()).getAssociatedAngularProject().get();
-			return project.getNgComponents().stream()
-					.map(NgComponentRepresentation::getName)
+			return project.getNgModules().stream()
+					.map(NgModuleRepresentation::getName)
 					.map(CompletionProposal::new)
 					.collect(Collectors.toList());
 			// @formatter:on

@@ -1,4 +1,4 @@
-package br.xtool.core.converter;
+package br.xtool.command.converter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;

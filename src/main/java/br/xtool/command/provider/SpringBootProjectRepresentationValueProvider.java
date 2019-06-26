@@ -1,4 +1,4 @@
-package br.xtool.core.provider;
+package br.xtool.command.provider;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,7 +14,7 @@ import br.xtool.core.Workspace;
 import br.xtool.core.representation.ProjectRepresentation;
 
 @Component
-public class ProjectRepresentationValueProvider extends ValueProviderSupport {
+public class SpringBootProjectRepresentationValueProvider extends ValueProviderSupport {
 
 	@Autowired
 	private Workspace workspace;
@@ -23,6 +23,7 @@ public class ProjectRepresentationValueProvider extends ValueProviderSupport {
 	public List<CompletionProposal> complete(MethodParameter parameter, CompletionContext completionContext, String[] hints) {
 		// @formatter:off
 		return this.workspace.getWorkspace().getProjects().stream()
+				.filter(prj -> prj.getProjectType().equals(ProjectRepresentation.Type.SPRINGBOOT))
 				.map(ProjectRepresentation::getName)
 				.map(CompletionProposal::new)
 				.collect(Collectors.toList());

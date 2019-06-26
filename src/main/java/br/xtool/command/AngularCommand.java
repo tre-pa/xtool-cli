@@ -11,9 +11,9 @@ import org.springframework.shell.standard.ShellMethodAvailability;
 import org.springframework.shell.standard.ShellOption;
 
 import br.xtool.XtoolCliApplication;
+import br.xtool.command.provider.EntityRepresentationValueProvider;
+import br.xtool.command.provider.NgModuleRepresentationValueProvider;
 import br.xtool.core.Workspace;
-import br.xtool.core.provider.EntityRepresentationValueProvider;
-import br.xtool.core.provider.NgModuleRepresentationValueProvider;
 import br.xtool.core.representation.ProjectRepresentation;
 import br.xtool.core.representation.angular.NgModuleRepresentation;
 import br.xtool.core.representation.angular.NgProjectRepresentation;
