@@ -1,4 +1,4 @@
-package br.xtool.core.map;
+package br.xtool.core.pdiagram.map;
 
 import java.util.function.Function;
 

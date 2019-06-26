@@ -1,4 +1,4 @@
-package br.xtool.core.implementation.visitor;
+package br.xtool.core.pdiagram.visitor;
 
 import javax.persistence.Column;
 import javax.persistence.EnumType;
@@ -14,9 +14,9 @@ import javax.validation.constraints.Size;
 import org.springframework.stereotype.Component;
 
 import br.xtool.core.representation.plantuml.PlantClassFieldPropertyRepresentation.FieldPropertyType;
+import br.xtool.core.pdiagram.FieldVisitor;
 import br.xtool.core.representation.plantuml.PlantClassFieldRepresentation;
 import br.xtool.core.representation.springboot.EntityAttributeRepresentation;
-import br.xtool.core.visitor.FieldVisitor;
 import lombok.val;
 
 @Component

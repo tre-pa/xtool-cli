@@ -1,4 +1,4 @@
-package br.xtool.core.implementation.visitor;
+package br.xtool.core.pdiagram.visitor;
 
 import javax.validation.constraints.Size;
 
@@ -6,9 +6,9 @@ import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import br.xtool.core.pdiagram.RelationshipVisitor;
 import br.xtool.core.representation.plantuml.PlantRelationshipRepresentation;
 import br.xtool.core.representation.springboot.EntityAttributeRepresentation;
-import br.xtool.core.visitor.RelationshipVisitor;
 
 @Component
 public class EntityRelationshipVisitor implements RelationshipVisitor {

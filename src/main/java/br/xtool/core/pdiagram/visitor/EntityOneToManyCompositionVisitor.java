@@ -1,5 +1,6 @@
-package br.xtool.core.implementation.visitor;
+package br.xtool.core.pdiagram.visitor;
 
+import javax.persistence.CascadeType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
@@ -9,47 +10,48 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.stereotype.Component;
 
+import br.xtool.core.pdiagram.RelationshipVisitor;
 import br.xtool.core.representation.plantuml.PlantRelationshipRepresentation;
 import br.xtool.core.representation.springboot.EntityAttributeRepresentation;
-import br.xtool.core.visitor.RelationshipVisitor;
 import lombok.val;
 import strman.Strman;
 
 /**
- * 
- * Visitor de relacionamento de Associação OneToMany
+ * Visitor de relacionamento de Composição OneToMany
  * 
  * @author jcruz
  *
  */
 @Component
-public class EntityOneToManyAssociationVisitor implements RelationshipVisitor {
+public class EntityOneToManyCompositionVisitor implements RelationshipVisitor {
 
 	@Override
 	public void visit(EntityAttributeRepresentation attr, PlantRelationshipRepresentation plantRelationship) {
-		if (plantRelationship.isAssociation() && plantRelationship.isOneToMany()) {
-			addOneToManyAnnotation(attr, plantRelationship);
+		if (plantRelationship.isComposition() && plantRelationship.isOneToMany()) {
 			addBatchSizeAnnotation(attr);
 			addLazyCollectionAnnotation(attr);
-			addJoinColumnAnnotation(attr, plantRelationship);
-		}
-	}
-
-	private void addJoinColumnAnnotation(EntityAttributeRepresentation attr, PlantRelationshipRepresentation plantRelationship) {
-		if (!plantRelationship.getNavigability().isBidirectional()) {
-			// @formatter:off
-			String fkName = StringUtils.abbreviate(
-				StringUtils.upperCase(
-				Strman.toSnakeCase(plantRelationship.getTargetClass().getName())), "", 30) + "_ID";
-			// @formatter:on
-			attr.addAnnotation(JoinColumn.class).getRoasterAnnotation().setStringValue("name", fkName);
+			addOneToManyAnnotation(attr, plantRelationship);
 		}
 	}
 
 	private void addOneToManyAnnotation(EntityAttributeRepresentation attr, PlantRelationshipRepresentation plantRelationship) {
-		val annOneToMany = attr.addAnnotation(OneToMany.class);
+		// @formatter:off
+		val annOneToMany = attr.addAnnotation(OneToMany.class)
+			.getRoasterAnnotation()
+			.setEnumValue("cascade", CascadeType.ALL)
+			.setLiteralValue("orphanRemoval", "true");
+		// @formatter:on
 		if (plantRelationship.getNavigability().isBidirectional()) {
-			annOneToMany.getRoasterAnnotation().setStringValue("mappedBy", plantRelationship.getTargetRole());
+			annOneToMany.setStringValue("mappedBy", plantRelationship.getTargetRole());
+		} else {
+			// @formatter:off
+			String fkName = StringUtils.abbreviate(
+					StringUtils.upperCase(
+					Strman.toSnakeCase(plantRelationship.getTargetClass().getName())), "", 30) + "_ID";
+			attr.addAnnotation(JoinColumn.class)
+				.getRoasterAnnotation()
+				.setStringValue("name", fkName);
+			// @formatter:on
 		}
 	}
 

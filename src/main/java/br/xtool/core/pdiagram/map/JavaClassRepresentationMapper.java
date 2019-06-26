@@ -1,4 +1,4 @@
-package br.xtool.core.map;
+package br.xtool.core.pdiagram.map;
 
 import java.util.Set;
 import java.util.function.Function;
@@ -11,10 +11,10 @@ import br.xtool.core.Workspace;
 import br.xtool.core.helper.RoasterHelper;
 import br.xtool.core.implementation.representation.EntityRepresentationImpl;
 import br.xtool.core.implementation.representation.JavaClassRepresentationImpl;
+import br.xtool.core.pdiagram.ClassVisitor;
 import br.xtool.core.representation.plantuml.PlantClassRepresentation;
 import br.xtool.core.representation.springboot.JavaClassRepresentation;
 import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
-import br.xtool.core.visitor.ClassVisitor;
 
 /**
  * Transforma uma classe UML (PlantUML) em um EJavaClass.

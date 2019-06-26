@@ -1,4 +1,4 @@
-package br.xtool.core.map;
+package br.xtool.core.pdiagram.map;
 
 import java.util.Set;
 import java.util.function.BiFunction;
@@ -9,13 +9,13 @@ import org.springframework.stereotype.Component;
 import br.xtool.core.helper.RoasterHelper;
 import br.xtool.core.implementation.representation.EntityAttributeRepresentationImpl;
 import br.xtool.core.implementation.representation.EntityRepresentationImpl;
+import br.xtool.core.pdiagram.FieldVisitor;
 import br.xtool.core.representation.plantuml.PlantClassFieldRepresentation;
 import br.xtool.core.representation.springboot.EntityAttributeRepresentation;
 import br.xtool.core.representation.springboot.EntityRepresentation;
 import br.xtool.core.representation.springboot.JavaClassRepresentation;
 import br.xtool.core.representation.springboot.JavaFieldRepresentation;
 import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
-import br.xtool.core.visitor.FieldVisitor;
 
 /**
  * Transforma um atributo UML (PlantUML) do diagrama de classe em um EJavaField.

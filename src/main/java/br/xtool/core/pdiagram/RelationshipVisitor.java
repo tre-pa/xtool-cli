@@ -1,4 +1,4 @@
-package br.xtool.core.visitor;
+package br.xtool.core.pdiagram;
 
 import br.xtool.core.representation.plantuml.PlantRelationshipRepresentation;
 import br.xtool.core.representation.springboot.EntityAttributeRepresentation;

@@ -1,4 +1,4 @@
-package br.xtool.core.implementation.visitor;
+package br.xtool.core.pdiagram.visitor;
 
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
@@ -7,9 +7,9 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.springframework.stereotype.Component;
 
+import br.xtool.core.pdiagram.RelationshipVisitor;
 import br.xtool.core.representation.plantuml.PlantRelationshipRepresentation;
 import br.xtool.core.representation.springboot.EntityAttributeRepresentation;
-import br.xtool.core.visitor.RelationshipVisitor;
 import lombok.val;
 
 /**

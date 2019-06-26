@@ -1,4 +1,4 @@
-package br.xtool.core.implementation.visitor;
+package br.xtool.core.pdiagram.visitor;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -13,10 +13,10 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 import br.xtool.core.Clog;
 import br.xtool.core.helper.InflectorHelper;
+import br.xtool.core.pdiagram.ClassVisitor;
 import br.xtool.core.representation.plantuml.PlantClassRepresentation;
 import br.xtool.core.representation.plantuml.PlantStereotypeRepresentation.StereotypeType;
 import br.xtool.core.representation.springboot.EntityRepresentation;
-import br.xtool.core.visitor.ClassVisitor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
