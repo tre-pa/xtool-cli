@@ -11,6 +11,13 @@ import br.xtool.core.representation.springboot.JavaEnumRepresentation;
 
 public interface AngularService {
 
+	/**
+	 * Gera uma nova aplicação Angular baseada em um archetype localizado em src/main/resources/templates/angular
+	 * 
+	 * @param name       Nome do projeto
+	 * @param descrition Descrição do projeto.
+	 * @param version    Versão do archetype.
+	 */
 	void newApp(String name, String descrition, String version);
 
 	/**
