@@ -2,7 +2,7 @@ package br.xtool.core.template;
 
 import org.springframework.stereotype.Component;
 
-import br.xtool.core.TemplateBuilder;
+import br.xtool.core.helper.TemplateBuilder;
 import br.xtool.core.representation.springboot.EntityAttributeRepresentation;
 import br.xtool.core.representation.springboot.EntityRepresentation;
 

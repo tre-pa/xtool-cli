@@ -3,7 +3,7 @@ package br.xtool.core.template;
 import org.hibernate.annotations.Immutable;
 import org.springframework.stereotype.Component;
 
-import br.xtool.core.TemplateBuilder;
+import br.xtool.core.helper.TemplateBuilder;
 import br.xtool.core.representation.plantuml.PlantRelationshipRepresentation;
 import br.xtool.core.representation.springboot.JavaClassRepresentation;
 

@@ -1,4 +1,4 @@
-package br.xtool.core;
+package br.xtool.core.helper;
 
 import org.apache.commons.lang3.StringUtils;
 import org.jtwig.JtwigModel;
