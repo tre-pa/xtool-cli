@@ -10,7 +10,7 @@ import { ${entity.name} } from 'src/app/domain/${entityFileName}';
 export class ${entity.name}Service extends CrudService<${entity.name}> {
 
   constructor(private http: HttpClient) {
-    super(http, '/${entity.apiName}');
+    super(http, '/${entityApiName}');
   }
   
   save(${entity.instanceName}: ${entity.name}): Observable<${entity.name}> {
