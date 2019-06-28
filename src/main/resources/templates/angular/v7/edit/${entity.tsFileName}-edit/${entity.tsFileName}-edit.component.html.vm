@@ -4,6 +4,7 @@
     (submit)="save($event)">
     <dx-form id="form"
       [formData]="${entity.instanceName}"
+      (onContentReady)="onContentReady($event)"
       [showValidationSummary]="true"
       requiredMark="<span title='campo obrigatório'>*</span>">
       <dxi-item itemType="group" colCount="2">
