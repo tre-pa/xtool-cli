@@ -14,10 +14,10 @@ import org.springframework.shell.standard.ShellOption;
 
 import br.xtool.XtoolCliApplication;
 import br.xtool.command.provider.value.SpringBootProjectRepresentationValueProvider;
-import br.xtool.core.Shell;
 import br.xtool.core.Workspace;
 import br.xtool.core.representation.ProjectRepresentation;
 import br.xtool.core.representation.angular.NgProjectRepresentation;
+import br.xtool.core.representation.springboot.SpringBootNgProjectRepresentation;
 import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 import br.xtool.service.AngularService;
 import br.xtool.service.SpringBootService;
@@ -39,9 +39,6 @@ public class CoreCommand {
 	@Autowired
 	private Workspace workspace;
 
-	@Autowired
-	private Shell shell;
-
 	/**
 	 * Gera uma aplicação Spring Boot e Angular integrada.
 	 * 
@@ -53,13 +50,29 @@ public class CoreCommand {
 			@ShellOption(help = "Nome do projeto") String name,
 			@ShellOption(help = "Descrição do projeto (Usar aspas duplas caso possua espaços em branco)") String description,
 			@ShellOption(help = "Versão da aplicação SpringBoot", defaultValue = "v2", value = "--springboot-version") String sbversion,
-			@ShellOption(help = "Versão da aplicação Angular", defaultValue = "v7", value = "--angular-version") String ngversion) {
+			@ShellOption(help = "Versão da aplicação Angular", defaultValue = "v7", value = "--angular-version") String ngversion,
+			@ShellOption(help = "Versão da aplicação modular", defaultValue = "v2_v7", value = "--module-version") String mversion,
+			@ShellOption(help = "Desabilita a geração de projeto modular", arity = 0, defaultValue = "false") boolean noModular) {
 	// @formatter:on
-		SpringBootProjectRepresentation bootProject = springBootService.newApp(name, description, sbversion);
-		angularService.newApp(name, description, ngversion);
-		
+		if (noModular) {
+			SpringBootProjectRepresentation bootProject = springBootService.newApp(name, description, sbversion);
+			angularService.newApp(name, description, ngversion);
+			this.workspace.setWorkingProject(bootProject);
+		}
+		SpringBootNgProjectRepresentation bootProject = springBootService.newAppModular(name, description, mversion);
 		this.workspace.setWorkingProject(bootProject);
 	}
+
+//	@ShellMethod(key = "new:multimodule", value = "Gera um projeto Spring Boot e Angular multi-módulo", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
+//	public void newMultiModule(
+//	// @formatter:off
+//			@ShellOption(help = "Nome do projeto") String name,
+//			@ShellOption(help = "Descrição do projeto (Usar aspas duplas caso possua espaços em branco)") String description,
+//			@ShellOption(help = "Versão da aplicação", defaultValue = "v2_v7") String version) {
+//	// @formatter:on
+//		SpringBootNgProjectRepresentation bootProject = springBootService.newAppMultiModule(name, description, version);
+//		this.workspace.setWorkingProject(bootProject);
+//	}
 
 	/**
 	 * Gera um novo projeto Spring Boot.
@@ -126,6 +139,5 @@ public class CoreCommand {
 	public void use(@ShellOption(help = "Nome do projeto Spring Boot", valueProvider = SpringBootProjectRepresentationValueProvider.class) ProjectRepresentation project) {
 		this.workspace.setWorkingProject(project);
 	}
-
 
 }

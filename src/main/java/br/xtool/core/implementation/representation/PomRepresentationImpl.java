@@ -32,13 +32,10 @@ public class PomRepresentationImpl implements PomRepresentation {
 
 	private Document pomDoc;
 
-	private SpringBootProjectRepresentation bootProject;
+	// private File file;
 
-	//	private File file;
-
-	private PomRepresentationImpl(SpringBootProjectRepresentation bootProject, Path path) {
+	private PomRepresentationImpl(Path path) {
 		super();
-		this.bootProject = bootProject;
 		this.path = path;
 	}
 
@@ -49,6 +46,7 @@ public class PomRepresentationImpl implements PomRepresentation {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.xtool.core.representation.ESBootPom#getGroupId()
 	 */
 	@Override
@@ -58,6 +56,7 @@ public class PomRepresentationImpl implements PomRepresentation {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.xtool.core.representation.ESBootPom#getVersion()
 	 */
 	@Override
@@ -67,6 +66,7 @@ public class PomRepresentationImpl implements PomRepresentation {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.xtool.core.representation.ESBootPom#getParentGroupId()
 	 */
 	@Override
@@ -79,6 +79,7 @@ public class PomRepresentationImpl implements PomRepresentation {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.xtool.core.representation.ESBootPom#getParentVersion()
 	 */
 	@Override
@@ -91,6 +92,7 @@ public class PomRepresentationImpl implements PomRepresentation {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.xtool.core.representation.ESBootPom#hasArtifactId(java.lang.String)
 	 */
 	@Override
@@ -98,8 +100,14 @@ public class PomRepresentationImpl implements PomRepresentation {
 		return this.getDependencies().stream().anyMatch(dependency -> dependency.getArtifactId().equals(artifactId));
 	}
 
+	@Override
+	public boolean isMultiModule() {
+		return Objects.nonNull(this.pomDoc.getRootElement().getChild("modules", NAMESPACE));
+	}
+
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.xtool.core.representation.ESBootPom#getDependencies()
 	 */
 	@Override
@@ -121,6 +129,7 @@ public class PomRepresentationImpl implements PomRepresentation {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.xtool.core.representation.ESBootPom#addDependency(java.lang.String, java.lang.String)
 	 */
 	@Override
@@ -135,6 +144,7 @@ public class PomRepresentationImpl implements PomRepresentation {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.xtool.core.representation.ESBootPom#addDependency(java.lang.String, java.lang.String, java.lang.String)
 	 */
 	@Override
@@ -155,10 +165,10 @@ public class PomRepresentationImpl implements PomRepresentation {
 		return this;
 	}
 
-	public static PomRepresentationImpl of(SpringBootProjectRepresentation bootProject, Path path) {
+	public static PomRepresentationImpl of(Path path) {
 		if (Files.exists(path)) {
 			try {
-				PomRepresentationImpl pomRepresentation = new PomRepresentationImpl(bootProject, path);
+				PomRepresentationImpl pomRepresentation = new PomRepresentationImpl(path);
 				SAXBuilder saxBuilder = new SAXBuilder();
 				pomRepresentation.pomDoc = saxBuilder.build(Files.newBufferedReader(path));
 				return pomRepresentation;

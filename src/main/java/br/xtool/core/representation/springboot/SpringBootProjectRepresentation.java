@@ -7,12 +7,15 @@ import java.util.List;
 import java.util.Optional;
 import java.util.SortedSet;
 
+import org.apache.commons.lang3.StringUtils;
 import org.jboss.forge.roaster.model.JavaUnit;
 
+import br.xtool.core.implementation.representation.JavaPackageRepresentationImpl;
 import br.xtool.core.implementation.representation.PomRepresentationImpl;
 import br.xtool.core.representation.ProjectRepresentation;
 import br.xtool.core.representation.angular.NgProjectRepresentation;
 import br.xtool.core.representation.plantuml.PlantClassDiagramRepresentation;
+import strman.Strman;
 
 /**
  * Representação de um projeto Spring Boot
@@ -23,8 +26,7 @@ import br.xtool.core.representation.plantuml.PlantClassDiagramRepresentation;
 public interface SpringBootProjectRepresentation extends ProjectRepresentation {
 
 	/**
-	 * Retorna o nome da classe base. O nome da classe base é o nome da classe que
-	 * possui a annotation @SpringBootApplication sem o sufixo 'Application'
+	 * Retorna o nome da classe base. O nome da classe base é o nome da classe que possui a annotation @SpringBootApplication sem o sufixo 'Application'
 	 * 
 	 * @return Nome da classe base.
 	 */
@@ -120,9 +122,7 @@ public interface SpringBootProjectRepresentation extends ProjectRepresentation {
 	SortedSet<RestClassRepresentation> getRests();
 
 	/**
-	 * Retorna o projeto Angular associado ao projeto SpringBoot. Por conveção o
-	 * projeto angular associado possui o mesmo nome do projeto Spring Boot menos
-	 * -service
+	 * Retorna o projeto Angular associado ao projeto SpringBoot. Por conveção o projeto angular associado possui o mesmo nome do projeto Spring Boot menos -service
 	 * 
 	 * @return
 	 */
@@ -131,8 +131,7 @@ public interface SpringBootProjectRepresentation extends ProjectRepresentation {
 	/**
 	 * Retorna o diagrama de classe principal do projeto.
 	 * 
-	 * @return PlantClassDiagramRepresentation com a representação do diagrama de
-	 *         classe.
+	 * @return PlantClassDiagramRepresentation com a representação do diagrama de classe.
 	 */
 	PlantClassDiagramRepresentation getMainDomainClassDiagram();
 
@@ -158,12 +157,40 @@ public interface SpringBootProjectRepresentation extends ProjectRepresentation {
 	static boolean isValid(Path path) {
 		Path pomFile = path.resolve("pom.xml");
 		if (Files.exists(pomFile)) {
-			PomRepresentation ePom = PomRepresentationImpl.of(null, pomFile);
-			if (ePom.getParentVersion().isPresent()) {
+			PomRepresentation ePom = PomRepresentationImpl.of(pomFile);
+			if (ePom.getParentVersion().isPresent() && !ePom.isMultiModule()) {
 				return ePom.getParentGroupId().get().equals("org.springframework.boot");
 			}
 		}
 		return false;
+	}
+
+	/**
+	 * Gera um nome de projeto válido.
+	 * 
+	 * @param commomName
+	 * @return
+	 */
+	static String genProjectName(String commomName) {
+		// @formatter:off
+		return StringUtils.lowerCase(
+				Strman.toKebabCase(
+					StringUtils.endsWithIgnoreCase(commomName, "-service") ? 
+						commomName : 
+						commomName.concat("-service")
+						)
+				);
+		// @formatter:on
+	}
+
+	static String genBaseClassName(String projectName) {
+		return Strman.toStudlyCase(projectName.endsWith("Application") ? projectName.replace("Application", "") : projectName);
+
+	}
+
+	static JavaPackageRepresentation genRootPackage(String projectName) {
+		String packageName = JavaPackageRepresentation.getDefaultPrefix().concat(".").concat(StringUtils.join(StringUtils.split(Strman.toKebabCase(projectName), "-"), "."));
+		return JavaPackageRepresentationImpl.of(packageName);
 	}
 
 }

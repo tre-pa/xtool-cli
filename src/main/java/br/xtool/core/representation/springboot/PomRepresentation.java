@@ -47,13 +47,19 @@ public interface PomRepresentation {
 	Optional<String> getParentVersion();
 
 	/**
-	 * Verifica se um atefato existe no pom.xml
+	 * Verifica se um artefato existe no pom.xml
 	 * 
-	 * @param artifactId
-	 *            Nome do artefato
+	 * @param artifactId Nome do artefato
 	 * @return
 	 */
 	boolean hasArtifactId(String artifactId);
+
+	/**
+	 * Verifica se é um projeto multi-módulo
+	 * 
+	 * @return
+	 */
+	boolean isMultiModule();
 
 	/**
 	 * Retorna a lista de dependências do projeto.

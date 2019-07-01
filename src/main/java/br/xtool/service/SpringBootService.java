@@ -2,11 +2,11 @@ package br.xtool.service;
 
 import br.xtool.core.representation.plantuml.PlantClassRepresentation;
 import br.xtool.core.representation.springboot.EntityRepresentation;
-import br.xtool.core.representation.springboot.JavaPackageRepresentation;
 import br.xtool.core.representation.springboot.RepositoryRepresentation;
 import br.xtool.core.representation.springboot.RestClassRepresentation;
 import br.xtool.core.representation.springboot.ServiceClassRepresentation;
 import br.xtool.core.representation.springboot.SpecificationRepresentation;
+import br.xtool.core.representation.springboot.SpringBootNgProjectRepresentation;
 import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 
 public interface SpringBootService {
@@ -17,6 +17,16 @@ public interface SpringBootService {
 	 * @param name Nome do projeto Spring Boot.
 	 */
 	SpringBootProjectRepresentation newApp(String name, String description, String version);
+
+	/**
+	 * Cria uma aplicação Spring Boot e Angular Multi-Módulo.
+	 * 
+	 * @param name
+	 * @param description
+	 * @param version
+	 * @return
+	 */
+	SpringBootNgProjectRepresentation newAppModular(String name, String description, String version);
 
 	/**
 	 * 
@@ -83,29 +93,5 @@ public interface SpringBootService {
 	 * @param project
 	 */
 	void printRests(SpringBootProjectRepresentation project);
-
-	/**
-	 * Gera um nome de projeto válido.
-	 * 
-	 * @param commomName
-	 * @return
-	 */
-	String genProjectName(String commomName);
-
-	/**
-	 * Gera um nome de classe base (Classe main) valido.
-	 * 
-	 * @param projectName
-	 * @return
-	 */
-	String genBaseClassName(String projectName);
-
-	/**
-	 * Gera um nome de pacote base válido.
-	 * 
-	 * @param projectName
-	 * @return
-	 */
-	JavaPackageRepresentation genRootPackage(String projectName);
 
 }

@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.UUID;
 
-import org.apache.commons.lang3.StringUtils;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.formatter.DefaultCodeFormatterConstants;
 import org.eclipse.jdt.internal.compiler.impl.CompilerOptions;
@@ -22,7 +21,6 @@ import br.xtool.core.Clog;
 import br.xtool.core.Shell;
 import br.xtool.core.Workspace;
 import br.xtool.core.implementation.representation.EntityRepresentationImpl;
-import br.xtool.core.implementation.representation.JavaPackageRepresentationImpl;
 import br.xtool.core.pdiagram.map.JavaClassRepresentationMapper;
 import br.xtool.core.pdiagram.map.JavaEnumRepresentationMapper;
 import br.xtool.core.pdiagram.map.JavaFieldRepresentationMapper;
@@ -33,12 +31,12 @@ import br.xtool.core.representation.plantuml.PlantClassRepresentation;
 import br.xtool.core.representation.springboot.EntityRepresentation;
 import br.xtool.core.representation.springboot.JavaClassRepresentation;
 import br.xtool.core.representation.springboot.JavaEnumRepresentation;
-import br.xtool.core.representation.springboot.JavaPackageRepresentation;
 import br.xtool.core.representation.springboot.JavaTypeRepresentation;
 import br.xtool.core.representation.springboot.RepositoryRepresentation;
 import br.xtool.core.representation.springboot.RestClassRepresentation;
 import br.xtool.core.representation.springboot.ServiceClassRepresentation;
 import br.xtool.core.representation.springboot.SpecificationRepresentation;
+import br.xtool.core.representation.springboot.SpringBootNgProjectRepresentation;
 import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 import br.xtool.core.template.RepositoryTemplates;
 import br.xtool.core.template.RestClassTemplates;
@@ -46,7 +44,6 @@ import br.xtool.core.template.ServiceClassTemplates;
 import br.xtool.core.template.SpecificationTemplates;
 import br.xtool.service.SpringBootService;
 import lombok.SneakyThrows;
-import strman.Strman;
 
 @Service
 @Lazy
@@ -81,16 +78,16 @@ public class SpringBootServiceImpl implements SpringBootService {
 	@Override
 	public SpringBootProjectRepresentation newApp(String name, String description, String version) {
 		Map<String, Object> vars = new HashMap<String, Object>();
-		vars.put("projectName", genProjectName(name));
-		vars.put("baseClassName", genBaseClassName(name));
-		vars.put("rootPackage", genRootPackage(name));
-		vars.put("clientSecret", UUID.randomUUID());
+		vars.put("projectName", SpringBootProjectRepresentation.genProjectName(name));
 		vars.put("projectDesc", description);
+		vars.put("baseClassName", SpringBootProjectRepresentation.genBaseClassName(name));
+		vars.put("rootPackage", SpringBootProjectRepresentation.genRootPackage(name));
+		vars.put("clientSecret", UUID.randomUUID());
 		// @formatter:off
 		SpringBootProjectRepresentation bootProject = this.workspace.createProject(
 				ProjectRepresentation.Type.SPRINGBOOT, 
 				version,
-				genProjectName(name), 
+				SpringBootProjectRepresentation.genProjectName(name), 
 				vars);
 		// @formatter:on
 
@@ -100,6 +97,32 @@ public class SpringBootServiceImpl implements SpringBootService {
 		this.shellService.runCmd(bootProject.getPath(), "git add . > /dev/null 2>&1");
 		this.shellService.runCmd(bootProject.getPath(), "git commit -m \"Inicial commit\" > /dev/null 2>&1 ");
 		Clog.print(Clog.cyan("\t-- Commit inicial realizado no git. --"));
+
+		return bootProject;
+	}
+
+	@Override
+	public SpringBootNgProjectRepresentation newAppModular(String name, String description, String version) {
+		Map<String, Object> vars = new HashMap<String, Object>();
+		vars.put("projectName", SpringBootNgProjectRepresentation.genProjectName(name));
+		vars.put("projectDesc", description);
+		vars.put("baseClassName", SpringBootNgProjectRepresentation.genBaseClassName(name));
+		vars.put("rootPackage", SpringBootNgProjectRepresentation.genRootPackage(name));
+		vars.put("clientSecret", UUID.randomUUID());
+		// @formatter:off
+		SpringBootNgProjectRepresentation bootProject = this.workspace.createProject(
+				ProjectRepresentation.Type.SPRINGBOOTNG, 
+				version,
+				SpringBootNgProjectRepresentation.genProjectName(name), 
+				vars);
+		// @formatter:on
+
+		this.workspace.setWorkingProject(bootProject);
+//		this.shellService.runCmd(bootProject.getPath(), "chmod +x scripts/keycloak/register-client.sh");
+//		this.shellService.runCmd(bootProject.getPath(), "git init > /dev/null 2>&1 ");
+//		this.shellService.runCmd(bootProject.getPath(), "git add . > /dev/null 2>&1");
+//		this.shellService.runCmd(bootProject.getPath(), "git commit -m \"Inicial commit\" > /dev/null 2>&1 ");
+//		Clog.print(Clog.cyan("\t-- Commit inicial realizado no git. --"));
 
 		return bootProject;
 	}
@@ -126,7 +149,7 @@ public class SpringBootServiceImpl implements SpringBootService {
 //		plantClass.getRelationships().forEach(r -> {
 //			System.out.println(String.format("Source: %s, Target: %s", r.getSourceClass().getName(), r.getTargetClass().getName()));
 //		});
-		
+
 		plantClass.getRelationships().stream().forEach(plantRelationship -> appCtx.getBean(JavaRelationshipRepresentationMapper.class).apply(javaClass, plantRelationship));
 		save(javaClass);
 
@@ -258,50 +281,11 @@ public class SpringBootServiceImpl implements SpringBootService {
 		// @formatter:on
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see br.xtool.service.SpringBootService#genProjectName(java.lang.String)
-	 */
-	@Override
-	public String genProjectName(String commomName) {
-		// @formatter:off
-		return StringUtils.lowerCase(
-				Strman.toKebabCase(
-					StringUtils.endsWithIgnoreCase(commomName, "-service") ? 
-						commomName : 
-						commomName.concat("-service")
-						)
-				);
-		// @formatter:on
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see br.xtool.service.SpringBootService#genBaseClassName(java.lang.String)
-	 */
-	@Override
-	public String genBaseClassName(String projectName) {
-		return Strman.toStudlyCase(projectName.endsWith("Application") ? projectName.replace("Application", "") : projectName);
-
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see br.xtool.service.SpringBootService#genRootPackage(java.lang.String)
-	 */
-	@Override
-	public JavaPackageRepresentation genRootPackage(String projectName) {
-		String packageName = JavaPackageRepresentation.getDefaultPrefix().concat(".").concat(StringUtils.join(StringUtils.split(Strman.toKebabCase(projectName), "-"), "."));
-		return JavaPackageRepresentationImpl.of(packageName);
-	}
-
 	@SneakyThrows
 	private void save(JavaTypeRepresentation<?> javaType) {
 		Path javaPath = javaType.getProject().getMainSourceFolder().getPath().resolve(javaType.getJavaPackage().getDir()).resolve(String.format("%s.java", javaType.getName()));
-		if (Files.notExists(javaPath.getParent())) Files.createDirectories(javaPath.getParent());
+		if (Files.notExists(javaPath.getParent()))
+			Files.createDirectories(javaPath.getParent());
 		Properties prefs = new Properties();
 		prefs.setProperty(JavaCore.COMPILER_SOURCE, CompilerOptions.VERSION_1_8);
 		prefs.setProperty(JavaCore.COMPILER_COMPLIANCE, CompilerOptions.VERSION_1_8);

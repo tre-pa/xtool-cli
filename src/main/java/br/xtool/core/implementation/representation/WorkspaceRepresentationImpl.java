@@ -6,11 +6,14 @@ import java.util.Objects;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
+
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Sets;
 
 import br.xtool.core.representation.ProjectRepresentation;
 import br.xtool.core.representation.WorkspaceRepresentation;
 import br.xtool.core.representation.angular.NgProjectRepresentation;
+import br.xtool.core.representation.springboot.SpringBootNgProjectRepresentation;
 import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 import lombok.SneakyThrows;
 
@@ -19,6 +22,8 @@ public class WorkspaceRepresentationImpl implements WorkspaceRepresentation {
 	private SortedSet<SpringBootProjectRepresentation> springBootProjects;
 
 	private SortedSet<NgProjectRepresentation> angularProjects;
+
+	private SortedSet<SpringBootNgProjectRepresentation> springBootNgProjects;
 
 	private Path path;
 
@@ -44,7 +49,7 @@ public class WorkspaceRepresentationImpl implements WorkspaceRepresentation {
 
 	@Override
 	@SneakyThrows
-	public SortedSet<NgProjectRepresentation> getAngularProjections() {
+	public SortedSet<NgProjectRepresentation> getAngularProjects() {
 		if (Objects.isNull(this.angularProjects)) {
 			// @formatter:off
 			this.angularProjects = Files.list(this.path)
@@ -58,8 +63,29 @@ public class WorkspaceRepresentationImpl implements WorkspaceRepresentation {
 	}
 
 	@Override
-	public SortedSet<ProjectRepresentation> getProjects() {
-		return Stream.concat(this.getSpringBootProjects().stream(), this.getAngularProjections().stream()).collect(Collectors.toCollection(TreeSet::new));
+	@SneakyThrows
+	public SortedSet<SpringBootNgProjectRepresentation> getSpringBootNgProjects() {
+		if (Objects.isNull(this.springBootNgProjects)) {
+			// @formatter:off
+			this.springBootNgProjects = Files.list(this.path)
+					.filter(Files::isDirectory)
+					.filter(SpringBootNgProjectRepresentation::isValid)
+					.map(SpringBootNgProjectRepresentationImpl::new)
+					.collect(Collectors.toCollection(TreeSet::new));
+			// @formatter:on
+		}
+		return this.springBootNgProjects;
+	}
+
+	@Override
+	public SortedSet<? extends ProjectRepresentation> getProjects() {
+		return Sets.newTreeSet(Iterables.concat(this.getSpringBootProjects(), this.getAngularProjects(), this.getSpringBootNgProjects()));
+//		// @formatter:off
+//		return Stream.concat(
+//				this.getSpringBootProjects().stream(), 
+//				this.getAngularProjects().stream())
+//			.collect(Collectors.toCollection(TreeSet::new));
+//		// @formatter:on
 	}
 
 	@Override

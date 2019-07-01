@@ -4,8 +4,10 @@ import java.nio.file.Path;
 import java.util.Collection;
 
 import br.xtool.core.implementation.representation.NgProjectRepresentationImpl;
+import br.xtool.core.implementation.representation.SpringBootNgProjectRepresentationImpl;
 import br.xtool.core.implementation.representation.SpringBootProjectRepresentationImpl;
 import br.xtool.core.representation.angular.NgProjectRepresentation;
+import br.xtool.core.representation.springboot.SpringBootNgProjectRepresentation;
 import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,11 +28,16 @@ public interface ProjectRepresentation extends Comparable<ProjectRepresentation>
 	 */
 	@AllArgsConstructor
 	@Getter
+	// @formatter:off
 	enum Type {
-		SPRINGBOOT("springboot", SpringBootProjectRepresentation.class), ANGULAR("angular", NgProjectRepresentation.class), NONE("none", NoneProjectRepresentation.class);
+		SPRINGBOOT("springboot", SpringBootProjectRepresentation.class), 
+		ANGULAR("angular", NgProjectRepresentation.class), 
+		SPRINGBOOTNG("springbootng", SpringBootNgProjectRepresentation.class),
+		NONE("none", NoneProjectRepresentation.class);
 		private String name;
 		private Class<?> projectClass;
 	}
+	// @formatter:on
 
 	/**
 	 * Enum com as versões do projeto.
@@ -40,10 +47,13 @@ public interface ProjectRepresentation extends Comparable<ProjectRepresentation>
 	 */
 	@AllArgsConstructor
 	@Getter
+	// @formatter:off
 	enum Version {
-		NONE(""), V1("v1"), V2("v2"), V3("v3"), V4("v4"), V5("v5"), V6("v6"), V7("v7"), V8("v8"), V9("v9"), V10("v10");
+		NONE(""), V1("v1"), V2("v2"), V3("v3"), V4("v4"), V5("v5"), V6("v6"), V7("v7"), V8("v8"), V9("v9"), V10("v10"),
+		V2_V7("v2_v7");
 		private String name;
 	}
+	// @formatter:on
 
 	Path getPath();
 
@@ -54,16 +64,23 @@ public interface ProjectRepresentation extends Comparable<ProjectRepresentation>
 	 */
 	String getName();
 
-	// String getMainDir();
-
 	/**
+	 * Retorna a versão do Framework
 	 * 
 	 * @return
 	 */
 	String getFrameworkVersion();
 
+	/**
+	 * Retorna a versão do projeto.
+	 * 
+	 * @return
+	 */
 	Version getProjectVersion();
 
+	/**
+	 * Efetua uma limpeza no cache do projeto.
+	 */
 	void refresh();
 
 	/**
@@ -88,6 +105,13 @@ public interface ProjectRepresentation extends Comparable<ProjectRepresentation>
 	Collection<Path> listAllDirectories();
 
 	/**
+	 * Retorna se o projeto é multi-módulo.
+	 * 
+	 * @return
+	 */
+	boolean isMultiModule();
+
+	/**
 	 * 
 	 * @param projectClass
 	 * @param path
@@ -98,25 +122,10 @@ public interface ProjectRepresentation extends Comparable<ProjectRepresentation>
 			return new SpringBootProjectRepresentationImpl(path);
 		} else if (NgProjectRepresentation.class.isAssignableFrom(projectClass)) {
 			return new NgProjectRepresentationImpl(path);
+		} else if (SpringBootNgProjectRepresentation.class.isAssignableFrom(projectClass)) {
+			return new SpringBootNgProjectRepresentationImpl(path);
 		}
 		throw new IllegalArgumentException(String.format("Factory de projeto não encontrada para %s", projectClass.getName()));
-	}
-
-	/**
-	 * 
-	 * @author jcruz
-	 *
-	 * @param <T>
-	 */
-	interface Support<T extends ProjectRepresentation> {
-		/**
-		 * 
-		 * @param project
-		 * @param version
-		 */
-		void apply(T project);
-
-		boolean has(T project);
 	}
 
 }

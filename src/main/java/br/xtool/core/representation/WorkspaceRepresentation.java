@@ -4,6 +4,7 @@ import java.nio.file.Path;
 import java.util.SortedSet;
 
 import br.xtool.core.representation.angular.NgProjectRepresentation;
+import br.xtool.core.representation.springboot.SpringBootNgProjectRepresentation;
 import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 
 /**
@@ -14,27 +15,40 @@ import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
  */
 public interface WorkspaceRepresentation {
 
+	/**
+	 * Retorna o caminho do workspace.
+	 * 
+	 * @return Caminho do Workspace.
+	 */
 	Path getPath();
 
 	/**
 	 * Retorna a lista de projetos spring boot do workspace.
 	 * 
-	 * @return
+	 * @return {@link SpringBootProjectRepresentation}
 	 */
 	SortedSet<SpringBootProjectRepresentation> getSpringBootProjects();
 
 	/**
 	 * Retorna a lista de projetos angular de aplicação.
 	 * 
-	 * @return
+	 * @return {@link NgProjectRepresentation}
 	 */
-	SortedSet<NgProjectRepresentation> getAngularProjections();
+	SortedSet<NgProjectRepresentation> getAngularProjects();
 
 	/**
+	 * Retorna a lista de projetos multi-módulo SpringBoot e Angular.
 	 * 
-	 * @return
+	 * @return {@link SpringBootNgProjectRepresentation}
 	 */
-	SortedSet<ProjectRepresentation> getProjects();
+	SortedSet<SpringBootNgProjectRepresentation> getSpringBootNgProjects();
+
+	/**
+	 * Retorna a lista de todos os projetos do workspace.
+	 * 
+	 * @return {@link ProjectRepresentation}
+	 */
+	SortedSet<? extends ProjectRepresentation> getProjects();
 
 	/**
 	 * Atualiza o workspace.

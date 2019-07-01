@@ -253,9 +253,12 @@ public class NgProjectRepresentationImpl extends ProjectRepresentationImpl imple
 		Pattern v5pattern = Pattern.compile("[\\^~]?5\\.2\\.\\d");
 		Pattern v6pattern = Pattern.compile("[\\^~]?6\\.\\d\\.\\d");
 		Pattern v7pattern = Pattern.compile("[\\^~]?7\\.\\d\\.\\d");
-		if (v5pattern.matcher(this.getFrameworkVersion()).matches()) return Version.V5;
-		if (v6pattern.matcher(this.getFrameworkVersion()).matches()) return Version.V6;
-		if (v7pattern.matcher(this.getFrameworkVersion()).matches()) return Version.V7;
+		if (v5pattern.matcher(this.getFrameworkVersion()).matches())
+			return Version.V5;
+		if (v6pattern.matcher(this.getFrameworkVersion()).matches())
+			return Version.V6;
+		if (v7pattern.matcher(this.getFrameworkVersion()).matches())
+			return Version.V7;
 		return Version.NONE;
 	}
 
@@ -267,6 +270,11 @@ public class NgProjectRepresentationImpl extends ProjectRepresentationImpl imple
 	@Override
 	public Type getProjectType() {
 		return ProjectRepresentation.Type.ANGULAR;
+	}
+
+	@Override
+	public boolean isMultiModule() {
+		return false;
 	}
 
 }

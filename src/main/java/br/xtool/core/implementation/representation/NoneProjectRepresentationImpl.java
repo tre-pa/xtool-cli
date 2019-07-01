@@ -31,4 +31,9 @@ public class NoneProjectRepresentationImpl extends ProjectRepresentationImpl imp
 		return Version.NONE;
 	}
 
+	@Override
+	public boolean isMultiModule() {
+		return false;
+	}
+
 }

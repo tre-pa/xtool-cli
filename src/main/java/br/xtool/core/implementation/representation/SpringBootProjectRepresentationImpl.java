@@ -129,7 +129,7 @@ public class SpringBootProjectRepresentationImpl extends ProjectRepresentationIm
 	@Override
 	public PomRepresentation getPom() {
 		if (Objects.isNull(this.pom)) {
-			this.pom = PomRepresentationImpl.of(this, this.getPath().resolve("pom.xml"));
+			this.pom = PomRepresentationImpl.of(this.getPath().resolve("pom.xml"));
 		}
 		return this.pom;
 	}
@@ -319,21 +319,19 @@ public class SpringBootProjectRepresentationImpl extends ProjectRepresentationIm
 	public PlantClassDiagramRepresentation getMainDomainClassDiagram() {
 		return PlantClassDiagramRepresentationImpl.of(this.getPath().resolve("docs/diagrams/class/main.plantuml"));
 	}
-	
+
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.xtool.core.representation.SpringBootProjectRepresentation#getClassDiagrams()
 	 */
 	@Override
 	@SneakyThrows
 	public List<PlantClassDiagramRepresentation> getClassDiagrams() {
 		try (Stream<Path> paths = Files.walk(this.getPath().resolve("docs/diagrams/class"))) {
-		    return paths
-		        .filter(Files::isRegularFile)
-		        .filter(p -> FilenameUtils.getExtension(p.toFile().getAbsolutePath()).equals("plantuml"))
-		        .map(PlantClassDiagramRepresentationImpl::of)
-		        .collect(Collectors.toList());
-		} 
+			return paths.filter(Files::isRegularFile).filter(p -> FilenameUtils.getExtension(p.toFile().getAbsolutePath()).equals("plantuml")).map(PlantClassDiagramRepresentationImpl::of)
+					.collect(Collectors.toList());
+		}
 	}
 
 	/*
@@ -380,6 +378,11 @@ public class SpringBootProjectRepresentationImpl extends ProjectRepresentationIm
 	@Override
 	public Type getProjectType() {
 		return ProjectRepresentation.Type.SPRINGBOOT;
+	}
+
+	@Override
+	public boolean isMultiModule() {
+		return false;
 	}
 
 }
