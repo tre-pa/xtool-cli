@@ -46,7 +46,7 @@ public interface NgClassRepresentation extends NgTypeRepresentation, Comparable<
 				put("Short", "number");
 				put("BigDecimal", "number");
 				put("BigInteger", "number");
-				put("Boolean", "boolean");
+				put("Boolean", "boolean = false");
 				put("String", "string");
 				put("Date", "Date");
 				put("LocalDate", "Date");

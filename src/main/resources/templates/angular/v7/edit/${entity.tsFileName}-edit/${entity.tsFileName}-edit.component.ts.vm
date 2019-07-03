@@ -1,10 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Title } from '@angular/platform-browser';
 import { Subscription, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import DataSource from 'devextreme/data/data_source';
+import { DxFormComponent } from 'devextreme-angular/ui/form';
 
 import { JiiStore } from 'src/app/@core/jii/jii-store';
 import { ${entity.name}Service } from 'src/app/service/${entity.tsFileName}.service';
@@ -16,6 +17,10 @@ import { ${entity.name} } from 'src/app/domain/${entity.tsFileName}';
   styles: []
 })
 export class ${entity.name}EditComponent implements OnInit, OnDestroy {
+
+  @ViewChild(DxFormComponent)
+  form : DxFormComponent;
+ 
 
   id: number;
   ${entity.instanceName}: ${entity.name};
@@ -68,6 +73,11 @@ export class ${entity.name}EditComponent implements OnInit, OnDestroy {
     this.saveSub = this.${entity.instanceName}Service.save(this.${entity.instanceName})
       .pipe(takeUntil(this.destroy$))
       .subscribe((${entity.instanceName}) => this.router.navigate(['${entity.apiPath}', ${entity.instanceName}.id]));
+  }
+  
+  //coloca o foco no campo indicado ao abrir o form
+  onContentReady = () => {
+    this.form.instance.getEditor('id').focus();
   }
 
 }
