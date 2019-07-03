@@ -1,0 +1,59 @@
+<h2>Relatórios</h2>
+<dx-data-grid #dataGrid
+  id="gridContainer"
+  [dataSource]="reportStore"
+  [wordWrapEnabled]="true"
+  [showBorders]="true"
+  [showRowLines]="true"
+  [showColumnLines]="false"
+  (onToolbarPreparing)="onToolbarPreparing($event.toolbarOptions)">
+  <dxo-remote-operations [paging]="true"
+    [sorting]="true"
+    [filtering]="true"></dxo-remote-operations>
+  <dxo-sorting mode="multiple"></dxo-sorting>
+  <dxo-paging [pageSize]="pageSize"></dxo-paging>
+  <dxo-pager [allowedPageSizes]="[pageSize]"
+    [showNavigationButtons]="true"></dxo-pager>
+  <dxo-state-storing [enabled]="true"
+    type="localStorage"
+    storageKey="report-list-grid-storage"></dxo-state-storing>
+  <dxo-filter-row [visible]="true"></dxo-filter-row>
+  <dxo-header-filter [visible]="true"></dxo-header-filter>
+  <dxo-search-panel [visible]="true"
+    [width]="300"></dxo-search-panel>
+
+  <dxi-column dataField="id"
+    width="auto"></dxi-column>
+  <dxi-column dataField="title"
+    cellTemplate="titleTemplate">
+    <div *dxTemplate="let data of 'titleTemplate'">
+      {{ data.value }}<br>{{ data.data.subtitle }}
+    </div>
+  </dxi-column>
+  <dxi-column dataField="subtitle"
+    [visible]="false"></dxi-column>
+  <dxi-column dataField="sql"
+    [visible]="false"></dxi-column>
+  <dxi-column dataField="columns"
+    [visible]="false"></dxi-column>
+  <dxi-column dataField="gpdf"
+    [visible]="false"></dxi-column>
+  <dxi-column dataField="category"
+    width="auto"></dxi-column>
+  <dxi-column dataField="devOnly"
+    [showEditorAlways]="false"
+    width="auto"></dxi-column>
+  <dxi-column dataField="printOnly"
+    [showEditorAlways]="false"
+    width="auto"></dxi-column>
+  <dxi-column caption=""
+    type="buttons"
+    cellTemplate="buttonsTemplate">
+    <div *dxTemplate="let data of 'buttonsTemplate'">
+      <dx-button icon="edit"
+        title="Editar"
+        (onClick)="edit(data.data.id)">
+      </dx-button>
+    </div>
+  </dxi-column>
+</dx-data-grid>
