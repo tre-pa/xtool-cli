@@ -20,8 +20,8 @@ import br.xtool.core.representation.ProjectRepresentation;
 import br.xtool.core.representation.plantuml.PlantClassDiagramRepresentation;
 import br.xtool.core.representation.springboot.EntityRepresentation;
 import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
-import br.xtool.service.AngularService;
-import br.xtool.service.SpringBootService;
+import br.xtool.service.AngularProjectService;
+import br.xtool.service.SpringBootProjectService;
 
 /**
  * Classe com os comandos Shell para Spring Boot.
@@ -32,10 +32,10 @@ import br.xtool.service.SpringBootService;
 public class SpringBootCommand {
 
 	@Autowired
-	private SpringBootService springBootService;
+	private SpringBootProjectService springBootProjectService;
 
 	@Autowired
-	private AngularService angularService;
+	private AngularProjectService angularService;
 
 	@Autowired
 	private ApplicationContext appCtx;
@@ -53,7 +53,7 @@ public class SpringBootCommand {
 			@ShellOption(value = "--diagram", help = "Diagrama de classe", valueProvider = PlantClassDiagramRepresentationValueProvider.class, defaultValue = "main.plantuml") PlantClassDiagramRepresentation plantClassDiagram,
 			@ShellOption(value = "--verbose", help = "Modo verbose", defaultValue = "false") boolean verbose) {
 		Clog.verbose = verbose;
-		plantClassDiagram.getClasses().stream().forEach(springBootService::genEntity);
+		plantClassDiagram.getClasses().stream().forEach(springBootProjectService::genEntity);
 		Clog.verbose = false;
 	}
 
@@ -68,11 +68,11 @@ public class SpringBootCommand {
 		if (Objects.isNull(entity)) {
 			// @formatter:off
 			this.workspace.getWorkingProject(SpringBootProjectRepresentation.class).getEntities().stream()
-				.forEach(springBootService::genRepository);
+				.forEach(springBootProjectService::genRepository);
 			// @formatter:on
 			return;
 		}
-		springBootService.genRepository(entity);
+		springBootProjectService.genRepository(entity);
 //		springBootService.genSpecification(entity);
 	}
 
@@ -87,11 +87,11 @@ public class SpringBootCommand {
 		if (Objects.isNull(entity)) {
 			// @formatter:off
 			this.workspace.getWorkingProject(SpringBootProjectRepresentation.class).getEntities().stream()
-				.forEach(springBootService::genService);
+				.forEach(springBootProjectService::genService);
 			// @formatter:on
 			return;
 		}
-		springBootService.genService(entity);
+		springBootProjectService.genService(entity);
 	}
 
 	/**
@@ -105,11 +105,11 @@ public class SpringBootCommand {
 		if (Objects.isNull(entity)) {
 			// @formatter:off
 			this.workspace.getWorkingProject(SpringBootProjectRepresentation.class).getEntities().stream()
-				.forEach(springBootService::genRest);
+				.forEach(springBootProjectService::genRest);
 			// @formatter:on
 			return;
 		}
-		springBootService.genRest(entity);
+		springBootProjectService.genRest(entity);
 	}
 
 //	/**
@@ -178,10 +178,10 @@ public class SpringBootCommand {
 			@ShellOption(help = "Classes de Repositorio", arity = 0, defaultValue = "false") boolean repositories,
 			@ShellOption(help = "Classes de Service", arity = 0, defaultValue = "false") boolean services, @ShellOption(help = "Classes de Rest", arity = 0, defaultValue = "false") boolean rests) {
 		SpringBootProjectRepresentation project = this.workspace.getWorkingProject(SpringBootProjectRepresentation.class);
-		if (entities) springBootService.printEntities(project);
-		if (repositories) springBootService.printRepositories(project);
-		if (services) springBootService.printServices(project);
-		if (rests) springBootService.printRests(project);
+		if (entities) springBootProjectService.printEntities(project);
+		if (repositories) springBootProjectService.printRepositories(project);
+		if (services) springBootProjectService.printServices(project);
+		if (rests) springBootProjectService.printRests(project);
 	}
 
 //	@ShellMethod(key = "list:ng-artifacts", value = "Lista os artefatos do projeto Angular", group = XtoolCliApplication.SPRINGBOOT_COMMAND_GROUP)

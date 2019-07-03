@@ -9,7 +9,7 @@ import br.xtool.core.representation.springboot.SpecificationRepresentation;
 import br.xtool.core.representation.springboot.SpringBootNgProjectRepresentation;
 import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 
-public interface SpringBootService {
+public interface SpringBootProjectService {
 
 	/**
 	 * Cria uma nova aplicação Spring Boot.

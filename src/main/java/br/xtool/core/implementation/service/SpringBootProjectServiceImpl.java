@@ -42,12 +42,12 @@ import br.xtool.core.template.RepositoryTemplates;
 import br.xtool.core.template.RestClassTemplates;
 import br.xtool.core.template.ServiceClassTemplates;
 import br.xtool.core.template.SpecificationTemplates;
-import br.xtool.service.SpringBootService;
+import br.xtool.service.SpringBootProjectService;
 import lombok.SneakyThrows;
 
 @Service
 @Lazy
-public class SpringBootServiceImpl implements SpringBootService {
+public class SpringBootProjectServiceImpl implements SpringBootProjectService {
 
 	@Autowired
 	private Workspace workspace;

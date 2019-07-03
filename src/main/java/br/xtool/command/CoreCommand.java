@@ -19,8 +19,8 @@ import br.xtool.core.representation.ProjectRepresentation;
 import br.xtool.core.representation.angular.NgProjectRepresentation;
 import br.xtool.core.representation.springboot.SpringBootNgProjectRepresentation;
 import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
-import br.xtool.service.AngularService;
-import br.xtool.service.SpringBootService;
+import br.xtool.service.AngularProjectService;
+import br.xtool.service.SpringBootProjectService;
 
 /**
  * Classe com os comandos padrões.
@@ -31,10 +31,10 @@ import br.xtool.service.SpringBootService;
 public class CoreCommand {
 
 	@Autowired
-	private SpringBootService springBootService;
+	private SpringBootProjectService springBootService;
 
 	@Autowired
-	private AngularService angularService;
+	private AngularProjectService angularService;
 
 	@Autowired
 	private Workspace workspace;

@@ -19,13 +19,13 @@ import br.xtool.core.representation.angular.NgModuleRepresentation;
 import br.xtool.core.representation.angular.NgProjectRepresentation;
 import br.xtool.core.representation.springboot.EntityRepresentation;
 import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
-import br.xtool.service.AngularService;
+import br.xtool.service.AngularProjectService;
 
 @ShellComponent
 public class AngularCommand {
 
 	@Autowired
-	private AngularService angularService;
+	private AngularProjectService angularService;
 
 	@Autowired
 	private Workspace workspace;

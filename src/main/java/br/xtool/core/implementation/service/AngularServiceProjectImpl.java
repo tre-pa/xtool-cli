@@ -62,13 +62,13 @@ import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 import br.xtool.core.template.NgDetailTemplates;
 import br.xtool.core.template.NgEditTemplates;
 import br.xtool.core.template.NgListTemplates;
-import br.xtool.service.AngularService;
+import br.xtool.service.AngularProjectService;
 import lombok.SneakyThrows;
 import strman.Strman;
 
 @Service
 @Lazy
-public class AngularServiceImpl implements AngularService {
+public class AngularServiceProjectImpl implements AngularProjectService {
 
 	@Autowired
 	private Shell shellService;
@@ -120,7 +120,7 @@ public class AngularServiceImpl implements AngularService {
 	 */
 	@Override
 	public NgEntityRepresentation genNgEntity(EntityRepresentation entity) {
-		NgProjectRepresentation ngProject = this.genNgAssociatedProject();
+		NgProjectRepresentation ngProject = this.getNgAssociatedProject();
 		Map<String, Object> vars = new HashMap<String, Object>() {
 			private static final long serialVersionUID = 1L;
 			{
@@ -149,7 +149,7 @@ public class AngularServiceImpl implements AngularService {
 	 */
 	@Override
 	public NgEnumRepresentation genNgEnum(JavaEnumRepresentation javaEnum) {
-		NgProjectRepresentation ngProject = this.genNgAssociatedProject();
+		NgProjectRepresentation ngProject = this.getNgAssociatedProject();
 		Map<String, Object> vars = new HashMap<String, Object>() {
 			private static final long serialVersionUID = 1L;
 			{
@@ -178,7 +178,7 @@ public class AngularServiceImpl implements AngularService {
 	public NgServiceRepresentation genNgService(EntityRepresentation entity) {
 		entity.getAssociatedNgEntity().orElseGet(() -> this.genNgEntity(entity));
 
-		NgProjectRepresentation ngProject = this.genNgAssociatedProject();
+		NgProjectRepresentation ngProject = this.getNgAssociatedProject();
 		Map<String, Object> vars = new HashMap<String, Object>() {
 			private static final long serialVersionUID = 1L;
 			{
@@ -228,14 +228,14 @@ public class AngularServiceImpl implements AngularService {
 	 * br.xtool.core.representation.angular.NgModuleRepresentation)
 	 */
 	private NgListRepresentation genNgList(EntityRepresentation entity, NgModuleRepresentation ngModule) {
-		NgProjectRepresentation ngProject = this.genNgAssociatedProject();
+		NgProjectRepresentation ngProject = this.getNgAssociatedProject();
 
 		Map<String, Object> vars = new HashMap<String, Object>() {
 			private static final long serialVersionUID = 1L;
 			{
 				this.put("Strman", Strman.class);
 				this.put("StringUtils", StringUtils.class);
-				this.put("ngListTemplates", AngularServiceImpl.this.appCtx.getBean(NgListTemplates.class));
+				this.put("ngListTemplates", AngularServiceProjectImpl.this.appCtx.getBean(NgListTemplates.class));
 				this.put("entity", entity);
 				this.put("title", InflectorHelper.getInstance().pluralize(entity.getName()));
 				this.put("entityApiName", InflectorHelper.getInstance().pluralize(Strman.toKebabCase(entity.getName())));
@@ -264,14 +264,14 @@ public class AngularServiceImpl implements AngularService {
 	 * br.xtool.core.representation.angular.NgModuleRepresentation)
 	 */
 	private NgDetailRepresentation genNgDetail(EntityRepresentation entity, NgModuleRepresentation ngModule) {
-		NgProjectRepresentation ngProject = this.genNgAssociatedProject();
+		NgProjectRepresentation ngProject = this.getNgAssociatedProject();
 
 		Map<String, Object> vars = new HashMap<String, Object>() {
 			private static final long serialVersionUID = 1L;
 			{
 				this.put("Strman", Strman.class);
 				this.put("StringUtils", StringUtils.class);
-				this.put("ngDetailTemplates", AngularServiceImpl.this.appCtx.getBean(NgDetailTemplates.class));
+				this.put("ngDetailTemplates", AngularServiceProjectImpl.this.appCtx.getBean(NgDetailTemplates.class));
 				this.put("entity", entity);
 				this.put("title", InflectorHelper.getInstance().pluralize(entity.getName()));
 				this.put("typescriptTypeMap", NgClassRepresentation.typescriptTypeMap());
@@ -300,7 +300,7 @@ public class AngularServiceImpl implements AngularService {
 	 * br.xtool.core.representation.angular.NgModuleRepresentation)
 	 */
 	private NgEditRepresentation genNgEdit(EntityRepresentation entity, NgModuleRepresentation ngModule) {
-		NgProjectRepresentation ngProject = this.genNgAssociatedProject();
+		NgProjectRepresentation ngProject = this.getNgAssociatedProject();
 
 		String entityFileName = NgClassRepresentation.genFileName(entity.getName()).concat("-edit");
 		String entityFolderName = Strman.toKebabCase(entity.getInstanceName());
@@ -310,7 +310,7 @@ public class AngularServiceImpl implements AngularService {
 			{
 				this.put("Strman", Strman.class);
 				this.put("StringUtils", StringUtils.class);
-				this.put("ngEditTemplates", AngularServiceImpl.this.appCtx.getBean(NgEditTemplates.class));
+				this.put("ngEditTemplates", AngularServiceProjectImpl.this.appCtx.getBean(NgEditTemplates.class));
 				this.put("entityFileName", entityFileName);
 				this.put("entityTsFileName", Strman.toKebabCase(entity.getInstanceName()));
 				this.put("entityFolderName", entityFolderName);
@@ -476,7 +476,7 @@ public class AngularServiceImpl implements AngularService {
 		}
 	}
 
-	private NgProjectRepresentation genNgAssociatedProject() {
+	private NgProjectRepresentation getNgAssociatedProject() {
 		SpringBootProjectRepresentation springBootProject = this.workspace.getWorkingProject(SpringBootProjectRepresentation.class);
 		NgProjectRepresentation ngProject = springBootProject.getAssociatedAngularProject()
 				.orElseThrow(() -> new IllegalArgumentException("Não há nenhum projeto Angular associado ao projeto: " + springBootProject.getName()));
