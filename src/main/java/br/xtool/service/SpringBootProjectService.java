@@ -34,14 +34,15 @@ public interface SpringBootProjectService {
 	/**
 	 * Cria uma inteface de Repository no projeto para a entidade.
 	 * 
-	 * @param entity
-	 * @return
+	 * @param entity Entidade JPA.
+	 * @return {@link RepositoryRepresentation}
 	 */
 	RepositoryRepresentation genRepository(EntityRepresentation entity);
 
 	/**
+	 * Cria uma classe de specification. A criação da classe é gerada automaticamente quando a interface de repositório é gerada.
 	 * 
-	 * @param entity
+	 * @param entity Entidade JPA.
 	 * @return
 	 */
 	SpecificationRepresentation genSpecification(EntityRepresentation entity);
@@ -49,7 +50,7 @@ public interface SpringBootProjectService {
 	/**
 	 * Cria uma classe de Service no projeto.
 	 * 
-	 * @param repository Repositório selecionado.
+	 * @param entity Entidade JPA.
 	 * @return
 	 */
 	ServiceClassRepresentation genService(EntityRepresentation entity);
@@ -57,7 +58,7 @@ public interface SpringBootProjectService {
 	/**
 	 * Cria uma classe Rest no projeto.
 	 * 
-	 * @param repository Repositório selecionado.
+	 * @param entity Entidade JPA.
 	 * @return
 	 */
 	RestClassRepresentation genRest(EntityRepresentation entity);

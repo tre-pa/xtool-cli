@@ -13,10 +13,10 @@ public interface SpringBootNgProjectService {
 	/**
 	 * Cria uma aplicação Spring Boot e Angular Multi-Módulo.
 	 * 
-	 * @param name
-	 * @param description
-	 * @param version
-	 * @return
+	 * @param name        Nome do projeto
+	 * @param description Descrição do projeto
+	 * @param version     Versão do projeto
+	 * @return {@link SpringBootNgProjectRepresentation}
 	 */
 	SpringBootNgProjectRepresentation newApp(String name, String description, String version);
 }
