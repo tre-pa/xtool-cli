@@ -1,5 +1,3 @@
-#set ($OB = "${")
-#set ($CB = "}")
 
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
@@ -7,18 +5,19 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>${OB}project.parent.groupId}</groupId>
+	<groupId>br.jus.tre_pa.${projectName}</groupId>
 	<artifactId>${projectName}</artifactId>
-	<version>${OB}project.parent.version}</version>
+	<!--<version>0.0.1-SNAPSHOT</version>-->
 	<packaging>jar</packaging>
 
 	<name>${projectName}</name>
 	<description>${projectDesc}</description>
 	
 	<parent>
-		<groupId>br.jus.tre_pa.${projectName}</groupId>
-		<artifactId>${projectName}</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.1.0.RELEASE</version>
+		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 
 	<properties>
@@ -61,13 +60,13 @@
 		</dependency>
 
 		<!-- Driver Oracle JDBC -->
-		<dependency>
+		<!--<dependency>
 			<groupId>com.oracle</groupId>
 			<artifactId>ojdbc6</artifactId>
 			<version>11.2.0.3.0</version>
 			<scope>system</scope>
-			<systemPath>${OB}project.basedir}/src/main/resources/BOOT-INF/lib/ojdbc6-11.2.0.3.0.jar</systemPath>
-		</dependency>
+			<systemPath>${project.basedir}/src/main/resources/BOOT-INF/lib/ojdbc6-11.2.0.3.0.jar</systemPath>
+		</dependency> -->
 
 		<!-- Devido a incompatibilidade com o Oracle 10c é necessário utilizar 
 			esta versão -->
