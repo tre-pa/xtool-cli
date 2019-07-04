@@ -6,9 +6,14 @@ import br.xtool.core.representation.springboot.RepositoryRepresentation;
 import br.xtool.core.representation.springboot.RestClassRepresentation;
 import br.xtool.core.representation.springboot.ServiceClassRepresentation;
 import br.xtool.core.representation.springboot.SpecificationRepresentation;
-import br.xtool.core.representation.springboot.SpringBootNgProjectRepresentation;
 import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 
+/**
+ * API de serviço do projeto Spring Boot.
+ * 
+ * @author jcruz
+ *
+ */
 public interface SpringBootProjectService {
 
 	/**
@@ -19,16 +24,7 @@ public interface SpringBootProjectService {
 	SpringBootProjectRepresentation newApp(String name, String description, String version);
 
 	/**
-	 * Cria uma aplicação Spring Boot e Angular Multi-Módulo.
-	 * 
-	 * @param name
-	 * @param description
-	 * @param version
-	 * @return
-	 */
-	SpringBootNgProjectRepresentation newAppModular(String name, String description, String version);
-
-	/**
+	 * Gera uma entidade JPA baseado em
 	 * 
 	 * @param plantClass
 	 * @return
