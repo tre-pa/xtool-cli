@@ -20,6 +20,7 @@ import br.xtool.core.representation.angular.NgProjectRepresentation;
 import br.xtool.core.representation.springboot.SpringBootNgProjectRepresentation;
 import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 import br.xtool.service.AngularProjectService;
+import br.xtool.service.SpringBootNgProjectService;
 import br.xtool.service.SpringBootProjectService;
 
 /**
@@ -32,6 +33,9 @@ public class CoreCommand {
 
 	@Autowired
 	private SpringBootProjectService springBootService;
+
+	@Autowired
+	private SpringBootNgProjectService springBootNgProjectService;
 
 	@Autowired
 	private AngularProjectService angularService;
@@ -59,7 +63,7 @@ public class CoreCommand {
 			angularService.newApp(name, description, ngversion);
 			this.workspace.setWorkingProject(bootProject);
 		}
-		SpringBootNgProjectRepresentation bootProject = springBootService.newAppModular(name, description, mversion);
+		SpringBootNgProjectRepresentation bootProject = springBootNgProjectService.newApp(name, description, mversion);
 		this.workspace.setWorkingProject(bootProject);
 	}
 

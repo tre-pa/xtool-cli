@@ -36,7 +36,6 @@ import br.xtool.core.representation.springboot.RepositoryRepresentation;
 import br.xtool.core.representation.springboot.RestClassRepresentation;
 import br.xtool.core.representation.springboot.ServiceClassRepresentation;
 import br.xtool.core.representation.springboot.SpecificationRepresentation;
-import br.xtool.core.representation.springboot.SpringBootNgProjectRepresentation;
 import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 import br.xtool.core.template.RepositoryTemplates;
 import br.xtool.core.template.RestClassTemplates;
@@ -97,32 +96,6 @@ public class SpringBootProjectServiceImpl implements SpringBootProjectService {
 		this.shellService.runCmd(bootProject.getPath(), "git add . > /dev/null 2>&1");
 		this.shellService.runCmd(bootProject.getPath(), "git commit -m \"Inicial commit\" > /dev/null 2>&1 ");
 		Clog.print(Clog.cyan("\t-- Commit inicial realizado no git. --"));
-
-		return bootProject;
-	}
-
-	@Override
-	public SpringBootNgProjectRepresentation newAppModular(String name, String description, String version) {
-		Map<String, Object> vars = new HashMap<String, Object>();
-		vars.put("projectName", SpringBootNgProjectRepresentation.genProjectName(name));
-		vars.put("projectDesc", description);
-		vars.put("baseClassName", SpringBootNgProjectRepresentation.genBaseClassName(name));
-		vars.put("rootPackage", SpringBootNgProjectRepresentation.genRootPackage(name));
-		vars.put("clientSecret", UUID.randomUUID());
-		// @formatter:off
-		SpringBootNgProjectRepresentation bootProject = this.workspace.createProject(
-				ProjectRepresentation.Type.SPRINGBOOTNG, 
-				version,
-				SpringBootNgProjectRepresentation.genProjectName(name), 
-				vars);
-		// @formatter:on
-
-		this.workspace.setWorkingProject(bootProject);
-//		this.shellService.runCmd(bootProject.getPath(), "chmod +x scripts/keycloak/register-client.sh");
-//		this.shellService.runCmd(bootProject.getPath(), "git init > /dev/null 2>&1 ");
-//		this.shellService.runCmd(bootProject.getPath(), "git add . > /dev/null 2>&1");
-//		this.shellService.runCmd(bootProject.getPath(), "git commit -m \"Inicial commit\" > /dev/null 2>&1 ");
-//		Clog.print(Clog.cyan("\t-- Commit inicial realizado no git. --"));
 
 		return bootProject;
 	}

@@ -9,6 +9,12 @@ import br.xtool.core.representation.angular.NgServiceRepresentation;
 import br.xtool.core.representation.springboot.EntityRepresentation;
 import br.xtool.core.representation.springboot.JavaEnumRepresentation;
 
+/**
+ * API de serviço do projeto Angular.
+ * 
+ * @author jcruz
+ *
+ */
 public interface AngularProjectService {
 
 	/**
