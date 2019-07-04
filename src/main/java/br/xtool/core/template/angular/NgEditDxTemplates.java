@@ -1,4 +1,4 @@
-package br.xtool.core.template;
+package br.xtool.core.template.angular;
 
 import org.springframework.stereotype.Component;
 
@@ -7,20 +7,18 @@ import br.xtool.core.representation.springboot.EntityAttributeRepresentation;
 import br.xtool.core.representation.springboot.EntityRepresentation;
 
 /**
- * Classe com os fragmentos de template do componente de edição do Angular. A
- * classe é injetada no arquivo de template
+ * Classe com os fragmentos de template do componente de edição do Angular. A classe é injetada no arquivo de template
  * src/main/resources/templates/angular/v7/edit/${entity.tsFileName}-edit/${entity.tsFileName}-edit.component.html.vm
  * 
  * 
- * @author jcruz
+ * @author jcruz 
  *
  */
 @Component
-public class NgEditTemplates {
+public class NgEditDxTemplates {
 
 	/**
-	 * Itera sobre todos os atributos da entidade para a geração do fragmento de
-	 * código HTML de edição de acordo com o tipo de dado do atributo.
+	 * Itera sobre todos os atributos da entidade para a geração do fragmento de código HTML de edição de acordo com o tipo de dado do atributo.
 	 * 
 	 * @param entity Entidade JPA.
 	 * @return Fragmento do componente de edição.
@@ -108,8 +106,7 @@ public class NgEditTemplates {
 	}
 
 	/**
-	 * Gera o fragmento de código HTML para atributos do tipo Temporal (Date,
-	 * LocalDate, LocalDateTime ou java.sql.Date)
+	 * Gera o fragmento de código HTML para atributos do tipo Temporal (Date, LocalDate, LocalDateTime ou java.sql.Date)
 	 * 
 	 * @param sb   Instância de StringBuilder
 	 * @param attr Atributo da entidade JPA.
@@ -138,8 +135,7 @@ public class NgEditTemplates {
 	}
 
 	/**
-	 * Verifica se o atributo JPA está marcado com máscara e gera o framento de
-	 * código HTML refletindo a máscara.
+	 * Verifica se o atributo JPA está marcado com máscara e gera o framento de código HTML refletindo a máscara.
 	 * 
 	 * @param attr
 	 * @return Framento com código HTML de máscara ou String vazia.
@@ -159,20 +155,17 @@ public class NgEditTemplates {
 	}
 
 	/**
-	 * Verifica se o atributo é marcado como requerido e retorna o fragmento de
-	 * código HTML de validação do tipo 'required'.
+	 * Verifica se o atributo é marcado como requerido e retorna o fragmento de código HTML de validação do tipo 'required'.
 	 * 
 	 * @param attr Atributo da entidade JPA.
-	 * @return Framento de código HTML de validação do tipo 'required' ou String
-	 *         vazia.
+	 * @return Framento de código HTML de validação do tipo 'required' ou String vazia.
 	 */
 	public String addHtmlRequiredValidation(EntityAttributeRepresentation attr) {
 		return attr.isRequired() ? "<dxi-validation-rule type=\"required\"></dxi-validation-rule>" : "";
 	}
 
 	/**
-	 * Retorna o fragmento de código HTML de validação de tamanho para atributo do
-	 * tipo String.
+	 * Retorna o fragmento de código HTML de validação de tamanho para atributo do tipo String.
 	 * 
 	 * @param attr Atributo de entidade JPA.
 	 * @return Fragmento de código HTML de validação de tamanho.

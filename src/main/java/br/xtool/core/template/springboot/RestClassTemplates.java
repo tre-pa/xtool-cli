@@ -1,4 +1,4 @@
-package br.xtool.core.template;
+package br.xtool.core.template.springboot;
 
 import java.util.concurrent.TimeUnit;
 

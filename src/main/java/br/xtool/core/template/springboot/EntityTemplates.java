@@ -1,4 +1,4 @@
-package br.xtool.core.template;
+package br.xtool.core.template.springboot;
 
 import org.hibernate.annotations.Immutable;
 import org.springframework.stereotype.Component;

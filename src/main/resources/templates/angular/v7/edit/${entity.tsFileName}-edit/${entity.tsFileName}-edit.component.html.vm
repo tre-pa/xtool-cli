@@ -8,7 +8,7 @@
       [showValidationSummary]="true"
       requiredMark="<span title='campo obrigatório'>*</span>">
       <dxi-item itemType="group" colCount="2">
-      ${ngEditTemplates.createHtmlAttributesDecl($entity)}
+      ${ngEditDxTemplates.createHtmlAttributesDecl($entity)}
       </dxi-item>
       <dxi-item itemType="group"
         colCount="2"

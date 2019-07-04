@@ -6,7 +6,7 @@
     (onClick)="confirmDelete()"></dx-button>
 </h2>
 <div class="dx-card content-block">
-  ${ngDetailTemplates.createHtmlAttributesDecl($entity)}
+  ${ngDetailDxTemplates.createHtmlAttributesDecl($entity)}
   
   <div fxLayout="row"
     fxLayoutAlign="space-between center">

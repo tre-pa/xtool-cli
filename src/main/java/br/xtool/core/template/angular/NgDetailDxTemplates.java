@@ -1,4 +1,4 @@
-package br.xtool.core.template;
+package br.xtool.core.template.angular;
 
 import org.springframework.stereotype.Component;
 
@@ -6,8 +6,14 @@ import br.xtool.core.helper.TemplateBuilder;
 import br.xtool.core.representation.springboot.EntityAttributeRepresentation;
 import br.xtool.core.representation.springboot.EntityRepresentation;
 
+/**
+ * Template DevExtreme do componente de detail de projetos Angular.
+ * 
+ * @author jcruz
+ *
+ */
 @Component
-public class NgDetailTemplates {
+public class NgDetailDxTemplates {
 
 	public String createHtmlAttributesDecl(EntityRepresentation entity) {
 		StringBuilder sb = new StringBuilder();

@@ -31,7 +31,7 @@
   <dxo-search-panel [visible]="true"
     [width]="300"></dxo-search-panel>
   <!-- COLUMNS -->
-  ${ngListTemplates.createHtmlAttributesDecl($entity)}
+  ${ngListDxTemplates.createHtmlAttributesDecl($entity)}
   <!-- BUTTONS -->
   <dxi-column type="buttons"
     cellTemplate="buttonsTemplate"

@@ -59,9 +59,9 @@ import br.xtool.core.representation.springboot.EntityAttributeRepresentation;
 import br.xtool.core.representation.springboot.EntityRepresentation;
 import br.xtool.core.representation.springboot.JavaEnumRepresentation;
 import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
-import br.xtool.core.template.NgDetailTemplates;
-import br.xtool.core.template.NgEditTemplates;
-import br.xtool.core.template.NgListTemplates;
+import br.xtool.core.template.angular.NgDetailDxTemplates;
+import br.xtool.core.template.angular.NgEditDxTemplates;
+import br.xtool.core.template.angular.NgListDxTemplates;
 import br.xtool.service.AngularProjectService;
 import lombok.SneakyThrows;
 import strman.Strman;
@@ -224,8 +224,7 @@ public class AngularServiceProjectImpl implements AngularProjectService {
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see br.xtool.service.AngularService#genNgList(br.xtool.core.representation. springboot.EntityRepresentation,
-	 * br.xtool.core.representation.angular.NgModuleRepresentation)
+	 * @see br.xtool.service.AngularService#genNgList(br.xtool.core.representation. springboot.EntityRepresentation, br.xtool.core.representation.angular.NgModuleRepresentation)
 	 */
 	private NgListRepresentation genNgList(EntityRepresentation entity, NgModuleRepresentation ngModule) {
 		NgProjectRepresentation ngProject = this.getNgAssociatedProject();
@@ -235,7 +234,7 @@ public class AngularServiceProjectImpl implements AngularProjectService {
 			{
 				this.put("Strman", Strman.class);
 				this.put("StringUtils", StringUtils.class);
-				this.put("ngListTemplates", AngularServiceProjectImpl.this.appCtx.getBean(NgListTemplates.class));
+				this.put("ngListDxTemplates", AngularServiceProjectImpl.this.appCtx.getBean(NgListDxTemplates.class));
 				this.put("entity", entity);
 				this.put("title", InflectorHelper.getInstance().pluralize(entity.getName()));
 				this.put("entityApiName", InflectorHelper.getInstance().pluralize(Strman.toKebabCase(entity.getName())));
@@ -260,8 +259,7 @@ public class AngularServiceProjectImpl implements AngularProjectService {
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see br.xtool.service.AngularService#genNgDetail(br.xtool.core.representation. springboot.EntityRepresentation,
-	 * br.xtool.core.representation.angular.NgModuleRepresentation)
+	 * @see br.xtool.service.AngularService#genNgDetail(br.xtool.core.representation. springboot.EntityRepresentation, br.xtool.core.representation.angular.NgModuleRepresentation)
 	 */
 	private NgDetailRepresentation genNgDetail(EntityRepresentation entity, NgModuleRepresentation ngModule) {
 		NgProjectRepresentation ngProject = this.getNgAssociatedProject();
@@ -271,7 +269,7 @@ public class AngularServiceProjectImpl implements AngularProjectService {
 			{
 				this.put("Strman", Strman.class);
 				this.put("StringUtils", StringUtils.class);
-				this.put("ngDetailTemplates", AngularServiceProjectImpl.this.appCtx.getBean(NgDetailTemplates.class));
+				this.put("ngDetailDxTemplates", AngularServiceProjectImpl.this.appCtx.getBean(NgDetailDxTemplates.class));
 				this.put("entity", entity);
 				this.put("title", InflectorHelper.getInstance().pluralize(entity.getName()));
 				this.put("typescriptTypeMap", NgClassRepresentation.typescriptTypeMap());
@@ -296,8 +294,7 @@ public class AngularServiceProjectImpl implements AngularProjectService {
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see br.xtool.service.AngularService#genNgEdit(br.xtool.core.representation. springboot.EntityRepresentation,
-	 * br.xtool.core.representation.angular.NgModuleRepresentation)
+	 * @see br.xtool.service.AngularService#genNgEdit(br.xtool.core.representation. springboot.EntityRepresentation, br.xtool.core.representation.angular.NgModuleRepresentation)
 	 */
 	private NgEditRepresentation genNgEdit(EntityRepresentation entity, NgModuleRepresentation ngModule) {
 		NgProjectRepresentation ngProject = this.getNgAssociatedProject();
@@ -310,7 +307,7 @@ public class AngularServiceProjectImpl implements AngularProjectService {
 			{
 				this.put("Strman", Strman.class);
 				this.put("StringUtils", StringUtils.class);
-				this.put("ngEditTemplates", AngularServiceProjectImpl.this.appCtx.getBean(NgEditTemplates.class));
+				this.put("ngEditDxTemplates", AngularServiceProjectImpl.this.appCtx.getBean(NgEditDxTemplates.class));
 				this.put("entityFileName", entityFileName);
 				this.put("entityTsFileName", Strman.toKebabCase(entity.getInstanceName()));
 				this.put("entityFolderName", entityFolderName);

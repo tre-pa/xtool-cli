@@ -1,4 +1,4 @@
-package br.xtool.core.template;
+package br.xtool.core.template.angular;
 
 import org.springframework.stereotype.Component;
 
@@ -6,8 +6,14 @@ import br.xtool.core.helper.TemplateBuilder;
 import br.xtool.core.representation.springboot.EntityAttributeRepresentation;
 import br.xtool.core.representation.springboot.EntityRepresentation;
 
+/**
+ * Template DevExtreme do componente de edit de projetos Angular.
+ * 
+ * @author jcruz
+ *
+ */
 @Component
-public class NgListTemplates {
+public class NgListDxTemplates {
 
 	public String createHtmlAttributesDecl(EntityRepresentation entity) {
 		StringBuilder sb = new StringBuilder();
@@ -44,6 +50,9 @@ public class NgListTemplates {
 		return sb.toString();
 	}
 
+	/*
+	 * Gera fragmentos html do componente list para atributos boolean.
+	 */
 	private void addHtmlBooleanFieldDecl(StringBuilder sb, EntityAttributeRepresentation attr) {
 		if (attr.isBooleanField()) {
 			// @formatter:off

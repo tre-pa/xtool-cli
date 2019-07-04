@@ -1,4 +1,4 @@
-package br.xtool.core.template;
+package br.xtool.core.template.springboot;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

@@ -37,10 +37,10 @@ import br.xtool.core.representation.springboot.RestClassRepresentation;
 import br.xtool.core.representation.springboot.ServiceClassRepresentation;
 import br.xtool.core.representation.springboot.SpecificationRepresentation;
 import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
-import br.xtool.core.template.RepositoryTemplates;
-import br.xtool.core.template.RestClassTemplates;
-import br.xtool.core.template.ServiceClassTemplates;
-import br.xtool.core.template.SpecificationTemplates;
+import br.xtool.core.template.springboot.RepositoryTemplates;
+import br.xtool.core.template.springboot.RestClassTemplates;
+import br.xtool.core.template.springboot.ServiceClassTemplates;
+import br.xtool.core.template.springboot.SpecificationTemplates;
 import br.xtool.service.SpringBootProjectService;
 import lombok.SneakyThrows;
 
