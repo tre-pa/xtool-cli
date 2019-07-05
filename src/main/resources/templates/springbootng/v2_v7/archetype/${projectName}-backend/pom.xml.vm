@@ -1,3 +1,5 @@
+#set ($OB = "${")
+#set ($CB = "}")
 
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
@@ -5,19 +7,18 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>br.jus.tre_pa.${projectName}</groupId>
-	<artifactId>${projectName}</artifactId>
-	<!--<version>0.0.1-SNAPSHOT</version>-->
+	<groupId>${OB}project.parent.groupId${CB}</groupId>
+	<artifactId>${projectName}-backend</artifactId>
+	<version>${project.parent.version}</version>
 	<packaging>jar</packaging>
 
-	<name>${projectName}</name>
+	<name>${projectName}-backend</name>
 	<description>${projectDesc}</description>
 	
 	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.1.0.RELEASE</version>
-		<relativePath /> <!-- lookup parent from repository -->
+		<groupId>br.jus.tre_pa.${projectName}</groupId>
+		<artifactId>${projectName}</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
 	<properties>
@@ -98,7 +99,7 @@
 		<dependency>
 			<groupId>br.jus.tre_pa.${projectName}</groupId>
 			<artifactId>${projectName}-frontend</artifactId>
-			<version>$OB project.version}</version>
+			<version>${project.version}</version>
 			<scope>runtime</scope>
 		</dependency>
 
