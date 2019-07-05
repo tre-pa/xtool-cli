@@ -1,12 +1,10 @@
 package br.xtool.core.pdiagram.map;
 
-import java.util.function.Function;
+import java.util.function.BiFunction;
 
 import org.jboss.forge.roaster.model.source.JavaEnumSource;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import br.xtool.core.Workspace;
 import br.xtool.core.helper.RoasterHelper;
 import br.xtool.core.implementation.representation.JavaEnumRepresentationImpl;
 import br.xtool.core.representation.plantuml.PlantEnumRepresentation;
@@ -20,14 +18,10 @@ import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
  *
  */
 @Component
-public class JavaEnumRepresentationMapper implements Function<PlantEnumRepresentation, JavaEnumRepresentation> {
-
-	@Autowired
-	private Workspace workspace;
+public class JavaEnumRepresentationMapper implements BiFunction<SpringBootProjectRepresentation, PlantEnumRepresentation, JavaEnumRepresentation> {
 
 	@Override
-	public JavaEnumRepresentation apply(PlantEnumRepresentation plantEnum) {
-		SpringBootProjectRepresentation springBootProject = this.workspace.getWorkingProject(SpringBootProjectRepresentation.class);
+	public JavaEnumRepresentation apply(SpringBootProjectRepresentation springBootProject, PlantEnumRepresentation plantEnum) {
 		// @formatter:off
 		JavaEnumRepresentation javaEnum = springBootProject.getRoasterJavaUnits().stream()
 				.filter(javaUnit -> javaUnit.getGoverningType().isEnum())

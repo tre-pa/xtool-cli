@@ -1,13 +1,12 @@
 package br.xtool.core.pdiagram.map;
 
 import java.util.Set;
-import java.util.function.Function;
+import java.util.function.BiFunction;
 
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import br.xtool.core.Workspace;
 import br.xtool.core.helper.RoasterHelper;
 import br.xtool.core.implementation.representation.EntityRepresentationImpl;
 import br.xtool.core.implementation.representation.JavaClassRepresentationImpl;
@@ -23,17 +22,13 @@ import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
  *
  */
 @Component
-public class JavaClassRepresentationMapper implements Function<PlantClassRepresentation, JavaClassRepresentation> {
-
-	@Autowired
-	private Workspace workspace;
+public class JavaClassRepresentationMapper implements BiFunction<SpringBootProjectRepresentation, PlantClassRepresentation, JavaClassRepresentation> {
 
 	@Autowired
 	private Set<ClassVisitor> classVisitors;
 
 	@Override
-	public JavaClassRepresentation apply(PlantClassRepresentation plnatClass) {
-		SpringBootProjectRepresentation springBootProject = this.workspace.getWorkingProject(SpringBootProjectRepresentation.class);
+	public JavaClassRepresentation apply(SpringBootProjectRepresentation springBootProject, PlantClassRepresentation plnatClass) {
 		// @formatter:off
 		JavaClassRepresentation javaClass = springBootProject.getRoasterJavaUnits().stream()
 				.filter(javaUnit -> javaUnit.getGoverningType().isClass())

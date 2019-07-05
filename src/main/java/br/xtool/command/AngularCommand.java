@@ -112,9 +112,16 @@ public class AngularCommand {
 	}
 
 	public Availability availabilityAngularCommand() throws IOException {
-		return this.workspace.getWorkingProject().getProjectType().equals(ProjectRepresentation.Type.SPRINGBOOT)
-				&& this.workspace.getWorkingProject(SpringBootProjectRepresentation.class).getAssociatedAngularProject().isPresent() ? Availability.available()
-						: Availability.unavailable("O diretório de trabalho não possui um projeto angular associado. Use o comando 'use' para alterar o diretório de trabalho.");
+		return isSpringBootProject() || isSpringBootNgProject() ? Availability.available()
+				: Availability.unavailable("O diretório de trabalho não possui um projeto angular associado. Use o comando 'use' para alterar o diretório de trabalho.");
 	}
 
+	protected boolean isSpringBootProject() {
+		return this.workspace.getWorkingProjectType().equals(ProjectRepresentation.Type.SPRINGBOOT)
+				&& this.workspace.getWorkingProject(SpringBootProjectRepresentation.class).getAssociatedAngularProject().isPresent();
+	}
+
+	protected boolean isSpringBootNgProject() {
+		return this.workspace.getWorkingProjectType().equals(ProjectRepresentation.Type.SPRINGBOOTNG);
+	}
 }

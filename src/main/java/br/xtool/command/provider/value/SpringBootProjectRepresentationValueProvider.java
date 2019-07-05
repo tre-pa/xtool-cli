@@ -23,7 +23,7 @@ public class SpringBootProjectRepresentationValueProvider extends ValueProviderS
 	public List<CompletionProposal> complete(MethodParameter parameter, CompletionContext completionContext, String[] hints) {
 		// @formatter:off
 		return this.workspace.getWorkspace().getProjects().stream()
-				.filter(prj -> prj.getProjectType().equals(ProjectRepresentation.Type.SPRINGBOOT))
+				.filter(prj -> prj.getProjectType().equals(ProjectRepresentation.Type.SPRINGBOOT) || prj.getProjectType().equals(ProjectRepresentation.Type.SPRINGBOOTNG))
 				.map(ProjectRepresentation::getName)
 				.map(CompletionProposal::new)
 				.collect(Collectors.toList());

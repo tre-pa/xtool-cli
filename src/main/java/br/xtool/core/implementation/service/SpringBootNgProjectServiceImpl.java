@@ -5,28 +5,19 @@ import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import br.xtool.core.Clog;
 import br.xtool.core.Shell;
 import br.xtool.core.Workspace;
-import br.xtool.core.helper.JavaTypeHelper;
-import br.xtool.core.implementation.representation.EntityRepresentationImpl;
-import br.xtool.core.pdiagram.map.JavaClassRepresentationMapper;
-import br.xtool.core.pdiagram.map.JavaEnumRepresentationMapper;
-import br.xtool.core.pdiagram.map.JavaFieldRepresentationMapper;
-import br.xtool.core.pdiagram.map.JavaRelationshipRepresentationMapper;
 import br.xtool.core.representation.ProjectRepresentation;
-import br.xtool.core.representation.plantuml.PlantClassFieldRepresentation;
 import br.xtool.core.representation.plantuml.PlantClassRepresentation;
 import br.xtool.core.representation.springboot.EntityRepresentation;
-import br.xtool.core.representation.springboot.JavaClassRepresentation;
-import br.xtool.core.representation.springboot.JavaEnumRepresentation;
 import br.xtool.core.representation.springboot.SpringBootNgProjectRepresentation;
 import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 import br.xtool.service.SpringBootNgProjectService;
+import br.xtool.service.SpringBootProjectService;
 
 @Service
 @Lazy
@@ -39,7 +30,7 @@ public class SpringBootNgProjectServiceImpl implements SpringBootNgProjectServic
 	private Shell shell;
 
 	@Autowired
-	private ApplicationContext appCtx;
+	private SpringBootProjectService springBootProjectService;
 
 	@Override
 	public SpringBootNgProjectRepresentation newApp(String name, String description, String version) {
@@ -67,35 +58,9 @@ public class SpringBootNgProjectServiceImpl implements SpringBootNgProjectServic
 		return bootProject;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see br.xtool.service.SpringBootService#genEntity(br.xtool.core.representation. plantuml.PlantClassRepresentation)
-	 */
 	@Override
-	public EntityRepresentation genEntity(PlantClassRepresentation plantClass) {
-		Clog.printv(Clog.green("[CLASS] "), plantClass.getName(), " / ", plantClass.getRelationships().size(), " relationships");
-
-		SpringBootProjectRepresentation springBootProject = this.workspace.getWorkingProject(SpringBootProjectRepresentation.class);
-		JavaClassRepresentation javaClass = appCtx.getBean(JavaClassRepresentationMapper.class).apply(plantClass);
-		plantClass.getFields().stream().filter(PlantClassFieldRepresentation::isEnum).forEach(plantClassField -> {
-			JavaEnumRepresentation javaEnum = appCtx.getBean(JavaEnumRepresentationMapper.class).apply(plantClassField.getPlantEnumRepresentation().get());
-			JavaTypeHelper.save(javaEnum);
-		});
-		plantClass.getFields().stream().forEach(plantField -> appCtx.getBean(JavaFieldRepresentationMapper.class).apply(javaClass, plantField));
-
-//		System.out.println("\n\n");
-//		System.out.println(String.format("Classe %s, Quantidade de Relacionamentos: %d", plantClass.getName(), plantClass.getRelationships().size()));
-//		plantClass.getRelationships().forEach(r -> {
-//			System.out.println(String.format("Source: %s, Target: %s", r.getSourceClass().getName(), r.getTargetClass().getName()));
-//		});
-
-		plantClass.getRelationships().stream().forEach(plantRelationship -> appCtx.getBean(JavaRelationshipRepresentationMapper.class).apply(javaClass, plantRelationship));
-		JavaTypeHelper.save(javaClass);
-
-		springBootProject.refresh();
-		Clog.printv("");
-		return new EntityRepresentationImpl(springBootProject, javaClass.getRoasterJavaClass());
+	public EntityRepresentation genEntity(SpringBootProjectRepresentation springBootProject, PlantClassRepresentation plantClass) {
+		return springBootProjectService.genEntity(springBootProject, plantClass);
 	}
 
 }

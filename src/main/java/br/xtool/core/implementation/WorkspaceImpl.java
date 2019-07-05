@@ -7,7 +7,6 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -18,7 +17,6 @@ import br.xtool.core.implementation.representation.NoneProjectRepresentationImpl
 import br.xtool.core.implementation.representation.WorkspaceRepresentationImpl;
 import br.xtool.core.representation.ProjectRepresentation;
 import br.xtool.core.representation.ProjectRepresentation.Type;
-import br.xtool.core.representation.ProjectRepresentation.Version;
 import br.xtool.core.representation.WorkspaceRepresentation;
 import lombok.Getter;
 import lombok.SneakyThrows;
@@ -53,8 +51,7 @@ public class WorkspaceImpl implements Workspace {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see br.xtool.core.service.WorkspaceService#setWorkingProject(br.xtool.core.
-	 * representation.EProject)
+	 * @see br.xtool.core.service.WorkspaceService#setWorkingProject(br.xtool.core. representation.EProject)
 	 */
 	@Override
 	public void setWorkingProject(ProjectRepresentation project) {
@@ -64,8 +61,7 @@ public class WorkspaceImpl implements Workspace {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * br.xtool.core.service.WorkspaceService#getWorkingProject(java.lang.Class)
+	 * @see br.xtool.core.service.WorkspaceService#getWorkingProject(java.lang.Class)
 	 */
 	@Override
 	public <T extends ProjectRepresentation> T getWorkingProject(Class<T> projectClass) {
@@ -90,9 +86,7 @@ public class WorkspaceImpl implements Workspace {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see br.xtool.core.Workspace#createProject(br.xtool.core.representation.
-	 * ProjectRepresentation.Type, java.lang.String, java.lang.String,
-	 * java.util.Map)
+	 * @see br.xtool.core.Workspace#createProject(br.xtool.core.representation. ProjectRepresentation.Type, java.lang.String, java.lang.String, java.util.Map)
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
@@ -101,6 +95,11 @@ public class WorkspaceImpl implements Workspace {
 		Path projectPath = this.createDirectory(name);
 		this.fs.copy(archetypePath, vars, projectPath);
 		return (T) type.getProjectClass().cast(ProjectRepresentation.factory((Class<T>) type.getProjectClass(), projectPath));
+	}
+
+	@Override
+	public Type getWorkingProjectType() {
+		return this.getWorkingProject().getProjectType();
 	}
 
 }

@@ -15,6 +15,13 @@ import br.xtool.core.representation.WorkspaceRepresentation;
 public interface Workspace {
 
 	/**
+	 * Retorna o tipo do projeto de trabalho.
+	 * 
+	 * @return
+	 */
+	ProjectRepresentation.Type getWorkingProjectType();
+
+	/**
 	 * Retorna o projeto atual de trabalho.
 	 * 
 	 * @return

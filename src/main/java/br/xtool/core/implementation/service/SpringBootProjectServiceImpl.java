@@ -97,13 +97,14 @@ public class SpringBootProjectServiceImpl implements SpringBootProjectService {
 	 * @see br.xtool.service.SpringBootService#genEntity(br.xtool.core.representation. plantuml.PlantClassRepresentation)
 	 */
 	@Override
-	public EntityRepresentation genEntity(PlantClassRepresentation plantClass) {
+	public EntityRepresentation genEntity(SpringBootProjectRepresentation springBootProject, PlantClassRepresentation plantClass) {
+
 		Clog.printv(Clog.green("[CLASS] "), plantClass.getName(), " / ", plantClass.getRelationships().size(), " relationships");
 
-		SpringBootProjectRepresentation springBootProject = this.workspace.getWorkingProject(SpringBootProjectRepresentation.class);
-		JavaClassRepresentation javaClass = appCtx.getBean(JavaClassRepresentationMapper.class).apply(plantClass);
+//		SpringBootProjectRepresentation springBootProject = this.workspace.getWorkingProject(SpringBootProjectRepresentation.class);
+		JavaClassRepresentation javaClass = appCtx.getBean(JavaClassRepresentationMapper.class).apply(springBootProject, plantClass);
 		plantClass.getFields().stream().filter(PlantClassFieldRepresentation::isEnum).forEach(plantClassField -> {
-			JavaEnumRepresentation javaEnum = appCtx.getBean(JavaEnumRepresentationMapper.class).apply(plantClassField.getPlantEnumRepresentation().get());
+			JavaEnumRepresentation javaEnum = appCtx.getBean(JavaEnumRepresentationMapper.class).apply(springBootProject, plantClassField.getPlantEnumRepresentation().get());
 			JavaTypeHelper.save(javaEnum);
 		});
 		plantClass.getFields().stream().forEach(plantField -> appCtx.getBean(JavaFieldRepresentationMapper.class).apply(javaClass, plantField));
@@ -128,9 +129,9 @@ public class SpringBootProjectServiceImpl implements SpringBootProjectService {
 	 * @see br.xtool.service.SpringBootService#genRepository(br.xtool.core.representation .springboot.EntityRepresentation)
 	 */
 	@Override
-	public RepositoryRepresentation genRepository(EntityRepresentation entity) {
-		entity.getAssociatedSpecification().orElseGet(() -> genSpecification(entity));
-		SpringBootProjectRepresentation springBootProject = this.workspace.getWorkingProject(SpringBootProjectRepresentation.class);
+	public RepositoryRepresentation genRepository(SpringBootProjectRepresentation springBootProject, EntityRepresentation entity) {
+		entity.getAssociatedSpecification().orElseGet(() -> genSpecification(springBootProject, entity));
+//		SpringBootProjectRepresentation springBootProject = this.workspace.getWorkingProject(SpringBootProjectRepresentation.class);
 		String repositoryName = entity.getName().concat("Repository");
 		// @formatter:off
 		RepositoryRepresentation repository = springBootProject.getRepositories().stream()
@@ -149,8 +150,8 @@ public class SpringBootProjectServiceImpl implements SpringBootProjectService {
 	 * @see br.xtool.service.SpringBootService#genSpecification(br.xtool.core. representation.springboot.EntityRepresentation)
 	 */
 	@Override
-	public SpecificationRepresentation genSpecification(EntityRepresentation entity) {
-		SpringBootProjectRepresentation springBootProject = this.workspace.getWorkingProject(SpringBootProjectRepresentation.class);
+	public SpecificationRepresentation genSpecification(SpringBootProjectRepresentation springBootProject, EntityRepresentation entity) {
+//		SpringBootProjectRepresentation springBootProject = this.workspace.getWorkingProject(SpringBootProjectRepresentation.class);
 		String specificationName = entity.getName().concat("Specification");
 		// @formatter:off
 		SpecificationRepresentation specification = springBootProject.getSpecifications().stream()
@@ -166,11 +167,11 @@ public class SpringBootProjectServiceImpl implements SpringBootProjectService {
 	 * @see br.xtool.service.SpringBootService#genService(br.xtool.core.representation.springboot.EntityRepresentation)
 	 */
 	@Override
-	public ServiceClassRepresentation genService(EntityRepresentation entity) {
+	public ServiceClassRepresentation genService(SpringBootProjectRepresentation springBootProject,EntityRepresentation entity) {
 		
-		RepositoryRepresentation repository = entity.getAssociatedRepository().orElseGet(() -> this.genRepository(entity));
+		RepositoryRepresentation repository = entity.getAssociatedRepository().orElseGet(() -> this.genRepository(springBootProject,entity));
 		
-		SpringBootProjectRepresentation springBootProject = this.workspace.getWorkingProject(SpringBootProjectRepresentation.class);
+//		SpringBootProjectRepresentation springBootProject = this.workspace.getWorkingProject(SpringBootProjectRepresentation.class);
 		String serviceName = entity.getName().concat("Service");
 		// @formatter:off
 		ServiceClassRepresentation serviceClass = springBootProject.getServices().stream()
@@ -187,11 +188,11 @@ public class SpringBootProjectServiceImpl implements SpringBootProjectService {
 	 * @see br.xtool.service.SpringBootService#genRest(br.xtool.core.representation.springboot.EntityRepresentation)
 	 */
 	@Override
-	public RestClassRepresentation genRest(EntityRepresentation entity) {
+	public RestClassRepresentation genRest(SpringBootProjectRepresentation springBootProject,EntityRepresentation entity) {
 		
-		RepositoryRepresentation repository = entity.getAssociatedRepository().orElseGet(() -> this.genRepository(entity));
+		RepositoryRepresentation repository = entity.getAssociatedRepository().orElseGet(() -> this.genRepository(springBootProject,entity));
 		
-		SpringBootProjectRepresentation springBootProject = this.workspace.getWorkingProject(SpringBootProjectRepresentation.class);
+//		SpringBootProjectRepresentation springBootProject = this.workspace.getWorkingProject(SpringBootProjectRepresentation.class);
 		String restName = entity.getName().concat("Rest");
 		// @formatter:off
 		RestClassRepresentation restClass = springBootProject.getRests().stream()

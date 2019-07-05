@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.shell.Availability;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
@@ -19,8 +18,9 @@ import br.xtool.core.Workspace;
 import br.xtool.core.representation.ProjectRepresentation;
 import br.xtool.core.representation.plantuml.PlantClassDiagramRepresentation;
 import br.xtool.core.representation.springboot.EntityRepresentation;
+import br.xtool.core.representation.springboot.SpringBootNgProjectRepresentation;
 import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
-import br.xtool.service.AngularProjectService;
+import br.xtool.service.SpringBootNgProjectService;
 import br.xtool.service.SpringBootProjectService;
 
 /**
@@ -35,10 +35,7 @@ public class SpringBootCommand {
 	private SpringBootProjectService springBootProjectService;
 
 	@Autowired
-	private AngularProjectService angularService;
-
-	@Autowired
-	private ApplicationContext appCtx;
+	private SpringBootNgProjectService springBootNgProjectService;
 
 	@Autowired
 	private Workspace workspace;
@@ -48,12 +45,19 @@ public class SpringBootCommand {
 	 * @param plantClass
 	 */
 	@ShellMethod(key = "gen:entities", value = "Gera as classes Jpa do diagrama de classe", group = XtoolCliApplication.SPRINGBOOT_COMMAND_GROUP)
-	@ShellMethodAvailability("availabilitySpringBootCommand")
+	@ShellMethodAvailability("availabilitySpringBootComma nd")
 	public void genEntities(
 			@ShellOption(value = "--diagram", help = "Diagrama de classe", valueProvider = PlantClassDiagramRepresentationValueProvider.class, defaultValue = "main.plantuml") PlantClassDiagramRepresentation plantClassDiagram,
 			@ShellOption(value = "--verbose", help = "Modo verbose", defaultValue = "false") boolean verbose) {
 		Clog.verbose = verbose;
-		plantClassDiagram.getClasses().stream().forEach(springBootProjectService::genEntity);
+		if (isSpringBootProject()) {
+			SpringBootProjectRepresentation springBootProject = this.workspace.getWorkingProject(SpringBootProjectRepresentation.class);
+			plantClassDiagram.getClasses().stream().forEach(plantClass -> springBootProjectService.genEntity(springBootProject, plantClass));
+			return;
+		}
+		SpringBootNgProjectRepresentation springBootNgProject = this.workspace.getWorkingProject(SpringBootNgProjectRepresentation.class);
+		System.out.println(plantClassDiagram);
+		plantClassDiagram.getClasses().stream().forEach(plantClass -> springBootNgProjectService.genEntity(springBootNgProject.getSpringBootProject(), plantClass));
 		Clog.verbose = false;
 	}
 
@@ -65,14 +69,15 @@ public class SpringBootCommand {
 	@ShellMethod(key = "gen:repository", value = "Gera uma classe de Repository (JpaRepository) para entidade JPA em um projeto Spring Boot", group = XtoolCliApplication.SPRINGBOOT_COMMAND_GROUP)
 	@ShellMethodAvailability("availabilitySpringBootCommand")
 	public void genRepository(@ShellOption(help = "Entidade JPA", valueProvider = EntityRepresentationValueProvider.class, defaultValue = "") EntityRepresentation entity) {
+		SpringBootProjectRepresentation springBootProject = this.workspace.getWorkingProject(SpringBootProjectRepresentation.class);
 		if (Objects.isNull(entity)) {
 			// @formatter:off
 			this.workspace.getWorkingProject(SpringBootProjectRepresentation.class).getEntities().stream()
-				.forEach(springBootProjectService::genRepository);
+				.forEach(_entity -> springBootProjectService.genRepository(springBootProject, _entity));
 			// @formatter:on
 			return;
 		}
-		springBootProjectService.genRepository(entity);
+		springBootProjectService.genRepository(springBootProject, entity);
 //		springBootService.genSpecification(entity);
 	}
 
@@ -84,14 +89,15 @@ public class SpringBootCommand {
 	@ShellMethod(key = "gen:service", value = "Gera uma classe Service em um projeto Spring Boot", group = XtoolCliApplication.SPRINGBOOT_COMMAND_GROUP)
 	@ShellMethodAvailability("availabilitySpringBootCommand")
 	public void genService(@ShellOption(help = "Entidade JPA", valueProvider = EntityRepresentationValueProvider.class, defaultValue = "") EntityRepresentation entity) {
+		SpringBootProjectRepresentation springBootProject = this.workspace.getWorkingProject(SpringBootProjectRepresentation.class);
 		if (Objects.isNull(entity)) {
 			// @formatter:off
 			this.workspace.getWorkingProject(SpringBootProjectRepresentation.class).getEntities().stream()
-				.forEach(springBootProjectService::genService);
+				.forEach(_entity -> springBootProjectService.genService(springBootProject, _entity));
 			// @formatter:on
 			return;
 		}
-		springBootProjectService.genService(entity);
+		springBootProjectService.genService(springBootProject, entity);
 	}
 
 	/**
@@ -102,75 +108,16 @@ public class SpringBootCommand {
 	@ShellMethod(key = "gen:rest", value = "Gera uma classe Rest em um projeto Spring Boot", group = XtoolCliApplication.SPRINGBOOT_COMMAND_GROUP)
 	@ShellMethodAvailability("availabilitySpringBootCommand")
 	public void genRest(@ShellOption(help = "Entidade JPA", valueProvider = EntityRepresentationValueProvider.class, defaultValue = "") EntityRepresentation entity) {
+		SpringBootProjectRepresentation springBootProject = this.workspace.getWorkingProject(SpringBootProjectRepresentation.class);
 		if (Objects.isNull(entity)) {
 			// @formatter:off
 			this.workspace.getWorkingProject(SpringBootProjectRepresentation.class).getEntities().stream()
-				.forEach(springBootProjectService::genRest);
+				.forEach(_entity -> springBootProjectService.genRest(springBootProject, _entity));
 			// @formatter:on
 			return;
 		}
-		springBootProjectService.genRest(entity);
+		springBootProjectService.genRest(springBootProject, entity);
 	}
-
-//	/**
-//	 * 
-//	 * @param plantClass
-//	 */
-//	@ShellMethod(key = "gen:ng-entities", value = "Gera as classes Typescript do diagrama no projeto Angular", group = XtoolCliApplication.SPRINGBOOT_COMMAND_GROUP)
-//	@ShellMethodAvailability("availabilitySpringBootCommand")
-//	public void genNgEntities() {
-//		SpringBootProjectRepresentation project = this.workspace.getWorkingProject(SpringBootProjectRepresentation.class);
-//		project.getEntities().stream().forEach(angularService::genNgEntity);
-//	}
-
-//	/**
-//	 * Comando qu gera uma nova classe de Rest.
-//	 * 
-//	 * @param repository
-//	 */
-//	@ShellMethod(key = "gen:ng-service", value = "Gera uma classe Service Angular", group = XtoolCliApplication.SPRINGBOOT_COMMAND_GROUP)
-//	@ShellMethodAvailability("availabilitySpringBootCommand")
-//	public void genNgService(
-//			@ShellOption(help = "Entidade JPA", valueProvider = EntityRepresentationValueProvider.class, defaultValue = "") EntityRepresentation entity) {
-//		if (Objects.isNull(entity)) {
-//			// @formatter:off
-//			this.workspace.getWorkingProject(SpringBootProjectRepresentation.class).getEntities().stream()
-//				.forEach(angularService::genNgService);
-//			// @formatter:on
-//			return;
-//		}
-//		angularService.genNgService(entity);
-//	}
-//
-//	@ShellMethod(key = "gen:ng-list", value = "Gera um componente de lista angular para a entidade JPA", group = XtoolCliApplication.SPRINGBOOT_COMMAND_GROUP)
-//	@ShellMethodAvailability("availabilitySpringBootCommand")
-//	public void genNgList(
-//	// @formatter:off
-//			@ShellOption(help = "Entidade JPA", valueProvider = EntityRepresentationValueProvider.class) EntityRepresentation entity,
-//			@ShellOption(help = "Módulo Angular", valueProvider = NgModuleRepresentationValueProvider.class) NgModuleRepresentation ngModule) {
-//	// @formatter:on
-//		this.angularService.genNgList(entity, ngModule);
-//	}
-//
-//	@ShellMethod(key = "gen:ng-detail", value = "Gera um componente de detail para a entidade JPA", group = XtoolCliApplication.SPRINGBOOT_COMMAND_GROUP)
-//	@ShellMethodAvailability("availabilitySpringBootCommand")
-//	public void genNgDetail(
-//	// @formatter:off
-//			@ShellOption(help = "Entidade JPA", valueProvider = EntityRepresentationValueProvider.class) EntityRepresentation entity,
-//			@ShellOption(help = "Módulo Angular", valueProvider = NgModuleRepresentationValueProvider.class) NgModuleRepresentation ngModule) {
-//	// @formatter:on
-//		this.angularService.genNgDetail(entity, ngModule);
-//	}
-//
-//	@ShellMethod(key = "gen:ng-edit", value = "Gera um componente de edit para a entidade JPA", group = XtoolCliApplication.SPRINGBOOT_COMMAND_GROUP)
-//	@ShellMethodAvailability("availabilitySpringBootCommand")
-//	public void genNgEdit(
-//	// @formatter:off
-//			@ShellOption(help = "Entidade JPA", valueProvider = EntityRepresentationValueProvider.class) EntityRepresentation entity,
-//			@ShellOption(help = "Módulo Angular", valueProvider = NgModuleRepresentationValueProvider.class) NgModuleRepresentation ngModule) {
-//	// @formatter:on
-//		this.angularService.genNgEdit(entity, ngModule);
-//	}
 
 	@ShellMethod(key = "list:artifacts", value = "Lista os artefatos do projeto Spring Boot", group = XtoolCliApplication.SPRINGBOOT_COMMAND_GROUP)
 	@ShellMethodAvailability("availabilitySpringBootCommand")
@@ -184,22 +131,20 @@ public class SpringBootCommand {
 		if (rests) springBootProjectService.printRests(project);
 	}
 
-//	@ShellMethod(key = "list:ng-artifacts", value = "Lista os artefatos do projeto Angular", group = XtoolCliApplication.SPRINGBOOT_COMMAND_GROUP)
-//	@ShellMethodAvailability("availabilitySpringBootCommand")
-//	public void listNgArtifacts(@ShellOption(help = "Componentes de listagem", arity = 0, defaultValue = "false") boolean ngLists) {
-//		SpringBootProjectRepresentation project = this.workspace.getWorkingProject(SpringBootProjectRepresentation.class);
-//		if (project.getAssociatedAngularProject().isPresent()) {
-//			NgProjectRepresentation ngProject = project.getAssociatedAngularProject().get();
-//			if (ngLists) angularService.printNgLists(ngProject);
-//		}
-//	}
-
 	/*
 	 * Define a regra para disponibilidade de comandos.
 	 */
 	protected Availability availabilitySpringBootCommand() throws IOException {
-		return this.workspace.getWorkingProject().getProjectType().equals(ProjectRepresentation.Type.SPRINGBOOT) ? Availability.available()
-				: Availability.unavailable("O diretório de trabalho não é um projeto 'Spring Boot' válido. Use o comando 'use' para alterar o projeto de trabalho.");
+		String str = "O diretório de trabalho não é um projeto 'Spring Boot' válido. Use o comando 'use' para alterar o projeto de trabalho.";
+		return isSpringBootProject() || isSpringBootNgProject() ? Availability.available() : Availability.unavailable(str);
+	}
+
+	protected boolean isSpringBootProject() {
+		return this.workspace.getWorkingProjectType().equals(ProjectRepresentation.Type.SPRINGBOOT);
+	}
+
+	protected boolean isSpringBootNgProject() {
+		return this.workspace.getWorkingProjectType().equals(ProjectRepresentation.Type.SPRINGBOOTNG);
 	}
 
 }
