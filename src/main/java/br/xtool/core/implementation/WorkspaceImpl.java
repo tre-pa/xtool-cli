@@ -4,6 +4,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.annotation.PostConstruct;
 
@@ -18,6 +19,9 @@ import br.xtool.core.implementation.representation.WorkspaceRepresentationImpl;
 import br.xtool.core.representation.ProjectRepresentation;
 import br.xtool.core.representation.ProjectRepresentation.Type;
 import br.xtool.core.representation.WorkspaceRepresentation;
+import br.xtool.core.representation.angular.NgProjectRepresentation;
+import br.xtool.core.representation.springboot.SpringBootNgProjectRepresentation;
+import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 import lombok.Getter;
 import lombok.SneakyThrows;
 
@@ -35,7 +39,7 @@ public class WorkspaceImpl implements Workspace {
 
 	@PostConstruct
 	private void init() {
-		this.workingProject = new NoneProjectRepresentationImpl(this.home);
+		workingProject = new NoneProjectRepresentationImpl(home);
 	}
 
 	/*
@@ -45,7 +49,7 @@ public class WorkspaceImpl implements Workspace {
 	 */
 	@Override
 	public WorkspaceRepresentation getWorkspace() {
-		return new WorkspaceRepresentationImpl(this.home);
+		return new WorkspaceRepresentationImpl(home);
 	}
 
 	/*
@@ -55,7 +59,7 @@ public class WorkspaceImpl implements Workspace {
 	 */
 	@Override
 	public void setWorkingProject(ProjectRepresentation project) {
-		this.workingProject = project;
+		workingProject = project;
 	}
 
 	/*
@@ -65,7 +69,7 @@ public class WorkspaceImpl implements Workspace {
 	 */
 	@Override
 	public <T extends ProjectRepresentation> T getWorkingProject(Class<T> projectClass) {
-		return projectClass.cast(this.workingProject);
+		return projectClass.cast(workingProject);
 	}
 
 	/*
@@ -76,7 +80,7 @@ public class WorkspaceImpl implements Workspace {
 	@Override
 	@SneakyThrows
 	public Path createDirectory(String name) {
-		Path directory = this.home.resolve(name);
+		Path directory = home.resolve(name);
 		if (Files.exists(directory)) {
 			throw new IllegalArgumentException(String.format("O diretório %s já existe no workspace", name));
 		}
@@ -92,14 +96,49 @@ public class WorkspaceImpl implements Workspace {
 	@Override
 	public <T extends ProjectRepresentation> T createProject(Type type, String version, String name, Map<String, Object> vars) {
 		Path archetypePath = Paths.get(type.getName()).resolve(version).resolve("archetype");
-		Path projectPath = this.createDirectory(name);
-		this.fs.copy(archetypePath, vars, projectPath);
+		Path projectPath = createDirectory(name);
+		fs.copy(archetypePath, vars, projectPath);
 		return (T) type.getProjectClass().cast(ProjectRepresentation.factory((Class<T>) type.getProjectClass(), projectPath));
 	}
 
 	@Override
 	public Type getWorkingProjectType() {
 		return this.getWorkingProject().getProjectType();
+	}
+
+	@Override
+	public boolean isSpringBootProject() {
+		return getWorkingProjectType().equals(ProjectRepresentation.Type.SPRINGBOOT);
+	}
+
+	@Override
+	public boolean isAngularProject() {
+		return getWorkingProjectType().equals(ProjectRepresentation.Type.ANGULAR);
+	}
+
+	@Override
+	public boolean isSpringBootNgProject() {
+		return getWorkingProjectType().equals(ProjectRepresentation.Type.SPRINGBOOTNG);
+	}
+
+	@Override
+	public Optional<SpringBootProjectRepresentation> getSpringBootProject() {
+		if (isSpringBootProject()) {
+			return Optional.of(this.getWorkingProject(SpringBootProjectRepresentation.class));
+		} else if (isSpringBootNgProject()) {
+			return Optional.of(this.getWorkingProject(SpringBootNgProjectRepresentation.class).getSpringBootProject());
+		}
+		return Optional.empty();
+	}
+
+	@Override
+	public Optional<NgProjectRepresentation> getAngularProject() {
+		if (isAngularProject()) {
+			return Optional.of(this.getWorkingProject(NgProjectRepresentation.class));
+		} else if (isSpringBootNgProject()) {
+			return Optional.of(this.getWorkingProject(SpringBootNgProjectRepresentation.class).getAngularProject());
+		}
+		return Optional.empty();
 	}
 
 }

@@ -6,8 +6,6 @@ import org.springframework.stereotype.Component;
 
 import br.xtool.core.Workspace;
 import br.xtool.core.representation.angular.NgComponentRepresentation;
-import br.xtool.core.representation.angular.NgProjectRepresentation;
-import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 
 @Component
 public class NgComponentRepresentationConverter implements Converter<String, NgComponentRepresentation> {
@@ -18,15 +16,9 @@ public class NgComponentRepresentationConverter implements Converter<String, NgC
 	@Override
 	public NgComponentRepresentation convert(String source) {
 
-		boolean isNgProjectRepresentation = this.workspace.getWorkingProject() instanceof NgProjectRepresentation;
-		boolean isSpringBootRepresentation = this.workspace.getWorkingProject() instanceof SpringBootProjectRepresentation;
-
-		if (isNgProjectRepresentation || isSpringBootRepresentation) {
+		if (workspace.getAngularProject().isPresent()) {
 			// @formatter:off
-			NgProjectRepresentation project = isNgProjectRepresentation ? 
-					NgProjectRepresentation.class.cast(this.workspace.getWorkingProject()) : 
-					SpringBootProjectRepresentation.class.cast(this.workspace.getWorkingProject()).getAssociatedAngularProject().get();
-			return project.getNgComponents()
+			return workspace.getAngularProject().get().getNgComponents()
 				.stream()
 				.filter(e -> e.getName().equals(source))
 				.findFirst()

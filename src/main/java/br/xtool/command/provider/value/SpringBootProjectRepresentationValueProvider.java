@@ -13,6 +13,12 @@ import org.springframework.stereotype.Component;
 import br.xtool.core.Workspace;
 import br.xtool.core.representation.ProjectRepresentation;
 
+/**
+ * ValueProviderSupport retornando todos os projeto SpringBoot e SpringBootNg
+ * 
+ * @author jcruz
+ *
+ */
 @Component
 public class SpringBootProjectRepresentationValueProvider extends ValueProviderSupport {
 
@@ -22,7 +28,7 @@ public class SpringBootProjectRepresentationValueProvider extends ValueProviderS
 	@Override
 	public List<CompletionProposal> complete(MethodParameter parameter, CompletionContext completionContext, String[] hints) {
 		// @formatter:off
-		return this.workspace.getWorkspace().getProjects().stream()
+		return workspace.getWorkspace().getProjects().stream()
 				.filter(prj -> prj.getProjectType().equals(ProjectRepresentation.Type.SPRINGBOOT) || prj.getProjectType().equals(ProjectRepresentation.Type.SPRINGBOOTNG))
 				.map(ProjectRepresentation::getName)
 				.map(CompletionProposal::new)
