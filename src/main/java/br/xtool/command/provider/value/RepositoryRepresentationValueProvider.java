@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import br.xtool.core.Workspace;
 import br.xtool.core.representation.springboot.RepositoryRepresentation;
+import br.xtool.core.representation.springboot.SpringBootNgProjectRepresentation;
 import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 
 @Component
@@ -27,6 +28,14 @@ public class RepositoryRepresentationValueProvider extends ValueProviderSupport 
 			SpringBootProjectRepresentation project = SpringBootProjectRepresentation.class.cast(this.workspace.getWorkingProject());
 			// @formatter:off
 			return project.getRepositories()
+				.stream().map(RepositoryRepresentation::getName)
+				.map(CompletionProposal::new)
+				.collect(Collectors.toList());
+			// @formatter:on
+		} else if (this.workspace.getWorkingProject() instanceof SpringBootNgProjectRepresentation) {
+			SpringBootNgProjectRepresentation project = SpringBootNgProjectRepresentation.class.cast(this.workspace.getWorkingProject());
+			// @formatter:off
+			return project.getSpringBootProject().getRepositories()
 				.stream().map(RepositoryRepresentation::getName)
 				.map(CompletionProposal::new)
 				.collect(Collectors.toList());

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import br.xtool.core.Workspace;
 import br.xtool.core.representation.springboot.EntityRepresentation;
+import br.xtool.core.representation.springboot.SpringBootNgProjectRepresentation;
 import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 
 @Component
@@ -22,6 +23,15 @@ public class EntityRepresentationConverter implements Converter<String, EntityRe
 				SpringBootProjectRepresentation project = SpringBootProjectRepresentation.class.cast(this.workspace.getWorkingProject());
 				// @formatter:off
 				return project.getEntities()
+					.stream()
+					.filter(e -> e.getName().equals(source))
+					.findFirst()
+					.orElseThrow(() -> new RuntimeException("Erro ao converter entidade."));
+				// @formatter:on
+			} else if (this.workspace.getWorkingProject() instanceof SpringBootNgProjectRepresentation) {
+				SpringBootNgProjectRepresentation project = SpringBootNgProjectRepresentation.class.cast(this.workspace.getWorkingProject());
+				// @formatter:off
+				return project.getSpringBootProject().getEntities()
 					.stream()
 					.filter(e -> e.getName().equals(source))
 					.findFirst()
