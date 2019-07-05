@@ -61,13 +61,13 @@
 		</dependency>
 
 		<!-- Driver Oracle JDBC -->
-		<!--<dependency>
+		<dependency>
 			<groupId>com.oracle</groupId>
 			<artifactId>ojdbc6</artifactId>
 			<version>11.2.0.3.0</version>
 			<scope>system</scope>
 			<systemPath>${project.basedir}/src/main/resources/BOOT-INF/lib/ojdbc6-11.2.0.3.0.jar</systemPath>
-		</dependency> -->
+		</dependency>
 
 		<!-- Devido a incompatibilidade com o Oracle 10c é necessário utilizar 
 			esta versão -->
