@@ -56,7 +56,6 @@ public class SpringBootCommand {
 			return;
 		}
 		SpringBootNgProjectRepresentation springBootNgProject = this.workspace.getWorkingProject(SpringBootNgProjectRepresentation.class);
-		System.out.println(plantClassDiagram);
 		plantClassDiagram.getClasses().stream().forEach(plantClass -> springBootNgProjectService.genEntity(springBootNgProject.getSpringBootProject(), plantClass));
 		Clog.verbose = false;
 	}
