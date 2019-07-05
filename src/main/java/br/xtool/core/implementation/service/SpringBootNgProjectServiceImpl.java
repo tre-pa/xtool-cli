@@ -5,6 +5,9 @@ import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import br.xtool.core.Clog;
 import br.xtool.core.Shell;
@@ -13,6 +16,8 @@ import br.xtool.core.representation.ProjectRepresentation;
 import br.xtool.core.representation.springboot.SpringBootNgProjectRepresentation;
 import br.xtool.service.SpringBootNgProjectService;
 
+@Service
+@Lazy
 public class SpringBootNgProjectServiceImpl implements SpringBootNgProjectService {
 
 	@Autowired
