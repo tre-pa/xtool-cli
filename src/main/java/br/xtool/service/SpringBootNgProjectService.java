@@ -1,5 +1,7 @@
 package br.xtool.service;
 
+import br.xtool.core.representation.plantuml.PlantClassRepresentation;
+import br.xtool.core.representation.springboot.EntityRepresentation;
 import br.xtool.core.representation.springboot.SpringBootNgProjectRepresentation;
 
 /**
@@ -19,4 +21,12 @@ public interface SpringBootNgProjectService {
 	 * @return {@link SpringBootNgProjectRepresentation}
 	 */
 	SpringBootNgProjectRepresentation newApp(String name, String description, String version);
+
+	/**
+	 * Gera uma entidade JPA baseado em
+	 * 
+	 * @param plantClass
+	 * @return
+	 */
+	EntityRepresentation genEntity(PlantClassRepresentation plantClass);
 }
