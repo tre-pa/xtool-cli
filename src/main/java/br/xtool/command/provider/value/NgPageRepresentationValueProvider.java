@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
 
 import br.xtool.core.Workspace;
 import br.xtool.core.representation.angular.NgPageRepresentation;
-import br.xtool.core.representation.angular.NgProjectRepresentation;
 
 @Component
 public class NgPageRepresentationValueProvider extends ValueProviderSupport {
@@ -23,10 +22,9 @@ public class NgPageRepresentationValueProvider extends ValueProviderSupport {
 
 	@Override
 	public List<CompletionProposal> complete(MethodParameter parameter, CompletionContext completionContext, String[] hints) {
-		if (this.workspace.getWorkingProject() instanceof NgProjectRepresentation) {
-			NgProjectRepresentation project = NgProjectRepresentation.class.cast(this.workspace.getWorkingProject());
+		if (workspace.getAngularProject().isPresent()) {
 			// @formatter:off
-			return project.getNgPages().stream()
+			return workspace.getAngularProject().get().getNgPages().stream()
 					.map(NgPageRepresentation::getName)
 					.map(CompletionProposal::new)
 					.collect(Collectors.toList());

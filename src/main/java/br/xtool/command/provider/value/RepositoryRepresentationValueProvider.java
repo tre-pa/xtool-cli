@@ -13,8 +13,6 @@ import org.springframework.stereotype.Component;
 
 import br.xtool.core.Workspace;
 import br.xtool.core.representation.springboot.RepositoryRepresentation;
-import br.xtool.core.representation.springboot.SpringBootNgProjectRepresentation;
-import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 
 @Component
 public class RepositoryRepresentationValueProvider extends ValueProviderSupport {
@@ -24,18 +22,9 @@ public class RepositoryRepresentationValueProvider extends ValueProviderSupport 
 
 	@Override
 	public List<CompletionProposal> complete(MethodParameter parameter, CompletionContext completionContext, String[] hints) {
-		if (this.workspace.getWorkingProject() instanceof SpringBootProjectRepresentation) {
-			SpringBootProjectRepresentation project = SpringBootProjectRepresentation.class.cast(this.workspace.getWorkingProject());
+		if (workspace.getSpringBootProject().isPresent()) {
 			// @formatter:off
-			return project.getRepositories()
-				.stream().map(RepositoryRepresentation::getName)
-				.map(CompletionProposal::new)
-				.collect(Collectors.toList());
-			// @formatter:on
-		} else if (this.workspace.getWorkingProject() instanceof SpringBootNgProjectRepresentation) {
-			SpringBootNgProjectRepresentation project = SpringBootNgProjectRepresentation.class.cast(this.workspace.getWorkingProject());
-			// @formatter:off
-			return project.getSpringBootProject().getRepositories()
+			return workspace.getSpringBootProject().get().getRepositories()
 				.stream().map(RepositoryRepresentation::getName)
 				.map(CompletionProposal::new)
 				.collect(Collectors.toList());
