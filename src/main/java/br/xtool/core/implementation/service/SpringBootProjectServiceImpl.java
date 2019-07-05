@@ -1,17 +1,9 @@
 package br.xtool.core.implementation.service;
 
-import java.io.BufferedWriter;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
 import java.util.UUID;
 
-import org.eclipse.jdt.core.JavaCore;
-import org.eclipse.jdt.core.formatter.DefaultCodeFormatterConstants;
-import org.eclipse.jdt.internal.compiler.impl.CompilerOptions;
-import org.jboss.forge.roaster.Roaster;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Lazy;
@@ -20,6 +12,7 @@ import org.springframework.stereotype.Service;
 import br.xtool.core.Clog;
 import br.xtool.core.Shell;
 import br.xtool.core.Workspace;
+import br.xtool.core.helper.JavaTypeHelper;
 import br.xtool.core.implementation.representation.EntityRepresentationImpl;
 import br.xtool.core.pdiagram.map.JavaClassRepresentationMapper;
 import br.xtool.core.pdiagram.map.JavaEnumRepresentationMapper;
@@ -31,7 +24,6 @@ import br.xtool.core.representation.plantuml.PlantClassRepresentation;
 import br.xtool.core.representation.springboot.EntityRepresentation;
 import br.xtool.core.representation.springboot.JavaClassRepresentation;
 import br.xtool.core.representation.springboot.JavaEnumRepresentation;
-import br.xtool.core.representation.springboot.JavaTypeRepresentation;
 import br.xtool.core.representation.springboot.RepositoryRepresentation;
 import br.xtool.core.representation.springboot.RestClassRepresentation;
 import br.xtool.core.representation.springboot.ServiceClassRepresentation;
@@ -42,7 +34,6 @@ import br.xtool.core.template.springboot.RestClassTemplates;
 import br.xtool.core.template.springboot.ServiceClassTemplates;
 import br.xtool.core.template.springboot.SpecificationTemplates;
 import br.xtool.service.SpringBootProjectService;
-import lombok.SneakyThrows;
 
 @Service
 @Lazy
@@ -113,7 +104,7 @@ public class SpringBootProjectServiceImpl implements SpringBootProjectService {
 		JavaClassRepresentation javaClass = appCtx.getBean(JavaClassRepresentationMapper.class).apply(plantClass);
 		plantClass.getFields().stream().filter(PlantClassFieldRepresentation::isEnum).forEach(plantClassField -> {
 			JavaEnumRepresentation javaEnum = appCtx.getBean(JavaEnumRepresentationMapper.class).apply(plantClassField.getPlantEnumRepresentation().get());
-			save(javaEnum);
+			JavaTypeHelper.save(javaEnum);
 		});
 		plantClass.getFields().stream().forEach(plantField -> appCtx.getBean(JavaFieldRepresentationMapper.class).apply(javaClass, plantField));
 
@@ -124,7 +115,7 @@ public class SpringBootProjectServiceImpl implements SpringBootProjectService {
 //		});
 
 		plantClass.getRelationships().stream().forEach(plantRelationship -> appCtx.getBean(JavaRelationshipRepresentationMapper.class).apply(javaClass, plantRelationship));
-		save(javaClass);
+		JavaTypeHelper.save(javaClass);
 
 		springBootProject.refresh();
 		Clog.printv("");
@@ -147,7 +138,7 @@ public class SpringBootProjectServiceImpl implements SpringBootProjectService {
 				.findFirst()
 				.orElseGet(() -> repositoryTemplates.newRepositoryRepresentation(springBootProject, entity));
 		// @formatter:on
-		this.save(repository);
+		JavaTypeHelper.save(repository);
 		springBootProject.refresh();
 		return repository;
 	}
@@ -166,7 +157,7 @@ public class SpringBootProjectServiceImpl implements SpringBootProjectService {
 				.filter(pSpecification -> pSpecification.getName().equals(specificationName))
 				.findFirst()
 				.orElseGet(() -> specificationTemplates.newSpecificationRepresentation(springBootProject, entity));
-		this.save(specification);
+		JavaTypeHelper.save(specification);
 		return specification;
 	}
 
@@ -186,7 +177,7 @@ public class SpringBootProjectServiceImpl implements SpringBootProjectService {
 				.filter(service -> service.getName().equals(serviceName))
 				.findFirst()
 				.orElseGet(() -> serviceClassTemplates.newServiceClassRepresentation(springBootProject, repository));
-		this.save(serviceClass);
+		JavaTypeHelper.save(serviceClass);
 		springBootProject.refresh();
 		return serviceClass;
 	}
@@ -208,7 +199,7 @@ public class SpringBootProjectServiceImpl implements SpringBootProjectService {
 				.findFirst()
 				.orElseGet(() -> restClassTemplates.newRestClassRepresentation(springBootProject, repository));
 		// @formatter:on
-		this.save(restClass);
+		JavaTypeHelper.save(restClass);
 		springBootProject.refresh();
 		return restClass;
 	}
@@ -252,29 +243,6 @@ public class SpringBootProjectServiceImpl implements SpringBootProjectService {
 			.stream()
 			.forEach(entity -> Clog.print(entity.getName()));
 		// @formatter:on
-	}
-
-	@SneakyThrows
-	private void save(JavaTypeRepresentation<?> javaType) {
-		Path javaPath = javaType.getProject().getMainSourceFolder().getPath().resolve(javaType.getJavaPackage().getDir()).resolve(String.format("%s.java", javaType.getName()));
-		if (Files.notExists(javaPath.getParent()))
-			Files.createDirectories(javaPath.getParent());
-		Properties prefs = new Properties();
-		prefs.setProperty(JavaCore.COMPILER_SOURCE, CompilerOptions.VERSION_1_8);
-		prefs.setProperty(JavaCore.COMPILER_COMPLIANCE, CompilerOptions.VERSION_1_8);
-		prefs.setProperty(JavaCore.COMPILER_CODEGEN_TARGET_PLATFORM, CompilerOptions.VERSION_1_8);
-		prefs.setProperty(DefaultCodeFormatterConstants.FORMATTER_LINE_SPLIT, "120");
-		prefs.setProperty(DefaultCodeFormatterConstants.FORMATTER_BLANK_LINES_BEFORE_FIELD, "1");
-		prefs.setProperty(DefaultCodeFormatterConstants.FORMATTER_BLANK_LINES_AFTER_IMPORTS, "1");
-		prefs.setProperty(DefaultCodeFormatterConstants.FORMATTER_BLANK_LINES_AFTER_PACKAGE, "1");
-		prefs.setProperty(DefaultCodeFormatterConstants.FORMATTER_USE_ON_OFF_TAGS, DefaultCodeFormatterConstants.TRUE);
-		try (BufferedWriter write = Files.newBufferedWriter(javaPath)) {
-			String formatedJavaClassSource = Roaster.format(prefs, javaType.toUnformattedString());
-			write.write(formatedJavaClassSource);
-			write.flush();
-			javaType.getProject().refresh();
-			Clog.print(Clog.cyan(" + "), Clog.white(javaType.getQualifiedName()));
-		}
 	}
 
 }
