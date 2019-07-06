@@ -61,13 +61,13 @@ import br.xtool.core.representation.springboot.JavaEnumRepresentation;
 import br.xtool.core.template.angular.NgDetailDxTemplates;
 import br.xtool.core.template.angular.NgEditDxTemplates;
 import br.xtool.core.template.angular.NgListDxTemplates;
-import br.xtool.service.AngularProjectService;
+import br.xtool.service.AngularService;
 import lombok.SneakyThrows;
 import strman.Strman;
 
 @Service
 @Lazy
-public class AngularServiceProjectImpl implements AngularProjectService {
+public class AngularServiceImpl implements AngularService {
 
 	@Autowired
 	private Shell shellService;

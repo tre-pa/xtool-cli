@@ -18,7 +18,7 @@ import br.xtool.core.Workspace;
 import br.xtool.core.representation.plantuml.PlantClassDiagramRepresentation;
 import br.xtool.core.representation.springboot.EntityRepresentation;
 import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
-import br.xtool.service.SpringBootProjectService;
+import br.xtool.service.SpringBootService;
 
 /**
  * Classe com os comandos Shell para Spring Boot.
@@ -29,7 +29,7 @@ import br.xtool.service.SpringBootProjectService;
 public class SpringBootCommand {
 
 	@Autowired
-	private SpringBootProjectService springBootProjectService;
+	private SpringBootService springBootProjectService;
 
 	@Autowired
 	private Workspace workspace;

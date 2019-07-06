@@ -19,9 +19,8 @@ import br.xtool.core.representation.ProjectRepresentation;
 import br.xtool.core.representation.angular.NgProjectRepresentation;
 import br.xtool.core.representation.springboot.SpringBootNgProjectRepresentation;
 import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
-import br.xtool.service.AngularProjectService;
-import br.xtool.service.SpringBootNgProjectService;
-import br.xtool.service.SpringBootProjectService;
+import br.xtool.service.AngularService;
+import br.xtool.service.SpringBootService;
 
 /**
  * Classe com os comandos padrões.
@@ -32,13 +31,10 @@ import br.xtool.service.SpringBootProjectService;
 public class CoreCommand {
 
 	@Autowired
-	private SpringBootProjectService springBootService;
+	private SpringBootService springBootService;
 
 	@Autowired
-	private SpringBootNgProjectService springBootNgProjectService;
-
-	@Autowired
-	private AngularProjectService angularService;
+	private AngularService angularService;
 
 	@Autowired
 	private Workspace workspace;
@@ -61,10 +57,10 @@ public class CoreCommand {
 		if (noModular) {
 			SpringBootProjectRepresentation bootProject = springBootService.newApp(name, description, sbversion);
 			angularService.newApp(name, description, ngversion);
-			this.workspace.setWorkingProject(bootProject);
+			workspace.setWorkingProject(bootProject);
 		}
-		SpringBootNgProjectRepresentation bootProject = springBootNgProjectService.newApp(name, description, mversion);
-		this.workspace.setWorkingProject(bootProject);
+		SpringBootNgProjectRepresentation bootProject = springBootService.newAppModular(name, description, mversion);
+		workspace.setWorkingProject(bootProject);
 	}
 
 //	@ShellMethod(key = "new:multimodule", value = "Gera um projeto Spring Boot e Angular multi-módulo", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
@@ -131,7 +127,7 @@ public class CoreCommand {
 			}
 			print(sb.toString());
 		};
-		this.workspace.getWorkspace().getProjects().forEach(prettyPrintProject);
+		workspace.getWorkspace().getProjects().forEach(prettyPrintProject);
 	}
 
 	/**
@@ -141,7 +137,7 @@ public class CoreCommand {
 	 */
 	@ShellMethod(value = "Define o projeto spring boot de trabalho", group = XtoolCliApplication.XTOOL_COMMAND_GROUP)
 	public void use(@ShellOption(help = "Nome do projeto Spring Boot", valueProvider = SpringBootProjectRepresentationValueProvider.class) ProjectRepresentation project) {
-		this.workspace.setWorkingProject(project);
+		workspace.setWorkingProject(project);
 	}
 
 }

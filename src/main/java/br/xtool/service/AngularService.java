@@ -15,7 +15,7 @@ import br.xtool.core.representation.springboot.JavaEnumRepresentation;
  * @author jcruz
  *
  */
-public interface AngularProjectService {
+public interface AngularService {
 
 	/**
 	 * Gera uma nova aplicação Angular baseada em um archetype localizado em src/main/resources/templates/angular
