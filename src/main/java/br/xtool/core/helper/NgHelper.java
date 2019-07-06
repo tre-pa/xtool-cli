@@ -32,13 +32,31 @@ import lombok.SneakyThrows;
  */
 public class NgHelper {
 
+	public static void addToRoute(NgModuleRepresentation ngModule, NgCrudRepresentation ngCrud) {
+		List<NgRoute> ngRoutes = ngModule.getRoutes();
+		String rootRoutePath = ngCrud.getTargetEntity().getApiPath();
+		for (NgRoute r1 : ngRoutes) {
+			for (NgRoute r2 : r1.getChildren()) {
+				if (r2.getPath().equals(rootRoutePath)) {
+					r2.setChildren(ngCrud.genRoute());
+					NgHelper.updateRoute(ngModule, ngRoutes);
+					return;
+				}
+			}
+		}
+		NgRoute rootRoute = new NgRoute(rootRoutePath);
+		rootRoute.setChildren(ngCrud.genRoute());
+		ngRoutes.get(0).getChildren().add(rootRoute);
+		NgHelper.updateRoute(ngModule, ngRoutes);
+	}
+
 	/**
 	 * Atualiza a rota de um módulo.
 	 * 
 	 * @param ngModule Modulo Angular
 	 * @param routes   Fragmento de rota a ser inserido na rota principal.
 	 */
-	public static void updateRoute(NgModuleRepresentation ngModule, List<NgRoute> routes) {
+	private static void updateRoute(NgModuleRepresentation ngModule, List<NgRoute> routes) {
 		String content = ngModule.getTsFileContent();
 		Pattern pattern = Pattern.compile(NgModuleRepresentation.ROUTE_PATTERN);
 		Pair<Integer, Integer> idxRoute = StringHelper.indexOfPattern(pattern, content);

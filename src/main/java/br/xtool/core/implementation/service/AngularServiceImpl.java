@@ -3,7 +3,6 @@ package br.xtool.core.implementation.service;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -37,7 +36,6 @@ import br.xtool.core.representation.angular.NgEnumRepresentation;
 import br.xtool.core.representation.angular.NgListRepresentation;
 import br.xtool.core.representation.angular.NgModuleRepresentation;
 import br.xtool.core.representation.angular.NgProjectRepresentation;
-import br.xtool.core.representation.angular.NgRoute;
 import br.xtool.core.representation.angular.NgServiceRepresentation;
 import br.xtool.core.representation.springboot.EntityAttributeRepresentation;
 import br.xtool.core.representation.springboot.EntityRepresentation;
@@ -196,13 +194,13 @@ public class AngularServiceImpl implements AngularService {
 		if (Objects.nonNull(ngEdit)) {
 			NgCrudRepresentation ngCrud = new NgCrudRepresentationImpl(ngModule, ngList, ngDetail, ngEdit);
 			NgHelper.addComponent(ngModule, ngCrud);
-			addToRoute(ngModule, ngCrud);
+			NgHelper.addToRoute(ngModule, ngCrud);
 			ngModule.getAssociatedPage().ifPresent(ngPage -> NgHelper.addNavigation(ngPage, ngCrud));
 			return ngCrud;
 		}
 		NgCrudRepresentation ngCrud = new NgCrudRepresentationImpl(ngModule, ngList, ngDetail);
 		NgHelper.addComponent(ngModule, ngCrud);
-		addToRoute(ngModule, ngCrud);
+		NgHelper.addToRoute(ngModule, ngCrud);
 		ngModule.getAssociatedPage().ifPresent(ngPage -> NgHelper.addNavigation(ngPage, ngCrud));
 		return ngCrud;
 	}
@@ -335,23 +333,23 @@ public class AngularServiceImpl implements AngularService {
 
 	}
 
-	private void addToRoute(NgModuleRepresentation ngModule, NgCrudRepresentation ngCrud) {
-		List<NgRoute> ngRoutes = ngModule.getRoutes();
-		String rootRoutePath = ngCrud.getTargetEntity().getApiPath();
-		for (NgRoute r1 : ngRoutes) {
-			for (NgRoute r2 : r1.getChildren()) {
-				if (r2.getPath().equals(rootRoutePath)) {
-					r2.setChildren(ngCrud.genRoute());
-					NgHelper.updateRoute(ngModule, ngRoutes);
-					return;
-				}
-			}
-		}
-		NgRoute rootRoute = new NgRoute(rootRoutePath);
-		rootRoute.setChildren(ngCrud.genRoute());
-		ngRoutes.get(0).getChildren().add(rootRoute);
-		NgHelper.updateRoute(ngModule, ngRoutes);
-	}
+//	private void addToRoute(NgModuleRepresentation ngModule, NgCrudRepresentation ngCrud) {
+//		List<NgRoute> ngRoutes = ngModule.getRoutes();
+//		String rootRoutePath = ngCrud.getTargetEntity().getApiPath();
+//		for (NgRoute r1 : ngRoutes) {
+//			for (NgRoute r2 : r1.getChildren()) {
+//				if (r2.getPath().equals(rootRoutePath)) {
+//					r2.setChildren(ngCrud.genRoute());
+//					NgHelper.updateRoute(ngModule, ngRoutes);
+//					return;
+//				}
+//			}
+//		}
+//		NgRoute rootRoute = new NgRoute(rootRoutePath);
+//		rootRoute.setChildren(ngCrud.genRoute());
+//		ngRoutes.get(0).getChildren().add(rootRoute);
+//		NgHelper.updateRoute(ngModule, ngRoutes);
+//	}
 
 //	/*
 //	 * Atualiza o array das rotas.
