@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.SortedSet;
 
-import br.xtool.core.implementation.representation.NgPackageRepresentationImpl;
+import br.xtool.core.implementation.representation.NgPackageJsonRepresentationImpl;
 import br.xtool.core.representation.ProjectRepresentation;
 import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 import lombok.AllArgsConstructor;
@@ -64,11 +64,26 @@ public interface NgProjectRepresentation extends ProjectRepresentation {
 	 */
 	Path getViewPath();
 
+	/**
+	 * Retorna a referência ao módulo ViewModule.
+	 * 
+	 * @return
+	 */
 	NgModuleRepresentation getNgViewModule();
 
+	/**
+	 * Retorna a referência ao módulo AppModule
+	 * 
+	 * @return
+	 */
 	NgModuleRepresentation getNgAppModule();
 
-	NgPackageRepresentation getNgPackage();
+	/**
+	 * Retorna a repesentação do aquivo package.json
+	 * 
+	 * @return
+	 */
+	NgPackageJsonRepresentation getNgPackage();
 
 	/**
 	 * Retorna as classes de entidade do projeto.
@@ -143,7 +158,7 @@ public interface NgProjectRepresentation extends ProjectRepresentation {
 	static boolean isValid(Path path) {
 		Path packageJsonFile = path.resolve("package.json");
 		if (Files.exists(packageJsonFile)) {
-			Optional<NgPackageRepresentation> ngPackage = NgPackageRepresentationImpl.of(packageJsonFile);
+			Optional<NgPackageJsonRepresentation> ngPackage = NgPackageJsonRepresentationImpl.of(packageJsonFile);
 			if (ngPackage.isPresent()) {
 				Map<String, String> dependencies = ngPackage.get().getDependencies();
 				return dependencies.containsKey("@angular/core");

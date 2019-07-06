@@ -10,7 +10,7 @@ import java.util.Optional;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import br.xtool.core.representation.angular.NgPackageRepresentation;
+import br.xtool.core.representation.angular.NgPackageJsonRepresentation;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -25,7 +25,7 @@ import lombok.ToString;
 @Setter
 @ToString(of = { "name" })
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class NgPackageRepresentationImpl implements NgPackageRepresentation {
+public class NgPackageJsonRepresentationImpl implements NgPackageJsonRepresentation {
 
 	private Path path;
 
@@ -37,15 +37,15 @@ public class NgPackageRepresentationImpl implements NgPackageRepresentation {
 
 	private Map<String, String> devDependencies = new HashMap<>();
 
-	private NgPackageRepresentationImpl() {
+	private NgPackageJsonRepresentationImpl() {
 		super();
 	}
 
-	public static Optional<NgPackageRepresentation> of(Path path) {
+	public static Optional<NgPackageJsonRepresentation> of(Path path) {
 		if (Files.exists(path)) {
 			ObjectMapper mapper = new ObjectMapper();
 			try {
-				NgPackageRepresentationImpl ngPackage = mapper.readValue(Files.newBufferedReader(path), NgPackageRepresentationImpl.class);
+				NgPackageJsonRepresentationImpl ngPackage = mapper.readValue(Files.newBufferedReader(path), NgPackageJsonRepresentationImpl.class);
 				return Optional.of(ngPackage);
 			} catch (IOException e) {
 				e.printStackTrace();

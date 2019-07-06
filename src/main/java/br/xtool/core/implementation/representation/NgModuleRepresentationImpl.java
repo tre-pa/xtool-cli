@@ -17,7 +17,6 @@ import com.google.common.base.Splitter;
 
 import br.xtool.core.helper.JsonHelper;
 import br.xtool.core.helper.StringHelper;
-import br.xtool.core.representation.angular.NgComponentRepresentation;
 import br.xtool.core.representation.angular.NgImportRepresentation;
 import br.xtool.core.representation.angular.NgModuleRepresentation;
 import br.xtool.core.representation.angular.NgPageRepresentation;
@@ -35,7 +34,7 @@ public class NgModuleRepresentationImpl extends NgClassRepresentationImpl implem
 
 	NgProjectRepresentation ngProject;
 
-	//	private Pair<Integer, Integer> idxRoutes = Pair.of(-1, -1);
+	// private Pair<Integer, Integer> idxRoutes = Pair.of(-1, -1);
 
 	private Pair<Integer, Integer> idxDeclarations = Pair.of(-1, -1);
 
@@ -51,7 +50,7 @@ public class NgModuleRepresentationImpl extends NgClassRepresentationImpl implem
 	 */
 	@Override
 	public NgProjectRepresentation getProject() {
-		return this.ngProject;
+		return ngProject;
 	}
 
 	/*
@@ -63,7 +62,7 @@ public class NgModuleRepresentationImpl extends NgClassRepresentationImpl implem
 	@SneakyThrows
 	public List<NgImportRepresentation> getImports() {
 		List<NgImportRepresentation> ngImports = new ArrayList<>();
-		List<String> lines = Files.readAllLines(this.getPath());
+		List<String> lines = Files.readAllLines(getPath());
 		for (String line : lines) {
 			Pattern pattern = Pattern.compile("import\\s*\\{([\\w\\,\\s]*)\\}\\s*from\\s*'([\\w@\\/\\-\\.]*)");
 			Matcher matcher = pattern.matcher(line);
@@ -85,8 +84,8 @@ public class NgModuleRepresentationImpl extends NgClassRepresentationImpl implem
 	@SneakyThrows
 	public List<NgRoute> getRoutes() {
 		Pattern pattern = Pattern.compile(NgModuleRepresentation.ROUTE_PATTERN);
-		int idx = StringHelper.indexOfPattern(pattern, this.getTsFileContent()).getRight();
-		String startRouteArray = this.getTsFileContent().substring(idx);
+		int idx = StringHelper.indexOfPattern(pattern, getTsFileContent()).getRight();
+		String startRouteArray = getTsFileContent().substring(idx);
 		Pair<Integer, Integer> idxOfFirstArray = StringHelper.indexOfFirstArray(startRouteArray);
 		String strRoutes = startRouteArray.substring(idxOfFirstArray.getLeft(), idxOfFirstArray.getRight());
 
@@ -104,11 +103,11 @@ public class NgModuleRepresentationImpl extends NgClassRepresentationImpl implem
 	@Override
 	public List<String> getModuleDeclarations() {
 		Pattern pattern = Pattern.compile(NgModuleRepresentation.DECLARATION_PATTERN);
-		int idx = StringHelper.indexOfPattern(pattern, this.getTsFileContent()).getRight();
-		String startDeclarationArray = this.getTsFileContent().substring(idx);
+		int idx = StringHelper.indexOfPattern(pattern, getTsFileContent()).getRight();
+		String startDeclarationArray = getTsFileContent().substring(idx);
 		Pair<Integer, Integer> idxOfFirstArray = StringHelper.indexOfFirstArray(startDeclarationArray);
 		String strDeclarationComponents = startDeclarationArray.substring(idxOfFirstArray.getLeft() + 1, idxOfFirstArray.getRight() - 1);
-		this.idxDeclarations = Pair.of(idx + 1, idx + idxOfFirstArray.getRight() - 1);
+		idxDeclarations = Pair.of(idx + 1, idx + idxOfFirstArray.getRight() - 1);
 		// @formatter:off
 		return Splitter
 				.on(",")
@@ -119,23 +118,14 @@ public class NgModuleRepresentationImpl extends NgClassRepresentationImpl implem
 
 	@Override
 	public Optional<NgPageRepresentation> getAssociatedPage() {
-		int idxSuffix = this.getTsFileName().indexOf("-routing.module.ts");
-		String modulePreffix = this.getTsFileName().substring(0, idxSuffix);
+		int idxSuffix = getTsFileName().indexOf("-routing.module.ts");
+		String modulePreffix = getTsFileName().substring(0, idxSuffix);
 		// @formatter:off
-		return this.getProject().getNgPages()
+		return getProject().getNgPages()
 				.stream()
 				.filter(ngPage -> ngPage.getTsFileName().equals(modulePreffix.concat("-page.component.ts")))
 				.findAny();
 		// @formatter:on
 	}
-
-	@Override
-	public <T extends NgComponentRepresentation> List<NgRoute> updateComponentRoute(String rootPath, T ngComponent) {
-		List<NgRoute> routes = this.getRoutes();
-
-		return null;
-	}
-
-
 
 }

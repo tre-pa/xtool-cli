@@ -7,7 +7,7 @@ import java.nio.file.Path;
  * @author jcruz
  *
  */
-public interface NgTypeRepresentation {
+public interface NgBaseTypeRepresentation {
 
 	/**
 	 * Retorna o caminho

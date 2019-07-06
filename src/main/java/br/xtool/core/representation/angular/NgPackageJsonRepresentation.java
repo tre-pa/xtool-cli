@@ -9,7 +9,7 @@ import java.util.Map;
  * @author jcruz
  *
  */
-public interface NgPackageRepresentation {
+public interface NgPackageJsonRepresentation {
 
 	Path getPath();
 

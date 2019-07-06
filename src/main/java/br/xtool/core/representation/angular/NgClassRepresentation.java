@@ -11,7 +11,7 @@ import strman.Strman;
  * @author jcruz
  *
  */
-public interface NgClassRepresentation extends NgTypeRepresentation, Comparable<NgClassRepresentation> {
+public interface NgClassRepresentation extends NgBaseTypeRepresentation, Comparable<NgClassRepresentation> {
 
 	/**
 	 * Retorna o nome da classe.

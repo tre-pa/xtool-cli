@@ -57,6 +57,6 @@
   </dxi-column>
 	<!-- SUMMARY -->
 	<dxo-summary>
-    ${ngListTemplates.createHtmlTotalItemsSummaryDecl($entity)}
+    ${ngListDxTemplates.createHtmlTotalItemsSummaryDecl($entity)}
 	</dxo-summary>
 </dx-data-grid>

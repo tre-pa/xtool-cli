@@ -22,7 +22,7 @@ import br.xtool.core.representation.angular.NgEditRepresentation;
 import br.xtool.core.representation.angular.NgEntityRepresentation;
 import br.xtool.core.representation.angular.NgListRepresentation;
 import br.xtool.core.representation.angular.NgModuleRepresentation;
-import br.xtool.core.representation.angular.NgPackageRepresentation;
+import br.xtool.core.representation.angular.NgPackageJsonRepresentation;
 import br.xtool.core.representation.angular.NgPageRepresentation;
 import br.xtool.core.representation.angular.NgProjectRepresentation;
 import br.xtool.core.representation.angular.NgServiceRepresentation;
@@ -89,8 +89,8 @@ public class NgProjectRepresentationImpl extends ProjectRepresentationImpl imple
 	}
 
 	@Override
-	public NgPackageRepresentation getNgPackage() {
-		return NgPackageRepresentationImpl.of(getPath().resolve("package.json")).orElse(null);
+	public NgPackageJsonRepresentation getNgPackage() {
+		return NgPackageJsonRepresentationImpl.of(getPath().resolve("package.json")).orElse(null);
 	}
 
 	@Override

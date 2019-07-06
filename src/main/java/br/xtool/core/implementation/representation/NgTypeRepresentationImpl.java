@@ -3,10 +3,10 @@ package br.xtool.core.implementation.representation;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import br.xtool.core.representation.angular.NgTypeRepresentation;
+import br.xtool.core.representation.angular.NgBaseTypeRepresentation;
 import lombok.SneakyThrows;
 
-public class NgTypeRepresentationImpl implements NgTypeRepresentation {
+public class NgTypeRepresentationImpl implements NgBaseTypeRepresentation {
 
 	private Path path;
 

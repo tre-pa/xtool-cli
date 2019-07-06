@@ -23,7 +23,8 @@ public interface NgModuleRepresentation extends NgClassRepresentation {
 	NgProjectRepresentation getProject();
 
 	/**
-	 *
+	 * Retorna a lista de imports do módulo.
+	 * 
 	 * @return
 	 */
 	List<NgImportRepresentation> getImports();
@@ -48,15 +49,5 @@ public interface NgModuleRepresentation extends NgClassRepresentation {
 	 * @return
 	 */
 	Optional<NgPageRepresentation> getAssociatedPage();
-
-	/**
-	 * Atualiza a rota do crud
-	 * @param rootPath
-	 * @param ngRoute
-	 * @return
-	 */
-	<T extends NgComponentRepresentation> List<NgRoute> updateComponentRoute(String rootPath, T ngComponent);
-
-
 
 }
