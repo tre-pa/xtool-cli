@@ -2,7 +2,6 @@ package br.xtool.service;
 
 import br.xtool.core.representation.angular.NgCrudRepresentation;
 import br.xtool.core.representation.angular.NgEntityRepresentation;
-import br.xtool.core.representation.angular.NgEnumRepresentation;
 import br.xtool.core.representation.angular.NgModuleRepresentation;
 import br.xtool.core.representation.angular.NgProjectRepresentation;
 import br.xtool.core.representation.angular.NgServiceRepresentation;
@@ -41,7 +40,7 @@ public interface AngularService {
 	 * @param javaEnum
 	 * @return
 	 */
-	NgEnumRepresentation genNgEnum(NgProjectRepresentation ngProject, JavaEnumRepresentation javaEnum);
+	void genNgEnum(NgProjectRepresentation ngProject, JavaEnumRepresentation javaEnum);
 
 	/**
 	 * Cria uma nova classe Typescript de dominio em src/app/domain

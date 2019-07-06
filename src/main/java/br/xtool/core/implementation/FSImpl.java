@@ -94,7 +94,7 @@ public class FSImpl implements FS {
 		os.write(resource.read());
 		os.flush();
 		os.close();
-		Clog.print(Clog.green("[+] "), resource.getRelativePath().toString());
+		Clog.print(Clog.green("[+] "), finalPath.toString());
 	}
 
 }

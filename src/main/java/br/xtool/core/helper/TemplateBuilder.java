@@ -1,5 +1,7 @@
 package br.xtool.core.helper;
 
+import java.util.Map;
+
 import org.apache.commons.lang3.StringUtils;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
@@ -18,7 +20,7 @@ public abstract class TemplateBuilder {
 
 		protected TemplateBuilderBuilder() {
 			super();
-			this.model = JtwigModel.newModel();
+			model = JtwigModel.newModel();
 		}
 
 		public TemplateBuilderBuilder tpl(String template) {
@@ -64,13 +66,18 @@ public abstract class TemplateBuilder {
 //		}
 
 		public TemplateBuilderBuilder put(String key, Object value) {
-			this.model.with(key, value);
+			model.with(key, value);
+			return this;
+		}
+
+		public TemplateBuilderBuilder putAll(Map<String, Object> values) {
+			values.forEach((name, value) -> model.with(name, value));
 			return this;
 		}
 
 		public String build() {
-			JtwigTemplate jtwigTemplate = JtwigTemplate.inlineTemplate(this.template.toString());
-			return jtwigTemplate.render(this.model);
+			JtwigTemplate jtwigTemplate = JtwigTemplate.inlineTemplate(template.toString());
+			return jtwigTemplate.render(model);
 		}
 	}
 }

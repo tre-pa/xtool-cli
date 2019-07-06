@@ -23,7 +23,6 @@ import br.xtool.core.implementation.representation.NgCrudRepresentationImpl;
 import br.xtool.core.implementation.representation.NgDetailRepresentationImpl;
 import br.xtool.core.implementation.representation.NgEditRepresentationImpl;
 import br.xtool.core.implementation.representation.NgEntityRepresentationImpl;
-import br.xtool.core.implementation.representation.NgEnumRepresentationImpl;
 import br.xtool.core.implementation.representation.NgListRepresentationImpl;
 import br.xtool.core.implementation.representation.NgServiceRepresentationImpl;
 import br.xtool.core.representation.ProjectRepresentation;
@@ -32,7 +31,6 @@ import br.xtool.core.representation.angular.NgCrudRepresentation;
 import br.xtool.core.representation.angular.NgDetailRepresentation;
 import br.xtool.core.representation.angular.NgEditRepresentation;
 import br.xtool.core.representation.angular.NgEntityRepresentation;
-import br.xtool.core.representation.angular.NgEnumRepresentation;
 import br.xtool.core.representation.angular.NgListRepresentation;
 import br.xtool.core.representation.angular.NgModuleRepresentation;
 import br.xtool.core.representation.angular.NgProjectRepresentation;
@@ -42,6 +40,7 @@ import br.xtool.core.representation.springboot.EntityRepresentation;
 import br.xtool.core.representation.springboot.JavaEnumRepresentation;
 import br.xtool.core.template.angular.NgDetailDxTemplates;
 import br.xtool.core.template.angular.NgEditDxTemplates;
+import br.xtool.core.template.angular.NgEnumFSTemplate;
 import br.xtool.core.template.angular.NgListDxTemplates;
 import br.xtool.service.AngularService;
 import strman.Strman;
@@ -134,24 +133,25 @@ public class AngularServiceImpl implements AngularService {
 	 * @see br.xtool.service.AngularService#createNgEnum(br.xtool.core.representation. springboot.JavaEnumRepresentation)
 	 */
 	@Override
-	public NgEnumRepresentation genNgEnum(NgProjectRepresentation ngProject, JavaEnumRepresentation javaEnum) {
-		Map<String, Object> vars = new HashMap<String, Object>() {
-			private static final long serialVersionUID = 1L;
-			{
-				put("Strman", Strman.class);
-				put("javaEnumFileName", NgClassRepresentation.genFileName(javaEnum.getName()));
-				put("javaEnumClassName", javaEnum.getName());
-				put("javaEnum", javaEnum);
-				put("javaEnumConstants", StringUtils.join(javaEnum.getConstants(), ","));
-			}
-		};
-		Path resourcePath = Paths.get("angular").resolve(ngProject.getProjectVersion().getName()).resolve("enums");
-		Path destinationPath = ngProject.getNgAppModule().getPath().getParent().resolve("domain").resolve("enums");
-		fs.copy(resourcePath, vars, destinationPath);
-		Path ngEnumPath = destinationPath.resolve(NgClassRepresentation.genFileName(javaEnum.getName())).resolve(javaEnum.getName().concat(".ts"));
-
-		NgEnumRepresentation ngEnum = new NgEnumRepresentationImpl(ngEnumPath);
-		return ngEnum;
+	public void genNgEnum(NgProjectRepresentation ngProject, JavaEnumRepresentation javaEnum) {
+//		Map<String, Object> vars = new HashMap<String, Object>() {
+//			private static final long serialVersionUID = 1L;
+//			{
+//				put("Strman", Strman.class);
+//				put("javaEnumFileName", NgClassRepresentation.genFileName(javaEnum.getName()));
+//				put("javaEnumClassName", javaEnum.getName());
+//				put("javaEnum", javaEnum);
+//				put("javaEnumConstants", StringUtils.join(javaEnum.getConstants(), ","));
+//			}
+//		};
+//		Path resourcePath = Paths.get("angular").resolve(ngProject.getProjectVersion().getName()).resolve("enums");
+//		Path destinationPath = ngProject.getNgAppModule().getPath().getParent().resolve("domain").resolve("enums");
+//		fs.copy(resourcePath, vars, destinationPath);
+//		Path ngEnumPath = destinationPath.resolve(NgClassRepresentation.genFileName(javaEnum.getName())).resolve(javaEnum.getName().concat(".ts"));
+//
+//		NgEnumRepresentation ngEnum = new NgEnumRepresentationImpl(ngEnumPath);
+//		return ngEnum;
+		new NgEnumFSTemplate(javaEnum, ngProject).merge(fs);
 	}
 
 	/*
