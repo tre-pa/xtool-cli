@@ -22,46 +22,6 @@ public interface EntityRepresentation extends JavaClassRepresentation {
 	Collection<EntityAttributeRepresentation> getAttributes();
 
 	/**
-	 * Retorna os atributos simples (não relacionamento e não enums) da entidade
-	 *
-	 * @return
-	 */
-	@Deprecated
-	Collection<EntityAttributeRepresentation> getSimpleAttributes();
-
-	/**
-	 * Retorna os atributos que são relacionamentos.
-	 *
-	 * @return
-	 */
-	@Deprecated
-	Collection<EntityAttributeRepresentation> getRelationshipAttributes();
-
-	/**
-	 * Retorna os relacionamentos 'para muitos'
-	 *
-	 * @return
-	 */
-	@Deprecated
-	Collection<EntityAttributeRepresentation> getToManyRelationshipAttributes();
-
-	/**
-	 * Retorna os relacionamentos 'para um'
-	 *
-	 * @return
-	 */
-	@Deprecated
-	Collection<EntityAttributeRepresentation> getToOneRelationshipAttributes();
-
-	/**
-	 * Retorna os atributos que são do tipo enum.
-	 *
-	 * @return
-	 */
-	@Deprecated
-	Collection<EntityAttributeRepresentation> getEnumAttributes();
-
-	/**
 	 * Retorna o repositório associado a entidade.
 	 *
 	 * @return

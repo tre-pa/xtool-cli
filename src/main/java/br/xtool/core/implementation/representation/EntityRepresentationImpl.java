@@ -4,11 +4,6 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-
 import org.apache.commons.lang3.StringUtils;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 
@@ -45,71 +40,9 @@ public class EntityRepresentationImpl extends JavaClassRepresentationImpl implem
 	@Override
 	public Collection<EntityAttributeRepresentation> getAttributes() {
 		// @formatter:off
-		return this.javaClassSource.getFields().stream()
+		return javaClassSource.getFields().stream()
 				.filter(fieldSource -> !fieldSource.isStatic())
-				.map(fieldSource -> new EntityAttributeRepresentationImpl(this.getProject(),this, fieldSource))
-				.collect(Collectors.toList());
-		// @formatter:on
-	}
-
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see br.xtool.core.representation.EJpaEntity#getSimpleAttributes()
-	 */
-	@Override
-	public Collection<EntityAttributeRepresentation> getSimpleAttributes() {
-		// @formatter:off
-		return this.getAttributes().stream()
-				.filter(attr ->  !attr.getJpaRelationship().isPresent())
-				.filter(attr -> !attr.getEnum().isPresent())
-				.collect(Collectors.toList());
-		// @formatter:on
-
-	}
-
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see br.xtool.core.representation.EJpaEntity#getRelationshipAttributes()
-	 */
-	@Override
-	public Collection<EntityAttributeRepresentation> getRelationshipAttributes() {
-		// @formatter:off
-		return this.getAttributes().stream()
-				.filter(attr -> attr.getJpaRelationship().isPresent())
-				.collect(Collectors.toList());
-		// @formatter:on
-	}
-
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see br.xtool.core.representation.EJpaEntity#getEnumAttributes()
-	 */
-	@Override
-	public Collection<EntityAttributeRepresentation> getEnumAttributes() {
-		// @formatter:off
-		return this.getAttributes().stream()
-				.filter(attr -> attr.getEnum().isPresent())
-				.collect(Collectors.toList());
-		// @formatter:on
-	}
-
-	@Override
-	public Collection<EntityAttributeRepresentation> getToManyRelationshipAttributes() {
-		// @formatter:off
-		return this.getRelationshipAttributes().stream()
-				.filter(attr -> attr.getRoasterField().hasAnnotation(ManyToMany.class) || attr.getRoasterField().hasAnnotation(OneToMany.class))
-				.collect(Collectors.toList());
-		// @formatter:on
-	}
-
-	@Override
-	public Collection<EntityAttributeRepresentation> getToOneRelationshipAttributes() {
-		// @formatter:off
-		return this.getRelationshipAttributes().stream()
-				.filter(attr -> attr.getRoasterField().hasAnnotation(OneToOne.class) || attr.getRoasterField().hasAnnotation(ManyToOne.class))
+				.map(fieldSource -> new EntityAttributeRepresentationImpl(getProject(),this, fieldSource))
 				.collect(Collectors.toList());
 		// @formatter:on
 	}
@@ -117,8 +50,8 @@ public class EntityRepresentationImpl extends JavaClassRepresentationImpl implem
 	@Override
 	public Optional<RepositoryRepresentation> getAssociatedRepository() {
 		// @formatter:off
-		return this.getProject().getRepositories().stream()
-				.filter(repository -> repository.getName().equals(this.getName().concat("Repository")))
+		return getProject().getRepositories().stream()
+				.filter(repository -> repository.getName().equals(getName().concat("Repository")))
 				.findFirst();
 		// @formatter:on
 	}
@@ -126,8 +59,8 @@ public class EntityRepresentationImpl extends JavaClassRepresentationImpl implem
 	@Override
 	public Optional<SpecificationRepresentation> getAssociatedSpecification() {
 		// @formatter:off
-		return this.getProject().getSpecifications().stream()
-				.filter(repository -> repository.getName().equals(this.getName().concat("Specification")))
+		return getProject().getSpecifications().stream()
+				.filter(repository -> repository.getName().equals(getName().concat("Specification")))
 				.findFirst();
 		// @formatter:on
 	}
@@ -135,8 +68,8 @@ public class EntityRepresentationImpl extends JavaClassRepresentationImpl implem
 	@Override
 	public Optional<ServiceClassRepresentation> getAssociatedService() {
 		// @formatter:off
-		return this.getProject().getServices().stream()
-				.filter(service -> service.getName().equals(this.getName().concat("Service")))
+		return getProject().getServices().stream()
+				.filter(service -> service.getName().equals(getName().concat("Service")))
 				.findFirst();
 		// @formatter:on
 	}
@@ -144,19 +77,19 @@ public class EntityRepresentationImpl extends JavaClassRepresentationImpl implem
 	@Override
 	public Optional<RestClassRepresentation> getAssociatedRest() {
 		// @formatter:off
-		return this.getProject().getRests().stream()
-				.filter(rest -> rest.getName().equals(this.getName().concat("Rest")))
+		return getProject().getRests().stream()
+				.filter(rest -> rest.getName().equals(getName().concat("Rest")))
 				.findFirst();
 		// @formatter:on
 	}
 
 	@Override
 	public Optional<NgEntityRepresentation> getAssociatedNgEntity() {
-		if (this.getProject().getAssociatedAngularProject().isPresent()) {
-			NgProjectRepresentation ngProject = this.getProject().getAssociatedAngularProject().get();
+		if (getProject().getAssociatedAngularProject().isPresent()) {
+			NgProjectRepresentation ngProject = getProject().getAssociatedAngularProject().get();
 			// @formatter:off
 			return ngProject.getNgEntities().stream()
-					.filter(ngEntity -> ngEntity.getName().equals(this.getName()))
+					.filter(ngEntity -> ngEntity.getName().equals(getName()))
 					.findAny();
 			// @formatter:on
 		}
@@ -165,11 +98,11 @@ public class EntityRepresentationImpl extends JavaClassRepresentationImpl implem
 
 	@Override
 	public Optional<NgServiceRepresentation> getAssociatedNgService() {
-		if (this.getProject().getAssociatedAngularProject().isPresent()) {
-			NgProjectRepresentation ngProject = this.getProject().getAssociatedAngularProject().get();
+		if (getProject().getAssociatedAngularProject().isPresent()) {
+			NgProjectRepresentation ngProject = getProject().getAssociatedAngularProject().get();
 			// @formatter:off
 			return ngProject.getNgServices().stream()
-					.filter(ngService -> ngService.getName().equals(this.getName().concat("Service")))
+					.filter(ngService -> ngService.getName().equals(getName().concat("Service")))
 					.findAny();
 			// @formatter:on
 		}
@@ -181,7 +114,7 @@ public class EntityRepresentationImpl extends JavaClassRepresentationImpl implem
 		// @formatter:off
 		return StringUtils.abbreviate(
 				StringUtils.upperCase(
-						Strman.toSnakeCase(this.getName())), "", 30);
+						Strman.toSnakeCase(getName())), "", 30);
 		// @formatter:on
 	}
 
@@ -190,7 +123,7 @@ public class EntityRepresentationImpl extends JavaClassRepresentationImpl implem
 		// @formatter:off
 		return StringUtils.abbreviate(
 				StringUtils.upperCase(
-						"SEQ_" + Strman.toSnakeCase(this.getName())), "", 30);
+						"SEQ_" + Strman.toSnakeCase(getName())), "", 30);
 		// @formatter:on
 	}
 
@@ -199,7 +132,7 @@ public class EntityRepresentationImpl extends JavaClassRepresentationImpl implem
 		// @formatter:off
 		return StringUtils.abbreviate(
 				StringUtils.upperCase(
-						Strman.toSnakeCase(this.getName())), "", 30) + "_ID";
+						Strman.toSnakeCase(getName())), "", 30) + "_ID";
 		// @formatter:on
 	}
 

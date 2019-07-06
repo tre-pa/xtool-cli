@@ -24,7 +24,6 @@ import br.xtool.core.implementation.representation.NgDetailRepresentationImpl;
 import br.xtool.core.implementation.representation.NgEditRepresentationImpl;
 import br.xtool.core.implementation.representation.NgEntityRepresentationImpl;
 import br.xtool.core.implementation.representation.NgListRepresentationImpl;
-import br.xtool.core.implementation.representation.NgServiceRepresentationImpl;
 import br.xtool.core.representation.ProjectRepresentation;
 import br.xtool.core.representation.angular.NgClassRepresentation;
 import br.xtool.core.representation.angular.NgCrudRepresentation;
@@ -34,7 +33,6 @@ import br.xtool.core.representation.angular.NgEntityRepresentation;
 import br.xtool.core.representation.angular.NgListRepresentation;
 import br.xtool.core.representation.angular.NgModuleRepresentation;
 import br.xtool.core.representation.angular.NgProjectRepresentation;
-import br.xtool.core.representation.angular.NgServiceRepresentation;
 import br.xtool.core.representation.springboot.EntityAttributeRepresentation;
 import br.xtool.core.representation.springboot.EntityRepresentation;
 import br.xtool.core.representation.springboot.JavaEnumRepresentation;
@@ -42,6 +40,7 @@ import br.xtool.core.template.angular.NgDetailDxTemplates;
 import br.xtool.core.template.angular.NgEditDxTemplates;
 import br.xtool.core.template.angular.NgEnumFSTemplate;
 import br.xtool.core.template.angular.NgListDxTemplates;
+import br.xtool.core.template.angular.NgServiceFSTemplate;
 import br.xtool.service.AngularService;
 import strman.Strman;
 
@@ -160,33 +159,35 @@ public class AngularServiceImpl implements AngularService {
 	 * @see br.xtool.service.AngularService#genNgService(br.xtool.core.representation. springboot.EntityRepresentation)
 	 */
 	@Override
-	public NgServiceRepresentation genNgService(NgProjectRepresentation ngProject, EntityRepresentation entity) {
+	public void genNgService(NgProjectRepresentation ngProject, EntityRepresentation entity) {
 		entity.getAssociatedNgEntity().orElseGet(() -> genNgEntity(ngProject, entity));
-
-		Map<String, Object> vars = new HashMap<String, Object>() {
-			private static final long serialVersionUID = 1L;
-			{
-				put("Strman", Strman.class);
-				put("entityFileName", NgClassRepresentation.genFileName(entity.getName()));
-				put("entityClassName", entity.getName());
-				put("entity", entity);
-				put("entityApiName", InflectorHelper.getInstance().pluralize(Strman.toKebabCase(entity.getName())));
-				put("typescriptTypeMap", NgClassRepresentation.typescriptTypeMap());
-			}
-		};
-		Path resourcePath = Paths.get("angular").resolve(ngProject.getProjectVersion().getName()).resolve("service");
-		Path destinationPath = ngProject.getNgAppModule().getPath().getParent().resolve("service");
-
-		fs.copy(resourcePath, vars, destinationPath);
-		Path ngServicePath = destinationPath.resolve(NgClassRepresentation.genFileName(entity.getName()).concat(".service")).resolve(entity.getName().concat(".ts"));
-		NgServiceRepresentation ngService = new NgServiceRepresentationImpl(ngServicePath);
-
-		return ngService;
+//
+//		Map<String, Object> vars = new HashMap<String, Object>() {
+//			private static final long serialVersionUID = 1L;
+//			{
+//				put("Strman", Strman.class);
+//				put("entityFileName", NgClassRepresentation.genFileName(entity.getName()));
+//				put("entityClassName", entity.getName());
+//				put("entity", entity);
+//				put("entityApiName", InflectorHelper.getInstance().pluralize(Strman.toKebabCase(entity.getName())));
+//				put("typescriptTypeMap", NgClassRepresentation.typescriptTypeMap());
+//			}
+//		};
+//		Path resourcePath = Paths.get("angular").resolve(ngProject.getProjectVersion().getName()).resolve("service");
+//		Path destinationPath = ngProject.getNgAppModule().getPath().getParent().resolve("service");
+//
+//		fs.copy(resourcePath, vars, destinationPath);
+//		Path ngServicePath = destinationPath.resolve(NgClassRepresentation.genFileName(entity.getName()).concat(".service")).resolve(entity.getName().concat(".ts"));
+//		NgServiceRepresentation ngService = new NgServiceRepresentationImpl(ngServicePath);
+//
+//		return ngService;
+		new NgServiceFSTemplate(entity, ngProject).merge(fs);
 	}
 
 	@Override
 	public NgCrudRepresentation genNgCrud(NgProjectRepresentation ngProject, EntityRepresentation entity, NgModuleRepresentation ngModule) {
-		entity.getAssociatedNgService().orElseGet(() -> genNgService(ngProject, entity));
+		// entity.getAssociatedNgService().orElseGet(() -> genNgService(ngProject, entity));
+		if (!entity.getAssociatedNgService().isPresent()) genNgService(ngProject, entity);
 
 		NgListRepresentation ngList = genNgList(ngProject, entity, ngModule);
 		NgDetailRepresentation ngDetail = genNgDetail(ngProject, entity, ngModule);

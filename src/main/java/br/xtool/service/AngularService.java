@@ -4,7 +4,6 @@ import br.xtool.core.representation.angular.NgCrudRepresentation;
 import br.xtool.core.representation.angular.NgEntityRepresentation;
 import br.xtool.core.representation.angular.NgModuleRepresentation;
 import br.xtool.core.representation.angular.NgProjectRepresentation;
-import br.xtool.core.representation.angular.NgServiceRepresentation;
 import br.xtool.core.representation.springboot.EntityRepresentation;
 import br.xtool.core.representation.springboot.JavaEnumRepresentation;
 
@@ -49,7 +48,7 @@ public interface AngularService {
 	 * @param entity    classe Jpa
 	 * @return classe Typescript
 	 */
-	NgServiceRepresentation genNgService(NgProjectRepresentation ngProject, EntityRepresentation entity);
+	void genNgService(NgProjectRepresentation ngProject, EntityRepresentation entity);
 
 	/**
 	 *
