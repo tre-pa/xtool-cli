@@ -9,6 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.Assert;
 
 import br.xtool.core.FS;
+import strman.Strman;
 
 public abstract class FSTemplate {
 
@@ -17,6 +18,11 @@ public abstract class FSTemplate {
 	private Path source;
 
 	private Path destination;
+
+	public FSTemplate() {
+		super();
+		vars.put("Strman", Strman.class);
+	}
 
 	protected abstract void configure();
 

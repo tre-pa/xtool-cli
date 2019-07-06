@@ -7,8 +7,13 @@ import br.xtool.core.representation.angular.NgProjectRepresentation;
 import br.xtool.core.representation.springboot.JavaEnumRepresentation;
 import br.xtool.core.template.FSTemplate;
 import lombok.AllArgsConstructor;
-import strman.Strman;
 
+/**
+ * Classe de template de Enums Angular.
+ * 
+ * @author jcruz
+ *
+ */
 @AllArgsConstructor
 public class NgEnumFSTemplate extends FSTemplate {
 
@@ -18,7 +23,6 @@ public class NgEnumFSTemplate extends FSTemplate {
 
 	@Override
 	protected void configure() {
-		put("Strman", Strman.class);
 		put("project", project);
 		put("javaEnumFileName", NgClassRepresentation.genFileName(javaEnum.getName()));
 		put("javaEnumClassName", javaEnum.getName());
