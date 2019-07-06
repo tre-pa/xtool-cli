@@ -32,6 +32,12 @@ import lombok.SneakyThrows;
  */
 public class NgHelper {
 
+	/**
+	 * Adiciona o componente NgCrud a rota do módulo.
+	 * 
+	 * @param ngModule
+	 * @param ngCrud
+	 */
 	public static void addToRoute(NgModuleRepresentation ngModule, NgCrudRepresentation ngCrud) {
 		List<NgRoute> ngRoutes = ngModule.getRoutes();
 		String rootRoutePath = ngCrud.getTargetEntity().getApiPath();
@@ -50,12 +56,6 @@ public class NgHelper {
 		NgHelper.updateRoute(ngModule, ngRoutes);
 	}
 
-	/**
-	 * Atualiza a rota de um módulo.
-	 * 
-	 * @param ngModule Modulo Angular
-	 * @param routes   Fragmento de rota a ser inserido na rota principal.
-	 */
 	private static void updateRoute(NgModuleRepresentation ngModule, List<NgRoute> routes) {
 		String content = ngModule.getTsFileContent();
 		Pattern pattern = Pattern.compile(NgModuleRepresentation.ROUTE_PATTERN);
@@ -135,6 +135,12 @@ public class NgHelper {
 
 	}
 
+	/**
+	 * Atualiza o import de um módulo.
+	 * 
+	 * @param module
+	 * @param componentName
+	 */
 	@SneakyThrows
 	public static void addImport(NgModuleRepresentation module, String componentName) {
 		// @formatter:off
