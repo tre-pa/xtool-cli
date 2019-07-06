@@ -33,7 +33,7 @@ public interface AngularProjectService {
 	 * @param entity    classe Jpa
 	 * @return classe Typescript
 	 */
-	NgEntityRepresentation genNgEntity(EntityRepresentation entity);
+	NgEntityRepresentation genNgEntity(NgProjectRepresentation ngProject, EntityRepresentation entity);
 
 	/**
 	 *
@@ -41,7 +41,7 @@ public interface AngularProjectService {
 	 * @param javaEnum
 	 * @return
 	 */
-	NgEnumRepresentation genNgEnum(JavaEnumRepresentation javaEnum);
+	NgEnumRepresentation genNgEnum(NgProjectRepresentation ngProject, JavaEnumRepresentation javaEnum);
 
 	/**
 	 * Cria uma nova classe Typescript de dominio em src/app/domain
@@ -50,7 +50,7 @@ public interface AngularProjectService {
 	 * @param entity    classe Jpa
 	 * @return classe Typescript
 	 */
-	NgServiceRepresentation genNgService(EntityRepresentation entity);
+	NgServiceRepresentation genNgService(NgProjectRepresentation ngProject, EntityRepresentation entity);
 
 	/**
 	 *
@@ -58,7 +58,7 @@ public interface AngularProjectService {
 	 * @param ngModule
 	 * @return
 	 */
-	NgCrudRepresentation genNgCrud(EntityRepresentation entity, NgModuleRepresentation ngModule);
+	NgCrudRepresentation genNgCrud(NgProjectRepresentation ngProject, EntityRepresentation entity, NgModuleRepresentation ngModule);
 
 	/**
 	 * Imprime a lista de componentes de listagem angular.

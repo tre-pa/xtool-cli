@@ -45,7 +45,7 @@ public class NgProjectRepresentationImpl extends ProjectRepresentationImpl imple
 	 */
 	@Override
 	public Path getAppPath() {
-		return this.getPath().resolve("src/app");
+		return getPath().resolve("src/app");
 	}
 
 	/*
@@ -55,7 +55,7 @@ public class NgProjectRepresentationImpl extends ProjectRepresentationImpl imple
 	 */
 	@Override
 	public Path getDomainPath() {
-		return this.getPath().resolve("src/app/domain");
+		return getPath().resolve("src/app/domain");
 	}
 
 	/*
@@ -65,7 +65,7 @@ public class NgProjectRepresentationImpl extends ProjectRepresentationImpl imple
 	 */
 	@Override
 	public Path getServicePath() {
-		return this.getPath().resolve("src/app/service");
+		return getPath().resolve("src/app/service");
 	}
 
 	/*
@@ -75,13 +75,13 @@ public class NgProjectRepresentationImpl extends ProjectRepresentationImpl imple
 	 */
 	@Override
 	public Path getViewPath() {
-		return this.getPath().resolve("src/app/view");
+		return getPath().resolve("src/app/view");
 	}
 
 	@Override
 	public SortedSet<NgEntityRepresentation> getNgEntities() {
 		// @formatter:off
-		return this.getNgClasses().values().stream()
+		return getNgClasses().values().stream()
 				.filter(ngClass -> ngClass.getPath().getParent().endsWith("domain"))
 				.map(ngClass -> new NgEntityRepresentationImpl(ngClass.getPath()))
 				.collect(Collectors.toCollection(TreeSet::new));
@@ -90,13 +90,13 @@ public class NgProjectRepresentationImpl extends ProjectRepresentationImpl imple
 
 	@Override
 	public NgPackageRepresentation getNgPackage() {
-		return NgPackageRepresentationImpl.of(this.getPath().resolve("package.json")).orElse(null);
+		return NgPackageRepresentationImpl.of(getPath().resolve("package.json")).orElse(null);
 	}
 
 	@Override
 	public NgModuleRepresentation getNgViewModule() {
 		// @formatter:off
-		return this.getNgModules().stream()
+		return getNgModules().stream()
 				.filter(ngModule -> ngModule.getName().equals("ViewModule"))
 				.findFirst()
 				.orElseThrow(() -> new IllegalArgumentException("O projeto não possui o módulo 'view.module.ts'."));
@@ -106,7 +106,7 @@ public class NgProjectRepresentationImpl extends ProjectRepresentationImpl imple
 	@Override
 	public NgModuleRepresentation getNgAppModule() {
 		// @formatter:off
-		return this.getNgModules().stream()
+		return getNgModules().stream()
 				.filter(ngModule -> ngModule.getName().equals("AppModule"))
 				.findFirst()
 				.orElseThrow(() -> new IllegalArgumentException("O projeto não possui o módulo 'app.module.ts'."));
@@ -121,7 +121,7 @@ public class NgProjectRepresentationImpl extends ProjectRepresentationImpl imple
 	@Override
 	public SortedSet<NgModuleRepresentation> getNgModules() {
 		// @formatter:off
-		return this.getNgClasses().values().stream()
+		return getNgClasses().values().stream()
 				.filter(ngClass -> ngClass.getTsFileName().endsWith(NgProjectRepresentation.ArtifactyType.MODULE.getExt()))
 				.map(ngClass -> new NgModuleRepresentationImpl(this, ngClass.getPath()))
 				.collect(Collectors.toCollection(TreeSet::new));
@@ -136,7 +136,7 @@ public class NgProjectRepresentationImpl extends ProjectRepresentationImpl imple
 	@Override
 	public SortedSet<NgComponentRepresentation> getNgComponents() {
 		// @formatter:off
-		return this.getNgClasses().values().stream()
+		return getNgClasses().values().stream()
 				.filter(ngClass -> ngClass.getTsFileName().endsWith(NgProjectRepresentation.ArtifactyType.COMPONENT.getExt()))
 				.map(ngClass -> new NgComponentRepresentationImpl(ngClass.getPath().getParent()))
 				.collect(Collectors.toCollection(TreeSet::new));
@@ -151,7 +151,7 @@ public class NgProjectRepresentationImpl extends ProjectRepresentationImpl imple
 	@Override
 	public SortedSet<NgServiceRepresentation> getNgServices() {
 		// @formatter:off
-		return this.getNgClasses().values().stream()
+		return getNgClasses().values().stream()
 				.filter(ngClass -> ngClass.getTsFileName().endsWith(NgProjectRepresentation.ArtifactyType.SERVICE.getExt()))
 				.map(ngClass -> new NgServiceRepresentationImpl(ngClass.getPath()))
 				.collect(Collectors.toCollection(TreeSet::new));
@@ -166,7 +166,7 @@ public class NgProjectRepresentationImpl extends ProjectRepresentationImpl imple
 	@Override
 	public SortedSet<NgPageRepresentation> getNgPages() {
 		// @formatter:off
-		return this.getNgClasses().values().stream()
+		return getNgClasses().values().stream()
 				.filter(ngClass -> ngClass.getTsFileName().endsWith(NgProjectRepresentation.ArtifactyType.PAGE.getExt()))
 				.map(ngClass -> new NgPageRepresentationImpl(ngClass.getPath()))
 				.collect(Collectors.toCollection(TreeSet::new));
@@ -176,7 +176,7 @@ public class NgProjectRepresentationImpl extends ProjectRepresentationImpl imple
 	@Override
 	public SortedSet<NgListRepresentation> getNgLists() {
 		// @formatter:off
-		return this.getNgClasses().values().stream()
+		return getNgClasses().values().stream()
 				.filter(ngClass -> ngClass.getTsFileName().endsWith(NgProjectRepresentation.ArtifactyType.LIST.getExt()))
 				.map(ngClass -> new NgListRepresentationImpl(ngClass.getPath()))
 				.collect(Collectors.toCollection(TreeSet::new));
@@ -191,7 +191,7 @@ public class NgProjectRepresentationImpl extends ProjectRepresentationImpl imple
 	@Override
 	public SortedSet<NgEditRepresentation> getNgEdits() {
 		// @formatter:off
-		return this.getNgClasses().values().stream()
+		return getNgClasses().values().stream()
 				.filter(ngClass -> ngClass.getTsFileName().endsWith(NgProjectRepresentation.ArtifactyType.EDIT.getExt()))
 				.map(ngClass -> new NgEditRepresentationImpl(ngClass.getPath().getParent()))
 				.collect(Collectors.toCollection(TreeSet::new));
@@ -206,7 +206,7 @@ public class NgProjectRepresentationImpl extends ProjectRepresentationImpl imple
 	@Override
 	public SortedSet<NgDetailRepresentation> getNgDetails() {
 		// @formatter:off
-		return this.getNgClasses().values().stream()
+		return getNgClasses().values().stream()
 				.filter(ngClass -> ngClass.getTsFileName().endsWith(NgProjectRepresentation.ArtifactyType.DETAIL.getExt()))
 				.map(ngClass -> new NgDetailRepresentationImpl(ngClass.getPath().getParent()))
 				.collect(Collectors.toCollection(TreeSet::new));
@@ -214,15 +214,15 @@ public class NgProjectRepresentationImpl extends ProjectRepresentationImpl imple
 	}
 
 	private Map<String, NgClassRepresentation> getNgClasses() {
-		if (Objects.isNull(this.ngClasses)) {
+		if (Objects.isNull(ngClasses)) {
 			// @formatter:off
-			this.ngClasses = this.listAllFiles().stream()
+			ngClasses = listAllFiles().stream()
 					.filter(path -> Arrays.asList(ArtifactyType.values()).stream().anyMatch(artifactType -> path.toString().endsWith(artifactType.getExt())))
 					.map(NgClassRepresentationImpl::new)
 					.collect(Collectors.toMap(ngClass -> ngClass.getPath().toString(), Function.identity()));
 			// @formatter:on
 		}
-		return this.ngClasses;
+		return ngClasses;
 	}
 
 	// @Override
@@ -232,20 +232,19 @@ public class NgProjectRepresentationImpl extends ProjectRepresentationImpl imple
 
 	@Override
 	public String getFrameworkVersion() {
-		return this.getNgPackage().getDependencies().get("@angular/core");
+		return getNgPackage().getDependencies().get("@angular/core");
 	}
 
 	@Override
 	public SpringBootProjectRepresentation getTargetSpringBootProject() {
-		String springBootPath = this.getPath().toString().concat("-service");
+		String springBootPath = getName().endsWith("-frontend") ? getPath().toString().replace("-frontend", "-backend") : getPath().toString().concat("-service");
+		System.out.println(springBootPath);
 		if (StringUtils.isNotEmpty(springBootPath)) {
 			if (Files.exists(Paths.get(springBootPath))) {
-				if (SpringBootProjectRepresentation.isValid(Paths.get(springBootPath))) {
-					return new SpringBootProjectRepresentationImpl(Paths.get(springBootPath));
-				}
+				return new SpringBootProjectRepresentationImpl(Paths.get(springBootPath));
 			}
 		}
-		throw new IllegalArgumentException(String.format("Nenhum projeto Spring Boot associado ao projeto '%s'", this.getName()));
+		throw new IllegalArgumentException(String.format("Nenhum projeto Spring Boot associado ao projeto '%s'", getName()));
 	}
 
 	@Override
@@ -253,18 +252,15 @@ public class NgProjectRepresentationImpl extends ProjectRepresentationImpl imple
 		Pattern v5pattern = Pattern.compile("[\\^~]?5\\.2\\.\\d");
 		Pattern v6pattern = Pattern.compile("[\\^~]?6\\.\\d\\.\\d");
 		Pattern v7pattern = Pattern.compile("[\\^~]?7\\.\\d\\.\\d");
-		if (v5pattern.matcher(this.getFrameworkVersion()).matches())
-			return Version.V5;
-		if (v6pattern.matcher(this.getFrameworkVersion()).matches())
-			return Version.V6;
-		if (v7pattern.matcher(this.getFrameworkVersion()).matches())
-			return Version.V7;
+		if (v5pattern.matcher(getFrameworkVersion()).matches()) return Version.V5;
+		if (v6pattern.matcher(getFrameworkVersion()).matches()) return Version.V6;
+		if (v7pattern.matcher(getFrameworkVersion()).matches()) return Version.V7;
 		return Version.NONE;
 	}
 
 	@Override
 	public void refresh() {
-		this.ngClasses = null;
+		ngClasses = null;
 	}
 
 	@Override

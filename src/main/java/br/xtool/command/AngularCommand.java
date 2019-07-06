@@ -37,8 +37,12 @@ public class AngularCommand {
 	@ShellMethod(key = "gen:ng-entities", value = "Gera as classes Typescript do diagrama no projeto Angular", group = XtoolCliApplication.ANGULAR_COMMAND_GROUP)
 	@ShellMethodAvailability("availabilityAngularCommand")
 	public void genNgEntities() {
-		SpringBootProjectRepresentation project = this.workspace.getWorkingProject(SpringBootProjectRepresentation.class);
-		project.getEntities().stream().forEach(this.angularService::genNgEntity);
+		// @formatter:off
+		workspace.getAngularProject().get().getTargetSpringBootProject()
+			.getEntities()
+			.stream()
+			.forEach(_entity -> angularService.genNgEntity(workspace.getAngularProject().get(), _entity));
+		// @formatter:on
 	}
 
 	/**
@@ -51,63 +55,34 @@ public class AngularCommand {
 	public void genNgService(@ShellOption(help = "Entidade JPA", valueProvider = EntityRepresentationValueProvider.class, defaultValue = "") EntityRepresentation entity) {
 		if (Objects.isNull(entity)) {
 			// @formatter:off
-			this.workspace.getWorkingProject(SpringBootProjectRepresentation.class).getEntities().stream()
-			.forEach(this.angularService::genNgService);
+			workspace.getAngularProject().get().getTargetSpringBootProject().getEntities()
+				.stream()
+				.forEach(_entity -> angularService.genNgService(workspace.getAngularProject().get(), _entity));
 			// @formatter:on
 			return;
 		}
-		this.angularService.genNgService(entity);
+		angularService.genNgService(workspace.getAngularProject().get(), entity);
 	}
-
-	// @ShellMethod(key = "gen:ng-list", value = "Gera um componente de lista angular para a entidade JPA", group = XtoolCliApplication.ANGULAR_COMMAND_GROUP)
-	// @ShellMethodAvailability("availabilityAngularCommand")
-	// public void genNgList(
-	//	// @formatter:off
-	//			@ShellOption(help = "Entidade JPA", valueProvider = EntityRepresentationValueProvider.class) EntityRepresentation entity,
-	//			@ShellOption(help = "Módulo Angular", valueProvider = NgModuleRepresentationValueProvider.class) NgModuleRepresentation ngModule) {
-	//	// @formatter:on
-	// this.angularService.genNgList(entity, ngModule);
-	// }
-
-	// @ShellMethod(key = "gen:ng-detail", value = "Gera um componente de detail para a entidade JPA", group = XtoolCliApplication.ANGULAR_COMMAND_GROUP)
-	// @ShellMethodAvailability("availabilityAngularCommand")
-	// public void genNgDetail(
-	//	// @formatter:off
-	//			@ShellOption(help = "Entidade JPA", valueProvider = EntityRepresentationValueProvider.class) EntityRepresentation entity,
-	//			@ShellOption(help = "Módulo Angular", valueProvider = NgModuleRepresentationValueProvider.class) NgModuleRepresentation ngModule) {
-	//	// @formatter:on
-	// this.angularService.genNgDetail(entity, ngModule);
-	// }
-
-	// @ShellMethod(key = "gen:ng-edit", value = "Gera um componente de edit para a entidade JPA", group = XtoolCliApplication.ANGULAR_COMMAND_GROUP)
-	// @ShellMethodAvailability("availabilityAngularCommand")
-	// public void genNgEdit(
-	//	// @formatter:off
-	//			@ShellOption(help = "Entidade JPA", valueProvider = EntityRepresentationValueProvider.class) EntityRepresentation entity,
-	//			@ShellOption(help = "Módulo Angular", valueProvider = NgModuleRepresentationValueProvider.class) NgModuleRepresentation ngModule) {
-	//	// @formatter:on
-	// this.angularService.genNgEdit(entity, ngModule);
-	// }
 
 	@ShellMethod(key = "gen:ng-crud", value = "Gera um componente de crud para a entidade JPA", group = XtoolCliApplication.ANGULAR_COMMAND_GROUP)
 	@ShellMethodAvailability("availabilityAngularCommand")
 	public void genNgEdit(
 	// @formatter:off
 			@ShellOption(help = "Entidade JPA", valueProvider = EntityRepresentationValueProvider.class) EntityRepresentation entity,
-			@ShellOption(help = "Módulo Angular", valueProvider = NgModuleRepresentationValueProvider.class) NgModuleRepresentation ngModule) {
+			@ShellOption(help = "Módu)lo Angular", valueProvider = NgModuleRepresentationValueProvider.class) NgModuleRepresentation ngModule) {
 		// @formatter:on
-		this.angularService.genNgCrud(entity, ngModule);
+		angularService.genNgCrud(workspace.getAngularProject().get(), entity, ngModule);
 	}
 
 	@ShellMethod(key = "list:ng-artifacts", value = "Lista os artefatos do projeto Angular", group = XtoolCliApplication.ANGULAR_COMMAND_GROUP)
 	@ShellMethodAvailability("availabilityAngularCommand")
 	public void listNgArtifacts(@ShellOption(help = "Entidades de domínio Angular", arity = 0, defaultValue = "false") boolean ngEntities,
 			@ShellOption(help = "Componentes de listagem", arity = 0, defaultValue = "false") boolean ngLists) {
-		SpringBootProjectRepresentation project = this.workspace.getWorkingProject(SpringBootProjectRepresentation.class);
+		SpringBootProjectRepresentation project = workspace.getWorkingProject(SpringBootProjectRepresentation.class);
 		if (project.getAssociatedAngularProject().isPresent()) {
 			NgProjectRepresentation ngProject = project.getAssociatedAngularProject().get();
-			if (ngEntities) this.angularService.printNgEntities(ngProject);
-			if (ngLists) this.angularService.printNgLists(ngProject);
+			if (ngEntities) angularService.printNgEntities(ngProject);
+			if (ngLists) angularService.printNgLists(ngProject);
 		}
 	}
 
@@ -117,11 +92,11 @@ public class AngularCommand {
 	}
 
 	protected boolean isSpringBootProject() {
-		return this.workspace.getWorkingProjectType().equals(ProjectRepresentation.Type.SPRINGBOOT)
-				&& this.workspace.getWorkingProject(SpringBootProjectRepresentation.class).getAssociatedAngularProject().isPresent();
+		return workspace.getWorkingProjectType().equals(ProjectRepresentation.Type.SPRINGBOOT)
+				&& workspace.getWorkingProject(SpringBootProjectRepresentation.class).getAssociatedAngularProject().isPresent();
 	}
 
 	protected boolean isSpringBootNgProject() {
-		return this.workspace.getWorkingProjectType().equals(ProjectRepresentation.Type.SPRINGBOOTNG);
+		return workspace.getWorkingProjectType().equals(ProjectRepresentation.Type.SPRINGBOOTNG);
 	}
 }
