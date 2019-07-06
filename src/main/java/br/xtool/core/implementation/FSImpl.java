@@ -28,6 +28,7 @@ public class FSImpl implements FS {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.xtool.core.service.FileService#getTemplates(java.nio.file.Path, java.util.Map)
 	 */
 	@SneakyThrows
@@ -37,7 +38,7 @@ public class FSImpl implements FS {
 		// @formatter:off
 		return Files.walk(realRootPath)
 			.filter(Files::isRegularFile)
-			.map(path -> new ResourceRepresentationImpl(realRootPath,realRootPath.relativize(path),this.velocityEngine, velocityContext))
+			.map(path -> new ResourceRepresentationImpl(realRootPath,realRootPath.relativize(path),velocityEngine, velocityContext))
 			.collect(Collectors.toList());
 		// @formatter:on
 	}
@@ -45,37 +46,38 @@ public class FSImpl implements FS {
 	private ResourceRepresentation getResource(Path resourcePath, Map<String, Object> vars) {
 		Path realRootPath = ResourceRepresentation.ROOT_PATH.resolve(resourcePath);
 		VelocityContext velocityContext = new VelocityContext(vars);
-		return new ResourceRepresentationImpl(realRootPath, resourcePath, this.velocityEngine, velocityContext);
+		return new ResourceRepresentationImpl(realRootPath, resourcePath, velocityEngine, velocityContext);
 	}
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.xtool.core.service.FileService#copy(java.util.Collection, br.xtool.core.representation.EProject)
 	 */
 	@Override
 	public <T extends ProjectRepresentation> void copy(Path resourcePath, Map<String, Object> vars, T destProject) {
 		if (Files.isDirectory(ResourceRepresentation.ROOT_PATH.resolve(resourcePath))) {
-			Collection<ResourceRepresentation> resources = this.getResources(resourcePath, vars);
+			Collection<ResourceRepresentation> resources = getResources(resourcePath, vars);
 			resources.forEach(resource -> this.copy(resource, destProject.getPath()));
 			return;
 		}
-		ResourceRepresentation resource = this.getResource(resourcePath, vars);
+		ResourceRepresentation resource = getResource(resourcePath, vars);
 		this.copy(resource, destProject.getPath());
 	}
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see br.xtool.core.service.FileService#copy(java.util.Collection, java.nio.file.Path)
 	 */
 	@Override
 	public void copy(Path resourcePath, Map<String, Object> vars, Path path) {
 		if (Files.isDirectory(ResourceRepresentation.ROOT_PATH.resolve(resourcePath))) {
-			Collection<ResourceRepresentation> resources = this.getResources(resourcePath, vars);
+			Collection<ResourceRepresentation> resources = getResources(resourcePath, vars);
 			resources.forEach(resource -> this.copy(resource, path));
 			return;
 		}
-		//		System.out.println("Resource: " + Files.isDirectory(EResource.ROOT_PATH.resolve(resourcePath)));
-		ResourceRepresentation resource = this.getResource(resourcePath, vars);
+		ResourceRepresentation resource = getResource(resourcePath, vars);
 		this.copy(resource, path);
 	}
 

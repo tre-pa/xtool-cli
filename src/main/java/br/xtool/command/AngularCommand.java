@@ -69,7 +69,7 @@ public class AngularCommand {
 	public void genNgEdit(
 	// @formatter:off
 			@ShellOption(help = "Entidade JPA", valueProvider = EntityRepresentationValueProvider.class) EntityRepresentation entity,
-			@ShellOption(help = "Módu)lo Angular", valueProvider = NgModuleRepresentationValueProvider.class) NgModuleRepresentation ngModule) {
+			@ShellOption(help = "Módulo Angular", valueProvider = NgModuleRepresentationValueProvider.class) NgModuleRepresentation ngModule) {
 		// @formatter:on
 		angularService.genNgCrud(workspace.getAngularProject().get(), entity, ngModule);
 	}

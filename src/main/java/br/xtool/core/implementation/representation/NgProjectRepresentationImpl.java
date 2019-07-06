@@ -238,7 +238,6 @@ public class NgProjectRepresentationImpl extends ProjectRepresentationImpl imple
 	@Override
 	public SpringBootProjectRepresentation getTargetSpringBootProject() {
 		String springBootPath = getName().endsWith("-frontend") ? getPath().toString().replace("-frontend", "-backend") : getPath().toString().concat("-service");
-		System.out.println(springBootPath);
 		if (StringUtils.isNotEmpty(springBootPath)) {
 			if (Files.exists(Paths.get(springBootPath))) {
 				return new SpringBootProjectRepresentationImpl(Paths.get(springBootPath));
