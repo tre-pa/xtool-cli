@@ -1,4 +1,3 @@
-import { KeycloakService } from './../../../@security/keycloak.service';
 import {
   EventEmitter,
   Component,
@@ -18,8 +17,10 @@ import { DxPopupModule } from 'devextreme-angular/ui/popup';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
-import { UserInfo } from 'src/app/@security/user-info';
+import * as _ from 'lodash';
 
+import { KeycloakService } from 'src/app/@security/keycloak.service';
+import { UserInfo } from 'src/app/@security/user-info';
 
 library.add(fas);
 
@@ -42,6 +43,7 @@ export class HeaderComponent implements OnInit {
   isUserAuthorized = true;
 
   userInfo: UserInfo;
+  userInitials: string;
 
   colors = ['#2196F3', '#32c787', '#00BCD4', '#ff5652',
     '#ffc107', '#ff85af', '#FF9800', '#39bbb0'];
@@ -65,6 +67,7 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.userInfo = this.keycloakService.getUserInfo();
+    this.calcInitials();
     if (!this.keycloakService.hasResourceRole('REPORT_MANAGER')) {
       this.userMenuItems[1].isHidden = true;
     }
@@ -83,17 +86,19 @@ export class HeaderComponent implements OnInit {
     if (item === this.userMenuItems[2]) this.keycloakService.logout();
   }
 
-  getInitials(): string {
-    let aaa: string[] = []
+  calcInitials() {
+    let aaa: string[] = [];
+    if (_.isEmpty(this.userInfo)) return;
     if (this.userInfo.name) aaa = this.userInfo.name.split(' ');
     else aaa = [this.userInfo.preferred_username];
-    return aaa[0].charAt(0) + aaa[aaa.length - 1].charAt(0);
+    this.userInitials = aaa[0].charAt(0) + aaa[aaa.length - 1].charAt(0);
   }
 
   randonColorStyle() {
     var hash = 0;
-    for (var i = 0; i < this.getInitials().length; i++)
-      hash = 31 * hash + this.getInitials().charCodeAt(i);
+    if (!this.userInitials) return;
+    for (var i = 0; i < this.userInitials.length; i++)
+      hash = 31 * hash + this.userInitials.charCodeAt(i);
     var index = Math.abs(hash % this.colors.length);
     return { 'background-color': this.colors[index] };
   }
