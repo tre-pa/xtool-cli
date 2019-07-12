@@ -95,13 +95,6 @@
 			<version>1.0.0</version>
 		</dependency>
 
-		<dependency>
-			<groupId>${rootPackage.name}</groupId>
-			<artifactId>${projectName}-frontend</artifactId>
-			<version>${project.version}</version>
-			<scope>runtime</scope>
-		</dependency>
-
 	</dependencies>
 
 	<dependencyManagement>
@@ -121,6 +114,26 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy frontend resources</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.outputDirectory}/static</outputDirectory>
+							<resources>
+								<resource>
+									<directory>../${project.parent.artifactId}-frontend/target/frontend</directory>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
