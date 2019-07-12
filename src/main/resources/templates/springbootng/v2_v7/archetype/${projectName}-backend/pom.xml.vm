@@ -96,7 +96,7 @@
 		</dependency>
 
 		<dependency>
-			<groupId>br.jus.tre_pa.${projectName}</groupId>
+			<groupId>${rootPackage.name}</groupId>
 			<artifactId>${projectName}-frontend</artifactId>
 			<version>${project.version}</version>
 			<scope>runtime</scope>
