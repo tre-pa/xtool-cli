@@ -43,8 +43,8 @@ public class EntityVisitor implements ClassVisitor {
 	private void addApiPath(EntityRepresentation entity, PlantClassRepresentation plantClass) {
 		// @formatter:off
 		plantClass.getTaggedValue("api-path")
-			.map(tagValue -> entity.getRoasterJavaClass().getJavaDoc().addTagValue("@api-path", tagValue))
-			.orElseGet(() -> entity.getRoasterJavaClass().getJavaDoc().addTagValue("@api-path", InflectorHelper.getInstance().pluralize(Strman.toKebabCase(entity.getName()))));
+			.map(tagValue -> entity.addTagValue("@api-path", tagValue))
+			.orElseGet(() -> entity.addTagValue("@api-path", InflectorHelper.getInstance().pluralize(Strman.toKebabCase(entity.getName()))));
 		// @formatter:on
 
 		// @formatter:off

@@ -11,6 +11,8 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 
+import org.jboss.forge.roaster.model.source.JavaClassSource;
+import org.jboss.forge.roaster.model.source.JavaDocSource;
 import org.springframework.stereotype.Component;
 
 import br.xtool.core.representation.plantuml.PlantClassFieldPropertyRepresentation.FieldPropertyType;
@@ -41,8 +43,8 @@ public class EntityAttributeVisitor implements FieldVisitor {
 	private void addLabelTag(EntityAttributeRepresentation attr, PlantClassFieldRepresentation plantField) {
 		// @formatter:off
 		plantField.getTaggedValue("label")
-			.map(tagValue -> attr.getRoasterField().getJavaDoc().addTagValue("@label", tagValue))
-			.orElseGet(() -> attr.getRoasterField().getJavaDoc().addTagValue("@label", attr.getName()));
+			.map(tagValue -> attr.addTagValue("@label", tagValue))
+			.orElseGet(() -> attr.addTagValue("@label", attr.getName()));
 		// @formatter:on
 //		plantField.getTaggedValue("label").ifPresent(tagValue -> attr.getRoasterField().getJavaDoc().addTagValue("@label", tagValue));
 	}
@@ -121,5 +123,6 @@ public class EntityAttributeVisitor implements FieldVisitor {
 			plantField.getLowerBoundMultiplicity().ifPresent(v -> ann.getRoasterAnnotation().setLiteralValue("min", String.valueOf(v)));
 		}
 	}
+
 
 }
