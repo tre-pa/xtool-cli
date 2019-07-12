@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
+import org.jboss.forge.roaster.model.source.JavaDocSource;
 
 import br.xtool.core.representation.angular.NgEntityRepresentation;
 import br.xtool.core.representation.angular.NgProjectRepresentation;
@@ -134,6 +135,14 @@ public class EntityRepresentationImpl extends JavaClassRepresentationImpl implem
 				StringUtils.upperCase(
 						Strman.toSnakeCase(getName())), "", 30) + "_ID";
 		// @formatter:on
+	}
+
+	@Override
+	public JavaDocSource<JavaClassSource> addTagValue(String tagName, String value) {
+		if(this.getRoasterJavaClass().getJavaDoc().getTagNames().stream().noneMatch(_tagName -> tagName.equals(tagName))) {
+			return this.getRoasterJavaClass().getJavaDoc().addTagValue(tagName, value);
+		}
+		return null;
 	}
 
 }

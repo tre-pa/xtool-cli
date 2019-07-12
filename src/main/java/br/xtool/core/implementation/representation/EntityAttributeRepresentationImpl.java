@@ -11,6 +11,7 @@ import javax.persistence.Transient;
 import org.jboss.forge.roaster.model.source.AnnotationSource;
 import org.jboss.forge.roaster.model.source.FieldSource;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
+import org.jboss.forge.roaster.model.source.JavaDocSource;
 import org.jboss.forge.roaster.model.util.Types;
 
 import br.xtool.core.representation.springboot.EntityAttributeRepresentation;
@@ -150,6 +151,15 @@ public class EntityAttributeRepresentationImpl extends JavaFieldRepresentationIm
 			.map(docTag -> docTag.getValue())
 			.findAny();
 		// @formatter:on
+	}
+
+	@Override
+	public JavaDocSource<FieldSource<JavaClassSource>> addTagValue(String tagName, String value) {
+		if(this.getRoasterField().getJavaDoc().getTagNames().stream().noneMatch(_tagName -> tagName.equals(tagName))) {
+			return this.getRoasterField().getJavaDoc().addTagValue(tagName, value);
+		}
+		return null;
+		
 	}
 
 }

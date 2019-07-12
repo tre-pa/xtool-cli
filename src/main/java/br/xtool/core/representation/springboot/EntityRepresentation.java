@@ -3,6 +3,9 @@ package br.xtool.core.representation.springboot;
 import java.util.Collection;
 import java.util.Optional;
 
+import org.jboss.forge.roaster.model.source.JavaClassSource;
+import org.jboss.forge.roaster.model.source.JavaDocSource;
+
 import br.xtool.core.representation.angular.NgEntityRepresentation;
 import br.xtool.core.representation.angular.NgServiceRepresentation;
 
@@ -62,6 +65,12 @@ public interface EntityRepresentation extends JavaClassRepresentation {
 	 * @return
 	 */
 	Optional<NgServiceRepresentation> getAssociatedNgService();
+	
+	/**
+	 * Adciona uma doclet a entidade
+	 * 
+	 */
+	JavaDocSource<JavaClassSource> addTagValue(String tagName, String value);
 
 	/**
 	 * Retorna um nome válido de uma tabela do banco de dados com no máximo 30 carateres (Limite do oracle).
