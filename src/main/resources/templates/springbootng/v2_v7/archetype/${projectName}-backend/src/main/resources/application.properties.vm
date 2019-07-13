@@ -28,9 +28,9 @@ spring.jackson.mapper.default-view-inclusion=true
 #
 # LOG CONFIGS
 # 
-logging.level.br.jus=${OB}LOG_APP:DEBUG${CB}
-logging.level.org.hibernate.SQL=${OB}LOG_SQL:DEBUG${CB}
-logging.level.org.springframework.jdbc.core.JdbcTemplate=${OB}LOG_JDBC:debug${CB}
+logging.level.br.jus=${OB}LOG_LEVEL:DEBUG${CB}
+logging.level.org.hibernate.SQL=${OB}LOG_LEVEL:DEBUG${CB}
+logging.level.org.springframework.jdbc.core.JdbcTemplate=${OB}LOG_LEVEL:debug${CB}
 
 #
 # FLYWAY CONFIGS
