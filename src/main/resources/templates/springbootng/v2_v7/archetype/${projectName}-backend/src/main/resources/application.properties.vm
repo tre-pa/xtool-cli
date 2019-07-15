@@ -52,11 +52,10 @@ keycloak.bearer-only=true
 
 keycloak.policy-enforcer-config.paths[0].path=/h2/*
 keycloak.policy-enforcer-config.paths[0].enforcement-mode=DISABLED
-keycloak.securityConstraints[0].authRoles[0]=USER
-keycloak.securityConstraints[0].securityCollections[0].name=protected
-keycloak.securityConstraints[0].securityCollections[0].patterns[0]=/api/*
+keycloak.securityConstraints[0].securityCollections[0].name=public
+keycloak.securityConstraints[0].securityCollections[0].patterns[0]=/api/env/*
+keycloak.securityConstraints[1].authRoles[0]=USER
+keycloak.securityConstraints[1].securityCollections[0].name=protected
+keycloak.securityConstraints[1].securityCollections[0].patterns[0]=/api/*
 keycloak.policy-enforcer-config.enforcement-mode=ENFORCING
 keycloak.policy-enforcer-config.http-method-as-scope=true
-
-
-

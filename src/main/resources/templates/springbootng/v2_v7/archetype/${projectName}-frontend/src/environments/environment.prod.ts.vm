@@ -1,7 +1,7 @@
 export const environment = {
   production: true,
   urlbase: "/${projectName}/api",
-  keycloak_installation: { url: 'http://localhost:8085/auth', realm: 'TRE-PA', clientId: "${projectName}" },
+  keycloak_installation: { realm: 'TRE-PA', clientId: "${projectName}" },
   keycloak_redirect_uri: "/${projectName}",
   keycloak_clientId_sboot: "${projectName}-service",
 };
