@@ -1,6 +1,7 @@
 package br.xtool.command;
 
 import java.io.IOException;
+import java.sql.Clob;
 import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.shell.standard.ShellOption;
 import br.xtool.XtoolCliApplication;
 import br.xtool.command.provider.value.EntityRepresentationValueProvider;
 import br.xtool.command.provider.value.NgModuleRepresentationValueProvider;
+import br.xtool.core.Clog;
 import br.xtool.core.Workspace;
 import br.xtool.core.representation.ProjectRepresentation;
 import br.xtool.core.representation.angular.NgModuleRepresentation;
@@ -78,7 +80,7 @@ public class AngularCommand {
 	@ShellMethodAvailability("availabilityAngularCommand")
 	public void listNgArtifacts(@ShellOption(help = "Entidades de domínio Angular", arity = 0, defaultValue = "false") boolean ngEntities,
 			@ShellOption(help = "Componentes de listagem", arity = 0, defaultValue = "false") boolean ngLists) {
-		SpringBootProjectRepresentation project = workspace.getWorkingProject(SpringBootProjectRepresentation.class);
+		SpringBootProjectRepresentation project = workspace.getSpringBootProject().get();
 		if (project.getAssociatedAngularProject().isPresent()) {
 			NgProjectRepresentation ngProject = project.getAssociatedAngularProject().get();
 			if (ngEntities) angularService.printNgEntities(ngProject);

@@ -2,6 +2,10 @@ package br.xtool.core.representation.springboot;
 
 import java.util.Optional;
 
+import org.jboss.forge.roaster.model.source.FieldSource;
+import org.jboss.forge.roaster.model.source.JavaClassSource;
+import org.jboss.forge.roaster.model.source.JavaDocSource;
+
 /**
  * Representação de um atributo de uma entidade JPA.
  * 
@@ -39,6 +43,13 @@ public interface EntityAttributeRepresentation extends JavaFieldRepresentation {
 	 * @return
 	 */
 	boolean isRequired();
+	
+	
+	/**
+	 * Adciona uma doclet ao atributo
+	 * 
+	 */
+	JavaDocSource<FieldSource<JavaClassSource>> addTagValue(String tagName, String value);
 
 	/**
 	 * Retorna o tamanho máximo da String.
@@ -60,5 +71,7 @@ public interface EntityAttributeRepresentation extends JavaFieldRepresentation {
 	 * @return
 	 */
 	Optional<JpaRelationshipRepresentation> getJpaRelationship();
+	
+	
 
 }

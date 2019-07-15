@@ -299,7 +299,7 @@ public class SpringBootProjectRepresentationImpl extends ProjectRepresentationIm
 	 */
 	@Override
 	public Optional<NgProjectRepresentation> getAssociatedAngularProject() {
-		String angularPath = this.getPath().toString().replace("-service", "");
+		String angularPath = this.getPath().toString().replace("-backend", "-frontend");
 		if (StringUtils.isNotEmpty(angularPath)) {
 			if (Files.exists(Paths.get(angularPath))) {
 				if (NgProjectRepresentation.isValid(Paths.get(angularPath))) {
