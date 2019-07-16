@@ -83,7 +83,6 @@ public class SpringBootServiceImpl implements SpringBootService {
 		// @formatter:on
 
 		workspace.setWorkingProject(bootProject);
-		shellService.runCmd(bootProject.getPath(), "chmod +x scripts/keycloak/register-client.sh");
 		shellService.runCmd(bootProject.getPath(), "git init > /dev/null 2>&1 ");
 		shellService.runCmd(bootProject.getPath(), "git add . > /dev/null 2>&1");
 		shellService.runCmd(bootProject.getPath(), "git commit -m \"Inicial commit\" > /dev/null 2>&1 ");
@@ -109,7 +108,6 @@ public class SpringBootServiceImpl implements SpringBootService {
 		// @formatter:on
 
 		workspace.setWorkingProject(bootProject);
-		shellService.runCmd(bootProject.getPath(), String.format("chmod +x %s-backend/scripts/keycloak/register-client.sh", vars.get("projectName")));
 		shellService.runCmd(bootProject.getPath(), "git init > /dev/null 2>&1 ");
 		shellService.runCmd(bootProject.getPath(), "git add . > /dev/null 2>&1");
 		shellService.runCmd(bootProject.getPath(), "git commit -m \"Inicial commit\" > /dev/null 2>&1 ");

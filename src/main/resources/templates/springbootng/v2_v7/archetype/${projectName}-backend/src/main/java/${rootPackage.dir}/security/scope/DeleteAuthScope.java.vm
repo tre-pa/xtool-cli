@@ -1,0 +1,22 @@
+package ${rootPackage.name}.security.scope;
+
+import org.keycloak.representations.idm.authorization.ScopeRepresentation;
+import org.springframework.stereotype.Component;
+
+import br.jus.tre_pa.jsecurity.base.AbstractKcAuthzScope;
+
+/**
+ * Registra o scope authorization DELETE.
+ * 
+ * @author jcruz
+ *
+ */
+@Component
+public class DeleteAuthScope extends AbstractKcAuthzScope {
+
+	@Override
+	public void configure(ScopeRepresentation representation) {
+		representation.setName("DELETE");
+	}
+
+}

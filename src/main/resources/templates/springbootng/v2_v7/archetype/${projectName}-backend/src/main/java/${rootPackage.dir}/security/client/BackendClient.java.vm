@@ -1,0 +1,33 @@
+package ${rootPackage.name}.security.client;
+
+import org.keycloak.representations.idm.ClientRepresentation;
+import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Component;
+
+import br.jus.tre_pa.jsecurity.base.AbstractKcClient;
+
+/**
+ * Classe responsável pelo registro da aplicação backend no Keycloak.
+ * 
+ * @author jcruz
+ *
+ */
+@Component
+@Order(1)
+public class BackendClient extends AbstractKcClient {
+
+	@Override
+	public void configure(ClientRepresentation representation) {
+		representation.setName(getKcProperties().getClientId());
+		representation.setClientId(getKcProperties().getClientId());
+		representation.setEnabled(true);
+		representation.setSecret(getKcProperties().getSecret());
+		representation.setBaseUrl(getKcProperties().getBaseUrl());
+		representation.setPublicClient(false);
+		representation.setServiceAccountsEnabled(true);
+		representation.setDirectAccessGrantsEnabled(true);
+		representation.setAuthorizationServicesEnabled(true);
+		representation.setDefaultRoles(new String[] { "REPORT_MNGT", "USER" });
+	}
+
+}

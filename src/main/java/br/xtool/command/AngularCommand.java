@@ -23,6 +23,7 @@ import br.xtool.core.representation.springboot.EntityRepresentation;
 import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 import br.xtool.service.AngularService;
 
+
 @ShellComponent
 public class AngularCommand {
 
