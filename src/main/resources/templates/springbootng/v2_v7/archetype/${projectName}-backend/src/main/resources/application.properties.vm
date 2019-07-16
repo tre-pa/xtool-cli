@@ -50,6 +50,11 @@ keycloak.ssl-required=external
 keycloak.use-resource-role-mappings=true
 keycloak.bearer-only=true
 
+kc.adm-user=${OB}KEYCLOAK_ADM_USER:admin${CB}
+kc.adm-pass=${OB}KEYCLOAK_ADM_PASS:admin${CB}
+kc.base-url=${OB}KEYCLOAK_BASE_URL:http://localhost:8080/${projectName}${CB}
+kc.redirect-uris=${OB}KEYCLOAK_REDIRECT_URIS:http://localhost:4200/*,http://localhost:8080/*${CB}
+
 keycloak.policy-enforcer-config.paths[0].path=/h2/*
 keycloak.policy-enforcer-config.paths[0].enforcement-mode=DISABLED
 keycloak.securityConstraints[0].securityCollections[0].name=public

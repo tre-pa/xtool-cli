@@ -83,7 +83,6 @@ public class AngularServiceImpl implements AngularService {
 		// @formatter:on
 		Clog.print(Clog.cyan("\t-- npm install --"));
 		shellService.runCmd(project.getPath(), "npm i && code .", vars);
-		shellService.runCmd(project.getPath(), "chmod +x scripts/keycloak/register-client.sh");
 		shellService.runCmd(project.getPath(), "git init > /dev/null 2>&1");
 		shellService.runCmd(project.getPath(), "git add . > /dev/null 2>&1");
 		shellService.runCmd(project.getPath(), "git commit -m \"Inicial commit\" > /dev/null 2>&1");

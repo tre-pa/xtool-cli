@@ -94,7 +94,11 @@
 			<artifactId>springboot-jreport</artifactId>
 			<version>1.0.0</version>
 		</dependency>
-
+		<dependency>
+			<groupId>br.jus.tre_pa.jsecurity</groupId>
+			<artifactId>springboot-jsecurity</artifactId>
+			<version>1.0.0</version>
+		</dependency>
 	</dependencies>
 
 	<dependencyManagement>

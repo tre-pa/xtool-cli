@@ -80,25 +80,7 @@ senha:admin
 
 === Registrando a aplicação no keycloak em ambiente local
 
-Para registrar a aplicação como __client__ no keycloak juntamente com as opções de autorização siga com os procedimentos abaixo: 
-
-IMPORTANT: Para a correta execução do script é necessário que a instalação do *keycloak-4.8.3.Final* esteja localizada em `${DS}HOME/opt/` e o serviço do keycloak na porta `8085`.
-
-. Abrir o terminal do linux. 
-
-. Entrar na raiz do projeto *${projectName}* e executar o script: ` ./scripts/keycloak/register-client.sh`
-
-. No navegador web, logar na interface de administração do keycloak (http://localhost:8085/auth).
-
-. Ir em menu:Clients[${projectName} > Authorization > Settings > Import > Select file]
-
-. Selecionar o arquivo localizado em: `${projectName}/src/main/resources/client-authz-config.json`
-
-. Clicar em *Import*.
-
-Após os procedimentos acima a aplicação ${projectName} estará com seu registro de segurança no keycloak efetivado.
-
-Obs.: Se existir o front-end (Angular), deve-se então proceder com o restante da configuração do keycloak conforme o arquivo *README.adoc* localizado na pasta raiz do front-end.
+. Processo de registro da aplicacao no keycloack automatizado atravez do keycloak-spring-boot-starter.
 
 == Acesso no H2
 
