@@ -22,7 +22,7 @@ const routes: Routes = [
 @NgModule({
     imports: [
         BrowserAnimationsModule,
-        RouterModule.forRoot(routes, { useHash: false })
+        RouterModule.forRoot(routes, { useHash: true })
     ],
     exports: [RouterModule]
 })
