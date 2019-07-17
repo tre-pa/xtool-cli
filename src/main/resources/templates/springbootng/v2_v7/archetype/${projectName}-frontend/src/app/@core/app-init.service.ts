@@ -10,11 +10,11 @@ export class AppInitService {
 
   constructor(
     private keycloakService: KeycloakService,
-    private appConfigService: EnvService
+    private envService: EnvService
   ) { }
 
   public async init() {
-    await this.appConfigService.init();
+    await this.envService.init();
     await this.keycloakService.init();
   }
 

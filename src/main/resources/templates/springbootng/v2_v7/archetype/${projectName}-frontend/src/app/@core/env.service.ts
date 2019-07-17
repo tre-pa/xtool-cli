@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment';
 })
 export class EnvService {
 
-  private url: string = `${environment.urlbase}/env`;
+  private url: string = `${environment.contextPath}/env`;
 
   constructor(private http: HttpClient) { }
 
