@@ -76,7 +76,7 @@ export class ${entity.name}EditComponent implements OnInit, OnDestroy {
   }
   
   //coloca o foco no campo indicado ao abrir o form
-  onContentReady = () => {
+  onContentReady = (event) => {
     this.form.instance.getEditor('id').focus();
   }
 
