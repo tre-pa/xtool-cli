@@ -1,27 +1,20 @@
 package ${rootPackage.name}.security.resource;
 
 import org.keycloak.representations.idm.authorization.ResourceRepresentation;
-import org.keycloak.representations.idm.authorization.ScopeRepresentation;
 import org.springframework.stereotype.Component;
 
 import com.google.common.collect.Sets;
 
-import br.jus.tre_pa.jsecurity.base.AbstractKcResource;
+import br.jus.tre_pa.jsecurity.AbstractResourceConfiguration;
 
 @Component
-public class JReportResource extends AbstractKcResource {
+public class JReportResource extends AbstractResourceConfiguration {
 
 	@Override
 	public void configure(ResourceRepresentation representation) {
 		representation.setName("JREPORT_RESOURCE");
 		representation.setUris(Sets.newHashSet("/api/jreport/*"));
-		// @formatter:off
-		representation.setScopes(Sets.newHashSet(
-				new ScopeRepresentation("GET"),
-				new ScopeRepresentation("PUT"),
-				new ScopeRepresentation("DELETE"),
-				new ScopeRepresentation("POST")));
-		// @formatter:on
+		representation.addScope("GET", "PUT", "DELETE", "POST");
 	}
 
 }

@@ -3,10 +3,10 @@ package ${rootPackage.name}.security.policy;
 import org.keycloak.representations.idm.authorization.RolePolicyRepresentation;
 import org.springframework.stereotype.Component;
 
-import br.jus.tre_pa.jsecurity.base.policy.AbstractKcRolePolicy;
+import br.jus.tre_pa.jsecurity.AbstractRolePolicyConfiguration;
 
 @Component
-public class ReportMngtPolicy extends AbstractKcRolePolicy {
+public class ReportMngtPolicy extends AbstractRolePolicyConfiguration {
 
 	@Override
 	public void configure(RolePolicyRepresentation representation) {

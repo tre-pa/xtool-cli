@@ -3,7 +3,7 @@ package ${rootPackage.name}.security.realm;
 import org.keycloak.representations.idm.RealmRepresentation;
 import org.springframework.stereotype.Component;
 
-import br.jus.tre_pa.jsecurity.base.AbstractKcRealm;
+import br.jus.tre_pa.jsecurity.AbstractRealmConfiguration;
 
 /**
  * Classe responsável pelo registro do Realm da aplicação.
@@ -12,7 +12,7 @@ import br.jus.tre_pa.jsecurity.base.AbstractKcRealm;
  *
  */
 @Component
-public class AppRealm extends AbstractKcRealm {
+public class AppRealm extends AbstractRealmConfiguration {
 
 	@Override
 	public void configure(RealmRepresentation representation) {
