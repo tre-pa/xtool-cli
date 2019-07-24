@@ -10,7 +10,7 @@ const routes: Routes = [
         canActivate: [NgxPermissionsGuard],
         data: {
             permissions: {
-                only: 'REPORT_MANAGER',
+                only: 'REPORT_MNGT',
                 redirectTo: '/'
             }
         }

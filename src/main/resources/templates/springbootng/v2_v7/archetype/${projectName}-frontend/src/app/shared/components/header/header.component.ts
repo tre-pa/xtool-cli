@@ -68,7 +68,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     this.userInfo = this.keycloakService.getUserInfo();
     this.calcInitials();
-    if (!this.keycloakService.hasResourceRole('REPORT_MANAGER')) {
+    if (!this.keycloakService.hasResourceRole('REPORT_MNGT')) {
       this.userMenuItems[1].isHidden = true;
     }
   }
