@@ -67,9 +67,5 @@ keycloak.policy-enforcer-config.paths[1].enforcement-mode=DISABLED
 keycloak.policy-enforcer-config.paths[2].path=/env/*
 keycloak.policy-enforcer-config.paths[2].enforcement-mode=DISABLED
 
-# Proteção via Keycloak com autorização de {kc.base-url}/api/*
-keycloak.securityConstraints[0].authRoles[0]=USER
-keycloak.securityConstraints[0].securityCollections[0].name=protected
-keycloak.securityConstraints[0].securityCollections[0].patterns[0]=/api/*
 keycloak.policy-enforcer-config.enforcement-mode=ENFORCING
 keycloak.policy-enforcer-config.http-method-as-scope=true
