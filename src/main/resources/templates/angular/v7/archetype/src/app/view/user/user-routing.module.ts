@@ -1,15 +1,20 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { DxValidationSummaryModule } from 'devextreme-angular/ui/validation-summary';
 import { DxLoadPanelModule } from 'devextreme-angular/ui/load-panel';
+import { DxNumberBoxModule } from 'devextreme-angular/ui/number-box';
+import { DxValidatorModule } from 'devextreme-angular/ui/validator';
+import { DxCheckBoxModule } from 'devextreme-angular/ui/check-box';
 import { DxDataGridModule } from 'devextreme-angular/ui/data-grid';
+import { DxTextAreaModule } from 'devextreme-angular/ui/text-area';
+import { DxDateBoxModule } from 'devextreme-angular/ui/date-box';
+import { DxTextBoxModule } from 'devextreme-angular/ui/text-box';
 import { DxButtonModule } from 'devextreme-angular/ui/button';
 import { DxFormModule } from 'devextreme-angular/ui/form';
-import {
-  NgxPermissionsService,
-  NgxPermissionsModule
-} from 'ngx-permissions';
+import { NgxPermissionsModule } from 'ngx-permissions';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
@@ -23,15 +28,23 @@ import { HomeComponent } from './home/home.component';
 library.add(fas);
 
 const DEVEXTREME_MODULES: any[] = [
+  DxValidationSummaryModule,
   DxLoadPanelModule,
+  DxNumberBoxModule,
+  DxValidatorModule,
+  DxCheckBoxModule,
   DxDataGridModule,
+  DxTextAreaModule,
+  DxDateBoxModule,
+  DxTextBoxModule,
   DxButtonModule,
   DxFormModule
 ];
 
 const ANGULAR_MODULES: any[] = [
   FlexLayoutModule,
-  CommonModule
+  CommonModule,
+  FormsModule
 ];
 
 const routes: Routes = [
