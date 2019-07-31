@@ -11,8 +11,7 @@ import br.xtool.core.representation.springboot.EntityRepresentation;
  * src/main/resources/templates/angular/v7/edit/${entity.tsFileName}-edit/${entity.tsFileName}-edit.component.html.vm
  * 
  * 
- * @author jcruz 
- *
+ * @author mathews 
  */
 @Component
 public class NgEditTemplate {
@@ -50,7 +49,7 @@ public class NgEditTemplate {
 					.tpl("    <dx-check-box [(ngModel)]=\"{{ entity.instanceName }}.{{ attr.name }}\"", 1)
 					.tpl("      [(value)]=\"{{ entity.instanceName }}.{{ attr.name }}\"", 1)
 					.tpl("      name=\"{{ attr.name }}\"", 1)
-					.tpl("      text=\"{{ attr.label }}\"", 1)
+					.tpl("      text=\"{{ attr.label }}\">", 1)
 					.tpl("    </dx-check-box>", 1)
 					.tpl("  </div>", 1)
 					.tpl("</div>", 1)
@@ -100,16 +99,21 @@ public class NgEditTemplate {
 		if (attr.isStringField()) {
 			// @formatter:off
 			sb.append(TemplateBuilder.builder()
-					.tpl("<!-- {{attr.label}} -->",1)
-					.tpl("<dxi-item dataField=\"{{attr.name}}\"",3)
-					.tpl("  [editorOptions]=\"{",3)
-					.tpl( 	  addHtmlStringMask(attr))
-					.tpl(" 	  hint: 'Digite o {{attr.label}}'", 4)
-					.tpl("  }\">",3)
-					.tpl("  <dxo-label text=\"{{attr.label}}\"></dxo-label>",3)
-					.tpl(	addHtmlRequiredValidationRule(attr),4)
-					.tpl(	addHtmlStringLengthValidation(attr),4)
-					.tpl("</dxi-item>",3)
+					.tpl("<!-- {{ attr.label }} -->", 1)
+					.tpl(addHtmlStringResponsiveFormField(attr), 1)
+					.tpl(  addHtmlFormFieldLabel(attr), 1)
+					.tpl("  <div class=\"adx-form-field-editor\">", 1)
+					.tpl("    <" + addHtmlStringTagName(attr) + " [(ngModel)]=\"{{ entity.instanceName }}.{{ attr.name }}\"", 1)
+					.tpl("      [(value)]=\"{{ entity.instanceName }}.{{ attr.name }}\"", 1)
+					.tpl(       addHtmlStringMask(attr), 1)
+					.tpl("      name=\"{{ attr.name }}\">", 1)
+					.tpl("      <dx-validator>", 1)
+					.tpl(         addHtmlRequiredValidationRule(attr), 1)
+					.tpl(         addHtmlStringLengthValidation(attr), 1)
+					.tpl("      </dx-validator>", 1)
+					.tpl("    </" + addHtmlStringTagName(attr) + ">", 1)
+					.tpl("  </div>", 1)
+					.tpl("</div>", 1)
 					.put("attr", attr)
 					.build());
 			// @formatter:on
@@ -126,19 +130,22 @@ public class NgEditTemplate {
 		if (attr.isTemporalField()) {
 			// @formatter:off
 			sb.append(TemplateBuilder.builder()
-					.tpl("<!-- {{attr.label}} -->",1)
-					.tpl("<dxi-item dataField=\"{{attr.name}}\"",3)
-					.tpl("	editorType=\"dxDateBox\"",3)
-					.tpl("  [editorOptions]=\"{",3)
-					.tpl("	  type: 'datetime',",4)
-					.tpl("	  width: '100%',",4)
-					.tpl("	  useMaskBehavior: true,",4)
-					.tpl("	  openOnFieldClick: true,",4)
-					.tpl(" 	  hint: 'Selecione a {{attr.label}}'", 4)
-					.tpl("  }\">",3)
-					.tpl("  <dxo-label text=\"{{attr.label}}\"></dxo-label>",3)
-					.tpl(	addHtmlRequiredValidationRule(attr),4)
-					.tpl("</dxi-item>",3)
+					.tpl("<!-- {{ attr.label }} -->",1)
+					.tpl("<div class=\"adx-form-field responsive-small-field\">", 1)
+					.tpl(  addHtmlFormFieldLabel(attr), 1)
+					.tpl("  <div class=\"adx-form-field-editor\">", 1)
+					.tpl("    <dx-date-box [(ngModel)]=\"{{ entity.instanceName }}.{{ attr.name }}\"", 1)
+					.tpl("      [(value)]=\"{{ entity.instanceName }}.{{ attr.name }}\"", 1)
+					.tpl("      [openOnFieldClick]=\"true\"", 1)
+					.tpl("      [useMaskBehavior]=\"true\"", 1)
+					.tpl("      name=\"{{ attr.name }}\"", 1)
+					.tpl("      type=\"'date\">", 1)
+					.tpl("      <dx-validator>", 1)
+					.tpl(	      addHtmlRequiredValidationRule(attr),4)
+					.tpl("      </dx-validator>", 1)
+					.tpl("    </dx-date-box", 1)
+					.tpl("  </div", 1)
+					.tpl("</div", 1)
 					.put("attr", attr)
 					.build());
 			// @formatter:on
@@ -151,13 +158,13 @@ public class NgEditTemplate {
 	 * @param attr
 	 * @return Framento com código HTML de máscara ou String vazia.
 	 */
-	public String addHtmlStringMask(EntityAttributeRepresentation attr) {
+	private String addHtmlStringMask(EntityAttributeRepresentation attr) {
 		if (attr.getMask().isPresent()) {
 			// @formatter:off
 			return TemplateBuilder.builder()
-					.tpl("mask: '{{ mask }}',",6)
-					.tpl("showMaskMode: 'onFocus',",6)
-					.tpl("useMaskedValue: true,",6)
+					.tpl("      mask=\"{{ mask }}\"", 1)
+					.tpl("      showMaskMode=\"onFocus\"", 1)
+					.tpl("      [useMaskedValue]=\"true\"", 1)
 					.put("mask", attr.getMask().get())
 					.build();
 			// @formatter:on
@@ -166,12 +173,22 @@ public class NgEditTemplate {
 	}
 
 	/**
+	 * Verifica o comprimento do atributo JPA gera o framento de código HTML referente ao nome da Tag ideal para o atributo.
+	 * 
+	 * @param attr
+	 * @return Framento com código HTML com o nome da Tag usada para editar uma String.
+	 */
+	private String addHtmlStringTagName(EntityAttributeRepresentation attr) {
+		return attr.getColumnLength() > 255 ? "dx-text-area" : "dx-text-box";
+	}
+
+	/**
 	 * Verifica se o atributo é marcado como requerido e retorna o fragmento de código HTML de validação do tipo 'required'.
 	 * 
 	 * @param attr Atributo da entidade JPA.
 	 * @return Framento de código HTML de validação do tipo 'required' ou String vazia.
 	 */
-	public String addHtmlRequiredValidationRule(EntityAttributeRepresentation attr) {
+	private String addHtmlRequiredValidationRule(EntityAttributeRepresentation attr) {
 		return attr.isRequired() ? "<dxi-validation-rule type=\"required\"></dxi-validation-rule>" : "";
 	}
 
@@ -181,8 +198,20 @@ public class NgEditTemplate {
 	 * @param attr Atributo da entidade JPA.
 	 * @return Fragmento de código HTML que define o Label de um Form Field.
 	 */
-	public String addHtmlFormFieldLabel(EntityAttributeRepresentation attr) {
-		return attr.isRequired() ? "  <div class=\"adx-form-field-label\" title=\"{{ attr.label }} é obrigatório\">{{ attr.label }} *</div>" : "  <div class=\"adx-form-field-label\">{{ attr.label }}</div>";
+	private String addHtmlFormFieldLabel(EntityAttributeRepresentation attr) {
+		return attr.isRequired() ? "  <div class=\"adx-form-field-label\"\n    title=\"{{ attr.label }} é obrigatório\">{{ attr.label }} *</div>" : "  <div class=\"adx-form-field-label\">{{ attr.label }}</div>";
+	}
+
+	/**
+	 * Retorna o fragmento de código HTML que define um Form Field responsivo.
+	 * 
+	 * @param attr Atributo da entidade JPA.
+	 * @return Fragmento de código HTML que define um Form Field responsivo.
+	 */
+	private String addHtmlStringResponsiveFormField(EntityAttributeRepresentation attr) {
+		if (attr.getColumnLength() <= 50) return "<div class=\"adx-form-field responsive-small-field\">";
+		if (attr.getColumnLength() <= 100) return "<div class=\"adx-form-field responsive-medium-field\">";
+		return "<div class=\"adx-form-field responsive-large-field\">";
 	}
 
 	/**
@@ -191,12 +220,13 @@ public class NgEditTemplate {
 	 * @param attr Atributo de entidade JPA.
 	 * @return Fragmento de código HTML de validação de tamanho.
 	 */
-	public String addHtmlStringLengthValidation(EntityAttributeRepresentation attr) {
+	private String addHtmlStringLengthValidation(EntityAttributeRepresentation attr) {
 		// @formatter:off
 		return TemplateBuilder.builder()
-				.tpl("<dxi-validation-rule type=\"stringLength\" max=\"{{ max }}\"></dxi-validation-rule>")
+				.tpl("<dxi-validation-rule type=\"stringLength\"\n max=\"{{ max }}\"></dxi-validation-rule>")
 				.put("max", attr.getColumnLength())
 				.build();
 		// @formatter:on
 	}
+
 }

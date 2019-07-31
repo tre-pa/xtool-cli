@@ -70,9 +70,4 @@ export class ${entity.name}EditComponent implements OnInit, OnDestroy {
       .subscribe((${entity.instanceName}) => this.router.navigate(['${entity.apiPath}', ${entity.instanceName}.id]));
   }
 
-  //coloca o foco no campo indicado ao abrir o form
-  onContentReady = (event) => {
-    this.form.instance.getEditor('id').focus();
-  }
-
 }
