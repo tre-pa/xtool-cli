@@ -34,7 +34,7 @@ export class ${entity.name}ListComponent implements OnInit, OnDestroy {
   ${entity.instanceName}JiiStore: JiiStore<${entity.name}>;
   count: number = 0;
 
-  ${ngListTemplates.createHeaderFiltersDecl($entity)}
+  ${ngListDxTemplates.createHeaderFiltersDecl($entity)}
 
   destroy$: Subject<boolean> = new Subject<boolean>();
 
@@ -92,7 +92,7 @@ export class ${entity.name}ListComponent implements OnInit, OnDestroy {
   }
 
   private initHeaderFilters() {
-    ${ngListTemplates.createHeaderFiltersImpl($entity)}
+    ${ngListDxTemplates.createHeaderFiltersImpl($entity)}
   }
 
   onToolbarPreparing(toolbar) {

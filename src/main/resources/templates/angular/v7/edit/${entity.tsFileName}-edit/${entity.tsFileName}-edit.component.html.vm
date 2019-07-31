@@ -1,32 +1,27 @@
 <h2>{{ id ? 'Edição de' : 'Nova' }} ${entity.name}</h2>
 <div class="dx-card content-block">
-  <form autocomplete="off"
+  <form *ngIf="${entity.tsFileName}"
+    autocomplete="off"
     (submit)="save($event)">
-    <dx-form id="form"
-      [formData]="${entity.instanceName}"
-      (onContentReady)="onContentReady($event)"
-      [showValidationSummary]="true"
-      requiredMark="<span title='campo obrigatório'>*</span>">
-      <dxi-item itemType="group" colCount="2">
-      ${ngEditDxTemplates.createHtmlAttributesDecl($entity)}
-      </dxi-item>
-      <dxi-item itemType="group"
-        colCount="2"
-        [colCountByScreen]="{ xs: 2 }">
-        <dxi-item itemType="button"
-          horizontalAlignment="left"
-          [buttonOptions]="{
-            text: 'Cancelar',
-            onClick: back
-          }"></dxi-item>
-        <dxi-item itemType="button"
-          [buttonOptions]="{
-            text: 'Salvar',
-            type : 'success',
-            useSubmitBehavior: true,
-            disabled: saveSub && !saveSub.closed
-          }"></dxi-item>
-      </dxi-item>
-    </dx-form>
-  </form>
+    <div class="adx-form">
+      ${ngEditTemplates.createHtmlAttributesDecl($entity)}
+      <div class="adx-form-footer">
+				<dx-validation-summary id="summary"></dx-validation-summary>
+				<div class="adx-form-buttons">
+					<dx-button id="button"
+						text="Cancelar"
+						type="fail"
+						[useSubmitBehavior]="false">
+					</dx-button>
+					<span fxFlex></span>
+					<dx-button id="button"
+						text="Salvar"
+						type="success"
+						[useSubmitBehavior]="true"
+						[disabled]="saveSub  && !saveSub.closed">
+					</dx-button>
+				</div>
+			</div>
+    </div>
+	</form>
 </div>
