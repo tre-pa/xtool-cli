@@ -38,6 +38,7 @@ import br.xtool.core.representation.springboot.EntityRepresentation;
 import br.xtool.core.representation.springboot.JavaEnumRepresentation;
 import br.xtool.core.template.angular.NgDetailDxTemplates;
 import br.xtool.core.template.angular.NgEditDxTemplates;
+import br.xtool.core.template.angular.NgEditTemplate;
 import br.xtool.core.template.angular.NgEnumFSTemplate;
 import br.xtool.core.template.angular.NgListDxTemplates;
 import br.xtool.core.template.angular.NgServiceFSTemplate;
@@ -287,6 +288,7 @@ public class AngularServiceImpl implements AngularService {
 				put("Strman", Strman.class);
 				put("StringUtils", StringUtils.class);
 				put("ngEditDxTemplates", appCtx.getBean(NgEditDxTemplates.class));
+				put("ngEditTemplates", appCtx.getBean(NgEditTemplate.class));
 				put("entityFileName", entityFileName);
 				put("entityTsFileName", Strman.toKebabCase(entity.getInstanceName()));
 				put("entityFolderName", entityFolderName);

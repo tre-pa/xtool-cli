@@ -80,9 +80,10 @@ public class NgEditTemplate {
 					.tpl("      <dx-validator>", 1)
 					.tpl(	      addHtmlRequiredValidationRule(attr),4)
 					.tpl("      </dx-validator>", 1)
-					.tpl("    </dx-number-box", 1)
-					.tpl("  </div", 1)
-					.tpl("</div", 1)
+					.tpl("    </dx-number-box>", 1)
+					.tpl("  </div>", 1)
+					.tpl("</div>", 1)
+					.put("entity", entity)
 					.put("attr", attr)
 					.build());
 			// @formatter:on
@@ -114,6 +115,7 @@ public class NgEditTemplate {
 					.tpl("    </" + addHtmlStringTagName(attr) + ">", 1)
 					.tpl("  </div>", 1)
 					.tpl("</div>", 1)
+					.put("entity", entity)
 					.put("attr", attr)
 					.build());
 			// @formatter:on
@@ -143,9 +145,10 @@ public class NgEditTemplate {
 					.tpl("      <dx-validator>", 1)
 					.tpl(	      addHtmlRequiredValidationRule(attr),4)
 					.tpl("      </dx-validator>", 1)
-					.tpl("    </dx-date-box", 1)
-					.tpl("  </div", 1)
-					.tpl("</div", 1)
+					.tpl("    </dx-date-box>", 1)
+					.tpl("  </div>", 1)
+					.tpl("</div>", 1)
+					.put("entity", entity)
 					.put("attr", attr)
 					.build());
 			// @formatter:on
