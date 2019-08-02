@@ -67,5 +67,21 @@ keycloak.policy-enforcer-config.paths[1].enforcement-mode=DISABLED
 keycloak.policy-enforcer-config.paths[2].path=/env/*
 keycloak.policy-enforcer-config.paths[2].enforcement-mode=DISABLED
 
+# Spring actuator
+endpoints.info.id="springinfo"
+info.app.name="Exemplo"
+info.app.description="Spring Boot Actuator"
+info.app.version=1.0.0
+endpoints.info.sensitive=false
+endpoints.info.enabled=true
+# Se true, habilita a segurança no actuator
+endpoints.beans.sensitive=false
+endpoints.beans.enabled=true
+management.endpoint.health.show-details=always
+# Habilita todos os endpoints no actuator
+management.endpoints.web.exposure.include=*
+spring.application.admin.enabled=true
+management.endpoint.shutdown.enabled=true
+
 keycloak.policy-enforcer-config.enforcement-mode=ENFORCING
 keycloak.policy-enforcer-config.http-method-as-scope=true
