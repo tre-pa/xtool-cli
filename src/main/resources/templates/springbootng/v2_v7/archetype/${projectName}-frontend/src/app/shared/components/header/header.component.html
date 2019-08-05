@@ -11,8 +11,10 @@
       }">
     </dxi-item>
     <dxi-item location="before"
-      *ngIf="toolbarTitle"
-      [text]="toolbarTitle">
+    *ngIf="toolbarTitle">
+      <div class="toolbarTitle" (click)="home()">
+          {{toolbarTitle}}
+      </div>
     </dxi-item>
     <dxi-item location="before"
       *ngIf="toolbarTitle">

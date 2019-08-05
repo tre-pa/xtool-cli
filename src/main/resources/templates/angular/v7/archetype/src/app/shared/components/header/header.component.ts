@@ -80,6 +80,10 @@ export class HeaderComponent implements OnInit {
   onLoginClick(args) {
     this.isUserAuthorized = true;
   }
+  
+  home() {
+  	this.router.navigate(['']);
+  }
 
   onUserMenuItemClick(item) {
     if (item === this.userMenuItems[1]) this.router.navigate(['/report-mngt']);

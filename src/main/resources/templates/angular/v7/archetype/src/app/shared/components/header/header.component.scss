@@ -18,6 +18,10 @@
     margin: 0 12px;
 }
 
+.toolbarTitle {
+    cursor:pointer; font-size: 20px; font-weight: normal; font-family: 'Helvetica Neue', 'Segoe UI', Helvetica, Verdana, sans-serif;
+}
+
 :host ::ng-deep .dx-menu-base {
     .dx-menu-item-wrapper {
         width: 173px;
