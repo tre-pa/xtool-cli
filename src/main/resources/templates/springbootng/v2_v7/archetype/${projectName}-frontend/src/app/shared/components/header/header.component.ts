@@ -81,6 +81,10 @@ export class HeaderComponent implements OnInit {
     this.isUserAuthorized = true;
   }
 
+  home() {
+    this.router.navigate(['']);
+  }
+
   onUserMenuItemClick(item) {
     if (item === this.userMenuItems[1]) this.router.navigate(['/report-mngt']);
     if (item === this.userMenuItems[2]) this.keycloakService.logout();
