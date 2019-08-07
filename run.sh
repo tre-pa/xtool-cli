@@ -67,7 +67,9 @@ fi
 LOCAL=$(git rev-parse @)
 REMOTE=$(git rev-parse origin/master)
 BASE=$(git merge-base @ master)
-if [ $LOCAL = $BASE ]; then
+if [ $LOCAL = $REMOTE ]; then
+    echo "Tudo atualizado"
+elif [ $LOCAL = $BASE ]; then
     echo "Há atualizações! É necessario 'git pull'"
 fi
 
