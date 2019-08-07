@@ -64,6 +64,13 @@ if [ -z $(which dot) ]; then
 	echo ""
 fi
 
+LOCAL=$(git rev-parse @)
+REMOTE=$(git rev-parse origin/master)
+BASE=$(git merge-base @ master)
+if [ $LOCAL = $BASE ]; then
+    echo "Há atualizações! É necessario 'git pull'"
+fi
+
 if [ ! -d "$1" ]; then
     echo -e "${__RED__}"
     echo -e "======================================================================================================"
