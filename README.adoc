@@ -26,7 +26,7 @@ Spring Shell. A ferramenta é baseada em linha de comando.
 
 O SdkMan é uma ferramenta para facilitar a instalação de certas bibliotecas como por exemplo maven ou java etc.
 
-**1.** Primeiro é necessario instalar o SdkMan em sua maquina para isso instale da seguinte forma.
+**1.** Primeiro é necessario instalar o SdkMan em sua máquina para isso instale da seguinte forma.
 
 [source,sh]
 ----
