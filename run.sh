@@ -52,6 +52,18 @@ if [ -z $(which npm) ]; then
 	exit 0
 fi
 
+echo "Buscando pelo graphviz..."
+if [ -z $(which dot) ]; then
+	echo "Não encontrado."
+	echo "======================================================================================================"
+	echo " Para visualizar o PlantUml, Instale o graphviz com o comando 'sudo dnf install graphviz'."
+	echo "visite (https://apps.fedoraproject.org/packages/graphviz/updates/)"
+	echo ""
+	echo " Reinicie após a instalação do graphviz."
+	echo "======================================================================================================"
+	echo ""
+fi
+
 if [ ! -d "$1" ]; then
     echo -e "${__RED__}"
     echo -e "======================================================================================================"
