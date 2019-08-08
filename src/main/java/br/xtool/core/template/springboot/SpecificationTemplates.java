@@ -1,5 +1,8 @@
 package br.xtool.core.template.springboot;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.jboss.forge.roaster.model.source.MethodSource;
 import org.springframework.data.jpa.domain.Specification;
@@ -29,7 +32,44 @@ public class SpecificationTemplates {
 		specification.getRoasterJavaClass().addImport("br.jus.tre_pa.jfilter.jpa.AbstractSpecification");
 		specification.getRoasterJavaClass().setSuperType("AbstractSpecification<".concat(entity.getName()).concat(">"));
 		specification.getRoasterJavaClass().addAnnotation(Component.class);
+		specification.getRoasterJavaClass().addMethod("public void configure() {}");
+		MethodSource<JavaClassSource> configureMethod = specification.getRoasterJavaClass().getMethod("configure");
+		configureMethod.addAnnotation(Override.class);
+		List<List<String>> body = entity.getJavaFields().stream().filter(field -> field.isRelationshipField())
+				.map(field -> {
+					return this.findEntity("Local", springBootProject).getJavaFields().stream()
+							.filter(f -> !f.isRelationshipField()).map(f -> {
+								if (f.isLocalDate()) {
+									specification.getRoasterJavaClass().addImport(f.getType());
+								}
+								if (f.isLocalDateTime()) {
+									specification.getRoasterJavaClass().addImport(f.getType());
+								}
+								if (f.isCollectionField()) {
+									specification.getRoasterJavaClass().addImport(f.getType());
+								}
+								return "map(\"" + field.getName() + "." + f.getName() + "\", " + f.getType().getName()
+										+ ".class, root -> root.get(\"" + field.getName() + "\").get(\"" + f.getName()
+										+ "\"));\n";
+							}).collect(Collectors.toList());
+				}).collect(Collectors.toList());
+		List<String> roots = body.stream().map(n -> getListWithoutComman(n) + "\n").collect(Collectors.toList());
+		configureMethod.setBody(getListWithoutComman(roots));
 		return specification;
+	}
+
+	private String getListWithoutComman(List<String> list) {
+		StringBuilder builder = new StringBuilder();
+		for (String value : list) {
+			builder.append(value);
+		}
+		return builder.toString();
+
+	}
+
+	private EntityRepresentation findEntity(String name, SpringBootProjectRepresentation springBootProject) {
+		return springBootProject.getEntities().stream().filter(entity -> entity.getName().equalsIgnoreCase(name))
+				.findAny().get();
 	}
 
 	/**
@@ -51,11 +91,11 @@ public class SpecificationTemplates {
 			// @formatter:off
 			method.setBody(
 					TemplateBuilder.builder()
-						.tpl("return (root, cq, cb) -> {")
-						.tpl("		return filter.toPredicate({{target_name}}.class, root, cq, cb);")
-						.tpl("};")
-					.put("target_name", specification.getTargetEntity().getName())
-					.build());
+					.tpl("return (root, cq, cb) -> {")
+					.tpl("		return filter.toPredicate({{target_name}}.class, root, cq, cb);")
+					.tpl("};")
+				.put("target_name", specification.getTargetEntity().getName())
+				.build());
 			// @formatter:on
 		}
 	}
