@@ -25,15 +25,14 @@ export class KeycloakService {
   public async init(): Promise<any>{
     //Inicializa o keycloak
     const init = await this.start();
-
     //seta permissões de permission do client
     const initAuthz = await this.initKeycloakAuthorization();
     const permissionsScopes = await this.getPermisionScopes();
     permissionsScopes.forEach(ps => {
       this.permissionsService.addPermission(ps);
     });
-
-
+    this.getRealmRoles().forEach(role => {this.permissionsService.addPermission(role)});
+    this.getResourceRoles().forEach(role => {this.permissionsService.addPermission(role)});
     return init;
   }
 
