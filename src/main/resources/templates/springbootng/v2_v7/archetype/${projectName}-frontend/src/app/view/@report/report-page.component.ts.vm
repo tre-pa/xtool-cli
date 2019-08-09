@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-report-page',
   template: `
-    <app-side-nav-outer-toolbar toolbarTitle="Controle, Organização e Velocidade - Gerência de Relatórios"
+    <app-side-nav-outer-toolbar toolbarTitle="${projectDesc} - Gerência de Relatórios"
       [menuItems]="navigation">
       <router-outlet></router-outlet>
     </app-side-nav-outer-toolbar>
