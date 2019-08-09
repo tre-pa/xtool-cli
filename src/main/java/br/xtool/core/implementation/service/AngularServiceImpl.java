@@ -185,12 +185,15 @@ public class AngularServiceImpl implements AngularService {
 	}
 
 	@Override
-	public NgCrudRepresentation genNgCrud(NgProjectRepresentation ngProject, EntityRepresentation entity, NgModuleRepresentation ngModule) {
+	public NgCrudRepresentation genNgCrud(NgProjectRepresentation ngProject, EntityRepresentation entity, NgModuleRepresentation ngModule, boolean noDetail) {
 		// entity.getAssociatedNgService().orElseGet(() -> genNgService(ngProject, entity));
 		if (!entity.getAssociatedNgService().isPresent()) genNgService(ngProject, entity);
 
 		NgListRepresentation ngList = genNgList(ngProject, entity, ngModule);
-		NgDetailRepresentation ngDetail = genNgDetail(ngProject, entity, ngModule);
+		NgDetailRepresentation ngDetail = null;
+		if (!noDetail) {
+			ngDetail = genNgDetail(ngProject, entity, ngModule);
+		}
 		NgEditRepresentation ngEdit = entity.isImmutable() ? null : genNgEdit(ngProject, entity, ngModule);
 		if (Objects.nonNull(ngEdit)) {
 			NgCrudRepresentation ngCrud = new NgCrudRepresentationImpl(ngModule, ngList, ngDetail, ngEdit);

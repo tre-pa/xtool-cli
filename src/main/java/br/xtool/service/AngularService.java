@@ -54,9 +54,10 @@ public interface AngularService {
 	 *
 	 * @param entity
 	 * @param ngModule
+	 * @param noDetail
 	 * @return
 	 */
-	NgCrudRepresentation genNgCrud(NgProjectRepresentation ngProject, EntityRepresentation entity, NgModuleRepresentation ngModule);
+	NgCrudRepresentation genNgCrud(NgProjectRepresentation ngProject, EntityRepresentation entity, NgModuleRepresentation ngModule, boolean noDetail);
 
 	/**
 	 * Imprime a lista de componentes de listagem angular.

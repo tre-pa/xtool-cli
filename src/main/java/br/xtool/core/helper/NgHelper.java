@@ -86,7 +86,9 @@ public class NgHelper {
 	public static void addComponent(NgModuleRepresentation module, NgCrudRepresentation ngCrud) {
 		List<String> declarations = new ArrayList<>(module.getModuleDeclarations());
 		declarations.add(ngCrud.getList().getName());
-		declarations.add(ngCrud.getDetail().getName());
+		if (ngCrud.getDetail() != null) {
+			declarations.add(ngCrud.getDetail().getName());
+		}
 		ngCrud.getEdit().ifPresent(ngEdit -> declarations.add(ngEdit.getName()));
 
 		String content = module.getTsFileContent();

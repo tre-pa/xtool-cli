@@ -69,7 +69,9 @@ public class NgCrudRepresentationImpl implements NgCrudRepresentation {
 		List<NgRoute> routes = new ArrayList<>();
 		routes.add(this.getListRoute());
 		this.ngEdit.ifPresent(ngEdit -> routes.add(this.getEditRoute()));
-		routes.add(this.getDetailRoute());
+		if (getDetail() != null) {
+			routes.add(this.getDetailRoute());
+		}
 		return routes;
 	}
 

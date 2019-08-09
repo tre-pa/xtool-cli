@@ -72,9 +72,10 @@ public class AngularCommand {
 	public void genNgEdit(
 	// @formatter:off
 			@ShellOption(help = "Entidade JPA", valueProvider = EntityRepresentationValueProvider.class) EntityRepresentation entity,
-			@ShellOption(help = "Módulo Angular", valueProvider = NgModuleRepresentationValueProvider.class) NgModuleRepresentation ngModule) {
+			@ShellOption(help = "Módulo Angular", valueProvider = NgModuleRepresentationValueProvider.class) NgModuleRepresentation ngModule,
+			@ShellOption(help = "Remove o Detail dos CRUDs", arity = 0, defaultValue = "false") boolean noDetail) {
 		// @formatter:on
-		angularService.genNgCrud(workspace.getAngularProject().get(), entity, ngModule);
+		angularService.genNgCrud(workspace.getAngularProject().get(), entity, ngModule, noDetail);
 	}
 
 	@ShellMethod(key = "list:ng-artifacts", value = "Lista os artefatos do projeto Angular", group = XtoolCliApplication.ANGULAR_COMMAND_GROUP)
