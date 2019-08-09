@@ -15,6 +15,11 @@ export class UserPageComponent implements OnInit {
   text : 'Home',
   path : '/home',
   icon : 'home'
+},
+{
+  text : 'Relatorios',
+  path : '/relatorios',
+  icon : 'chart-bar'
 }];
 
   constructor() { }
