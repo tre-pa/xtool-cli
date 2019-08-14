@@ -39,7 +39,7 @@ public class SpringBootCommand {
 	 * @param plantClass
 	 */
 	@ShellMethod(key = "gen:entities", value = "Gera as classes Jpa do diagrama de classe", group = XtoolCliApplication.SPRINGBOOT_COMMAND_GROUP)
-	@ShellMethodAvailability("availabilitySpringBootComma nd")
+	@ShellMethodAvailability("availabilitySpringBootCommand")
 	public void genEntities(
 			@ShellOption(value = "--diagram", help = "Diagrama de classe", valueProvider = PlantClassDiagramRepresentationValueProvider.class, defaultValue = "main.plantuml") PlantClassDiagramRepresentation plantClassDiagram,
 			@ShellOption(value = "--verbose", help = "Modo verbose", defaultValue = "false") boolean verbose) {
@@ -107,8 +107,7 @@ public class SpringBootCommand {
 	@ShellMethodAvailability("availabilitySpringBootCommand")
 	public void listArtifacts(@ShellOption(help = "Entidade JPA", arity = 0, defaultValue = "false") boolean entities,
 			@ShellOption(help = "Classes de Repositorio", arity = 0, defaultValue = "false") boolean repositories,
-			@ShellOption(help = "Classes de Service", arity = 0, defaultValue = "false") boolean services, 
-			@ShellOption(help = "Classes de Rest", arity = 0, defaultValue = "false") boolean rests) {
+			@ShellOption(help = "Classes de Service", arity = 0, defaultValue = "false") boolean services, @ShellOption(help = "Classes de Rest", arity = 0, defaultValue = "false") boolean rests) {
 		SpringBootProjectRepresentation project = workspace.getSpringBootProject().get();
 		if (entities) springBootProjectService.printEntities(project);
 		if (repositories) springBootProjectService.printRepositories(project);
