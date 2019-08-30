@@ -6,6 +6,14 @@ import { DxLoadPanelModule } from 'devextreme-angular/ui/load-panel';
 import { DxDataGridModule } from 'devextreme-angular/ui/data-grid';
 import { DxButtonModule } from 'devextreme-angular/ui/button';
 import { DxFormModule } from 'devextreme-angular/ui/form';
+import { FormsModule } from '@angular/forms';
+import { DxTextBoxModule } from 'devextreme-angular/ui/text-box';
+import { DxSelectBoxModule } from 'devextreme-angular/ui/select-box';
+import { DxValidatorModule, } from 'devextreme-angular/ui/validator';
+import { DxValidationSummaryModule } from 'devextreme-angular/ui/validation-summary';
+import { DxNumberBoxModule } from 'devextreme-angular/ui/number-box';
+import { DxCheckBoxModule } from 'devextreme-angular/ui/check-box';
+import { DxDateBoxModule } from 'devextreme-angular/ui/date-box';
 import {
   NgxPermissionsService,
   NgxPermissionsModule
@@ -26,12 +34,22 @@ const DEVEXTREME_MODULES: any[] = [
   DxLoadPanelModule,
   DxDataGridModule,
   DxButtonModule,
-  DxFormModule
+  DxFormModule,
+  DxTextBoxModule,
+  DxSelectBoxModule,
+  DxButtonModule,
+  DxValidatorModule,
+  DxValidatorModule,
+  DxValidationSummaryModule,
+  DxNumberBoxModule,
+  DxCheckBoxModule,
+  DxDateBoxModule
 ];
 
 const ANGULAR_MODULES: any[] = [
   FlexLayoutModule,
-  CommonModule
+  CommonModule,
+  FormsModule
 ];
 
 const routes: Routes = [

@@ -9,7 +9,14 @@ import { DxFormModule } from 'devextreme-angular/ui/form';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
-
+import { FormsModule } from '@angular/forms';
+import { DxTextBoxModule } from 'devextreme-angular/ui/text-box';
+import { DxSelectBoxModule } from 'devextreme-angular/ui/select-box';
+import { DxValidatorModule, } from 'devextreme-angular/ui/validator';
+import { DxValidationSummaryModule } from 'devextreme-angular/ui/validation-summary';
+import { DxNumberBoxModule } from 'devextreme-angular/ui/number-box';
+import { DxCheckBoxModule } from 'devextreme-angular/ui/check-box';
+import { DxDateBoxModule } from 'devextreme-angular/ui/date-box';
 import { SideNavOuterToolbarModule } from 'src/app/shared/layouts/side-nav-outer-toolbar/side-nav-outer-toolbar.component';
 
 import { ReporMngttListComponent } from 'src/app/view/@report/report/report-list/report-mngt-list.component';
@@ -22,12 +29,22 @@ const DEVEXTREME_MODULES: any[] = [
   DxDataGridModule,
   DxTextAreaModule,
   DxButtonModule,
-  DxFormModule
+  DxFormModule,
+  DxTextBoxModule,
+  DxSelectBoxModule,
+  DxButtonModule,
+  DxValidatorModule,
+  DxValidatorModule,
+  DxValidationSummaryModule,
+  DxNumberBoxModule,
+  DxCheckBoxModule,
+  DxDateBoxModule
 ];
 
 const ANGULAR_MODULES: any[] = [
   FlexLayoutModule,
-  CommonModule
+  CommonModule,
+  FormsModule
 ];
 
 const routes: Routes = [
