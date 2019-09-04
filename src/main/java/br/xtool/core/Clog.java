@@ -8,6 +8,7 @@ import org.apache.commons.lang3.StringUtils;
  * @author jcruz
  *
  */
+@Deprecated
 public class Clog {
 
 	public static boolean verbose = false;

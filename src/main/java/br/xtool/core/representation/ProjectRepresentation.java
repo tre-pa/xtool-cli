@@ -29,6 +29,7 @@ public interface ProjectRepresentation extends Comparable<ProjectRepresentation>
 	@AllArgsConstructor
 	@Getter
 	// @formatter:off
+	@Deprecated
 	enum Type {
 		SPRINGBOOT("springboot", SpringBootProjectRepresentation.class), 
 		ANGULAR("angular", NgProjectRepresentation.class), 
@@ -48,6 +49,7 @@ public interface ProjectRepresentation extends Comparable<ProjectRepresentation>
 	@AllArgsConstructor
 	@Getter
 	// @formatter:off
+	@Deprecated
 	enum Version {
 		NONE(""), V1("v1"), V2("v2"), V3("v3"), V4("v4"), V5("v5"), V6("v6"), V7("v7"), V8("v8"), V9("v9"), V10("v10"),
 		V2_V7("v2_v7");
@@ -69,6 +71,7 @@ public interface ProjectRepresentation extends Comparable<ProjectRepresentation>
 	 * 
 	 * @return
 	 */
+	@Deprecated
 	String getFrameworkVersion();
 
 	/**
@@ -109,6 +112,7 @@ public interface ProjectRepresentation extends Comparable<ProjectRepresentation>
 	 * 
 	 * @return
 	 */
+	@Deprecated
 	boolean isMultiModule();
 
 	/**
@@ -117,6 +121,7 @@ public interface ProjectRepresentation extends Comparable<ProjectRepresentation>
 	 * @param path
 	 * @return
 	 */
+	@Deprecated
 	static <T extends ProjectRepresentation> ProjectRepresentation factory(Class<T> projectClass, Path path) {
 		if (SpringBootProjectRepresentation.class.isAssignableFrom(projectClass)) {
 			return new SpringBootProjectRepresentationImpl(path);
