@@ -9,7 +9,6 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.SortedSet;
 import java.util.TreeSet;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -21,7 +20,6 @@ import org.jboss.forge.roaster.model.source.JavaEnumSource;
 import org.jboss.forge.roaster.model.source.JavaInterfaceSource;
 
 import br.xtool.core.helper.RoasterHelper;
-import br.xtool.core.representation.ProjectRepresentation;
 import br.xtool.core.representation.angular.NgProjectRepresentation;
 import br.xtool.core.representation.plantuml.PlantClassDiagramRepresentation;
 import br.xtool.core.representation.springboot.ApplicationPropertiesRepresentation;
@@ -337,27 +335,11 @@ public class SpringBootProjectRepresentationImpl extends ProjectRepresentationIm
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see br.xtool.core.representation.EProject#getFrameworkVersion()
-	 */
-	@Override
-	public String getFrameworkVersion() {
-		return this.getPom().getParentVersion().get();
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
 	 * @see br.xtool.core.representation.EProject#getProjectVersion()
 	 */
 	@Override
-	public Version getProjectVersion() {
-		Pattern v5pattern = Pattern.compile("1\\.5\\.\\d+\\.\\w*");
-		Pattern v6pattern = Pattern.compile("2\\.\\d+\\.\\d+\\.\\w*");
-		if (v5pattern.matcher(getFrameworkVersion()).matches())
-			return Version.V1;
-		if (v6pattern.matcher(getFrameworkVersion()).matches())
-			return Version.V2;
-		return Version.NONE;
+	public String getVersion() {
+		throw new UnsupportedOperationException();
 	}
 
 	/*
@@ -376,13 +358,8 @@ public class SpringBootProjectRepresentationImpl extends ProjectRepresentationIm
 	 * @see br.xtool.core.representation.EProject#getProjectType()
 	 */
 	@Override
-	public Type getProjectType() {
-		return ProjectRepresentation.Type.SPRINGBOOT;
-	}
-
-	@Override
-	public boolean isMultiModule() {
-		return false;
+	public String getType() {
+		return "springboot";
 	}
 
 }

@@ -13,7 +13,7 @@ import com.google.common.collect.Sets;
 import br.xtool.core.representation.ProjectRepresentation;
 import br.xtool.core.representation.WorkspaceRepresentation;
 import br.xtool.core.representation.angular.NgProjectRepresentation;
-import br.xtool.core.representation.springboot.SpringBootNgProjectRepresentation;
+import br.xtool.core.representation.springboot.SpringBootFullStackProjectRepresentation;
 import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 import lombok.SneakyThrows;
 
@@ -23,7 +23,7 @@ public class WorkspaceRepresentationImpl implements WorkspaceRepresentation {
 
 	private SortedSet<NgProjectRepresentation> angularProjects;
 
-	private SortedSet<SpringBootNgProjectRepresentation> springBootNgProjects;
+	private SortedSet<SpringBootFullStackProjectRepresentation> springBootNgProjects;
 
 	private Path path;
 
@@ -64,13 +64,13 @@ public class WorkspaceRepresentationImpl implements WorkspaceRepresentation {
 
 	@Override
 	@SneakyThrows
-	public SortedSet<SpringBootNgProjectRepresentation> getSpringBootNgProjects() {
+	public SortedSet<SpringBootFullStackProjectRepresentation> getSpringBootNgProjects() {
 		if (Objects.isNull(this.springBootNgProjects)) {
 			// @formatter:off
 			this.springBootNgProjects = Files.list(this.path)
 					.filter(Files::isDirectory)
-					.filter(SpringBootNgProjectRepresentation::isValid)
-					.map(SpringBootNgProjectRepresentationImpl::new)
+					.filter(SpringBootFullStackProjectRepresentation::isValid)
+					.map(SpringBootFullStackProjectRepresentationImpl::new)
 					.collect(Collectors.toCollection(TreeSet::new));
 			// @formatter:on
 		}

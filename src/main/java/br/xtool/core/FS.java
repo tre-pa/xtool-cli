@@ -19,6 +19,7 @@ public interface FS {
 	 * @param vars
 	 * @param destinationProject
 	 */
+	@Deprecated
 	<T extends ProjectRepresentation> void copy(Path resourcePath, Map<String, Object> vars, T destinationProject);
 
 	/**

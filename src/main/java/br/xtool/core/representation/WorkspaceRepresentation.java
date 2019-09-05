@@ -4,7 +4,7 @@ import java.nio.file.Path;
 import java.util.SortedSet;
 
 import br.xtool.core.representation.angular.NgProjectRepresentation;
-import br.xtool.core.representation.springboot.SpringBootNgProjectRepresentation;
+import br.xtool.core.representation.springboot.SpringBootFullStackProjectRepresentation;
 import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 
 /**
@@ -39,9 +39,9 @@ public interface WorkspaceRepresentation {
 	/**
 	 * Retorna a lista de projetos multi-módulo SpringBoot e Angular.
 	 * 
-	 * @return {@link SpringBootNgProjectRepresentation}
+	 * @return {@link SpringBootFullStackProjectRepresentation}
 	 */
-	SortedSet<SpringBootNgProjectRepresentation> getSpringBootNgProjects();
+	SortedSet<SpringBootFullStackProjectRepresentation> getSpringBootNgProjects();
 
 	/**
 	 * Retorna a lista de todos os projetos do workspace.

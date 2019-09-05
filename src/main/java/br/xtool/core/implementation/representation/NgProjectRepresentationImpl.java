@@ -225,16 +225,6 @@ public class NgProjectRepresentationImpl extends ProjectRepresentationImpl imple
 		return ngClasses;
 	}
 
-	// @Override
-	// public String getMainDir() {
-	// return FilenameUtils.concat(this.getDirectory().getPath(), "src/app");
-	// }
-
-	@Override
-	public String getFrameworkVersion() {
-		return getNgPackage().getDependencies().get("@angular/core");
-	}
-
 	@Override
 	public SpringBootProjectRepresentation getTargetSpringBootProject() {
 		String springBootPath = getName().endsWith("-frontend") ? getPath().toString().replace("-frontend", "-backend") : getPath().toString().concat("-service");
@@ -247,14 +237,8 @@ public class NgProjectRepresentationImpl extends ProjectRepresentationImpl imple
 	}
 
 	@Override
-	public Version getProjectVersion() {
-		Pattern v5pattern = Pattern.compile("[\\^~]?5\\.2\\.\\d");
-		Pattern v6pattern = Pattern.compile("[\\^~]?6\\.\\d\\.\\d");
-		Pattern v7pattern = Pattern.compile("[\\^~]?7\\.\\d\\.\\d");
-		if (v5pattern.matcher(getFrameworkVersion()).matches()) return Version.V5;
-		if (v6pattern.matcher(getFrameworkVersion()).matches()) return Version.V6;
-		if (v7pattern.matcher(getFrameworkVersion()).matches()) return Version.V7;
-		return Version.NONE;
+	public String getVersion() {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -263,13 +247,8 @@ public class NgProjectRepresentationImpl extends ProjectRepresentationImpl imple
 	}
 
 	@Override
-	public Type getProjectType() {
-		return ProjectRepresentation.Type.ANGULAR;
-	}
-
-	@Override
-	public boolean isMultiModule() {
-		return false;
+	public String getType() {
+		return "angular";
 	}
 
 }

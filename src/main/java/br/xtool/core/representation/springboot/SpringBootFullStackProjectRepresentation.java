@@ -17,7 +17,7 @@ import strman.Strman;
  * @author jcruz
  *
  */
-public interface SpringBootNgProjectRepresentation extends ProjectRepresentation {
+public interface SpringBootFullStackProjectRepresentation extends ProjectRepresentation {
 
 	/**
 	 * Retorna a referência ao projeto SpringBoot.
