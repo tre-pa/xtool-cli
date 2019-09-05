@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import br.xtool.core.FS;
-import br.xtool.core.Workspace;
+import br.xtool.core.WorkspaceContext;
 import br.xtool.core.implementation.representation.NoneProjectRepresentationImpl;
 import br.xtool.core.implementation.representation.WorkspaceRepresentationImpl;
 import br.xtool.core.representation.ProjectRepresentation;
@@ -17,7 +17,7 @@ import br.xtool.core.representation.WorkspaceRepresentation;
 import lombok.Getter;
 
 @Service
-public class WorkspaceImpl implements Workspace {
+public class WorkspaceContextImpl implements WorkspaceContext {
 
 	@Value("${workspace}")
 	private Path home;

@@ -12,14 +12,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.xtool.core.Shell;
-import br.xtool.core.Workspace;
+import br.xtool.core.WorkspaceContext;
 import lombok.SneakyThrows;
 
 @Service
 public class ShellImpl implements Shell {
 
 	@Autowired
-	private Workspace workspace;
+	private WorkspaceContext workspace;
 
 	@Autowired
 	private VelocityEngine velocityEngine;

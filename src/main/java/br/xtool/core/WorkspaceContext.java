@@ -9,7 +9,7 @@ import br.xtool.core.representation.WorkspaceRepresentation;
  * @author jcruz
  *
  */
-public interface Workspace {
+public interface WorkspaceContext {
 
 	/**
 	 * Retorna o projeto atual de trabalho.
