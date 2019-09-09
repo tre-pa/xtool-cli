@@ -125,30 +125,4 @@ public interface JavaClassRepresentation extends Comparable<JavaClassRepresentat
 	 */
 	boolean isImmutable();
 
-	// EJavaAnnotation<JavaClassSource> addTableAnnotation();
-
-	@Deprecated
-	JavaAnnotationRepresentation<JavaClassSource> addToStringAnnotation(String... attributes);
-
-	@Deprecated
-	JavaAnnotationRepresentation<JavaClassSource> addEqualsAndHashCodeAnnotation(String... attibutes);
-
-	@Deprecated
-	interface EAuditableJavaClass extends JavaClassRepresentation {}
-
-	@Deprecated
-	interface ECacheableJavaClass extends JavaClassRepresentation {}
-
-	@Deprecated
-	interface EIndexedJavaClass extends JavaClassRepresentation {}
-
-	@Deprecated
-	interface EViewJavaClass extends JavaClassRepresentation {}
-
-	@Deprecated
-	interface EReadOnlyJavaClass extends JavaClassRepresentation {}
-
-	@Deprecated
-	interface EVersionableJavaClass extends JavaClassRepresentation {}
-
 }

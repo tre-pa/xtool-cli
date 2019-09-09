@@ -384,6 +384,11 @@ public class PlantClassRepresentationImpl implements PlantClassRepresentation {
 	}
 
 	@Override
+	public boolean hasStereotype(String stereotypeName) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public String toString() {
 		return "PlantClassRepresentationImpl [" + (getName() != null ? "getName()=" + getName() : "") + "]";
 	}

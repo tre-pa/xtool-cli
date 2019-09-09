@@ -293,6 +293,12 @@ public class PlantClassFieldRepresentationImpl implements PlantClassFieldReprese
 	public Optional<String> getTaggedValue(String key) {
 		return Optional.ofNullable(this.getTaggedValues().get(String.format("@%s.%s", this.getName(), key)));
 	}
+	
+	
+	@Override
+	public boolean hasProperty(String propertyName) {
+		throw new UnsupportedOperationException();
+	}
 
 	private String memberName() {
 		return StringUtils.trim(StringUtils.split(this.member.getDisplay(false), ":")[0]);
@@ -301,5 +307,6 @@ public class PlantClassFieldRepresentationImpl implements PlantClassFieldReprese
 	private String memberType() {
 		return StringUtils.trim(StringUtils.split(this.member.getDisplay(false), ":")[1]);
 	}
+
 
 }

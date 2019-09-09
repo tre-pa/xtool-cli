@@ -143,6 +143,14 @@ public interface PlantClassFieldRepresentation {
 	boolean hasProperties();
 
 	/**
+	 * Verifica se o atributo possui uma propridade.
+	 * 
+	 * @param propertyName
+	 * @return
+	 */
+	boolean hasProperty(String propertyName);
+
+	/**
 	 * Retorna uma property do atributo.
 	 * 
 	 * @param name

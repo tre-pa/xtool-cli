@@ -187,30 +187,6 @@ public class JavaClassRepresentationImpl implements JavaClassRepresentation {
 		return this.javaClassSource;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see br.xtool.core.representation.EJavaClass#addToString(java.lang.String[])
-	 */
-	@Override
-	public JavaAnnotationRepresentation<JavaClassSource> addToStringAnnotation(String... attributes) {
-		JavaAnnotationRepresentation<JavaClassSource> javaAnnotation = this.addAnnotation(ToString.class);
-		javaAnnotation.setStringArrayValue("of", attributes);
-		return javaAnnotation;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see br.xtool.core.representation.EJavaClass#addEqualsAndHashCode(java.lang.String [])
-	 */
-	@Override
-	public JavaAnnotationRepresentation<JavaClassSource> addEqualsAndHashCodeAnnotation(String... attributes) {
-		JavaAnnotationRepresentation<JavaClassSource> javaAnnotation = this.addAnnotation(EqualsAndHashCode.class);
-		javaAnnotation.setStringArrayValue("of", attributes);
-		return javaAnnotation;
-	}
-
 	@Override
 	public int compareTo(JavaClassRepresentation o) {
 		return this.getName().compareTo(o.getName());

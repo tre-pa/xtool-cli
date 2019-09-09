@@ -45,7 +45,7 @@ public interface SpringBootProjectRepresentation extends ProjectRepresentation {
 	 * 
 	 * @return
 	 */
-	JavaPackageRepresentation getRootPackage();
+	JavaPackageRepresentation getRootPkg();
 
 	/**
 	 * 

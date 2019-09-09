@@ -95,7 +95,7 @@ public class SpringBootProjectRepresentationImpl extends ProjectRepresentationIm
 	 * @see br.xtool.core.representation.ESBootProject#getRootPackage()
 	 */
 	@Override
-	public JavaPackageRepresentation getRootPackage() {
+	public JavaPackageRepresentation getRootPkg() {
 		return this.getPom().getGroupId();
 	}
 

@@ -98,4 +98,12 @@ public interface PlantClassRepresentation extends JavaType<JavaClassSource> {
 	 */
 	Optional<String[]> getTaggedValueAsArray(String key);
 
+	/**
+	 * Verifica se a classe possui stereotype.
+	 * 
+	 * @param stereotypeName
+	 * @return
+	 */
+	boolean hasStereotype(String stereotypeName);
+
 }
