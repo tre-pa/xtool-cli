@@ -9,13 +9,14 @@ import lombok.Getter;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 
-@Command(name = "", description = "Example interactive shell with completion", footer = { "", "Press Ctl-D to exit." }, subcommands = { ClearCommand.class })
-public class CoreCommands implements Runnable {
+@Command(name = "", description = "Example interactive shell with completion", footer = { "", "Press Ctl-D to exit." },
+		subcommands = {ClearCommand.class})
+public class CoreCommand implements Runnable {
+	
 	@Getter
 	private LineReaderImpl reader;
 	private PrintWriter out;
 
-	public CoreCommands() {}
 
 	public void setReader(LineReader reader) {
 		this.reader = (LineReaderImpl) reader;

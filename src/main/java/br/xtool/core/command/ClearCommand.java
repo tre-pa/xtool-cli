@@ -5,11 +5,11 @@ import java.util.concurrent.Callable;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.ParentCommand;
 
-@Command(name = "clear", mixinStandardHelpOptions = false, description = "Clears the screen")
+@Command(name = "clear", description = "Limpa a tela")
 public class ClearCommand implements Callable<Void> {
 
 	@ParentCommand
-	private CoreCommands parent;
+	private CoreCommand parent;
 
 	@Override
 	public Void call() throws Exception {
