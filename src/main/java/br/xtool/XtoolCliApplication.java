@@ -7,13 +7,13 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 
-import br.xtool.core.CommandProcessor;
+import br.xtool.core.CommandDispatcher;
 
 @SpringBootApplication
 public class XtoolCliApplication implements CommandLineRunner {
 	
 	@Autowired
-	private CommandProcessor consoleProcessor;
+	private CommandDispatcher consoleProcessor;
 
 	public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
 		new SpringApplicationBuilder(XtoolCliApplication.class).headless(false).run(args);
