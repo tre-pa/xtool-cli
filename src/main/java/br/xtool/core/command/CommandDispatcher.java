@@ -1,4 +1,4 @@
-package br.xtool.core;
+package br.xtool.core.command;
 
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -20,8 +20,6 @@ import org.springframework.stereotype.Component;
 
 import com.google.common.collect.Lists;
 
-import br.xtool.core.command.CoreCommand;
-import br.xtool.core.command.ExecCommand;
 import picocli.CommandLine;
 import picocli.CommandLine.Model.CommandSpec;
 import picocli.CommandLine.Model.OptionSpec;

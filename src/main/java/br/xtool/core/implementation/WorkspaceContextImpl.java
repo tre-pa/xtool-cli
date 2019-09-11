@@ -4,11 +4,9 @@ import java.nio.file.Path;
 
 import javax.annotation.PostConstruct;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import br.xtool.core.FS;
 import br.xtool.core.WorkspaceContext;
 import br.xtool.core.implementation.representation.NoneProjectRepresentationImpl;
 import br.xtool.core.implementation.representation.WorkspaceRepresentationImpl;
@@ -24,9 +22,6 @@ public class WorkspaceContextImpl implements WorkspaceContext {
 
 	@Getter
 	private ProjectRepresentation workingProject;
-
-	@Autowired
-	private FS fs;
 
 	@PostConstruct
 	private void init() {
@@ -52,6 +47,5 @@ public class WorkspaceContextImpl implements WorkspaceContext {
 	public void setWorkingProject(ProjectRepresentation project) {
 		workingProject = project;
 	}
-
 
 }
