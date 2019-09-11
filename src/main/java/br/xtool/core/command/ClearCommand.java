@@ -13,7 +13,8 @@ public class ClearCommand implements Callable<Void> {
 
 	@Override
 	public Void call() throws Exception {
-		parent.getReader().clearScreen();
+		System.out.println("Clear command!");
+//		parent.getReader().clearScreen();
 		return null;
 	}
 

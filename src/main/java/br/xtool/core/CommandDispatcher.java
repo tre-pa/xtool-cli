@@ -55,7 +55,7 @@ public class CommandDispatcher {
                     .parser(new DefaultParser())
                     .build();
             // @formatter:on
-			coreCommand.setReader(reader);
+//			coreCommand.setReader(reader);
 			String prompt = Ansi.ansi().bold().fg(Color.YELLOW).a("xtool:~ ").reset().toString();
 			String rightPrompt = null;
 			String line;
@@ -64,6 +64,7 @@ public class CommandDispatcher {
 					line = reader.readLine(prompt, rightPrompt, (MaskingCallback) null, null);
 					ParsedLine pl = reader.getParser().parse(line, 0);
 					String[] arguments = pl.words().toArray(new String[0]);
+					if(StringUtils.isBlank(arguments[0])) continue;
 					ParseResult parseResult = cmd.parseArgs(arguments);
 					// @formatter:off
 					System.out.println(parseResult.asCommandLineList()
