@@ -28,9 +28,15 @@ import picocli.CommandLine.Model.OptionSpec;
 import picocli.CommandLine.ParseResult;
 import picocli.shell.jline3.PicocliJLineCompleter;
 
+/**
+ * Classe responsável por interpretar a linha de comando e despachar a ação para os comandos.
+ * 
+ * @author jcruz
+ *
+ */
 @Component
 public class CommandDispatcher {
-	
+
 	/**
 	 * Inicializa o processador de comandos.
 	 */
@@ -59,16 +65,17 @@ public class CommandDispatcher {
 					ParsedLine pl = reader.getParser().parse(line, 0);
 					String[] arguments = pl.words().toArray(new String[0]);
 					ParseResult parseResult = cmd.parseArgs(arguments);
+					// @formatter:off
 					System.out.println(parseResult.asCommandLineList()
 							.stream()
 							.map(_cmd -> _cmd.getCommandName())
 							.filter(StringUtils::isNotBlank)
 							.collect(Collectors.toList()));
-					
 //					System.out.println(parseResult.subcommand().subcommand().matchedArgs());
 					parseResult.subcommand().subcommand().matchedOptions()
 							.stream()
 							.forEach(op -> System.out.println(op.longestName()+" : "+op.getValue()));
+					// @formatter:on
 				} catch (UserInterruptException e) {
 					System.out.println("Pressione Ctrl+D para sair");
 				} catch (EndOfFileException e) {
@@ -84,6 +91,7 @@ public class CommandDispatcher {
 
 	private void addExec(CommandLine cmd) {
 		CommandSpec execSpec = CommandSpec.forAnnotatedObject(new ExecCommand());
+		// @formatter:off
 		CommandSpec componentSpec = CommandSpec.create()
 				.name("angular")
 				.addOption(OptionSpec.builder("--name")
@@ -97,8 +105,9 @@ public class CommandDispatcher {
 						.arity("0")
 						.required(false)
 						.build());
+		// @formatter:on
 		execSpec.addSubcommand("angular", componentSpec);
 		cmd.addSubcommand("exec", execSpec);
 	}
-	
+
 }
