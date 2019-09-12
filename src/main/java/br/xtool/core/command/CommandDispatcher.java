@@ -16,14 +16,17 @@ import org.jline.reader.UserInterruptException;
 import org.jline.reader.impl.DefaultParser;
 import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.google.common.collect.Lists;
 
+import br.xtool.core.Console;
 import picocli.CommandLine;
 import picocli.CommandLine.Model.CommandSpec;
 import picocli.CommandLine.Model.OptionSpec;
 import picocli.CommandLine.ParseResult;
+import picocli.CommandLine.UnmatchedArgumentException;
 import picocli.shell.jline3.PicocliJLineCompleter;
 
 /**
@@ -34,6 +37,9 @@ import picocli.shell.jline3.PicocliJLineCompleter;
  */
 @Component
 public class CommandDispatcher {
+
+	@Autowired
+	private Console console;
 
 	/**
 	 * Inicializa o processador de comandos.
@@ -62,7 +68,7 @@ public class CommandDispatcher {
 					line = reader.readLine(prompt, rightPrompt, (MaskingCallback) null, null);
 					ParsedLine pl = reader.getParser().parse(line, 0);
 					String[] arguments = pl.words().toArray(new String[0]);
-					if(StringUtils.isBlank(arguments[0])) continue;
+					if (StringUtils.isBlank(arguments[0])) continue;
 					ParseResult parseResult = cmd.parseArgs(arguments);
 					// @formatter:off
 					System.out.println(parseResult.asCommandLineList()
@@ -77,6 +83,8 @@ public class CommandDispatcher {
 					// @formatter:on
 				} catch (UserInterruptException e) {
 					System.out.println("Pressione Ctrl+D para sair");
+				} catch (UnmatchedArgumentException e) {
+					console.println("Argumento não encontrado. ".concat(e.getMessage()));
 				} catch (EndOfFileException e) {
 					return;
 				}

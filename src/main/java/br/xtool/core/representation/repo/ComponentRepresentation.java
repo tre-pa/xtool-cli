@@ -12,6 +12,11 @@ import java.util.Map;
 public interface ComponentRepresentation {
 
 	/**
+	 * Nome do arquivo descritor xtool.
+	 */
+	static String DESCRIPTOR_FILE = "xtool.yml";
+
+	/**
 	 * Nome do componente. Por conveção é o mesmo nome do diretório.
 	 * 
 	 * @return

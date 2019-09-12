@@ -36,7 +36,7 @@ public class ComponentRepresentationImpl implements ComponentRepresentation {
 	@SneakyThrows
 	public Map<String, Object> getDescriptor() {
 		if (Objects.isNull(descriptor)) {
-			InputStream input = Files.newInputStream(path.resolve("xtool.yml"));
+			InputStream input = Files.newInputStream(path.resolve(ComponentRepresentation.DESCRIPTOR_FILE));
 			this.descriptor = new Yaml().load(input);
 		}
 		return this.descriptor;

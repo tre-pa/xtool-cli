@@ -33,7 +33,7 @@ public class ModuleRepresentationImpl implements ModuleRepresentation {
 			// @formatter:off
 			this.components = Files.list(path)
 				.filter(Files::isDirectory)
-				.filter(p -> Files.exists(p.resolve("xtool.yml")))
+				.filter(p -> Files.exists(p.resolve(ComponentRepresentation.DESCRIPTOR_FILE)))
 				.map(ComponentRepresentationImpl::new)
 				.collect(Collectors.toSet());
 			// @formatter:on
