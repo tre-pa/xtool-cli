@@ -16,7 +16,7 @@ import br.xtool.core.helper.InflectorHelper;
 import br.xtool.core.pdiagram.ClassVisitor;
 import br.xtool.core.representation.plantuml.PlantClassRepresentation;
 import br.xtool.core.representation.plantuml.PlantStereotypeRepresentation.StereotypeType;
-import br.xtool.core.representation.springboot.EntityRepresentation;
+import br.xtool.core.representation.springboot.JpaEntityRepresentation;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,7 +28,7 @@ import strman.Strman;
 public class EntityVisitor implements ClassVisitor {
 
 	@Override
-	public void visit(EntityRepresentation entity, PlantClassRepresentation plantClass) {
+	public void visit(JpaEntityRepresentation entity, PlantClassRepresentation plantClass) {
 		this.addEntityAnnotation(entity);
 		this.addDynamicAnnotation(entity, plantClass);
 		this.addTableAnnotation(entity, plantClass);
@@ -40,7 +40,7 @@ public class EntityVisitor implements ClassVisitor {
 		this.addApiPath(entity, plantClass);
 	}
 
-	private void addApiPath(EntityRepresentation entity, PlantClassRepresentation plantClass) {
+	private void addApiPath(JpaEntityRepresentation entity, PlantClassRepresentation plantClass) {
 		// @formatter:off
 		plantClass.getTaggedValue("api-path")
 			.map(tagValue -> entity.addTagValue("@api-path", tagValue))
@@ -56,7 +56,7 @@ public class EntityVisitor implements ClassVisitor {
 		// @formatter:on
 	}
 
-	private void addEqualsAndHashCodeAnnotation(EntityRepresentation entity, PlantClassRepresentation plantClass) {
+	private void addEqualsAndHashCodeAnnotation(JpaEntityRepresentation entity, PlantClassRepresentation plantClass) {
 
 		if (plantClass.getTaggedValueAsArray("equalsAndHashCode.of").isPresent()) {
 			String[] tagValues = plantClass.getTaggedValueAsArray("equalsAndHashCode.of").get();
@@ -70,7 +70,7 @@ public class EntityVisitor implements ClassVisitor {
 		}
 	}
 
-	private void addToStringAnnotation(EntityRepresentation entity, PlantClassRepresentation plantClass) {
+	private void addToStringAnnotation(JpaEntityRepresentation entity, PlantClassRepresentation plantClass) {
 		// @formatter:off
 		plantClass.getTaggedValueAsArray("toString.of").ifPresent(tagValues -> entity
 				.addAnnotation(ToString.class)
@@ -79,20 +79,20 @@ public class EntityVisitor implements ClassVisitor {
 		// @formatter:on
 	}
 
-	private void AddNoArgsConstructorAnnotation(EntityRepresentation entity) {
+	private void AddNoArgsConstructorAnnotation(JpaEntityRepresentation entity) {
 		entity.addAnnotation(NoArgsConstructor.class);
 	}
 
-	private void addAccessorsAnnotation(EntityRepresentation entity) {
+	private void addAccessorsAnnotation(JpaEntityRepresentation entity) {
 		entity.addAnnotation(Getter.class);
 		entity.addAnnotation(Setter.class);
 	}
 
-	private void addJsonIncludeAnnotation(EntityRepresentation entity) {
+	private void addJsonIncludeAnnotation(JpaEntityRepresentation entity) {
 		entity.addAnnotation(JsonInclude.class).getRoasterAnnotation().setEnumArrayValue(JsonInclude.Include.NON_EMPTY);
 	}
 
-	private void addTableAnnotation(EntityRepresentation entity, PlantClassRepresentation plantClass) {
+	private void addTableAnnotation(JpaEntityRepresentation entity, PlantClassRepresentation plantClass) {
 		// @formatter:off
 		plantClass.getTaggedValue("table.name")
 			.map(tagValue ->
@@ -109,14 +109,14 @@ public class EntityVisitor implements ClassVisitor {
 		// @formatter:on
 	}
 
-	private void addDynamicAnnotation(EntityRepresentation entity, PlantClassRepresentation plantClass) {
+	private void addDynamicAnnotation(JpaEntityRepresentation entity, PlantClassRepresentation plantClass) {
 		if (plantClass.getStereotypes().stream().noneMatch(st -> st.getStereotypeType().equals(StereotypeType.READ_ONLY) || st.getStereotypeType().equals(StereotypeType.VIEW))) {
 			entity.addAnnotation(DynamicInsert.class);
 			entity.addAnnotation(DynamicUpdate.class);
 		}
 	}
 
-	private void addEntityAnnotation(EntityRepresentation entity) {
+	private void addEntityAnnotation(JpaEntityRepresentation entity) {
 		entity.addAnnotation(Entity.class);
 	}
 

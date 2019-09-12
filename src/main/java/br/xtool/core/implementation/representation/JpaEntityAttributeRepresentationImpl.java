@@ -14,8 +14,8 @@ import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.jboss.forge.roaster.model.source.JavaDocSource;
 import org.jboss.forge.roaster.model.util.Types;
 
-import br.xtool.core.representation.springboot.EntityAttributeRepresentation;
-import br.xtool.core.representation.springboot.EntityRepresentation;
+import br.xtool.core.representation.springboot.JpaEntityAttributeRepresentation;
+import br.xtool.core.representation.springboot.JpaEntityRepresentation;
 import br.xtool.core.representation.springboot.JpaRelationshipRepresentation;
 import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 
@@ -25,13 +25,13 @@ import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
  * @author jcruz
  *
  */
-public class EntityAttributeRepresentationImpl extends JavaFieldRepresentationImpl implements EntityAttributeRepresentation {
+public class JpaEntityAttributeRepresentationImpl extends JavaFieldRepresentationImpl implements JpaEntityAttributeRepresentation {
 
 	private SpringBootProjectRepresentation springBootProject;
 
-	private EntityRepresentation entitySource;
+	private JpaEntityRepresentation entitySource;
 
-	public EntityAttributeRepresentationImpl(SpringBootProjectRepresentation springBootProject, EntityRepresentation entitySource,
+	public JpaEntityAttributeRepresentationImpl(SpringBootProjectRepresentation springBootProject, JpaEntityRepresentation entitySource,
 			FieldSource<JavaClassSource> fieldSource) {
 		super(entitySource, fieldSource);
 		this.springBootProject = springBootProject;
@@ -39,7 +39,7 @@ public class EntityAttributeRepresentationImpl extends JavaFieldRepresentationIm
 	}
 
 	@Override
-	public EntityRepresentation getEntity() {
+	public JpaEntityRepresentation getEntity() {
 		return entitySource;
 	}
 	

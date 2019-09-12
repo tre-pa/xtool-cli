@@ -1,7 +1,7 @@
 package br.xtool.core.pdiagram;
 
 import br.xtool.core.representation.plantuml.PlantClassRepresentation;
-import br.xtool.core.representation.springboot.EntityRepresentation;
+import br.xtool.core.representation.springboot.JpaEntityRepresentation;
 
 /**
  * 
@@ -14,6 +14,6 @@ public interface ClassVisitor {
 	 * 
 	 * @param plantClass
 	 */
-	void visit(EntityRepresentation entity, PlantClassRepresentation plantClass);
+	void visit(JpaEntityRepresentation entity, PlantClassRepresentation plantClass);
 
 }

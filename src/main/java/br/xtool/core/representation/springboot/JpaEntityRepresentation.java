@@ -15,42 +15,42 @@ import br.xtool.core.representation.angular.NgServiceRepresentation;
  * @author jcruz
  *
  */
-public interface EntityRepresentation extends JavaClassRepresentation {
+public interface JpaEntityRepresentation extends JavaClassRepresentation {
 
 	/**
 	 * Retorna os atributos JPA da entidade.
 	 *
 	 * @return
 	 */
-	Collection<EntityAttributeRepresentation> getAttributes();
+	Collection<JpaEntityAttributeRepresentation> getAttributes();
 
 	/**
 	 * Retorna o repositório associado a entidade.
 	 *
 	 * @return
 	 */
-	Optional<RepositoryRepresentation> getAssociatedRepository();
+	Optional<SpringBootRepositoryRepresentation> getAssociatedRepository();
 
 	/**
 	 * Retorna a specification associada a entidade.
 	 *
 	 * @return
 	 */
-	Optional<SpecificationRepresentation> getAssociatedSpecification();
+	Optional<SpringBooSpecificationRepresentation> getAssociatedSpecification();
 
 	/**
 	 * Retorna a classe de serviço associado a entidade.
 	 *
 	 * @return
 	 */
-	Optional<ServiceClassRepresentation> getAssociatedService();
+	Optional<SpringBootServiceClassRepresentation> getAssociatedService();
 
 	/**
 	 * Retorna a classe rest associado a entidade.
 	 *
 	 * @return
 	 */
-	Optional<RestClassRepresentation> getAssociatedRest();
+	Optional<SpringBootRestClassRepresentation> getAssociatedRest();
 
 	/**
 	 * Retorna a classe de entidade angular associadad a entidade.

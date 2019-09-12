@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 import br.xtool.core.pdiagram.RelationshipVisitor;
 import br.xtool.core.representation.plantuml.PlantRelationshipRepresentation;
-import br.xtool.core.representation.springboot.EntityAttributeRepresentation;
+import br.xtool.core.representation.springboot.JpaEntityAttributeRepresentation;
 import lombok.val;
 import strman.Strman;
 
@@ -26,7 +26,7 @@ import strman.Strman;
 public class EntityOneToManyAssociationVisitor implements RelationshipVisitor {
 
 	@Override
-	public void visit(EntityAttributeRepresentation attr, PlantRelationshipRepresentation plantRelationship) {
+	public void visit(JpaEntityAttributeRepresentation attr, PlantRelationshipRepresentation plantRelationship) {
 		if (plantRelationship.isAssociation() && plantRelationship.isOneToMany()) {
 			addOneToManyAnnotation(attr, plantRelationship);
 			addBatchSizeAnnotation(attr);
@@ -35,7 +35,7 @@ public class EntityOneToManyAssociationVisitor implements RelationshipVisitor {
 		}
 	}
 
-	private void addJoinColumnAnnotation(EntityAttributeRepresentation attr, PlantRelationshipRepresentation plantRelationship) {
+	private void addJoinColumnAnnotation(JpaEntityAttributeRepresentation attr, PlantRelationshipRepresentation plantRelationship) {
 		if (!plantRelationship.getNavigability().isBidirectional()) {
 			// @formatter:off
 			String fkName = StringUtils.abbreviate(
@@ -46,18 +46,18 @@ public class EntityOneToManyAssociationVisitor implements RelationshipVisitor {
 		}
 	}
 
-	private void addOneToManyAnnotation(EntityAttributeRepresentation attr, PlantRelationshipRepresentation plantRelationship) {
+	private void addOneToManyAnnotation(JpaEntityAttributeRepresentation attr, PlantRelationshipRepresentation plantRelationship) {
 		val annOneToMany = attr.addAnnotation(OneToMany.class);
 		if (plantRelationship.getNavigability().isBidirectional()) {
 			annOneToMany.getRoasterAnnotation().setStringValue("mappedBy", plantRelationship.getTargetRole());
 		}
 	}
 
-	private void addLazyCollectionAnnotation(EntityAttributeRepresentation attr) {
+	private void addLazyCollectionAnnotation(JpaEntityAttributeRepresentation attr) {
 		attr.addAnnotation(LazyCollection.class).getRoasterAnnotation().setEnumValue(LazyCollectionOption.EXTRA);
 	}
 
-	private void addBatchSizeAnnotation(EntityAttributeRepresentation attr) {
+	private void addBatchSizeAnnotation(JpaEntityAttributeRepresentation attr) {
 		attr.addAnnotation(BatchSize.class).getRoasterAnnotation().setLiteralValue("size", String.valueOf(10));
 	}
 

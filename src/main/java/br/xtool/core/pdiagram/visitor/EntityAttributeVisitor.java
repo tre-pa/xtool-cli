@@ -18,14 +18,14 @@ import org.springframework.stereotype.Component;
 import br.xtool.core.representation.plantuml.PlantClassFieldPropertyRepresentation.FieldPropertyType;
 import br.xtool.core.pdiagram.FieldVisitor;
 import br.xtool.core.representation.plantuml.PlantClassFieldRepresentation;
-import br.xtool.core.representation.springboot.EntityAttributeRepresentation;
+import br.xtool.core.representation.springboot.JpaEntityAttributeRepresentation;
 import lombok.val;
 
 @Component
 public class EntityAttributeVisitor implements FieldVisitor {
 
 	@Override
-	public void visit(EntityAttributeRepresentation attr, PlantClassFieldRepresentation plantField) {
+	public void visit(JpaEntityAttributeRepresentation attr, PlantClassFieldRepresentation plantField) {
 		this.addSizeAnnotation(attr, plantField);
 		this.addMinAnnotation(attr, plantField);
 		this.addMaxAnnotation(attr, plantField);
@@ -36,11 +36,11 @@ public class EntityAttributeVisitor implements FieldVisitor {
 		this.addMaskTag(attr, plantField);
 	}
 
-	private void addMaskTag(EntityAttributeRepresentation attr, PlantClassFieldRepresentation plantField) {
+	private void addMaskTag(JpaEntityAttributeRepresentation attr, PlantClassFieldRepresentation plantField) {
 		plantField.getTaggedValue("mask").ifPresent(tagValue -> attr.getRoasterField().getJavaDoc().addTagValue("@mask", tagValue));
 	}
 
-	private void addLabelTag(EntityAttributeRepresentation attr, PlantClassFieldRepresentation plantField) {
+	private void addLabelTag(JpaEntityAttributeRepresentation attr, PlantClassFieldRepresentation plantField) {
 		// @formatter:off
 		plantField.getTaggedValue("label")
 			.map(tagValue -> attr.addTagValue("@label", tagValue))
@@ -49,7 +49,7 @@ public class EntityAttributeVisitor implements FieldVisitor {
 //		plantField.getTaggedValue("label").ifPresent(tagValue -> attr.getRoasterField().getJavaDoc().addTagValue("@label", tagValue));
 	}
 
-	private void addColumnAnnotation(EntityAttributeRepresentation attr, PlantClassFieldRepresentation plantField) {
+	private void addColumnAnnotation(JpaEntityAttributeRepresentation attr, PlantClassFieldRepresentation plantField) {
 		val annColumn = attr.addAnnotation(Column.class);
 		plantField.getTaggedValue("column.name").ifPresent(tagValue -> annColumn.getRoasterAnnotation().setStringValue("name", tagValue));
 		plantField.getProperty(FieldPropertyType.NOTNULL).ifPresent(property -> annColumn.getRoasterAnnotation().setLiteralValue("nullable", "false"));
@@ -58,7 +58,7 @@ public class EntityAttributeVisitor implements FieldVisitor {
 
 	}
 
-	private void addIdAnnotation(EntityAttributeRepresentation attr, PlantClassFieldRepresentation plantField) {
+	private void addIdAnnotation(JpaEntityAttributeRepresentation attr, PlantClassFieldRepresentation plantField) {
 		if (attr.isLongField()) {
 			if (plantField.isId()) {
 				attr.addAnnotation(Id.class);
@@ -79,7 +79,7 @@ public class EntityAttributeVisitor implements FieldVisitor {
 		}
 	}
 
-	private void addEnumeratedAnnotation(EntityAttributeRepresentation attr) {
+	private void addEnumeratedAnnotation(JpaEntityAttributeRepresentation attr) {
 		if (attr.isEnumField()) {
 			// @formatter:off
 			attr.addAnnotation(Enumerated.class)
@@ -93,7 +93,7 @@ public class EntityAttributeVisitor implements FieldVisitor {
 		}
 	}
 
-	private void addMaxAnnotation(EntityAttributeRepresentation attr, PlantClassFieldRepresentation plantField) {
+	private void addMaxAnnotation(JpaEntityAttributeRepresentation attr, PlantClassFieldRepresentation plantField) {
 		if (attr.isNumberField()) {
 			// @formatter:off
 			plantField.getUpperBoundMultiplicity().ifPresent(maxValue -> 
@@ -104,7 +104,7 @@ public class EntityAttributeVisitor implements FieldVisitor {
 		}
 	}
 
-	private void addMinAnnotation(EntityAttributeRepresentation attr, PlantClassFieldRepresentation plantField) {
+	private void addMinAnnotation(JpaEntityAttributeRepresentation attr, PlantClassFieldRepresentation plantField) {
 		if (attr.isNumberField()) {
 			// @formatter:off
 			plantField.getLowerBoundMultiplicity().ifPresent(minValue -> 
@@ -116,7 +116,7 @@ public class EntityAttributeVisitor implements FieldVisitor {
 		}
 	}
 
-	private void addSizeAnnotation(EntityAttributeRepresentation attr, PlantClassFieldRepresentation plantField) {
+	private void addSizeAnnotation(JpaEntityAttributeRepresentation attr, PlantClassFieldRepresentation plantField) {
 		if (attr.isStringField()) {
 			val ann = attr.addAnnotation(Size.class);
 			ann.getRoasterAnnotation().setLiteralValue("max", String.valueOf(plantField.getUpperBoundMultiplicity().orElse(255)));

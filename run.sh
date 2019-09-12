@@ -3,6 +3,7 @@
 __NORMAL__="\e[0m\e[39m"
 __YELLOW__="\e[93m"
 __RED__="\e[91m"
+REPOSITORY_HOME=~/xtool/repository
 
 echo "Buscando pelo maven..."
 if [ -z $(which mvn) ]; then
@@ -83,6 +84,13 @@ if [ ! -d "$1" ]; then
 	exit 1;
 fi
 
+if [ ! -d "$REPOSITORY_HOME" ]; then
+	mkdir -p $REPOSITORY_HOME
+	echo -e "${__YELLOW__}"
+	echo -e "Diretório de repositório de componentes '$REPOSITORY_HOME' criado com sucesso. "
+	echo -e "${__NORMAL__}"
+fi
+
 echo "Iniciando xtool... Aguarde."
 
-mvn spring-boot:run -Dworkspace=$1 -DskipTests
+mvn spring-boot:run -Dworkspace=$1 -Drepository.home=$REPOSITORY_HOME -DskipTests

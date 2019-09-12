@@ -1,7 +1,5 @@
 package br.xtool.core;
 
-import org.fusesource.jansi.Ansi;
-
 /**
  * Classe que gerencia o console.
  * 
@@ -23,12 +21,5 @@ public interface Console {
 	 */
 	void println(String msg);
 
-	/**
-	 * Imprime uma mensagem no console.
-	 * 
-	 * @param ansi Objeto jansi com definição do texto e estilo.
-	 * @see https://github.com/fusesource/jansi
-	 */
-	void println(Ansi ansi);
 
 }

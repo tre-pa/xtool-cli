@@ -11,12 +11,12 @@ import org.jboss.forge.roaster.model.source.JavaDocSource;
 import br.xtool.core.representation.angular.NgEntityRepresentation;
 import br.xtool.core.representation.angular.NgProjectRepresentation;
 import br.xtool.core.representation.angular.NgServiceRepresentation;
-import br.xtool.core.representation.springboot.EntityAttributeRepresentation;
-import br.xtool.core.representation.springboot.EntityRepresentation;
-import br.xtool.core.representation.springboot.RepositoryRepresentation;
-import br.xtool.core.representation.springboot.RestClassRepresentation;
-import br.xtool.core.representation.springboot.ServiceClassRepresentation;
-import br.xtool.core.representation.springboot.SpecificationRepresentation;
+import br.xtool.core.representation.springboot.JpaEntityAttributeRepresentation;
+import br.xtool.core.representation.springboot.JpaEntityRepresentation;
+import br.xtool.core.representation.springboot.SpringBootRepositoryRepresentation;
+import br.xtool.core.representation.springboot.SpringBootRestClassRepresentation;
+import br.xtool.core.representation.springboot.SpringBootServiceClassRepresentation;
+import br.xtool.core.representation.springboot.SpringBooSpecificationRepresentation;
 import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 import strman.Strman;
 
@@ -26,9 +26,9 @@ import strman.Strman;
  * @author jcruz
  *
  */
-public class EntityRepresentationImpl extends JavaClassRepresentationImpl implements EntityRepresentation {
+public class JpaEntityRepresentationImpl extends JavaClassRepresentationImpl implements JpaEntityRepresentation {
 
-	public EntityRepresentationImpl(SpringBootProjectRepresentation springBootProject, JavaClassSource javaClassSource) {
+	public JpaEntityRepresentationImpl(SpringBootProjectRepresentation springBootProject, JavaClassSource javaClassSource) {
 		super(springBootProject, javaClassSource);
 		this.javaClassSource = javaClassSource;
 	}
@@ -39,17 +39,17 @@ public class EntityRepresentationImpl extends JavaClassRepresentationImpl implem
 	 * @return
 	 */
 	@Override
-	public Collection<EntityAttributeRepresentation> getAttributes() {
+	public Collection<JpaEntityAttributeRepresentation> getAttributes() {
 		// @formatter:off
 		return javaClassSource.getFields().stream()
 				.filter(fieldSource -> !fieldSource.isStatic())
-				.map(fieldSource -> new EntityAttributeRepresentationImpl(getProject(),this, fieldSource))
+				.map(fieldSource -> new JpaEntityAttributeRepresentationImpl(getProject(),this, fieldSource))
 				.collect(Collectors.toList());
 		// @formatter:on
 	}
 
 	@Override
-	public Optional<RepositoryRepresentation> getAssociatedRepository() {
+	public Optional<SpringBootRepositoryRepresentation> getAssociatedRepository() {
 		// @formatter:off
 		return getProject().getRepositories().stream()
 				.filter(repository -> repository.getName().equals(getName().concat("Repository")))
@@ -58,7 +58,7 @@ public class EntityRepresentationImpl extends JavaClassRepresentationImpl implem
 	}
 
 	@Override
-	public Optional<SpecificationRepresentation> getAssociatedSpecification() {
+	public Optional<SpringBooSpecificationRepresentation> getAssociatedSpecification() {
 		// @formatter:off
 		return getProject().getSpecifications().stream()
 				.filter(repository -> repository.getName().equals(getName().concat("Specification")))
@@ -67,7 +67,7 @@ public class EntityRepresentationImpl extends JavaClassRepresentationImpl implem
 	}
 
 	@Override
-	public Optional<ServiceClassRepresentation> getAssociatedService() {
+	public Optional<SpringBootServiceClassRepresentation> getAssociatedService() {
 		// @formatter:off
 		return getProject().getServices().stream()
 				.filter(service -> service.getName().equals(getName().concat("Service")))
@@ -76,7 +76,7 @@ public class EntityRepresentationImpl extends JavaClassRepresentationImpl implem
 	}
 
 	@Override
-	public Optional<RestClassRepresentation> getAssociatedRest() {
+	public Optional<SpringBootRestClassRepresentation> getAssociatedRest() {
 		// @formatter:off
 		return getProject().getRests().stream()
 				.filter(rest -> rest.getName().equals(getName().concat("Rest")))

@@ -2,6 +2,8 @@ package br.xtool.core;
 
 import java.util.Set;
 
+import br.xtool.core.representation.repo.RepositoryRepresentation;
+
 /**
  * Contexto do repositório xtool.
  * 
@@ -15,5 +17,5 @@ public interface RepositoryContext {
 	 * 
 	 * @return
 	 */
-	Set<RepositoryContext> getRepositories();
+	Set<RepositoryRepresentation> getRepositories();
 }

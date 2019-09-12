@@ -18,12 +18,12 @@ import org.apache.commons.configuration2.builder.FileBasedConfigurationBuilder;
 import org.apache.commons.configuration2.builder.fluent.Parameters;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 
-import br.xtool.core.representation.springboot.ApplicationPropertiesRepresentation;
+import br.xtool.core.representation.springboot.SpringBootApplicationPropertiesRepresentation;
 import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 import lombok.SneakyThrows;
 import strman.Strman;
 
-public class ApplicationPropertiesRepresentationImpl implements ApplicationPropertiesRepresentation {
+public class ApplicationPropertiesRepresentationImpl implements SpringBootApplicationPropertiesRepresentation {
 
 	private Path path;
 
@@ -63,7 +63,7 @@ public class ApplicationPropertiesRepresentationImpl implements ApplicationPrope
 	}
 
 	@Override
-	public ApplicationPropertiesRepresentation set(String key, String value) {
+	public SpringBootApplicationPropertiesRepresentation set(String key, String value) {
 		if (!this.configuration.containsKey(key)) {
 			this.configuration.setProperty(key, value);
 			print(bold(yellow("\t[~] ")), purple("Item: "), white("application.properties"), gray(" -- "), gray(Strman.surround(key, "Key [", "]")));
@@ -72,12 +72,12 @@ public class ApplicationPropertiesRepresentationImpl implements ApplicationPrope
 	}
 
 	@Override
-	public ApplicationPropertiesRepresentation set(String key, String value, Object... params) {
+	public SpringBootApplicationPropertiesRepresentation set(String key, String value, Object... params) {
 		return this.set(key, String.format(value, params));
 	}
 
 	@Override
-	public ApplicationPropertiesRepresentation comment(String key, String value) {
+	public SpringBootApplicationPropertiesRepresentation comment(String key, String value) {
 		this.layout.setComment(key, value);
 		return this;
 	}
@@ -93,7 +93,7 @@ public class ApplicationPropertiesRepresentationImpl implements ApplicationPrope
 		this.builder.save();
 	}
 
-	public static ApplicationPropertiesRepresentation of(SpringBootProjectRepresentation bootProject, Path path) {
+	public static SpringBootApplicationPropertiesRepresentation of(SpringBootProjectRepresentation bootProject, Path path) {
 		if (Files.exists(path)) {
 			try {
 				ApplicationPropertiesRepresentationImpl representation = new ApplicationPropertiesRepresentationImpl(bootProject, path);

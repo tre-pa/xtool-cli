@@ -1,7 +1,7 @@
 package br.xtool.core.pdiagram;
 
 import br.xtool.core.representation.plantuml.PlantClassFieldPropertyRepresentation;
-import br.xtool.core.representation.springboot.EntityAttributeRepresentation;
+import br.xtool.core.representation.springboot.JpaEntityAttributeRepresentation;
 
 /**
  * 
@@ -15,6 +15,6 @@ public interface PropertyVisitor {
 	 * @param attribute
 	 * @param plantProperty
 	 */
-	void visit(EntityAttributeRepresentation attribute, PlantClassFieldPropertyRepresentation plantProperty);
+	void visit(JpaEntityAttributeRepresentation attribute, PlantClassFieldPropertyRepresentation plantProperty);
 
 }

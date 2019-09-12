@@ -71,7 +71,7 @@ public interface SpringBootProjectRepresentation extends ProjectRepresentation {
 	 * 
 	 * @return
 	 */
-	ApplicationPropertiesRepresentation getApplicationProperties();
+	SpringBootApplicationPropertiesRepresentation getApplicationProperties();
 
 	/**
 	 * 
@@ -84,42 +84,42 @@ public interface SpringBootProjectRepresentation extends ProjectRepresentation {
 	 * 
 	 * @return
 	 */
-	SortedSet<EntityRepresentation> getEntities();
+	SortedSet<JpaEntityRepresentation> getEntities();
 
 	/**
 	 * Retorna a lista de projetions do projeto.
 	 * 
 	 * @return
 	 */
-	SortedSet<JpaProjectionRepresentation> getProjections();
+	SortedSet<SpringBootProjectionRepresentation> getProjections();
 
 	/**
 	 * Retorna a lista de specifications do projeto.
 	 * 
 	 * @return
 	 */
-	SortedSet<SpecificationRepresentation> getSpecifications();
+	SortedSet<SpringBooSpecificationRepresentation> getSpecifications();
 
 	/**
 	 * Retorna a lista de repositórios.
 	 * 
 	 * @return
 	 */
-	SortedSet<RepositoryRepresentation> getRepositories();
+	SortedSet<SpringBootRepositoryRepresentation> getRepositories();
 
 	/**
 	 * Restorna a lista de services.
 	 * 
 	 * @return
 	 */
-	SortedSet<ServiceClassRepresentation> getServices();
+	SortedSet<SpringBootServiceClassRepresentation> getServices();
 
 	/**
 	 * Retorna a lsta de classes rests.
 	 * 
 	 * @return
 	 */
-	SortedSet<RestClassRepresentation> getRests();
+	SortedSet<SpringBootRestClassRepresentation> getRests();
 
 	/**
 	 * Retorna o projeto Angular associado ao projeto SpringBoot. Por conveção o projeto angular associado possui o mesmo nome do projeto Spring Boot menos -service

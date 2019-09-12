@@ -9,6 +9,7 @@ import java.nio.file.Paths;
  * @author jcruz
  *
  */
+@Deprecated
 public interface ResourceRepresentation {
 
 	/**

@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import br.xtool.core.helper.RoasterHelper;
-import br.xtool.core.implementation.representation.EntityRepresentationImpl;
+import br.xtool.core.implementation.representation.JpaEntityRepresentationImpl;
 import br.xtool.core.implementation.representation.JavaClassRepresentationImpl;
 import br.xtool.core.pdiagram.ClassVisitor;
 import br.xtool.core.representation.plantuml.PlantClassRepresentation;
@@ -38,7 +38,7 @@ public class JavaClassRepresentationMapper implements BiFunction<SpringBootProje
 				.findFirst()
 				.orElseGet(() -> new JavaClassRepresentationImpl(springBootProject,RoasterHelper.createJavaClassSource(plnatClass.getUmlPackage().getName(),plnatClass.getName())));
 		// @formatter:on
-		this.classVisitors.forEach(visitor -> visitor.visit(new EntityRepresentationImpl(springBootProject, javaClass.getRoasterJavaClass()), plnatClass));
+		this.classVisitors.forEach(visitor -> visitor.visit(new JpaEntityRepresentationImpl(springBootProject, javaClass.getRoasterJavaClass()), plnatClass));
 		return javaClass;
 	}
 

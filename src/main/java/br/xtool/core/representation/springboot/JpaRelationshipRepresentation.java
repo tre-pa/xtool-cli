@@ -52,11 +52,11 @@ public interface JpaRelationshipRepresentation extends JavaRelationshipRepresent
 	 */
 	boolean isManyToMany();
 
-	EntityAttributeRepresentation getSourceAttribute();
+	JpaEntityAttributeRepresentation getSourceAttribute();
 
-	Optional<EntityAttributeRepresentation> getTargetAttribute();
+	Optional<JpaEntityAttributeRepresentation> getTargetAttribute();
 
-	EntityRepresentation getSourceEntity();
+	JpaEntityRepresentation getSourceEntity();
 
-	EntityRepresentation getTargetEntity();
+	JpaEntityRepresentation getTargetEntity();
 }

@@ -11,12 +11,12 @@ import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.jboss.forge.roaster.model.source.MethodSource;
 
 import br.xtool.core.representation.springboot.JavaMethodRepresentation;
-import br.xtool.core.representation.springboot.RestClassRepresentation;
+import br.xtool.core.representation.springboot.SpringBootRestClassRepresentation;
 import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 
-public class RestClassRepresentationImpl extends JavaClassRepresentationImpl implements RestClassRepresentation {
+public class SpringBootRestClassRepresentationImpl extends JavaClassRepresentationImpl implements SpringBootRestClassRepresentation {
 
-	public RestClassRepresentationImpl(SpringBootProjectRepresentation bootProject, JavaClassSource javaClassSource) {
+	public SpringBootRestClassRepresentationImpl(SpringBootProjectRepresentation bootProject, JavaClassSource javaClassSource) {
 		super(bootProject, javaClassSource);
 	}
 

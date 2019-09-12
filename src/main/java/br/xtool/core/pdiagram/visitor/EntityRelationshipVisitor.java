@@ -8,18 +8,18 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import br.xtool.core.pdiagram.RelationshipVisitor;
 import br.xtool.core.representation.plantuml.PlantRelationshipRepresentation;
-import br.xtool.core.representation.springboot.EntityAttributeRepresentation;
+import br.xtool.core.representation.springboot.JpaEntityAttributeRepresentation;
 
 @Component
 public class EntityRelationshipVisitor implements RelationshipVisitor {
 
 	@Override
-	public void visit(EntityAttributeRepresentation attribute, PlantRelationshipRepresentation plantRelationship) {
+	public void visit(JpaEntityAttributeRepresentation attribute, PlantRelationshipRepresentation plantRelationship) {
 		addJsonIgnorePropertiesAnnotation(attribute, plantRelationship);
 		addSizeAnnotation(attribute, plantRelationship);
 	}
 
-	private void addSizeAnnotation(EntityAttributeRepresentation attribute, PlantRelationshipRepresentation plantRelationship) {
+	private void addSizeAnnotation(JpaEntityAttributeRepresentation attribute, PlantRelationshipRepresentation plantRelationship) {
 		if (plantRelationship.getSourceMultiplicity().isToMany() && !plantRelationship.getSourceMultiplicity().isOptional()) {
 			// @formatter:off
 			attribute.getRoasterField().addAnnotation(Size.class)
@@ -28,7 +28,7 @@ public class EntityRelationshipVisitor implements RelationshipVisitor {
 		}
 	}
 
-	private void addJsonIgnorePropertiesAnnotation(EntityAttributeRepresentation attribute, PlantRelationshipRepresentation plantRelationship) {
+	private void addJsonIgnorePropertiesAnnotation(JpaEntityAttributeRepresentation attribute, PlantRelationshipRepresentation plantRelationship) {
 		// @formatter:off
 		String[] relationships = plantRelationship.getTargetClass().getRelationships().stream()
 				.map(relationship -> relationship.getSourceRole())

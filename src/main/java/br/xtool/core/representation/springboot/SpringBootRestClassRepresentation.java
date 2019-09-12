@@ -11,7 +11,7 @@ import org.jboss.forge.roaster.model.source.JavaClassSource;
  * @author jcruz
  *
  */
-public interface RestClassRepresentation extends JavaClassRepresentation {
+public interface SpringBootRestClassRepresentation extends JavaClassRepresentation {
 
 	/**
 	 * Retorna o contexto raiz da api rest.

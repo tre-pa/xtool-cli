@@ -6,7 +6,7 @@ package br.xtool.core.representation.springboot;
  * @author jcruz
  *
  */
-public interface RepositoryRepresentation extends JavaInterfaceRepresentation {
+public interface SpringBootRepositoryRepresentation extends JavaInterfaceRepresentation {
 
 	/**
 	 * Retorna o pacote da classe
@@ -21,20 +21,20 @@ public interface RepositoryRepresentation extends JavaInterfaceRepresentation {
 	 * 
 	 * @return
 	 */
-	EntityRepresentation getTargetEntity();
+	JpaEntityRepresentation getTargetEntity();
 
 	/**
 	 * Retorna a projeção alvo do repostório.
 	 * 
 	 * @return
 	 */
-	JpaProjectionRepresentation getTargetProjection();
+	SpringBootProjectionRepresentation getTargetProjection();
 
 	/**
 	 * Retorna a specification alvo do repositório.
 	 * 
 	 * @return
 	 */
-	SpecificationRepresentation getTargetSpecification();
+	SpringBooSpecificationRepresentation getTargetSpecification();
 
 }

@@ -22,18 +22,18 @@ import org.jboss.forge.roaster.model.source.JavaInterfaceSource;
 import br.xtool.core.helper.RoasterHelper;
 import br.xtool.core.representation.angular.NgProjectRepresentation;
 import br.xtool.core.representation.plantuml.PlantClassDiagramRepresentation;
-import br.xtool.core.representation.springboot.ApplicationPropertiesRepresentation;
-import br.xtool.core.representation.springboot.EntityRepresentation;
+import br.xtool.core.representation.springboot.SpringBootApplicationPropertiesRepresentation;
+import br.xtool.core.representation.springboot.JpaEntityRepresentation;
 import br.xtool.core.representation.springboot.JavaClassRepresentation;
 import br.xtool.core.representation.springboot.JavaEnumRepresentation;
 import br.xtool.core.representation.springboot.JavaPackageRepresentation;
 import br.xtool.core.representation.springboot.JavaSourceFolderRepresentation;
-import br.xtool.core.representation.springboot.JpaProjectionRepresentation;
+import br.xtool.core.representation.springboot.SpringBootProjectionRepresentation;
 import br.xtool.core.representation.springboot.PomRepresentation;
-import br.xtool.core.representation.springboot.RepositoryRepresentation;
-import br.xtool.core.representation.springboot.RestClassRepresentation;
-import br.xtool.core.representation.springboot.ServiceClassRepresentation;
-import br.xtool.core.representation.springboot.SpecificationRepresentation;
+import br.xtool.core.representation.springboot.SpringBootRepositoryRepresentation;
+import br.xtool.core.representation.springboot.SpringBootRestClassRepresentation;
+import br.xtool.core.representation.springboot.SpringBootServiceClassRepresentation;
+import br.xtool.core.representation.springboot.SpringBooSpecificationRepresentation;
 import br.xtool.core.representation.springboot.SpringBootProjectRepresentation;
 import lombok.SneakyThrows;
 
@@ -49,7 +49,7 @@ public class SpringBootProjectRepresentationImpl extends ProjectRepresentationIm
 
 	private PomRepresentation pom;
 
-	private ApplicationPropertiesRepresentation applicationProperties;
+	private SpringBootApplicationPropertiesRepresentation applicationProperties;
 
 	private JavaClassRepresentation mainClass;
 
@@ -138,7 +138,7 @@ public class SpringBootProjectRepresentationImpl extends ProjectRepresentationIm
 	 * @see br.xtool.core.representation.EBootProject#getApplicationProperties()
 	 */
 	@Override
-	public ApplicationPropertiesRepresentation getApplicationProperties() {
+	public SpringBootApplicationPropertiesRepresentation getApplicationProperties() {
 		if (Objects.isNull(this.applicationProperties)) {
 			this.applicationProperties = ApplicationPropertiesRepresentationImpl.of(this, this.getPath().resolve("src/main/resources/application.properties"));
 		}
@@ -168,14 +168,14 @@ public class SpringBootProjectRepresentationImpl extends ProjectRepresentationIm
 	 * @see br.xtool.core.representation.EBootProject#getEntities()
 	 */
 	@Override
-	public SortedSet<EntityRepresentation> getEntities() {
+	public SortedSet<JpaEntityRepresentation> getEntities() {
 		// @formatter:off
 		return this.getJavaUnits()
 			.parallelStream()
 			.filter(javaUnit -> javaUnit.getGoverningType().isClass())
 			.map(javaUnit -> javaUnit.<JavaClassSource>getGoverningType())
 			.filter(j -> j.getAnnotations().stream().anyMatch(ann -> ann.getName().equals("Entity")))
-			.map(j -> new EntityRepresentationImpl(this, j))
+			.map(j -> new JpaEntityRepresentationImpl(this, j))
 			.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
 	}
@@ -186,14 +186,14 @@ public class SpringBootProjectRepresentationImpl extends ProjectRepresentationIm
 	 * @see br.xtool.core.representation.EBootProject#getProjections()
 	 */
 	@Override
-	public SortedSet<JpaProjectionRepresentation> getProjections() {
+	public SortedSet<SpringBootProjectionRepresentation> getProjections() {
 		// @formatter:off
 		return this.getJavaUnits()
 				.parallelStream()
 				.filter(javaUnit -> javaUnit.getGoverningType().isInterface())
 				.map(javaUnit -> javaUnit.<JavaInterfaceSource>getGoverningType())
 				.filter(j -> j.getName().endsWith("Projection"))
-				.map(j -> new JpaProjectionRepresentationImpl(this,j))
+				.map(j -> new SpringBootProjectionRepresentationImpl(this,j))
 				.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
 	}
@@ -204,14 +204,14 @@ public class SpringBootProjectRepresentationImpl extends ProjectRepresentationIm
 	 * @see br.xtool.core.representation.EBootProject#getSpecifications()
 	 */
 	@Override
-	public SortedSet<SpecificationRepresentation> getSpecifications() {
+	public SortedSet<SpringBooSpecificationRepresentation> getSpecifications() {
 		// @formatter:off
 		return this.getJavaUnits()
 				.parallelStream()
 				.filter(javaUnit -> javaUnit.getGoverningType().isClass())
 				.map(javaUnit -> javaUnit.<JavaClassSource>getGoverningType())
 				.filter(j -> j.getName().endsWith("Specification"))
-				.map(j -> new SpecificationRepresentationImpl(this, j))
+				.map(j -> new SpringBootSpecificationRepresentationImpl(this, j))
 				.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
 	}
@@ -222,14 +222,14 @@ public class SpringBootProjectRepresentationImpl extends ProjectRepresentationIm
 	 * @see br.xtool.core.representation.EBootProject#getServices()
 	 */
 	@Override
-	public SortedSet<ServiceClassRepresentation> getServices() {
+	public SortedSet<SpringBootServiceClassRepresentation> getServices() {
 		// @formatter:off
 		return this.getJavaUnits()
 				.parallelStream()
 				.filter(javaUnit -> javaUnit.getGoverningType().isClass())
 				.map(javaUnit -> javaUnit.<JavaClassSource>getGoverningType())
 				.filter(j -> j.getName().endsWith("Service"))
-				.map(j -> new ServiceClassRepresentationImpl(this, j))
+				.map(j -> new SpringBootServiceClassRepresentationImpl(this, j))
 				.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
 	}
@@ -240,14 +240,14 @@ public class SpringBootProjectRepresentationImpl extends ProjectRepresentationIm
 	 * @see br.xtool.core.representation.EBootProject#getRepositories()
 	 */
 	@Override
-	public SortedSet<RepositoryRepresentation> getRepositories() {
+	public SortedSet<SpringBootRepositoryRepresentation> getRepositories() {
 		// @formatter:off
 		return this.getJavaUnits()
 			.parallelStream()
 			.filter(javaUnit -> javaUnit.getGoverningType().isInterface())
 			.map(javaUnit -> javaUnit.<JavaInterfaceSource>getGoverningType())
 			.filter(j -> j.getAnnotations().stream().anyMatch(ann -> ann.getName().equals("Repository")))
-			.map(j -> new RepositoryRepresentationImpl(this, j))
+			.map(j -> new SpringBootRepositoryRepresentationImpl(this, j))
 			.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
 	}
@@ -258,14 +258,14 @@ public class SpringBootProjectRepresentationImpl extends ProjectRepresentationIm
 	 * @see br.xtool.core.representation.EBootProject#getRests()
 	 */
 	@Override
-	public SortedSet<RestClassRepresentation> getRests() {
+	public SortedSet<SpringBootRestClassRepresentation> getRests() {
 		// @formatter:off
 		return this.getJavaUnits()
 			.parallelStream()
 			.filter(javaUnit -> javaUnit.getGoverningType().isClass())
 			.map(javaUnit -> javaUnit.<JavaClassSource>getGoverningType())
 			.filter(j -> j.getAnnotations().stream().anyMatch(ann -> ann.getName().equals("RestController")))
-			.map(j -> new RestClassRepresentationImpl(this, j))
+			.map(j -> new SpringBootRestClassRepresentationImpl(this, j))
 			.collect(Collectors.toCollection(TreeSet::new));
 		// @formatter:on
 	}
@@ -327,8 +327,12 @@ public class SpringBootProjectRepresentationImpl extends ProjectRepresentationIm
 	@SneakyThrows
 	public List<PlantClassDiagramRepresentation> getClassDiagrams() {
 		try (Stream<Path> paths = Files.walk(this.getPath().resolve("docs/diagrams/class"))) {
-			return paths.filter(Files::isRegularFile).filter(p -> FilenameUtils.getExtension(p.toFile().getAbsolutePath()).equals("plantuml")).map(PlantClassDiagramRepresentationImpl::of)
+			// @formatter:off
+			return paths.filter(Files::isRegularFile)
+					.filter(p -> FilenameUtils.getExtension(p.toFile().getAbsolutePath()).equals("plantuml"))
+					.map(PlantClassDiagramRepresentationImpl::of)
 					.collect(Collectors.toList());
+			// @formatter:on
 		}
 	}
 

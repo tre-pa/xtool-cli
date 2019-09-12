@@ -6,6 +6,6 @@ package br.xtool.core.representation.springboot;
  * @author jcruz
  *
  */
-public interface ServiceClassRepresentation extends JavaClassRepresentation {
+public interface SpringBootServiceClassRepresentation extends JavaClassRepresentation {
 
 }

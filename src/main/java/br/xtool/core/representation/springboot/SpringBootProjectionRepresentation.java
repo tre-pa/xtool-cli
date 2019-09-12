@@ -6,6 +6,6 @@ package br.xtool.core.representation.springboot;
  * @author jcruz
  *
  */
-public interface JpaProjectionRepresentation extends JavaInterfaceRepresentation {
+public interface SpringBootProjectionRepresentation extends JavaInterfaceRepresentation {
 
 }

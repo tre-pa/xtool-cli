@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import br.xtool.core.Clog;
 import br.xtool.core.pdiagram.RelationshipVisitor;
 import br.xtool.core.representation.plantuml.PlantRelationshipRepresentation;
-import br.xtool.core.representation.springboot.EntityAttributeRepresentation;
+import br.xtool.core.representation.springboot.JpaEntityAttributeRepresentation;
 import lombok.val;
 
 /**
@@ -23,7 +23,7 @@ import lombok.val;
 public class EntityManyToManyAssociationVisitor implements RelationshipVisitor {
 
 	@Override
-	public void visit(EntityAttributeRepresentation attr, PlantRelationshipRepresentation plantRelationship) {
+	public void visit(JpaEntityAttributeRepresentation attr, PlantRelationshipRepresentation plantRelationship) {
 		if (plantRelationship.isAssociation() && plantRelationship.isManyToMany()) {
 			Clog.printv(" [ASSOCIATION] ");
 			addManyToManyAnnotation(attr, plantRelationship);
@@ -32,15 +32,15 @@ public class EntityManyToManyAssociationVisitor implements RelationshipVisitor {
 		}
 	}
 
-	private void addLazyCollectionAnnotation(EntityAttributeRepresentation attr) {
+	private void addLazyCollectionAnnotation(JpaEntityAttributeRepresentation attr) {
 		attr.addAnnotation(LazyCollection.class).getRoasterAnnotation().setEnumValue(LazyCollectionOption.EXTRA);
 	}
 
-	private void addBatchSizeAnnotation(EntityAttributeRepresentation attr) {
+	private void addBatchSizeAnnotation(JpaEntityAttributeRepresentation attr) {
 		attr.addAnnotation(BatchSize.class).getRoasterAnnotation().setLiteralValue("size", String.valueOf(10));
 	}
 
-	private void addManyToManyAnnotation(EntityAttributeRepresentation attr, PlantRelationshipRepresentation plantRelationship) {
+	private void addManyToManyAnnotation(JpaEntityAttributeRepresentation attr, PlantRelationshipRepresentation plantRelationship) {
 		val annMany = attr.addAnnotation(ManyToMany.class);
 		if (!plantRelationship.isSourceClassOwner() && plantRelationship.getNavigability().isBidirectional()) {
 			annMany.getRoasterAnnotation().setStringValue("mappedBy", plantRelationship.getTargetRole());

@@ -8,20 +8,20 @@ import java.util.Optional;
  * @author jcruz
  *
  */
-public interface ApplicationPropertiesRepresentation {
+public interface SpringBootApplicationPropertiesRepresentation {
 
 	SpringBootProjectRepresentation getProject();
 
 	Optional<String> get(String key);
 
 	@Deprecated
-	ApplicationPropertiesRepresentation set(String key, String value);
+	SpringBootApplicationPropertiesRepresentation set(String key, String value);
 
 	@Deprecated
-	ApplicationPropertiesRepresentation set(String key, String value, Object... params);
+	SpringBootApplicationPropertiesRepresentation set(String key, String value, Object... params);
 
 	@Deprecated
-	ApplicationPropertiesRepresentation comment(String key, String value);
+	SpringBootApplicationPropertiesRepresentation comment(String key, String value);
 
 	boolean hasProperty(String key);
 

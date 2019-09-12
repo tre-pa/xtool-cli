@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 import br.xtool.core.pdiagram.RelationshipVisitor;
 import br.xtool.core.representation.plantuml.PlantRelationshipRepresentation;
-import br.xtool.core.representation.springboot.EntityAttributeRepresentation;
+import br.xtool.core.representation.springboot.JpaEntityAttributeRepresentation;
 import lombok.val;
 import strman.Strman;
 
@@ -26,7 +26,7 @@ import strman.Strman;
 public class EntityOneToManyCompositionVisitor implements RelationshipVisitor {
 
 	@Override
-	public void visit(EntityAttributeRepresentation attr, PlantRelationshipRepresentation plantRelationship) {
+	public void visit(JpaEntityAttributeRepresentation attr, PlantRelationshipRepresentation plantRelationship) {
 		if (plantRelationship.isComposition() && plantRelationship.isOneToMany()) {
 			addBatchSizeAnnotation(attr);
 			addLazyCollectionAnnotation(attr);
@@ -34,7 +34,7 @@ public class EntityOneToManyCompositionVisitor implements RelationshipVisitor {
 		}
 	}
 
-	private void addOneToManyAnnotation(EntityAttributeRepresentation attr, PlantRelationshipRepresentation plantRelationship) {
+	private void addOneToManyAnnotation(JpaEntityAttributeRepresentation attr, PlantRelationshipRepresentation plantRelationship) {
 		// @formatter:off
 		val annOneToMany = attr.addAnnotation(OneToMany.class)
 			.getRoasterAnnotation()
@@ -55,11 +55,11 @@ public class EntityOneToManyCompositionVisitor implements RelationshipVisitor {
 		}
 	}
 
-	private void addLazyCollectionAnnotation(EntityAttributeRepresentation attr) {
+	private void addLazyCollectionAnnotation(JpaEntityAttributeRepresentation attr) {
 		attr.addAnnotation(LazyCollection.class).getRoasterAnnotation().setEnumValue(LazyCollectionOption.EXTRA);
 	}
 
-	private void addBatchSizeAnnotation(EntityAttributeRepresentation attr) {
+	private void addBatchSizeAnnotation(JpaEntityAttributeRepresentation attr) {
 		attr.addAnnotation(BatchSize.class).getRoasterAnnotation().setLiteralValue("size", String.valueOf(10));
 	}
 

@@ -12,9 +12,9 @@ import org.jboss.forge.roaster.model.source.JavaDocSource;
  * @author jcruz
  *
  */
-public interface EntityAttributeRepresentation extends JavaFieldRepresentation {
+public interface JpaEntityAttributeRepresentation extends JavaFieldRepresentation {
 
-	EntityRepresentation getEntity();
+	JpaEntityRepresentation getEntity();
 
 	/**
 	 * Retorna se o atributo é Id da entidade.

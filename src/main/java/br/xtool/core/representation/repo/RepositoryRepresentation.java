@@ -12,6 +12,13 @@ import java.util.Set;
 public interface RepositoryRepresentation {
 
 	/**
+	 * Retorna o nome do repositório.
+	 * 
+	 * @return
+	 */
+	String getName();
+
+	/**
 	 * Caminho do repositório.
 	 * 
 	 * @return Path com o caminho do repositório.
