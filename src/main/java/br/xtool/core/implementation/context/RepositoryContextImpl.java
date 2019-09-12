@@ -41,7 +41,7 @@ public class RepositoryContextImpl implements RepositoryContext {
 				.flatMap(mod -> mod.getComponents().stream())
 				.count();
 		// @formatter:on
-		console.println(String.format("[@|cyan %d|@] Repositórios, [@|cyan %d|@] Módulos, [@|cyan %d|@] Componentes", qReps, qMods, qCmps));
+		console.println(String.format("[@|cyan %d|@] Repositório(s), [@|cyan %d|@] Módulo(s), [@|cyan %d|@] Componente(s)", qReps, qMods, qCmps));
 	}
 
 	@Override
