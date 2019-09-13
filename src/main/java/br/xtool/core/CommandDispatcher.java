@@ -1,4 +1,4 @@
-package br.xtool.command;
+package br.xtool.core;
 
 import java.util.stream.Collectors;
 
@@ -18,12 +18,7 @@ import org.jline.terminal.TerminalBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.google.common.collect.Lists;
-
-import br.xtool.core.Console;
 import picocli.CommandLine;
-import picocli.CommandLine.Model.CommandSpec;
-import picocli.CommandLine.Model.OptionSpec;
 import picocli.CommandLine.ParseResult;
 import picocli.CommandLine.UnmatchedArgumentException;
 import picocli.shell.jline3.PicocliJLineCompleter;
@@ -40,6 +35,9 @@ public class CommandDispatcher {
 	@Autowired
 	private Console console;
 
+	@Autowired
+	private CommandLine cmd;
+
 	/**
 	 * Inicializa o processador de comandos.
 	 */
@@ -47,9 +45,9 @@ public class CommandDispatcher {
 		AnsiConsole.systemInstall();
 		try {
 			// set up the completion
-			CoreCommand coreCommand = new CoreCommand();
-			CommandLine cmd = new CommandLine(coreCommand);
-			addExec(cmd);
+//			CoreCommand coreCommand = new CoreCommand();
+//			CommandLine cmd = new CommandLine(coreCommand);
+//			addExec(cmd);
 			Terminal terminal = TerminalBuilder.builder().build();
 			// @formatter:off
             LineReader reader = LineReaderBuilder.builder()
@@ -95,25 +93,25 @@ public class CommandDispatcher {
 		}
 	}
 
-	private void addExec(CommandLine cmd) {
-		CommandSpec execSpec = CommandSpec.forAnnotatedObject(new ExecCommand());
-		// @formatter:off
-		CommandSpec componentSpec = CommandSpec.create()
-				.name("angular")
-				.addOption(OptionSpec.builder("--name")
-						.description("Nome do projeto")
-						.completionCandidates(Lists.newArrayList("Angular", "SpringBoot", "SpringBoot:Fullstack"))
-						.type(String.class)
-						.required(false)
-						.build())
-				.addOption(OptionSpec.builder("--no-edit")
-						.description("Sem edit")
-						.arity("0")
-						.required(false)
-						.build());
-		// @formatter:on
-		execSpec.addSubcommand("angular", componentSpec);
-		cmd.addSubcommand("exec", execSpec);
-	}
+//	private void addExec(CommandLine cmd) {
+//		CommandSpec execSpec = CommandSpec.forAnnotatedObject(new ExecCommand());
+//		// @formatter:off
+//		CommandSpec componentSpec = CommandSpec.create()
+//				.name("angular")
+//				.addOption(OptionSpec.builder("--name")
+//						.description("Nome do projeto")
+//						.completionCandidates(Lists.newArrayList("Angular", "SpringBoot", "SpringBoot:Fullstack"))
+//						.type(String.class)
+//						.required(false)
+//						.build())
+//				.addOption(OptionSpec.builder("--no-edit")
+//						.description("Sem edit")
+//						.arity("0")
+//						.required(false)
+//						.build());
+//		// @formatter:on
+//		execSpec.addSubcommand("angular", componentSpec);
+//		cmd.addSubcommand("exec", execSpec);
+//	}
 
 }

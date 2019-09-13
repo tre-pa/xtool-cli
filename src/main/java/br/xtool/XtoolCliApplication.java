@@ -2,12 +2,12 @@ package br.xtool;
 
 import javax.swing.UnsupportedLookAndFeelException;
 
+import br.xtool.core.CommandDispatcher;
+import br.xtool.core.Console;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
-
-import br.xtool.command.CommandDispatcher;
 
 @SpringBootApplication
 public class XtoolCliApplication implements CommandLineRunner {

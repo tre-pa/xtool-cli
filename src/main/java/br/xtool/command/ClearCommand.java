@@ -2,20 +2,25 @@ package br.xtool.command;
 
 import java.util.concurrent.Callable;
 
+import br.xtool.core.AbstractCommand;
+import br.xtool.core.Console;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.ParentCommand;
 
+/**
+ * Comando para limpar a tela do console.
+ */
+@Component
 @Command(name = "clear", description = "Limpa a tela")
-public class ClearCommand implements Callable<Void> {
+public class ClearCommand extends AbstractCommand {
 
-	@ParentCommand
-	private CoreCommand parent;
+	@Autowired
+	private Console console;
 
-	@Override
-	public Void call() throws Exception {
-		System.out.println("Clear command!");
-//		parent.getReader().clearScreen();
-		return null;
-	}
-
+    @Override
+    public void run() {
+		console.clearScreen();
+    }
 }

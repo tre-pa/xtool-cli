@@ -18,14 +18,14 @@ public class ConsoleImpl implements Console {
 	
 	@PostConstruct
 	private void init() throws IOException {
-		this.terminal = TerminalBuilder.builder().build();
+//		this.terminal = TerminalBuilder.builder().build();
 	}
 
 	@Override
 	public void clearScreen() {
 
 	}
-
+	
 	@Override
 	public void println(String msg) {
 		System.out.println(Ansi.ansi().render(msg).reset());
