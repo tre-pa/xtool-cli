@@ -10,7 +10,6 @@ import org.eclipse.jdt.core.formatter.DefaultCodeFormatterConstants;
 import org.eclipse.jdt.internal.compiler.impl.CompilerOptions;
 import org.jboss.forge.roaster.Roaster;
 
-import br.xtool.core.Clog;
 import br.xtool.representation.springboot.JavaTypeRepresentation;
 import lombok.SneakyThrows;
 
@@ -35,7 +34,6 @@ public class JavaTypeHelper {
 			write.write(formatedJavaClassSource);
 			write.flush();
 			javaType.getProject().refresh();
-			Clog.print(Clog.cyan(" + "), Clog.white(javaType.getQualifiedName()));
 		}
 	}
 }

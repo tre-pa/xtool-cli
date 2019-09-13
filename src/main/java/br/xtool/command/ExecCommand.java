@@ -15,7 +15,7 @@ import picocli.CommandLine.Model.CommandSpec;
 public class ExecCommand extends AbstractCommand {
 
 	@Override
-	public void setup(CommandLine mainCommandoLine) {
+	public void setup(CommandLine mainCommandLine) {
 		CommandSpec execSpec = CommandSpec.forAnnotatedObject(this);
 		// @formatter:off
 		CommandSpec componentSpec = CommandSpec.create()
@@ -33,7 +33,7 @@ public class ExecCommand extends AbstractCommand {
 						.build());
 		// @formatter:on
 		execSpec.addSubcommand("angular", componentSpec);
-		mainCommandoLine.addSubcommand("exec", execSpec);
+		mainCommandLine.addSubcommand("exec", execSpec);
 	}
 
 	@Override

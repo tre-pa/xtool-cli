@@ -1,12 +1,5 @@
 package br.xtool.implementation.representation;
 
-import static br.xtool.core.Clog.bold;
-import static br.xtool.core.Clog.gray;
-import static br.xtool.core.Clog.print;
-import static br.xtool.core.Clog.purple;
-import static br.xtool.core.Clog.white;
-import static br.xtool.core.Clog.yellow;
-
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Optional;
@@ -66,7 +59,7 @@ public class ApplicationPropertiesRepresentationImpl implements SpringBootApplic
 	public SpringBootApplicationPropertiesRepresentation set(String key, String value) {
 		if (!this.configuration.containsKey(key)) {
 			this.configuration.setProperty(key, value);
-			print(bold(yellow("\t[~] ")), purple("Item: "), white("application.properties"), gray(" -- "), gray(Strman.surround(key, "Key [", "]")));
+//			print(bold(yellow("\t[~] ")), purple("Item: "), white("application.properties"), gray(" -- "), gray(Strman.surround(key, "Key [", "]")));
 		}
 		return this;
 	}

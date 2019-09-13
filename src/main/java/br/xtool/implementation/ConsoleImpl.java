@@ -11,6 +11,7 @@ import org.fusesource.jansi.Ansi;
 import org.fusesource.jansi.AnsiConsole;
 import org.jline.reader.*;
 import org.jline.reader.impl.DefaultParser;
+import org.jline.reader.impl.history.DefaultHistory;
 import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,10 +44,11 @@ public class ConsoleImpl implements Console {
         this.terminal = TerminalBuilder.builder().build();
         this.reader = LineReaderBuilder.builder()
                 .terminal(terminal)
+                .history(new DefaultHistory())
                 .completer(new PicocliJLineCompleter(cmd.getCommandSpec()))
                 .parser(new DefaultParser())
                 .build();
-        String prompt = Ansi.ansi().bold().fg(Ansi.Color.YELLOW).a("xtool:~ ").reset().toString();
+        String prompt = Ansi.ansi().bold().fg(Ansi.Color.YELLOW).a("xtool:$ ").reset().toString();
         String rightPrompt = null;
         String line;
         try {
@@ -55,7 +57,7 @@ public class ConsoleImpl implements Console {
                     line = reader.readLine(prompt, rightPrompt, (MaskingCallback) null, null);
                     ParsedLine pl = reader.getParser().parse(line, 0);
                     String[] arguments = pl.words().toArray(new String[0]);
-//					if (StringUtils.isBlank(arguments[0])) continue;
+					if (StringUtils.isBlank(arguments[0])) continue;
                     CommandLine.ParseResult parseResult = cmd.parseArgs(arguments);
                     publisher.publishEvent(parseResult);
                     // @formatter:off

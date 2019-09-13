@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
-import br.xtool.core.Clog;
 import br.xtool.helper.InflectorHelper;
 import br.xtool.representation.plantuml.PlantClassRepresentation;
 import br.xtool.representation.plantuml.PlantStereotypeRepresentation.StereotypeType;
@@ -48,11 +47,11 @@ public class EntityVisitor implements ClassVisitor {
 		// @formatter:on
 
 		// @formatter:off
-		Clog.printv(Clog.green(" [DOCKET] "), "@api-path: ", entity.getRoasterJavaClass().getJavaDoc().getTags().stream()
-				.filter(javaDocTag -> javaDocTag.getName().equals("@api-path"))
-				.map(JavaDocTag::getValue)
-				.findFirst()
-				.orElse(""), "");
+//		Clog.printv(Clog.green(" [DOCKET] "), "@api-path: ", entity.getRoasterJavaClass().getJavaDoc().getTags().stream()
+//				.filter(javaDocTag -> javaDocTag.getName().equals("@api-path"))
+//				.map(JavaDocTag::getValue)
+//				.findFirst()
+//				.orElse(""), "");
 		// @formatter:on
 	}
 
@@ -66,7 +65,7 @@ public class EntityVisitor implements ClassVisitor {
 				.getRoasterAnnotation()
 				.setStringArrayValue("of", tagValues);
 			// @formatter:on
-			Clog.printv(Clog.green(" [ANNOTATION] "), "@EqualAndHashCode: ", "[", StringUtils.join(tagValues, ", "), "]");
+//			Clog.printv(Clog.green(" [ANNOTATION] "), "@EqualAndHashCode: ", "[", StringUtils.join(tagValues, ", "), "]");
 		}
 	}
 
