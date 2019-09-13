@@ -1,7 +1,7 @@
 package br.xtool.core;
 
-import br.xtool.core.representation.ProjectRepresentation;
-import br.xtool.core.representation.WorkspaceRepresentation;
+import br.xtool.representation.ProjectRepresentation;
+import br.xtool.representation.WorkspaceRepresentation;
 
 /**
  * Serviços do workspace.

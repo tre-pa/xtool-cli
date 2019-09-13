@@ -2,7 +2,7 @@ package br.xtool.core;
 
 import java.util.Set;
 
-import br.xtool.core.representation.repo.RepositoryRepresentation;
+import br.xtool.representation.repo.RepositoryRepresentation;
 
 /**
  * Contexto do repositório xtool.

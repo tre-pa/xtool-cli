@@ -3,7 +3,7 @@ package br.xtool.core;
 import java.nio.file.Path;
 import java.util.Map;
 
-import br.xtool.core.representation.ProjectRepresentation;
+import br.xtool.representation.ProjectRepresentation;
 
 /**
  * Serviços para operações em FileSystem.

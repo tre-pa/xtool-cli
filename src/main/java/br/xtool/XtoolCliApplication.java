@@ -7,7 +7,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 
-import br.xtool.core.command.CommandDispatcher;
+import br.xtool.command.CommandDispatcher;
 
 @SpringBootApplication
 public class XtoolCliApplication implements CommandLineRunner {
