@@ -8,6 +8,8 @@ import java.util.stream.Collectors;
 
 import br.xtool.representation.repo.ComponentRepresentation;
 import br.xtool.representation.repo.ModuleRepresentation;
+import br.xtool.representation.repo.RepositoryRepresentation;
+import lombok.Setter;
 import lombok.SneakyThrows;
 
 public class ModuleRepresentationImpl implements ModuleRepresentation {
@@ -16,13 +18,16 @@ public class ModuleRepresentationImpl implements ModuleRepresentation {
 
 	private Set<ComponentRepresentation> components;
 
+	@Setter
+	private RepositoryRepresentation repository;
+
 	public ModuleRepresentationImpl(Path path) {
 		super();
 		this.path = path;
 	}
 
 	@Override
-	public String name() {
+	public String getName() {
 		return path.getFileName().toString();
 	}
 
@@ -35,10 +40,16 @@ public class ModuleRepresentationImpl implements ModuleRepresentation {
 				.filter(Files::isDirectory)
 				.filter(p -> Files.exists(p.resolve(ComponentRepresentation.DESCRIPTOR_FILE)))
 				.map(ComponentRepresentationImpl::new)
+				.peek(cmdRepo -> cmdRepo.setModule(this))
 				.collect(Collectors.toSet());
 			// @formatter:on
 		}
 		return this.components;
+	}
+
+	@Override
+	public RepositoryRepresentation getRepository() {
+		return this.repository;
 	}
 
 }

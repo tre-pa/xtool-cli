@@ -30,6 +30,8 @@ public class RepositoryContextImpl implements RepositoryContext {
 
 	private Set<RepositoryRepresentation> repositories;
 
+	private RepositoryRepresentation workingRepository;
+
 	@PostConstruct
 	private void init() {
 		// @formatter:off
@@ -57,6 +59,16 @@ public class RepositoryContextImpl implements RepositoryContext {
 			// @formatter:on
 		}
 		return this.repositories;
+	}
+
+	@Override
+	public RepositoryRepresentation getWorkingRepository() {
+		return this.workingRepository;
+	}
+
+	@Override
+	public void setWorkingRepository(RepositoryRepresentation repositoryRepresentation) {
+		this.workingRepository = repositoryRepresentation;
 	}
 
 }

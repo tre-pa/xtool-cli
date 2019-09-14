@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import picocli.CommandLine;
 
 @Component
-@CommandLine.Command(name = "repo")
+@CommandLine.Command(name = "repo", description = "Gerencia os reposotórios de componentes")
 public class RepoCommand extends AbstractCommand {
 
     @Autowired

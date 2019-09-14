@@ -39,6 +39,7 @@ public class RepositoryRepresentationImpl implements RepositoryRepresentation {
 			this.modules = Files.list(path)
 					.filter(Files::isDirectory)
 					.map(ModuleRepresentationImpl::new)
+					.peek(mod -> mod.setRepository(this))
 					.collect(Collectors.toSet());
 			// @formatter:on
 		}

@@ -6,16 +6,22 @@ import java.nio.file.Path;
 import java.util.Map;
 import java.util.Objects;
 
+import br.xtool.representation.repo.ModuleRepresentation;
+import lombok.Setter;
 import org.yaml.snakeyaml.Yaml;
 
 import br.xtool.representation.repo.ComponentRepresentation;
 import lombok.SneakyThrows;
+import picocli.CommandLine;
 
 public class ComponentRepresentationImpl implements ComponentRepresentation {
 
 	private Path path;
 
 	private Map<String, Object> descriptor;
+
+	@Setter
+	private ModuleRepresentation module;
 
 	public ComponentRepresentationImpl(Path path) {
 		super();
@@ -25,6 +31,11 @@ public class ComponentRepresentationImpl implements ComponentRepresentation {
 	@Override
 	public String getName() {
 		return path.getFileName().toString();
+	}
+
+	@Override
+	public String getFullyQualifiedName() {
+		return this.getModule().getRepository().getName().concat(this.getModule().getName()).concat(this.getName());
 	}
 
 	@Override
@@ -41,5 +52,18 @@ public class ComponentRepresentationImpl implements ComponentRepresentation {
 		}
 		return this.descriptor;
 	}
+
+	@Override
+	public CommandLine.Model.CommandSpec getCommandSpec() {
+		CommandLine.Model.CommandSpec cmpCommandSpec = CommandLine.Model.CommandSpec.create();
+		cmpCommandSpec.name(String.format("%s@%s:%s", this.getModule().getRepository().getName(), this.getModule().getName(), this.getName()));
+		return cmpCommandSpec;
+	}
+
+	@Override
+	public ModuleRepresentation getModule() {
+		return this.module;
+	}
+
 
 }

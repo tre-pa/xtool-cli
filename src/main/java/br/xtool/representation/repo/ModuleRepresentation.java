@@ -15,7 +15,7 @@ public interface ModuleRepresentation {
 	 * 
 	 * @return
 	 */
-	String name();
+	String getName();
 
 	/**
 	 * Retorna a lista de componentes do módulo.
@@ -23,4 +23,10 @@ public interface ModuleRepresentation {
 	 * @return
 	 */
 	Set<ComponentRepresentation> getComponents();
+
+	/**
+	 *
+	 * @return
+	 */
+	RepositoryRepresentation getRepository();
 }
