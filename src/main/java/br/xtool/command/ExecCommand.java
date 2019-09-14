@@ -11,7 +11,7 @@ import picocli.CommandLine.Model.CommandSpec;
  * Comando de execução de componentes.
  */
 @Component
-@Command(name = "exec", description = "Executa um componente")
+@Command(name = "exec", description = "Executa um componente Xtool")
 public class ExecCommand extends AbstractCommand {
 
 	@Override

@@ -10,9 +10,7 @@ import picocli.CommandLine;
  */
 public abstract class AbstractCommand implements Runnable {
 
-    @Getter
-    @Setter
-    private CommandPayload payload;
+
 
     public void setup(CommandLine mainCommandLine) {
         String commandName = this.getClass().getAnnotation(CommandLine.Command.class).name();

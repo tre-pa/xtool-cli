@@ -74,7 +74,7 @@ public class ConsoleImpl implements Console {
                 } catch (UserInterruptException e) {
 					this.println("Pressione Ctrl+D para sair.");
                 } catch (CommandLine.UnmatchedArgumentException e) {
-                    this.println("Argumento não encontrado. ".concat(e.getMessage()));
+                    this.println("Comando/Argumento não encontrado. ".concat(e.getMessage()));
                 } catch (EndOfFileException e) {
                     return;
                 }
