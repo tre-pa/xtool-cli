@@ -1,12 +1,18 @@
 package br.xtool.core;
 
 
+import lombok.Getter;
+import lombok.Setter;
 import picocli.CommandLine;
 
 /**
  * Classe base para todos os comandos Xtool.
  */
 public abstract class AbstractCommand implements Runnable {
+
+    @Getter
+    @Setter
+    private CommandPayload payload;
 
     public void setup(CommandLine mainCommandLine) {
         String commandName = this.getClass().getAnnotation(CommandLine.Command.class).name();
