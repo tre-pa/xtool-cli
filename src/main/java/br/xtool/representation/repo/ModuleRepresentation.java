@@ -1,32 +1,38 @@
 package br.xtool.representation.repo;
 
+import java.nio.file.Path;
 import java.util.Set;
 
 /**
  * Classe que representa um módulo de componentes.
- * 
- * @author jcruz
  *
+ * @author jcruz
  */
 public interface ModuleRepresentation {
 
-	/**
-	 * Nome do módulo.
-	 * 
-	 * @return
-	 */
-	String getName();
+    /**
+     * Retorna o caminho do módulo.
+     *
+     * @return
+     */
+    Path getPath();
 
-	/**
-	 * Retorna a lista de componentes do módulo.
-	 * 
-	 * @return
-	 */
-	Set<ComponentRepresentation> getComponents();
+    /**
+     * Nome do módulo.
+     *
+     * @return
+     */
+    String getName();
 
-	/**
-	 *
-	 * @return
-	 */
-	RepositoryRepresentation getRepository();
+    /**
+     * Retorna a lista de componentes do módulo.
+     *
+     * @return
+     */
+    Set<ComponentRepresentation> getComponents();
+
+    /**
+     * @return
+     */
+    RepositoryRepresentation getRepository();
 }

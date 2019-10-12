@@ -3,7 +3,7 @@
 __NORMAL__="\e[0m\e[39m"
 __YELLOW__="\e[93m"
 __RED__="\e[91m"
-REPOSITORY_HOME=~/xtool/main
+REPOSITORY_HOME=~/xtool/
 
 echo "Buscando pelo maven..."
 if [ -z $(which mvn) ]; then

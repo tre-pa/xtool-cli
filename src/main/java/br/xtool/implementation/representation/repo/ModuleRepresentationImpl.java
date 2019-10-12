@@ -26,6 +26,11 @@ public class ModuleRepresentationImpl implements ModuleRepresentation {
 	}
 
 	@Override
+	public Path getPath() {
+		return this.path;
+	}
+
+	@Override
 	public String getName() {
 		return path.getFileName().toString();
 	}
@@ -37,7 +42,6 @@ public class ModuleRepresentationImpl implements ModuleRepresentation {
 		return Files.list(path)
 				.filter(Files::isDirectory)
 				.map(cmpPath -> new ComponentRepresentationImpl(cmpPath, this))
-				.peek(System.out::println)
 				.collect(Collectors.toSet());
 		// @formatter:on
 	}

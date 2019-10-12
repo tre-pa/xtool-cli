@@ -55,7 +55,6 @@ public class RepositoryContextImpl implements RepositoryContext {
 			this.repositories = Files.list(path)
 					.filter(Files::isDirectory)
 					.map(RepositoryRepresentationImpl::new)
-					.peek(repo -> console.debug("Repository: "+ repo.getPath()))
 					.collect(Collectors.toSet());
 			// @formatter:on
 		}
