@@ -23,6 +23,14 @@ public interface ComponentRepresentation {
      *
      * @return
      */
+    String getSimpleName();
+
+
+    /**
+     * Retorna o nome do componente junto com o modulo.
+     *
+     * @return
+     */
     String getName();
 
     /**

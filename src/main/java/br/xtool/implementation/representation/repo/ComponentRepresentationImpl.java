@@ -21,8 +21,13 @@ public class ComponentRepresentationImpl implements ComponentRepresentation {
     }
 
     @Override
-    public String getName() {
+    public String getSimpleName() {
         return path.getFileName().toString();
+    }
+
+    @Override
+    public String getName() {
+        return module.getName().concat(":").concat(this.getSimpleName());
     }
 
     @Override
