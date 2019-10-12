@@ -28,11 +28,13 @@ import org.jline.reader.impl.LineReaderImpl;
 @Service
 public class ConsoleImpl implements Console {
 
+    private Level level = Level.NORMAL;
+
     @Autowired
     private CommandLine cmd;
 
     @Autowired
-	private ApplicationEventPublisher publisher;
+    private ApplicationEventPublisher publisher;
 
     private Terminal terminal;
 
@@ -40,7 +42,7 @@ public class ConsoleImpl implements Console {
 
     @EventListener(ContextRefreshedEvent.class)
     private void init() throws IOException {
-    	AnsiConsole.systemInstall();
+        AnsiConsole.systemInstall();
         this.terminal = TerminalBuilder.builder().build();
         this.reader = LineReaderBuilder.builder()
                 .terminal(terminal)
@@ -57,22 +59,11 @@ public class ConsoleImpl implements Console {
                     line = reader.readLine(prompt, rightPrompt, (MaskingCallback) null, null);
                     ParsedLine pl = reader.getParser().parse(line, 0);
                     String[] arguments = pl.words().toArray(new String[0]);
-					if (StringUtils.isBlank(arguments[0])) continue;
+                    if (StringUtils.isBlank(arguments[0])) continue;
                     CommandLine.ParseResult parseResult = cmd.parseArgs(arguments);
                     publisher.publishEvent(parseResult);
-                    // @formatter:off
-//                    System.out.println(parseResult.asCommandLineList()
-//                            .stream()
-//                            .map(_cmd -> _cmd.getCommandName())
-//                            .filter(StringUtils::isNotBlank)
-//                            .collect(Collectors.toList()));
-////					System.out.println(parseResult.subcommand().subcommand().matchedArgs());
-//                    parseResult.subcommand().subcommand().matchedOptions()
-//                            .stream()
-//                            .forEach(op -> System.out.println(op.longestName() + " : " + op.getValue()));
-                    // @formatter:on
                 } catch (UserInterruptException e) {
-					this.println("Pressione Ctrl+D para sair.");
+                    this.println("Pressione Ctrl+D para sair.");
                 } catch (CommandLine.UnmatchedArgumentException e) {
                     this.println("Comando/Argumento não encontrado. ".concat(e.getMessage()));
                 } catch (EndOfFileException e) {
@@ -88,7 +79,7 @@ public class ConsoleImpl implements Console {
 
     @Override
     public void clearScreen() {
-		((LineReaderImpl) reader).clearScreen();
+        ((LineReaderImpl) reader).clearScreen();
     }
 
     @Override
@@ -96,4 +87,20 @@ public class ConsoleImpl implements Console {
         System.out.println(Ansi.ansi().render(msg).reset());
     }
 
+    @Override
+    public void setLevel(Level level) {
+        this.level = level;
+    }
+
+    @Override
+    public Level getLevel() {
+        return this.level;
+    }
+
+    @Override
+    public void debug(String msg) {
+        if(level.equals(Level.DEBUG)) {
+            System.out.println(Ansi.ansi().render(msg).reset());
+        }
+    }
 }

@@ -7,6 +7,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import br.xtool.representation.repo.ComponentRepresentation;
+import br.xtool.representation.repo.DescriptorRepresentation;
 import br.xtool.representation.repo.ModuleRepresentation;
 import br.xtool.representation.repo.RepositoryRepresentation;
 import lombok.Setter;
@@ -16,14 +17,12 @@ public class ModuleRepresentationImpl implements ModuleRepresentation {
 
 	private Path path;
 
-	private Set<ComponentRepresentation> components;
-
-	@Setter
 	private RepositoryRepresentation repository;
 
-	public ModuleRepresentationImpl(Path path) {
+	public ModuleRepresentationImpl(Path path, RepositoryRepresentation repository) {
 		super();
 		this.path = path;
+		this.repository = repository;
 	}
 
 	@Override
@@ -34,17 +33,13 @@ public class ModuleRepresentationImpl implements ModuleRepresentation {
 	@Override
 	@SneakyThrows
 	public Set<ComponentRepresentation> getComponents() {
-		if (Objects.isNull(components)) {
-			// @formatter:off
-			this.components = Files.list(path)
+		// @formatter:off
+		return Files.list(path)
 				.filter(Files::isDirectory)
-				.filter(p -> Files.exists(p.resolve(ComponentRepresentation.DESCRIPTOR_FILE)))
-				.map(ComponentRepresentationImpl::new)
-				.peek(cmdRepo -> cmdRepo.setModule(this))
+				.map(cmpPath -> new ComponentRepresentationImpl(cmpPath, this))
+				.peek(System.out::println)
 				.collect(Collectors.toSet());
-			// @formatter:on
-		}
-		return this.components;
+		// @formatter:on
 	}
 
 	@Override

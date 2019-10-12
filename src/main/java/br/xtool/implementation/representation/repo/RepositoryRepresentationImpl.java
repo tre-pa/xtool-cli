@@ -22,11 +22,6 @@ public class RepositoryRepresentationImpl implements RepositoryRepresentation {
 	}
 
 	@Override
-	public String getName() {
-		return this.path.getFileName().toString();
-	}
-
-	@Override
 	public Path getPath() {
 		return this.path;
 	}
@@ -38,8 +33,7 @@ public class RepositoryRepresentationImpl implements RepositoryRepresentation {
 			// @formatter:off
 			this.modules = Files.list(path)
 					.filter(Files::isDirectory)
-					.map(ModuleRepresentationImpl::new)
-					.peek(mod -> mod.setRepository(this))
+					.map(modulePath -> new ModuleRepresentationImpl(modulePath, this))
 					.collect(Collectors.toSet());
 			// @formatter:on
 		}

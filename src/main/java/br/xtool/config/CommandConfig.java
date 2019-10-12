@@ -2,19 +2,11 @@ package br.xtool.config;
 
 import br.xtool.core.AbstractCommand;
 import br.xtool.core.RepositoryContext;
-import br.xtool.representation.repo.ComponentRepresentation;
-import br.xtool.representation.repo.ModuleRepresentation;
-import br.xtool.representation.repo.RepositoryRepresentation;
-import org.apache.commons.collections.map.AbstractOrderedMapDecorator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.Ordered;
-import org.springframework.core.annotation.Order;
 import picocli.CommandLine;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

@@ -3,7 +3,7 @@ package br.xtool.representation.repo;
 import picocli.CommandLine;
 
 import java.nio.file.Path;
-import java.util.Map;
+import java.util.Set;
 
 /**
  * Classe que representa um componente xtool.
@@ -13,23 +13,17 @@ import java.util.Map;
 public interface ComponentRepresentation {
 
     /**
-     * Nome do arquivo descritor xtool.
+     * Retorna o caminho do componente
+     *
+     * @return
      */
-    static String DESCRIPTOR_FILE = "xtool.yml";
-
+    Path getPath();
     /**
      * Nome do componente. Por conveção é o mesmo nome do diretório.
      *
      * @return
      */
     String getName();
-
-    /**
-     * Nome do Repository + Nome do Módulo + Nome do Componente
-     *
-     * @return
-     */
-    String getFullyQualifiedName();
 
     /**
      * Caminho com o diretório de templates.
@@ -39,18 +33,12 @@ public interface ComponentRepresentation {
     Path getTplPath();
 
     /**
-     * Mapa com todas as chaves/valores do arquivo descritor do componente (xtool.yaml).
-     *
-     * @return Map<String, Object> com as chaves/valores do arquivo xtool.yaml do componente.
-     */
-    Map<String, Object> getDescriptor();
-
-    /**
-     * Retorna o CommandSpec do componente.
+     * Retorna a representação do arquivo descritor xtool.yml
      *
      * @return
      */
-    CommandLine.Model.CommandSpec getCommandSpec();
+    DescriptorRepresentation getDescriptor();
+
 
     /**
      * Retorna o módulo do componente.
@@ -58,4 +46,18 @@ public interface ComponentRepresentation {
      * @return
      */
     ModuleRepresentation getModule();
+//
+//    /**
+//     * Retorna o CommandSpec do componente.
+//     *
+//     * @return
+//     */
+//    CommandLine.Model.CommandSpec getCommandSpec();
+//
+//    /**
+//     * Retorna os parametros do componente.
+//     *
+//     * @return
+//     */
+//    Set<ParamDirectiveRepresentation> getComponentParams();
 }

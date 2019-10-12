@@ -2,18 +2,13 @@ package br.xtool.command;
 
 import br.xtool.core.AbstractCommand;
 import br.xtool.core.RepositoryContext;
-import br.xtool.representation.repo.RepositoryRepresentation;
-import com.google.common.collect.Lists;
-import com.sun.jndi.toolkit.ctx.ComponentContext;
+import br.xtool.representation.repo.ComponentRepresentation;
+import br.xtool.representation.repo.DescriptorRepresentation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Model.CommandSpec;
-
-import java.util.List;
-import java.util.Map;
 
 /**
  * Comando de execução de componentes.
@@ -28,7 +23,16 @@ public class ExecCommand extends AbstractCommand {
     @Override
     public void setup(CommandLine mainCommandLine) {
         CommandSpec execSpec = CommandSpec.forAnnotatedObject(this);
-//		// @formatter:off
+        repositoryContext.getRepositories()
+                .stream()
+                .flatMap(repo -> repo.getModules().stream())
+                .flatMap(modules -> modules.getComponents().stream())
+                .map(ComponentRepresentation::getDescriptor)
+                .map(DescriptorRepresentation::getComponentDirective)
+                .forEach(cmd -> execSpec.addSubcommand(cmd.getDescriptor().getComponent().getName(), cmd.getCommandSpec()));
+        mainCommandLine.addSubcommand("exec", execSpec);
+
+        //		// @formatter:off
 //		CommandSpec componentSpec = CommandSpec.create()
 //				.name("angular")
 //				.addOption(picocli.CommandLine.Model.OptionSpec.builder("--name")
@@ -44,12 +48,6 @@ public class ExecCommand extends AbstractCommand {
 //						.build());
 //		// @formatter:on
 //		commandSpecs.forEach((k,v) -> execSpec.addSubcommand(k, v));
-        repositoryContext.getRepositories()
-                .stream()
-                .flatMap(repo -> repo.getModules().stream())
-                .flatMap(mod -> mod.getComponents().stream())
-                .forEach(cmd -> execSpec.addSubcommand(cmd.getName(), cmd.getCommandSpec()));
-        mainCommandLine.addSubcommand("exec", execSpec);
 
     }
 
