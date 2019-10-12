@@ -7,6 +7,7 @@ import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 import picocli.CommandLine;
 
+import java.util.ArrayDeque;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -18,21 +19,27 @@ import java.util.stream.Collectors;
 public class CommandDispatcher {
 
     @Autowired
+    private Console console;
+
+    @Autowired
     @Qualifier("commands")
-    private Map<String, AbstractCommand> commands;
+    private Map<String, AbstractCommand> commandList;
 
     @EventListener
     protected void process(CommandLine.ParseResult parseResult) {
-        List<String> normalizedCommands = parseResult.asCommandLineList()
+        ArrayDeque<String> commands = parseResult.asCommandLineList()
                 .stream()
-                .filter(cmd -> StringUtils.isNotBlank(cmd.getCommandName()))
                 .map(CommandLine::getCommandName)
-                .collect(Collectors.toList());
-        if (normalizedCommands.size() == 1) {
-            String commandName = normalizedCommands.get(0);
-            commands.get(commandName).run();
-        }
-
+                .filter(StringUtils::isNotBlank)
+                .collect(Collectors.toCollection(ArrayDeque::new));
+        CommandLine.printHelpIfRequested(parseResult);
+//        if (commands.size() == 1) {
+//            console.debug("@|magenta CommandDispatcher.process(command=%s) %b|@", commands, parseResult.);
+//            String commandName = commands.poll();
+//            commandList.get(commandName).run();
+//        } else if (commands.size() == 2) {
+//            console.debug("@|magenta CommandDispatcher.process(command=%s, args=%s) |@", commands, parseResult.subcommand().matchedArgs());
+//        }
     }
 
 }

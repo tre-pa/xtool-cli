@@ -49,7 +49,7 @@ public class CommandConfig {
         return commandMap;
     }
 
-    @CommandLine.Command(name = "", description = "Example interactive shell with completion")
+    @CommandLine.Command(name = "", description = "")
     public static class CoreCommand implements Runnable {
         public void run() {
         }

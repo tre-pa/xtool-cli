@@ -43,7 +43,7 @@ public interface Console {
      *
      * @param msg
      */
-    void debug(String msg);
+    void debug(String msg, Object... args);
 
 
 }

@@ -60,7 +60,7 @@ public class ConsoleImpl implements Console {
                     ParsedLine pl = reader.getParser().parse(line, 0);
                     String[] arguments = pl.words().toArray(new String[0]);
                     if (StringUtils.isBlank(arguments[0])) continue;
-                    CommandLine.ParseResult parseResult = cmd.parseArgs(arguments);
+                    CommandLine.ParseResult parseResult = cmd.parseArgs(arguments); // ver CommandDispatcher.process
                     publisher.publishEvent(parseResult);
                 } catch (UserInterruptException e) {
                     this.println("Pressione Ctrl+D para sair.");
@@ -98,9 +98,9 @@ public class ConsoleImpl implements Console {
     }
 
     @Override
-    public void debug(String msg) {
+    public void debug(String msg, Object...args) {
         if(level.equals(Level.DEBUG)) {
-            System.out.println(Ansi.ansi().render(msg).reset());
+            System.out.println(Ansi.ansi().render(String.format(msg, args)).reset());
         }
     }
 }

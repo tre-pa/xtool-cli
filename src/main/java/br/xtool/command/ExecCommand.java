@@ -1,6 +1,7 @@
 package br.xtool.command;
 
 import br.xtool.core.AbstractCommand;
+import br.xtool.core.Console;
 import br.xtool.core.RepositoryContext;
 import br.xtool.representation.repo.ComponentRepresentation;
 import br.xtool.representation.repo.DescriptorRepresentation;
@@ -14,22 +15,19 @@ import picocli.CommandLine.Model.CommandSpec;
  * Comando de execução de componentes.
  */
 @Component
-@Command(name = "exec", description = "Executa um componente Xtool")
+@Command(name = "exec", description = "Executa um componente Xtool", mixinStandardHelpOptions = true)
 public class ExecCommand extends AbstractCommand {
 
     @Autowired
     private RepositoryContext repositoryContext;
 
+    @Autowired
+    private Console console;
+
     @Override
     public void setup(CommandLine mainCommandLine) {
         CommandSpec execSpec = CommandSpec.forAnnotatedObject(this);
-        repositoryContext.getRepositories()
-                .stream()
-                .flatMap(repo -> repo.getModules().stream())
-                .flatMap(modules -> modules.getComponents().stream())
-                .map(ComponentRepresentation::getDescriptor)
-                .map(DescriptorRepresentation::getComponentDirective)
-                .forEach(cmd -> execSpec.addSubcommand(cmd.getDescriptor().getComponent().getName(), cmd.getCommandSpec()));
+        addXtoolComponentCommands(execSpec);
         mainCommandLine.addSubcommand("exec", execSpec);
 
         //		// @formatter:off
@@ -51,9 +49,24 @@ public class ExecCommand extends AbstractCommand {
 
     }
 
+    /**
+     * Adiciona os comandos provenientes do componentes xtool.
+     *
+     * @param execSpec
+     */
+    private void addXtoolComponentCommands(CommandSpec execSpec) {
+        repositoryContext.getRepositories()
+                .stream()
+                .flatMap(repo -> repo.getModules().stream())
+                .flatMap(modules -> modules.getComponents().stream())
+                .map(ComponentRepresentation::getDescriptor)
+                .map(DescriptorRepresentation::getComponentDirective)
+                .forEach(cmd -> execSpec.addSubcommand(cmd.getDescriptor().getComponent().getName(), cmd.getCommandSpec()));
+    }
+
     @Override
     public void run() {
-        System.out.println("Oi");
+//        console.println("Oi");
     }
 
 }
