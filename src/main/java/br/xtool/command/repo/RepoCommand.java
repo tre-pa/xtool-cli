@@ -20,6 +20,9 @@ public class RepoCommand extends AbstractCommand {
     @CommandLine.Option(names = {"--list"}, required = false, description = "Lista os repositórios de componentes.")
     private boolean listOptions;
 
+    @CommandLine.Option(names = {"--modules"}, required = false, description = "Lista os repositórios de componentes.")
+    private boolean modulesList;
+
     @Override
     public void run() {
 

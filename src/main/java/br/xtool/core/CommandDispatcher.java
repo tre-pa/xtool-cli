@@ -33,7 +33,9 @@ public class CommandDispatcher {
                 .filter(StringUtils::isNotBlank)
                 .collect(Collectors.toCollection(ArrayDeque::new));
         CommandLine.printHelpIfRequested(parseResult);
-//        if (commands.size() == 1) {
+        console.debug("@|magenta CommandDispatcher.process(command=%s, args=%s)|@", commands, parseResult.subcommand().matchedOptions());
+
+        //        if (commands.size() == 1) {
 //            console.debug("@|magenta CommandDispatcher.process(command=%s) %b|@", commands, parseResult.);
 //            String commandName = commands.poll();
 //            commandList.get(commandName).run();

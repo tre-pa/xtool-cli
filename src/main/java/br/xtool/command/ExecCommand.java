@@ -27,7 +27,7 @@ public class ExecCommand extends AbstractCommand {
     @Override
     public void setup(CommandLine mainCommandLine) {
         CommandSpec execSpec = CommandSpec.forAnnotatedObject(this);
-        addXtoolComponentCommands(execSpec);
+        addComponentCommands(execSpec);
         mainCommandLine.addSubcommand("exec", execSpec);
 
         //		// @formatter:off
@@ -54,7 +54,7 @@ public class ExecCommand extends AbstractCommand {
      *
      * @param execSpec
      */
-    private void addXtoolComponentCommands(CommandSpec execSpec) {
+    private void addComponentCommands(CommandSpec execSpec) {
         repositoryContext.getRepositories()
                 .stream()
                 .flatMap(repo -> repo.getModules().stream())

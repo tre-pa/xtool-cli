@@ -28,7 +28,7 @@ import org.jline.reader.impl.LineReaderImpl;
 @Service
 public class ConsoleImpl implements Console {
 
-    private Level level = Level.NORMAL;
+    private Level level = Level.DEBUG;
 
     @Autowired
     private CommandLine cmd;
@@ -68,6 +68,8 @@ public class ConsoleImpl implements Console {
                     this.println("Comando/Argumento não encontrado. ".concat(e.getMessage()));
                 } catch (EndOfFileException e) {
                     return;
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         } catch (Throwable t) {
