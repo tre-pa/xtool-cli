@@ -28,37 +28,14 @@ public class RepositoryContextImpl implements RepositoryContext {
 	@Autowired
 	private Console console;
 
-	private Set<RepositoryRepresentation> repositories;
+	private RepositoryRepresentation repository;
 
 	private RepositoryRepresentation workingRepository;
 
-	@PostConstruct
-	private void init() {
-		// @formatter:off
-		long qReps = this.getRepositories().size();
-		long qMods = this.getRepositories().stream()
-				.flatMap(repo -> repo.getModules().stream())
-				.count();
-		long qCmps = this.getRepositories().stream()
-				.flatMap(repo -> repo.getModules().stream())
-				.flatMap(mod -> mod.getComponents().stream())
-				.count();
-		// @formatter:on
-		console.println(String.format("[@|cyan %d|@] Repositório(s), [@|cyan %d|@] Módulo(s), [@|cyan %d|@] Componente(s)", qReps, qMods, qCmps));
-	}
-
 	@Override
 	@SneakyThrows
-	public Set<RepositoryRepresentation> getRepositories() {
-		if (Objects.isNull(repositories)) {
-			// @formatter:off
-			this.repositories = Files.list(path)
-					.filter(Files::isDirectory)
-					.map(RepositoryRepresentationImpl::new)
-					.collect(Collectors.toSet());
-			// @formatter:on
-		}
-		return this.repositories;
+	public RepositoryRepresentation getRepository() {
+		return new RepositoryRepresentationImpl(path);
 	}
 
 	@Override

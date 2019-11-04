@@ -12,11 +12,11 @@ import br.xtool.representation.repo.RepositoryRepresentation;
 public interface RepositoryContext {
 
     /**
-     * Retorna a lista de repositórios de componentes.
+     * Retorna o repositório de componentes.
      *
      * @return RepositoryContext
      */
-    Set<RepositoryRepresentation> getRepositories();
+    RepositoryRepresentation getRepository();
 
     /**
      * Retorna o repositório de trabalho.
