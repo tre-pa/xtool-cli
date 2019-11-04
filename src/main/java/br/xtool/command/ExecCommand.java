@@ -4,7 +4,7 @@ import br.xtool.core.AbstractCommand;
 import br.xtool.core.Console;
 import br.xtool.core.RepositoryContext;
 import br.xtool.representation.repo.ComponentRepresentation;
-import br.xtool.representation.repo.DescriptorRepresentation;
+import br.xtool.representation.repo.directive.XDescriptorRepresentation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import picocli.CommandLine;
@@ -27,7 +27,7 @@ public class ExecCommand extends AbstractCommand {
     @Override
     public void setup(CommandLine mainCommandLine) {
         CommandSpec execSpec = CommandSpec.forAnnotatedObject(this);
-        addComponentCommands(execSpec);
+        //addComponentCommands(execSpec);
         mainCommandLine.addSubcommand("exec", execSpec);
 
         //		// @formatter:off
@@ -59,7 +59,7 @@ public class ExecCommand extends AbstractCommand {
                 .stream()
                 .flatMap(modules -> modules.getComponents().stream())
                 .map(ComponentRepresentation::getDescriptor)
-                .map(DescriptorRepresentation::getComponentDirective)
+                .map(XDescriptorRepresentation::getXComponent)
                 .forEach(cmd -> execSpec.addSubcommand(cmd.getDescriptor().getComponent().getName(), cmd.getCommandSpec()));
     }
 

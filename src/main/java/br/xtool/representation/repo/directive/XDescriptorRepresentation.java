@@ -1,13 +1,12 @@
-package br.xtool.representation.repo;
+package br.xtool.representation.repo.directive;
 
-import br.xtool.representation.repo.directive.ComponentDirectiveRepresentation;
-
-import java.nio.file.Path;
+import br.xtool.representation.repo.ComponentRepresentation;
+import br.xtool.representation.repo.directive.XComponentRepresentation;
 
 /**
  * Classe que representa o arquivo descritor xtool.yml
  */
-public interface DescriptorRepresentation {
+public interface XDescriptorRepresentation {
 
     /**
      * Nome do arquivo descritor xtool.
@@ -19,7 +18,7 @@ public interface DescriptorRepresentation {
      *
      * @return
      */
-    ComponentDirectiveRepresentation getComponentDirective();
+    XComponentRepresentation getXComponent();
 
 
     /**

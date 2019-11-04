@@ -1,7 +1,7 @@
 package br.xtool.implementation.representation.repo;
 
 import br.xtool.representation.repo.ComponentRepresentation;
-import br.xtool.representation.repo.DescriptorRepresentation;
+import br.xtool.representation.repo.directive.XDescriptorRepresentation;
 import br.xtool.representation.repo.ModuleRepresentation;
 import lombok.ToString;
 
@@ -46,8 +46,8 @@ public class ComponentRepresentationImpl implements ComponentRepresentation {
     }
 
     @Override
-    public DescriptorRepresentation getDescriptor() {
-        return DescriptorRepresentationImpl.of(this);
+    public XDescriptorRepresentation getDescriptor() {
+        throw new UnsupportedOperationException();
     }
 
 

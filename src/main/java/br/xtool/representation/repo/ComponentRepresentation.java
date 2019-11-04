@@ -1,9 +1,8 @@
 package br.xtool.representation.repo;
 
-import picocli.CommandLine;
+import br.xtool.representation.repo.directive.XDescriptorRepresentation;
 
 import java.nio.file.Path;
-import java.util.Set;
 
 /**
  * Classe que representa um componente xtool.
@@ -45,7 +44,7 @@ public interface ComponentRepresentation {
      *
      * @return
      */
-    DescriptorRepresentation getDescriptor();
+    XDescriptorRepresentation getDescriptor();
 
 
     /**

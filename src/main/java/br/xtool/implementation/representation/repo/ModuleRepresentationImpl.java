@@ -2,15 +2,12 @@ package br.xtool.implementation.representation.repo;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import br.xtool.representation.repo.ComponentRepresentation;
-import br.xtool.representation.repo.DescriptorRepresentation;
 import br.xtool.representation.repo.ModuleRepresentation;
 import br.xtool.representation.repo.RepositoryRepresentation;
-import lombok.Setter;
 import lombok.SneakyThrows;
 
 public class ModuleRepresentationImpl implements ModuleRepresentation {

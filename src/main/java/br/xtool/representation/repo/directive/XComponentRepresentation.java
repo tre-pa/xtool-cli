@@ -1,14 +1,15 @@
 package br.xtool.representation.repo.directive;
 
-import br.xtool.representation.repo.DescriptorRepresentation;
 import picocli.CommandLine;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Classe que representa a directiva 'component' do arquivo descritor.
  */
-public interface ComponentDirectiveRepresentation {
+public interface XComponentRepresentation {
 
     /**
      * Retorna a descrição do componente
@@ -29,14 +30,14 @@ public interface ComponentDirectiveRepresentation {
      *
      * @return
      */
-    DescriptorRepresentation getDescriptor();
+    XDescriptorRepresentation getDescriptor();
 
     /**
      * Retorna a lista de directivas de paramentros.
      *
      * @return
      */
-    List<ParamDirectiveRepresentation> getParamsDirective();
+    Collection<XParamRepresentation> getXParams();
 
 
     /**

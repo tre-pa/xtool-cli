@@ -11,7 +11,7 @@ import java.util.Optional;
 /**
  * Classe que representa um parametro de um componente.
  */
-public interface ParamDirectiveRepresentation {
+public interface XParamRepresentation {
 
     /**
      * Retorna o Id do parametro
@@ -39,14 +39,14 @@ public interface ParamDirectiveRepresentation {
      *
      * @return
      */
-    boolean isRequired();
+    Optional<Boolean> isRequired();
 
     /**
      * Retorna o tipo de parametro.
      *
      * @return
      */
-    Class<?> getParamType();
+    Optional<Class<?>> getParamType();
 
     /**
      * Retorna o converter do parametro.
