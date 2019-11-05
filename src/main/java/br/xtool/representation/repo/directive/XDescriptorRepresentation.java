@@ -1,7 +1,6 @@
 package br.xtool.representation.repo.directive;
 
 import br.xtool.representation.repo.ComponentRepresentation;
-import br.xtool.representation.repo.directive.XComponentRepresentation;
 
 /**
  * Classe que representa o arquivo descritor xtool.yml
@@ -14,11 +13,11 @@ public interface XDescriptorRepresentation {
     static String DESCRIPTOR_FILENAME = "xtool.yml";
 
     /**
-     * Retorna o componente descritor
+     * Retorna a definição do componente.
      *
      * @return
      */
-    XComponentRepresentation getXComponent();
+    XDefRepresentation getXDef();
 
 
     /**

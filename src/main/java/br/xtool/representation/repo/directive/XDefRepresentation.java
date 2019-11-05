@@ -8,9 +8,9 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Classe que representa a directiva 'component' do arquivo descritor.
+ * Classe que representa a definição do 'component'.
  */
-public interface XComponentRepresentation {
+public interface XDefRepresentation {
 
     /**
      * Retorna a descrição do componente

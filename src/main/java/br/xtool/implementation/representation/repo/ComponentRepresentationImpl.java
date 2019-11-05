@@ -7,6 +7,7 @@ import br.xtool.representation.repo.ModuleRepresentation;
 import lombok.ToString;
 
 import java.nio.file.Path;
+import java.util.Objects;
 
 @ToString
 public class ComponentRepresentationImpl implements ComponentRepresentation {
@@ -15,6 +16,7 @@ public class ComponentRepresentationImpl implements ComponentRepresentation {
 
     private ModuleRepresentation module;
 
+    private XDescriptorRepresentation descriptor;
 
     public ComponentRepresentationImpl(Path path, ModuleRepresentation module) {
         this.path = path;
@@ -48,7 +50,10 @@ public class ComponentRepresentationImpl implements ComponentRepresentation {
 
     @Override
     public XDescriptorRepresentation getDescriptor() {
-        return new XDescriptorRepresentationImpl(this);
+        if(Objects.isNull(descriptor)) {
+            this.descriptor = new XDescriptorRepresentationImpl(this);
+        }
+        return descriptor;
     }
 
 

@@ -59,7 +59,7 @@ public class ExecCommand extends AbstractCommand {
                 .stream()
                 .flatMap(modules -> modules.getComponents().stream())
                 .map(ComponentRepresentation::getDescriptor)
-                .map(XDescriptorRepresentation::getXComponent)
+                .map(XDescriptorRepresentation::getXDef)
                 .forEach(cmd -> execSpec.addSubcommand(cmd.getDescriptor().getComponent().getName(), cmd.getCommandSpec()));
     }
 
