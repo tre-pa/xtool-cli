@@ -1,0 +1,27 @@
+component:
+  description: Gerador de service angular
+  params:
+    - id: entity
+      label: --entity
+      description: Entidade JPA
+      required: true
+      type: JpaEntity
+  depends:
+    name: angular-dx:entity
+  availability:
+    condition: ${project.type == 'angular' or project.type == 'springboot:fullstack'}
+    on_failure: O componente deve ser executado em um projeto angular ou springboot:fullstack
+
+  tasks:
+    - name: Alterando diretório de destino para ${params['projectName']}-frontend
+      destination:
+        path: ${project.path}-frontend
+      only: ${project.type == 'springboot:fullstack'}
+    - name: Iniciando cópia de templates (versão 1.x.x)
+      tpl:
+        src: v1
+      only: ${project.framework.version matches '1\\.\\d\\.\\d'}
+    - name: Iniciando cópia de templates (versão 2.x.x)
+      tpl:
+        src: v2
+      only: ${project.framework.version matches '2\\.\\d\\.\\d'}

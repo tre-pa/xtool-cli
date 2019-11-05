@@ -1,0 +1,31 @@
+def:
+  description: Gerador de scaffolding de projetos angular com DevExtreme.
+  version: 1.0.0
+  params:
+    - id: projectName
+      label: --name
+      description: Nome do projeto
+      required: true
+    - id: projectDesc
+      label: --description
+      description: Descrição do projeto
+      required: true
+  tasks:
+    - name: Criando diretório de trabalho ${params['projectName']}
+      mkdir: ${params['projectName']}
+    - name: Alterando diretório de destino para ${params['projectName']}
+      destination:
+        path: ${params['projectName']}
+    - name: Iniciando cópia de templates
+      tpl:
+        src: main
+        dest: ${workspace['destination']}
+    - name: Realizando npm install.
+      command: npm i
+    - name: Realizando vesionamento git
+      command:
+        - git init
+        - git add .
+        - git commit -m "First Commit"
+    - name: Abrindo VSCode
+      command: code .
