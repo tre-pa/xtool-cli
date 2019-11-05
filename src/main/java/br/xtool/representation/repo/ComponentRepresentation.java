@@ -53,18 +53,4 @@ public interface ComponentRepresentation {
      * @return
      */
     ModuleRepresentation getModule();
-//
-//    /**
-//     * Retorna o CommandSpec do componente.
-//     *
-//     * @return
-//     */
-//    CommandLine.Model.CommandSpec getCommandSpec();
-//
-//    /**
-//     * Retorna os parametros do componente.
-//     *
-//     * @return
-//     */
-//    Set<ParamDirectiveRepresentation> getComponentParams();
 }

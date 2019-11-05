@@ -1,5 +1,6 @@
 package br.xtool.implementation.representation.repo;
 
+import br.xtool.kt.impl.XDescriptorRepresentationImpl;
 import br.xtool.representation.repo.ComponentRepresentation;
 import br.xtool.representation.repo.directive.XDescriptorRepresentation;
 import br.xtool.representation.repo.ModuleRepresentation;
@@ -47,7 +48,7 @@ public class ComponentRepresentationImpl implements ComponentRepresentation {
 
     @Override
     public XDescriptorRepresentation getDescriptor() {
-        throw new UnsupportedOperationException();
+        return new XDescriptorRepresentationImpl(this);
     }
 
 

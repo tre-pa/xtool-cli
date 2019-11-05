@@ -1,5 +1,6 @@
 package br.xtool.representation.repo.directive;
 
+import org.apache.commons.lang3.tuple.Pair;
 import picocli.CommandLine;
 
 import java.util.Collection;
@@ -39,6 +40,19 @@ public interface XComponentRepresentation {
      */
     Collection<XParamRepresentation> getXParams();
 
+    /**
+     * Retorna o componente de dependência.
+     *
+     * @return
+     */
+    Optional<String> getDepends();
+
+    /**
+     * Retorna a disponibilidade do componente.
+     *
+     * @return Pair<String, String> com o paramentro left sendo a condição e o right a mensagem em caso de falha.
+     */
+    Optional<Pair<String, String>> getAvailability();
 
     /**
      * Retorna o CommandSpec do component.
@@ -46,5 +60,6 @@ public interface XComponentRepresentation {
      * @return
      */
     CommandLine.Model.CommandSpec getCommandSpec();
+
 
 }

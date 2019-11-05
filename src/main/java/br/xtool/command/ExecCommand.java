@@ -27,7 +27,7 @@ public class ExecCommand extends AbstractCommand {
     @Override
     public void setup(CommandLine mainCommandLine) {
         CommandSpec execSpec = CommandSpec.forAnnotatedObject(this);
-        //addComponentCommands(execSpec);
+//        addComponentCommands(execSpec);
         mainCommandLine.addSubcommand("exec", execSpec);
 
         //		// @formatter:off
