@@ -7,12 +7,14 @@ import org.apache.commons.lang3.tuple.Pair
 import picocli.CommandLine
 import java.util.*
 
-class XDefRepresentationImpl(
-        private val componentMap: Map<String, Any>,
-        private val descriptor: XDescriptorRepresentation): XDefRepresentation {
-    override fun getDescription() = componentMap["description"] as String
 
-    override fun getVersion() = componentMap["version"] as String
+class XDefRepresentationImpl(
+        private val def: Map<String, Any>,
+        private val descriptor: XDescriptorRepresentation): XDefRepresentation {
+
+    override fun getDescription() = def["description"] as String
+
+    override fun getVersion() = def["version"] as String
 
     override fun getDescriptor() = this.descriptor;
 
@@ -20,9 +22,7 @@ class XDefRepresentationImpl(
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun getDepends(): Optional<String> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun getDepends(): Optional<String> = Optional.ofNullable(def["depends"] as String?);
 
     override fun getAvailability(): Optional<Pair<String, String>> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.

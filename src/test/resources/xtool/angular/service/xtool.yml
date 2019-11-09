@@ -1,4 +1,4 @@
-component:
+def:
   description: Gerador de service angular
   params:
     - id: entity
@@ -6,8 +6,7 @@ component:
       description: Entidade JPA
       required: true
       type: JpaEntity
-  depends:
-    name: angular-dx:entity
+  depends: angular-dx:entity
   availability:
     condition: ${project.type == 'angular' or project.type == 'springboot:fullstack'}
     on_failure: O componente deve ser executado em um projeto angular ou springboot:fullstack

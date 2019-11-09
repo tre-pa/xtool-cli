@@ -51,7 +51,7 @@ public class ComponentRepresentationImpl implements ComponentRepresentation {
     @Override
     public XDescriptorRepresentation getDescriptor() {
         if(Objects.isNull(descriptor)) {
-            this.descriptor = new XDescriptorRepresentationImpl(this);
+            this.descriptor = XDescriptorRepresentationImpl.Companion.of(this);
         }
         return descriptor;
     }
