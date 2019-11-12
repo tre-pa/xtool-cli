@@ -12,8 +12,8 @@ class XParamRepresentationImpl(val param: Map<String,Any>) : XParamRepresentatio
     override fun isRequired() = param["required"] as Boolean? ?: false
 
     override fun getType() = when(param["type"] as String?) {
-        "String" -> String.javaClass
-        "Boolean" -> Boolean.javaClass
-        else -> String.javaClass
+        "String" -> String::class.java
+        "Boolean" -> Boolean::class.java
+        else -> String::class.java
     }
 }
