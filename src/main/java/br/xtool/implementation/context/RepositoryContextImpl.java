@@ -3,6 +3,7 @@ package br.xtool.implementation.context;
 import br.xtool.core.Console;
 import br.xtool.core.RepositoryContext;
 import br.xtool.implementation.representation.repo.RepositoryRepresentationImpl;
+import br.xtool.representation.repo.ComponentRepresentation;
 import br.xtool.representation.repo.RepositoryRepresentation;
 import br.xtool.representation.repo.directive.XDescriptorRepresentation;
 import br.xtool.representation.repo.directive.XParamRepresentation;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import picocli.CommandLine;
 
 import java.nio.file.Path;
+import java.util.Optional;
 
 @Service
 public class RepositoryContextImpl implements RepositoryContext {
@@ -56,5 +58,14 @@ public class RepositoryContextImpl implements RepositoryContext {
 				.required(param.isRequired())
 				.type(param.getType())
 				.build();
+	}
+
+	@Override
+	public Optional<ComponentRepresentation> findByName(String name) {
+		return this.getRepository().getModules()
+				.stream()
+				.flatMap(module -> module.getComponents().stream())
+				.filter(componente -> componente.getName().equals(name))
+				.findFirst();
 	}
 }

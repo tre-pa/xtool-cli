@@ -1,8 +1,11 @@
 package br.xtool.core;
 
+import br.xtool.representation.repo.ComponentRepresentation;
 import br.xtool.representation.repo.RepositoryRepresentation;
 import br.xtool.representation.repo.directive.XDescriptorRepresentation;
 import picocli.CommandLine;
+
+import java.util.Optional;
 
 /**
  * Contexto do repositório xtool.
@@ -40,5 +43,14 @@ public interface RepositoryContext {
      * @return
      */
     CommandLine.Model.CommandSpec create(XDescriptorRepresentation descriptor);
+
+
+    /**
+     * Retorna o componente pelo nome.
+     *
+     * @param name
+     * @return
+     */
+    Optional<ComponentRepresentation> findByName(String name);
 
 }

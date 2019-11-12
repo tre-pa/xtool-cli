@@ -46,7 +46,8 @@ public class ExecCommand extends AbstractCommand {
     @Override
     public void run() {
         if (getParseResult().subcommand().hasSubcommand()) {
-            console.println("Exec");
+            String subcommand = getParseResult().subcommand().subcommand().commandSpec().name();
+            console.debug("Exec: "+subcommand);
         }
     }
 
