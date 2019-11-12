@@ -1,16 +1,12 @@
 package br.xtool.implementation;
 
-import java.io.IOException;
-import java.util.stream.Collectors;
-
-import javax.annotation.PostConstruct;
-import javax.annotation.Priority;
-
+import br.xtool.core.Console;
 import org.apache.commons.lang3.StringUtils;
 import org.fusesource.jansi.Ansi;
 import org.fusesource.jansi.AnsiConsole;
 import org.jline.reader.*;
 import org.jline.reader.impl.DefaultParser;
+import org.jline.reader.impl.LineReaderImpl;
 import org.jline.reader.impl.history.DefaultHistory;
 import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
@@ -19,16 +15,15 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
-
-import br.xtool.core.Console;
 import picocli.CommandLine;
 import picocli.shell.jline3.PicocliJLineCompleter;
-import org.jline.reader.impl.LineReaderImpl;
+
+import java.io.IOException;
 
 @Service
 public class ConsoleImpl implements Console {
 
-    private Level level = Level.DEBUG;
+    private Level level = Level.NORMAL;
 
     @Autowired
     private CommandLine cmd;
@@ -69,7 +64,7 @@ public class ConsoleImpl implements Console {
                 } catch (EndOfFileException e) {
                     return;
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    if(level.equals(Level.NORMAL)) this.printlnError(e.getMessage()); else e.printStackTrace();
                 }
             }
         } catch (Throwable t) {
@@ -87,6 +82,10 @@ public class ConsoleImpl implements Console {
     @Override
     public void println(String msg) {
         System.out.println(Ansi.ansi().render(msg).reset());
+    }
+
+    private void printlnError(String msg) {
+        System.out.println(Ansi.ansi().fg(Ansi.Color.RED).render(msg).reset());
     }
 
     @Override
