@@ -28,28 +28,10 @@ public class ExecCommand extends AbstractCommand {
         CommandSpec execSpec = CommandSpec.forAnnotatedObject(this);
         addComponentCommands(execSpec);
         mainCommandLine.addSubcommand("exec", execSpec);
-
-        //		// @formatter:off
-//		CommandSpec componentSpec = CommandSpec.create()
-//				.name("angular")
-//				.addOption(picocli.CommandLine.Model.OptionSpec.builder("--name")
-//						.description("Nome do projeto")
-//						.completionCandidates(Lists.newArrayList("Angular", "SpringBoot", "SpringBoot:Fullstack"))
-//						.type(String.class)
-//						.required(false)
-//						.build())
-//				.addOption(picocli.CommandLine.Model.OptionSpec.builder("--no-edit")
-//						.description("Sem edit")
-//						.arity("0")
-//						.required(false)
-//						.build());
-//		// @formatter:on
-//		commandSpecs.forEach((k,v) -> execSpec.addSubcommand(k, v));
-
     }
 
     /**
-     * Adiciona os comandos provenientes do componentes xtool.
+     * Adiciona os comandos provenientes dos componentes xtool.
      *
      * @param execSpec
      */
@@ -63,7 +45,9 @@ public class ExecCommand extends AbstractCommand {
 
     @Override
     public void run() {
-//        console.println("Oi");
+        if (getParseResult().subcommand().hasSubcommand()) {
+            console.println("Exec");
+        }
     }
 
 }

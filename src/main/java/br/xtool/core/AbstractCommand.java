@@ -10,6 +10,10 @@ import picocli.CommandLine;
  */
 public abstract class AbstractCommand implements Runnable {
 
+    @Setter
+    @Getter
+    private CommandLine.ParseResult parseResult;
+
     /**
      * Envia o mainCommandLine para inclusao de subcomandos.
      * @param mainCommandLine

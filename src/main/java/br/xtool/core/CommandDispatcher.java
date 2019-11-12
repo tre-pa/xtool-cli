@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 import picocli.CommandLine;
 
 import java.util.ArrayDeque;
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -35,13 +34,9 @@ public class CommandDispatcher {
         CommandLine.printHelpIfRequested(parseResult);
         console.debug("@|magenta CommandDispatcher.process(command=%s, args=%s)|@", commands, parseResult.subcommand().matchedOptions());
 
-        //        if (commands.size() == 1) {
-//            console.debug("@|magenta CommandDispatcher.process(command=%s) %b|@", commands, parseResult.);
-//            String commandName = commands.poll();
-//            commandList.get(commandName).run();
-//        } else if (commands.size() == 2) {
-//            console.debug("@|magenta CommandDispatcher.process(command=%s, args=%s) |@", commands, parseResult.subcommand().matchedArgs());
-//        }
+        AbstractCommand command = commandList.get(commands.getFirst());
+        command.setParseResult(parseResult);
+        command.run();
     }
 
 }
