@@ -1,5 +1,6 @@
 package br.xtool.representation.repo.directive;
 
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -22,7 +23,9 @@ public interface XTaskRepresentation {
     Optional<String> isOnly();
 
     /**
-     * Executa a tarefa.
+     * Retorna os itens da tarefa.
+     *
+     * @return
      */
-    void run();
+    Map<String, Object> getItems();
 }

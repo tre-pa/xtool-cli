@@ -27,6 +27,4 @@ public interface XDescriptorRepresentation {
      */
     ComponentRepresentation getComponent();
 
-
-
 }

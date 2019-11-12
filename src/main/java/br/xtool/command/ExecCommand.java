@@ -4,7 +4,6 @@ import br.xtool.core.AbstractCommand;
 import br.xtool.core.Console;
 import br.xtool.core.RepositoryContext;
 import br.xtool.representation.repo.ComponentRepresentation;
-import br.xtool.representation.repo.directive.XDescriptorRepresentation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import picocli.CommandLine;
@@ -59,8 +58,7 @@ public class ExecCommand extends AbstractCommand {
                 .stream()
                 .flatMap(modules -> modules.getComponents().stream())
                 .map(ComponentRepresentation::getDescriptor)
-                .map(XDescriptorRepresentation::getXDef)
-                .forEach(cmd -> execSpec.addSubcommand(cmd.getDescriptor().getComponent().getName(), cmd.getCommandSpec()));
+                .forEach(descriptor -> execSpec.addSubcommand(descriptor.getComponent().getName(), repositoryContext.create(descriptor)));
     }
 
     @Override

@@ -1,23 +1,18 @@
 package br.xtool.implementation.context;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.Objects;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import javax.annotation.PostConstruct;
-
+import br.xtool.core.Console;
+import br.xtool.core.RepositoryContext;
 import br.xtool.implementation.representation.repo.RepositoryRepresentationImpl;
-import lombok.extern.slf4j.Slf4j;
+import br.xtool.representation.repo.RepositoryRepresentation;
+import br.xtool.representation.repo.directive.XDescriptorRepresentation;
+import br.xtool.representation.repo.directive.XParamRepresentation;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import picocli.CommandLine;
 
-import br.xtool.core.Console;
-import br.xtool.core.RepositoryContext;
-import br.xtool.representation.repo.RepositoryRepresentation;
-import lombok.SneakyThrows;
+import java.nio.file.Path;
 
 @Service
 public class RepositoryContextImpl implements RepositoryContext {
@@ -48,4 +43,18 @@ public class RepositoryContextImpl implements RepositoryContext {
 		this.workingRepository = repositoryRepresentation;
 	}
 
+	@Override
+	public CommandLine.Model.CommandSpec create(XDescriptorRepresentation descriptor) {
+		CommandLine.Model.CommandSpec commandSpec = CommandLine.Model.CommandSpec.create();
+		descriptor.getXDef().getXParams().forEach(xparam -> commandSpec.addOption(this.create(xparam)));
+		return commandSpec;
+	}
+
+	private CommandLine.Model.OptionSpec create(XParamRepresentation param) {
+		return CommandLine.Model.OptionSpec.builder(param.getLabel())
+				.description(param.getDescription())
+				.required(param.isRequired())
+				.type(param.getType())
+				.build();
+	}
 }

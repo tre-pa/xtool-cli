@@ -1,13 +1,5 @@
 package br.xtool.representation.repo.directive;
 
-import br.xtool.type.JpaEntity;
-import br.xtool.type.NgModule;
-import picocli.CommandLine;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-
 /**
  * Classe que representa um parametro de um componente.
  */
@@ -39,34 +31,13 @@ public interface XParamRepresentation {
      *
      * @return
      */
-    Optional<Boolean> isRequired();
+    Boolean isRequired();
 
     /**
      * Retorna o tipo de parametro.
      *
      * @return
      */
-    Optional<Class<?>> getParamType();
-
-    /**
-     * Retorna o converter do parametro.
-     *
-     * @return
-     */
-    Optional<? extends CommandLine.ITypeConverter<?>> getConverter();
-
-    /**
-     * Retorna o completer do parametro.
-     *
-     * @return
-     */
-    Optional<? extends Iterable<String>> getCompleter();
-
-    /**
-     * Retorna a representação {@link picocli.CommandLine.Model.OptionSpec} do parametro.
-     *
-     * @return
-     */
-    CommandLine.Model.OptionSpec getOptionSpec();
+    Class<?> getType();
 
 }

@@ -1,8 +1,8 @@
 package br.xtool.core;
 
-import java.util.Set;
-
 import br.xtool.representation.repo.RepositoryRepresentation;
+import br.xtool.representation.repo.directive.XDescriptorRepresentation;
+import picocli.CommandLine;
 
 /**
  * Contexto do repositório xtool.
@@ -31,4 +31,14 @@ public interface RepositoryContext {
      * @param repositoryRepresentation
      */
     void setWorkingRepository(RepositoryRepresentation repositoryRepresentation);
+
+
+    /**
+     * Cria o CommandSpec a partir do descritor.
+     *
+     * @param descriptor
+     * @return
+     */
+    CommandLine.Model.CommandSpec create(XDescriptorRepresentation descriptor);
+
 }

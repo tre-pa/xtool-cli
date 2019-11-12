@@ -4,7 +4,6 @@ import br.xtool.representation.repo.directive.XDefRepresentation
 import br.xtool.representation.repo.directive.XDescriptorRepresentation
 import br.xtool.representation.repo.directive.XParamRepresentation
 import org.apache.commons.lang3.tuple.Pair
-import picocli.CommandLine
 import java.util.*
 
 
@@ -19,7 +18,8 @@ class XDefRepresentationImpl(
     override fun getDescriptor() = this.descriptor;
 
     override fun getXParams(): MutableCollection<XParamRepresentation> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val params: List<Map<String, Any>> = def["params"] as List<Map<String, Any>>
+        return params.asSequence().map(::XParamRepresentationImpl).toMutableList();
     }
 
     override fun getDepends(): Optional<String> = Optional.ofNullable(def["depends"] as String?);
@@ -28,7 +28,4 @@ class XDefRepresentationImpl(
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun getCommandSpec(): CommandLine.Model.CommandSpec {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
 }
