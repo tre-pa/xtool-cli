@@ -36,7 +36,7 @@ public interface XDefRepresentation {
      *
      * @return
      */
-    Collection<XParamRepresentation> getXParams();
+    Collection<XParamRepresentation> getParams();
 
     /**
      * Retorna o componente de dependência.
@@ -51,5 +51,13 @@ public interface XDefRepresentation {
      * @return Pair<String, String> com o paramentro left sendo a condição e o right a mensagem em caso de falha.
      */
     Optional<Pair<String, String>> getAvailability();
+
+
+    /**
+     * Retorna as tarefas do compoenente
+     *
+     * @return
+     */
+    Collection<XTaskRepresentation> getTasks();
 
 }

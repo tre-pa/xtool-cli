@@ -54,10 +54,18 @@ public class XDefAngularAppComponentTestCase {
 
     @Test
     public void angularAppComponente_ParamsDirectiveIsPresent() {
-        Assert.assertTrue(angularAppComponent.get().getDescriptor().getXDef().getXParams().size() == 2);
-        angularAppComponent.get().getDescriptor().getXDef().getXParams()
+        Assert.assertTrue(angularAppComponent.get().getDescriptor().getXDef().getParams().size() == 2);
+        angularAppComponent.get().getDescriptor().getXDef().getParams()
                 .stream()
                 .forEach(p -> System.out.println("Id: "+p.getId()+", label: "+p.getLabel()+" type: "+p.getType()));
+    }
+
+    @Test
+    public void angularAppComponent_TaskDirectiveIsPresent() {
+        Assert.assertTrue(angularAppComponent.get().getDescriptor().getXDef().getTasks().size() == 6);
+        angularAppComponent.get().getDescriptor().getXDef().getTasks()
+                .stream()
+                .forEach(p -> System.out.println(p.getTask()));
     }
 
 }

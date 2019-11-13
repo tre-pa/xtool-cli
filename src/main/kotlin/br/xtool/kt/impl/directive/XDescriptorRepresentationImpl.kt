@@ -1,4 +1,4 @@
-package br.xtool.kt.impl
+package br.xtool.kt.impl.directive
 
 import br.xtool.kt.ext.XDescriptorValidator
 import br.xtool.representation.repo.ComponentRepresentation

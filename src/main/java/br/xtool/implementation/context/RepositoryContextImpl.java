@@ -48,7 +48,7 @@ public class RepositoryContextImpl implements RepositoryContext {
 	@Override
 	public CommandLine.Model.CommandSpec create(XDescriptorRepresentation descriptor) {
 		CommandLine.Model.CommandSpec commandSpec = CommandLine.Model.CommandSpec.create();
-		descriptor.getXDef().getXParams().forEach(xparam -> commandSpec.addOption(this.create(xparam)));
+		descriptor.getXDef().getParams().forEach(xparam -> commandSpec.addOption(this.create(xparam)));
 		return commandSpec;
 	}
 

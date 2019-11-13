@@ -23,9 +23,10 @@ public interface XTaskRepresentation {
     Optional<String> isOnly();
 
     /**
-     * Retorna os itens da tarefa.
-     *
+     * Retorna o mapa com a terefa;
      * @return
      */
-    Map<String, Object> getItems();
+    Map<String, Object> getTask();
+
+
 }
