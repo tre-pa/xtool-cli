@@ -1,6 +1,6 @@
 package br.xtool.representation.repo;
 
-import br.xtool.representation.repo.directive.XDescriptorRepresentation;
+import br.xtool.representation.repo.directive.DescriptorRepresentation;
 
 import java.nio.file.Path;
 
@@ -44,7 +44,7 @@ public interface ComponentRepresentation {
      *
      * @return
      */
-    XDescriptorRepresentation getDescriptor();
+    DescriptorRepresentation getDescriptor();
 
 
     /**

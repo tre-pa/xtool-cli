@@ -5,7 +5,7 @@ import br.xtool.representation.repo.ComponentRepresentation;
 /**
  * Classe que representa o arquivo descritor xtool.yml
  */
-public interface XDescriptorRepresentation {
+public interface DescriptorRepresentation {
 
     /**
      * Nome do arquivo descritor xtool.
@@ -17,7 +17,7 @@ public interface XDescriptorRepresentation {
      *
      * @return
      */
-    XDefRepresentation getXDef();
+    DefRepresentation getXDef();
 
 
     /**

@@ -8,7 +8,7 @@ import java.util.Optional;
 /**
  * Classe que representa a definição do 'component'.
  */
-public interface XDefRepresentation {
+public interface DefRepresentation {
 
     /**
      * Retorna a descrição do componente
@@ -29,14 +29,14 @@ public interface XDefRepresentation {
      *
      * @return
      */
-    XDescriptorRepresentation getDescriptor();
+    DescriptorRepresentation getDescriptor();
 
     /**
      * Retorna a lista de directivas de paramentros.
      *
      * @return
      */
-    Collection<XParamRepresentation> getParams();
+    Collection<DefParamRepresentation> getParams();
 
     /**
      * Retorna o componente de dependência.
@@ -58,6 +58,6 @@ public interface XDefRepresentation {
      *
      * @return
      */
-    Collection<XTaskRepresentation> getTasks();
+    Collection<DefTaskRepresentation> getTasks();
 
 }

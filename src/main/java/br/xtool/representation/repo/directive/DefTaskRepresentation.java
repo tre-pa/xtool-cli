@@ -6,7 +6,7 @@ import java.util.Optional;
 /**
  * Representação de uma tarefa.
  */
-public interface XTaskRepresentation {
+public interface DefTaskRepresentation {
 
     /**
      * Retorna o nome da tarefa.

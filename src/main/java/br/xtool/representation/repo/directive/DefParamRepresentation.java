@@ -3,7 +3,7 @@ package br.xtool.representation.repo.directive;
 /**
  * Classe que representa um parametro de um componente.
  */
-public interface XParamRepresentation {
+public interface DefParamRepresentation {
 
     /**
      * Retorna o Id do parametro
