@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.xtool.core.Shell;
-import br.xtool.core.WorkspaceContext;
+import br.xtool.context.WorkspaceContext;
 import lombok.SneakyThrows;
 
 @Service

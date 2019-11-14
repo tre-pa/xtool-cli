@@ -6,7 +6,7 @@ import java.util.Optional;
 /**
  * Representação de uma tarefa.
  */
-public interface DefTaskRepresentation {
+public interface TaskDefRepresentation {
 
     /**
      * Retorna o nome da tarefa.
@@ -14,6 +14,13 @@ public interface DefTaskRepresentation {
      * @return
      */
     String getName();
+
+    /**
+     * Retorna o tipo da tarefa.
+     *
+     * @return String com o tipo da tarefa.
+     */
+    String getType();
 
     /**
      * Retorna a expressão para a execução da tarefa.
@@ -24,6 +31,7 @@ public interface DefTaskRepresentation {
 
     /**
      * Retorna o mapa com a terefa;
+     *
      * @return
      */
     Map<String, Object> getTask();

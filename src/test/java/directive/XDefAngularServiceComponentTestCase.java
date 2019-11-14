@@ -31,9 +31,9 @@ public class XDefAngularServiceComponentTestCase {
                 .findFirst();
 
         Assert.assertTrue(angularServiceComponent.isPresent());
-        Assert.assertTrue(angularServiceComponent.get().getDescriptor().getXDef().getDescription().equals("Gerador de service angular"));
-        Assert.assertTrue(angularServiceComponent.get().getDescriptor().getXDef().getDepends().isPresent());
-        System.out.println(angularServiceComponent.get().getDescriptor().getXDef().getDepends().get());
+        Assert.assertTrue(angularServiceComponent.get().getDescriptor().getDef().getDescription().equals("Gerador de service angular"));
+        Assert.assertTrue(angularServiceComponent.get().getDescriptor().getDef().getDepends().isPresent());
+        System.out.println(angularServiceComponent.get().getDescriptor().getDef().getDepends().get());
     }
 
 }

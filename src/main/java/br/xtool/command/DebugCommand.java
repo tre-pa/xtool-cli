@@ -26,4 +26,5 @@ public class DebugCommand extends AbstractCommand {
             console.println(">> Nivel @|cyan DEBUG|@ ativado.");
         }
     }
+
 }

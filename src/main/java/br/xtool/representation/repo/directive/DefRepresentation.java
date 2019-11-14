@@ -36,7 +36,7 @@ public interface DefRepresentation {
      *
      * @return
      */
-    Collection<DefParamRepresentation> getParams();
+    Collection<ParamDefRepresentation> getParams();
 
     /**
      * Retorna o componente de dependência.
@@ -58,6 +58,6 @@ public interface DefRepresentation {
      *
      * @return
      */
-    Collection<DefTaskRepresentation> getTasks();
+    Collection<TaskDefRepresentation> getTasks();
 
 }

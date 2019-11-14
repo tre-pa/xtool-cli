@@ -1,8 +1,8 @@
 package br.xtool.kt.impl.directive
 
-import br.xtool.representation.repo.directive.DefParamRepresentation
+import br.xtool.representation.repo.directive.ParamDefRepresentation
 
-class DefParamRepresentationImpl(val param: Map<String,Any>) : DefParamRepresentation {
+class ParamDefRepresentationImpl(val param: Map<String,Any>) : ParamDefRepresentation {
     override fun getId() = param["id"] as String
 
     override fun getLabel() = param["label"] as String

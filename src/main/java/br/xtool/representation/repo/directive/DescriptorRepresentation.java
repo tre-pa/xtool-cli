@@ -17,7 +17,7 @@ public interface DescriptorRepresentation {
      *
      * @return
      */
-    DefRepresentation getXDef();
+    DefRepresentation getDef();
 
 
     /**

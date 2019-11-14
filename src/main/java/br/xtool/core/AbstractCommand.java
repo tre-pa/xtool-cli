@@ -22,4 +22,5 @@ public abstract class AbstractCommand implements Runnable {
         String commandName = this.getClass().getAnnotation(CommandLine.Command.class).name();
         mainCommandLine.addSubcommand(commandName, this);
     }
+
 }

@@ -1,17 +1,16 @@
 package br.xtool.kt.impl.directive
 
-import br.xtool.kt.ext.XDescriptorValidator
 import br.xtool.representation.repo.ComponentRepresentation
 import br.xtool.representation.repo.directive.DefRepresentation
 import br.xtool.representation.repo.directive.DescriptorRepresentation
 import org.yaml.snakeyaml.Yaml
 import java.nio.file.Files
 
-class XDescriptorRepresentationImpl private constructor(
+class DescriptorRepresentationImpl private constructor(
         private val component: ComponentRepresentation,
         private val descriptor: Map<String, Any>) : DescriptorRepresentation {
 
-    override fun getXDef(): DefRepresentation {
+    override fun getDef(): DefRepresentation {
         return DefRepresentationImpl(this.descriptor["def"] as Map<String, Any>, this)
     }
 
@@ -20,8 +19,7 @@ class XDescriptorRepresentationImpl private constructor(
     companion object {
         fun of(component: ComponentRepresentation): DescriptorRepresentation {
             val descriptor: Map<String, Any> = Yaml().load(Files.newBufferedReader(component.path.resolve(DescriptorRepresentation.DESCRIPTOR_FILENAME)));
-            XDescriptorValidator.validate(descriptor, component);
-            return XDescriptorRepresentationImpl(component, descriptor);
+            return DescriptorRepresentationImpl(component, descriptor);
         }
     }
 }

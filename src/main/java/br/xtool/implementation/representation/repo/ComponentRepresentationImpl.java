@@ -1,6 +1,6 @@
 package br.xtool.implementation.representation.repo;
 
-import br.xtool.kt.impl.directive.XDescriptorRepresentationImpl;
+import br.xtool.kt.impl.directive.DescriptorRepresentationImpl;
 import br.xtool.representation.repo.ComponentRepresentation;
 import br.xtool.representation.repo.directive.DescriptorRepresentation;
 import br.xtool.representation.repo.ModuleRepresentation;
@@ -51,7 +51,7 @@ public class ComponentRepresentationImpl implements ComponentRepresentation {
     @Override
     public DescriptorRepresentation getDescriptor() {
         if(Objects.isNull(descriptor)) {
-            this.descriptor = XDescriptorRepresentationImpl.Companion.of(this);
+            this.descriptor = DescriptorRepresentationImpl.Companion.of(this);
         }
         return descriptor;
     }

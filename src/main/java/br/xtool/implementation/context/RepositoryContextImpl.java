@@ -1,12 +1,12 @@
 package br.xtool.implementation.context;
 
 import br.xtool.core.Console;
-import br.xtool.core.RepositoryContext;
+import br.xtool.context.RepositoryContext;
 import br.xtool.implementation.representation.repo.RepositoryRepresentationImpl;
 import br.xtool.representation.repo.ComponentRepresentation;
 import br.xtool.representation.repo.RepositoryRepresentation;
 import br.xtool.representation.repo.directive.DescriptorRepresentation;
-import br.xtool.representation.repo.directive.DefParamRepresentation;
+import br.xtool.representation.repo.directive.ParamDefRepresentation;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -48,11 +48,11 @@ public class RepositoryContextImpl implements RepositoryContext {
 	@Override
 	public CommandLine.Model.CommandSpec create(DescriptorRepresentation descriptor) {
 		CommandLine.Model.CommandSpec commandSpec = CommandLine.Model.CommandSpec.create();
-		descriptor.getXDef().getParams().forEach(xparam -> commandSpec.addOption(this.create(xparam)));
+		descriptor.getDef().getParams().forEach(xparam -> commandSpec.addOption(this.create(xparam)));
 		return commandSpec;
 	}
 
-	private CommandLine.Model.OptionSpec create(DefParamRepresentation param) {
+	private CommandLine.Model.OptionSpec create(ParamDefRepresentation param) {
 		return CommandLine.Model.OptionSpec.builder(param.getLabel())
 				.description(param.getDescription())
 				.required(param.isRequired())
@@ -61,7 +61,7 @@ public class RepositoryContextImpl implements RepositoryContext {
 	}
 
 	@Override
-	public Optional<ComponentRepresentation> findByName(String name) {
+	public Optional<ComponentRepresentation> findComponentByName(String name) {
 		return this.getRepository().getModules()
 				.stream()
 				.flatMap(module -> module.getComponents().stream())

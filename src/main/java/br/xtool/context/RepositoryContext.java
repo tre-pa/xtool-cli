@@ -1,4 +1,4 @@
-package br.xtool.core;
+package br.xtool.context;
 
 import br.xtool.representation.repo.ComponentRepresentation;
 import br.xtool.representation.repo.RepositoryRepresentation;
@@ -51,6 +51,6 @@ public interface RepositoryContext {
      * @param name
      * @return
      */
-    Optional<ComponentRepresentation> findByName(String name);
+    Optional<ComponentRepresentation> findComponentByName(String name);
 
 }

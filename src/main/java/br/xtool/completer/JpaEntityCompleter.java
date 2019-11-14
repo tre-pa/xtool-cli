@@ -1,7 +1,6 @@
 package br.xtool.completer;
 
-import br.xtool.core.WorkspaceContext;
-import org.eclipse.core.internal.resources.Workspace;
+import br.xtool.context.WorkspaceContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

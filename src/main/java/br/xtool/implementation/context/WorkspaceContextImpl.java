@@ -9,7 +9,7 @@ import br.xtool.implementation.representation.WorkspaceRepresentationImpl;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import br.xtool.core.WorkspaceContext;
+import br.xtool.context.WorkspaceContext;
 import br.xtool.representation.ProjectRepresentation;
 import br.xtool.representation.WorkspaceRepresentation;
 import lombok.Getter;

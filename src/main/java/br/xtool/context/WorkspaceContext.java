@@ -1,4 +1,4 @@
-package br.xtool.core;
+package br.xtool.context;
 
 import br.xtool.representation.ProjectRepresentation;
 import br.xtool.representation.WorkspaceRepresentation;
