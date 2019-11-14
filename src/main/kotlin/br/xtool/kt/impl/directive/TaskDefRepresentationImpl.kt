@@ -10,6 +10,7 @@ class TaskDefRepresentationImpl(private val taskDef: Map<String, Any>): TaskDefR
 
     override fun isOnly()= Optional.ofNullable(taskDef["only"] as String?)
 
+    // TODO Realizar verificação para não permitir mais de um tipo de tarefa.
     override fun getTask() = taskDef - arrayOf("name", "only")
 
     override fun toString(): String {
