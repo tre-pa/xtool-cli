@@ -39,6 +39,14 @@ public interface DefRepresentation {
     Collection<ParamDefRepresentation> getParams();
 
     /**
+     * Retorna o parametro pelo nome.
+     *
+     * @param label
+     * @return
+     */
+    ParamDefRepresentation findParamByLabel(String label);
+
+    /**
      * Retorna o componente de dependência.
      *
      * @return

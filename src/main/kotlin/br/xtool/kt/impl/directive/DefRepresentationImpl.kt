@@ -1,9 +1,9 @@
 package br.xtool.kt.impl.directive
 
-import br.xtool.representation.repo.directive.ParamDefRepresentation
 import br.xtool.representation.repo.directive.DefRepresentation
-import br.xtool.representation.repo.directive.TaskDefRepresentation
 import br.xtool.representation.repo.directive.DescriptorRepresentation
+import br.xtool.representation.repo.directive.ParamDefRepresentation
+import br.xtool.representation.repo.directive.TaskDefRepresentation
 import org.apache.commons.lang3.tuple.Pair
 import java.util.*
 
@@ -23,6 +23,8 @@ class DefRepresentationImpl(
         val paramsDef: List<Map<String, Any>> = def["params"] as List<Map<String, Any>>
         return paramsDef.map(::ParamDefRepresentationImpl).toMutableList()
     }
+
+    override fun findParamByLabel(label: String?) = this.params.find { it.label == label }
 
     override fun getDepends() = Optional.ofNullable(def["depends"] as String?)
 

@@ -1,8 +1,10 @@
 package br.xtool.command;
 
+import br.xtool.context.RepositoryContext;
+import br.xtool.context.WorkspaceContext;
 import br.xtool.core.AbstractCommand;
 import br.xtool.core.Console;
-import br.xtool.context.RepositoryContext;
+import br.xtool.core.DescriptorContext;
 import br.xtool.kt.core.ComponentExecutor;
 import br.xtool.representation.repo.ComponentRepresentation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +13,9 @@ import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Model.CommandSpec;
 
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * Comando de execução de componentes.
@@ -19,6 +23,9 @@ import java.util.Optional;
 @Component
 @Command(name = "exec", description = "Executa um componente Xtool")
 public class ExecCommand extends AbstractCommand {
+
+    @Autowired
+    private WorkspaceContext workspaceContext;
 
     @Autowired
     private RepositoryContext repositoryContext;
@@ -52,10 +59,21 @@ public class ExecCommand extends AbstractCommand {
     @Override
     public void run() {
         if (getParseResult().subcommand().hasSubcommand()) {
-            String subcommand = getParseResult().subcommand().subcommand().commandSpec().name();
-            Optional<ComponentRepresentation> component = repositoryContext.findComponentByName(subcommand);
-            component.ifPresent(componentExecutor::run);
+            String subcommandName = getParseResult().subcommand().subcommand().commandSpec().name();
+            Optional<ComponentRepresentation> component = repositoryContext.findComponentByName(subcommandName);
+            component.ifPresent(comp -> componentExecutor.run(
+                    comp,
+                    createDescriptorContext(comp,getParseResult())));
         }
+    }
+
+    public DescriptorContext createDescriptorContext(ComponentRepresentation component, CommandLine.ParseResult parseResult) {
+        Map<String, Object> params = parseResult.subcommand().subcommand().matchedOptions()
+                .stream()
+                .collect(Collectors.toMap(
+                        op -> component.getDescriptor().getDef().findParamByLabel(op.names()[0]).getId(),
+                        op -> op.getValue()));
+        return new DescriptorContext(workspaceContext.getWorkingProject(), params);
     }
 
 }

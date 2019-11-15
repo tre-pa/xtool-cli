@@ -1,22 +1,22 @@
 package br.xtool.kt.task
 
 import br.xtool.annotation.Task
-import br.xtool.core.Console
+import br.xtool.core.DescriptorContext
 import br.xtool.kt.core.AbstractTask
-import org.springframework.beans.factory.annotation.Autowired
+import br.xtool.representation.repo.directive.TaskDefRepresentation
 
 /**
  * Tarefa de criação de diretório
  */
 @Task(type = "mkdir")
-class MkdirTask(@Autowired private val console: Console): AbstractTask(console) {
+class MkdirTask: AbstractTask() {
 
-    override fun process() {
-        console.debug("\tMkdirTask.process()")
+    override fun process(task: TaskDefRepresentation, ctx: DescriptorContext) {
+        console.debug(">>> MkdirTask.process()")
     }
 
     override fun validate(): Boolean {
-        console.debug("\tMkdirTask.validate()")
+        console.debug(">>> MkdirTask.validate()")
         return false
     }
 }
