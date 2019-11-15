@@ -1,6 +1,5 @@
 package br.xtool.kt.core
 
-import br.xtool.core.AbstractTask
 import br.xtool.core.Console
 import br.xtool.representation.repo.ComponentRepresentation
 import org.springframework.beans.factory.annotation.Autowired

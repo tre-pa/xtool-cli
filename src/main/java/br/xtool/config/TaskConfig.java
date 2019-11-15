@@ -1,7 +1,7 @@
 package br.xtool.config;
 
 import br.xtool.annotation.Task;
-import br.xtool.core.AbstractTask;
+import br.xtool.kt.core.AbstractTask;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

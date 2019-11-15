@@ -17,7 +17,7 @@ import java.util.Optional;
  * Comando de execução de componentes.
  */
 @Component
-@Command(name = "exec", description = "Executa um componente Xtool", mixinStandardHelpOptions = true)
+@Command(name = "exec", description = "Executa um componente Xtool")
 public class ExecCommand extends AbstractCommand {
 
     @Autowired
