@@ -15,8 +15,7 @@ class MkdirTask: AbstractTask() {
         console.debug(">>> MkdirTask.process()")
     }
 
-    override fun validate(): Boolean {
+    override fun validate() {
         console.debug(">>> MkdirTask.validate()")
-        return false
     }
 }

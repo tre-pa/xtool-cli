@@ -12,7 +12,7 @@ abstract class AbstractTask {
 
     abstract fun process(task: TaskDefRepresentation, ctx: DescriptorContext)
 
-    abstract fun validate(): Boolean
+    abstract fun validate()
 
     fun exec(task: TaskDefRepresentation, ctx: DescriptorContext): Unit  {
         console.debug("${this::class.java.simpleName}.exec()")
