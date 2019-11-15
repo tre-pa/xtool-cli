@@ -28,12 +28,17 @@ public class DescriptorContext {
 
     /**
      * Processa a expressão SpEL.
+     *
      * @param exp
      * @return
      */
     public String parse(String exp) {
+        return this.parse(exp, String.class);
+    }
+
+    public <T> T parse(String exp, Class<T> clazz) {
         ExpressionParser parser = new SpelExpressionParser();
-        return parser.parseExpression(exp, new TemplateParserContext()).getValue(this,String.class);
+        return parser.parseExpression(exp, new TemplateParserContext()).getValue(this, clazz);
     }
 
     public DescriptorContext(ProjectRepresentation project, Map<String, Object> params) {
