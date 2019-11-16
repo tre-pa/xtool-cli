@@ -1,6 +1,8 @@
 package br.xtool.implementation;
 
+import br.xtool.context.WorkspaceContext;
 import br.xtool.core.Console;
+import br.xtool.representation.ProjectRepresentation;
 import org.apache.commons.lang3.StringUtils;
 import org.fusesource.jansi.Ansi;
 import org.fusesource.jansi.AnsiConsole;
@@ -19,6 +21,7 @@ import picocli.CommandLine;
 import picocli.shell.jline3.PicocliJLineCompleter;
 
 import java.io.IOException;
+import java.nio.file.Path;
 
 @Service
 public class ConsoleImpl implements Console {
@@ -27,6 +30,9 @@ public class ConsoleImpl implements Console {
 
     @Autowired
     private CommandLine cmd;
+
+    @Autowired
+    private WorkspaceContext workspaceContext;
 
     @Autowired
     private ApplicationEventPublisher publisher;
@@ -45,7 +51,7 @@ public class ConsoleImpl implements Console {
                 .completer(new PicocliJLineCompleter(cmd.getCommandSpec()))
                 .parser(new DefaultParser())
                 .build();
-        String prompt = Ansi.ansi().bold().fg(Ansi.Color.YELLOW).a("xtool:$ ").reset().toString();
+        String prompt = Ansi.ansi().render(getPromptFormat()).reset().toString();
         String rightPrompt = null;
         String line;
         try {
@@ -86,6 +92,11 @@ public class ConsoleImpl implements Console {
         System.out.println(Ansi.ansi().render(msg).reset());
     }
 
+    @Override
+    public void println(String msg, Object... args) {
+        System.out.println(Ansi.ansi().render(String.format(msg, args)).reset());
+    }
+
     private void printlnError(String msg) {
         System.out.println(Ansi.ansi().fg(Ansi.Color.RED).render(msg).reset());
     }
@@ -98,6 +109,21 @@ public class ConsoleImpl implements Console {
     @Override
     public Level getLevel() {
         return this.level;
+    }
+
+    @Override
+    public void registerPromptPath(Path path) {
+
+    }
+
+    @Override
+    public void registerPromptProject(ProjectRepresentation project) {
+
+    }
+
+    private String getPromptFormat() {
+        String promptFormat = "@|bold,yellow xtool|@:@|bold,green %s|@:$ ";
+        return String.format(promptFormat, workspaceContext.getWorkspace().getPath().getFileName());
     }
 
     @Override

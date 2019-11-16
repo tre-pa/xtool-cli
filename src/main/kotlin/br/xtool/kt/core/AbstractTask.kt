@@ -17,7 +17,7 @@ abstract class AbstractTask {
     fun exec(task: TaskDefRepresentation, ctx: DescriptorContext): Unit  {
         console.debug("${this::class.java.simpleName}.exec()")
         validate()
-        console.println("@|blue [TASK]|@ --- @|yellow ${ctx.parse(task.name)}|@ ---")
+        console.println("@|bold,blue [TASK]|@ --- @|yellow ${ctx.parse(task.name)}|@ ---")
         process(task, ctx)
     }
 }
