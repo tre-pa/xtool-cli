@@ -64,7 +64,9 @@ public class ExecCommand extends AbstractCommand {
             component.ifPresent(comp -> componentExecutor.run(
                     comp,
                     createDescriptorContext(comp,getParseResult())));
+            return;
         }
+        console.println(new CommandLine(this).getUsageMessage());
     }
 
     public DescriptorContext createDescriptorContext(ComponentRepresentation component, CommandLine.ParseResult parseResult) {

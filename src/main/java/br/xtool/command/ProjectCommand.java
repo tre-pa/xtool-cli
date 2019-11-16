@@ -9,10 +9,10 @@ import org.springframework.stereotype.Component;
 import picocli.CommandLine;
 
 @Component
-@CommandLine.Command(name = "project", description = "Comandos do projeto")
+@CommandLine.Command(name = "project", description = "Comando de gerenciamento de projetos do workspace")
 public class ProjectCommand extends AbstractCommand {
 
-    @CommandLine.Option(names = "--list", arity = "0..1", description = "Lista todos os projetos do workspace")
+    @CommandLine.Option(names = "--list", description = "Lista todos os projetos do workspace")
     private boolean listProjectsOption;
 
     @Autowired
@@ -23,13 +23,19 @@ public class ProjectCommand extends AbstractCommand {
 
     @Override
     public void run() {
-        if (listProjectsOption) printProjects();
+        if (listProjectsOption) {
+            printProjectList();
+            return;
+        };
+        console.println(new CommandLine(this).getUsageMessage());
     }
 
-    private void printProjects() {
-        console.println("total %d", workspaceContext.getWorkspace().getProjects().size());
-        workspaceContext.getWorkspace().getProjects().stream()
-                .forEach(p -> console.println("@|blue %s|@ -> %s", ((ProjectRepresentation) p).getName(), ((ProjectRepresentation) p).getType()));
-
+    private void printProjectList() {
+        if (listProjectsOption) {
+            console.println("total %d", workspaceContext.getWorkspace().getProjects().size());
+            workspaceContext.getWorkspace().getProjects().stream()
+                    .forEach(p -> console.println("@|blue %s|@ -> %s", ((ProjectRepresentation) p).getName(), ((ProjectRepresentation) p).getType()));
+            return;
+        }
     }
 }
