@@ -9,10 +9,10 @@ import org.springframework.stereotype.Component;
 import picocli.CommandLine;
 
 @Component
-@CommandLine.Command(name = "project", description = "Comando de gerenciamento de projetos do workspace")
-public class ProjectCommand extends AbstractCommand {
+@CommandLine.Command(name = "workspace", description = "Comando de gerenciamento de workspace")
+public class WorkspaceCommand extends AbstractCommand {
 
-    @CommandLine.Option(names = "--list", description = "Lista todos os projetos do workspace")
+    @CommandLine.Option(names = "--projects", description = "Lista todos os projetos do workspace")
     private boolean listProjectsOption;
 
     @Autowired
