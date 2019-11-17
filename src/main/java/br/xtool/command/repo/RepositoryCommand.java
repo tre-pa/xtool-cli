@@ -14,6 +14,9 @@ public class RepositoryCommand extends AbstractCommand {
     @CommandLine.Option(names = "--modules", description = "Lista todos os módulos xtool")
     private boolean listModulesOption;
 
+    @CommandLine.Option(names = "--components", description = "Lista todos os componentes xtool")
+    private boolean listComponentsOption;
+
     @Autowired
     private RepositoryContext repositoryContext;
 
@@ -25,8 +28,21 @@ public class RepositoryCommand extends AbstractCommand {
         if (listModulesOption) {
             printModuleList();
             return;
+        } else if(listComponentsOption) {
+            printComponentList();
+            return;
         }
         console.println(new CommandLine(this).getUsageMessage());
+    }
+
+    private void printComponentList() {
+        console.println("total %d", repositoryContext.getRepository().getModules().stream()
+                .flatMap(module -> module.getComponents().stream())
+                .count());
+        repositoryContext.getRepository().getModules().stream()
+                .flatMap(module -> module.getComponents().stream())
+                .forEach(component -> console.println("@|blue %s|@ -> %s", component.getName(), component.getDescriptor().getDef().getDescription()));
+        return;
     }
 
     private void printModuleList() {
