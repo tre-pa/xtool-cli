@@ -1,5 +1,6 @@
-package br.xtool.core;
+package br.xtool.context;
 
+import br.xtool.core.TemplateParserContext;
 import lombok.Getter;
 import org.springframework.expression.ExpressionParser;
 import org.springframework.expression.spel.standard.SpelExpressionParser;

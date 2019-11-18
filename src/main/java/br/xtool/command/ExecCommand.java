@@ -4,7 +4,7 @@ import br.xtool.context.RepositoryContext;
 import br.xtool.context.WorkspaceContext;
 import br.xtool.core.AbstractCommand;
 import br.xtool.core.Console;
-import br.xtool.core.DescriptorContext;
+import br.xtool.context.DescriptorContext;
 import br.xtool.kt.core.ComponentExecutor;
 import br.xtool.representation.repo.ComponentRepresentation;
 import org.springframework.beans.factory.annotation.Autowired;

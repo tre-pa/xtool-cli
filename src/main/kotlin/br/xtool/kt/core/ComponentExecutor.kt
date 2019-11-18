@@ -1,7 +1,8 @@
 package br.xtool.kt.core
 
+import br.xtool.context.DescriptorContext
+import br.xtool.context.TaskContext
 import br.xtool.core.Console
-import br.xtool.core.DescriptorContext
 import br.xtool.representation.repo.ComponentRepresentation
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Qualifier
@@ -13,7 +14,8 @@ class ComponentExecutor(@Autowired val console: Console,
 
     fun run(component: ComponentRepresentation, descriptorContext: DescriptorContext): Unit {
         console.debug("ComponentExecutor.run(name: ${component.name}, tasks: ${component.descriptor.def.tasks.size})")
-        component.descriptor.def.tasks.forEach { tasks[it.type]?.exec(it, descriptorContext) }
+
+        component.descriptor.def.tasks.forEach { tasks[it.type]?.exec(TaskContext(component, it, descriptorContext)) }
     }
 
 }
