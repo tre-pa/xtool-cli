@@ -4,6 +4,7 @@ import lombok.Getter;
 import org.springframework.expression.ExpressionParser;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
 
+import java.nio.file.Path;
 import java.util.Map;
 
 /**
@@ -11,6 +12,8 @@ import java.util.Map;
  */
 @Getter
 public class DescriptorContext {
+
+    private Path destination;
 
     /**
      * Retorna a referência dos parametros.
@@ -29,12 +32,17 @@ public class DescriptorContext {
         return this.parse(exp, String.class);
     }
 
+    public void updateDestination(Path destination) {
+        this.destination = destination;
+    }
+
     public <T> T parse(String exp, Class<T> clazz) {
         ExpressionParser parser = new SpelExpressionParser();
         return parser.parseExpression(exp, new TemplateParserContext()).getValue(this, clazz);
     }
 
-    public DescriptorContext(Map<String, Object> params) {
+    public DescriptorContext(Path defaultDestionation ,Map<String, Object> params) {
+        this.destination = defaultDestionation;
         this.params = params;
     }
 }

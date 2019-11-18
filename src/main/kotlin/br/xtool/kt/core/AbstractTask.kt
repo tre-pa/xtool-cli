@@ -10,14 +10,14 @@ abstract class AbstractTask {
     @Autowired
     lateinit var console: Console
 
-    abstract fun process(task: TaskDefRepresentation, ctx: DescriptorContext)
+    abstract fun process(taskDef: TaskDefRepresentation, ctx: DescriptorContext)
 
-    abstract fun validate()
+    abstract fun validate(taskDef: TaskDefRepresentation)
 
-    fun exec(task: TaskDefRepresentation, ctx: DescriptorContext): Unit  {
+    fun exec(taskDef: TaskDefRepresentation, ctx: DescriptorContext): Unit  {
         console.debug("${this::class.java.simpleName}.exec()")
-        validate()
-        console.println("@|bold,blue [TASK]|@ --- @|yellow ${ctx.parse(task.name)}|@ ---")
-        process(task, ctx)
+        validate(taskDef)
+        console.println("@|bold,blue [TASK]|@ --- @|yellow ${ctx.parse(taskDef.name)}|@ @|bold,white (${taskDef.type})|@ ---")
+        process(taskDef, ctx)
     }
 }
