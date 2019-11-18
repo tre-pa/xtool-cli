@@ -1,6 +1,5 @@
 package br.xtool.core;
 
-import br.xtool.representation.ProjectRepresentation;
 import lombok.Getter;
 import org.springframework.expression.ExpressionParser;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
@@ -12,12 +11,6 @@ import java.util.Map;
  */
 @Getter
 public class DescriptorContext {
-    /**
-     * Retorna a referência do projeto.
-     *
-     * @return
-     */
-    private ProjectRepresentation project;
 
     /**
      * Retorna a referência dos parametros.
@@ -41,8 +34,7 @@ public class DescriptorContext {
         return parser.parseExpression(exp, new TemplateParserContext()).getValue(this, clazz);
     }
 
-    public DescriptorContext(ProjectRepresentation project, Map<String, Object> params) {
-        this.project = project;
+    public DescriptorContext(Map<String, Object> params) {
         this.params = params;
     }
 }

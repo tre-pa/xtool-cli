@@ -75,7 +75,7 @@ public class ExecCommand extends AbstractCommand {
                 .collect(Collectors.toMap(
                         op -> component.getDescriptor().getDef().findParamByLabel(op.names()[0]).getId(),
                         op -> op.getValue()));
-        return new DescriptorContext(workspaceContext.getWorkingProject(), params);
+        return new DescriptorContext(params);
     }
 
 }

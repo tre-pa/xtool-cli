@@ -1,38 +1,23 @@
 package br.xtool.implementation;
 
-import java.io.StringWriter;
-import java.lang.ProcessBuilder.Redirect;
-import java.nio.file.Path;
-import java.util.HashMap;
-import java.util.Map;
-
+import br.xtool.core.Shell;
+import lombok.SneakyThrows;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.xtool.core.Shell;
-import br.xtool.context.WorkspaceContext;
-import lombok.SneakyThrows;
+import java.io.StringWriter;
+import java.nio.file.Path;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class ShellImpl implements Shell {
 
-	@Autowired
-	private WorkspaceContext workspace;
 
 	@Autowired
 	private VelocityEngine velocityEngine;
-
-	@Override
-	public int runCmd(String command) {
-		return runCmd(this.workspace.getWorkingProject().getPath(), command, new HashMap<>());
-	}
-
-	@Override
-	public int runCmd(String command, Map<String, Object> vars) {
-		return runCmd(this.workspace.getWorkingProject().getPath(), command, vars);
-	}
 
 	@Override
 	public int runCmd(Path path, String command) {
@@ -53,14 +38,14 @@ public class ShellImpl implements Shell {
 		return process.waitFor();
 	}
 
-	@Override
-	@SneakyThrows
-	public int runScript(String name) {
-		ProcessBuilder pb = new ProcessBuilder(System.getProperty("user.dir").concat("/src/main/resources/scripts/".concat(name).concat(".sh")));
-		pb.redirectOutput(Redirect.INHERIT);
-		Process process = pb.start();
-//		Process process = Runtime.getRuntime().exec();
-		return 0;
-	}
+//	@Override
+//	@SneakyThrows
+//	public int runScript(String name) {
+//		ProcessBuilder pb = new ProcessBuilder(System.getProperty("user.dir").concat("/src/main/resources/scripts/".concat(name).concat(".sh")));
+//		pb.redirectOutput(Redirect.INHERIT);
+//		Process process = pb.start();
+////		Process process = Runtime.getRuntime().exec();
+//		return 0;
+//	}
 
 }
