@@ -16,18 +16,18 @@ import java.nio.file.Path
 class DestinationTask(@Autowired val workspaceContext: WorkspaceContext): AbstractTask() {
 
     override fun process(taskContext: TaskContext) {
-        console.debug(">>> MkdirTask.process()")
+        console.debug("[DEBUG] MkdirTask.process()")
         val destination: String = taskContext.taskDef.task["destination"] as String
         val path: Path = workspaceContext.workspace.path.resolve(taskContext.descriptorContext.parse(destination));
         if(Files.notExists(path)){
             Files.createDirectories(path);
-            console.println("      @|green >|@ Criando diretório: ${path}")
+            console.println("@|green >|@ Criando diretório: ${path}")
         }
         taskContext.descriptorContext.updateDestination(path)
-        console.println("      @|green >|@ Alterando diretório de destino para: ${path}")
+        console.println("@|green >|@ Alterando diretório de destino para: ${path}")
     }
 
     override fun validate(taskDef: TaskDefRepresentation) {
-        console.debug(">>> MkdirTask.validate()")
+        console.debug("[DEBUG] MkdirTask.validate()")
     }
 }

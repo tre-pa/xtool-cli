@@ -11,7 +11,7 @@ class DescriptorRepresentationImpl private constructor(
         private val descriptor: Map<String, Any>) : DescriptorYmlRepresentation {
 
     override fun getComponentDef(): ComponentDefRepresentation {
-        return DefRepresentationImpl(this.descriptor["def"] as Map<String, Any>, this)
+        return ComponentDefRepresentationImpl(this.descriptor["def"] as Map<String, Any>, this)
     }
 
     override fun getComponent() = this.component;

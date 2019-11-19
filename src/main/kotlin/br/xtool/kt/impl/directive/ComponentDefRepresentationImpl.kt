@@ -5,13 +5,13 @@ import br.xtool.representation.repo.directive.DescriptorYmlRepresentation
 import br.xtool.representation.repo.directive.ParamDefRepresentation
 import br.xtool.representation.repo.directive.TaskDefRepresentation
 import org.apache.commons.lang3.tuple.Pair
+import picocli.CommandLine
 import java.util.*
 
 
-class DefRepresentationImpl(
+class ComponentDefRepresentationImpl(
         private val def: Map<String, Any>,
         private val descriptorYml: DescriptorYmlRepresentation): ComponentDefRepresentation {
-
 
     override fun getDescription() = def["description"] as String
 
@@ -24,8 +24,6 @@ class DefRepresentationImpl(
         return paramsDef.map(::ParamDefRepresentationImpl).toMutableList()
     }
 
-    override fun findParamByLabel(label: String?) = this.params.find { it.label == label }
-
     override fun getDepends() = Optional.ofNullable(def["depends"] as String?)
 
     override fun getAvailability(): Optional<Pair<String, String>> {
@@ -36,4 +34,11 @@ class DefRepresentationImpl(
         val tasksDef: List<Map<String, Any>> = def["tasks"] as List<Map<String, Any>>
         return tasksDef.map(::TaskDefRepresentationImpl).toMutableList();
     }
+    override fun findParamByLabel(label: String?) = this.params.find { it.label == label }
+
+    override fun getParamDefValues(parseResult: CommandLine.ParseResult?) =
+        parseResult?.subcommand()?.subcommand()?.matchedOptions()?.asSequence()?.
+                map { op -> this.descriptorYml.componentDef.findParamByLabel(op.names()[0]).id to op.getValue<Any>() }?.
+                toMap()
+
 }

@@ -1,8 +1,10 @@
 package br.xtool.representation.repo.directive;
 
 import org.apache.commons.lang3.tuple.Pair;
+import picocli.CommandLine;
 
 import java.util.Collection;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -38,13 +40,6 @@ public interface ComponentDefRepresentation {
      */
     Collection<ParamDefRepresentation> getParams();
 
-    /**
-     * Retorna o parametro pelo nome.
-     *
-     * @param label
-     * @return
-     */
-    ParamDefRepresentation findParamByLabel(String label);
 
     /**
      * Retorna o componente de dependência.
@@ -68,4 +63,19 @@ public interface ComponentDefRepresentation {
      */
     Collection<TaskDefRepresentation> getTasks();
 
+    /**
+     * Retorna o parametro pelo nome.
+     *
+     * @param label
+     * @return
+     */
+    ParamDefRepresentation findParamByLabel(String label);
+
+    /**
+     * Retorna os valores dos parametros.
+     *
+     * @param parseResult
+     * @return
+     */
+    Map<String, Object> getParamDefValues(CommandLine.ParseResult parseResult);
 }

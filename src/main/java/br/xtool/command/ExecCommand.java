@@ -1,10 +1,10 @@
 package br.xtool.command;
 
+import br.xtool.context.DescriptorContext;
 import br.xtool.context.RepositoryContext;
 import br.xtool.context.WorkspaceContext;
 import br.xtool.core.AbstractCommand;
 import br.xtool.core.Console;
-import br.xtool.context.DescriptorContext;
 import br.xtool.kt.core.ComponentExecutor;
 import br.xtool.representation.repo.ComponentRepresentation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +13,7 @@ import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Model.CommandSpec;
 
-import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  * Comando de execução de componentes.
@@ -70,12 +68,8 @@ public class ExecCommand extends AbstractCommand {
     }
 
     public DescriptorContext createDescriptorContext(ComponentRepresentation component, CommandLine.ParseResult parseResult) {
-        Map<String, Object> params = parseResult.subcommand().subcommand().matchedOptions()
-                .stream()
-                .collect(Collectors.toMap(
-                        op -> component.getDescriptor().getComponentDef().findParamByLabel(op.names()[0]).getId(),
-                        op -> op.getValue()));
-        return new DescriptorContext(workspaceContext.getWorkspace().getPath(),params);
+        return new DescriptorContext(
+                workspaceContext.getWorkspace().getPath(),
+                component.getDescriptor().getComponentDef().getParamDefValues(parseResult));
     }
-
 }
