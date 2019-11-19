@@ -2,7 +2,7 @@ package br.xtool.implementation.representation.repo;
 
 import br.xtool.kt.impl.directive.DescriptorRepresentationImpl;
 import br.xtool.representation.repo.ComponentRepresentation;
-import br.xtool.representation.repo.directive.DescriptorRepresentation;
+import br.xtool.representation.repo.directive.DescriptorYmlRepresentation;
 import br.xtool.representation.repo.ModuleRepresentation;
 import lombok.ToString;
 
@@ -16,7 +16,7 @@ public class ComponentRepresentationImpl implements ComponentRepresentation {
 
     private ModuleRepresentation module;
 
-    private DescriptorRepresentation descriptor;
+    private DescriptorYmlRepresentation descriptor;
 
     public ComponentRepresentationImpl(Path path, ModuleRepresentation module) {
         this.path = path;
@@ -49,7 +49,7 @@ public class ComponentRepresentationImpl implements ComponentRepresentation {
     }
 
     @Override
-    public DescriptorRepresentation getDescriptor() {
+    public DescriptorYmlRepresentation getDescriptor() {
         if(Objects.isNull(descriptor)) {
             this.descriptor = DescriptorRepresentationImpl.Companion.of(this);
         }

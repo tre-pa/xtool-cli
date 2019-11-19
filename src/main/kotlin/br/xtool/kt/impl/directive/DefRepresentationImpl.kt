@@ -1,7 +1,7 @@
 package br.xtool.kt.impl.directive
 
-import br.xtool.representation.repo.directive.DefRepresentation
-import br.xtool.representation.repo.directive.DescriptorRepresentation
+import br.xtool.representation.repo.directive.ComponentDefRepresentation
+import br.xtool.representation.repo.directive.DescriptorYmlRepresentation
 import br.xtool.representation.repo.directive.ParamDefRepresentation
 import br.xtool.representation.repo.directive.TaskDefRepresentation
 import org.apache.commons.lang3.tuple.Pair
@@ -10,14 +10,14 @@ import java.util.*
 
 class DefRepresentationImpl(
         private val def: Map<String, Any>,
-        private val descriptor: DescriptorRepresentation): DefRepresentation {
+        private val descriptorYml: DescriptorYmlRepresentation): ComponentDefRepresentation {
 
 
     override fun getDescription() = def["description"] as String
 
     override fun getVersion() = def["version"] as String
 
-    override fun getDescriptor() = this.descriptor
+    override fun getDescriptorYml() = this.descriptorYml
 
     override fun getParams(): MutableCollection<ParamDefRepresentation> {
         val paramsDef: List<Map<String, Any>> = def["params"] as List<Map<String, Any>>

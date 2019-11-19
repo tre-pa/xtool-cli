@@ -38,32 +38,32 @@ public class XDefAngularAppComponentTestCase {
 
     @Test
     public void angularAppComponent_DefDirectiveIsPresentTest() {
-        Assert.assertTrue(angularAppComponent.get().getDescriptor().getDef().getDescription().equals("Gerador de scaffolding de projetos angular com DevExtreme."));
+        Assert.assertTrue(angularAppComponent.get().getDescriptor().getComponentDef().getDescription().equals("Gerador de scaffolding de projetos angular com DevExtreme."));
     }
 
     @Test
     public void angularAppComponent_DefVersionDirectiveIsPresentTest() {
-        Assert.assertTrue(angularAppComponent.get().getDescriptor().getDef().getVersion().equals("1.0.0"));
+        Assert.assertTrue(angularAppComponent.get().getDescriptor().getComponentDef().getVersion().equals("1.0.0"));
     }
 
     @Test
     public void angularAppComponent_DependesDirectiveNotPresentTest() {
-        Assert.assertFalse(angularAppComponent.get().getDescriptor().getDef().getDepends().isPresent());
+        Assert.assertFalse(angularAppComponent.get().getDescriptor().getComponentDef().getDepends().isPresent());
 
     }
 
     @Test
     public void angularAppComponente_ParamsDirectiveIsPresent() {
-        Assert.assertTrue(angularAppComponent.get().getDescriptor().getDef().getParams().size() == 2);
-        angularAppComponent.get().getDescriptor().getDef().getParams()
+        Assert.assertTrue(angularAppComponent.get().getDescriptor().getComponentDef().getParams().size() == 2);
+        angularAppComponent.get().getDescriptor().getComponentDef().getParams()
                 .stream()
                 .forEach(p -> System.out.println("Id: "+p.getId()+", label: "+p.getLabel()+" type: "+p.getType()));
     }
 
     @Test
     public void angularAppComponent_TaskDirectiveIsPresent() {
-        Assert.assertTrue(angularAppComponent.get().getDescriptor().getDef().getTasks().size() == 6);
-        angularAppComponent.get().getDescriptor().getDef().getTasks()
+        Assert.assertTrue(angularAppComponent.get().getDescriptor().getComponentDef().getTasks().size() == 6);
+        angularAppComponent.get().getDescriptor().getComponentDef().getTasks()
                 .stream()
                 .forEach(p -> System.out.println(p.getTask()));
     }

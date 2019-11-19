@@ -13,9 +13,9 @@ class ComponentExecutor(@Autowired val console: Console,
                         @Autowired @Qualifier("tasks") val tasks: Map<String, AbstractTask>) {
 
     fun run(component: ComponentRepresentation, descriptorContext: DescriptorContext): Unit {
-        console.debug("ComponentExecutor.run(name: ${component.name}, tasks: ${component.descriptor.def.tasks.size})")
+        console.debug("ComponentExecutor.run(name: ${component.name}, tasks: ${component.descriptor.componentDef.tasks.size})")
 
-        component.descriptor.def.tasks.forEach { tasks[it.type]?.exec(TaskContext(component, it, descriptorContext)) }
+        component.descriptor.componentDef.tasks.forEach { tasks[it.type]?.exec(TaskContext(component, it, descriptorContext)) }
     }
 
 }

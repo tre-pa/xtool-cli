@@ -41,7 +41,7 @@ public class RepositoryCommand extends AbstractCommand {
                 .count());
         repositoryContext.getRepository().getModules().stream()
                 .flatMap(module -> module.getComponents().stream())
-                .forEach(component -> console.println("@|blue %s|@ -> %s", component.getName(), component.getDescriptor().getDef().getDescription()));
+                .forEach(component -> console.println("@|blue %s|@ -> %s", component.getName(), component.getDescriptor().getComponentDef().getDescription()));
         return;
     }
 

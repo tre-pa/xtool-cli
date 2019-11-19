@@ -5,7 +5,7 @@ import br.xtool.context.RepositoryContext;
 import br.xtool.implementation.representation.repo.RepositoryRepresentationImpl;
 import br.xtool.representation.repo.ComponentRepresentation;
 import br.xtool.representation.repo.RepositoryRepresentation;
-import br.xtool.representation.repo.directive.DescriptorRepresentation;
+import br.xtool.representation.repo.directive.DescriptorYmlRepresentation;
 import br.xtool.representation.repo.directive.ParamDefRepresentation;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,9 +46,9 @@ public class RepositoryContextImpl implements RepositoryContext {
 	}
 
 	@Override
-	public CommandLine.Model.CommandSpec create(DescriptorRepresentation descriptor) {
+	public CommandLine.Model.CommandSpec create(DescriptorYmlRepresentation descriptor) {
 		CommandLine.Model.CommandSpec commandSpec = CommandLine.Model.CommandSpec.create();
-		descriptor.getDef().getParams().forEach(xparam -> commandSpec.addOption(this.create(xparam)));
+		descriptor.getComponentDef().getParams().forEach(xparam -> commandSpec.addOption(this.create(xparam)));
 		return commandSpec;
 	}
 

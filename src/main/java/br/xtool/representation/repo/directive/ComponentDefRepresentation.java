@@ -8,7 +8,7 @@ import java.util.Optional;
 /**
  * Classe que representa a definição do 'component'.
  */
-public interface DefRepresentation {
+public interface ComponentDefRepresentation {
 
     /**
      * Retorna a descrição do componente
@@ -29,7 +29,7 @@ public interface DefRepresentation {
      *
      * @return
      */
-    DescriptorRepresentation getDescriptor();
+    DescriptorYmlRepresentation getDescriptorYml();
 
     /**
      * Retorna a lista de directivas de paramentros.

@@ -10,8 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired
 @Task(type = "tpl")
 class TplTask(@Autowired val workspaceContext: WorkspaceContext): AbstractTask() {
     override fun process(taskContext: TaskContext) {
-        val taskParams: Map<String, Any> = taskContext.taskDef.task["tpl"] as Map<String, Any>
-        val src: String = taskParams["src"] as String
+//        val taskParams: Map<String, Any> = taskContext.taskDef.task["tpl"] as Map<String, Any>
+//        val src: String = taskParams["src"] as String
 
     }
 

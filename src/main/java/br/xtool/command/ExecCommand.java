@@ -73,7 +73,7 @@ public class ExecCommand extends AbstractCommand {
         Map<String, Object> params = parseResult.subcommand().subcommand().matchedOptions()
                 .stream()
                 .collect(Collectors.toMap(
-                        op -> component.getDescriptor().getDef().findParamByLabel(op.names()[0]).getId(),
+                        op -> component.getDescriptor().getComponentDef().findParamByLabel(op.names()[0]).getId(),
                         op -> op.getValue()));
         return new DescriptorContext(workspaceContext.getWorkspace().getPath(),params);
     }
