@@ -17,6 +17,9 @@ public class RepositoryCommand extends AbstractCommand {
     @CommandLine.Option(names = "--components", description = "Lista todos os componentes xtool")
     private boolean listComponentsOption;
 
+    @CommandLine.Option(names = "--list", description = "Lista todos os repositórios xtool")
+    private boolean listRepositoriesOption;
+
     @Autowired
     private RepositoryContext repositoryContext;
 
@@ -28,15 +31,18 @@ public class RepositoryCommand extends AbstractCommand {
         if (listModulesOption) {
             printModuleList();
             return;
-        } else if(listComponentsOption) {
+        } else if (listComponentsOption) {
             printComponentList();
             return;
+        } else if(listRepositoriesOption) {
+            printRepoList();
+            return;
         }
-        console.println(new CommandLine(this).getUsageMessage());
+        this.printCurrentRepo();
     }
 
     private void printComponentList() {
-        console.println("total %d", repositoryContext.getWorkingRepository().getModules().stream()
+        console.println("%s / total %d", repositoryContext.getWorkingRepository().getName(), repositoryContext.getWorkingRepository().getModules().stream()
                 .flatMap(module -> module.getComponents().stream())
                 .count());
         repositoryContext.getWorkingRepository().getModules().stream()
@@ -46,8 +52,18 @@ public class RepositoryCommand extends AbstractCommand {
     }
 
     private void printModuleList() {
-        console.println("total %d", repositoryContext.getWorkingRepository().getModules().size());
+        console.println("%s / total %d", repositoryContext.getWorkingRepository().getName(), repositoryContext.getWorkingRepository().getModules().size());
         repositoryContext.getWorkingRepository().getModules().stream()
                 .forEach(module -> console.println("@|blue %s|@ -> %d componentes", module.getName(), module.getComponents().size()));
+    }
+
+    private void printRepoList() {
+        console.println("total %d", repositoryContext.getRepositories().size());
+        repositoryContext.getRepositories().stream()
+                .forEach(repo -> console.println("@|blue %s|@ -> %d modules", repo.getName(), repo.getModules().size()));
+    }
+
+    private void printCurrentRepo() {
+        console.println("%s", repositoryContext.getWorkingRepository().getName());
     }
 }
