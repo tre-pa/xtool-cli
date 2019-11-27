@@ -5,6 +5,7 @@ import br.xtool.representation.repo.RepositoryRepresentation;
 import br.xtool.representation.repo.directive.DescriptorYmlRepresentation;
 import picocli.CommandLine;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -19,7 +20,7 @@ public interface RepositoryContext {
      *
      * @return RepositoryContext
      */
-    RepositoryRepresentation getRepository();
+    List<RepositoryRepresentation> getRepositories();
 
     /**
      * Retorna o repositório de trabalho.

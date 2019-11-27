@@ -3,6 +3,7 @@ package br.xtool.context;
 import br.xtool.representation.repo.ComponentRepresentation;
 import br.xtool.representation.repo.directive.TaskDefRepresentation;
 
+@Deprecated
 public class TaskContext {
 
     private ComponentRepresentation component;

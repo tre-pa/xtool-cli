@@ -47,7 +47,7 @@ public class ExecCommand extends AbstractCommand {
      * @param execSpec
      */
     private void addComponentCommands(CommandSpec execSpec) {
-        repositoryContext.getRepository().getModules()
+        repositoryContext.getWorkingRepository().getModules()
                 .stream()
                 .flatMap(modules -> modules.getComponents().stream())
                 .map(ComponentRepresentation::getDescriptor)

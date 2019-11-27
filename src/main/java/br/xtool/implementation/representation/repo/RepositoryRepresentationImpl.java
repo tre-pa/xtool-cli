@@ -1,14 +1,14 @@
 package br.xtool.implementation.representation.repo;
 
+import br.xtool.representation.repo.ModuleRepresentation;
+import br.xtool.representation.repo.RepositoryRepresentation;
+import lombok.SneakyThrows;
+
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import br.xtool.representation.repo.ModuleRepresentation;
-import br.xtool.representation.repo.RepositoryRepresentation;
-import lombok.SneakyThrows;
 
 public class RepositoryRepresentationImpl implements RepositoryRepresentation {
 
@@ -19,6 +19,11 @@ public class RepositoryRepresentationImpl implements RepositoryRepresentation {
 	public RepositoryRepresentationImpl(Path path) {
 		super();
 		this.path = path;
+	}
+
+	@Override
+	public String getName() {
+		return this.path.getFileName().toString();
 	}
 
 	@Override

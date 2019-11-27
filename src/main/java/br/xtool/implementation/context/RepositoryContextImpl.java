@@ -1,7 +1,7 @@
 package br.xtool.implementation.context;
 
-import br.xtool.core.Console;
 import br.xtool.context.RepositoryContext;
+import br.xtool.core.Console;
 import br.xtool.implementation.representation.repo.RepositoryRepresentationImpl;
 import br.xtool.representation.repo.ComponentRepresentation;
 import br.xtool.representation.repo.RepositoryRepresentation;
@@ -13,8 +13,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import picocli.CommandLine;
 
+import javax.annotation.PostConstruct;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class RepositoryContextImpl implements RepositoryContext {
@@ -29,10 +33,21 @@ public class RepositoryContextImpl implements RepositoryContext {
 
 	private RepositoryRepresentation workingRepository;
 
+	@PostConstruct
+	private void init() {
+		RepositoryRepresentation repository = this.getRepositories().stream()
+				.filter(repo -> repo.getName().equals(RepositoryRepresentation.MASTER_REPOSITORY))
+				.findFirst()
+				.orElseThrow(() -> new IllegalArgumentException(String.format("Repositório 'master' não encontrado.")));
+		this.setWorkingRepository(repository);
+	}
+
 	@Override
 	@SneakyThrows
-	public RepositoryRepresentation getRepository() {
-		return new RepositoryRepresentationImpl(path);
+	public List<RepositoryRepresentation> getRepositories() {
+		return Files.list(path)
+				.map(p -> new RepositoryRepresentationImpl(p))
+				.collect(Collectors.toList());
 	}
 
 	@Override
@@ -62,7 +77,7 @@ public class RepositoryContextImpl implements RepositoryContext {
 
 	@Override
 	public Optional<ComponentRepresentation> findComponentByName(String name) {
-		return this.getRepository().getModules()
+		return this.getWorkingRepository().getModules()
 				.stream()
 				.flatMap(module -> module.getComponents().stream())
 				.filter(componente -> componente.getName().equals(name))

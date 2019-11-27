@@ -85,7 +85,7 @@ if [ ! -d "$1" ]; then
 fi
 
 if [ ! -d "$REPOSITORY_HOME" ]; then
-  mkdir -p $REPOSITORY_HOME
+  mkdir -p $REPOSITORY_HOME/master
   echo -e "${__YELLOW__}"
   echo -e "Diretório de repositório de componentes '$REPOSITORY_HOME' criado com sucesso. "
   echo -e "${__NORMAL__}"
