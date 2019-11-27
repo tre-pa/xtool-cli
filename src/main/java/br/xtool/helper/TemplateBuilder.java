@@ -1,11 +1,12 @@
 package br.xtool.helper;
 
-import java.util.Map;
-
 import org.apache.commons.lang3.StringUtils;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 
+import java.util.Map;
+
+@Deprecated
 public abstract class TemplateBuilder {
 
 	public static TemplateBuilderBuilder builder() {

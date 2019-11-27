@@ -9,6 +9,7 @@ import java.util.Map;
  * @author jcruz
  *
  */
+@Deprecated
 public interface Shell {
 
 	/**

@@ -1,7 +1,5 @@
 package br.xtool.config;
 
-import java.io.IOException;
-
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.exception.VelocityException;
 import org.apache.velocity.runtime.RuntimeConstants;
@@ -9,7 +7,10 @@ import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.io.IOException;
+
 @Configuration
+@Deprecated
 public class VelocityEngineConfig {
 
 	@Bean

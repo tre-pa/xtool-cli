@@ -1,9 +1,9 @@
 package br.xtool.core;
 
+import br.xtool.representation.ProjectRepresentation;
+
 import java.nio.file.Path;
 import java.util.Map;
-
-import br.xtool.representation.ProjectRepresentation;
 
 /**
  * Serviços para operações em FileSystem.
@@ -11,6 +11,7 @@ import br.xtool.representation.ProjectRepresentation;
  * @author jcruz
  *
  */
+@Deprecated
 public interface FS {
 
 	/**

@@ -12,6 +12,7 @@ import java.util.Map;
  * Classe com o payload para a execução das terefas.
  */
 @Getter
+@Deprecated
 public class DescriptorContext {
 
     private Path destination;
