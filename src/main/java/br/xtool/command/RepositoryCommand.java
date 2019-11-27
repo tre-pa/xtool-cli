@@ -1,5 +1,6 @@
 package br.xtool.command;
 
+import br.xtool.annotation.OptionFn;
 import br.xtool.command.subcommand.CreateRepositoryComponentCommand;
 import br.xtool.context.RepositoryContext;
 import br.xtool.command.core.AbstractCommand;
@@ -28,22 +29,8 @@ public class RepositoryCommand extends AbstractCommand {
     @Autowired
     private Console console;
 
-    @Override
-    public void run() {
-        if (listModulesOption) {
-            printModuleList();
-            return;
-        } else if (listComponentsOption) {
-            printComponentList();
-            return;
-        } else if(listRepositoriesOption) {
-            printRepoList();
-            return;
-        }
-        this.printCurrentRepo();
-    }
-
-    private void printComponentList() {
+    @OptionFn("--components")
+    public void printComponentList() {
         console.println("%s / total %d", repositoryContext.getWorkingRepository().getName(), repositoryContext.getWorkingRepository().getModules().stream()
                 .flatMap(module -> module.getComponents().stream())
                 .count());
@@ -53,19 +40,21 @@ public class RepositoryCommand extends AbstractCommand {
         return;
     }
 
-    private void printModuleList() {
+    @OptionFn("--modules")
+    public void printModuleList() {
         console.println("%s / total %d", repositoryContext.getWorkingRepository().getName(), repositoryContext.getWorkingRepository().getModules().size());
         repositoryContext.getWorkingRepository().getModules().stream()
                 .forEach(module -> console.println("@|blue %s|@ -> %d componentes", module.getName(), module.getComponents().size()));
     }
 
-    private void printRepoList() {
+    @OptionFn("--list")
+    public void printRepoList() {
         console.println("total %d", repositoryContext.getRepositories().size());
         repositoryContext.getRepositories().stream()
                 .forEach(repo -> console.println("@|blue %s|@ -> %d modules", repo.getName(), repo.getModules().size()));
     }
 
-    private void printCurrentRepo() {
+    public void printCurrentRepo() {
         console.println("%s", repositoryContext.getWorkingRepository().getName());
     }
 }

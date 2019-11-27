@@ -36,6 +36,7 @@ public class CommandDispatcher {
         console.debug("@|magenta CommandDispatcher.process(command=%s, args=%s)|@", commands, parseResult.subcommand().matchedOptions());
 
         AbstractCommand command = commandList.get(commands.getFirst());
+        command.setCommandList(commandList);
         command.setParseResult(parseResult);
         command.run();
     }
