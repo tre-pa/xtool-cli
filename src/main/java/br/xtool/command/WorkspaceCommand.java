@@ -1,7 +1,7 @@
-package br.xtool.picocli.command;
+package br.xtool.command;
 
 import br.xtool.context.WorkspaceContext;
-import br.xtool.core.AbstractCommand;
+import br.xtool.command.core.AbstractCommand;
 import br.xtool.core.Console;
 import br.xtool.representation.ProjectRepresentation;
 import org.springframework.beans.factory.annotation.Autowired;

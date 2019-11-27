@@ -1,6 +1,5 @@
-package br.xtool.picocli;
+package br.xtool.command.core;
 
-import br.xtool.core.AbstractCommand;
 import br.xtool.core.Console;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;

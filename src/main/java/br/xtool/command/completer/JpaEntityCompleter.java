@@ -1,4 +1,4 @@
-package br.xtool.picocli.completer;
+package br.xtool.command.completer;
 
 import br.xtool.context.WorkspaceContext;
 import org.springframework.beans.factory.annotation.Autowired;

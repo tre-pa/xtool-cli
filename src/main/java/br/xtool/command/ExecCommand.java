@@ -1,9 +1,9 @@
-package br.xtool.picocli.command;
+package br.xtool.command;
 
 import br.xtool.context.DescriptorContext;
 import br.xtool.context.RepositoryContext;
 import br.xtool.context.WorkspaceContext;
-import br.xtool.core.AbstractCommand;
+import br.xtool.command.core.AbstractCommand;
 import br.xtool.core.Console;
 import br.xtool.kt.core.ComponentExecutor;
 import br.xtool.representation.repo.ComponentRepresentation;

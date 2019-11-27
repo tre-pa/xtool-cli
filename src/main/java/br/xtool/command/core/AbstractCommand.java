@@ -1,4 +1,4 @@
-package br.xtool.core;
+package br.xtool.command.core;
 
 
 import lombok.Getter;

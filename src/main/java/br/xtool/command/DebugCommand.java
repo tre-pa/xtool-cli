@@ -1,6 +1,6 @@
-package br.xtool.picocli.command;
+package br.xtool.command;
 
-import br.xtool.core.AbstractCommand;
+import br.xtool.command.core.AbstractCommand;
 import br.xtool.core.Console;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
