@@ -1,5 +1,7 @@
-package br.xtool.core;
+package br.xtool.picocli;
 
+import br.xtool.core.AbstractCommand;
+import br.xtool.core.Console;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

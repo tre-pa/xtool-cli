@@ -1,4 +1,4 @@
-package br.xtool.command;
+package br.xtool.picocli.command;
 
 import br.xtool.core.AbstractCommand;
 import br.xtool.core.Console;

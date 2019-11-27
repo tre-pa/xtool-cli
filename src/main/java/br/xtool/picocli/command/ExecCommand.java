@@ -1,4 +1,4 @@
-package br.xtool.command;
+package br.xtool.picocli.command;
 
 import br.xtool.context.DescriptorContext;
 import br.xtool.context.RepositoryContext;

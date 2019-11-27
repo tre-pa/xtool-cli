@@ -1,4 +1,4 @@
 /**
  * Pacote os comandos da aplicação Xtool.
  */
-package br.xtool.command;
+package br.xtool.picocli.command;

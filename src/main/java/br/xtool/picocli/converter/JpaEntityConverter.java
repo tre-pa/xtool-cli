@@ -1,4 +1,4 @@
-package br.xtool.converter;
+package br.xtool.picocli.converter;
 
 import br.xtool.type.JpaEntity;
 import org.springframework.stereotype.Component;
