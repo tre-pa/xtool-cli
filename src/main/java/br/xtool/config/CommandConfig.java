@@ -1,6 +1,6 @@
 package br.xtool.config;
 
-import br.xtool.core.AbstractCommand;
+import br.xtool.command.core.AbstractCommand;
 import br.xtool.context.RepositoryContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -15,7 +15,7 @@ import java.util.Map;
 public class CommandConfig {
 
     @Autowired
-    private List<AbstractCommand> commands;
+    private List<? extends AbstractCommand> commands;
 
     @Autowired
     private RepositoryContext repositoryContext;
