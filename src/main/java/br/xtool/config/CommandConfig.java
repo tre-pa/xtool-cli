@@ -2,6 +2,7 @@ package br.xtool.config;
 
 import br.xtool.command.core.AbstractCommand;
 import br.xtool.context.RepositoryContext;
+import br.xtool.core.CommandFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,6 +19,9 @@ public class CommandConfig {
     private List<? extends AbstractCommand> commands;
 
     @Autowired
+    private CommandFactory commandFactory;
+
+    @Autowired
     private RepositoryContext repositoryContext;
 
     /**
@@ -27,7 +31,7 @@ public class CommandConfig {
      */
     @Bean
     public CommandLine getCommandLine() {
-        CommandLine cmdLine = new CommandLine(new CoreCommand());
+        CommandLine cmdLine = new CommandLine(new CoreCommand(), commandFactory);
         for (AbstractCommand cmd : commands) {
             cmd.setup(cmdLine);
         }
