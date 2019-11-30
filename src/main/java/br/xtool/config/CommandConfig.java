@@ -8,7 +8,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import picocli.CommandLine;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Configuration
 public class CommandConfig {
@@ -32,14 +35,14 @@ public class CommandConfig {
         CommandLine cmdLine = new CommandLine(new CoreCommand(), commandFactory);
         List<String> subcommands = new ArrayList<>();
         for (AbstractCommand cmd : commands) {
-            // Registra os subcomandos
-            CommandLine.Command cmdAnn = cmd.getClass().getAnnotation(CommandLine.Command.class);
-            if(cmdAnn.subcommands().length > 0) {
-                Arrays.asList(cmdAnn.subcommands()).stream()
-                        .map(subcommandClass -> subcommandClass.getName())
-                        .forEach(subcommandClass -> subcommands.add(subcommandClass));
-            }
-            if(subcommands.stream().noneMatch(s -> s.equals(cmd.getClass().getName()))) cmd.setup(cmdLine);
+//            // Registra os subcomandos
+//            CommandLine.Command cmdAnn = cmd.getClass().getAnnotation(CommandLine.Command.class);
+//            if(cmdAnn.subcommands().length > 0) {
+//                Arrays.asList(cmdAnn.subcommands()).stream()
+//                        .map(subcommandClass -> subcommandClass.getName())
+//                        .forEach(subcommandClass -> subcommands.add(subcommandClass));
+//            }
+            if(cmd.getClass().isAnnotationPresent(br.xtool.annotation.CoreCommand.class)) cmd.setup(cmdLine);
         }
         return cmdLine;
     }

@@ -1,15 +1,15 @@
 package br.xtool.command;
 
+import br.xtool.annotation.CoreCommand;
 import br.xtool.annotation.OptionFn;
+import br.xtool.command.core.AbstractCommand;
 import br.xtool.command.subcommand.CreateRepositoryComponentCommand;
 import br.xtool.context.RepositoryContext;
-import br.xtool.command.core.AbstractCommand;
 import br.xtool.core.Console;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import picocli.CommandLine;
 
-@Component
+@CoreCommand
 @CommandLine.Command(name = "repo", description = "Comando de gerenciamento do repositório xtool",
     subcommands = CreateRepositoryComponentCommand.class)
 public class RepositoryCommand extends AbstractCommand {

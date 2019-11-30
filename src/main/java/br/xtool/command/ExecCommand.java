@@ -1,14 +1,14 @@
 package br.xtool.command;
 
+import br.xtool.annotation.CoreCommand;
+import br.xtool.command.core.AbstractCommand;
 import br.xtool.context.DescriptorContext;
 import br.xtool.context.RepositoryContext;
 import br.xtool.context.WorkspaceContext;
-import br.xtool.command.core.AbstractCommand;
 import br.xtool.core.Console;
 import br.xtool.kt.core.ComponentExecutor;
 import br.xtool.representation.repo.ComponentRepresentation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Model.CommandSpec;
@@ -18,7 +18,7 @@ import java.util.Optional;
 /**
  * Comando de execução de componentes.
  */
-@Component
+@CoreCommand
 @Command(name = "exec", description = "Executa um componente Xtool")
 public class ExecCommand extends AbstractCommand {
 

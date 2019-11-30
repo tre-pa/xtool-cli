@@ -1,15 +1,15 @@
 package br.xtool.command;
 
+import br.xtool.annotation.CoreCommand;
 import br.xtool.annotation.OptionFn;
-import br.xtool.context.WorkspaceContext;
 import br.xtool.command.core.AbstractCommand;
+import br.xtool.context.WorkspaceContext;
 import br.xtool.core.Console;
 import br.xtool.representation.ProjectRepresentation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import picocli.CommandLine;
 
-@Component
+@CoreCommand
 @CommandLine.Command(name = "workspace", description = "Comando de gerenciamento de workspace")
 public class WorkspaceCommand extends AbstractCommand {
 

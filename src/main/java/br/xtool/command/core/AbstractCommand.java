@@ -29,6 +29,7 @@ public abstract class AbstractCommand implements Runnable {
     private Map<String, Method> optionsFnList = new HashMap<>();
 
     @Setter
+    @Getter
     private Map<String, AbstractCommand> commandList;
 
 //    @Autowired

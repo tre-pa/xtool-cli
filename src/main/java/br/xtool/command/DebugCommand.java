@@ -1,15 +1,15 @@
 package br.xtool.command;
 
+import br.xtool.annotation.CoreCommand;
 import br.xtool.command.core.AbstractCommand;
 import br.xtool.core.Console;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import picocli.CommandLine.Command;
 
 /**
  * Comando para limpar a tela do console.
  */
-@Component
+@CoreCommand
 @Command(name = "debug", description = "Ativa o nivel debug no console.")
 public class DebugCommand extends AbstractCommand {
 
