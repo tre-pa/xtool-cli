@@ -1,31 +1,16 @@
 package br.xtool.implementation.representation;
 
+import br.xtool.representation.angular.*;
+import br.xtool.representation.springboot.SpringBootProjectRepresentation;
+import lombok.Getter;
+import org.apache.commons.lang3.StringUtils;
+
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.Map;
-import java.util.Objects;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-
-import org.apache.commons.lang3.StringUtils;
-
-import br.xtool.representation.angular.NgClassRepresentation;
-import br.xtool.representation.angular.NgComponentRepresentation;
-import br.xtool.representation.angular.NgDetailRepresentation;
-import br.xtool.representation.angular.NgEditRepresentation;
-import br.xtool.representation.angular.NgEntityRepresentation;
-import br.xtool.representation.angular.NgListRepresentation;
-import br.xtool.representation.angular.NgModuleRepresentation;
-import br.xtool.representation.angular.NgPackageJsonRepresentation;
-import br.xtool.representation.angular.NgPageRepresentation;
-import br.xtool.representation.angular.NgProjectRepresentation;
-import br.xtool.representation.angular.NgServiceRepresentation;
-import br.xtool.representation.springboot.SpringBootProjectRepresentation;
-import lombok.Getter;
 
 @Getter
 public class NgProjectRepresentationImpl extends ProjectRepresentationImpl implements NgProjectRepresentation {
@@ -236,7 +221,12 @@ public class NgProjectRepresentationImpl extends ProjectRepresentationImpl imple
 
 	@Override
 	public String getVersion() {
-		throw new UnsupportedOperationException();
+		return getNgPackage().getVersion();
+	}
+
+	@Override
+	public String getFrameworkVersion() {
+		return getNgPackage().getDependencies().get("@angular/core");
 	}
 
 	@Override

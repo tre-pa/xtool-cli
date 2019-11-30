@@ -27,7 +27,7 @@ public class WorkspaceCommand extends AbstractCommand {
         if (listProjectsOption) {
             console.println("total %d", workspaceContext.getWorkspace().getProjects().size());
             workspaceContext.getWorkspace().getProjects().stream()
-                    .forEach(p -> console.println("@|blue %s|@ -> %s", ((ProjectRepresentation) p).getName(), ((ProjectRepresentation) p).getType()));
+                    .forEach(p -> console.println("@|blue %s|@ -> %s (%s)", ((ProjectRepresentation) p).getName(), ((ProjectRepresentation) p).getType(), ((ProjectRepresentation) p).getFrameworkVersion()));
             return;
         }
     }

@@ -1,12 +1,12 @@
 package br.xtool.implementation.representation;
 
-import java.nio.file.Path;
-import java.util.Objects;
-
 import br.xtool.representation.angular.NgProjectRepresentation;
 import br.xtool.representation.springboot.PomRepresentation;
 import br.xtool.representation.springboot.SpringBootFullStackProjectRepresentation;
 import br.xtool.representation.springboot.SpringBootProjectRepresentation;
+
+import java.nio.file.Path;
+import java.util.Objects;
 
 public class SpringBootFullStackProjectRepresentationImpl extends ProjectRepresentationImpl implements SpringBootFullStackProjectRepresentation {
 
@@ -18,7 +18,12 @@ public class SpringBootFullStackProjectRepresentationImpl extends ProjectReprese
 
 	@Override
 	public String getVersion() {
-		throw new UnsupportedOperationException();
+		return getSpringBootProject().getVersion();
+	}
+
+	@Override
+	public String getFrameworkVersion() {
+		return getSpringBootProject().getFrameworkVersion() + " - " + getAngularProject().getFrameworkVersion();
 	}
 
 	@Override

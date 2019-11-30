@@ -1,8 +1,8 @@
 package br.xtool.implementation.representation;
 
-import java.nio.file.Path;
-
 import br.xtool.representation.NoneProjectRepresentation;
+
+import java.nio.file.Path;
 
 public class NoneProjectRepresentationImpl extends ProjectRepresentationImpl implements NoneProjectRepresentation {
 
@@ -22,7 +22,11 @@ public class NoneProjectRepresentationImpl extends ProjectRepresentationImpl imp
 
 	@Override
 	public String getVersion() {
-		return "noe";
+		return "none";
 	}
 
+	@Override
+	public String getFrameworkVersion() {
+		return "none";
+	}
 }

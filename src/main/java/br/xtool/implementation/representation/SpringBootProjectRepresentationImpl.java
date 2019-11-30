@@ -1,17 +1,10 @@
 package br.xtool.implementation.representation;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.SortedSet;
-import java.util.TreeSet;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
+import br.xtool.helper.RoasterHelper;
+import br.xtool.representation.angular.NgProjectRepresentation;
+import br.xtool.representation.plantuml.PlantClassDiagramRepresentation;
+import br.xtool.representation.springboot.*;
+import lombok.SneakyThrows;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.jboss.forge.roaster.model.JavaUnit;
@@ -19,23 +12,12 @@ import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.jboss.forge.roaster.model.source.JavaEnumSource;
 import org.jboss.forge.roaster.model.source.JavaInterfaceSource;
 
-import br.xtool.helper.RoasterHelper;
-import br.xtool.representation.angular.NgProjectRepresentation;
-import br.xtool.representation.plantuml.PlantClassDiagramRepresentation;
-import br.xtool.representation.springboot.SpringBootApplicationPropertiesRepresentation;
-import br.xtool.representation.springboot.JpaEntityRepresentation;
-import br.xtool.representation.springboot.JavaClassRepresentation;
-import br.xtool.representation.springboot.JavaEnumRepresentation;
-import br.xtool.representation.springboot.JavaPackageRepresentation;
-import br.xtool.representation.springboot.JavaSourceFolderRepresentation;
-import br.xtool.representation.springboot.SpringBootProjectionRepresentation;
-import br.xtool.representation.springboot.PomRepresentation;
-import br.xtool.representation.springboot.SpringBootRepositoryRepresentation;
-import br.xtool.representation.springboot.SpringBootRestClassRepresentation;
-import br.xtool.representation.springboot.SpringBootServiceClassRepresentation;
-import br.xtool.representation.springboot.SpringBooSpecificationRepresentation;
-import br.xtool.representation.springboot.SpringBootProjectRepresentation;
-import lombok.SneakyThrows;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Classe que representa um projeto Spring Boot
@@ -343,7 +325,12 @@ public class SpringBootProjectRepresentationImpl extends ProjectRepresentationIm
 	 */
 	@Override
 	public String getVersion() {
-		throw new UnsupportedOperationException();
+		return getPom().getVersion();
+	}
+
+	@Override
+	public String getFrameworkVersion() {
+		return getPom().getParentVersion().orElse("");
 	}
 
 	/*

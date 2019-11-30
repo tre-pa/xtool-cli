@@ -5,56 +5,62 @@ import java.util.Collection;
 
 /**
  * Interface genérica para projetos.
- * 
- * @author jcruz
  *
+ * @author jcruz
  */
 public interface ProjectRepresentation extends Comparable<ProjectRepresentation> {
 
-	/**
-	 * Retorna o path do projeto.
-	 * 
-	 * @return
-	 */
-	Path getPath();
+    /**
+     * Retorna o path do projeto.
+     *
+     * @return
+     */
+    Path getPath();
 
-	/**
-	 * Retorna o nome do projeto.
-	 * 
-	 * @return
-	 */
-	String getName();
+    /**
+     * Retorna o nome do projeto.
+     *
+     * @return
+     */
+    String getName();
 
-	/**
-	 * Retorna a versão do projeto.
-	 * 
-	 * @return
-	 */
-	String getVersion();
+    /**
+     * Retorna a versão do projeto.
+     *
+     * @return
+     */
+    String getVersion();
 
-	/**
-	 * Retorna o tipo de projeto atual.
-	 * 
-	 * @return
-	 */
-	String getType();
+    /**
+     * Retorna a versão do framework do projeto.
+     *
+     * @return
+     */
+    String getFrameworkVersion();
 
-	/**
-	 * Lista todos os arquivo do projeto recursivamente.
-	 * 
-	 * @return
-	 */
-	Collection<Path> listAllFiles();
+    /**
+     * Retorna o tipo de projeto atual.
+     *
+     * @return
+     */
+    String getType();
 
-	/**
-	 * Lista todos os diretórios recursivamente.
-	 * 
-	 * @return
-	 */
-	Collection<Path> listAllDirectories();
+    /**
+     * Lista todos os arquivo do projeto recursivamente.
+     *
+     * @return
+     */
+    Collection<Path> listAllFiles();
 
-	/**
-	 * Efetua uma limpeza no cache do projeto.
-	 */
-	void refresh();
+    /**
+     * Lista todos os diretórios recursivamente.
+     *
+     * @return
+     */
+    Collection<Path> listAllDirectories();
+
+    /**
+     * Efetua uma limpeza no cache do projeto.
+     */
+    void refresh();
 }
