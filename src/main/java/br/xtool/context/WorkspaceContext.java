@@ -1,5 +1,6 @@
 package br.xtool.context;
 
+import br.xtool.representation.ProjectRepresentation;
 import br.xtool.representation.WorkspaceRepresentation;
 
 /**
@@ -17,4 +18,18 @@ public interface WorkspaceContext {
      */
     WorkspaceRepresentation getWorkspace();
 
+    /**
+     * Define o projeto de trabalho.
+     *
+     * @param projectRepresentation
+     */
+    void setWorkingProject(ProjectRepresentation projectRepresentation);
+
+
+    /**
+     * Retorna o projeto de trabalho.
+     *
+     * @return
+     */
+    ProjectRepresentation getWorkingProject();
 }

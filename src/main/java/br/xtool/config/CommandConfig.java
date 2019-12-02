@@ -25,6 +25,9 @@ public class CommandConfig {
     @Autowired
     private RepositoryContext repositoryContext;
 
+    @Autowired(required = false)
+    private List<CommandLine.ITypeConverter> converters;
+
     /**
      * Retorna todos os comandos do sistema.
      *
@@ -33,15 +36,12 @@ public class CommandConfig {
     @Bean
     public CommandLine getCommandLine() {
         CommandLine cmdLine = new CommandLine(new CoreCommand(), commandFactory);
+//        converters.stream()
+//                .filter(c -> c.getClass().isAnnotationPresent(Converter.class))
+//                .peek(System.out::println)
+//                .forEach(c -> cmdLine.registerConverter(c.getClass().getAnnotation(Converter.class).value(), c));
         List<String> subcommands = new ArrayList<>();
         for (AbstractCommand cmd : commands) {
-//            // Registra os subcomandos
-//            CommandLine.Command cmdAnn = cmd.getClass().getAnnotation(CommandLine.Command.class);
-//            if(cmdAnn.subcommands().length > 0) {
-//                Arrays.asList(cmdAnn.subcommands()).stream()
-//                        .map(subcommandClass -> subcommandClass.getName())
-//                        .forEach(subcommandClass -> subcommands.add(subcommandClass));
-//            }
             if(cmd.getClass().isAnnotationPresent(br.xtool.annotation.CoreCommand.class)) cmd.setup(cmdLine);
         }
         return cmdLine;

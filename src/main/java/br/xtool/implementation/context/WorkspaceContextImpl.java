@@ -2,6 +2,7 @@ package br.xtool.implementation.context;
 
 import br.xtool.context.WorkspaceContext;
 import br.xtool.implementation.representation.WorkspaceRepresentationImpl;
+import br.xtool.representation.ProjectRepresentation;
 import br.xtool.representation.WorkspaceRepresentation;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,8 @@ public class WorkspaceContextImpl implements WorkspaceContext {
     @Value("${workspace}")
     private Path home;
 
+    private ProjectRepresentation project;
+
     /*
      * (non-Javadoc)
      *
@@ -24,4 +27,13 @@ public class WorkspaceContextImpl implements WorkspaceContext {
         return new WorkspaceRepresentationImpl(home);
     }
 
+    @Override
+    public void setWorkingProject(ProjectRepresentation projectRepresentation) {
+        this.project = projectRepresentation;
+    }
+
+    @Override
+    public ProjectRepresentation getWorkingProject() {
+        return this.project;
+    }
 }

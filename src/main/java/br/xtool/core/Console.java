@@ -2,8 +2,6 @@ package br.xtool.core;
 
 import br.xtool.representation.ProjectRepresentation;
 
-import java.nio.file.Path;
-
 /**
  * Classe que gerencia o console.
  *
@@ -56,13 +54,6 @@ public interface Console {
      * @param msg
      */
     void debug(String msg, Object... args);
-
-    /**
-     * Registra o diretório no prompt.
-     *
-     * @param path
-     */
-    void registerPromptPath(Path path);
 
     /**
      * Registra o projeto no prompt.

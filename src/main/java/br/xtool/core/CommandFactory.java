@@ -17,7 +17,7 @@ public class CommandFactory implements CommandLine.IFactory {
     public <K> K create(Class<K> cls) throws Exception {
         if (Objects.nonNull(fabricables)) {
             for (Fabricable fabricable : fabricables) {
-                if (cls.getName().equals(fabricable.getClass().getSimpleName())) {
+                if (cls.getSimpleName().equals(fabricable.getClass().getSimpleName())) {
                     return (K) fabricable;
                 }
             }

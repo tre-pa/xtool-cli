@@ -21,7 +21,7 @@ import picocli.CommandLine;
 import picocli.shell.jline3.PicocliJLineCompleter;
 
 import java.io.IOException;
-import java.nio.file.Path;
+import java.util.Objects;
 
 @Service
 public class ConsoleImpl implements Console {
@@ -41,6 +41,8 @@ public class ConsoleImpl implements Console {
 
     private LineReader reader;
 
+    private ProjectRepresentation project;
+
     @EventListener(ContextRefreshedEvent.class)
     private void init() throws IOException {
         AnsiConsole.systemInstall();
@@ -51,12 +53,12 @@ public class ConsoleImpl implements Console {
                 .completer(new PicocliJLineCompleter(cmd.getCommandSpec()))
                 .parser(new DefaultParser())
                 .build();
-        String prompt = Ansi.ansi().render(getPromptFormat()).reset().toString();
         String rightPrompt = null;
         String line;
         try {
             while (true) {
                 try {
+                    String prompt = Ansi.ansi().render(getPromptFormat()).reset().toString();
                     line = reader.readLine(prompt, rightPrompt, (MaskingCallback) null, null);
                     ParsedLine pl = reader.getParser().parse(line, 0);
                     String[] arguments = pl.words().toArray(new String[0]);
@@ -68,11 +70,11 @@ public class ConsoleImpl implements Console {
                 } catch (CommandLine.UnmatchedArgumentException e) {
                     this.println("Comando/Argumento não encontrado. ".concat(e.getMessage()));
 //                    this.println(cmd.getUsageMessage());
-                }
-                catch (EndOfFileException e) {
+                } catch (EndOfFileException e) {
                     return;
                 } catch (Exception e) {
-                    if(level.equals(Level.NORMAL)) this.printlnError(e.getMessage()); else e.printStackTrace();
+                    if (level.equals(Level.NORMAL)) this.printlnError(e.getMessage());
+                    else e.printStackTrace();
                 }
             }
         } catch (Throwable t) {
@@ -112,23 +114,22 @@ public class ConsoleImpl implements Console {
     }
 
     @Override
-    public void registerPromptPath(Path path) {
-
-    }
-
-    @Override
     public void registerPromptProject(ProjectRepresentation project) {
-
+        this.project = project;
     }
 
     private String getPromptFormat() {
+        if (Objects.nonNull(this.project)) {
+            String promptFormat = "@|bold,yellow xtool|@:@|bold,green %s|@/@|bold,white %s|@:$ ";
+            return String.format(promptFormat, workspaceContext.getWorkspace().getPath().getFileName(), workspaceContext.getWorkingProject().getName());
+        }
         String promptFormat = "@|bold,yellow xtool|@:@|bold,green %s|@:$ ";
         return String.format(promptFormat, workspaceContext.getWorkspace().getPath().getFileName());
     }
 
     @Override
-    public void debug(String msg, Object...args) {
-        if(level.equals(Level.DEBUG)) {
+    public void debug(String msg, Object... args) {
+        if (level.equals(Level.DEBUG)) {
             System.out.println(Ansi.ansi().render(String.format(msg, args)).reset());
         }
     }
