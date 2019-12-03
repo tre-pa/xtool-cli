@@ -1,7 +1,6 @@
 package br.xtool.command;
 
 import br.xtool.annotation.CoreCommand;
-import br.xtool.annotation.OptionFn;
 import br.xtool.command.core.AbstractCommand;
 import br.xtool.context.WorkspaceContext;
 import br.xtool.core.Console;
@@ -22,7 +21,6 @@ public class WorkspaceCommand extends AbstractCommand {
     @Autowired
     private Console console;
 
-    @OptionFn("--projects")
     public void printProjectList() {
         if (listProjectsOption) {
             console.println("total %d", workspaceContext.getWorkspace().getProjects().size());

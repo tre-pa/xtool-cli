@@ -10,7 +10,7 @@ import java.util.Set;
  */
 public interface RepositoryRepresentation {
 
-	static final String  MASTER_REPOSITORY = "master";
+    static final String MASTER_REPOSITORY = "master";
 
     /**
      * Retorna o nome do repositório.
@@ -32,5 +32,19 @@ public interface RepositoryRepresentation {
      * @return
      */
     Set<ModuleRepresentation> getModules();
+
+    /**
+     * Retorna a quantidade de componentes do repositório.
+     *
+     * @return
+     */
+    long getTotalComponents();
+
+    /**
+     * Retorna a quantidade total de módulos do repositório.
+     *
+     * @return
+     */
+    long getTotalModules();
 
 }

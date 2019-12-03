@@ -54,4 +54,12 @@ public interface RepositoryContext {
      */
     Optional<ComponentRepresentation> findComponentByName(String name);
 
+
+    /**
+     * Retorna a quantidade total de repositórios.
+     *
+     * @return
+     */
+    long getTotalRepositories();
+
 }

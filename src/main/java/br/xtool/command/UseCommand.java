@@ -1,7 +1,6 @@
 package br.xtool.command;
 
 import br.xtool.annotation.CoreCommand;
-import br.xtool.annotation.OptionFn;
 import br.xtool.command.completer.ProjectRepresentationCompleter;
 import br.xtool.command.converter.ProjectRepresentationConverter;
 import br.xtool.command.core.AbstractCommand;
@@ -36,13 +35,11 @@ public class UseCommand extends AbstractCommand {
         order = 2)
     private boolean root;
 
-    @OptionFn("--project")
     public void projectOption() {
         workspaceContext.setWorkingProject(project);
         console.registerPromptProject(project);
     }
 
-    @OptionFn("--root")
     public void rootOption() {
         workspaceContext.setWorkingProject(null);
         console.registerPromptProject(null);

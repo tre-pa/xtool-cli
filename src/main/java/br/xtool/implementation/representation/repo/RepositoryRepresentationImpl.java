@@ -45,4 +45,15 @@ public class RepositoryRepresentationImpl implements RepositoryRepresentation {
 		return this.modules;
 	}
 
+	@Override
+	public long getTotalComponents() {
+		return getModules().stream()
+				.flatMap(module -> module.getComponents().stream())
+				.count();
+	}
+
+	@Override
+	public long getTotalModules() {
+		return getModules().size();
+	}
 }

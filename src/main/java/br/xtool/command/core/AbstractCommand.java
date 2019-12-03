@@ -1,17 +1,12 @@
 package br.xtool.command.core;
 
 
-import br.xtool.annotation.OptionFn;
 import br.xtool.core.Console;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import picocli.CommandLine;
 
-import javax.annotation.PostConstruct;
-import java.lang.reflect.Method;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -26,27 +21,12 @@ public abstract class AbstractCommand implements Runnable {
     @Autowired
     private Console console;
 
-    private Map<String, Method> optionsFnList = new HashMap<>();
-
     @Setter
     @Getter
     private Map<String, AbstractCommand> commandList;
 
-//    @Autowired
-//    @Qualifier("commands")
-//    private Map<String, AbstractCommand> commandList;
-
-    @PostConstruct
-    private void init() {
-//        this.getClass().getMethods().
-        for(int i=0; i < this.getClass().getDeclaredMethods().length; i++) {
-            Method method = this.getClass().getDeclaredMethods()[i];
-            if(method.isAnnotationPresent(OptionFn.class)) {
-                String optionName = method.getAnnotation(OptionFn.class).value();
-                optionsFnList.put(optionName, method);
-            }
-        }
-    }
+    @CommandLine.Option(names = "--help", description = "Ajuda do comando", usageHelp = true)
+    private boolean help;
 
     /**
      * Envia o mainCommandLine para inclusao de subcomandos.
@@ -64,26 +44,16 @@ public abstract class AbstractCommand implements Runnable {
         }
     }
 
-    protected void execOptions() {
-        parseResult.subcommand().matchedOptions().stream()
-                .filter(op -> optionsFnList.containsKey(op.names()[0]))
-                .forEach(op -> invoke(op));
-    }
+    protected void eachOption(String name, Object value) {
 
-    @SneakyThrows
-    private Object invoke(CommandLine.Model.OptionSpec op)  {
-        console.debug("%s.invoke(%s)", this.getClass().getSimpleName(), op.names()[0]);
-        return optionsFnList.get(op.names()[0]).invoke(this);
     }
 
     @Override
     public void run() {
         if(parseResult.subcommand().hasSubcommand()) {
-//            console.debug("Executando subcommand %s", parseResult.subcommand().commandSpec().name());
             execSubcommands();
             return;
         }
-//        System.out.println(parseResult.subcommand().matchedOptions());
-        execOptions();
+        getParseResult().subcommand().matchedOptions().forEach(op -> this.eachOption(op.names()[0], op.getValue()));
     }
 }

@@ -83,4 +83,9 @@ public class RepositoryContextImpl implements RepositoryContext {
 				.filter(componente -> componente.getName().equals(name))
 				.findFirst();
 	}
+
+	@Override
+	public long getTotalRepositories() {
+		return getRepositories().size();
+	}
 }
