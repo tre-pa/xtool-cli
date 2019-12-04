@@ -62,7 +62,7 @@ public class CommandConfig {
         return commandMap;
     }
 
-    @CommandLine.Command(name = "", description = "")
+    @CommandLine.Command(name = "", description = "", requiredOptionMarker = '*')
     public static class CoreCommand implements Runnable {
         public void run() {
         }

@@ -57,14 +57,16 @@ public class ExecCommand extends AbstractCommand {
     @Override
     public void run() {
         if (getParseResult().subcommand().hasSubcommand()) {
-            String subcommandName = getParseResult().subcommand().subcommand().commandSpec().name();
-            Optional<ComponentRepresentation> component = repositoryContext.findComponentByName(subcommandName);
-            component.ifPresent(comp -> componentExecutor.run(
-                    comp,
-                    createDescriptorContext(comp,getParseResult())));
-            return;
+            if (!getParseResult().subcommand().subcommand().isUsageHelpRequested()) {
+                String subcommandName = getParseResult().subcommand().subcommand().commandSpec().name();
+                Optional<ComponentRepresentation> component = repositoryContext.findComponentByName(subcommandName);
+                component.ifPresent(comp -> componentExecutor.run(
+                        comp,
+                        createDescriptorContext(comp, getParseResult())));
+                return;
+            }
         }
-        console.println(new CommandLine(this).getUsageMessage());
+//        console.println(new CommandLine(this).getUsageMessage());
     }
 
     public DescriptorContext createDescriptorContext(ComponentRepresentation component, CommandLine.ParseResult parseResult) {

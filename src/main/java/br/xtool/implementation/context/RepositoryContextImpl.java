@@ -64,6 +64,9 @@ public class RepositoryContextImpl implements RepositoryContext {
 	public CommandLine.Model.CommandSpec create(DescriptorYmlRepresentation descriptor) {
 		CommandLine.Model.CommandSpec commandSpec = CommandLine.Model.CommandSpec.create();
 		descriptor.getComponentDef().getParams().forEach(xparam -> commandSpec.addOption(this.create(xparam)));
+		commandSpec.addOption(CommandLine.Model.OptionSpec.builder("--help")
+				.usageHelp(true)
+				.description("Exibe a ajuda do componente.").build());
 		return commandSpec;
 	}
 

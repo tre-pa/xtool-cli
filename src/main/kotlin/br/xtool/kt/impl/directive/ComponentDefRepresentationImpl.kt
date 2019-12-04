@@ -38,7 +38,7 @@ class ComponentDefRepresentationImpl(
 
     override fun getParamDefValues(parseResult: CommandLine.ParseResult?) =
         parseResult?.subcommand()?.subcommand()?.matchedOptions()?.asSequence()?.
-                map { op -> this.descriptorYml.componentDef.findParamByLabel(op.names()[0]).id to op.getValue<Any>() }?.
+                map { op -> this.descriptorYml.componentDef.findParamByLabel(op.names()[0])?.id to op.getValue<Any>() }?.
                 toMap()
 
 }
