@@ -13,7 +13,7 @@ import java.util.Map;
 @Configuration
 public class TaskConfig {
 
-    @Autowired
+    @Autowired(required = false)
     private List<AbstractTask> tasks;
 
     @Bean("tasks")
