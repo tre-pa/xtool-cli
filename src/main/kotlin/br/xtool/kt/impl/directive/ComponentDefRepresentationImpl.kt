@@ -26,7 +26,7 @@ class ComponentDefRepresentationImpl(
 
     override fun getDepends() = Optional.ofNullable(def["depends"] as String?)
 
-    override fun getAvailability(): Optional<Pair<String, String>> {
+    override fun getEnabled(): Optional<Pair<String, String>> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 

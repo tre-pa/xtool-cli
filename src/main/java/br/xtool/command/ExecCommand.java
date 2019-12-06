@@ -2,7 +2,7 @@ package br.xtool.command;
 
 import br.xtool.annotation.CoreCommand;
 import br.xtool.command.core.AbstractCommand;
-import br.xtool.context.DescriptorContext;
+import br.xtool.context.ComponentExecutionContext;
 import br.xtool.context.RepositoryContext;
 import br.xtool.context.WorkspaceContext;
 import br.xtool.core.Console;
@@ -60,6 +60,12 @@ public class ExecCommand extends AbstractCommand {
             if (!getParseResult().subcommand().subcommand().isUsageHelpRequested()) {
                 String subcommandName = getParseResult().subcommand().subcommand().commandSpec().name();
                 Optional<ComponentRepresentation> component = repositoryContext.findComponentByName(subcommandName);
+                if(component.isPresent()) {
+                    ComponentExecutionContext ctx = ComponentExecutionContext.of(component.get(), workspaceContext.getWorkingProject(), getParseResult());
+                    componentExecutor.run(component.get(), ctx);
+                }
+                //                ComponentExecutionContext executionContext = new ComponentExecutionContext();
+
 //                component.ifPresent(comp -> componentExecutor.run(
 //                        comp,
 //                        createDescriptorContext(comp, getParseResult())));
@@ -70,9 +76,4 @@ public class ExecCommand extends AbstractCommand {
 //        console.println(new CommandLine(this).getUsageMessage());
     }
 
-    public DescriptorContext createDescriptorContext(ComponentRepresentation component, CommandLine.ParseResult parseResult) {
-        return new DescriptorContext(
-                workspaceContext.getWorkspace().getPath(),
-                component.getDescriptor().getComponentDef().getParamDefValues(parseResult));
-    }
 }

@@ -53,7 +53,7 @@ public interface ComponentDefRepresentation {
      *
      * @return Pair<String, String> com o paramentro left sendo a condição e o right a mensagem em caso de falha.
      */
-    Optional<Pair<String, String>> getAvailability();
+    Optional<Pair<String, String>> getEnabled();
 
 
     /**
