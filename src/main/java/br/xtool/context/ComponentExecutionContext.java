@@ -5,16 +5,19 @@ import br.xtool.representation.ProjectRepresentation;
 import br.xtool.representation.repo.ComponentRepresentation;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.springframework.expression.ExpressionParser;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
 import picocli.CommandLine;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Clase que representa o contexto de execução do componente.
  */
+@ToString
 public class ComponentExecutionContext {
 
     /**
@@ -33,15 +36,16 @@ public class ComponentExecutionContext {
     /**
      * Mapa com os valores do paramentros./
      */
+    @Getter
     private Map<String, Object> params = new HashMap<>();
 
     private ComponentExecutionContext() {}
 
     public static ComponentExecutionContext of(ComponentRepresentation componentRepresentation, ProjectRepresentation project, CommandLine.ParseResult parseResult) {
         ComponentExecutionContext executionContext = new ComponentExecutionContext();
-//        executionContext.params = componentRepresentation.getDescriptor().getComponentDef().getParamDefValues(parseResult);
+        executionContext.params = parseResult.subcommand().subcommand().matchedOptions().stream()
+                .collect( Collectors.toMap(op->  op.names()[0].replace("--", ""), op -> parseResult.subcommand().subcommand().matchedOptionValue(op.names()[0], op.defaultValue())));
         executionContext.project = project;
-
         return executionContext;
     }
 
