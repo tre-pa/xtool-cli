@@ -1,5 +1,7 @@
 package br.xtool.representation.repo.directive;
 
+import java.util.Collection;
+
 /**
  * Representação do descritor de componente (xtool.yml)
  */
@@ -25,6 +27,13 @@ public interface ComponentDescriptorRepresentation {
      * @return
      */
     String getVersion();
+
+    /**
+     * Retorna a lista de paramentros do descritor.
+     *
+     * @return
+     */
+    Collection<DescriptorParamRepresentation> getParams();
 
 }
 

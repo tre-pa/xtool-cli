@@ -1,10 +1,15 @@
 package br.xtool.implementation.representation.repo;
 
 import br.xtool.implementation.representation.repo.directive.ComponentDescriptorRepresentationImpl;
+import br.xtool.implementation.representation.repo.directive.DescriptorParamRepresentationImpl;
 import br.xtool.representation.repo.ComponentRepresentation;
 import br.xtool.representation.repo.ModuleRepresentation;
 import br.xtool.representation.repo.directive.ComponentDescriptorRepresentation;
+import br.xtool.representation.repo.directive.DescriptorParamRepresentation;
+import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleAbstractTypeResolver;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import lombok.SneakyThrows;
 import lombok.ToString;
@@ -53,6 +58,11 @@ public class ComponentRepresentationImpl implements ComponentRepresentation {
     @SneakyThrows
     public ComponentDescriptorRepresentation getComponentDescriptor() {
         ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
+        SimpleModule module = new SimpleModule("CustomModule", Version.unknownVersion());
+        SimpleAbstractTypeResolver resolver = new SimpleAbstractTypeResolver();
+        resolver.addMapping(DescriptorParamRepresentation.class, DescriptorParamRepresentationImpl.class);
+        module.setAbstractTypes(resolver);
+        mapper.registerModule(module);
         ComponentDescriptorRepresentation componentDescriptorRepresentation = mapper.readValue(this.path.resolve("xtool.yml").toFile(), ComponentDescriptorRepresentationImpl.class);
         return componentDescriptorRepresentation;
     }
