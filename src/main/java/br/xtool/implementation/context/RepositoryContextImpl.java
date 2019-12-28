@@ -85,6 +85,7 @@ public class RepositoryContextImpl implements RepositoryContext {
 				.build();
 	}
 
+	// TODO Implementar os restantes de tipos
 	private Class<?> getParamClassByTypeName(String paramTypeName) {
 		if("String".equals(paramTypeName)) return String.class;
 		return String.class;

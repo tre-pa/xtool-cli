@@ -35,5 +35,12 @@ public interface ComponentDescriptorRepresentation {
      */
     Collection<DescriptorParamRepresentation> getParams();
 
+    /**
+     * Retorna a lista de tarefas do descritor.
+     *
+     * @return
+     */
+    Collection<DescriptorTaskRepresentation> getTasks();
+
 }
 
