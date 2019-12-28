@@ -6,15 +6,17 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-@Setter
 @Getter
+@Setter
 @ToString(callSuper = true)
-public class ChangeDestinationTask extends DescriptorTaskRepresentation {
+public class CopyTemplateTask extends DescriptorTaskRepresentation {
 
-    private CreateDirTask.Args args;
+    private Args args;
 
     @Data
     public static class Args {
-        private String path;
+        private String src;
+
+        private String dest;
     }
 }

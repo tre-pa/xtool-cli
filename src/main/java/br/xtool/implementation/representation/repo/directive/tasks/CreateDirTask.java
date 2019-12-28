@@ -9,9 +9,9 @@ import lombok.ToString;
 
 @Setter
 @ToString(callSuper = true)
+@Getter
 public class CreateDirTask extends DescriptorTaskRepresentation {
 
-    @Getter
     private Args args;
 
     @Data
