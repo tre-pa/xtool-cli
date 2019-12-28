@@ -39,7 +39,7 @@ public class ComponentExecutionContext {
 
     public static ComponentExecutionContext of(ComponentRepresentation componentRepresentation, ProjectRepresentation project, CommandLine.ParseResult parseResult) {
         ComponentExecutionContext executionContext = new ComponentExecutionContext();
-        executionContext.params = componentRepresentation.getDescriptor().getComponentDef().getParamDefValues(parseResult);
+//        executionContext.params = componentRepresentation.getDescriptor().getComponentDef().getParamDefValues(parseResult);
         executionContext.project = project;
 
         return executionContext;

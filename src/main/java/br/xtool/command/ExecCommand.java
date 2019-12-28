@@ -50,8 +50,8 @@ public class ExecCommand extends AbstractCommand {
         repositoryContext.getWorkingRepository().getModules()
                 .stream()
                 .flatMap(modules -> modules.getComponents().stream())
-                .map(ComponentRepresentation::getDescriptor)
-                .forEach(descriptor -> execSpec.addSubcommand(descriptor.getComponent().getName(), repositoryContext.create(descriptor)));
+                .map(ComponentRepresentation::getComponentDescriptor)
+                .forEach(descriptor -> execSpec.addSubcommand(descriptor.getName(), repositoryContext.create(descriptor)));
     }
 
     @Override

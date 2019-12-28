@@ -2,7 +2,7 @@ package br.xtool.context;
 
 import br.xtool.representation.repo.ComponentRepresentation;
 import br.xtool.representation.repo.RepositoryRepresentation;
-import br.xtool.representation.repo.directive.DescriptorYmlRepresentation;
+import br.xtool.representation.repo.directive.ComponentDescriptorRepresentation;
 import picocli.CommandLine;
 
 import java.util.List;
@@ -43,7 +43,7 @@ public interface RepositoryContext {
      * @param descriptor
      * @return
      */
-    CommandLine.Model.CommandSpec create(DescriptorYmlRepresentation descriptor);
+    CommandLine.Model.CommandSpec create(ComponentDescriptorRepresentation descriptor);
 
 
     /**

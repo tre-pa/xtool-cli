@@ -5,8 +5,7 @@ import br.xtool.core.Console;
 import br.xtool.implementation.representation.repo.RepositoryRepresentationImpl;
 import br.xtool.representation.repo.ComponentRepresentation;
 import br.xtool.representation.repo.RepositoryRepresentation;
-import br.xtool.representation.repo.directive.DescriptorYmlRepresentation;
-import br.xtool.representation.repo.directive.ParamDefRepresentation;
+import br.xtool.representation.repo.directive.ComponentDescriptorRepresentation;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -61,22 +60,29 @@ public class RepositoryContextImpl implements RepositoryContext {
 	}
 
 	@Override
-	public CommandLine.Model.CommandSpec create(DescriptorYmlRepresentation descriptor) {
-		CommandLine.Model.CommandSpec commandSpec = CommandLine.Model.CommandSpec.create();
-		descriptor.getComponentDef().getParams().forEach(xparam -> commandSpec.addOption(this.create(xparam)));
-		commandSpec.addOption(CommandLine.Model.OptionSpec.builder("--help")
-				.usageHelp(true)
-				.description("Exibe a ajuda do componente.").build());
+	public CommandLine.Model.CommandSpec create(ComponentDescriptorRepresentation descriptor) {
+		CommandLine.Model.CommandSpec commandSpec = CommandLine.Model.CommandSpec.create()
+				.version(descriptor.getVersion());
+//		descriptor.getComponentDef().getParams().forEach(xparam -> commandSpec.addOption(this.create(xparam)));
+		commandSpec
+				.addOption(CommandLine.Model.OptionSpec.builder("--help")
+					.usageHelp(true)
+					.description("Exibe a ajuda do componente.").build())
+				.addOption(CommandLine.Model.OptionSpec.builder("--version")
+						.versionHelp(true)
+						.description("Exibe a versão do componente.").build());
+		commandSpec.usageMessage()
+				.description(descriptor.getDescription());
 		return commandSpec;
 	}
-
-	private CommandLine.Model.OptionSpec create(ParamDefRepresentation param) {
-		return CommandLine.Model.OptionSpec.builder(param.getLabel())
-				.description(param.getDescription())
-				.required(param.isRequired())
-				.type(param.getType())
-				.build();
-	}
+//
+//	private CommandLine.Model.OptionSpec create(ParamDefRepresentation param) {
+//		return CommandLine.Model.OptionSpec.builder(param.getLabel())
+//				.description(param.getDescription())
+//				.required(param.isRequired())
+//				.type(param.getType())
+//				.build();
+//	}
 
 	@Override
 	public Optional<ComponentRepresentation> findComponentByName(String name) {

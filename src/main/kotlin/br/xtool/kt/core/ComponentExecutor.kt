@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service
 class ComponentExecutor(@Autowired val console: Console) {
 
     fun run(component: ComponentRepresentation, componentExecutionContext: ComponentExecutionContext): Unit {
-        console.debug("ComponentExecutor.run(name: ${component.name}, tasks: ${component.descriptor.componentDef.tasks.size})")
+//        console.debug("ComponentExecutor.run(name: ${component.name}, tasks: ${component.descriptor.componentDef.tasks.size})")
 
         //component.descriptor.componentDef.tasks.forEach { tasks[it.type]?.exec(TaskContext(component, it, descriptorContext)) }
     }
