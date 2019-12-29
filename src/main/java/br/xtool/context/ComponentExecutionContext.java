@@ -3,6 +3,7 @@ package br.xtool.context;
 import br.xtool.core.TemplateParserContext;
 import br.xtool.representation.ProjectRepresentation;
 import br.xtool.representation.repo.ComponentRepresentation;
+import br.xtool.representation.repo.directive.DescriptorParamRepresentation;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -10,6 +11,7 @@ import org.springframework.expression.ExpressionParser;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
 import picocli.CommandLine;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -44,9 +46,20 @@ public class ComponentExecutionContext {
     public static ComponentExecutionContext of(ComponentRepresentation componentRepresentation, ProjectRepresentation project, CommandLine.ParseResult parseResult) {
         ComponentExecutionContext executionContext = new ComponentExecutionContext();
         executionContext.params = parseResult.subcommand().subcommand().matchedOptions().stream()
-                .collect( Collectors.toMap(op->  op.names()[0].replace("--", ""), op -> parseResult.subcommand().subcommand().matchedOptionValue(op.names()[0], op.defaultValue())));
+                .collect( Collectors.toMap(
+                        op->  findParamIdByLabel(componentRepresentation, op.names()[0]),
+                        op -> parseResult.subcommand().subcommand().matchedOptionValue(op.names()[0], op.defaultValue())));
         executionContext.project = project;
         return executionContext;
+    }
+
+    private static String findParamIdByLabel(ComponentRepresentation componentRepresentation, String paramLabel) {
+        return componentRepresentation.getComponentDescriptor().getParams()
+            .stream()
+            .filter(param -> param.getLabel().equals(paramLabel))
+            .map(DescriptorParamRepresentation::getId)
+            .findAny()
+            .orElseThrow(() -> new IllegalArgumentException(String.format("Parametro com label '%s' não encontrado no componente '%s'", paramLabel, componentRepresentation.getComponentDescriptor().getName())));
     }
 
     /**
@@ -57,6 +70,10 @@ public class ComponentExecutionContext {
      */
     public String parse(String exp) {
         return this.parse(exp, String.class);
+    }
+
+    public Boolean parseAsBoolean(String exp) {
+        return Boolean.valueOf(this.parse(exp, String.class));
     }
 
     public <T> T parse(String exp, Class<T> clazz) {

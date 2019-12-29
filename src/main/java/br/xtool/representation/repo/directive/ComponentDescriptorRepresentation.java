@@ -40,7 +40,7 @@ public interface ComponentDescriptorRepresentation {
      *
      * @return
      */
-    Collection<DescriptorTaskRepresentation> getTasks();
+    Collection<TaskRepresentation> getTasks();
 
 }
 

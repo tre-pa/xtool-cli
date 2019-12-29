@@ -15,7 +15,8 @@ import lombok.ToString;
 @JsonTypeInfo(
         use = JsonTypeInfo.Id.NAME,
         include = JsonTypeInfo.As.PROPERTY,
-        property = "type"
+        property = "type",
+        visible = true
 )
 @JsonSubTypes({
         @JsonSubTypes.Type(value = CreateDirTask.class, name = "create-dir"),
@@ -24,11 +25,35 @@ import lombok.ToString;
         @JsonSubTypes.Type(value = ExecCommandTask.class, name = "exec-command")
 })
 @JsonIgnoreProperties(ignoreUnknown = true)
-@Getter
-@Setter
 @ToString
-public abstract class DescriptorTaskRepresentation {
+public abstract class TaskRepresentation {
     private String name;
 
     private String type;
+
+    private String only = "true";
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getOnly() {
+        return only;
+    }
+
+    public void setOnly(String only) {
+        this.only = only;
+    }
 }
