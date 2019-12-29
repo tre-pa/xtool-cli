@@ -25,7 +25,7 @@ public class ComponentExecutionContext {
     /**
      * Caminho relativo de destino das tarefas;
      */
-    private String destination;
+    private String destination = "";
 
     /**
      * Projeto de trabalho do workspace.
