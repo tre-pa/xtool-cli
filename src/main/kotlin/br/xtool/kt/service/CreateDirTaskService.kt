@@ -1,4 +1,4 @@
-package br.xtool.kt
+package br.xtool.kt.service
 
 import br.xtool.annotation.TaskService
 import br.xtool.context.ComponentExecutionContext
@@ -12,6 +12,9 @@ import org.springframework.stereotype.Service
 import java.nio.file.Files
 import java.nio.file.Paths
 
+/**
+ * Classe de service responsável pela execução da Task: create-dir
+ */
 @TaskService("create-dir")
 class CreateDirTaskService: AbstractTaskService() {
 
@@ -21,6 +24,9 @@ class CreateDirTaskService: AbstractTaskService() {
         val ptask = task as CreateDirTask
         val path = ctx.parse(ptask.args.path)
         Files.createDirectories(workspaceContext.workspace.path.resolve(path))
+
+        if(ptask.args.isCd) ctx.destination = path
+
         log("path: ${path}")
     }
 }

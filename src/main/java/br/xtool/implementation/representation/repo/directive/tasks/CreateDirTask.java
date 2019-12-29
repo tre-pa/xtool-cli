@@ -22,6 +22,8 @@ public class CreateDirTask extends TaskRepresentation {
     public static class Args {
         private String path;
 
+        private boolean cd = false;
+
         public String getPath() {
             return path;
         }
@@ -29,5 +31,14 @@ public class CreateDirTask extends TaskRepresentation {
         public void setPath(String path) {
             this.path = path;
         }
+
+        public boolean isCd() {
+            return cd;
+        }
+
+        public void setCd(boolean cd) {
+            this.cd = cd;
+        }
     }
+
 }

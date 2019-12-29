@@ -6,17 +6,38 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-@Getter
-@Setter
 @ToString(callSuper = true)
 public class CopyTemplateTask extends TaskRepresentation {
 
     private Args args;
 
-    @Data
+    public Args getArgs() {
+        return args;
+    }
+
+    public void setArgs(Args args) {
+        this.args = args;
+    }
+
     public static class Args {
         private String src;
 
         private String dest;
+
+        public String getSrc() {
+            return src;
+        }
+
+        public void setSrc(String src) {
+            this.src = src;
+        }
+
+        public String getDest() {
+            return dest;
+        }
+
+        public void setDest(String dest) {
+            this.dest = dest;
+        }
     }
 }

@@ -25,20 +25,16 @@ public class ComponentExecutionContext {
     /**
      * Caminho relativo de destino das tarefas;
      */
-    @Getter
-    @Setter
     private String destination;
 
     /**
      * Projeto de trabalho do workspace.
      */
-    @Getter
     private ProjectRepresentation project;
 
     /**
      * Mapa com os valores do paramentros./
      */
-    @Getter
     private Map<String, Object> params = new HashMap<>();
 
     private ComponentExecutionContext() {}
@@ -81,4 +77,19 @@ public class ComponentExecutionContext {
         return parser.parseExpression(exp, new TemplateParserContext()).getValue(this, clazz);
     }
 
+    public String getDestination() {
+        return destination;
+    }
+
+    public void setDestination(String destination) {
+        this.destination = destination;
+    }
+
+    public ProjectRepresentation getProject() {
+        return project;
+    }
+
+    public Map<String, Object> getParams() {
+        return params;
+    }
 }
