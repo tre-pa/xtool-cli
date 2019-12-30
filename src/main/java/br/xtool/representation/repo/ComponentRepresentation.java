@@ -41,6 +41,12 @@ public interface ComponentRepresentation {
     Path getTplPath();
 
     /**
+     * Caminho para o diretório de templates parciais.
+     * @return
+     */
+    Path getTplPartialsPath();
+
+    /**
      * Retorna a representação do arquivo descritor xtool.yml
      *
      * @return

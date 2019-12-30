@@ -6,10 +6,13 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @ToString(callSuper = true)
 public class CopyTemplateTask extends TaskRepresentation {
 
-    private Args args;
+    private Args args = new Args();
 
     public Args getArgs() {
         return args;
@@ -20,9 +23,13 @@ public class CopyTemplateTask extends TaskRepresentation {
     }
 
     public static class Args {
-        private String src;
+        private String src = "";
 
-        private String dest;
+        private String dest = "${destination}";
+
+        private String include = "**/*";
+
+        private Map<String, Object> vars = new HashMap<>();
 
         public String getSrc() {
             return src;
@@ -38,6 +45,22 @@ public class CopyTemplateTask extends TaskRepresentation {
 
         public void setDest(String dest) {
             this.dest = dest;
+        }
+
+        public String getInclude() {
+            return include;
+        }
+
+        public void setInclude(String include) {
+            this.include = include;
+        }
+
+        public Map<String, Object> getVars() {
+            return vars;
+        }
+
+        public void setVars(Map<String, Object> vars) {
+            this.vars = vars;
         }
     }
 }

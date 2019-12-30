@@ -41,7 +41,12 @@ public class ComponentRepresentationImpl implements ComponentRepresentation {
 
     @Override
     public Path getTplPath() {
-        return path.resolve("tpl");
+        return path.resolve("tpl").resolve("main");
+    }
+
+    @Override
+    public Path getTplPartialsPath() {
+        return path.resolve("tpl").resolve("partials");
     }
 
     @Override

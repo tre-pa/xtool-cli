@@ -64,7 +64,11 @@ public class ComponentExecutionContext {
      * @param exp
      * @return
      */
-    public String parse(String exp) {
+    public Object parse(String exp) {
+        return this.parse(exp, Object.class);
+    }
+
+    public String parseAsString(String exp) {
         return this.parse(exp, String.class);
     }
 
