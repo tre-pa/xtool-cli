@@ -12,6 +12,7 @@ import org.apache.velocity.app.VelocityEngine
 import org.apache.velocity.runtime.RuntimeConstants
 import org.springframework.beans.factory.annotation.Autowired
 import java.io.StringWriter
+import java.nio.charset.StandardCharsets
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
@@ -56,7 +57,7 @@ class CopyTemplateTaskService : AbstractTaskService() {
             val writer = StringWriter()
             t.merge(velocityContext, writer)
             val finalPath = Paths.get("${workspaceContext.workspace.path.resolve(ctx.destination).resolve(tpl.toString().removeSuffix(".vm"))}")
-            createFile(finalPath, writer.toString().toByteArray())
+            createFile(finalPath, writer.toString().toByteArray(StandardCharsets.UTF_8))
             log("${tpl} -> @|green,bold ${finalPath} |@")
             return
         }
