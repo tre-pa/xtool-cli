@@ -26,6 +26,7 @@ class CopyTemplateTaskService : AbstractTaskService() {
 
     override fun run(ctx: ComponentExecutionContext, component: ComponentRepresentation, task: TaskRepresentation) {
         val wTask = task as CopyTemplateTask
+        log("src: ${component.tplPath}")
         log("dest: ${workspaceContext.workspace.path.resolve(ctx.destination)}\n")
         val vars = wTask.args.vars.mapValues { if(it.value is String) ctx.parse(it.value as String) else it.value }
         val velocityContext = VelocityContext(vars)
@@ -55,15 +56,20 @@ class CopyTemplateTaskService : AbstractTaskService() {
             val writer = StringWriter()
             t.merge(velocityContext, writer)
             val finalPath = Paths.get("${workspaceContext.workspace.path.resolve(ctx.destination).resolve(tpl.toString().removeSuffix(".vm"))}")
-            createFile(finalPath, writer.toString())
+            createFile(finalPath, writer.toString().toByteArray())
             log("${tpl} -> @|green,bold ${finalPath} |@")
+            return
         }
+        val tpl = tplPath.relativize(file).toString()
+        val finalPath = Paths.get("${workspaceContext.workspace.path.resolve(ctx.destination).resolve(tpl)}")
+        createFile(finalPath, Files.readAllBytes(file))
+        log("${tpl} -> @|green,bold ${finalPath} |@")
     }
 
-    fun createFile(finalPath: Path, content: String) {
+    fun createFile(finalPath: Path, content: ByteArray) {
         if (Files.notExists(finalPath.getParent())) Files.createDirectories(finalPath.getParent())
         val os = Files.newOutputStream(finalPath)
-        os.write(content.toByteArray())
+        os.write(content)
         os.flush()
         os.close()
     }

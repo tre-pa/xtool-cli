@@ -19,6 +19,10 @@ abstract class AbstractTaskService() {
         }
     }
 
+    fun logHeader(msg: String) {
+        console.println(" @ ${msg}")
+    }
+
     fun log(msg: String) {
         console.println(" - ${msg}")
     }
