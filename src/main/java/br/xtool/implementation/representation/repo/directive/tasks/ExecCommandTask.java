@@ -7,10 +7,16 @@ import lombok.ToString;
 
 import java.util.Collection;
 
-@Getter
-@Setter
 @ToString(callSuper = true)
 public class ExecCommandTask extends TaskRepresentation {
 
     private Collection<String> args;
+
+    public Collection<String> getArgs() {
+        return args;
+    }
+
+    public void setArgs(Collection<String> args) {
+        this.args = args;
+    }
 }

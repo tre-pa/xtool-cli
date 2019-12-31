@@ -25,7 +25,7 @@ class CreateDirTaskService: AbstractTaskService() {
 
         if(wTask.args.isCd) ctx.destination = path
 
-        log("path: ${path}")
-        log("dest: ${workspaceContext.workspace.path.resolve(ctx.destination)}")
+        logHeader("path","${path}")
+        logHeader("dest","${workspaceContext.workspace.path.resolve(ctx.destination)}")
     }
 }

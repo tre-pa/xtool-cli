@@ -6,15 +6,28 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-@Setter
-@Getter
 @ToString(callSuper = true)
 public class ChangeDestinationTask extends TaskRepresentation {
 
     private CreateDirTask.Args args;
 
-    @Data
+    public CreateDirTask.Args getArgs() {
+        return args;
+    }
+
+    public void setArgs(CreateDirTask.Args args) {
+        this.args = args;
+    }
+
     public static class Args {
         private String path;
+
+        public String getPath() {
+            return path;
+        }
+
+        public void setPath(String path) {
+            this.path = path;
+        }
     }
 }
