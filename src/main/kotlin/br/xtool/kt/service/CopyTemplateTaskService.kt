@@ -28,7 +28,7 @@ class CopyTemplateTaskService : AbstractTaskService() {
     override fun run(ctx: ComponentExecutionContext, component: ComponentRepresentation, task: TaskRepresentation) {
         val wTask = task as CopyTemplateTask
         log("src: ${component.tplPath}")
-        log("dest: ${workspaceContext.workspace.path.resolve(ctx.destination)}\n")
+        log("dest: ${workspaceContext.workspace.path.resolve(ctx.destination)}")
         val vars = wTask.args.vars.mapValues { if(it.value is String) ctx.parse(it.value as String) else it.value }
         val velocityContext = VelocityContext(vars)
         val ve = getVelocityEngine(component.tplPath, component.tplPartialsPath)
