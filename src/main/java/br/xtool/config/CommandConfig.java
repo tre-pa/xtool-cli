@@ -36,10 +36,6 @@ public class CommandConfig {
     @Bean
     public CommandLine getCommandLine() {
         CommandLine cmdLine = new CommandLine(new CoreCommand(), commandFactory);
-//        converters.stream()
-//                .filter(c -> c.getClass().isAnnotationPresent(Converter.class))
-//                .peek(System.out::println)
-//                .forEach(c -> cmdLine.registerConverter(c.getClass().getAnnotation(Converter.class).value(), c));
         List<String> subcommands = new ArrayList<>();
         for (AbstractCommand cmd : commands) {
             if(cmd.getClass().isAnnotationPresent(br.xtool.annotation.CoreCommand.class)) cmd.setup(cmdLine);

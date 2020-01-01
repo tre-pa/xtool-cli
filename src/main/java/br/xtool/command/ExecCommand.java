@@ -64,16 +64,8 @@ public class ExecCommand extends AbstractCommand {
                     ComponentExecutionContext ctx = ComponentExecutionContext.of(component.get(), workspaceContext.getWorkingProject(), getParseResult());
                     componentExecutor.run(component.get(), ctx);
                 }
-                //                ComponentExecutionContext executionContext = new ComponentExecutionContext();
-
-//                component.ifPresent(comp -> componentExecutor.run(
-//                        comp,
-//                        createDescriptorContext(comp, getParseResult())));
-//                return;
-
             }
         }
-//        console.println(new CommandLine(this).getUsageMessage());
     }
 
 }

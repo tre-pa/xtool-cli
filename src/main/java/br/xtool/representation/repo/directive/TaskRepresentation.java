@@ -1,15 +1,9 @@
 package br.xtool.representation.repo.directive;
 
-import br.xtool.command.ExecCommand;
-import br.xtool.implementation.representation.repo.directive.tasks.ChangeDestinationTask;
-import br.xtool.implementation.representation.repo.directive.tasks.CopyTemplateTask;
-import br.xtool.implementation.representation.repo.directive.tasks.CreateDirTask;
-import br.xtool.implementation.representation.repo.directive.tasks.ExecCommandTask;
+import br.xtool.implementation.representation.repo.directive.tasks.*;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
 
 @JsonTypeInfo(
@@ -22,7 +16,9 @@ import lombok.ToString;
         @JsonSubTypes.Type(value = CreateDirTask.class, name = "create-dir"),
         @JsonSubTypes.Type(value = ChangeDestinationTask.class, name = "change-destination"),
         @JsonSubTypes.Type(value = CopyTemplateTask.class, name = "copy-template"),
-        @JsonSubTypes.Type(value = ExecCommandTask.class, name = "exec-command")
+        @JsonSubTypes.Type(value = ExecCommandTask.class, name = "exec-command"),
+        @JsonSubTypes.Type(value = ReadClassTask.class, name ="read-class"),
+        @JsonSubTypes.Type(value = ReadPlantumlTask.class, name = "read-plantuml")
 })
 @JsonIgnoreProperties(ignoreUnknown = true)
 @ToString
