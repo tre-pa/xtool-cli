@@ -42,5 +42,15 @@ public interface ComponentDescriptorRepresentation {
      */
     Collection<TaskRepresentation> getTasks();
 
+    ComponentDescriptorEnabledRepresentation getEnabled();
+
+    interface ComponentDescriptorEnabledRepresentation {
+
+        String getWhen();
+
+        String onFail();
+
+    }
+
 }
 

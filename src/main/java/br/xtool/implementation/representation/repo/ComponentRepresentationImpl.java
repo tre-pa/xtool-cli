@@ -66,6 +66,7 @@ public class ComponentRepresentationImpl implements ComponentRepresentation {
         SimpleModule module = new SimpleModule("CustomModule", Version.unknownVersion());
         SimpleAbstractTypeResolver resolver = new SimpleAbstractTypeResolver();
         resolver.addMapping(DescriptorParamRepresentation.class, DescriptorParamRepresentationImpl.class);
+        resolver.addMapping(ComponentDescriptorRepresentation.ComponentDescriptorEnabledRepresentation.class, ComponentDescriptorRepresentationImpl.ComponentDescriptorEnabledRepresentationImpl.class);
         module.setAbstractTypes(resolver);
         mapper.registerModule(module);
         ComponentDescriptorRepresentation componentDescriptorRepresentation = mapper.readValue(this.path.resolve("xtool.yml").toFile(), ComponentDescriptorRepresentationImpl.class);

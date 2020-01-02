@@ -8,11 +8,14 @@ import br.xtool.context.WorkspaceContext;
 import br.xtool.core.Console;
 import br.xtool.kt.core.ComponentExecutor;
 import br.xtool.representation.repo.ComponentRepresentation;
+import br.xtool.representation.repo.directive.ComponentDescriptorRepresentation;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Model.CommandSpec;
 
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -62,10 +65,28 @@ public class ExecCommand extends AbstractCommand {
                 Optional<ComponentRepresentation> component = repositoryContext.findComponentByName(subcommandName);
                 if(component.isPresent()) {
                     ComponentExecutionContext ctx = ComponentExecutionContext.of(component.get(), workspaceContext.getWorkingProject(), getParseResult());
-                    componentExecutor.run(component.get(), ctx);
+                    ComponentRepresentation cmd = component.get();
+                    if(isEnabled(cmd.getComponentDescriptor(), ctx)) {
+                        componentExecutor.run(cmd, ctx);
+                    }
+
                 }
             }
         }
+    }
+
+    private boolean isEnabled(ComponentDescriptorRepresentation componentDescriptor, ComponentExecutionContext ctx) {
+        if(Objects.nonNull(componentDescriptor.getEnabled())) {
+            ComponentDescriptorRepresentation.ComponentDescriptorEnabledRepresentation enabled = componentDescriptor.getEnabled();
+            if(StringUtils.isNotBlank(enabled.getWhen())) {
+                boolean isEnabled = ctx.parseAsBoolean(enabled.getWhen());
+                if(!isEnabled) {
+                    console.println("@|red,bold "+componentDescriptor.getEnabled().onFail()+"|@");
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
 }

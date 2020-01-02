@@ -37,9 +37,9 @@ public class RepositoryCommand extends AbstractCommand {
 
     public void printComponentList() {
         console.println("%s / total %d", repositoryContext.getWorkingRepository().getName(), repositoryContext.getWorkingRepository().getTotalComponents());
-//        repositoryContext.getWorkingRepository().getModules().stream()
-//                .flatMap(module -> module.getComponents().stream())
-//                .forEach(component -> console.println("@|blue %s|@ -> %s", component.getName(), component.getDescriptor().getComponentDef().getDescription()));
+        repositoryContext.getWorkingRepository().getModules().stream()
+                .flatMap(module -> module.getComponents().stream())
+                .forEach(component -> console.println("@|blue %s|@ -> %s", component.getName(), component.getComponentDescriptor().getDescription()));
     }
 
     public void printModuleList() {
