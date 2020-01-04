@@ -1,7 +1,10 @@
 package br.xtool.implementation.representation;
 
+import java.nio.file.FileVisitOption;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
 import java.util.Objects;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -37,7 +40,7 @@ public class WorkspaceRepresentationImpl implements WorkspaceRepresentation {
 	public SortedSet<SpringBootProjectRepresentation> getSpringBootProjects() {
 		if (Objects.isNull(this.springBootProjects)) {
 			// @formatter:off
-			this.springBootProjects = Files.list(this.path)
+			this.springBootProjects = Files.walk(this.path, 2)
 					.filter(Files::isDirectory)
 					.filter(SpringBootProjectRepresentation::isValid)
 					.map(SpringBootProjectRepresentationImpl::new)
@@ -52,7 +55,7 @@ public class WorkspaceRepresentationImpl implements WorkspaceRepresentation {
 	public SortedSet<NgProjectRepresentation> getAngularProjects() {
 		if (Objects.isNull(this.angularProjects)) {
 			// @formatter:off
-			this.angularProjects = Files.list(this.path)
+			this.angularProjects = Files.walk(this.path, 2)
 					.filter(Files::isDirectory)
 					.filter(NgProjectRepresentation::isValid)
 					.map(NgProjectRepresentationImpl::new)
@@ -64,10 +67,10 @@ public class WorkspaceRepresentationImpl implements WorkspaceRepresentation {
 
 	@Override
 	@SneakyThrows
-	public SortedSet<SpringBootFullStackProjectRepresentation> getSpringBootNgProjects() {
+	public SortedSet<SpringBootFullStackProjectRepresentation> getSpringBootFullStackProjects() {
 		if (Objects.isNull(this.springBootNgProjects)) {
 			// @formatter:off
-			this.springBootNgProjects = Files.list(this.path)
+			this.springBootNgProjects = Files.walk(this.path, 2)
 					.filter(Files::isDirectory)
 					.filter(SpringBootFullStackProjectRepresentation::isValid)
 					.map(SpringBootFullStackProjectRepresentationImpl::new)
@@ -79,7 +82,7 @@ public class WorkspaceRepresentationImpl implements WorkspaceRepresentation {
 
 	@Override
 	public SortedSet<? extends ProjectRepresentation> getProjects() {
-		return Sets.newTreeSet(Iterables.concat(this.getSpringBootProjects(), this.getAngularProjects(), this.getSpringBootNgProjects()));
+		return Sets.newTreeSet(Iterables.concat(this.getSpringBootProjects(), this.getAngularProjects(), this.getSpringBootFullStackProjects()));
 //		// @formatter:off
 //		return Stream.concat(
 //				this.getSpringBootProjects().stream(), 

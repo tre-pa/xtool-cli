@@ -41,7 +41,7 @@ public interface WorkspaceRepresentation {
 	 * 
 	 * @return {@link SpringBootFullStackProjectRepresentation}
 	 */
-	SortedSet<SpringBootFullStackProjectRepresentation> getSpringBootNgProjects();
+	SortedSet<SpringBootFullStackProjectRepresentation> getSpringBootFullStackProjects();
 
 	/**
 	 * Retorna a lista de todos os projetos do workspace.

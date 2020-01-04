@@ -23,7 +23,7 @@ public class SpringBootFullStackProjectRepresentationImpl extends ProjectReprese
 
 	@Override
 	public String getFrameworkVersion() {
-		return getSpringBootProject().getFrameworkVersion() + " - " + getAngularProject().getFrameworkVersion();
+		return getPom().getParentVersion().orElse("") + " - " + getAngularProject().getFrameworkVersion();
 	}
 
 	@Override
