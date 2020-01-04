@@ -8,6 +8,7 @@ import br.xtool.kt.core.AbstractTaskService
 import br.xtool.representation.repo.ComponentRepresentation
 import br.xtool.representation.repo.directive.TaskRepresentation
 import org.apache.velocity.VelocityContext
+import org.apache.velocity.app.Velocity
 import org.apache.velocity.app.VelocityEngine
 import org.apache.velocity.runtime.RuntimeConstants
 import org.springframework.beans.factory.annotation.Autowired
@@ -50,21 +51,29 @@ class CopyTemplateTaskService : AbstractTaskService() {
         return ve
     }
 
-    fun copyOrTemplatize(ctx: ComponentExecutionContext, tplPath: Path, file: Path, ve: VelocityEngine, velocityContext: VelocityContext): Unit {
+    private fun copyOrTemplatize(ctx: ComponentExecutionContext, tplPath: Path, file: Path, ve: VelocityEngine, velocityContext: VelocityContext): Unit {
         if (file.toString().endsWith(".vm")) {
             val tpl = tplPath.relativize(file).toString()
             val t = ve.getTemplate(tpl)
             val writer = StringWriter()
             t.merge(velocityContext, writer)
-            val finalPath = Paths.get("${workspaceContext.workspace.path.resolve(ctx.destination).resolve(tpl.toString().removeSuffix(".vm"))}")
+            val finalTpl = finalTpl(tpl, ve, velocityContext)
+            val finalPath = Paths.get("${workspaceContext.workspace.path.resolve(ctx.destination).resolve(finalTpl.removeSuffix(".vm"))}")
             createFile(finalPath, writer.toString().toByteArray(StandardCharsets.UTF_8))
             log("${tpl} -> @|green,bold ${finalPath} |@")
             return
         }
         val tpl = tplPath.relativize(file).toString()
-        val finalPath = Paths.get("${workspaceContext.workspace.path.resolve(ctx.destination).resolve(tpl)}")
+        val finalTpl = finalTpl(tpl, ve, velocityContext)
+        val finalPath = Paths.get("${workspaceContext.workspace.path.resolve(ctx.destination).resolve(finalTpl)}")
         createFile(finalPath, Files.readAllBytes(file))
         log("${tpl} -> @|green,bold ${finalPath} |@")
+    }
+
+    private fun finalTpl(file: String, ve: VelocityEngine, velocityContext: VelocityContext): String {
+        val stringWriter = StringWriter()
+        ve.evaluate(velocityContext, stringWriter, String(), file)
+        return stringWriter.toString()
     }
 
     fun createFile(finalPath: Path, content: ByteArray) {
