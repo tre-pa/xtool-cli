@@ -46,7 +46,7 @@ case "$(uname)" in
 esac
 
 echo "Buscando pelo curl..."
-if [ -z $(which curl > /dev/null 2>&1) ]; then
+if [ -z $(which curl) ]; then
 	echo "Não encontrado."
 	echo ""
 	echo "======================================================================================================"
