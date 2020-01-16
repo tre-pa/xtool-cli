@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -e
-
 # Global variables
 XTOOL_GITREPO="https://github.com/tre-pa/xtool-cli.git"
 
