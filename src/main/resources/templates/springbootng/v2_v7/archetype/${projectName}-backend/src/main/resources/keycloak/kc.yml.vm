@@ -1,0 +1,53 @@
+realm: TRE-PA
+clients:
+  # Registro da aplicação backend
+  - client_id: ${projectName}-backend
+    full_scope_allowed: true
+    implicit_flow_enabled: false
+    direct_access_grants_enabled: true
+    authorization_services_enabled: true
+    service_accounts_enabled: true
+    redirect_uris:
+      - http://localhost:8080/${projectName}-backend
+    roles:
+      - USER
+      - ADMIN
+    public_client: false
+    authorization:
+      resources:
+        - name: JREPORT_MNGT_RESOURCE
+          uris:
+            - /api/mngt/jreport/*
+          scopes:
+            - GET
+            - POST
+            - PUT
+      policies:
+        - name: USER_POLICY
+          type: role
+          roles:
+            - id: USER
+              required: true
+      permissions:
+        - name: JREPORT_MNGT_PERMISSION
+          resources:
+            - JREPORT_MNGT_RESOURCE
+          policies:
+            - USER_POLICY
+  # Registro da aplicação fronted
+  - client_id: ${projectName}-frontend
+    public_client: true
+    full_scope_allowed: false
+    implicit_flow_enabled: false
+    direct_access_grants_enabled: false
+    authorization_services_enabled: false
+    redirect_uris:
+      - http://localhost:8080/*
+      - http://localhost:4200/*
+    web_origins:
+      - '*'
+    client_scope_mappings:
+      client_id: ${projectName}-backend
+      roles:
+        - USER
+        - ADMIN
