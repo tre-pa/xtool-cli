@@ -100,7 +100,7 @@ mkdir -p "$xtool_src_folder"
 mkdir -p "$xtool_tmp_folder"
 mkdir -p "$xtool_repo_folder"
 
-rm -rf "$xtool_tmp_folder/*"
+rm -rf "$xtool_tmp_folder/**"
 cd $xtool_tmp_folder
 git clone "$XTOOL_GITREPO"
 
