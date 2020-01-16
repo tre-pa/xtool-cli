@@ -104,6 +104,10 @@ rm -rf "$xtool_tmp_folder/*"
 cd $xtool_tmp_folder
 git clone "$XTOOL_GITREPO"
 
+if [ -z "$XTOOL_BRANCH" ]; then
+  git checkout $XTOOL_BRANCH
+fi
+
 cp $xtool_tmp_folder/xtool-cli/installation/bin/xtool-init.sh $xtool_bin_folder
 cp $xtool_tmp_folder/xtool-cli/installation/src/xtool-main.sh $xtool_src_folder
 
