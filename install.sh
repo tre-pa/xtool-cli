@@ -104,7 +104,7 @@ rm -rf "$xtool_tmp_folder/**"
 cd $xtool_tmp_folder
 git clone "$XTOOL_GITREPO"
 
-if [ -z "$XTOOL_BRANCH" ]; then
+if [ -n "$XTOOL_BRANCH" ]; then
   git checkout $XTOOL_BRANCH
 fi
 
