@@ -17,7 +17,7 @@ xtool_profile="${HOME}/.profile"
 xtool_bashrc="${HOME}/.bashrc"
 xtool_zshrc="${HOME}/.zshrc"
 
-xtool_init_snippet=$( cat << EOF
+xtool_init_snippet=$(cat << EOF
 export XTOOL_DIR="$XTOOL_DIR"
 [[ -s "${XTOOL_DIR}/bin/xtool-init.sh" ]] && source "${XTOOL_DIR}/bin/xtool-init.sh"
 EOF
