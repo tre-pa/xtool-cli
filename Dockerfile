@@ -1,6 +1,7 @@
 FROM debian:stretch
 
 RUN apt-get update && \
+    apt-get install maven -y &&\
     apt-get install default-jre -y && \
     apt-get install git -y && \
     apt-get install graphviz -y
@@ -18,7 +19,7 @@ ENV LANGUAGE C.UTF-8
 
 ENV LC_ALL C.UTF-8
 
-COPY target/xtool-cli.jar xtool-cli.jar
+COPY target/xtool-cli-2.0.0.jar xtool-cli.jar
 
 ENTRYPOINT ["java",  "-Dworkspace=/opt/workspace", "-Drepository.home=/opt/repository", "-jar", "/xtool-cli.jar"]
 

@@ -22,5 +22,5 @@ ${AnsiColor.BRIGHT_GREEN}${AnsiStyle.BOLD}
    __/ || \__
   \____/\____/
 ${AnsiColor.DEFAULT}  
-Bem vindo a ferramenta ${AnsiColor.BRIGHT_GREEN}${AnsiStyle.BOLD}xtool${AnsiColor.DEFAULT}${AnsiStyle.NORMAL}
+Bem vindo a ferramenta ${AnsiColor.BRIGHT_GREEN}${AnsiStyle.BOLD}xtool${AnsiColor.DEFAULT}${AnsiStyle.NORMAL}(v2)
 Digite ${AnsiColor.BRIGHT_GREEN}${AnsiStyle.BOLD}help${AnsiColor.DEFAULT}${AnsiStyle.NORMAL} para ver as opções de comandos.
