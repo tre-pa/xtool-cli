@@ -1,6 +1,6 @@
 package br.xtool.implementation.context;
 
-import br.xtool.context.WorkspaceContext;
+import br.xtool.xtoolcore.context.WorkspaceContext;
 import br.xtool.xtoolcore.impl.representation.WorkspaceRepresentationImpl;
 import br.xtool.xtoolcore.representation.ProjectRepresentation;
 import br.xtool.xtoolcore.representation.WorkspaceRepresentation;

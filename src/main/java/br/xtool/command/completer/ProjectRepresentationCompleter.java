@@ -1,7 +1,7 @@
 package br.xtool.command.completer;
 
-import br.xtool.context.WorkspaceContext;
 import br.xtool.core.Fabricable;
+import br.xtool.xtoolcore.context.WorkspaceContext;
 import br.xtool.xtoolcore.representation.ProjectRepresentation;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;

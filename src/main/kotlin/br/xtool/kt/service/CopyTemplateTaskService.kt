@@ -2,9 +2,9 @@ package br.xtool.kt.service
 
 import br.xtool.annotation.TaskService
 import br.xtool.context.ComponentExecutionContext
-import br.xtool.context.WorkspaceContext
 import br.xtool.kt.core.AbstractTaskService
 import br.xtool.representation.repo.ComponentRepresentation
+import br.xtool.xtoolcore.context.WorkspaceContext
 import org.apache.velocity.VelocityContext
 import org.apache.velocity.app.VelocityEngine
 import org.apache.velocity.runtime.RuntimeConstants

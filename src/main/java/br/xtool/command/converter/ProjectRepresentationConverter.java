@@ -1,8 +1,8 @@
 package br.xtool.command.converter;
 
 import br.xtool.annotation.Converter;
-import br.xtool.context.WorkspaceContext;
 import br.xtool.core.Fabricable;
+import br.xtool.xtoolcore.context.WorkspaceContext;
 import br.xtool.xtoolcore.representation.ProjectRepresentation;
 import org.springframework.beans.factory.annotation.Autowired;
 import picocli.CommandLine;
