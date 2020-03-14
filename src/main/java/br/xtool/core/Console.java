@@ -1,6 +1,6 @@
 package br.xtool.core;
 
-import br.xtool.representation.ProjectRepresentation;
+import br.xtool.xtoolcore.representation.ProjectRepresentation;
 
 /**
  * Classe que gerencia o console.

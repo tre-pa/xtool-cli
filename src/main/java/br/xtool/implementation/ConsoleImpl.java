@@ -2,7 +2,7 @@ package br.xtool.implementation;
 
 import br.xtool.context.WorkspaceContext;
 import br.xtool.core.Console;
-import br.xtool.representation.ProjectRepresentation;
+import br.xtool.xtoolcore.representation.ProjectRepresentation;
 import org.apache.commons.lang3.StringUtils;
 import org.fusesource.jansi.Ansi;
 import org.fusesource.jansi.AnsiConsole;

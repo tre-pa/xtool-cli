@@ -1,6 +1,5 @@
 package br.xtool.annotation;
 
-import br.xtool.representation.repo.directive.TaskRepresentation;
 import org.springframework.stereotype.Service;
 
 import java.lang.annotation.ElementType;

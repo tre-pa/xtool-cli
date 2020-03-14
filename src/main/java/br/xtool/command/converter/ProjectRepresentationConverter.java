@@ -3,7 +3,7 @@ package br.xtool.command.converter;
 import br.xtool.annotation.Converter;
 import br.xtool.context.WorkspaceContext;
 import br.xtool.core.Fabricable;
-import br.xtool.representation.ProjectRepresentation;
+import br.xtool.xtoolcore.representation.ProjectRepresentation;
 import org.springframework.beans.factory.annotation.Autowired;
 import picocli.CommandLine;
 

@@ -2,7 +2,7 @@ package br.xtool.command.completer;
 
 import br.xtool.context.WorkspaceContext;
 import br.xtool.core.Fabricable;
-import br.xtool.representation.ProjectRepresentation;
+import br.xtool.xtoolcore.representation.ProjectRepresentation;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

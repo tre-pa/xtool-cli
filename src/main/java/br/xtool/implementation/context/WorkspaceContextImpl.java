@@ -1,9 +1,9 @@
 package br.xtool.implementation.context;
 
 import br.xtool.context.WorkspaceContext;
-import br.xtool.implementation.representation.WorkspaceRepresentationImpl;
-import br.xtool.representation.ProjectRepresentation;
-import br.xtool.representation.WorkspaceRepresentation;
+import br.xtool.xtoolcore.impl.representation.WorkspaceRepresentationImpl;
+import br.xtool.xtoolcore.representation.ProjectRepresentation;
+import br.xtool.xtoolcore.representation.WorkspaceRepresentation;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 

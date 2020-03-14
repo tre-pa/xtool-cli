@@ -1,12 +1,6 @@
 package br.xtool.context;
 
-import br.xtool.representation.repo.ComponentRepresentation;
-import br.xtool.representation.repo.RepositoryRepresentation;
-import br.xtool.representation.repo.directive.ComponentDescriptorRepresentation;
-import picocli.CommandLine;
-
-import java.util.List;
-import java.util.Optional;
+import br.xtool.xtoolcore.representation.repo.RepositoryRepresentation;
 
 /**
  * Contexto do repositório xtool.
@@ -15,12 +9,12 @@ import java.util.Optional;
  */
 public interface RepositoryContext {
 
-    /**
-     * Retorna o repositório de componentes.
-     *
-     * @return RepositoryContext
-     */
-    List<RepositoryRepresentation> getRepositories();
+//    /**
+//     * Retorna o repositório de componentes.
+//     *
+//     * @return RepositoryContext
+//     */
+//    List<RepositoryRepresentation> getRepositories();
 
     /**
      * Retorna o repositório de trabalho.
@@ -36,30 +30,30 @@ public interface RepositoryContext {
      */
     void setWorkingRepository(RepositoryRepresentation repositoryRepresentation);
 
-
-    /**
-     * Cria o CommandSpec a partir do descritor.
-     *
-     * @param descriptor
-     * @return
-     */
-    CommandLine.Model.CommandSpec create(ComponentDescriptorRepresentation descriptor);
-
-
-    /**
-     * Retorna o componente pelo nome.
-     *
-     * @param name
-     * @return
-     */
-    Optional<ComponentRepresentation> findComponentByName(String name);
+//
+//    /**
+//     * Cria o CommandSpec a partir do descritor.
+//     *
+//     * @param descriptor
+//     * @return
+//     */
+//    CommandLine.Model.CommandSpec create(ComponentDescriptorRepresentation descriptor);
 
 
-    /**
-     * Retorna a quantidade total de repositórios.
-     *
-     * @return
-     */
-    long getTotalRepositories();
+//    /**
+//     * Retorna o componente pelo nome.
+//     *
+//     * @param name
+//     * @return
+//     */
+//    Optional<ComponentRepresentation> findComponentByName(String name);
+
+
+//    /**
+//     * Retorna a quantidade total de repositórios.
+//     *
+//     * @return
+//     */
+//    long getTotalRepositories();
 
 }

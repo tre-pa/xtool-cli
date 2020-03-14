@@ -6,7 +6,7 @@ import br.xtool.command.converter.ProjectRepresentationConverter;
 import br.xtool.command.core.AbstractCommand;
 import br.xtool.context.WorkspaceContext;
 import br.xtool.core.Console;
-import br.xtool.representation.ProjectRepresentation;
+import br.xtool.xtoolcore.representation.ProjectRepresentation;
 import org.springframework.beans.factory.annotation.Autowired;
 import picocli.CommandLine;
 

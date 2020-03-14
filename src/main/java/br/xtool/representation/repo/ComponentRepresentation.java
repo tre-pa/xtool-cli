@@ -1,8 +1,6 @@
 package br.xtool.representation.repo;
 
 
-import br.xtool.representation.repo.directive.ComponentDescriptorRepresentation;
-
 import java.nio.file.Path;
 
 /**
@@ -18,6 +16,7 @@ public interface ComponentRepresentation {
      * @return
      */
     Path getPath();
+
     /**
      * Nome do componente. Por conveção é o mesmo nome do diretório.
      *
@@ -42,25 +41,10 @@ public interface ComponentRepresentation {
 
     /**
      * Caminho para o diretório de templates parciais.
+     *
      * @return
      */
     Path getTplPartialsPath();
-
-    /**
-     * Retorna a representação do arquivo descritor xtool.yml
-     *
-     * @return
-     */
-//    DescriptorYmlRepresentation getDescriptor();
-
-    ComponentDescriptorRepresentation getComponentDescriptor();
-
-    /**
-     * Retorna o módulo do componente.
-     *
-     * @return
-     */
-    ModuleRepresentation getModule();
 
 
 }

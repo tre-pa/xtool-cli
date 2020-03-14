@@ -1,17 +1,13 @@
 package br.xtool.context;
 
 import br.xtool.core.TemplateParserContext;
-import br.xtool.representation.ProjectRepresentation;
 import br.xtool.representation.repo.ComponentRepresentation;
-import br.xtool.representation.repo.directive.DescriptorParamRepresentation;
-import lombok.Getter;
-import lombok.Setter;
+import br.xtool.xtoolcore.representation.ProjectRepresentation;
 import lombok.ToString;
 import org.springframework.expression.ExpressionParser;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
 import picocli.CommandLine;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -50,12 +46,13 @@ public class ComponentExecutionContext {
     }
 
     private static String findParamIdByLabel(ComponentRepresentation componentRepresentation, String paramLabel) {
-        return componentRepresentation.getComponentDescriptor().getParams()
-            .stream()
-            .filter(param -> param.getLabel().equals(paramLabel))
-            .map(DescriptorParamRepresentation::getId)
-            .findAny()
-            .orElseThrow(() -> new IllegalArgumentException(String.format("Parametro com label '%s' não encontrado no componente '%s'", paramLabel, componentRepresentation.getComponentDescriptor().getName())));
+        return "";
+//        return componentRepresentation.getComponentDescriptor().getParams()
+//            .stream()
+//            .filter(param -> param.getLabel().equals(paramLabel))
+//            .map(DescriptorParamRepresentation::getId)
+//            .findAny()
+//            .orElseThrow(() -> new IllegalArgumentException(String.format("Parametro com label '%s' não encontrado no componente '%s'", paramLabel, componentRepresentation.getComponentDescriptor().getName())));
     }
 
     /**
