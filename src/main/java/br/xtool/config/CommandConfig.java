@@ -1,7 +1,6 @@
 package br.xtool.config;
 
 import br.xtool.command.core.AbstractCommand;
-import br.xtool.context.RepositoryContext;
 import br.xtool.core.CommandFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -22,8 +21,8 @@ public class CommandConfig {
     @Autowired
     private CommandFactory commandFactory;
 
-    @Autowired
-    private RepositoryContext repositoryContext;
+//    @Autowired
+//    private RepositoryContext repositoryContext;
 
     @Autowired(required = false)
     private List<CommandLine.ITypeConverter> converters;

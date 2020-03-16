@@ -2,13 +2,15 @@ package br.xtool.command;
 
 import br.xtool.annotation.CoreCommand;
 import br.xtool.command.core.AbstractCommand;
-import br.xtool.context.RepositoryContext;
 import br.xtool.core.Console;
 import br.xtool.xtoolcore.context.WorkspaceContext;
+import br.xtool.xtoolcore.core.AbstractXtoolComponent;
 import org.springframework.beans.factory.annotation.Autowired;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Model.CommandSpec;
+
+import java.util.Set;
 
 /**
  * Comando de execução de componentes.
@@ -20,8 +22,14 @@ public class ExecCommand extends AbstractCommand {
     @Autowired
     private WorkspaceContext workspaceContext;
 
-    @Autowired
-    private RepositoryContext repositoryContext;
+    /**
+     * Retorna a lista dos componentes xtool.
+     */
+    @Autowired(required = false)
+    private Set<AbstractXtoolComponent> components;
+
+//    @Autowired
+//    private RepositoryContext repositoryContext;
 
     @Autowired
     private Console console;
