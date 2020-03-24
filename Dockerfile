@@ -2,7 +2,7 @@ FROM debian:stretch
 
 RUN apt-get update && \
     apt-get install maven -y &&\
-    apt-get install default-jre -y && \
+    apt-get install default-jdk -y && \
     apt-get install git -y && \
     apt-get install graphviz -y
 
