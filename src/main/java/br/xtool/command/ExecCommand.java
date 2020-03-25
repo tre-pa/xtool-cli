@@ -2,9 +2,9 @@ package br.xtool.command;
 
 import br.xtool.annotation.CoreCommand;
 import br.xtool.command.core.AbstractCommand;
-import br.xtool.core.Console;
 import br.xtool.xtoolcore.context.WorkspaceContext;
 import br.xtool.xtoolcore.core.AbstractXtoolComponent;
+import br.xtool.xtoolcore.core.Console;
 import org.springframework.beans.factory.annotation.Autowired;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;

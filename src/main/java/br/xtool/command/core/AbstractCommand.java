@@ -1,7 +1,7 @@
 package br.xtool.command.core;
 
 
-import br.xtool.core.Console;
+import br.xtool.xtoolcore.core.Console;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +12,7 @@ import java.util.Map;
 /**
  * Classe base para todos os comandos Xtool.
  */
+@Deprecated
 public abstract class AbstractCommand implements Runnable {
 
     @Setter
