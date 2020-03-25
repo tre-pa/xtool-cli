@@ -1,7 +1,7 @@
 package br.xtool.config;
 
 import br.xtool.command.core.AbstractCommand;
-import br.xtool.core.CommandFactory;
+import br.xtool.factory.CommandFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,6 +1,5 @@
 package br.xtool.kt.service
 
-import br.xtool.annotation.TaskService
 import br.xtool.kt.core.AbstractTaskService
 import br.xtool.xtoolcore.context.WorkspaceContext
 import org.apache.velocity.VelocityContext
@@ -12,7 +11,7 @@ import java.nio.file.Files
 import java.nio.file.Path
 
 
-@TaskService("copy-template")
+//@TaskService("copy-template")
 class CopyTemplateTaskService : AbstractTaskService() {
 
     @Autowired

@@ -1,4 +1,4 @@
-package br.xtool.core;
+package br.xtool.factory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

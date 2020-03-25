@@ -1,6 +1,6 @@
 package br.xtool.command.completer;
 
-import br.xtool.core.Fabricable;
+import br.xtool.factory.Fabricable;
 import br.xtool.xtoolcore.context.WorkspaceContext;
 import br.xtool.xtoolcore.representation.ProjectRepresentation;
 import org.jetbrains.annotations.NotNull;
