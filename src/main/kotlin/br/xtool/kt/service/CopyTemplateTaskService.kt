@@ -1,9 +1,7 @@
 package br.xtool.kt.service
 
 import br.xtool.annotation.TaskService
-import br.xtool.context.ComponentExecutionContext
 import br.xtool.kt.core.AbstractTaskService
-import br.xtool.representation.repo.ComponentRepresentation
 import br.xtool.xtoolcore.context.WorkspaceContext
 import org.apache.velocity.VelocityContext
 import org.apache.velocity.app.VelocityEngine
@@ -20,7 +18,7 @@ class CopyTemplateTaskService : AbstractTaskService() {
     @Autowired
     lateinit var workspaceContext: WorkspaceContext
 
-    override fun run(ctx: ComponentExecutionContext, component: ComponentRepresentation, task: TaskRepresentation) {
+//    override fun run(ctx: ComponentExecutionContext, component: ComponentRepresentation, task: TaskRepresentation) {
 //        val wTask = task as CopyTemplateTask
 //        logHeader("src","${component.tplPath}")
 //        logHeader("dest","${workspaceContext.workspace.path.resolve(ctx.destination)}")
@@ -31,7 +29,7 @@ class CopyTemplateTaskService : AbstractTaskService() {
 //                .asSequence()
 //                .filter { Files.isRegularFile(it) }
 //                .forEach { copyOrTemplatize(ctx, component.tplPath, it, ve, velocityContext) }
-    }
+//    }
 
     /**
      * Retorna a engine Velocity do tipo File Resource.
@@ -45,7 +43,7 @@ class CopyTemplateTaskService : AbstractTaskService() {
         return ve
     }
 
-    private fun copyOrTemplatize(ctx: ComponentExecutionContext, tplPath: Path, file: Path, ve: VelocityEngine, velocityContext: VelocityContext): Unit {
+//    private fun copyOrTemplatize(ctx: ComponentExecutionContext, tplPath: Path, file: Path, ve: VelocityEngine, velocityContext: VelocityContext): Unit {
 //        if (file.toString().endsWith(".vm")) {
 //            val tpl = tplPath.relativize(file).toString()
 //            val t = ve.getTemplate(tpl)
@@ -62,7 +60,7 @@ class CopyTemplateTaskService : AbstractTaskService() {
 //        val finalPath = Paths.get("${workspaceContext.workspace.path.resolve(ctx.destination).resolve(finalTpl)}")
 //        createFile(finalPath, Files.readAllBytes(file))
 //        log("${tpl} -> @|green,bold ${finalPath} |@")
-    }
+//    }
 
     private fun finalTpl(file: String, ve: VelocityEngine, velocityContext: VelocityContext): String {
         val stringWriter = StringWriter()
