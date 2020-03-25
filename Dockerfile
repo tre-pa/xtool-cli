@@ -21,6 +21,6 @@ ENV LC_ALL C.UTF-8
 
 COPY target/xtool-cli-2.0.0.jar xtool-cli.jar
 
-ENTRYPOINT ["java",  "-Dworkspace=/opt/workspace", "-Drepository.home=/opt/repository", "-jar", "/xtool-cli.jar"]
+ENTRYPOINT ["java",  "-Dworkspace=/opt/workspace", "-Dxtool.home=/opt/xtool", "-cp", "/xtool-cli.jar", "-Dloader.path=/opt/xtool/components", "org.springframework.boot.loader.PropertiesLauncher"]
 
 
