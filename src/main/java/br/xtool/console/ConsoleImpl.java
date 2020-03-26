@@ -2,8 +2,8 @@ package br.xtool.console;
 
 import br.xtool.xtoolcore.context.WorkspaceContext;
 import br.xtool.xtoolcore.core.AbstractXtoolComponent;
-import br.xtool.xtoolcore.core.Console;
 import br.xtool.xtoolcore.representation.ProjectRepresentation;
+import br.xtool.xtoolcore.service.Console;
 import org.apache.commons.lang3.StringUtils;
 import org.fusesource.jansi.Ansi;
 import org.fusesource.jansi.AnsiConsole;

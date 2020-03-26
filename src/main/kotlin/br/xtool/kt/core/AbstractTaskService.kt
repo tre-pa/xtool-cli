@@ -1,7 +1,7 @@
 package br.xtool.kt.core
 
 //import br.xtool.representation.repo.ComponentRepresentation
-import br.xtool.xtoolcore.core.Console
+import br.xtool.xtoolcore.service.Console
 import org.springframework.beans.factory.annotation.Autowired
 
 abstract class AbstractTaskService() {

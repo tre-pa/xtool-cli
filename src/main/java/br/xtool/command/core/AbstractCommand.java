@@ -1,7 +1,7 @@
 package br.xtool.command.core;
 
 
-import br.xtool.xtoolcore.core.Console;
+import br.xtool.xtoolcore.service.Console;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
